@@ -10,6 +10,7 @@ import org.junit.Assume;
 import org.junit.Before;
 import org.openqa.selenium.WebDriver;
 
+import com.generic.selenium.datatable.Xls_Reader;
 import com.generic.selenium.report.ReportUtil;
 import com.generic.selenium.util.TestUtilities;
 
@@ -26,12 +27,13 @@ public class SelTestCase {
     private static Properties CONFIG = null;
     private static WebDriver driver = null;
     private static int waitTime;
+    private static Xls_Reader datatable = null;
     private static String testCaseId = null;
     private static String startTime = null;
     private static String testStatus = null;
     private static String screenShotName = null;
     private static String browserName = null;
-
+    private static int testCaseRowNum;
     private static Throwable Error = null;
     
     public static String logDir= null;
@@ -75,6 +77,15 @@ public class SelTestCase {
         SelTestCase.startTime = startTime;
     }
 
+    public static Xls_Reader getDatatable() {
+        return datatable;
+    }
+
+
+    public static void setDatatable(Xls_Reader datatable) {
+        SelTestCase.datatable = datatable;
+    }
+    
     public static String getTestCaseDescription() {
         return testCaseDescription;
     }
@@ -109,6 +120,15 @@ public class SelTestCase {
         SelTestCase.driver = driver;
     }
 
+    public static int getTestCaseRowNum() {
+        return testCaseRowNum;
+    }
+
+
+    public static void setTestCaseRowNum(int testCaseRowNum) {
+        SelTestCase.testCaseRowNum = testCaseRowNum;
+    }
+    
     public static String getTestCaseId() {
         return testCaseId;
     }
@@ -152,7 +172,7 @@ public class SelTestCase {
         }
 
         logs.debug("Execute test case " + getTestCaseId());
-        setTestCaseDescription(testCaseDescription);
+        setTestCaseDescription(getDatatable().getCellData("Test Cases","Description", getTestCaseRowNum()));
         ActionDriver.initializeBrowser();
 
         try {

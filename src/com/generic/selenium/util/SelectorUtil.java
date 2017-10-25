@@ -6,6 +6,8 @@ import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
+import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.TreeMap;
 
 import javax.net.ssl.HostnameVerifier;
@@ -19,17 +21,21 @@ import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 import org.openqa.selenium.By;
 
+import com.generic.selenium.setup.SelTestCase;
+
 
 public class SelectorUtil {
 	
-	public static TreeMap <String, Elements> selectorToElementsMap;//TreeMap is better than HashMap to keep the insertion order
-	public static TreeMap <String, String> selectorToValuesMap;
+	public static LinkedHashMap<String, Elements> selectorToElementsMap;//LinkedHashMap is better than HashMap to keep the insertion order
+	public static LinkedHashMap <String, String> selectorToValuesMap;
+	public static LinkedHashMap <String, Boolean> selectorForErrorMsgsMap;
 	
-	 public static void initializeElementsSelectorsMaps(String[] subStrArr,String[] valuesArr){
+	 public static void initializeElementsSelectorsMaps(List<String> subStrArr,List<String> valuesArr){
 	    	Elements foundElements = null;
 	    	String selectorType = "id";
-	    	selectorToElementsMap = new TreeMap <String, Elements>();
-	    	selectorToValuesMap = new TreeMap <String, String>();
+	    	selectorToElementsMap = new LinkedHashMap <String, Elements>();
+	    	selectorToValuesMap = new LinkedHashMap <String, String>();
+	    	selectorForErrorMsgsMap = new LinkedHashMap <String, Boolean>();
 	    	try {
 				enableSSLSocket();
 			} catch (KeyManagementException e) {
@@ -40,24 +46,29 @@ public class SelectorUtil {
 				e.printStackTrace();
 			}
 	    	try {
-				Document doc = Jsoup.connect("https://www.tommybahama.com/en/login").get();
+				Document doc = Jsoup.connect(SelTestCase.getDriver().getCurrentUrl()).get();
+	    		//Document doc = Jsoup.connect("https://hybrisdemo.conexus.co.uk:9002/yacceleratorstorefront/en/login?site=apparel-uk").get();
 				int index = 0;
+				Boolean isAnErrorSelector = Boolean.FALSE;
 				for(String subStr: subStrArr) {
+					if (subStr.contains("error")) {
+						isAnErrorSelector = Boolean.TRUE;
+					}
 					foundElements = doc.select("[id="+subStr+"]");
 					if(foundElements.isEmpty()) {
 						//use regular expression (register.)?firstName for example
-						foundElements = doc.select("[id~=(register.)?"+subStr+"]");
+						foundElements = doc.select("[id~=(register.)?"+subStr+"$]");
 					}
 					
 					if (foundElements.isEmpty()) {
 						//use * to mean contains
-						foundElements = doc.select("[class*="+subStr+"]");
+						foundElements = doc.select("[class*="+subStr+" i]");
 						selectorType = (!(foundElements.isEmpty()) ? "class":selectorType);
 					}
-					/*if (foundElements.isEmpty()) {
-						foundElements = doc.select("contains("+ subStr +")");
+					if (foundElements.isEmpty()) {
+						foundElements = doc.select("*:contains("+ subStr +")");
 						selectorType = (!(foundElements.isEmpty()) ? subStr:selectorType);
-					}*/
+					}
 					if (foundElements.isEmpty()) {
 						foundElements = doc.select("[name*="+subStr+"]");
 						selectorType = (!(foundElements.isEmpty()) ? "name":selectorType);
@@ -67,7 +78,8 @@ public class SelectorUtil {
 					if (foundElements != null) {
 						String key = selectorType +"_"+ index;
 						selectorToElementsMap.put(key, foundElements);
-						selectorToValuesMap.put(key, valuesArr[index]);
+						selectorToValuesMap.put(key, valuesArr.get(index));
+						selectorForErrorMsgsMap.put(key, isAnErrorSelector);
 					}
 					index++;
 				}
@@ -127,10 +139,9 @@ public class SelectorUtil {
 					case "name":
 						selector = By.name(e.attr("name"));
 						break;
-					/*default:
-						String temp = selType.substring(0, selType.indexOf('_'));
-						selector = By.xpath("//[contains(text()='"+ temp + "')]");
-						break;*/
+					default:
+						selector = By.xpath("//button[contains(text(),'"+ selType + "')]");
+						break;
 					}
 		    		try {
 		    			

@@ -2,37 +2,42 @@ package com.generic.selenium.setup;
 
 import java.util.ArrayList;
 
+import com.generic.selenium.setup.SelTestCase;
+
 
 
 public class GlobalVariables extends SelTestCase {
 
 
-    public String validLoggedInUserName;
-    public String validLoggedInUserPassword;
-    public String invalidLoggedInUserName;
-    public String invalidLoggedInUserPassword;
-    public static final String EMPTY_USER_NAME_PASSWORD_ERROR ="You must enter a username";
-    public static final String EMPTY_USERNAME_ERROR = "You must enter a username";
-    public static final String EMPTY_PASSWORD_ERROR = "You must enter a password";
-    public static final String IN_VALID_USERNAME_PASSWORD_PAIR_ERROR = "Authentication error: User is disabled<br>Try entering the correct information or contact your DEXcenter Administrator if you believe this is an error.";
-
+	/*public String firstName;
+    public String lastName;
+    public String emailAddress;
+    public String confEmailAddress;
+    public String zipCode;
+    public String country;
+    public String password;
+    public String confPassword;*/
+   
     public ArrayList<String> list;
 
     public static boolean flag = false;
 
-    public GlobalVariables() {
+   
+    public GlobalVariables(String sheetName, int row) {
     	getCurrentFunctionName(true);
-    	logs.debug("initializing Global Variables...");
-        
-    	validLoggedInUserName = SelTestCase.getCONFIG().getProperty("validUserName");
-    	validLoggedInUserPassword = SelTestCase.getCONFIG().getProperty("validPassword");
-    	invalidLoggedInUserName = SelTestCase.getCONFIG().getProperty("invalidUserName");
-    	invalidLoggedInUserPassword = SelTestCase.getCONFIG().getProperty("invalidPassword");
-       
+    	logs.debug("reading data from sheet: " + sheetName + " row:" + row);
+
+       /* firstName = SelTestCase.getCONFIG().getProperty("firstName");
+        lastName = SelTestCase.getCONFIG().getProperty("lastName");
+        emailAddress = SelTestCase.getCONFIG().getProperty("emailAddress");
+        confEmailAddress = SelTestCase.getCONFIG().getProperty("confEmailAddress");
+        zipCode = SelTestCase.getCONFIG().getProperty("postalCode");
+        password = SelTestCase.getCONFIG().getProperty("password");
+        confPassword = SelTestCase.getCONFIG().getProperty("confPassword");
+        country = SelTestCase.getCONFIG().getProperty("country");
+        */
         SelTestCase.getCurrentFunctionName(false);
 
     }
-
-
-
+     
 }
