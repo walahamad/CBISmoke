@@ -2,9 +2,11 @@ package com.generic.selenium.setup;
 
 public class SheetVariables {
    
-    //Test Case id
-    public static String SignInTestCaseId = "SignIn";
-    
-    public static String SignInTestCaseDescription = "Sign In Validation";
+	//SheetNames
+    public static String registrationSheet = "Registration";
+    public static String testCasesSheet = "Test Cases";
 
+    //Test Case id
+    public static String registrationTestCaseId = "Registration";
+    
 }

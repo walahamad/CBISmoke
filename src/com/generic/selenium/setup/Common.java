@@ -11,6 +11,8 @@ import java.io.File;
 import java.io.InputStreamReader;
 import java.util.List;
 import javax.imageio.ImageIO;
+
+import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;

@@ -8,6 +8,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Properties;
 
+import com.generic.selenium.datatable.Xls_Reader;
 import com.generic.selenium.report.ReportUtil;
 import com.generic.selenium.setup.SelTestCase;
 
@@ -82,6 +83,35 @@ public class TestUtilities extends SelTestCase {
 
      }
 
+     // get the data from xls file
+     public static Object[][] getData(String testName){
+     	getCurrentFunctionName(true);
+         if(SelTestCase.getDatatable() == null){
+             SelTestCase.setDatatable(new Xls_Reader(System.getProperty("user.dir")+"//src//com//generic//selenium//testdata//DataSheet.xlsx"));
+         }
+     	System.out.println("Test name to be run: "+testName);
+         int rows=SelTestCase.getDatatable().getRowCount(testName)-1;
+         if(rows <=0){
+             Object[][] testData =new Object[1][0];
+             return testData;
+
+         }
+         rows = SelTestCase.getDatatable().getRowCount(testName);  // 3
+         int cols = SelTestCase.getDatatable().getColumnCount(testName);
+         logs.debug("Test Name -- "+testName);
+         Object data[][] = new Object[rows-1][cols];
+
+         for(int rowNum = 2 ; rowNum <= rows ; rowNum++){
+
+             for(int colNum=0 ; colNum< cols; colNum++){
+                 data[rowNum-2][colNum]=SelTestCase.getDatatable().getCellData(testName, colNum, rowNum);
+             }
+         }
+
+         getCurrentFunctionName(false);
+         return data;
+     }
+     
     public static void initialize() throws Exception{
     	getCurrentFunctionName(true);
         logs.debug("Execute initialize function");
@@ -96,8 +126,10 @@ public class TestUtilities extends SelTestCase {
 
         logs.debug("tempTCID is : " + tempTCID );
         
-       //set the max wait time
-       setWaitTime(Integer.parseInt(getCONFIG().getProperty("waitTime")));
+        setDatatable(new Xls_Reader(System.getProperty("user.dir")+"//src//com//generic//selenium//testdata//DataSheet.xlsx"));
+
+        //set the max wait time
+        setWaitTime(Integer.parseInt(getCONFIG().getProperty("waitTime")));
 
        
         getCurrentFunctionName(false);
