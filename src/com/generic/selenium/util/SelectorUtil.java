@@ -31,11 +31,8 @@ import com.generic.selenium.setup.SelTestCase;
 
 public class SelectorUtil {
 	
-	public static LinkedHashMap<String, Elements> selectorToElementsMap;//LinkedHashMap is better than HashMap to keep the insertion order
-	public static LinkedHashMap <String, String> selectorToValuesMap;
-	public static LinkedHashMap <String, Boolean> selectorForErrorMsgsMap;
 	
-	 public static void initializeElementsSelectorsMaps(Map<String, Map> webElementsInfo){
+	 public static void initializeElementsSelectorsMaps(LinkedHashMap<String, LinkedHashMap> webElementsInfo){
 		 
 	    	Elements foundElements = null;
 	    	String selectorType = "id";

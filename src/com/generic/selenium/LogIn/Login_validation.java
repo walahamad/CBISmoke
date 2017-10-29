@@ -17,7 +17,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
 import org.openqa.selenium.By;
-
+import java.util.LinkedHashMap;
 import com.generic.selenium.report.ReportUtil;
 import com.generic.selenium.setup.ActionDriver;
 import com.generic.selenium.setup.Common;
@@ -120,13 +120,13 @@ public class Login_validation extends SelTestCase {
 	}
 	
 	private void initializeSelectorsAndDoActions(List<String> subStrArr, List<String> valuesArr) {
-		Map<String, Map> webElementsInfo = new HashMap<String, Map>();
+		LinkedHashMap<String, LinkedHashMap> webElementsInfo = new LinkedHashMap<String, LinkedHashMap>();
 		
 		int index = 0; 
 		for (String key : subStrArr)
 		{
 			logs.debug(key);
-			Map <String, Object> webElementInfo = new HashMap<>();
+			LinkedHashMap <String, Object> webElementInfo = new LinkedHashMap<>();
 			webElementInfo.put("value",valuesArr.get(index));
 			webElementInfo.put("selector","");
 			webElementInfo.put("action","");
@@ -143,7 +143,7 @@ public class Login_validation extends SelTestCase {
 		
 		for (String key : webElementsInfo.keySet())
 		{
-			Map <String, Object> webElementInfo = webElementsInfo.get(key);
+			LinkedHashMap <String, Object> webElementInfo = webElementsInfo.get(key);
 			SelectorUtil.doAppropriateAction(webElementInfo);
 		}
 		logs.debug("FINISHED");
