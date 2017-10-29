@@ -6,8 +6,10 @@ import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.TreeMap;
 
 import javax.net.ssl.HostnameVerifier;
@@ -18,9 +20,12 @@ import javax.net.ssl.X509TrustManager;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.openqa.selenium.By;
+import org.openqa.selenium.support.ui.Select;
 
+import com.generic.selenium.setup.ActionDriver;
 import com.generic.selenium.setup.SelTestCase;
 
 
@@ -30,12 +35,10 @@ public class SelectorUtil {
 	public static LinkedHashMap <String, String> selectorToValuesMap;
 	public static LinkedHashMap <String, Boolean> selectorForErrorMsgsMap;
 	
-	 public static void initializeElementsSelectorsMaps(List<String> subStrArr,List<String> valuesArr){
+	 public static void initializeElementsSelectorsMaps(Map<String, Map> webElementsInfo){
+		 
 	    	Elements foundElements = null;
 	    	String selectorType = "id";
-	    	selectorToElementsMap = new LinkedHashMap <String, Elements>();
-	    	selectorToValuesMap = new LinkedHashMap <String, String>();
-	    	selectorForErrorMsgsMap = new LinkedHashMap <String, Boolean>();
 	    	try {
 				enableSSLSocket();
 			} catch (KeyManagementException e) {
@@ -50,7 +53,8 @@ public class SelectorUtil {
 	    		//Document doc = Jsoup.connect("https://hybrisdemo.conexus.co.uk:9002/yacceleratorstorefront/en/login?site=apparel-uk").get();
 				int index = 0;
 				Boolean isAnErrorSelector = Boolean.FALSE;
-				for(String subStr: subStrArr) {
+				
+				for(String subStr: webElementsInfo.keySet()) {
 					if (subStr.contains("error")) {
 						isAnErrorSelector = Boolean.TRUE;
 					}
@@ -74,12 +78,18 @@ public class SelectorUtil {
 						selectorType = (!(foundElements.isEmpty()) ? "name":selectorType);
 					}
 					
-					
 					if (foundElements != null) {
-						String key = selectorType +"_"+ index;
-						selectorToElementsMap.put(key, foundElements);
-						selectorToValuesMap.put(key, valuesArr.get(index));
-						selectorForErrorMsgsMap.put(key, isAnErrorSelector);
+						Map <String, Object> webElementInfo = webElementsInfo.get(subStr);
+						webElementInfo.put("selector",getStringSelectorForElements(foundElements, selectorType));
+						webElementInfo.put("SelType",selectorType);
+						webElementInfo.put("by",getBySelectorForElements(foundElements,selectorType));
+						webElementInfo.put("action",getActiontype(foundElements));
+						
+						if (foundElements.size()>1)
+						{
+							//TODO handel multiple elemnet in browser
+							System.out.println("TODO LATER");
+						}
 					}
 					index++;
 				}
@@ -90,7 +100,43 @@ public class SelectorUtil {
 	    	
 	    }
 	    
-	    //This method was added to enable SSL connection
+	    private static String getActiontype(Elements foundElements) {
+			String ActionType = "";
+			//TODO fix multiple elements 
+			for (org.jsoup.nodes.Element e : foundElements) {
+				
+					if (e.tagName().equals("input") && (e.attr("type").equals("text") || e.attr("type").equals("password") )) {
+						return "type";
+					} else if (e.tagName().equals("select")) {
+						return "selectByText";
+					} else if (e.tagName().equals("input") && e.attr("type").equals("checkbox")){
+						boolean selected = e.attr("checked").equalsIgnoreCase("checked");
+				        if(!selected)
+				        {
+				           return "click";
+				        }
+					} else if (e.tagName().equals("button")) {
+						return "click";
+					} else if (e.tagName().equals("input") && e.attr("type").equals("submit")) {
+						return "click";
+					}
+					else
+					{
+						return "Validate"; 
+					}
+//					else if (e.tagName().equals("span") && isErrorSel) {
+//						if (!value.isEmpty()) {
+//							Assert.assertNotEquals("The "+ e.id() + "has incorrect error msg", e.text(), value);
+//							logs.debug("The "+ e.id() + "is found and has correct error msg");
+//						}
+					
+			}
+	    	return ActionType;
+		
+		
+	}
+
+		//This method was added to enable SSL connection
 	    public static void enableSSLSocket() throws KeyManagementException, NoSuchAlgorithmException {
 	        HttpsURLConnection.setDefaultHostnameVerifier(new HostnameVerifier() {
 	            public boolean verify(String hostname, SSLSession session) {
@@ -143,14 +189,59 @@ public class SelectorUtil {
 						selector = By.xpath("//button[contains(text(),'"+ selType + "')]");
 						break;
 					}
-		    		try {
-		    			
-					} catch (Exception e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
+		    		
 				}
 			return selector;
 	    	
 	    }
+	    
+
+	    public static String getStringSelectorForElements(Elements foundElements, String selType) {
+	    	String selector = ""; 
+			for (org.jsoup.nodes.Element e : foundElements) {
+				selector = null;
+					switch(selType) {
+					case "id":
+						selector = e.id();
+						break;
+					case "class":
+						String[] tempClassArr = e.className().split(" ");
+						StringBuilder className = new StringBuilder();
+						for (String s : tempClassArr) {
+							className.append(".");
+							className.append(s);
+						}
+						selector = className.toString();
+						break;
+					case "name":
+						selector = e.attr("name");
+						break;
+					default:
+						selector = "//button[contains(text(),'"+ selType + "')]";
+						break;
+					}
+				}
+			return selector;
+	    }
+	    
+	    public static void doAppropriateAction(Map <String, Object> webElementInfo ) {
+			if (((String) webElementInfo.get("action")).equals("type"))
+			{
+				SelTestCase.logs.debug("writing " + (String) webElementInfo.get("value") +" to "+ webElementInfo.get("by").toString());
+				SelTestCase.getDriver().findElement((By)webElementInfo.get("by")).sendKeys((String) webElementInfo.get("value"));
+			}
+			if (((String) webElementInfo.get("action")).equals("click"))
+			{
+				SelTestCase.logs.debug("clicking on " +  webElementInfo.get("by").toString());
+				SelTestCase.getDriver().findElement((By)webElementInfo.get("by")).click();
+			}
+			if (((String) webElementInfo.get("action")).equals("selectByText"))
+			{
+				SelTestCase.logs.debug("selecting value " + webElementInfo.get("value")); 
+				Select select = new Select(SelTestCase.getDriver().findElement((By)webElementInfo.get("by")));
+				select.selectByVisibleText((String) webElementInfo.get("value"));
+			}
+			
+		
+		}
 }

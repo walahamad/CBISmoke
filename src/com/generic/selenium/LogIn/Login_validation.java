@@ -4,7 +4,9 @@ package com.generic.selenium.LogIn;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.jsoup.select.Elements;
 import org.junit.Assert;
@@ -58,6 +60,8 @@ public class Login_validation extends SelTestCase {
     	}
         return Arrays.asList(data);
     }
+	
+	
 	@Test
 	public void signIn() throws Exception {
 	    setStartTime(ReportUtil.now(time_date_format));
@@ -75,29 +79,32 @@ public class Login_validation extends SelTestCase {
 		    		break;
 		    	}
 		    }
-		    Thread.sleep(2000);
-		    initializeSelectorsAndDoActions(subStrArr, valuesArr);
-		    subStrArr.clear();
-		    valuesArr.clear();
-		    Thread.sleep(2000);
-		    for (; i < sheetColNum; i++) {
-		    	String selIdentifierValue = getDatatable().getCellData(SheetVariables.registrationSheet,i,1);
-		    	if ((selIdentifierValue.contains("error"))) {
-		    		subStrArr.add(selIdentifierValue);
-			    	valuesArr.add(getDatatable().getCellData(SheetVariables.registrationSheet,i,2+testCaseID));
-		    	} else {
-		    		continue;
-		    	}
-		    }
-		    Thread.sleep(2000);
-		    initializeSelectorsAndDoActions(subStrArr, valuesArr);
-		    /*String[] subStrArr = {"title","firstName","lastName","email","password","checkPwd","consentGiven1","Register"};
-		    String[] valuesArr = {"Mrs.","Abeer","Alia","aa@gg.cc","123456a","123456a","",""};*/
-		    /*String[] subStrArr = {"email","checkEmail","firstName","lastName","country","postalCode","password","checkPwd","createAccount"};
-		    String[] valuesArr = {"aa@gg.cc","aa@gg.cc","Abeer","Alia","Canada","44122","123456a","123456a",""};*/
 		    
-		    	
-	    	Thread.sleep(2000);
+		    Thread.sleep(2000);
+		    
+		    initializeSelectorsAndDoActions(subStrArr, valuesArr);
+//		    
+//		    subStrArr.clear();
+//		    valuesArr.clear();
+//		    Thread.sleep(2000);
+//		    for (; i < sheetColNum; i++) {
+//		    	String selIdentifierValue = getDatatable().getCellData(SheetVariables.registrationSheet,i,1);
+//		    	if ((selIdentifierValue.contains("error"))) {
+//		    		subStrArr.add(selIdentifierValue);
+//			    	valuesArr.add(getDatatable().getCellData(SheetVariables.registrationSheet,i,2+testCaseID));
+//		    	} else {
+//		    		continue;
+//		    	}
+//		    }
+//		    Thread.sleep(2000);
+//		    initializeSelectorsAndDoActions(subStrArr, valuesArr);
+//		    /*String[] subStrArr = {"title","firstName","lastName","email","password","checkPwd","consentGiven1","Register"};
+//		    String[] valuesArr = {"Mrs.","Abeer","Alia","aa@gg.cc","123456a","123456a","",""};*/
+//		    /*String[] subStrArr = {"email","checkEmail","firstName","lastName","country","postalCode","password","checkPwd","createAccount"};
+//		    String[] valuesArr = {"aa@gg.cc","aa@gg.cc","Abeer","Alia","Canada","44122","123456a","123456a",""};*/
+//		    
+//		    	
+//	    	Thread.sleep(2000);
 	        Common.testPass();
 	    } catch (Throwable t) {
 	        setTestCaseDescription(getTestCaseDescription());
@@ -113,45 +120,38 @@ public class Login_validation extends SelTestCase {
 	}
 	
 	private void initializeSelectorsAndDoActions(List<String> subStrArr, List<String> valuesArr) {
-		SelectorUtil.initializeElementsSelectorsMaps(subStrArr, valuesArr);
-    	for(String key : SelectorUtil.selectorToElementsMap.keySet()) {
-    		Elements foundElements = SelectorUtil.selectorToElementsMap.get(key);
-    		By selVal = SelectorUtil.getBySelectorForElements(foundElements, key.substring(0, key.indexOf("_")));
-    		String val = SelectorUtil.selectorToValuesMap.get(key);
-    		Boolean isErrorSel = SelectorUtil.selectorForErrorMsgsMap.get(key);
-    		doAppropriateAction(foundElements, selVal, val,isErrorSel);
-    	}
-	}
-	private void doAppropriateAction(Elements foundElements, By selector, String value, Boolean isErrorSel) {
-		try {
-			for (org.jsoup.nodes.Element e : foundElements) {
-				if (selector != null) {
-					if (e.tagName().equals("input") && (e.attr("type").equals("text") || e.attr("type").equals("password") )) {
-						ActionDriver.type(selector, value);
-					} else if (e.tagName().equals("select")) {
-						ActionDriver.selectByText(selector, value);
-					} else if (e.tagName().equals("input") && e.attr("type").equals("checkbox")){
-						boolean selected = e.attr("checked").equalsIgnoreCase("checked");
-				        if(!selected)
-				        {
-				           ActionDriver.click(selector);
-				        }
-					} else if (e.tagName().equals("button")) {
-						ActionDriver.click(selector);
-					} else if (e.tagName().equals("input") && e.attr("type").equals("submit")) {
-						ActionDriver.click(selector);
-					} else if (e.tagName().equals("span") && isErrorSel) {
-						if (!value.isEmpty()) {
-							Assert.assertNotEquals("The "+ e.id() + "has incorrect error msg", e.text(), value);
-							logs.debug("The "+ e.id() + "is found and has correct error msg");
-						}
-					}
-				}
-			}
-		} catch (Exception e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
+		Map<String, Map> webElementsInfo = new HashMap<String, Map>();
+		
+		int index = 0; 
+		for (String key : subStrArr)
+		{
+			logs.debug(key);
+			Map <String, Object> webElementInfo = new HashMap<>();
+			webElementInfo.put("value",valuesArr.get(index));
+			webElementInfo.put("selector","");
+			webElementInfo.put("action","");
+			webElementInfo.put("SelType","");
+			index++;
+			
+			webElementsInfo.remove(key);
+			webElementsInfo.put(key, webElementInfo);
 		}
+		
+		logs.debug(Arrays.asList(webElementsInfo));
+		SelectorUtil.initializeElementsSelectorsMaps(webElementsInfo);
+		logs.debug(Arrays.asList(webElementsInfo));
+		
+		for (String key : webElementsInfo.keySet())
+		{
+			Map <String, Object> webElementInfo = webElementsInfo.get(key);
+			SelectorUtil.doAppropriateAction(webElementInfo);
+		}
+		logs.debug("FINISHED");
+    	
 	}
+	
 
+	
+	
+	
 }
