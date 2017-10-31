@@ -1,4 +1,4 @@
-package com.generic.selenium.datatable;
+package com.generic.datatable;
 
 
 import org.apache.log4j.Logger;
@@ -7,11 +7,10 @@ import org.apache.poi.hssf.usermodel.HSSFDateUtil;
 import org.apache.poi.hssf.util.HSSFColor;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
-import com.generic.selenium.setup.SelTestCase;
-
 import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.xssf.usermodel.*;
 
+import com.generic.setup.SelTestCase;
 
 import java.io.*;
 import java.util.Calendar;

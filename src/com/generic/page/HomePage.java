@@ -1,7 +1,7 @@
-package com.generic.selenium.page;
+package com.generic.page;
 
 
-import com.generic.selenium.setup.SelTestCase;
+import com.generic.setup.SelTestCase;
 /**
  * The Class HomePage.
  */

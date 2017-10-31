@@ -1,8 +1,8 @@
-package com.generic.selenium.setup;
+package com.generic.setup;
 
 import java.util.ArrayList;
 
-import com.generic.selenium.setup.SelTestCase;
+import com.generic.setup.SelTestCase;
 
 
 

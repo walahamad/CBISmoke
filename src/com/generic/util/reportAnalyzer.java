@@ -1,4 +1,4 @@
-package com.generic.selenium.util;
+package com.generic.util;
 
 import java.io.BufferedReader;
 import java.io.File;

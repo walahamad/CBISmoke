@@ -1,4 +1,4 @@
-package com.generic.selenium.setup;
+package com.generic.setup;
 
 
 import java.io.IOException;
@@ -10,9 +10,9 @@ import org.junit.Assume;
 import org.junit.Before;
 import org.openqa.selenium.WebDriver;
 
-import com.generic.selenium.datatable.Xls_Reader;
-import com.generic.selenium.report.ReportUtil;
-import com.generic.selenium.util.TestUtilities;
+import com.generic.datatable.Xls_Reader;
+import com.generic.report.ReportUtil;
+import com.generic.util.TestUtilities;
 
 public class SelTestCase {
 	

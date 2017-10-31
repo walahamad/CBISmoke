@@ -1,4 +1,4 @@
-package com.generic.selenium.util;
+package com.generic.util;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -8,9 +8,9 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Properties;
 
-import com.generic.selenium.datatable.Xls_Reader;
-import com.generic.selenium.report.ReportUtil;
-import com.generic.selenium.setup.SelTestCase;
+import com.generic.datatable.Xls_Reader;
+import com.generic.report.ReportUtil;
+import com.generic.setup.SelTestCase;
 
 
 public class TestUtilities extends SelTestCase {
@@ -118,7 +118,7 @@ public class TestUtilities extends SelTestCase {
 
         // config property file
         setCONFIG(new Properties());
-        FileInputStream fn =new FileInputStream(System.getProperty("user.dir")+"//src//com//generic//selenium//config//config.properties");
+        FileInputStream fn =new FileInputStream(System.getProperty("user.dir")+"//src//com//generic//config//config.properties");
         getCONFIG().load(fn);
         logs.debug("adding environment: " + getCONFIG().getProperty("testEnvironment"));
         getCONFIG().setProperty("testSiteName", "https://"+getCONFIG().getProperty("testEnvironment")+"/"+getCONFIG().getProperty("testSiteName"));
@@ -126,7 +126,7 @@ public class TestUtilities extends SelTestCase {
 
         logs.debug("tempTCID is : " + tempTCID );
         
-        setDatatable(new Xls_Reader(System.getProperty("user.dir")+"//src//com//generic//selenium//testdata//DataSheet.xlsx"));
+        setDatatable(new Xls_Reader(System.getProperty("user.dir")+"//src//com//generic//testdata//DataSheet.xlsx"));
 
         //set the max wait time
         setWaitTime(Integer.parseInt(getCONFIG().getProperty("waitTime")));

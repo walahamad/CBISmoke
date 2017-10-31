@@ -1,4 +1,4 @@
-package com.generic.selenium.setup;
+package com.generic.setup;
 
 import java.util.concurrent.TimeUnit;
 
@@ -14,7 +14,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import com.generic.selenium.report.ReportUtil;
+import com.generic.report.ReportUtil;
 
 /**
  * This class is responsible for GUI interaction. It contains functions like type, click , select etc

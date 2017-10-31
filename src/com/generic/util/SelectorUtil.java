@@ -1,4 +1,4 @@
-package com.generic.selenium.util;
+package com.generic.util;
 
 import java.io.IOException;
 import java.security.KeyManagementException;
@@ -25,8 +25,8 @@ import org.jsoup.select.Elements;
 import org.openqa.selenium.By;
 import org.openqa.selenium.support.ui.Select;
 
-import com.generic.selenium.setup.ActionDriver;
-import com.generic.selenium.setup.SelTestCase;
+import com.generic.setup.ActionDriver;
+import com.generic.setup.SelTestCase;
 
 
 public class SelectorUtil {
@@ -66,10 +66,10 @@ public class SelectorUtil {
 						foundElements = doc.select("[class*="+subStr+" i]");
 						selectorType = (!(foundElements.isEmpty()) ? "class":selectorType);
 					}
-					if (foundElements.isEmpty()) {
-						foundElements = doc.select("*:contains("+ subStr +")");
-						selectorType = (!(foundElements.isEmpty()) ? subStr:selectorType);
-					}
+//					if (foundElements.isEmpty()) {
+//						foundElements = doc.select("*:contains("+ subStr +")");
+//						selectorType = (!(foundElements.isEmpty()) ? subStr:selectorType);
+//					}
 					if (foundElements.isEmpty()) {
 						foundElements = doc.select("[name*="+subStr+"]");
 						selectorType = (!(foundElements.isEmpty()) ? "name":selectorType);
@@ -222,23 +222,28 @@ public class SelectorUtil {
 	    }
 	    
 	    public static void doAppropriateAction(Map <String, Object> webElementInfo ) {
-			if (((String) webElementInfo.get("action")).equals("type"))
-			{
-				SelTestCase.logs.debug("writing " + (String) webElementInfo.get("value") +" to "+ webElementInfo.get("by").toString());
-				SelTestCase.getDriver().findElement((By)webElementInfo.get("by")).sendKeys((String) webElementInfo.get("value"));
+	    	try
+	    	{
+				if (((String) webElementInfo.get("action")).equals("type"))
+				{
+					SelTestCase.logs.debug("writing " + (String) webElementInfo.get("value") +" to "+ webElementInfo.get("by").toString());
+					SelTestCase.getDriver().findElement((By)webElementInfo.get("by")).sendKeys((String) webElementInfo.get("value"));
+				}
+				if (((String) webElementInfo.get("action")).equals("click"))
+				{
+					SelTestCase.logs.debug("clicking on " +  webElementInfo.get("by").toString());
+					SelTestCase.getDriver().findElement((By)webElementInfo.get("by")).click();
+				}
+				if (((String) webElementInfo.get("action")).equals("selectByText"))
+				{
+					SelTestCase.logs.debug("selecting value " + webElementInfo.get("value")); 
+					Select select = new Select(SelTestCase.getDriver().findElement((By)webElementInfo.get("by")));
+					select.selectByVisibleText((String) webElementInfo.get("value"));
+				}
+	    	}
+	    	catch (Exception e) {
+	    		SelTestCase.logs.debug("Error in selecotr");
 			}
-			if (((String) webElementInfo.get("action")).equals("click"))
-			{
-				SelTestCase.logs.debug("clicking on " +  webElementInfo.get("by").toString());
-				SelTestCase.getDriver().findElement((By)webElementInfo.get("by")).click();
-			}
-			if (((String) webElementInfo.get("action")).equals("selectByText"))
-			{
-				SelTestCase.logs.debug("selecting value " + webElementInfo.get("value")); 
-				Select select = new Select(SelTestCase.getDriver().findElement((By)webElementInfo.get("by")));
-				select.selectByVisibleText((String) webElementInfo.get("value"));
-			}
-			
 		
 		}
 }

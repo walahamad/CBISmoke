@@ -1,4 +1,4 @@
-package com.generic.selenium.setup;
+package com.generic.setup;
 
 
 import java.awt.Dimension;
@@ -17,7 +17,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import com.generic.selenium.report.ReportUtil;
+import com.generic.report.ReportUtil;
 
 
 public class Common extends SelTestCase {

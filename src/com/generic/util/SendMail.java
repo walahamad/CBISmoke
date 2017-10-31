@@ -1,4 +1,4 @@
-package com.generic.selenium.util;
+package com.generic.util;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -6,8 +6,8 @@ import java.util.Properties;
 import javax.mail.*;
 import javax.mail.internet.*;
 
-import com.generic.selenium.report.ReportUtil;
-import com.generic.selenium.setup.SelTestCase;
+import com.generic.report.ReportUtil;
+import com.generic.setup.SelTestCase;
 
 
 public class SendMail extends SelTestCase{

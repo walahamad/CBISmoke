@@ -1,4 +1,4 @@
-package com.generic.selenium.LogIn;
+package com.generic.tests.LogIn;
 
 
 
@@ -18,13 +18,14 @@ import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
 import org.openqa.selenium.By;
 import java.util.LinkedHashMap;
-import com.generic.selenium.report.ReportUtil;
-import com.generic.selenium.setup.ActionDriver;
-import com.generic.selenium.setup.Common;
-import com.generic.selenium.setup.SelTestCase;
-import com.generic.selenium.setup.SheetVariables;
-import com.generic.selenium.util.SelectorUtil;
-import com.generic.selenium.util.TestUtilities;
+
+import com.generic.report.ReportUtil;
+import com.generic.setup.ActionDriver;
+import com.generic.setup.Common;
+import com.generic.setup.SelTestCase;
+import com.generic.setup.SheetVariables;
+import com.generic.util.SelectorUtil;
+import com.generic.util.TestUtilities;
 
 
 @RunWith(Parameterized.class)

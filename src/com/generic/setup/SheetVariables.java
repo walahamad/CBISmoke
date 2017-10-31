@@ -1,4 +1,4 @@
-package com.generic.selenium.setup;
+package com.generic.setup;
 
 public class SheetVariables {
    

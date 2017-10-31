@@ -1,13 +1,13 @@
-package com.generic.selenium.testRunners;
+package com.generic.testRunners;
 
 import org.junit.AfterClass;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
-import com.generic.selenium.LogIn.Login_validation;
-import com.generic.selenium.setup.SelTestCase;
-import com.generic.selenium.util.SendMail;
+import com.generic.setup.SelTestCase;
+import com.generic.tests.LogIn.Login_validation;
+import com.generic.util.SendMail;
 
 
 
