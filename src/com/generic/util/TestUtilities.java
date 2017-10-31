@@ -87,7 +87,7 @@ public class TestUtilities extends SelTestCase {
      public static Object[][] getData(String testName){
      	getCurrentFunctionName(true);
          if(SelTestCase.getDatatable() == null){
-             SelTestCase.setDatatable(new Xls_Reader(System.getProperty("user.dir")+"//src//com//generic//selenium//testdata//DataSheet.xlsx"));
+             SelTestCase.setDatatable(new Xls_Reader(System.getProperty("user.dir")+"//src//com//generic//testdata//DataSheet.xlsx"));
          }
      	System.out.println("Test name to be run: "+testName);
          int rows=SelTestCase.getDatatable().getRowCount(testName)-1;

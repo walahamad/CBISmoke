@@ -40,6 +40,8 @@ public class SelTestCase {
     
     public static String tempTCID = null;
     public static String testCaseDescription = null;
+    
+    public static int caseIndex;
 
     public static String getBrowserName() {
         return browserName;
