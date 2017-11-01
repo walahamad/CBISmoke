@@ -1,5 +1,6 @@
 package com.generic.tests.LogIn;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -127,6 +128,7 @@ public class Login_validation extends SelTestCase {
 
 			Thread.sleep(2000);
 			initializeSelectorsAndDoActions(subStrArr, valuesArr);
+			
 			Common.testPass();
 		} catch (Throwable t) {
 			setTestCaseDescription(getTestCaseDescription());
@@ -140,10 +142,11 @@ public class Login_validation extends SelTestCase {
 
 	}
 
-	private void initializeSelectorsAndDoActions(List<String> subStrArr, List<String> valuesArr) {
+	private void initializeSelectorsAndDoActions(List<String> subStrArr, List<String> valuesArr) throws InterruptedException, IOException {
 		LinkedHashMap<String, LinkedHashMap> webElementsInfo = new LinkedHashMap<String, LinkedHashMap>();
 
 		int index = 0;
+		boolean isValidationStep = false;
 		for (String key : subStrArr) {
 			logs.debug(key);
 			LinkedHashMap<String, Object> webElementInfo = new LinkedHashMap<>();
@@ -158,14 +161,30 @@ public class Login_validation extends SelTestCase {
 		}
 
 		logs.debug(Arrays.asList(webElementsInfo));
-		SelectorUtil.initializeElementsSelectorsMaps(webElementsInfo);
+		SelectorUtil.initializeElementsSelectorsMaps(webElementsInfo, isValidationStep);
 		logs.debug(Arrays.asList(webElementsInfo));
 
 		for (String key : webElementsInfo.keySet()) {
 			LinkedHashMap<String, Object> webElementInfo = webElementsInfo.get(key);
 			SelectorUtil.doAppropriateAction(webElementInfo);
 		}
+
+		
+		Thread.sleep(3000);
+		isValidationStep = true;
+		// TODO: make isValidationStep value come with case 
+		logs.debug(Arrays.asList(webElementsInfo));
+		SelectorUtil.initializeElementsSelectorsMaps(webElementsInfo, isValidationStep);
+		logs.debug(Arrays.asList(webElementsInfo));
+		for (String key : webElementsInfo.keySet())
+		{
+		   LinkedHashMap<String, Object> webElementInfo = webElementsInfo.get(key);
+		   SelectorUtil.doAppropriateAction(webElementInfo);
+		}
+
+		
 		valuesArr.clear();
+		
 		logs.debug("FINISHED");
 
 	}
