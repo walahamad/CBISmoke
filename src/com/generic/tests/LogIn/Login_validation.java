@@ -7,6 +7,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 import org.jsoup.select.Elements;
 import org.junit.Assert;
@@ -36,6 +37,7 @@ public class Login_validation extends SelTestCase {
 	static List<String> subStrArr = new ArrayList<String>();
 	static List<String> valuesArr = new ArrayList<String>();
 
+	String desc; 
 	String email;
 	String checkEmail;
 	String firstName;
@@ -63,19 +65,34 @@ public class Login_validation extends SelTestCase {
 		int sheetColNum = getDatatable().getColumnCount(SheetVariables.registrationSheet);
 		for (int i = 0; i < sheetColNum; i++) {
 			String selIdentifierValue = getDatatable().getCellData(SheetVariables.registrationSheet, i, 1);
-			subStrArr.add(selIdentifierValue);
+			if (selIdentifierValue.contains("sel"))
+				subStrArr.add(selIdentifierValue.replace("sel_", ""));
 		}
 
 	}
 
-	public Login_validation(String email, String checkEmail, String firstName, String lastName, String country,
+	public Login_validation(String desc, String email, String checkEmail, String firstName, String lastName, String country,
 			String postalCode, String password, String checkPwd, String createAccount, String email_errors,
 			String checkEmail_errors, String firstName_errors, String lastName_errors, String country_errors,
 			String postalCode_errors, String pwd_errors, String checkPwd_errors) {
 
 		// have those variables to give readability and power to control/customize them
-		this.email = RandomUtilities.getRandomEmail().toLowerCase();
-		this.checkEmail = this.email;
+		this.desc = desc;
+		
+		Random rand = new Random(); 
+		int randomint = rand.nextInt(9999); 
+		
+		if (email_errors.equals(""))
+		{
+			this.email = email.replace("@", "@"+Integer.toString(randomint)); 
+			this.checkEmail = checkEmail.replace("@", "@"+Integer.toString(randomint)); 			
+		}
+		else
+		{
+			this.email = email;
+			this.checkEmail=checkEmail;
+		}
+		
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.country = country;
@@ -148,7 +165,7 @@ public class Login_validation extends SelTestCase {
 		int index = 0;
 		boolean isValidationStep = false;
 		for (String key : subStrArr) {
-			logs.debug(key);
+			//logs.debug(key);
 			LinkedHashMap<String, Object> webElementInfo = new LinkedHashMap<>();
 			webElementInfo.put("value", valuesArr.get(index));
 			webElementInfo.put("selector", "");
@@ -171,20 +188,50 @@ public class Login_validation extends SelTestCase {
 
 		
 		Thread.sleep(3000);
-		isValidationStep = true;
-		// TODO: make isValidationStep value come with case 
-		logs.debug(Arrays.asList(webElementsInfo));
-		SelectorUtil.initializeElementsSelectorsMaps(webElementsInfo, isValidationStep);
-		logs.debug(Arrays.asList(webElementsInfo));
-		for (String key : webElementsInfo.keySet())
+		
+		if ( !email_errors.trim().equals("")
+			 || !checkEmail_errors.trim().equals("")
+			 || !firstName_errors.trim().equals("")
+			 || !lastName_errors.trim().equals("")
+			 || !country_errors.trim().equals("")
+			 || !postalCode_errors.trim().equals("")
+			 || !pwd_errors.trim().equals("")
+			 || !checkPwd_errors.trim().equals(""))
 		{
-		   LinkedHashMap<String, Object> webElementInfo = webElementsInfo.get(key);
-		   SelectorUtil.doAppropriateAction(webElementInfo);
+			logs.debug("==============> Validation <================");
+			logs.debug("email: "+email);
+			logs.debug("checkEmail: "+checkEmail);
+			logs.debug("firstName: "+firstName);
+			logs.debug("lastName: "+lastName);
+			logs.debug("country: "+country);
+			logs.debug("postalCode: "+postalCode);
+			logs.debug("password: "+password);
+			logs.debug("checkPwd: "+checkPwd);
+			logs.debug("createAccount: "+createAccount);
+			logs.debug("email_errors: "+email_errors);
+			logs.debug("checkEmail_errors: "+checkEmail_errors);
+			logs.debug("firstName_errors: "+firstName_errors);
+			logs.debug("lastName_errors: "+lastName_errors);
+			logs.debug("country_errors: "+country_errors);
+			logs.debug("postalCode_errors: "+postalCode_errors);
+			logs.debug("pwd_errors: "+pwd_errors);
+			logs.debug("checkPwd_errors: "+checkPwd_errors);
+			
+			isValidationStep = true;
+			// TODO: make isValidationStep value come with case 
+			logs.debug(Arrays.asList(webElementsInfo));
+			SelectorUtil.initializeElementsSelectorsMaps(webElementsInfo, isValidationStep);
+			logs.debug(Arrays.asList(webElementsInfo));
+			for (String key : webElementsInfo.keySet())
+			{
+			   LinkedHashMap<String, Object> webElementInfo = webElementsInfo.get(key);
+			   SelectorUtil.doAppropriateAction(webElementInfo);
+			}
+			
+			
 		}
-
 		
 		valuesArr.clear();
-		
 		logs.debug("FINISHED");
 
 	}
