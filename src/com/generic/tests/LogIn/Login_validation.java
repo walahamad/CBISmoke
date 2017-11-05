@@ -4,24 +4,17 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Random;
 
-import org.jsoup.select.Elements;
 import org.junit.Assert;
-import org.junit.Assume;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
-import org.openqa.selenium.By;
 import java.util.LinkedHashMap;
 
 import com.generic.report.ReportUtil;
-import com.generic.setup.ActionDriver;
 import com.generic.setup.Common;
 import com.generic.setup.SelTestCase;
 import com.generic.setup.SheetVariables;
@@ -79,20 +72,16 @@ public class Login_validation extends SelTestCase {
 		// have those variables to give readability and power to control/customize them
 		this.desc = desc;
 		
-		Random rand = new Random(); 
-		int randomint = rand.nextInt(9999); 
-		
-		if (email_errors.equals(""))
-		{
-			this.email = email.replace("@", "@"+Integer.toString(randomint)); 
-			this.checkEmail = checkEmail.replace("@", "@"+Integer.toString(randomint)); 			
-		}
-		else
-		{
+		if (email.equals("random_not_equal")) {
+			this.email = RandomUtilities.getRandomEmail().toLowerCase();
+			this.checkEmail = RandomUtilities.getRandomEmail().toLowerCase();
+		} else if (email.equals("random_equal")) {
+			this.email = RandomUtilities.getRandomEmail().toLowerCase();
+			this.checkEmail = this.email;
+		} else {
 			this.email = email;
-			this.checkEmail=checkEmail;
+			this.checkEmail = checkEmail;
 		}
-		
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.country = country;
@@ -176,7 +165,6 @@ public class Login_validation extends SelTestCase {
 			webElementsInfo.remove(key);
 			webElementsInfo.put(key, webElementInfo);
 		}
-
 		logs.debug(Arrays.asList(webElementsInfo));
 		SelectorUtil.initializeElementsSelectorsMaps(webElementsInfo, isValidationStep);
 		logs.debug(Arrays.asList(webElementsInfo));
@@ -227,6 +215,8 @@ public class Login_validation extends SelTestCase {
 			   LinkedHashMap<String, Object> webElementInfo = webElementsInfo.get(key);
 			   SelectorUtil.doAppropriateAction(webElementInfo);
 			}
+			SelectorUtil.isAnErrorSelector = Boolean.FALSE;
+			
 			
 			
 		}
