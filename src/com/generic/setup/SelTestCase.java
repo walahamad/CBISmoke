@@ -161,7 +161,7 @@ public class SelTestCase {
     	getCurrentFunctionName(true);
         try {                   
             setTestCaseId(tempTCID);
-            setStartTime(ReportUtil.now(time_date_format));/////???????? where shall I put this?
+            setStartTime(ReportUtil.now(time_date_format));
             counter = counter + 1;
             
             //Initialize the property file

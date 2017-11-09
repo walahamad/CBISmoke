@@ -8,5 +8,6 @@ public class SheetVariables {
 
     //Test Case id
     public static String registrationTestCaseId = "Registration";
+    public static String checkoutTestCaseId = "CheckOut";
     
 }
