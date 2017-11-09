@@ -175,7 +175,7 @@ public class SelTestCase {
 
         logs.debug("Execute test case " + getTestCaseId());
         setTestCaseDescription(getDatatable().getCellData("Test Cases","Description", getTestCaseRowNum()));
-        ActionDriver.initializeBrowser();
+        Common.initializeBrowser();
 
         try {
         	Common.launchApplication();

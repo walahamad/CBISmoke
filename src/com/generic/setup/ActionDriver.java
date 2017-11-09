@@ -6,73 +6,16 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
-
-import com.generic.report.ReportUtil;
 
 /**
  * This class is responsible for GUI interaction. It contains functions like type, click , select etc
  *
  */
 public class ActionDriver extends SelTestCase{
-
-
-    /** It initialize the webdriver object with Chrome
-     *
-     * @throws Exception
-     */
-    public static void initializeBrowser() throws Exception {
-    	getCurrentFunctionName(true);
-        try {
-        	logs.debug("the browser is: " + SelTestCase.getCONFIG().getProperty("browser").toString());
-            DesiredCapabilities capabilities = new DesiredCapabilities();
-            
-            if(SelTestCase.getCONFIG().getProperty("browser").equalsIgnoreCase("chrome")){
-            	
-                capabilities = DesiredCapabilities.chrome();
-                capabilities.setCapability("platform", "WINDOWS");
-                capabilities.setBrowserName("chrome");
-                
-                ChromeOptions options = new ChromeOptions();
-                options.addArguments("disable-extensions");
-                options.addArguments("--start-maximized");
-                
-                
-                if (getCONFIG().getProperty("chached_chrome").equalsIgnoreCase("yes")){
-                	//options.addArguments("user-data-dir="+System.getProperty("user.home")+"/AppData/Local/Google/Chrome/User Data/");
-                	options.addArguments("user-data-dir="+System.getProperty("user.home")+"/AppData/Local/Google/Chrome SxS/User Data/");
-                	options.addArguments("detach=true");
-                }
-                capabilities.setCapability(ChromeOptions.CAPABILITY, options);
-
-                
-                
-                System.setProperty("webdriver.chrome.driver", "C:/softwares/servers/chromedriver.exe");
-                SelTestCase.setDriver(new ChromeDriver(capabilities));
-
-                logs.debug(SelTestCase.getDriver().toString());
-                
-                
-            } else {
-                logs.debug("Invalid browser. Check the config file");
-                throw new Exception("Invalid browser. Check the config file");
-            }
-          
-        } catch(Throwable t) {
-            t.printStackTrace();
-            SelTestCase.setTestStatus("Fail: " + t.getMessage());
-            SelTestCase.setStartTime(ReportUtil.now("dd.MMMMM.yyyy hh.mm.ss aaa"));
-            ReportUtil.addError(SelTestCase.getTestStatus(), null);
-            throw new Exception(t);
-        }
-        getCurrentFunctionName(false);
-    }
 
 
     /**This function will fetch the element from the application.
@@ -93,12 +36,6 @@ public class ActionDriver extends SelTestCase{
             throw new Exception(t);
         }
     }
-
-
-   
-
-
-
 
     /** It waits for element to load
      *

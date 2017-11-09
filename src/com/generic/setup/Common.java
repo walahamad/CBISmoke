@@ -14,6 +14,9 @@ import javax.imageio.ImageIO;
 
 import org.junit.Assert;
 import org.openqa.selenium.By;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -25,7 +28,58 @@ public class Common extends SelTestCase {
     public static String expected = null;
     public static String actual = null;
     
-    /**Reads URL from config.properties file
+    /** It initialize the webdriver object with Chrome
+	 *
+	 * @throws Exception
+	 */
+	public static void initializeBrowser() throws Exception {
+		getCurrentFunctionName(true);
+	    try {
+	    	logs.debug("the browser is: " + SelTestCase.getCONFIG().getProperty("browser").toString());
+	        DesiredCapabilities capabilities = new DesiredCapabilities();
+	        
+	        if(SelTestCase.getCONFIG().getProperty("browser").equalsIgnoreCase("chrome")){
+	        	
+	            capabilities = DesiredCapabilities.chrome();
+	            capabilities.setCapability("platform", "WINDOWS");
+	            capabilities.setBrowserName("chrome");
+	            
+	            ChromeOptions options = new ChromeOptions();
+	            options.addArguments("disable-extensions");
+	            options.addArguments("--start-maximized");
+	            
+	            
+	            if (getCONFIG().getProperty("chached_chrome").equalsIgnoreCase("yes")){
+	            	//options.addArguments("user-data-dir="+System.getProperty("user.home")+"/AppData/Local/Google/Chrome/User Data/");
+	            	options.addArguments("user-data-dir="+System.getProperty("user.home")+"/AppData/Local/Google/Chrome SxS/User Data/");
+	            	options.addArguments("detach=true");
+	            }
+	            capabilities.setCapability(ChromeOptions.CAPABILITY, options);
+	
+	            
+	            
+	            System.setProperty("webdriver.chrome.driver", "C:/softwares/servers/chromedriver.exe");
+	            SelTestCase.setDriver(new ChromeDriver(capabilities));
+	
+	            logs.debug(SelTestCase.getDriver().toString());
+	            
+	            
+	        } else {
+	            logs.debug("Invalid browser. Check the config file");
+	            throw new Exception("Invalid browser. Check the config file");
+	        }
+	      
+	    } catch(Throwable t) {
+	        t.printStackTrace();
+	        SelTestCase.setTestStatus("Fail: " + t.getMessage());
+	        SelTestCase.setStartTime(ReportUtil.now("dd.MMMMM.yyyy hh.mm.ss aaa"));
+	        ReportUtil.addError(SelTestCase.getTestStatus(), null);
+	        throw new Exception(t);
+	    }
+	    getCurrentFunctionName(false);
+	}
+
+	/**Reads URL from config.properties file
      * @throws Exception
      *
      *
@@ -36,11 +90,13 @@ public class Common extends SelTestCase {
         logs.debug("Test environment is: " + SelTestCase.getCONFIG().getProperty("testEnvironment"));
 
         if (getCONFIG().getProperty("chached_chrome").equalsIgnoreCase("yes")) {
-        	logs.debug("signing out from all users");
-        	logs.debug(getCONFIG().getProperty("logout"));
-        	getDriver().get(getCONFIG().getProperty("logout"));
-        	logs.debug("Removing all control cookies");
-        	getDriver().manage().deleteAllCookies();
+        	//TODO: please enable it later with correct url 
+        	logs.debug("Please enable this block for future");
+//        	logs.debug("signing out from all users");
+//        	logs.debug(getCONFIG().getProperty("logout"));
+//        	getDriver().get(getCONFIG().getProperty("logout"));
+//        	logs.debug("Removing all control cookies");
+//        	getDriver().manage().deleteAllCookies();
         }
 		 getDriver().get(getCONFIG().getProperty("testSiteName"));
 		 getDriver().manage().window().maximize();
