@@ -16,6 +16,7 @@ public class PDP extends SelTestCase {
 	
    public static void addProductsToCart(String color, String size, String qty) throws InterruptedException, IOException
    {
+	   getCurrentFunctionName(true);
 	   if(!color.equals(""))
 		   selectcolor(color);
 	   
@@ -25,47 +26,56 @@ public class PDP extends SelTestCase {
 	   defineQty(qty);
 	   clickAddToCartBtn();
 	   clickcheckoutBtnCartPopup();
-	   
+	   getCurrentFunctionName(false);
    }
 
 private static String getPrice() throws InterruptedException, IOException {
+	getCurrentFunctionName(true);
 	subStrArr.add(PDPSelectors.price);
 	valuesArr.add("");
 	SelectorUtil.initializeSelectorsAndDoActions(subStrArr,valuesArr);
+	getCurrentFunctionName(false);
 	return SelectorUtil.textValue;
 }
 
 private static void clickcheckoutBtnCartPopup() throws InterruptedException, IOException {
+	getCurrentFunctionName(true);
 	subStrArr.add(PDPSelectors.cart_popup);
 	valuesArr.add("");
 	SelectorUtil.initializeSelectorsAndDoActions(subStrArr,valuesArr);
-	
+	getCurrentFunctionName(false);
 }
 
 private static void clickAddToCartBtn() throws InterruptedException, IOException {
+	getCurrentFunctionName(true);
 	subStrArr.add(PDPSelectors.addToCartBtn);
 	valuesArr.add("");
 	SelectorUtil.initializeSelectorsAndDoActions(subStrArr,valuesArr);
+	getCurrentFunctionName(false);
 }
 
 private static void defineQty(String qty) throws InterruptedException, IOException {
+	getCurrentFunctionName(true);
 	subStrArr.add(PDPSelectors.qty);
 	valuesArr.add(qty);
 	SelectorUtil.initializeSelectorsAndDoActions(subStrArr,valuesArr);
-	
+	getCurrentFunctionName(false);
 }
 
 private static void selectsize(String size) throws InterruptedException, IOException {
+	getCurrentFunctionName(true);
 	subStrArr.add(PDPSelectors.size);
 	valuesArr.add(size);
 	SelectorUtil.initializeSelectorsAndDoActions(subStrArr,valuesArr);
-	
+	getCurrentFunctionName(false);
 }
 
 private static void selectcolor(String color) throws InterruptedException, IOException {
+	getCurrentFunctionName(true);
 	subStrArr.add(color);
 	valuesArr.add("");
 	SelectorUtil.initializeSelectorsAndDoActions(subStrArr,valuesArr);
+	getCurrentFunctionName(false);
 }
    
     
