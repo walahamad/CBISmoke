@@ -152,8 +152,7 @@ public class SelectorUtil extends SelTestCase {
 				        }
 					} else if (e.tagName().equals("button") ||
 							e.tagName().equals("img") ||
-							e.tagName().equals("a") ||
-							e.tagName().equals("div"))
+							e.tagName().equals("a") )
 					{
 						return "click";
 					} else if (e.tagName().equals("input") && e.attr("type").equals("submit")) {
@@ -161,6 +160,9 @@ public class SelectorUtil extends SelTestCase {
 					}
 					else if (e.tagName().equals("p")) {
 						return "gettext";
+					}else if (e.tagName().equals("div"))
+					{
+						return "click,gettext";
 					}
 					else
 					{
@@ -171,35 +173,6 @@ public class SelectorUtil extends SelTestCase {
     	return ActionType;
 	}
 
-		//This method was added to enable SSL connection
-	    public static void enableSSLSocket() throws KeyManagementException, NoSuchAlgorithmException {
-	        HttpsURLConnection.setDefaultHostnameVerifier(new HostnameVerifier() {
-	            public boolean verify(String hostname, SSLSession session) {
-	                return true;
-	            }
-	        });
-	 
-	        SSLContext context = SSLContext.getInstance("TLS");
-	        context.init(null, new X509TrustManager[]{new X509TrustManager() {
-
-				@Override
-				public void checkClientTrusted(X509Certificate[] chain, String authType) throws CertificateException {
-					
-				}
-
-				@Override
-				public void checkServerTrusted(X509Certificate[] chain, String authType) throws CertificateException {
-					
-				}
-
-				@Override
-				public X509Certificate[] getAcceptedIssuers() {
-					return new X509Certificate[0];
-				}
-	        }}, new SecureRandom());
-	        HttpsURLConnection.setDefaultSSLSocketFactory(context.getSocketFactory());
-	    }
-	    
 	    public static By getBySelectorForElements(Elements foundElements, String selType) {
 	    	By selector = null; 
 			for (org.jsoup.nodes.Element e : foundElements) {
@@ -293,6 +266,13 @@ public class SelectorUtil extends SelTestCase {
 					   {
 						   logs.debug("getting txt from " +  byAction.toString());
 						   return getDriver().findElement(byAction).getText();
+					   }
+					   else if (action.equals("click,gettext"))
+					   {
+						   logs.debug("getting txt, click from " +  byAction.toString());
+						   String textVal = getDriver().findElement(byAction).getText(); 
+						   getDriver().findElement(byAction).click();
+						   return textVal;
 					   }
 					   else if (action.equals("selectByText"))
 					   {
