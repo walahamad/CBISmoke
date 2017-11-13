@@ -8,8 +8,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Properties;
 
-import com.generic.datatable.Xls_Reader;
-import com.generic.report.ReportUtil;
 import com.generic.setup.SelTestCase;
 
 
@@ -87,7 +85,7 @@ public class TestUtilities extends SelTestCase {
      public static Object[][] getData(String testName){
      	getCurrentFunctionName(true);
          if(SelTestCase.getDatatable() == null){
-             SelTestCase.setDatatable(new Xls_Reader(System.getProperty("user.dir")+"//src//com//generic//testdata//DataSheet.xlsx"));
+             SelTestCase.setDatatable(new Xls_Reader(System.getProperty("user.dir")+"//src//com//generic//config//DataSheet.xlsx"));
          }
      	System.out.println("Test name to be run: "+testName);
          int rows=SelTestCase.getDatatable().getRowCount(testName)-1;
@@ -126,7 +124,7 @@ public class TestUtilities extends SelTestCase {
 
         logs.debug("tempTCID is : " + tempTCID );
         
-        setDatatable(new Xls_Reader(System.getProperty("user.dir")+"//src//com//generic//testdata//DataSheet.xlsx"));
+        setDatatable(new Xls_Reader(System.getProperty("user.dir")+"//src//com//generic//config//DataSheet.xlsx"));
 
         //set the max wait time
         setWaitTime(Integer.parseInt(getCONFIG().getProperty("waitTime")));

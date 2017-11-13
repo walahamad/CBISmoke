@@ -10,10 +10,10 @@ import com.generic.page.PDP;
 import com.generic.page.cart;
 import com.generic.page.checkOut;
 import com.generic.page.signIn;
-import com.generic.report.ReportUtil;
 import com.generic.setup.Common;
 import com.generic.setup.SelTestCase;
 import com.generic.setup.SheetVariables;
+import com.generic.util.ReportUtil;
 import com.generic.util.TestUtilities;
 
 public class Main_example_checkout_validation extends SelTestCase {

@@ -14,13 +14,13 @@ import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
 import java.util.LinkedHashMap;
 
-import com.generic.report.ReportUtil;
 import com.generic.setup.Common;
 import com.generic.setup.SelTestCase;
 import com.generic.setup.SheetVariables;
 import com.generic.util.SelectorUtil;
 import com.generic.util.TestUtilities;
 import com.generic.util.RandomUtilities;
+import com.generic.util.ReportUtil;
 
 @RunWith(Parameterized.class)
 public class Login_validation extends SelTestCase {

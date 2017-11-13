@@ -1,4 +1,4 @@
-package com.generic.datatable;
+package com.generic.util;
 
 
 import org.apache.log4j.Logger;

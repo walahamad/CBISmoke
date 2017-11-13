@@ -10,9 +10,9 @@ import org.junit.Assume;
 import org.junit.Before;
 import org.openqa.selenium.WebDriver;
 
-import com.generic.datatable.Xls_Reader;
-import com.generic.report.ReportUtil;
+import com.generic.util.ReportUtil;
 import com.generic.util.TestUtilities;
+import com.generic.util.Xls_Reader;
 
 public class SelTestCase {
 	

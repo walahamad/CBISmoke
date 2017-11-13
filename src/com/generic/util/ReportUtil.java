@@ -1,4 +1,4 @@
-package com.generic.report;
+package com.generic.util;
 
 
 import java.io.BufferedReader;
@@ -26,7 +26,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.Augmenter;
 
 import com.generic.setup.SelTestCase;
-import com.generic.util.reportAnalyzer;
 
 
 /**

@@ -9,6 +9,7 @@ import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.InputStreamReader;
+import java.util.LinkedHashMap;
 import java.util.List;
 import javax.imageio.ImageIO;
 
@@ -20,7 +21,7 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import com.generic.report.ReportUtil;
+import com.generic.util.ReportUtil;
 
 
 public class Common extends SelTestCase {
@@ -239,5 +240,11 @@ public class Common extends SelTestCase {
             e.printStackTrace();
         }
     }
+
+	public static LinkedHashMap<String, Object> readAddresses() {
+		LinkedHashMap<String, Object> addresses = new LinkedHashMap<>();
+		
+		return null;
+	}
 	
 }
