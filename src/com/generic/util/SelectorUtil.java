@@ -39,15 +39,6 @@ public class SelectorUtil extends SelTestCase {
 		 	getCurrentFunctionName(true);
 	    	Elements foundElements = null;
 	    	String selectorType = null;
-//	    	try {
-//				enableSSLSocket();
-//			} catch (KeyManagementException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			} catch (NoSuchAlgorithmException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
 	    	
 	    	Document doc = Jsoup.parse(SelTestCase.getDriver().getPageSource());
 			int index = 0;
@@ -96,14 +87,6 @@ public class SelectorUtil extends SelTestCase {
 					 foundElements = doc.select("[class*="+subStr+"]");
 					 selectorType = (!(foundElements.isEmpty()) ? "class":selectorType);
 				 }
-				 
-	    	     if (foundElements.isEmpty())
-	    	     {
-	    	    	 //logs.debug("in xpath");
-	    	    	 foundElements = doc.select("*:contains("+ subStr +")");
-	    	    	 selectorType = (!(foundElements.isEmpty()) ? subStr:selectorType);
-	    	     }
-	    	     
 				 if (foundElements.isEmpty()) {
 					 //logs.debug("in *name");
 					 foundElements = doc.select("[name*="+subStr+"]");
@@ -115,7 +98,12 @@ public class SelectorUtil extends SelTestCase {
 					 foundElements = doc.select("[title*="+subStr+"]");
 					  selectorType = (!(foundElements.isEmpty()) ? "title":selectorType);
 				 }
-				 
+				 if (foundElements.isEmpty())
+	    	     {
+	    	    	 //logs.debug("in xpath");
+	    	    	 foundElements = doc.select("*:containsOwn("+ subStr +")");
+	    	    	 selectorType = (!(foundElements.isEmpty()) ? subStr:selectorType);
+	    	     }
 				 
 				 if (foundElements != null && !foundElements.isEmpty()) {
 					  Map <String, Object> webElementInfo = webElementsInfo.get(subStr);
@@ -127,7 +115,7 @@ public class SelectorUtil extends SelTestCase {
 				  
 				  if (foundElements.size() ==0)
 				  {
-					  logs.debug("NO Valid Selector Found");
+					  logs.debug("XXX>> NO Valid Selector Found <<XXX");
 				  }
 			 } 
 			 index++;
@@ -140,6 +128,7 @@ public class SelectorUtil extends SelTestCase {
 			String ActionType = "";
 			//TODO fix multiple elements 
 			for (org.jsoup.nodes.Element e : foundElements) {
+					//logs.debug(e.toString());//Debugging purposes
 				
 					if (e.tagName().equals("input") && (e.attr("type").equals("text") || e.attr("type").equals("password") )) {
 						return "type";
@@ -191,7 +180,7 @@ public class SelectorUtil extends SelTestCase {
 						selector = By.name(e.attr("name"));
 						break;
 					default:
-						selector = By.xpath("//button[contains(text(),'"+ selType + "')]");
+						selector = By.xpath("//*[contains(text(),'"+ selType + "')]");
 						break;
 					}
 		    		
@@ -298,8 +287,28 @@ public class SelectorUtil extends SelTestCase {
 					   else if (action.equals("click,gettext"))
 					   {
 						   logs.debug("getting txt, click from " +  byAction.toString());
-						   String textVal = getDriver().findElement(byAction).getText(); 
-						   getDriver().findElement(byAction).click();
+						   
+						   WebElement element = getDriver().findElement(byAction);
+						   
+						   JavascriptExecutor jse = (JavascriptExecutor)getDriver();
+						   jse.executeScript("arguments[0].scrollIntoView()", element); 
+						   
+						   String textVal= "";
+						   try 
+						   {
+							   textVal = element.getText();
+						   }catch(Exception e)
+						   {
+						   		logs.debug("Failed to get text");
+						   }
+						   try 
+						   {
+							   element.click();
+						   }catch(Exception e)
+						   {
+						   		logs.debug("Failed to click");
+						   }
+						   
 						   return textVal;
 					   }
 					   else if (action.equals("selectByText"))
@@ -345,7 +354,7 @@ public class SelectorUtil extends SelTestCase {
 	        }
 	    	catch (Exception e)
 	    	{
-	    		SelTestCase.logs.debug("=> Error in selecotr: " + e.getClass().getCanonicalName() +
+	    		SelTestCase.logs.debug("XXX>> Error in selecotr: " + e.getClass().getCanonicalName() +
 	    				" = " +
 	    				e.getMessage().split("\n")[0] );
 	    	}

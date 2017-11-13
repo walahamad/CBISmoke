@@ -16,7 +16,7 @@ import com.generic.setup.SelTestCase;
 import com.generic.setup.SheetVariables;
 import com.generic.util.TestUtilities;
 
-public class checkout_validation extends SelTestCase {
+public class Main_example_checkout_validation extends SelTestCase {
 
 	private static int testCaseID;
 
@@ -37,39 +37,50 @@ public class checkout_validation extends SelTestCase {
 
 		try {
 			
-			/*//PDP
+			signIn.logIn("ibatta@dbi.com", "1234567");
+			
+			//PDP
 			//getDriver().get("https://hybrisdemo.conexus.co.uk:9002/yacceleratorstorefront/en/Categories/Bags%2BBoardbags/Bags/Seizure-Satchel/p/300613490");
 			getDriver().get("https://hybrisdemo.conexus.co.uk:9002/yacceleratorstorefront/en/Brands/Toko/Snowboard-Ski-Tool-Toko-Waxremover-HC3-500ml/p/45572");
 			//PDP.addProductsToCart("brown", "                                                 SIZE UNI, £34.79  15", "5"); 
 			PDP.addProductsToCart("","", "5");
-			//PDP */
+			//PDP
 			
 			//CART
-			//getDriver().get("https://hybrisdemo.conexus.co.uk:9002/yacceleratorstorefront/en/cart");
-			//cart.clickCheckout();
+			getDriver().get("https://hybrisdemo.conexus.co.uk:9002/yacceleratorstorefront/en/cart");
 			//cart.clickContinueShopiing();
-			//cart.getNumberOfproducts();
-			//cart.ordarTotal();
-			//cart.ordarSubTotal();
-			//cart.applyCoupon("Coupon name");
+			cart.getNumberOfproducts();
+			cart.ordarTotal();
+			cart.ordarSubTotal();
+			cart.applyCoupon("Coupon name");
+			cart.clickCheckout();
 			
 			//signin
 			//getDriver().get("https://hybrisdemo.conexus.co.uk:9002/yacceleratorstorefront/en/login");
 			//signIn.logIn("ibatta@dbi.com", "1234567");
 			
-			//checkout pages - shipping Address
-			signIn.logIn("ibatta@dbi.com", "1234567");
-			getDriver().get("https://hybrisdemo.conexus.co.uk:9002/yacceleratorstorefront/en/checkout/");
-			signIn.logIn("ibatta@dbi.com", "1234567");
 			
-			checkOut.shippingAddress.fillAndClickNext("United Kingdom", "Mr.","Accept", "Tester",
-					"49 Featherstone Street", "LONDON", "EC1Y 8SY", "545452154");
+			//checkout pages - shipping Address
+			//signIn.logIn("ibatta@dbi.com", "1234567");
+			//getDriver().get("https://hybrisdemo.conexus.co.uk:9002/yacceleratorstorefront/en/checkout/");
+			//signIn.logIn("ibatta@dbi.com", "1234567");
+			
+			//new user to enter address 
+			//checkOut.shippingAddress.fillAndClickNext("United Kingdom", "Mr.","Accept", "Tester",
+				//	"49 Featherstone Street", "LONDON", "EC1Y 8SY", "545452154", true);
+			
+			//old user to pick from Address book
+			checkOut.shippingAddress.fillAndClickNext(true);
 			
 			//checkout pages- shipping method
 			checkOut.shippingMethod.fillAndclickNext("PREMIUM DELIVERY");
 			
 			//checkout pages - payment information
-			checkOut.paymentInnformation.fillAndclickNext("VISA", "Accept", "4111111111111111", "4", "2020", "333",true);
+			//new user has no payment methods
+			//checkOut.paymentInnformation.fillAndclickNext("VISA", "Accept", "4111111111111111", "4", "2020", "333",true, true);
+			
+			//old user has a already saved cards
+			checkOut.paymentInnformation.fillAndclickNext(true);
 			
 			//checkout pages- review information/ place order
 			checkOut.reviewInformation.getSubtotal();
@@ -77,6 +88,17 @@ public class checkout_validation extends SelTestCase {
 			checkOut.reviewInformation.gettotal(); 
 			checkOut.reviewInformation.acceptTerms(true);
 			checkOut.reviewInformation.placeOrder();
+			
+			
+			//getDriver().get("http://10.20.20.99:8000/Order%20Confirmation%20_%20Apparel%20Site%20UK.html");
+			
+			//checkout pages- order confirmation
+			checkOut.orderConfirmation.getOrderid();
+			checkOut.orderConfirmation.getOrdertotal();
+			checkOut.orderConfirmation.getSubtotal();
+			checkOut.orderConfirmation.getShippingcost();
+			checkOut.orderConfirmation.getbillingAddrerss();
+			checkOut.orderConfirmation.getshippingAddrerss();
 			
 			Common.testPass();
 		} catch (Throwable t) {

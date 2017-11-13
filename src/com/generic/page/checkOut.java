@@ -99,6 +99,16 @@ public static class shippingAddress
 		
 	}
 
+	public static void checkSaveAddress(boolean check) throws InterruptedException, IOException {
+		getCurrentFunctionName(true);
+		logs.debug("Saving Address");
+		subStrArr.add(checkOutSelectors.CheckSaveAddress);
+		valuesArr.add(String.valueOf(check));
+		SelectorUtil.initializeSelectorsAndDoActions(subStrArr,valuesArr);
+		getCurrentFunctionName(false);
+		
+	}
+	
 	public static void clickNext() throws InterruptedException, IOException {
 		getCurrentFunctionName(true);
 		logs.debug("clicking next in shipping address form");
@@ -108,9 +118,9 @@ public static class shippingAddress
 		getCurrentFunctionName(false);
 		
 	}
-
+	
 	public static void fillAndClickNext(String Countery, String title, String firstName,
-			String lastName, String address, String city, String postal, String phone) throws InterruptedException, IOException {
+			String lastName, String address, String city, String postal, String phone , boolean saveAdderss) throws InterruptedException, IOException {
 		getCurrentFunctionName(true);
 		
 		if (!Countery.equals(""))
@@ -137,11 +147,37 @@ public static class shippingAddress
 		if (!phone.equals(""))
 			typePhone(phone);
 		
+		checkSaveAddress(saveAdderss);
 		clickNext();
 		
 		getCurrentFunctionName(false);
 	}
 	
+	public static void fillAndClickNext(boolean selectFromAddressBook) throws InterruptedException, IOException
+	{
+		getCurrentFunctionName(true);
+		clickOnAddressBook();
+		selectFirstAddress();
+		getCurrentFunctionName(false);
+	}
+
+	private static void selectFirstAddress() throws InterruptedException, IOException {
+		getCurrentFunctionName(true);
+		subStrArr.add(checkOutSelectors.selectFirstAddress);
+		valuesArr.add("");
+		SelectorUtil.initializeSelectorsAndDoActions(subStrArr,valuesArr);
+		getCurrentFunctionName(false);
+		
+	}
+
+	private static void clickOnAddressBook() throws InterruptedException, IOException {
+		getCurrentFunctionName(true);
+		subStrArr.add(checkOutSelectors.addressBookBtn);
+		valuesArr.add("");
+		SelectorUtil.initializeSelectorsAndDoActions(subStrArr,valuesArr);
+		getCurrentFunctionName(false);
+		
+	}
 }
 
 public static class shippingMethod 
@@ -179,7 +215,9 @@ public static class paymentInnformation
 
 	public static void fillAndclickNext(String cardtype, String cardHolder, String cardNumber,
 					String expireDay, String expireYear,
-					String CVC, boolean billSameShip) throws InterruptedException, IOException {
+					String CVC, boolean savePayment , boolean billSameShip) throws InterruptedException, IOException {
+		getCurrentFunctionName(true);
+		
 		if (!cardtype.equals(""))
 			selectCardType(cardtype);
 		if (!cardHolder.equals(""))
@@ -193,10 +231,36 @@ public static class paymentInnformation
 		if (!CVC.equals(""))
 			typeCVC(CVC);
 		
+		savePaymentMethod(savePayment);
+		
 		checkBillingAddressSameshipping(billSameShip);
 		
 		clickNext();
+		getCurrentFunctionName(false);
+	}
+
+	public static void fillAndclickNext(boolean useAlreadySavedPayment) throws InterruptedException, IOException {
+		getCurrentFunctionName(true);
+		clickOnUseedSavedCard();
+		pickFirstpaymentsaved();
+		getCurrentFunctionName(false);
+	}
+	
+	private static void pickFirstpaymentsaved() throws InterruptedException, IOException {
+		getCurrentFunctionName(true);
+		subStrArr.add(checkOutSelectors.selectFirstPayment);
+		valuesArr.add("");
+		SelectorUtil.initializeSelectorsAndDoActions(subStrArr,valuesArr);
+		getCurrentFunctionName(false);
 		
+	}
+
+	private static void clickOnUseedSavedCard() throws InterruptedException, IOException {
+		getCurrentFunctionName(true);
+		subStrArr.add(checkOutSelectors.savedPaymentBtn);
+		valuesArr.add("");
+		SelectorUtil.initializeSelectorsAndDoActions(subStrArr,valuesArr);
+		getCurrentFunctionName(false);
 	}
 
 	public static void clickNext() throws InterruptedException, IOException {
@@ -215,7 +279,16 @@ public static class paymentInnformation
 		getCurrentFunctionName(false);
 		
 	}
+	
+	private static void savePaymentMethod(boolean savePayment) throws InterruptedException, IOException {
+		getCurrentFunctionName(true);
+		subStrArr.add(checkOutSelectors.checkSavePayment);
+		valuesArr.add(String.valueOf(savePayment));
+		SelectorUtil.initializeSelectorsAndDoActions(subStrArr,valuesArr);
+		getCurrentFunctionName(false);		
+	}
 
+	
 	public static void typeCVC(String CVC) throws InterruptedException, IOException {
 		getCurrentFunctionName(true);
 		subStrArr.add(checkOutSelectors.CVC);
@@ -323,6 +396,77 @@ public static class reviewInformation
 		valuesArr.add("");
 		SelectorUtil.initializeSelectorsAndDoActions(subStrArr,valuesArr);
 		getCurrentFunctionName(false);
+		
+	}
+	
+}
+
+public static class orderConfirmation
+{
+
+	public static String getOrderid() throws InterruptedException, IOException {
+		getCurrentFunctionName(true);
+		subStrArr.add(checkOutSelectors.orderId);
+		valuesArr.add("");
+		SelectorUtil.initializeSelectorsAndDoActions(subStrArr,valuesArr);
+		logs.debug(SelectorUtil.textValue);
+		getCurrentFunctionName(false);
+		return SelectorUtil.textValue;
+		
+	}
+
+	public static String getOrdertotal() throws InterruptedException, IOException {
+		getCurrentFunctionName(true);
+		subStrArr.add(checkOutSelectors.orderConfirmationTotal);
+		valuesArr.add("");
+		SelectorUtil.initializeSelectorsAndDoActions(subStrArr,valuesArr);
+		logs.debug(SelectorUtil.textValue);
+		getCurrentFunctionName(false);
+		return SelectorUtil.textValue;
+		
+	}
+
+	public static String getSubtotal() throws InterruptedException, IOException {
+		getCurrentFunctionName(true);
+		subStrArr.add(checkOutSelectors.orderConfirmationSubtotal);
+		valuesArr.add("");
+		SelectorUtil.initializeSelectorsAndDoActions(subStrArr,valuesArr);
+		logs.debug(SelectorUtil.textValue);
+		getCurrentFunctionName(false);
+		return SelectorUtil.textValue;
+		
+	}
+
+	public static String getShippingcost() throws InterruptedException, IOException {
+		getCurrentFunctionName(true);
+		subStrArr.add(checkOutSelectors.orderConfirmationShippingCost);
+		valuesArr.add("");
+		SelectorUtil.initializeSelectorsAndDoActions(subStrArr,valuesArr);
+		logs.debug(SelectorUtil.textValue);
+		getCurrentFunctionName(false);
+		return SelectorUtil.textValue;
+		
+	}
+
+	public static String getbillingAddrerss() throws InterruptedException, IOException {
+		getCurrentFunctionName(true);
+		subStrArr.add(checkOutSelectors.orderconfirmationBillingAddress);
+		valuesArr.add("");
+		SelectorUtil.initializeSelectorsAndDoActions(subStrArr,valuesArr);
+		logs.debug(SelectorUtil.textValue);
+		getCurrentFunctionName(false);
+		return SelectorUtil.textValue;
+		
+	}
+	
+	public static String getshippingAddrerss() throws InterruptedException, IOException {
+		getCurrentFunctionName(true);
+		subStrArr.add(checkOutSelectors.orderconfirmationshippingAddress);
+		valuesArr.add("");
+		SelectorUtil.initializeSelectorsAndDoActions(subStrArr,valuesArr);
+		logs.debug(SelectorUtil.textValue);
+		getCurrentFunctionName(false);
+		return SelectorUtil.textValue;
 		
 	}
 	
