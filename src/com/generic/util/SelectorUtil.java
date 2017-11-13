@@ -22,6 +22,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 import org.junit.Assert;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 
@@ -144,12 +145,8 @@ public class SelectorUtil extends SelTestCase {
 						return "type";
 					} else if (e.tagName().equals("select")) {
 						return "selectByText";
-					} else if (e.tagName().equals("input") && e.attr("type").equals("checkbox")){
-						boolean selected = e.attr("checked").equalsIgnoreCase("checked");
-				        if(!selected)
-				        {
-				           return "click";
-				        }
+					} else if (e.tagName().equals("input") && e.attr("type").equals("checkbox") ){
+				        	return "check";
 					} else if (e.tagName().equals("button") ||
 							e.tagName().equals("img") ||
 							e.tagName().equals("a") )
@@ -260,7 +257,38 @@ public class SelectorUtil extends SelTestCase {
 					   else if (action.equals("click"))
 					   {
 						   logs.debug("clicking on " +  byAction.toString());
+						   JavascriptExecutor jse = (JavascriptExecutor)getDriver();
+						   jse.executeScript("arguments[0].scrollIntoView()", getDriver().findElement(byAction)); 
 						   getDriver().findElement(byAction).click();
+					   }
+					   else if (action.equals("check"))
+					   {
+						   WebElement checkboxE = getDriver().findElement(byAction);  
+						   logs.debug("check box  " +  byAction.toString() + " " + value);
+						   if(value.contains("true"))
+						   {
+							   if (!checkboxE.isSelected())
+							   {
+								   logs.debug("checking the check box- check box status is not checked");
+								   getDriver().findElement(byAction).click();
+							   }
+							   else
+							   {
+								   logs.debug("checking the check box- check box status is checked");
+							   }
+						   }
+						   else
+						   {
+							   if (checkboxE.isSelected())
+							   {
+								   logs.debug("unchecking the check box- check box status is checked");
+								   getDriver().findElement(byAction).click();
+							   }
+							   else
+							   {
+								   logs.debug("checking the check box- check box status is checked");
+							   }
+						   }
 					   }
 					   else if (action.equals("gettext"))
 					   {
@@ -279,14 +307,30 @@ public class SelectorUtil extends SelTestCase {
 						   logs.debug("selecting value " + byAction.toString()); 
 						   Select select = new Select(getDriver().findElement(byAction));
 						   
-						   //Keep the block below for debugging purposes  
-						   //List<WebElement> options = select.getOptions();
-						   //logs.debug(options.toString());
-						   //for(int i=1; i<options.size(); i++) {
-						   //	    logs.debug(options.get(i).getText());
-							//}
+//						   //Keep the block below for debugging purposes  
+//						   List<WebElement> options = select.getOptions();
+//						   logs.debug(options.toString());
+//						   for(int i=1; i<options.size(); i++) {
+//						   	    logs.debug(options.get(i).getText());
+//							}
 						   
-						   select.selectByVisibleText(value);
+						   try {
+							   select.selectByVisibleText(value);
+						   }
+						   catch(Exception e)
+						   {
+							   logs.debug("Try alternative way: ");
+							   List<WebElement> options = select.getOptions();
+							   for(int i=0; i<options.size(); i++)
+							   {
+								  // logs.debug(options.get(i).getText().trim());
+							   	    if (options.get(i).getText().trim().contains(value))
+							   	    {
+										logs.debug("selected index is" + i ); 
+							   	    	select.selectByIndex(i);
+							   	    }
+							   	}
+						   }
 					   }
 		    		}
 		    		else if (action.equals("Validate") && SelectorUtil.isAnErrorSelector)

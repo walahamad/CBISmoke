@@ -8,6 +8,8 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import com.generic.page.PDP;
 import com.generic.page.cart;
+import com.generic.page.checkOut;
+import com.generic.page.signIn;
 import com.generic.report.ReportUtil;
 import com.generic.setup.Common;
 import com.generic.setup.SelTestCase;
@@ -43,17 +45,38 @@ public class checkout_validation extends SelTestCase {
 			//PDP */
 			
 			//CART
-			getDriver().get("https://hybrisdemo.conexus.co.uk:9002/yacceleratorstorefront/en/cart");
+			//getDriver().get("https://hybrisdemo.conexus.co.uk:9002/yacceleratorstorefront/en/cart");
 			//cart.clickCheckout();
 			//cart.clickContinueShopiing();
-			cart.getNumberOfproducts();
-			cart.ordarTotal();
-			cart.ordarSubTotal();
-			cart.applyCoupon("TEST");
+			//cart.getNumberOfproducts();
+			//cart.ordarTotal();
+			//cart.ordarSubTotal();
+			//cart.applyCoupon("Coupon name");
 			
+			//signin
+			//getDriver().get("https://hybrisdemo.conexus.co.uk:9002/yacceleratorstorefront/en/login");
+			//signIn.logIn("ibatta@dbi.com", "1234567");
 			
-			//checkout page
+			//checkout pages - shipping Address
+			signIn.logIn("ibatta@dbi.com", "1234567");
+			getDriver().get("https://hybrisdemo.conexus.co.uk:9002/yacceleratorstorefront/en/checkout/");
+			signIn.logIn("ibatta@dbi.com", "1234567");
 			
+			checkOut.shippingAddress.fillAndClickNext("United Kingdom", "Mr.","Accept", "Tester",
+					"49 Featherstone Street", "LONDON", "EC1Y 8SY", "545452154");
+			
+			//checkout pages- shipping method
+			checkOut.shippingMethod.fillAndclickNext("PREMIUM DELIVERY");
+			
+			//checkout pages - payment information
+			checkOut.paymentInnformation.fillAndclickNext("VISA", "Accept", "4111111111111111", "4", "2020", "333",true);
+			
+			//checkout pages- review information/ place order
+			checkOut.reviewInformation.getSubtotal();
+			checkOut.reviewInformation.shippingCost();
+			checkOut.reviewInformation.gettotal(); 
+			checkOut.reviewInformation.acceptTerms(true);
+			checkOut.reviewInformation.placeOrder();
 			
 			Common.testPass();
 		} catch (Throwable t) {
