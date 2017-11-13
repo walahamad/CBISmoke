@@ -83,32 +83,39 @@ public class TestUtilities extends SelTestCase {
 
      // get the data from xls file
      public static Object[][] getData(String testName){
-     	getCurrentFunctionName(true);
-         if(SelTestCase.getDatatable() == null){
-             SelTestCase.setDatatable(new Xls_Reader(System.getProperty("user.dir")+"//src//com//generic//config//DataSheet.xlsx"));
-         }
-     	System.out.println("Test name to be run: "+testName);
-         int rows=SelTestCase.getDatatable().getRowCount(testName)-1;
-         if(rows <=0){
-             Object[][] testData =new Object[1][0];
-             return testData;
-
-         }
-         rows = SelTestCase.getDatatable().getRowCount(testName);  // 3
-         int cols = SelTestCase.getDatatable().getColumnCount(testName);
-         logs.debug("Test Name -- "+testName);
-         Object data[][] = new Object[rows-1][cols];
-
-         for(int rowNum = 2 ; rowNum <= rows ; rowNum++){
-
-             for(int colNum=0 ; colNum< cols; colNum++){
-                 data[rowNum-2][colNum]=SelTestCase.getDatatable().getCellData(testName, colNum, rowNum);
-             }
-         }
-
-         getCurrentFunctionName(false);
-         return data;
+     	return getData(testName, 2);
      }
+     
+     public static Object[][] getData(String testName, int startingRow){
+    	 //starting row 1 to rows sheets
+      	getCurrentFunctionName(true);
+          if(SelTestCase.getDatatable() == null){
+              SelTestCase.setDatatable(new Xls_Reader(System.getProperty("user.dir")+"//src//com//generic//config//DataSheet.xlsx"));
+          }
+          int rows=SelTestCase.getDatatable().getRowCount(testName)-1;
+          //if empty sheet return empty data 
+          if(rows <=0){
+              Object[][] testData =new Object[1][0];
+              return testData;
+          }
+          
+          rows = SelTestCase.getDatatable().getRowCount(testName); 
+          int cols = SelTestCase.getDatatable().getColumnCount(testName);
+          
+          logs.debug("Test Name -- "+testName);
+          Object data[][] = new Object[rows-(startingRow-1)][cols];//rows -1 since we dont have to include header
+
+          for(int rowNum = startingRow ; rowNum <= rows ; rowNum++)
+          {
+              for(int colNum=0 ; colNum< cols; colNum++)
+              {
+                  data[rowNum-startingRow][colNum]=SelTestCase.getDatatable().getCellData(testName, colNum, rowNum);
+              }
+          }
+
+          getCurrentFunctionName(false);
+          return data;
+      }
      
     public static void initialize() throws Exception{
     	getCurrentFunctionName(true);

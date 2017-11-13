@@ -1,6 +1,7 @@
 package com.generic.tests.checkout;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
 
@@ -38,8 +39,18 @@ public class address_main_example_checkout_validation extends SelTestCase {
 
 		try {
 			
+			//read addresses
 			LinkedHashMap<String, Object> addresses = new LinkedHashMap<>();
 			addresses = Common.readAddresses();
+			logs.debug(Arrays.asList(addresses));
+			
+			//read products
+			LinkedHashMap<String, Object> products = new LinkedHashMap<>();
+			products = Common.readProducts();
+			logs.debug(Arrays.asList(products));
+			
+		
+			
 			
 			Common.testPass();
 		} catch (Throwable t) {

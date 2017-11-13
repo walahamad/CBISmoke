@@ -9,6 +9,7 @@ import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.InputStreamReader;
+import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
 import javax.imageio.ImageIO;
@@ -22,6 +23,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.generic.util.ReportUtil;
+import com.generic.util.TestUtilities;
 
 
 public class Common extends SelTestCase {
@@ -242,9 +244,98 @@ public class Common extends SelTestCase {
     }
 
 	public static LinkedHashMap<String, Object> readAddresses() {
-		LinkedHashMap<String, Object> addresses = new LinkedHashMap<>();
+		/* output example
+		 * [
+			  {
+			    A1={
+			      firstName=Accept,
+			      lastName=Tester,
+			      adddressLine=49FeatherstoneStreet,
+			      city=LONDON,
+			      postal=EC1Y8SY,
+			      countery=UNITEDKINGDOM
+			    },
+			    A2={
+			      firstName=Accept,
+			      lastName=Tester,
+			      adddressLine=ArdenhamCourt,
+			      city=LONDON,
+			      postal=HP193EQ,
+			      countery=UNITEDKINGDOM
+			    }
+			  }
+			]
+		 */
 		
-		return null;
-	}
+		LinkedHashMap<String, Object> addresses = new LinkedHashMap<>();
+		Object[][] data = TestUtilities.getData(SheetVariables.addresses, 1);
+		
+		//data map
+		int header = 0;
+		int addresscode = 0;
+		int firstName = 1;
+		int lastName = 2;
+		int addressLine = 3;
+		int city = 4;
+		int postal = 5;
+		int countery = 6;
+		
+		for (int row = 1; row < data.length; row++)
+		{
+			LinkedHashMap<String, Object> address = new LinkedHashMap<>();
+			address.put((String) data[header][firstName], data[row][firstName]);
+			address.put((String) data[header][lastName], data[row][lastName]);
+			address.put((String) data[header][addressLine], data[row][addressLine]);
+			address.put((String) data[header][city], data[row][city]);
+			address.put((String) data[header][postal], data[row][postal]);
+			address.put((String) data[header][countery], data[row][countery]);
+			
+			addresses.put((String) data[row][addresscode], address);
+		}
+		return addresses;
+	}//readAddresses
+
+	public static LinkedHashMap<String, Object> readProducts() {
+		/* Output example
+		 * [
+			  {
+			    P1={
+			      url=/yacceleratorstorefront/en/Categories/Bags%2BBoardbags/Bags/Seizure-Satchel/p/300613490,
+			      color=black,
+			      size=SizeUni,£34.792 1,
+			      qty=1
+			    },
+			    P2={
+			      url=/yacceleratorstorefront/en/Categories/Bags%2BBoardbags/Bags/Seizure-Bag/p/300441924,
+			      color=claycourt,
+			      size=SizeUni, £24.26 4,
+			      qty=1
+			    }
+			  }
+			]
+		 */
+		LinkedHashMap<String, Object> products = new LinkedHashMap<>();
+		Object[][] data = TestUtilities.getData(SheetVariables.products, 1);
+		
+		//data map
+		int header = 0;
+		int name = 0;
+		int url = 1;
+		int color = 2;
+		int size = 3;
+		int qty = 4;
+		
+		for (int row = 1; row < data.length; row++)
+		{
+			LinkedHashMap<String, Object> product = new LinkedHashMap<>();
+			product.put((String) data[header][url], data[row][url]);
+			product.put((String) data[header][color], data[row][color]);
+			product.put((String) data[header][size], data[row][size]);
+			product.put((String) data[header][qty], data[row][qty]);
+			
+			products.put((String) data[row][name], product);
+		}
+		return products;
+	}//readProducts
 	
 }
