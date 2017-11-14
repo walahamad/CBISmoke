@@ -215,6 +215,12 @@ public class SelTestCase {
                         ReportUtil.now(time_date_format),
                         getTestStatus().substring(0, 4));
             }
+            else if (getTestStatus().startsWith("Ignore")) {
+                ReportUtil.addTestCase(getTestCaseId() + "_" + counter, getTestCaseDescription(),
+                        getStartTime(),
+                        ReportUtil.now(time_date_format),
+                        getTestStatus().substring(0, 6));
+            }
         }
 
         if (getTestStatus() ==  null) {

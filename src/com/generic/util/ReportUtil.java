@@ -369,7 +369,7 @@ public final class ReportUtil extends SelTestCase {
             out.write("<tr>\n");
             out.write("<td width=5% align= center ><FONT COLOR=#153E7E FACE= Arial  SIZE=2><b>"
                 + scriptNumber + "</b></td>\n");
-            if (status.equalsIgnoreCase("Pass")) {
+            if (status.equalsIgnoreCase("Pass") || status.equalsIgnoreCase("Ignore") ) {
                 out.write("<td width=10% align= center ><FONT COLOR=#153E7E FACE= Arial  SIZE=2><b>"
                     + testCaseName + "</b></td>\n");
             } else if (status.startsWith("Fail")){
@@ -391,6 +391,9 @@ public final class ReportUtil extends SelTestCase {
                     + status + "</b></td>\n");
             } else if (status.startsWith("Fail")) {
                 out.write("<td width=10% align= center  bgcolor=Red><FONT COLOR=#153E7E FACE= Arial  SIZE=2><b>"
+                    + status + "</b></td>\n");
+            }else if (status.startsWith("Ignore")) {
+                out.write("<td width=10% align= center  bgcolor=#c0c0c0><FONT COLOR=#153E7E FACE= Arial  SIZE=2><b>"
                     + status + "</b></td>\n");
             }
             
