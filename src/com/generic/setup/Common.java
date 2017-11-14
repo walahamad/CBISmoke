@@ -337,5 +337,53 @@ public class Common extends SelTestCase {
 		}
 		return products;
 	}//readProducts
+
+	public static LinkedHashMap<String, Object> readPayments() {
+		/*
+		 * [
+			  {
+			    visa={
+			      number=4111111111111111,
+			      name=Accept Tester,
+			      expireyear=2022,
+			      expiremonth=6,
+			      CVCC=333
+			    },
+			    master={
+			      number=5555555555554444,
+			      name=Accept Tester,
+			      expireyear=2022,
+			      expiremonth=6,
+			      CVCC=334
+			    }
+			  }
+			]
+		 */
+		LinkedHashMap<String, Object> products = new LinkedHashMap<>();
+		Object[][] data = TestUtilities.getData(SheetVariables.cards, 1);
+		
+		//data map
+		int header = 0;
+		int card = 0;
+		int number = 1;
+		int name = 2;
+		int expireMonth = 3;
+		int expireYear = 4;
+		int CVCC = 5;
+		
+		
+		for (int row = 1; row < data.length; row++)
+		{
+			LinkedHashMap<String, Object> product = new LinkedHashMap<>();
+			product.put((String) data[header][number], data[row][number]);
+			product.put((String) data[header][name], data[row][name]);
+			product.put((String) data[header][expireMonth], data[row][expireMonth]);
+			product.put((String) data[header][expireYear], data[row][expireYear]);
+			product.put((String) data[header][CVCC], data[row][CVCC]);
+			
+			products.put((String) data[row][card], product);
+		}
+		return products;
+	}//read payments
 	
 }

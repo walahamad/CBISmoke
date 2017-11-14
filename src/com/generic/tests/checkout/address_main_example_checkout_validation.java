@@ -8,10 +8,6 @@ import java.util.List;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import com.generic.page.PDP;
-import com.generic.page.cart;
-import com.generic.page.checkOut;
-import com.generic.page.signIn;
 import com.generic.setup.Common;
 import com.generic.setup.SelTestCase;
 import com.generic.setup.SheetVariables;
@@ -49,7 +45,12 @@ public class address_main_example_checkout_validation extends SelTestCase {
 			products = Common.readProducts();
 			logs.debug(Arrays.asList(products));
 			
-		
+			//read payments
+			LinkedHashMap<String, Object> payments = new LinkedHashMap<>();
+			payments = Common.readPayments();
+			logs.debug(Arrays.asList(payments));
+			
+			//Parameterized class with flow control 
 			
 			
 			Common.testPass();

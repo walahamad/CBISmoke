@@ -8,6 +8,9 @@ public class SheetVariables {
 	//products
 	public static final String products = "products";
 	
+	//cards
+	public static final String cards = "cards";
+	
 	//SheetNames
     public static final String registrationSheet = "Registration";
     public static String testCasesSheet = "Test Cases";
@@ -15,6 +18,7 @@ public class SheetVariables {
     //Test Case id
     public static final String registrationTestCaseId = "Registration";
     public static final String checkoutTestCaseId = "CheckOut";
+
 
     
 }
