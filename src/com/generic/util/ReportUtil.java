@@ -391,7 +391,7 @@ public final class ReportUtil extends SelTestCase {
                     + status + "</b></td>\n");
             } else if (status.startsWith("Fail")) {
                 out.write("<td width=10% align= center  bgcolor=Red><FONT COLOR=#153E7E FACE= Arial  SIZE=2><b>"
-                    + status + "</b></td>\n");
+                    + status.substring(0,4) + "</b></td>\n");
             }
             
             out.write("<td width=20% align= center ><FONT COLOR=#153E7E FACE= Arial  SIZE=2><b>"
