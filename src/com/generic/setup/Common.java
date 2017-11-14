@@ -130,7 +130,12 @@ public class Common extends SelTestCase {
         setTestStatus("Pass");
 
     }
+    
+    public static void testIgnored() {
+        setTestStatus("Ignore");
 
+    }
+    
     /** Set test case status that will appear in the Automation Report
      *
      *
@@ -295,7 +300,7 @@ public class Common extends SelTestCase {
 		return addresses;
 	}//readAddresses
 
-	public static LinkedHashMap<String, Object> readProducts() {
+	public static LinkedHashMap<String, Object> readLocalInventory() {
 		/* Output example
 		 * [
 			  {
@@ -338,7 +343,7 @@ public class Common extends SelTestCase {
 		return products;
 	}//readProducts
 
-	public static LinkedHashMap<String, Object> readPayments() {
+	public static LinkedHashMap<String, Object> readPaymentcards() {
 		/*
 		 * [
 			  {
