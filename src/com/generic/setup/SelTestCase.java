@@ -17,13 +17,15 @@ import com.generic.util.Xls_Reader;
 public class SelTestCase {
 	
 	public static String time_date_format = "hh:mm:ss aaa";
+	public static String reportFolderDateStampFormat = "MM-dd-yyyy";
+	public static String reportFolderTimeStampFormat = "HHmmss";
 
     public static boolean runReportSetup = true;
     public static String mainDir = null;
     public static String subDir = null;
     
     public static Logger logs = Logger.getLogger("logs");
-    public static int counter;
+    public static int counter ;
     private static Properties CONFIG = null;
     private static WebDriver driver = null;
     private static int waitTime;
@@ -162,6 +164,7 @@ public class SelTestCase {
         try {                   
             setTestCaseId(tempTCID);
             setStartTime(ReportUtil.now(time_date_format));
+            logs.debug("The value of the counter is : " + counter);
             counter = counter + 1;
             
             //Initialize the property file

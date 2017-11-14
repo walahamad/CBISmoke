@@ -8,6 +8,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Properties;
 
+import com.generic.setup.EnvironmentFiles;
 import com.generic.setup.SelTestCase;
 
 
@@ -15,9 +16,8 @@ public class TestUtilities extends SelTestCase {
 	
 	public static void prepareLogs() throws Exception {
 		logs.debug("Clearing logs file");
-		String logs_dir = System.getProperty("user.dir") + "/"
-                + SelTestCase.getCONFIG().getProperty("logs");
-		String log_file = "Application.log";
+		String logs_dir = EnvironmentFiles.getLogFilePath();
+		String log_file = EnvironmentFiles.getLogFileName();
 		String log_abs_path = logs_dir + "/" + log_file;
 		
 		PrintWriter writer = new PrintWriter(log_abs_path);
@@ -33,21 +33,18 @@ public class TestUtilities extends SelTestCase {
                     logs.debug("Execute reportSetup");
                     setBrowserName(getCONFIG().getProperty("browser"));
                     try {
-                        mainDir = System.getProperty("user.dir") + "/"
-                                + SelTestCase.getCONFIG().getProperty("reportFolderName");
+                        mainDir = EnvironmentFiles.getReportsFolderPath();
                         
                         logs.debug("LogsDir: "+mainDir);
                         
                         File dir1 = new File(mainDir);
                         boolean exists = dir1.exists();
                         if (!exists) {
-                            logs.debug("the main directory you are searching does not exist : "
-                                    + exists);
+                            logs.debug("the main directory you are searching does not exist : " + exists);
                             dir1.mkdir(); // creating main directory if it doesn't exist
                             createSubDir();
                         } else {
-                            logs.debug("the main directory you are searching exists : "
-                                    + exists);
+                            logs.debug("the main directory you are searching exists : " + exists);
                             createSubDir();
                         }
                     } catch (Throwable t) {
@@ -60,7 +57,7 @@ public class TestUtilities extends SelTestCase {
                             SelTestCase.getCONFIG().getProperty("testEnvironment"),
                             getBrowserName() );
 
-                    ReportUtil.startSuite("Suite1");
+                    ReportUtil.startSuite(getCONFIG().getProperty("testSuiteName"));
                     runReportSetup = false;
                 }
 
@@ -73,9 +70,9 @@ public class TestUtilities extends SelTestCase {
 
      public static void createSubDir() {
          Date dNow = new Date( );
-         SimpleDateFormat ft = new SimpleDateFormat ("MM-dd-yyyy");
+         SimpleDateFormat ft = new SimpleDateFormat (SelTestCase.reportFolderDateStampFormat);
          Calendar cal = Calendar.getInstance();
-         SimpleDateFormat sdf = new SimpleDateFormat("HHmmss");
+         SimpleDateFormat sdf = new SimpleDateFormat(SelTestCase.reportFolderTimeStampFormat);
     	 subDir = mainDir + "/" + tempTCID + ft.format(dNow) + "-Time-" + sdf.format(cal.getTime());
          new File(subDir).mkdir();
 
@@ -90,7 +87,7 @@ public class TestUtilities extends SelTestCase {
     	 //starting row 1 to rows sheets
       	getCurrentFunctionName(true);
           if(SelTestCase.getDatatable() == null){
-              SelTestCase.setDatatable(new Xls_Reader(System.getProperty("user.dir")+"//src//com//generic//config//DataSheet.xlsx"));
+              SelTestCase.setDatatable(new Xls_Reader(EnvironmentFiles.getDataSheetPath()));
           }
           int rows=SelTestCase.getDatatable().getRowCount(testName)-1;
           //if empty sheet return empty data 
@@ -123,7 +120,7 @@ public class TestUtilities extends SelTestCase {
 
         // config property file
         setCONFIG(new Properties());
-        FileInputStream fn =new FileInputStream(System.getProperty("user.dir")+"//src//com//generic//config//config.properties");
+        FileInputStream fn =new FileInputStream(EnvironmentFiles.getConfigFilePath());
         getCONFIG().load(fn);
         logs.debug("adding environment: " + getCONFIG().getProperty("testEnvironment"));
         getCONFIG().setProperty("testSiteName", "https://"+getCONFIG().getProperty("testEnvironment")+"/"+getCONFIG().getProperty("testSiteName"));
@@ -131,7 +128,7 @@ public class TestUtilities extends SelTestCase {
 
         logs.debug("tempTCID is : " + tempTCID );
         
-        setDatatable(new Xls_Reader(System.getProperty("user.dir")+"//src//com//generic//config//DataSheet.xlsx"));
+        setDatatable(new Xls_Reader(EnvironmentFiles.getDataSheetPath()));
 
         //set the max wait time
         setWaitTime(Integer.parseInt(getCONFIG().getProperty("waitTime")));
