@@ -153,6 +153,7 @@ public static class shippingAddress
 		getCurrentFunctionName(false);
 	}
 	
+	//in case of using the address book
 	public static void fillAndClickNext(boolean selectFromAddressBook) throws InterruptedException, IOException
 	{
 		getCurrentFunctionName(true);
@@ -238,7 +239,8 @@ public static class paymentInnformation
 		clickNext();
 		getCurrentFunctionName(false);
 	}
-
+	
+	//in case of using wallet 
 	public static void fillAndclickNext(boolean useAlreadySavedPayment) throws InterruptedException, IOException {
 		getCurrentFunctionName(true);
 		clickOnUseedSavedCard();

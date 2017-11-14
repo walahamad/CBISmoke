@@ -13,7 +13,8 @@ public class SheetVariables {
 	
 	//SheetNames
     public static final String registrationSheet = "Registration";
-    public static String testCasesSheet = "Test Cases";
+    public static final String checkoutSheet = "CheckOut";
+    public static final String testCasesSheet = "Test Cases";
 
     //Test Case id
     public static final String registrationTestCaseId = "Registration";

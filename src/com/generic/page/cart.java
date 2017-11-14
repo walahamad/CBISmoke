@@ -18,6 +18,7 @@ public class cart extends SelTestCase {
 
 public static void clickCheckout() throws InterruptedException, IOException {
 	getCurrentFunctionName(true);
+	logs.debug("clicking on checkout btn from cart");
 	subStrArr.add(cartSelectors.checkoutBtn);
 	valuesArr.add("");
 	SelectorUtil.initializeSelectorsAndDoActions(subStrArr,valuesArr);
@@ -25,8 +26,9 @@ public static void clickCheckout() throws InterruptedException, IOException {
 	
 }
 
-public static void clickContinueShopiing() throws InterruptedException, IOException {
+public static void clickContinueShoping() throws InterruptedException, IOException {
 	getCurrentFunctionName(true);
+	logs.debug("clicking on continue shopping from cart");
 	subStrArr.add(cartSelectors.continueShopping);
 	valuesArr.add("");
 	SelectorUtil.initializeSelectorsAndDoActions(subStrArr,valuesArr);
@@ -39,7 +41,7 @@ public static String getNumberOfproducts() throws InterruptedException, IOExcept
 	subStrArr.add(cartSelectors.numberOfProducts);
 	valuesArr.add("");
 	SelectorUtil.initializeSelectorsAndDoActions(subStrArr,valuesArr);
-	logs.debug(SelectorUtil.textValue);
+	logs.debug("number of products: "+SelectorUtil.textValue);
 	getCurrentFunctionName(false);
 	return SelectorUtil.textValue;
 }
@@ -49,7 +51,7 @@ public static String ordarTotal() throws InterruptedException, IOException {
 	subStrArr.add(cartSelectors.numberOfProducts);
 	valuesArr.add("");
 	SelectorUtil.initializeSelectorsAndDoActions(subStrArr,valuesArr);
-	logs.debug(SelectorUtil.textValue);
+	logs.debug("Order total: "+SelectorUtil.textValue);
 	getCurrentFunctionName(false);
 	return SelectorUtil.textValue;
 }
@@ -59,7 +61,7 @@ public static String ordarSubTotal() throws InterruptedException, IOException {
 	subStrArr.add(cartSelectors.OrderSubTotal);
 	valuesArr.add("");
 	SelectorUtil.initializeSelectorsAndDoActions(subStrArr,valuesArr);
-	logs.debug(SelectorUtil.textValue);
+	logs.debug("Order subtotal: "+SelectorUtil.textValue);
 	getCurrentFunctionName(false);
 	return SelectorUtil.textValue;
 	
@@ -67,9 +69,16 @@ public static String ordarSubTotal() throws InterruptedException, IOException {
 
 public static void applyCoupon(String coupon) throws InterruptedException, IOException {
 	getCurrentFunctionName(true);
-	logs.debug("Applying Coupon " + coupon);
-	writeCoupon(coupon);
-	clickApplycoupon();
+	if (!coupon.equals(""))
+	{
+		logs.debug("Applying Coupon " + coupon);
+		writeCoupon(coupon);
+		clickApplycoupon();
+	}
+	else
+	{
+		logs.debug("cannot apply coupon " + coupon);
+	}
 	getCurrentFunctionName(false);
 }
 

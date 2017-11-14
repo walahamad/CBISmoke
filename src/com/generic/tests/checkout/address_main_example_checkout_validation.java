@@ -42,12 +42,12 @@ public class address_main_example_checkout_validation extends SelTestCase {
 			
 			//read products
 			LinkedHashMap<String, Object> products = new LinkedHashMap<>();
-			products = Common.readProducts();
+			products = Common.readLocalInventory();
 			logs.debug(Arrays.asList(products));
 			
 			//read payments
 			LinkedHashMap<String, Object> payments = new LinkedHashMap<>();
-			payments = Common.readPayments();
+			payments = Common.readPaymentcards();
 			logs.debug(Arrays.asList(payments));
 			
 			//Parameterized class with flow control 
