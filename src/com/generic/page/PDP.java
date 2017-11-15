@@ -14,8 +14,9 @@ public class PDP extends SelTestCase {
     static List<String> subStrArr = new ArrayList<String>();
 	static List<String> valuesArr = new ArrayList<String>();
 	
-   public static void addProductsToCart(String color, String size, String qty) throws InterruptedException, IOException
+   public static void addProductsToCart(String url, String color, String size, String qty) throws InterruptedException, IOException
    {
+	   getDriver().get(url);
 	   getCurrentFunctionName(true);
 	   if(!color.equals(""))
 		   selectcolor(color);

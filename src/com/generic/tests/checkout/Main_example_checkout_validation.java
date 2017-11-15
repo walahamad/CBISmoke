@@ -41,9 +41,9 @@ public class Main_example_checkout_validation extends SelTestCase {
 			
 			//PDP
 			//getDriver().get("https://hybrisdemo.conexus.co.uk:9002/yacceleratorstorefront/en/Categories/Bags%2BBoardbags/Bags/Seizure-Satchel/p/300613490");
-			getDriver().get("https://hybrisdemo.conexus.co.uk:9002/yacceleratorstorefront/en/Brands/Toko/Snowboard-Ski-Tool-Toko-Waxremover-HC3-500ml/p/45572");
+			String url = "https://hybrisdemo.conexus.co.uk:9002/yacceleratorstorefront/en/Brands/Toko/Snowboard-Ski-Tool-Toko-Waxremover-HC3-500ml/p/45572";
 			//PDP.addProductsToCart("brown", "                                                 SIZE UNI, £34.79  15", "5"); 
-			PDP.addProductsToCart("","", "5");
+			PDP.addProductsToCart(url,"","", "5");
 			//PDP
 			
 			//CART
