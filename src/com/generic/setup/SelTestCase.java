@@ -20,6 +20,7 @@ public class SelTestCase {
 	public static String time_date_format = "hh:mm:ss aaa";
 	public static String reportFolderDateStampFormat = "MM-dd-yyyy";
 	public static String reportFolderTimeStampFormat = "HHmmss";
+	public static String testCaseRunDateStamp = "dd.MMMMM.yyyy";
 
     public static boolean runReportSetup = true;
     public static String mainDir = null;
