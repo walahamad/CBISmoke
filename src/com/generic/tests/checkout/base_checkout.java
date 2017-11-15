@@ -12,6 +12,10 @@ import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
 import java.util.LinkedHashMap;
 
+import com.generic.page.PDP;
+import com.generic.page.cart;
+import com.generic.page.checkOut;
+import com.generic.page.signIn;
 import com.generic.setup.Common;
 import com.generic.setup.SelTestCase;
 import com.generic.setup.SheetVariables;
@@ -34,7 +38,7 @@ public class base_checkout extends SelTestCase {
 	String payment;
 	String shippingAddress;
 	String billingAddress;
-	String giftcard;
+	String coupon;
 	String email;
 	String orderId;
 	String orderTotal;
@@ -51,7 +55,7 @@ public class base_checkout extends SelTestCase {
 
 	public base_checkout(String runTest, String desc, String proprties, String products,
 			String shippingMethod, String payment, String shippingAddress, String billingAddress,
-			String giftcard, String email, String orderId, String orderTotal,
+			String coupon, String email, String orderId, String orderTotal,
 			String orderSubtotal, String orderTax, String orderShipping ) {
 		
 		//moving variables from parameterize module to class variables 
@@ -66,7 +70,7 @@ public class base_checkout extends SelTestCase {
 		this.payment = payment;
 		this.shippingAddress = shippingAddress;
 		this.billingAddress = billingAddress;
-		this.giftcard = giftcard;
+		this.coupon = coupon;
 		this.email = email;
 		this.orderId = orderId;
 		this.orderTotal = orderTotal;
@@ -87,6 +91,7 @@ public class base_checkout extends SelTestCase {
 	public void Checkout() throws Exception {
 		try 
 		{
+			//TODO: write all values to sheet
 			if (runTest.equals(""))
 			{
 				logs.debug("Ignoring the current case");
@@ -97,7 +102,7 @@ public class base_checkout extends SelTestCase {
 			if (proprties.contains("logged in"))
 			{
 				//TODO: pull user mail from sheet 
-				//TODO: sign in 
+				signIn.logIn("ibatta@dbi.com", "1234567");
 			}
 			if(proprties.contains("fresh"))
 			{
@@ -108,12 +113,23 @@ public class base_checkout extends SelTestCase {
 				//TODO: create sheet for users or pull then from config file
 				//TODO: write function to get user information from sheet
 			}
-			//TODO: add products to cart
-			//TODO: apply coupon if it is not empty  
-			//TODO: checkout-pdp popup
-			//TODO: checkout-from cart 
 			
-			else if(proprties.contains("guest"))
+			//TODO: add function to get these values from the case vars
+			String url = "https://hybrisdemo.conexus.co.uk:9002/yacceleratorstorefront/en/Brands/Toko/Snowboard-Ski-Tool-Toko-Waxremover-HC3-500ml/p/45572";
+			PDP.addProductsToCart(url,"","", "5");
+			
+			if (!coupon.equals(""))
+			{
+				cart.applyCoupon(coupon);
+			}
+			cart.getNumberOfproducts();
+			cart.ordarTotal();
+			cart.ordarSubTotal();
+			cart.clickCheckout();
+			
+			//signIn.logIn("ibatta@dbi.com", "1234567");
+			
+			if(proprties.contains("guest"))
 			{
 				//TODO: add flow for guest 
 			}
@@ -123,29 +139,40 @@ public class base_checkout extends SelTestCase {
 					!proprties.contains("fersh") &&
 					!proprties.contains("guest"))
 			{
-				//TODO: use already saved address  
+				checkOut.shippingAddress.fillAndClickNext(true);
 			}
 			else
 			{
-				//TODO: apply shipping address 
+				checkOut.shippingAddress.fillAndClickNext("United Kingdom", "Mr.","Accept", "Tester",
+						"49 Featherstone Street", "LONDON", "EC1Y 8SY", "545452154", true);
 			}
 			
-			//TODO: apply shipping method
+			checkOut.shippingMethod.fillAndclickNext("PREMIUM DELIVERY");
 			
 			//checkout- payment
 			if (proprties.contains("saved-payment")&&
 					!proprties.contains("fersh") &&
 					!proprties.contains("guest"))
 			{
-				//TODO: use already saved payment  
+				checkOut.paymentInnformation.fillAndclickNext(true);  
 			}
 			else
 			{
-				//TODO: apply payment 
+				checkOut.paymentInnformation.fillAndclickNext("VISA", "Accept", "4111111111111111", "4", "2020", "333",true, true);
 			}
 			
-			//TODO: review order information 
-			//TODO: review order confirmation page and write order to sheet
+			checkOut.reviewInformation.getSubtotal();
+			checkOut.reviewInformation.shippingCost();
+			checkOut.reviewInformation.gettotal(); 
+			checkOut.reviewInformation.acceptTerms(true);
+			checkOut.reviewInformation.placeOrder();
+			
+			checkOut.orderConfirmation.getOrderid();
+			checkOut.orderConfirmation.getOrdertotal();
+			checkOut.orderConfirmation.getSubtotal();
+			checkOut.orderConfirmation.getShippingcost();
+			checkOut.orderConfirmation.getbillingAddrerss();
+			checkOut.orderConfirmation.getshippingAddrerss();
 			
 			Common.testPass();
 		} 

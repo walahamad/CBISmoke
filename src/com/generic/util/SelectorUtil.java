@@ -1,5 +1,8 @@
 package com.generic.util;
 
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
+
 import java.io.IOException;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
@@ -351,12 +354,18 @@ public class SelectorUtil extends SelTestCase {
 				       }
 		    		}
 	    		}
+	    		else
+	    		{
+	    			//TODO: edit message 
+	    			assertNull("no operation nor selctor found");
+	    		}
 	        }
 	    	catch (Exception e)
 	    	{
 	    		SelTestCase.logs.debug("XXX>> Error in selecotr: " + e.getClass().getCanonicalName() +
 	    				" = " +
 	    				e.getMessage().split("\n")[0] );
+	    		throw e; 
 	    	}
 	    	return "";
 		}
