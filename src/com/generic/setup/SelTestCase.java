@@ -204,34 +204,11 @@ public class SelTestCase {
     public void tearDown() {
     	getCurrentFunctionName(true);
     	logs.debug(getDriver().getCurrentUrl());
-<<<<<<< HEAD
-        if(getTestStatus() != null) {
-            if(getTestStatus().startsWith("Pass")) {
-                ReportUtil.addTestCase(getTestCaseId() + "_" + counter, getTestCaseDescription(),
-                        getStartTime(),
-                        ReportUtil.now(time_date_format),
-                        getTestStatus());
-            } else if (getTestStatus().startsWith("Fail")) {
-                ReportUtil.addTestCase(getTestCaseId() + "_" + counter, getTestCaseDescription(),
-                        getStartTime(),
-                        ReportUtil.now(time_date_format),
-                        getTestStatus().substring(0, 4));
-            }
-            else if (getTestStatus().startsWith("Ignore")) {
-                ReportUtil.addTestCase(getTestCaseId() + "_" + counter, getTestCaseDescription(),
-                        getStartTime(),
-                        ReportUtil.now(time_date_format),
-                        getTestStatus().substring(0, 6));
-            }
-        }
 
-        if (getTestStatus() ==  null) {
-=======
         if(! Strings.isNullOrEmpty(getTestStatus())) {
         	ReportUtil.addTestCase(getTestCaseId() + "_" + counter, getTestCaseDescription(),
                     			   getStartTime(),ReportUtil.now(time_date_format),getTestStatus());
         } else if (Strings.isNullOrEmpty(getTestStatus())) {
->>>>>>> 5bc4e83f0a3483433cf55757cf7ab56c4505b145
             String temp = getTestCaseId() + "_" + counter;
             Common.testFail(Error, temp);
             Common.takeScreenShot();
