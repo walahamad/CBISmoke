@@ -9,6 +9,7 @@ import org.junit.After;
 import org.junit.Assume;
 import org.junit.Before;
 import org.openqa.selenium.WebDriver;
+import org.testng.util.Strings;
 
 import com.generic.util.ReportUtil;
 import com.generic.util.TestUtilities;
@@ -203,6 +204,7 @@ public class SelTestCase {
     public void tearDown() {
     	getCurrentFunctionName(true);
     	logs.debug(getDriver().getCurrentUrl());
+<<<<<<< HEAD
         if(getTestStatus() != null) {
             if(getTestStatus().startsWith("Pass")) {
                 ReportUtil.addTestCase(getTestCaseId() + "_" + counter, getTestCaseDescription(),
@@ -224,13 +226,17 @@ public class SelTestCase {
         }
 
         if (getTestStatus() ==  null) {
+=======
+        if(! Strings.isNullOrEmpty(getTestStatus())) {
+        	ReportUtil.addTestCase(getTestCaseId() + "_" + counter, getTestCaseDescription(),
+                    			   getStartTime(),ReportUtil.now(time_date_format),getTestStatus());
+        } else if (Strings.isNullOrEmpty(getTestStatus())) {
+>>>>>>> 5bc4e83f0a3483433cf55757cf7ab56c4505b145
             String temp = getTestCaseId() + "_" + counter;
             Common.testFail(Error, temp);
             Common.takeScreenShot();
             ReportUtil.addTestCase(getTestCaseId() + "_" + counter, getTestCaseDescription(),
-                    getStartTime(),
-                    ReportUtil.now(time_date_format),
-                    getTestStatus().substring(0, 4));
+                    			   getStartTime(),ReportUtil.now(time_date_format),getTestStatus().substring(0, 4));
         }
         Common.closeApplication();
         ReportUtil.updateEndTime(ReportUtil.now(time_date_format),
