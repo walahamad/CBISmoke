@@ -16,7 +16,7 @@ public class cart extends SelTestCase {
 	static List<String> valuesArr = new ArrayList<String>();
 
 
-public static void clickCheckout() throws InterruptedException, IOException {
+public static void clickCheckout() throws Exception {
 	getCurrentFunctionName(true);
 	logs.debug("clicking on checkout btn from cart");
 	subStrArr.add(cartSelectors.checkoutBtn);
@@ -26,7 +26,7 @@ public static void clickCheckout() throws InterruptedException, IOException {
 	
 }
 
-public static void clickContinueShoping() throws InterruptedException, IOException {
+public static void clickContinueShoping() throws Exception {
 	getCurrentFunctionName(true);
 	logs.debug("clicking on continue shopping from cart");
 	subStrArr.add(cartSelectors.continueShopping);
@@ -36,7 +36,7 @@ public static void clickContinueShoping() throws InterruptedException, IOExcepti
 	
 }
 
-public static String getNumberOfproducts() throws InterruptedException, IOException {
+public static String getNumberOfproducts() throws Exception {
 	getCurrentFunctionName(true);
 	subStrArr.add(cartSelectors.numberOfProducts);
 	valuesArr.add("");
@@ -46,7 +46,7 @@ public static String getNumberOfproducts() throws InterruptedException, IOExcept
 	return SelectorUtil.textValue;
 }
 
-public static String ordarTotal() throws InterruptedException, IOException {
+public static String ordarTotal() throws Exception {
 	getCurrentFunctionName(true);
 	subStrArr.add(cartSelectors.numberOfProducts);
 	valuesArr.add("");
@@ -56,7 +56,7 @@ public static String ordarTotal() throws InterruptedException, IOException {
 	return SelectorUtil.textValue;
 }
 
-public static String ordarSubTotal() throws InterruptedException, IOException {
+public static String ordarSubTotal() throws Exception {
 	getCurrentFunctionName(true);
 	subStrArr.add(cartSelectors.OrderSubTotal);
 	valuesArr.add("");
@@ -67,7 +67,7 @@ public static String ordarSubTotal() throws InterruptedException, IOException {
 	
 }
 
-public static void applyCoupon(String coupon) throws InterruptedException, IOException {
+public static void applyCoupon(String coupon) throws Exception {
 	getCurrentFunctionName(true);
 	if (!coupon.equals(""))
 	{
@@ -82,7 +82,7 @@ public static void applyCoupon(String coupon) throws InterruptedException, IOExc
 	getCurrentFunctionName(false);
 }
 
-private static void clickApplycoupon() throws InterruptedException, IOException {
+private static void clickApplycoupon() throws Exception {
 	getCurrentFunctionName(true);
 	subStrArr.add(cartSelectors.applyCouponButton);
 	valuesArr.add("");
@@ -90,7 +90,7 @@ private static void clickApplycoupon() throws InterruptedException, IOException 
 	getCurrentFunctionName(false);
 }
 
-private static void writeCoupon(String coupon) throws InterruptedException, IOException {
+private static void writeCoupon(String coupon) throws Exception {
 	getCurrentFunctionName(true);
 	subStrArr.add(cartSelectors.couponField);
 	valuesArr.add(coupon);

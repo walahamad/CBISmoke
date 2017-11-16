@@ -11,7 +11,7 @@ import com.generic.selector.signInSelectors;
 import com.generic.setup.SelTestCase;
 import com.generic.util.SelectorUtil;
 
-public class signIn extends SelTestCase {
+public class registration extends SelTestCase {
     private static final String DOC_URL = getCONFIG().getProperty("testSiteName");
     static List<String> subStrArr = new ArrayList<String>();
 	static List<String> valuesArr = new ArrayList<String>();

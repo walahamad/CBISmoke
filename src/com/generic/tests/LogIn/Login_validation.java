@@ -148,7 +148,7 @@ public class Login_validation extends SelTestCase {
 
 	}
 
-	private void initializeSelectorsAndDoActions(List<String> subStrArr, List<String> valuesArr) throws InterruptedException, IOException {
+	private void initializeSelectorsAndDoActions(List<String> subStrArr, List<String> valuesArr) throws Exception {
 		LinkedHashMap<String, LinkedHashMap> webElementsInfo = new LinkedHashMap<String, LinkedHashMap>();
 
 		int index = 0;
