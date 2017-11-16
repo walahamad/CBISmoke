@@ -1,7 +1,6 @@
 package com.generic.page;
 
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,7 +29,7 @@ public class PDP extends SelTestCase {
 	   getCurrentFunctionName(false);
    }
 
-private static String getPrice() throws Exception {
+public static String getPrice() throws Exception {
 	getCurrentFunctionName(true);
 	subStrArr.add(PDPSelectors.price);
 	valuesArr.add("");
