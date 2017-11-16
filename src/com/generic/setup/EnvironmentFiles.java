@@ -68,5 +68,15 @@ public class EnvironmentFiles {
 		EnvironmentFiles.reportsFolderPath = reportsFolderPath;
 	}
 	
+	//Failed Test Case Template HTML File
+	public static String failedTestCaseReportTemplate = System.getProperty("user.dir")+"//src//com//generic//reports//reportsTemplates//failedTCTemplate.html";
+
+	public static String getFailedTestCaseReportTemplate() {
+		return failedTestCaseReportTemplate;
+	}
+
+	public static void setFailedTestCaseReportTemplate(String failedTestCaseReportTemplate) {
+		EnvironmentFiles.failedTestCaseReportTemplate = failedTestCaseReportTemplate;
+	}
 	
 }

@@ -45,6 +45,9 @@ public final class ReportUtil extends SelTestCase {
 
     /** The index result filename. */
     public static String indexResultFilename;
+    
+    /** The html detailed report for failed test case filename. */
+    public static String failedTestCaseFileName;
 
     /** The current dir. */
     public static String currentDir;
@@ -248,9 +251,10 @@ public final class ReportUtil extends SelTestCase {
         try {
             newTest = true;
             if (status.startsWith("Fail")) {
-                File f = new File(currentDir + "//" + currentSuiteName + "_TC" + tcid + "_" + testCaseName.replaceAll(" ", "_") + ".html");
+            	failedTestCaseFileName = currentDir + "//" + currentSuiteName + "_TC" + tcid + "_" + testCaseName.replaceAll(" ", "_") + ".html"; 
+                File f = new File(failedTestCaseFileName);
                 f.createNewFile();
-                fstream = new FileWriter(currentDir + "//" + currentSuiteName + "_TC" + tcid + "_" + testCaseName.replaceAll(" ", "_") + ".html");
+                fstream = new FileWriter(failedTestCaseFileName);
                 ReportResultsWriter.generateFailedTestCasePage(testCaseName, fstream);
             }
 
