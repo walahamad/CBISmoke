@@ -3,7 +3,6 @@ package com.generic.tests.checkout;
 import java.util.Arrays;
 import java.util.Collection;
 
-import org.apache.xerces.dom3.as.ASObjectList;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -19,10 +18,8 @@ import com.generic.page.signIn;
 import com.generic.setup.Common;
 import com.generic.setup.SelTestCase;
 import com.generic.setup.SheetVariables;
-import com.generic.tests.LogIn.Login_validation;
 import com.generic.util.TestUtilities;
 import com.generic.util.RandomUtilities;
-import com.generic.util.ReportUtil;
 
 @RunWith(Parameterized.class)
 public class base_checkout extends SelTestCase {
