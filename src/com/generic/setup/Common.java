@@ -9,12 +9,10 @@ import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.InputStreamReader;
-import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
 import javax.imageio.ImageIO;
 
-import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;

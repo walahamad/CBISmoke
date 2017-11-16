@@ -1,12 +1,9 @@
 package com.generic.page;
 
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.generic.selector.PDPSelectors;
-import com.generic.selector.cartSelectors;
 import com.generic.selector.signInSelectors;
 import com.generic.setup.SelTestCase;
 import com.generic.util.SelectorUtil;
