@@ -96,7 +96,7 @@ public class base_checkout extends SelTestCase {
 			//TODO: write all values to sheet
 			if (runTest.equals(""))
 			{
-				logs.debug("Ignoring the current case");
+				logs.debug("Ignoring the current case ");
 				Common.testIgnored();
 				return;
 			}
