@@ -24,4 +24,4 @@ jobs:
       - checkout
         
       # run tests!
-      - run: pwd; ls; cd CI; chmode +x test.sh; ./test.sh
+      - run: pwd; ls; cd CI; chmod +x test.sh; ./test.sh
