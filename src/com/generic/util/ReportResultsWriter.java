@@ -1,13 +1,21 @@
 package com.generic.util;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
+import com.generic.setup.EnvironmentFiles;
 import com.generic.setup.SelTestCase;
 
 public class ReportResultsWriter {
@@ -28,6 +36,8 @@ public class ReportResultsWriter {
 		    out.write("<td width=10% align= center  bgcolor=#BCE954><FONT COLOR=#153E7E FACE=Arial SIZE=2><b>" + status + "</b></td>\n");
 		} else if (status.startsWith("Fail")) {
 		    out.write("<td width=10% align= center  bgcolor=Red><FONT COLOR=#153E7E FACE= Arial  SIZE=2><b>" + status.substring(0,4) + "</b></td>\n");
+		} else if (status.startsWith("Ignore")) {
+			out.write("<td width=10% align= center  bgcolor=Yellow><FONT COLOR=#153E7E FACE= Arial  SIZE=2><b>" + status.substring(0,6) + "</b></td>\n");
 		}
 		
 		out.write("<td width=20% align= center ><FONT COLOR=#153E7E FACE= Arial  SIZE=2><b>" + testCaseStartTime + "</b></td>\n");
@@ -79,48 +89,77 @@ public class ReportResultsWriter {
 				}
 	}
 	
+	/**
+     * Update the copied template.
+     */
+    public static void updateFailedTestCaseDetails(String testCaseFilePath, String title, String testScriptNumber, String failureDetails, String screenshotName) {
+    	SelTestCase.getCurrentFunctionName(true);
+    	StringBuffer buf = new StringBuffer();
+        try {
+            // Open the file that is the first
+            // command line parameter
+            FileInputStream fstream = new FileInputStream(testCaseFilePath);
+            // Get the object of DataInputStream
+            DataInputStream in = new DataInputStream(fstream);
+            BufferedReader br = new BufferedReader(new InputStreamReader(in));
+            String strLine;
+            // Read File Line By Line
+            while ((strLine = br.readLine()) != null) {
+
+                if (strLine.indexOf("~TCName~") != -1) {
+                	strLine=strLine.replaceAll("~TCName~", title);
+                	
+                } if (strLine.indexOf("~TSNum~") != -1) {
+                	strLine=strLine.replaceAll("~TSNum~", testScriptNumber);
+                	
+                } if (strLine.indexOf("~Fail Desc~") != -1) {
+                	strLine=strLine.replaceAll("~Fail Desc~", failureDetails);
+                	
+                } if (strLine.indexOf("~ScreenshotPath~") != -1) {
+                	strLine=strLine.replaceAll("~ScreenshotPath~", screenshotName);
+                }
+                
+                buf.append(strLine);
+            }
+
+            in.close();
+            FileOutputStream fos = new FileOutputStream(testCaseFilePath);
+            DataOutputStream output = new DataOutputStream(fos);
+            output.writeBytes(buf.toString());
+            fos.close();
+
+        } catch (Exception e) {
+            System.err.println("Error: " + e.getMessage());
+        }
+        SelTestCase.getCurrentFunctionName(false);
+
+    }
+    
 	public static void generateFailedTestCasePage(final String testCaseName, FileWriter fstream)
 			throws IOException {
-		BufferedWriter out;
-		out = new BufferedWriter(fstream);
+		BufferedWriter out = null;
 		try {
-		out.write("<html>");
-		out.write("<head>");
-		out.write("<title>");
-		out.write(testCaseName + " Detailed Reports");
-		out.write("</title>");
-		out.write("</head>");
-		out.write("<body>");
-
-		out.write("<h4> <FONT COLOR=660000 FACE=Arial SIZE=4.5> Detailed Report :</h4>");
-		out.write("<table  border=1 cellspacing=1    cellpadding=1 width=100%>");
-		out.write("<tr> ");
-		out.write("<td align=center width=10%  align=center bgcolor=#153E7E><FONT COLOR=#E0E0E0 FACE=Arial SIZE=2><b>Step/Row#</b></td>");
-		out.write("<td align=center width=70% align=center bgcolor=#153E7E><FONT COLOR=#E0E0E0 FACE=Arial SIZE=2><b>Error Description</b></td>");
-		out.write("<td align=center width=20% align=center bgcolor=#153E7E><FONT COLOR=#E0E0E0 FACE=Arial SIZE=2><b>Screen Shot</b></td>");
-		out.write("</tr>");
-
-		int i = 0;
-		out.write("<tr> ");
-
-		out.write("<td align=center width=10%><FONT COLOR=#153E7E FACE=Arial SIZE=2><b>TS"
-		        + (i + 1) + "</b></td>");
-		out.write("<td width=75% align= center  bgcolor=Red><FONT COLOR=#153E7E FACE= Arial  SIZE=2><b>"
-		        + ReportUtil.teststatus + "</b></td>\n");
-
-		if (ReportUtil.screenShotPath.get(i) != null) {
-		    out.write("<td align=center width=15%><FONT COLOR=#153E7E FACE=Arial SIZE=2><b><a href="
-		            + ReportUtil.screenShotPath.get(i)
-		            + " target=_blank>Screen Shot</a></b></td>");
-		} else {
-		    out.write("<td align=center width=15%><FONT COLOR=#153E7E FACE=Arial SIZE=2><b>&nbsp;</b></td>");
-		}
-		out.write("</tr>");
-		} catch(Throwable t) {
+			SelTestCase.getCurrentFunctionName(true);
+			SelTestCase.logs.debug("Copying the template into the target failed test case");
+			out = new BufferedWriter(fstream);
+			BufferedReader br = new BufferedReader(new FileReader(EnvironmentFiles.getFailedTestCaseReportTemplate()));
 			
+			// copying template into target
+			String str;
+		    while ((str = br.readLine()) != null) {
+		    	SelTestCase.logs.debug("Writing the tag : \n" + str);
+		        out.append(str);
+		    }
+		    br.close();
+		} catch(Throwable t) {
+			SelTestCase.logs.debug("Error in generateFailedTestCase function : ");
+			t.printStackTrace();
 		} finally {
 			out.close();
 		}
+		int i = 0;
+		updateFailedTestCaseDetails(ReportUtil.failedTestCaseFileName, testCaseName, (i +1) + "", ReportUtil.teststatus, ReportUtil.screenShotPath.get(i));
+		SelTestCase.getCurrentFunctionName(false);
 	}
 	
 	public static void writeTestCasesHeader(final String suiteName, BufferedWriter out) throws IOException {
