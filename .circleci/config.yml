@@ -24,4 +24,4 @@ jobs:
       - checkout
         
       # run tests!
-      - run: pwd; cd /home/ubuntu/SelFW/CI; chmode +x test.sh; ./test.sh
+      - run: pwd; ls; cd /home/ubuntu/SelFW/CI; chmode +x test.sh; ./test.sh
