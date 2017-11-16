@@ -20,7 +20,7 @@ public class checkOut extends SelTestCase {
 public static class shippingAddress 
 {
 
-	public static void SelectCountery(String countery) throws InterruptedException, IOException {
+	public static void SelectCountery(String countery) throws Exception {
 		getCurrentFunctionName(true);
 		logs.debug("Selecting Countery "  + countery);
 		subStrArr.add(checkOutSelectors.countery);
@@ -30,7 +30,7 @@ public static class shippingAddress
 		
 	}
 
-	public static void selectTitle(String title) throws InterruptedException, IOException {
+	public static void selectTitle(String title) throws Exception {
 		getCurrentFunctionName(true);
 		logs.debug("Selecting title "  + title);
 		subStrArr.add(checkOutSelectors.title);
@@ -39,7 +39,7 @@ public static class shippingAddress
 		getCurrentFunctionName(false);
 	}
 
-	public static void typeFirstName(String firstName) throws InterruptedException, IOException {
+	public static void typeFirstName(String firstName) throws Exception {
 		getCurrentFunctionName(true);
 		logs.debug("typing firstname "  + firstName);
 		subStrArr.add(checkOutSelectors.firstName);
@@ -49,7 +49,7 @@ public static class shippingAddress
 		
 	}
 
-	public static void typeAddress(String address) throws InterruptedException, IOException {
+	public static void typeAddress(String address) throws Exception {
 		getCurrentFunctionName(true);
 		logs.debug("typing address "  + address);
 		subStrArr.add(checkOutSelectors.address);
@@ -59,7 +59,7 @@ public static class shippingAddress
 		
 	}
 
-	public static void typeLastName(String lastName) throws InterruptedException, IOException {
+	public static void typeLastName(String lastName) throws Exception {
 		getCurrentFunctionName(true);
 		logs.debug("typing lastname "  + lastName);
 		subStrArr.add(checkOutSelectors.lastName);
@@ -69,7 +69,7 @@ public static class shippingAddress
 		
 	}
 
-	public static void typeCity(String city) throws InterruptedException, IOException {
+	public static void typeCity(String city) throws Exception {
 		getCurrentFunctionName(true);
 		logs.debug("typing city "  + city);
 		subStrArr.add(checkOutSelectors.city);
@@ -79,7 +79,7 @@ public static class shippingAddress
 		
 	}
 
-	public static void typePostalCode(String postal) throws InterruptedException, IOException {
+	public static void typePostalCode(String postal) throws Exception {
 		getCurrentFunctionName(true);
 		logs.debug("typing postal "  + postal);
 		subStrArr.add(checkOutSelectors.postal);
@@ -89,7 +89,7 @@ public static class shippingAddress
 		
 	}
 	
-	public static void typePhone(String phone) throws InterruptedException, IOException {
+	public static void typePhone(String phone) throws Exception {
 		getCurrentFunctionName(true);
 		logs.debug("typing phone "  + phone);
 		subStrArr.add(checkOutSelectors.phone);
@@ -99,7 +99,7 @@ public static class shippingAddress
 		
 	}
 
-	public static void checkSaveAddress(boolean check) throws InterruptedException, IOException {
+	public static void checkSaveAddress(boolean check) throws Exception {
 		getCurrentFunctionName(true);
 		logs.debug("Saving Address");
 		subStrArr.add(checkOutSelectors.CheckSaveAddress);
@@ -109,7 +109,7 @@ public static class shippingAddress
 		
 	}
 	
-	public static void clickNext() throws InterruptedException, IOException {
+	public static void clickNext() throws Exception {
 		getCurrentFunctionName(true);
 		logs.debug("clicking next in shipping address form");
 		subStrArr.add(checkOutSelectors.submitShippingAddressBtn);
@@ -120,7 +120,7 @@ public static class shippingAddress
 	}
 	
 	public static void fillAndClickNext(String Countery, String title, String firstName,
-			String lastName, String address, String city, String postal, String phone , boolean saveAdderss) throws InterruptedException, IOException {
+			String lastName, String address, String city, String postal, String phone , boolean saveAdderss) throws Exception {
 		getCurrentFunctionName(true);
 		
 		if (!Countery.equals(""))
@@ -154,7 +154,7 @@ public static class shippingAddress
 	}
 	
 	//in case of using the address book
-	public static void fillAndClickNext(boolean selectFromAddressBook) throws InterruptedException, IOException
+	public static void fillAndClickNext(boolean selectFromAddressBook) throws Exception
 	{
 		getCurrentFunctionName(true);
 		clickOnAddressBook();
@@ -162,7 +162,7 @@ public static class shippingAddress
 		getCurrentFunctionName(false);
 	}
 
-	private static void selectFirstAddress() throws InterruptedException, IOException {
+	private static void selectFirstAddress() throws Exception {
 		getCurrentFunctionName(true);
 		subStrArr.add(checkOutSelectors.selectFirstAddress);
 		valuesArr.add("");
@@ -171,7 +171,7 @@ public static class shippingAddress
 		
 	}
 
-	private static void clickOnAddressBook() throws InterruptedException, IOException {
+	private static void clickOnAddressBook() throws Exception {
 		getCurrentFunctionName(true);
 		subStrArr.add(checkOutSelectors.addressBookBtn);
 		valuesArr.add("");
@@ -184,7 +184,7 @@ public static class shippingAddress
 public static class shippingMethod 
 {
 
-	public static void fillAndclickNext(String shippingMethod) throws InterruptedException, IOException {
+	public static void fillAndclickNext(String shippingMethod) throws Exception {
 		getCurrentFunctionName(true);
 		selectShippingMethod(shippingMethod);
 		clickNext();
@@ -192,7 +192,7 @@ public static class shippingMethod
 		
 	}
 
-	private static void selectShippingMethod(String shippingMethod) throws InterruptedException, IOException {
+	private static void selectShippingMethod(String shippingMethod) throws Exception {
 		getCurrentFunctionName(true);
 		subStrArr.add(checkOutSelectors.shippingMethod);
 		valuesArr.add(shippingMethod);
@@ -201,7 +201,7 @@ public static class shippingMethod
 		
 	}
 
-	private static void clickNext() throws InterruptedException, IOException {
+	private static void clickNext() throws Exception {
 		getCurrentFunctionName(true);
 		subStrArr.add(checkOutSelectors.submitShippingMethodbtn);
 		valuesArr.add("");
@@ -216,7 +216,7 @@ public static class paymentInnformation
 
 	public static void fillAndclickNext(String cardtype, String cardHolder, String cardNumber,
 					String expireDay, String expireYear,
-					String CVC, boolean savePayment , boolean billSameShip) throws InterruptedException, IOException {
+					String CVC, boolean savePayment , boolean billSameShip) throws Exception {
 		getCurrentFunctionName(true);
 		
 		if (!cardtype.equals(""))
@@ -241,14 +241,14 @@ public static class paymentInnformation
 	}
 	
 	//in case of using wallet 
-	public static void fillAndclickNext(boolean useAlreadySavedPayment) throws InterruptedException, IOException {
+	public static void fillAndclickNext(boolean useAlreadySavedPayment) throws Exception {
 		getCurrentFunctionName(true);
 		clickOnUseedSavedCard();
 		pickFirstpaymentsaved();
 		getCurrentFunctionName(false);
 	}
 	
-	private static void pickFirstpaymentsaved() throws InterruptedException, IOException {
+	private static void pickFirstpaymentsaved() throws Exception {
 		getCurrentFunctionName(true);
 		subStrArr.add(checkOutSelectors.selectFirstPayment);
 		valuesArr.add("");
@@ -257,7 +257,7 @@ public static class paymentInnformation
 		
 	}
 
-	private static void clickOnUseedSavedCard() throws InterruptedException, IOException {
+	private static void clickOnUseedSavedCard() throws Exception {
 		getCurrentFunctionName(true);
 		subStrArr.add(checkOutSelectors.savedPaymentBtn);
 		valuesArr.add("");
@@ -265,7 +265,7 @@ public static class paymentInnformation
 		getCurrentFunctionName(false);
 	}
 
-	public static void clickNext() throws InterruptedException, IOException {
+	public static void clickNext() throws Exception {
 		getCurrentFunctionName(true);
 		subStrArr.add(checkOutSelectors.submitPayment);
 		valuesArr.add(String.valueOf(""));
@@ -273,7 +273,7 @@ public static class paymentInnformation
 		getCurrentFunctionName(false);
 	}
 
-	public static void checkBillingAddressSameshipping(boolean billSameShip) throws InterruptedException, IOException {
+	public static void checkBillingAddressSameshipping(boolean billSameShip) throws Exception {
 		getCurrentFunctionName(true);
 		subStrArr.add(checkOutSelectors.checkSame);
 		valuesArr.add(String.valueOf(billSameShip));
@@ -282,7 +282,7 @@ public static class paymentInnformation
 		
 	}
 	
-	private static void savePaymentMethod(boolean savePayment) throws InterruptedException, IOException {
+	private static void savePaymentMethod(boolean savePayment) throws Exception {
 		getCurrentFunctionName(true);
 		subStrArr.add(checkOutSelectors.checkSavePayment);
 		valuesArr.add(String.valueOf(savePayment));
@@ -291,7 +291,7 @@ public static class paymentInnformation
 	}
 
 	
-	public static void typeCVC(String CVC) throws InterruptedException, IOException {
+	public static void typeCVC(String CVC) throws Exception {
 		getCurrentFunctionName(true);
 		subStrArr.add(checkOutSelectors.CVC);
 		valuesArr.add(CVC);
@@ -300,7 +300,7 @@ public static class paymentInnformation
 		
 	}
 
-	public static void typeExpireYear(String expireYear) throws InterruptedException, IOException {
+	public static void typeExpireYear(String expireYear) throws Exception {
 		getCurrentFunctionName(true);
 		subStrArr.add(checkOutSelectors.expireYear);
 		valuesArr.add(expireYear);
@@ -309,7 +309,7 @@ public static class paymentInnformation
 		
 	}
 
-	public static void selectExpireDay(String expireDay) throws InterruptedException, IOException {
+	public static void selectExpireDay(String expireDay) throws Exception {
 		getCurrentFunctionName(true);
 		subStrArr.add(checkOutSelectors.expireDay);
 		valuesArr.add(expireDay);
@@ -318,7 +318,7 @@ public static class paymentInnformation
 		
 	}
 
-	public static void typeCardNumber(String cardNumber) throws InterruptedException, IOException {
+	public static void typeCardNumber(String cardNumber) throws Exception {
 		getCurrentFunctionName(true);
 		subStrArr.add(checkOutSelectors.cardNumber);
 		valuesArr.add(cardNumber);
@@ -327,7 +327,7 @@ public static class paymentInnformation
 		
 	}
 
-	public static void typeCardholder(String cardHolder) throws InterruptedException, IOException {
+	public static void typeCardholder(String cardHolder) throws Exception {
 		getCurrentFunctionName(true);
 		subStrArr.add(checkOutSelectors.cardHolder);
 		valuesArr.add(cardHolder);
@@ -336,7 +336,7 @@ public static class paymentInnformation
 		
 	}
 
-	public static void selectCardType(String cardtype) throws InterruptedException, IOException {
+	public static void selectCardType(String cardtype) throws Exception {
 		getCurrentFunctionName(true);
 		subStrArr.add(checkOutSelectors.cardtype);
 		valuesArr.add(cardtype);
@@ -350,7 +350,7 @@ public static class paymentInnformation
 public static class reviewInformation
 {
 
-	public static String getSubtotal() throws InterruptedException, IOException {
+	public static String getSubtotal() throws Exception {
 		getCurrentFunctionName(true);
 		subStrArr.add(checkOutSelectors.summaryTotal);
 		valuesArr.add("");
@@ -361,7 +361,7 @@ public static class reviewInformation
 		
 	}
 
-	public static String shippingCost() throws InterruptedException, IOException {
+	public static String shippingCost() throws Exception {
 		getCurrentFunctionName(true);
 		subStrArr.add(checkOutSelectors.shippingCost);
 		valuesArr.add("");
@@ -372,7 +372,7 @@ public static class reviewInformation
 		
 	}
 
-	public static String gettotal() throws InterruptedException, IOException {
+	public static String gettotal() throws Exception {
 		getCurrentFunctionName(true);
 		subStrArr.add(checkOutSelectors.orderTotal);
 		valuesArr.add("");
@@ -383,7 +383,7 @@ public static class reviewInformation
 		
 	}
 
-	public static void acceptTerms(boolean acceptTerm) throws InterruptedException, IOException {
+	public static void acceptTerms(boolean acceptTerm) throws Exception {
 		getCurrentFunctionName(true);
 		subStrArr.add(checkOutSelectors.acceptTerm);
 		valuesArr.add(String.valueOf(acceptTerm));
@@ -392,7 +392,7 @@ public static class reviewInformation
 		
 	}
 
-	public static void placeOrder() throws InterruptedException, IOException {
+	public static void placeOrder() throws Exception {
 		getCurrentFunctionName(true);
 		subStrArr.add(checkOutSelectors.placeOrderBtn);
 		valuesArr.add("");
@@ -406,7 +406,7 @@ public static class reviewInformation
 public static class orderConfirmation
 {
 
-	public static String getOrderid() throws InterruptedException, IOException {
+	public static String getOrderid() throws Exception {
 		getCurrentFunctionName(true);
 		subStrArr.add(checkOutSelectors.orderId);
 		valuesArr.add("");
@@ -417,7 +417,7 @@ public static class orderConfirmation
 		
 	}
 
-	public static String getOrdertotal() throws InterruptedException, IOException {
+	public static String getOrdertotal() throws Exception {
 		getCurrentFunctionName(true);
 		subStrArr.add(checkOutSelectors.orderConfirmationTotal);
 		valuesArr.add("");
@@ -428,7 +428,7 @@ public static class orderConfirmation
 		
 	}
 
-	public static String getSubtotal() throws InterruptedException, IOException {
+	public static String getSubtotal() throws Exception {
 		getCurrentFunctionName(true);
 		subStrArr.add(checkOutSelectors.orderConfirmationSubtotal);
 		valuesArr.add("");
@@ -439,7 +439,7 @@ public static class orderConfirmation
 		
 	}
 
-	public static String getShippingcost() throws InterruptedException, IOException {
+	public static String getShippingcost() throws Exception {
 		getCurrentFunctionName(true);
 		subStrArr.add(checkOutSelectors.orderConfirmationShippingCost);
 		valuesArr.add("");
@@ -450,7 +450,7 @@ public static class orderConfirmation
 		
 	}
 
-	public static String getbillingAddrerss() throws InterruptedException, IOException {
+	public static String getbillingAddrerss() throws Exception {
 		getCurrentFunctionName(true);
 		subStrArr.add(checkOutSelectors.orderconfirmationBillingAddress);
 		valuesArr.add("");
@@ -461,7 +461,7 @@ public static class orderConfirmation
 		
 	}
 	
-	public static String getshippingAddrerss() throws InterruptedException, IOException {
+	public static String getshippingAddrerss() throws Exception {
 		getCurrentFunctionName(true);
 		subStrArr.add(checkOutSelectors.orderconfirmationshippingAddress);
 		valuesArr.add("");

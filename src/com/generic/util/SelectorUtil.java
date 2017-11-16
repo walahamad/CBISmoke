@@ -29,6 +29,7 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 
+import com.generic.setup.ActionDriver;
 import com.generic.setup.SelTestCase;
 
 
@@ -82,7 +83,6 @@ public class SelectorUtil extends SelTestCase {
 				  foundElements = doc.select("[id~=(register.)?"+subStr+"$]");
 				  selectorType = (!(foundElements.isEmpty()) ? "id":selectorType);
 				 }
-				 
 				 if (foundElements.isEmpty())
 				 {
 				  //use * to mean contains
@@ -99,7 +99,7 @@ public class SelectorUtil extends SelTestCase {
 				 {
 					 //logs.debug("in *title"); 
 					 foundElements = doc.select("[title*="+subStr+"]");
-					  selectorType = (!(foundElements.isEmpty()) ? "title":selectorType);
+					 selectorType = (!(foundElements.isEmpty()) ? "title":selectorType);
 				 }
 				 if (foundElements.isEmpty())
 	    	     {
@@ -108,7 +108,8 @@ public class SelectorUtil extends SelTestCase {
 	    	    	 selectorType = (!(foundElements.isEmpty()) ? subStr:selectorType);
 	    	     }
 				 
-				 if (foundElements != null && !foundElements.isEmpty()) {
+				 if (foundElements != null && !foundElements.isEmpty())
+				 {
 					  Map <String, Object> webElementInfo = webElementsInfo.get(subStr);
 					  webElementInfo.put("selector",getStringSelectorForElements(foundElements, selectorType));
 					  webElementInfo.put("SelType",selectorType);
@@ -116,11 +117,11 @@ public class SelectorUtil extends SelTestCase {
 					  webElementInfo.put("action",getActiontype(foundElements));
 					  SelTestCase.logs.debug("Found a valid selector: " + Arrays.asList(webElementInfo));
 				  
-				  if (foundElements.size() ==0)
-				  {
-					  logs.debug("XXX>> NO Valid Selector Found <<XXX");
-				  }
-			 } 
+				 } 
+				 else
+				 {
+					 logs.debug("XXX>> NO Valid Selector Found <<XXX");
+				 }
 			 index++;
 			}
 			getCurrentFunctionName(false);
@@ -182,8 +183,12 @@ public class SelectorUtil extends SelTestCase {
 					case "name":
 						selector = By.name(e.attr("name"));
 						break;
+					case "title":
+						selector = By.xpath("//*[contains(@"+selType+",'"+ e.attr(selType) + "')]");
+						break;
+						
 					default:
-						selector = By.xpath("//*[contains(text(),'"+ selType + "')]");
+						selector = By.xpath("//button[contains(text(),'"+ selType + "')]");
 						break;
 					}
 		    		
@@ -217,8 +222,12 @@ public class SelectorUtil extends SelTestCase {
 					case "name":
 						selector = e.attr("name");
 						break;
+					case "title":
+						selector = "//*[contains(@"+selType+",'"+ e.attr(selType) + "')]";
+						break;
+						
 					default:
-						selector = "//button[contains(text(),'"+ selType + "')]";
+						selector = "//button[contains(@text,'"+ selType + "')]";
 						break;
 					}
 				}
@@ -226,7 +235,8 @@ public class SelectorUtil extends SelTestCase {
 			return selector;
 	    }
 	    
-	    public static String doAppropriateAction(Map <String, Object> webElementInfo ) {
+	    public static String doAppropriateAction(Map <String, Object> webElementInfo ) throws Exception {
+	    	getCurrentFunctionName(true);
 	    	try
 	        {
 	    		String selector = (String) webElementInfo.get("selector");
@@ -251,7 +261,7 @@ public class SelectorUtil extends SelTestCase {
 						   logs.debug("clicking on " +  byAction.toString());
 						   JavascriptExecutor jse = (JavascriptExecutor)getDriver();
 						   jse.executeScript("arguments[0].scrollIntoView()", getDriver().findElement(byAction)); 
-						   getDriver().findElement(byAction).click();
+						   ActionDriver.click(byAction);
 					   }
 					   else if (action.equals("check"))
 					   {
@@ -336,7 +346,7 @@ public class SelectorUtil extends SelTestCase {
 							   for(int i=0; i<options.size(); i++)
 							   {
 								  // logs.debug(options.get(i).getText().trim());
-							   	    if (options.get(i).getText().trim().contains(value))
+							   	    if (options.get(i).getText().toLowerCase().trim().contains(value.toLowerCase()))
 							   	    {
 										logs.debug("selected index is" + i ); 
 							   	    	select.selectByIndex(i);
@@ -367,11 +377,12 @@ public class SelectorUtil extends SelTestCase {
 	    				e.getMessage().split("\n")[0] );
 	    		throw e; 
 	    	}
+	    	getCurrentFunctionName(false);
 	    	return "";
 		}
 	    
 	    
-		public static void initializeSelectorsAndDoActions(List<String> subStrArr, List<String> valuesArr) throws InterruptedException, IOException {
+		public static void initializeSelectorsAndDoActions(List<String> subStrArr, List<String> valuesArr) throws Exception {
 			LinkedHashMap<String, LinkedHashMap> webElementsInfo = new LinkedHashMap<String, LinkedHashMap>();
 			
 			int index = 0;

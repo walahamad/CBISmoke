@@ -14,7 +14,7 @@ public class PDP extends SelTestCase {
     static List<String> subStrArr = new ArrayList<String>();
 	static List<String> valuesArr = new ArrayList<String>();
 	
-   public static void addProductsToCart(String url, String color, String size, String qty) throws InterruptedException, IOException
+   public static void addProductsToCart(String url, String color, String size, String qty) throws Exception
    {
 	   getDriver().get(url);
 	   getCurrentFunctionName(true);
@@ -30,7 +30,7 @@ public class PDP extends SelTestCase {
 	   getCurrentFunctionName(false);
    }
 
-private static String getPrice() throws InterruptedException, IOException {
+private static String getPrice() throws Exception {
 	getCurrentFunctionName(true);
 	subStrArr.add(PDPSelectors.price);
 	valuesArr.add("");
@@ -39,7 +39,7 @@ private static String getPrice() throws InterruptedException, IOException {
 	return SelectorUtil.textValue;
 }
 
-private static void clickcheckoutBtnCartPopup() throws InterruptedException, IOException {
+private static void clickcheckoutBtnCartPopup() throws Exception {
 	getCurrentFunctionName(true);
 	subStrArr.add(PDPSelectors.cart_popup);
 	valuesArr.add("");
@@ -47,7 +47,7 @@ private static void clickcheckoutBtnCartPopup() throws InterruptedException, IOE
 	getCurrentFunctionName(false);
 }
 
-private static void clickAddToCartBtn() throws InterruptedException, IOException {
+private static void clickAddToCartBtn() throws Exception {
 	getCurrentFunctionName(true);
 	subStrArr.add(PDPSelectors.addToCartBtn);
 	valuesArr.add("");
@@ -55,7 +55,7 @@ private static void clickAddToCartBtn() throws InterruptedException, IOException
 	getCurrentFunctionName(false);
 }
 
-private static void defineQty(String qty) throws InterruptedException, IOException {
+private static void defineQty(String qty) throws Exception {
 	getCurrentFunctionName(true);
 	subStrArr.add(PDPSelectors.qty);
 	valuesArr.add(qty);
@@ -63,7 +63,7 @@ private static void defineQty(String qty) throws InterruptedException, IOExcepti
 	getCurrentFunctionName(false);
 }
 
-private static void selectsize(String size) throws InterruptedException, IOException {
+private static void selectsize(String size) throws Exception {
 	getCurrentFunctionName(true);
 	subStrArr.add(PDPSelectors.size);
 	valuesArr.add(size);
@@ -71,7 +71,7 @@ private static void selectsize(String size) throws InterruptedException, IOExcep
 	getCurrentFunctionName(false);
 }
 
-private static void selectcolor(String color) throws InterruptedException, IOException {
+private static void selectcolor(String color) throws Exception {
 	getCurrentFunctionName(true);
 	subStrArr.add(color);
 	valuesArr.add("");

@@ -19,7 +19,9 @@ import com.generic.page.signIn;
 import com.generic.setup.Common;
 import com.generic.setup.SelTestCase;
 import com.generic.setup.SheetVariables;
+import com.generic.tests.LogIn.Login_validation;
 import com.generic.util.TestUtilities;
+import com.generic.util.RandomUtilities;
 import com.generic.util.ReportUtil;
 
 @RunWith(Parameterized.class)
@@ -99,7 +101,7 @@ public class base_checkout extends SelTestCase {
 				return;
 			}
 			
-			if (proprties.contains("logged in"))
+			if (proprties.contains("loggedin"))
 			{
 				//TODO: pull user mail from sheet 
 				signIn.logIn("ibatta@dbi.com", "1234567");
@@ -107,20 +109,32 @@ public class base_checkout extends SelTestCase {
 			if(proprties.contains("fresh"))
 			{
 				//TODO: add flow for register 
-				//TODO: generate random mail 
+				String mail = RandomUtilities.getRandomEmail().toLowerCase();
+				
 				//TODO: write random mail from previous step to sheet
 				//TODO: register with information
 				//TODO: create sheet for users or pull then from config file
 				//TODO: write function to get user information from sheet
 			}
 			
-			//TODO: add function to get these values from the case vars
-			String url = "https://hybrisdemo.conexus.co.uk:9002/yacceleratorstorefront/en/Brands/Toko/Snowboard-Ski-Tool-Toko-Waxremover-HC3-500ml/p/45572";
-			PDP.addProductsToCart(url,"","", "5");
+			//TODO: move all keys to one file make sure to move them also from the function it self
+			for (String product :products )
+			{
+				logs.debug("Adding product " + product);
+				LinkedHashMap<String, Object> productDetails= (LinkedHashMap<String, Object>) invintory.get(product);
+				PDP.addProductsToCart((String) productDetails.get("url"),(String) productDetails.get("color"),
+						(String) productDetails.get("size"), (String) productDetails.get("qty"));
+				
+			}
+			
 			
 			if (!coupon.equals(""))
 			{
 				cart.applyCoupon(coupon);
+				if (coupon.contains("invalid"))
+				{
+					//TODO: add logic to validate the error msg 
+				}
 			}
 			cart.getNumberOfproducts();
 			cart.ordarTotal();
