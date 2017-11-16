@@ -24,4 +24,15 @@ jobs:
       - checkout
         
       # run tests!
-      - run: mvn integration-test
+      - run: 
+        name: Run dummy Test
+        command: chmode +x test.sh
+        when: always
+        working_directory: /home/ubuntu/SelFW/CI
+      
+      # run tests!
+      - run: 
+        name: Run dummy Test
+        command: ./test.sh
+        when: always
+        working_directory: /home/ubuntu/SelFW/CI
