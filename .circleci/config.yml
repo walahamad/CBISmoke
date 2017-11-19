@@ -27,3 +27,14 @@ jobs:
       - run: 
             name: Tests kickoff 
             command: pwd; ls; cd CI; chmod +x test.sh; ./test.sh
+            
+      # run tests!
+      - run: 
+            name: Tests unit test 
+            command: pwd; ls; cd CI; chmod +x test.sh; ./test.sh
+            
+            
+       # run tests!
+      - run: 
+            name: Tests automation test 
+            command: pwd; ls; cd CI; chmod +x test.sh; ./test.sh
