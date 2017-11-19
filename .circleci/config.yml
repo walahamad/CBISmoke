@@ -25,5 +25,5 @@ jobs:
         
       # run tests!
       - run: 
-        name: Tests kickoff 
-        command: pwd; ls; cd CI; chmod +x test.sh; ./test.sh
+            name: Tests kickoff 
+            command: pwd; ls; cd CI; chmod +x test.sh; ./test.sh
