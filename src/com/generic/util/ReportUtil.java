@@ -141,7 +141,7 @@ public final class ReportUtil extends SelTestCase {
             // Added so the report will show the browser type.
             String rBrowserType = browser;
 
-            ReportResultsWriter.writeReportTestDetails(testStartTime, out, rUNDATE, eNVIRONMENT, rBrowserType);
+            ReportResultsWriter.writeReportTestDetails(testStartTime, out, rUNDATE, eNVIRONMENT, rBrowserType, getCONFIG().getProperty("testSuiteName"));
             
         } catch (Exception e) {
             System.err.println("Error: " + e.getMessage());
@@ -171,7 +171,7 @@ public final class ReportUtil extends SelTestCase {
             fstream = new FileWriter(indexResultFilename, true);
             out = new BufferedWriter(fstream);
 
-            ReportResultsWriter.writeTestCasesHeader(suiteName, out);
+//            ReportResultsWriter.writeTestCasesHeader(suiteName, out);
         } catch (Exception e) {
             System.err.println("Error: " + e.getMessage());
         } finally {
@@ -315,9 +315,9 @@ public final class ReportUtil extends SelTestCase {
 
             while ((strLine = br.readLine()) != null) {
 
-                if (strLine.indexOf("end_time") != -1) {
+                if (strLine.indexOf("~EndTime~") != -1) {
                     //strLine = strLine.replace("END_TIME", endTime);
-                	strLine=strLine.replaceAll("'end_time'><FONT COLOR=#153E7E FACE= Arial  SIZE=2.75><b>.*</b></td></tr><tr id = 'Done_end'>", "'end_time'><FONT COLOR=#153E7E FACE= Arial  SIZE=2.75><b>"+endTime+"</b></td></tr><tr id = 'Done_end'>");
+                	strLine=strLine.replaceAll("~EndTime~",endTime);
                 }
                 if (strLine.indexOf("TEST_DATA") != -1) {
                     if (testStat == "Passed") {

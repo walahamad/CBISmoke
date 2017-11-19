@@ -147,7 +147,7 @@ public class ReportResultsWriter {
 			// copying template into target
 			String str;
 		    while ((str = br.readLine()) != null) {
-		    	SelTestCase.logs.debug("Writing the tag : \n" + str);
+//		    	SelTestCase.logs.debug("Writing the tag : \n" + str);
 		        out.append(str);
 		    }
 		    br.close();
@@ -185,57 +185,38 @@ public class ReportResultsWriter {
 		}
 	}
 	public static void writeReportTestDetails(final String testStartTime, BufferedWriter out, String rUNDATE,
-			String eNVIRONMENT, String rBrowserType) throws IOException {
+			String eNVIRONMENT, String rBrowserType, String testSuiteName) throws IOException {
 		try {
-		out.newLine();
-
-		out.write("<html>\r\n");
-		out.write("<HEAD>\r\n");
-		out.write(" <TITLE>Automation Test Results</TITLE>\n");
-		out.write("<style>tr:nth-of-type(odd) {   background: #eee; }th {   background: #333;   color: white;   font-weight: bold; }td, th {   padding: 6px;   border: 1px solid #ccc;   text-align: left; }</style>\r\n");
-		out.write("</HEAD>\r\n");
-
-		out.write("<body>\r\n");
-		out.write("<h4 align=center><FONT COLOR=#153E7E FACE=AriaL SIZE=6><b><u> Automation Test Results</u></b></h4>\r\n");
-		out.write("<h4> <FONT COLOR=#153E7E FACE=Arial SIZE=4.5> <u>Test Details :</u></h4>\r\n");
-
-		out.write("<table  border=1 cellspacing=1 cellpadding=1 >\r\n");
-		out.write("<tr>\r\n");
-		
-		out.write("<td width=150 align=left bgcolor=#153E7E><FONT COLOR=#E0E0E0 FACE=Arial SIZE=2.75><b>Run Date</b></td>\r\n");
-		out.write("<td width=150 align=left><FONT COLOR=#153E7E FACE=Arial SIZE=2.75><b>"
-		    + rUNDATE + "</b></td>\r\n");
-		out.write("</tr>\r\n");
-		out.write("<tr>\r\n");
-
-		out.write("<td width=150 align=left bgcolor=#153E7E><FONT COLOR=#E0E0E0 FACE=Arial SIZE=2.75><b>Run StartTime</b></td>\r\n");
-
-		out.write("<td width=150 align=left><FONT COLOR=#153E7E FACE=Arial SIZE=2.75><b>\r\n"
-		    + testStartTime + "</b></td>\r\n");
-		out.write("</tr>\r\n");
-		out.write("<tr>\r\n");
-		
-		out.newLine();
-		out.write("<td width=150 align= left  bgcolor=#153E7E><FONT COLOR=#E0E0E0 FACE= Arial  SIZE=2.75><b>Run EndTime</b></td>\r\n");
-		out.write("\n<td width=150 align= left id = 'end_time'><FONT COLOR=#153E7E FACE= Arial  SIZE=2.75><b>END_TIME</b></td>\r\n" + System.lineSeparator());
-		out.write("</tr>\r\n");
-		out.write("<tr id = 'Done_end'>\r\n");
-		out.newLine();
-
-		out.write("<td width=150 align= left  bgcolor=#153E7E><FONT COLOR=#E0E0E0 FACE= Arial  SIZE=2.75><b>Environment</b></td>\r\n");
-		out.write("<td width=150 align= left ><FONT COLOR=#153E7E FACE= Arial  SIZE=2.75><b>\r\n"
-		    + eNVIRONMENT + "</b></td>\r\n");
-		out.write("</tr>\r\n");
-		out.write("<tr>\r\n");
-
-		out.write("<td width=150 align= left  bgcolor=#153E7E><FONT COLOR=#E0E0E0 FACE= Arial  SIZE=2.75><b>Browser Type</b></td>\r\n");
-		out.write("<td width=150 align= left ><FONT COLOR=#153E7E FACE= Arial  SIZE=2.75><b>\r\n"
-		    + rBrowserType + "</b></td>\n");
-		out.write("</tr>\r\n");
-
-		out.write("</table>\r\n");
-		} catch(Throwable t) {
+			SelTestCase.getCurrentFunctionName(true);
+			SelTestCase.logs.debug("Copying the template into the target failed test case");
+			BufferedReader br = new BufferedReader(new FileReader(EnvironmentFiles.getTestCasesIndexReportTemplate()));
 			
+			// copying template into target
+			String str;
+		    while ((str = br.readLine()) != null) {
+		    	SelTestCase.logs.debug("Writing the tag : \n" + str);
+		    	if (str.indexOf("~RunDate~") != -1) {
+		    		str=str.replaceAll("~RunDate~", rUNDATE);
+                	
+                } if (str.indexOf("~Env~") != -1) {
+                	str=str.replaceAll("~Env~", eNVIRONMENT);
+                	
+                } if (str.indexOf("~BrowserType~") != -1) {
+                	str=str.replaceAll("~BrowserType~", rBrowserType);
+                	
+                } if (str.indexOf("~StartTime~") != -1) {
+                	str=str.replaceAll("~StartTime~", testStartTime);
+                	
+                } if (str.indexOf("~SuiteName~") != -1) {
+                	str=str.replaceAll("~SuiteName~", testSuiteName);
+                }
+                
+		        out.append(str);
+		    }
+		    br.close();
+		} catch(Throwable t) {
+			SelTestCase.logs.debug("Error in writing index file ");
+			t.printStackTrace();
 		} finally {
 			out.close();
 		}
