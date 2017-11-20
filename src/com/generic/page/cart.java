@@ -179,7 +179,13 @@ public static boolean isCartEmpty() throws Exception
 	getCurrentFunctionName(true);
 	subStrArr.add(cartSelectors.cartContent);
 	valuesArr.add("");
-	SelectorUtil.initializeSelectorsAndDoActions(subStrArr,valuesArr);
+	try {
+		SelectorUtil.textValue = "";
+		SelectorUtil.initializeSelectorsAndDoActions(subStrArr,valuesArr);
+	}catch(Exception e)
+	{
+		logs.debug("Cart is not empty " + e.getMessage());
+	}
 	getCurrentFunctionName(false);
 	return (SelectorUtil.textValue.contains("empty") ? true:false);
 }

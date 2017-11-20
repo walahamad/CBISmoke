@@ -7,6 +7,7 @@ import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.NoSuchElementException;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -362,9 +363,6 @@ public class SelectorUtil extends SelTestCase {
 	        }
 	    	catch (Exception e)
 	    	{
-	    		SelTestCase.logs.debug("XXX>> Error in selecotr: " + e.getClass().getCanonicalName() +
-	    				" = " +
-	    				e.getMessage().split("\n")[0] );
 	    		throw e; 
 	    	}
 	    	getCurrentFunctionName(false);
@@ -389,21 +387,31 @@ public class SelectorUtil extends SelTestCase {
 				webElementsInfo.remove(key);
 				webElementsInfo.put(key, webElementInfo);
 			}
-			//Keeping this for Debugging purposes.  
-			logs.debug(Arrays.asList(webElementsInfo));
-			SelectorUtil.initializeElementsSelectorsMaps(webElementsInfo, isValidationStep);
-			logs.debug(Arrays.asList(webElementsInfo));
-
-			for (String key : webElementsInfo.keySet()) {
-				LinkedHashMap<String, Object> webElementInfo = webElementsInfo.get(key);
-				textValue = SelectorUtil.doAppropriateAction(webElementInfo);
+			try
+			{
+				//Keeping this for Debugging purposes.  
+				logs.debug(Arrays.asList(webElementsInfo));
+				SelectorUtil.initializeElementsSelectorsMaps(webElementsInfo, isValidationStep);
+				logs.debug(Arrays.asList(webElementsInfo));
+	
+				for (String key : webElementsInfo.keySet()) {
+					LinkedHashMap<String, Object> webElementInfo = webElementsInfo.get(key);
+					textValue = SelectorUtil.doAppropriateAction(webElementInfo);
+				}
+	
+				
+				Thread.sleep(1000);
+			}catch(Exception e)
+			{
+				logs.debug("ERROR >>>-->>> : "+e.getMessage() );
+				throw new NoSuchElementException("No such element: "  + Arrays.asList(webElementsInfo)); 
+				
+			}finally
+			{
+				valuesArr.clear();
+				subStrArr.clear();
 			}
-
 			
-			Thread.sleep(1000);
-			
-			valuesArr.clear();
-			subStrArr.clear();
 			
 			logs.debug("FINISHED doing correct action on elements: " +Arrays.asList(webElementsInfo));
 

@@ -15,6 +15,6 @@ public class cartSelectors
 	public static final String errorMessage = "global-alerts";
 	public static final String actionMenue = "editEntry_";
 	public static final String removeItem = "actionEntry_";
-	public static final String cartContent = "page-cartPage";
+	public static final String cartContent = "yCmsComponent yComponentWrapper content__empty";
 	
 }
