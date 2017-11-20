@@ -123,6 +123,7 @@ public final class ReportUtil extends SelTestCase {
      *        This is the browser type that executed the test.
      */
     public static void startTesting(final String filename, final String testStartTime, final String env, final String browser) {
+    	currentSuiteName = getCONFIG().getProperty("testSuiteName").replaceAll(" ", "_");
         indexResultFilename = filename;
         currentDir = indexResultFilename.substring(0,indexResultFilename.lastIndexOf("//"));
         logDir = currentDir;
@@ -141,7 +142,7 @@ public final class ReportUtil extends SelTestCase {
             // Added so the report will show the browser type.
             String rBrowserType = browser;
 
-            ReportResultsWriter.writeReportTestDetails(testStartTime, out, rUNDATE, eNVIRONMENT, rBrowserType);
+            ReportResultsWriter.writeReportTestDetails(testStartTime, out, rUNDATE, eNVIRONMENT, rBrowserType, getCONFIG().getProperty("testSuiteName"));
             
         } catch (Exception e) {
             System.err.println("Error: " + e.getMessage());
@@ -151,37 +152,6 @@ public final class ReportUtil extends SelTestCase {
             out = null;
         }
     }
-
-	
-
-    /**
-     * Start suite.
-     *
-     * @param suiteName
-     *        the suite name
-     */
-    public static void startSuite(final String suiteName) {
-
-        FileWriter fstream = null;
-        BufferedWriter out = null;
-        currentSuiteName = suiteName.replaceAll(" ", "_");
-        tcid = 1;
-        try {
-
-            fstream = new FileWriter(indexResultFilename, true);
-            out = new BufferedWriter(fstream);
-
-            ReportResultsWriter.writeTestCasesHeader(suiteName, out);
-        } catch (Exception e) {
-            System.err.println("Error: " + e.getMessage());
-        } finally {
-
-            fstream = null;
-            out = null;
-        }
-    }
-
-	
 
     /**
      * End suite.
@@ -194,6 +164,8 @@ public final class ReportUtil extends SelTestCase {
             fstream = new FileWriter(indexResultFilename, true);
             out = new BufferedWriter(fstream);
             out.write("</table>\n");
+            out.write("</body>\n");
+            out.write("</html>");
             out.close();
         } catch (Exception e) {
             System.err.println("Error: " + e.getMessage());
@@ -314,24 +286,11 @@ public final class ReportUtil extends SelTestCase {
             // Read File Line By Line
 
             while ((strLine = br.readLine()) != null) {
-
+            	
+            	
                 if (strLine.indexOf("end_time") != -1) {
-                    //strLine = strLine.replace("END_TIME", endTime);
-                	strLine=strLine.replaceAll("'end_time'><FONT COLOR=#153E7E FACE= Arial  SIZE=2.75><b>.*</b></td></tr><tr id = 'Done_end'>", "'end_time'><FONT COLOR=#153E7E FACE= Arial  SIZE=2.75><b>"+endTime+"</b></td></tr><tr id = 'Done_end'>");
-                }
-                if (strLine.indexOf("TEST_DATA") != -1) {
-                    if (testStat == "Passed") {
-                        strLine =
-                            strLine.replace("TEST_DATA",
-                                "<FONT COLOR=GREEN FACE= Arial  SIZE=2.75>"
-                                    + testStat + "</FONT>");
-                    } else if (testStat == "Failed") {
-                        strLine =
-                            strLine.replace("TEST_DATA",
-                                "<FONT COLOR=RED FACE= Arial  SIZE=2.75>"
-                                    + testStat + "</FONT>");
-                    }
-
+                	strLine=strLine.replaceAll("'end_time'><FONT COLOR=#153E7E FACE=Arial SIZE=2.75><b>.*</b></td></tr><tr id='Done_end'>", 
+                			"'end_time'><FONT COLOR=#153E7E FACE=Arial SIZE=2.75><b>" +endTime+ "</b></td></tr><tr id='Done_end'>");
                 }
                 buf.append(strLine);
             }

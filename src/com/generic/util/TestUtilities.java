@@ -35,7 +35,7 @@ public class TestUtilities extends SelTestCase {
                     try {
                         mainDir = EnvironmentFiles.getReportsFolderPath();
                         
-                        logs.debug("LogsDir: "+mainDir);
+                        logs.debug("Reports dir. : "+mainDir);
                         
                         File dir1 = new File(mainDir);
                         boolean exists = dir1.exists();
@@ -57,7 +57,6 @@ public class TestUtilities extends SelTestCase {
                             SelTestCase.getCONFIG().getProperty("testEnvironment"),
                             getBrowserName() );
 
-                    ReportUtil.startSuite(getCONFIG().getProperty("testSuiteName"));
                     runReportSetup = false;
                 }
 

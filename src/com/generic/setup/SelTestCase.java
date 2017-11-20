@@ -6,6 +6,7 @@ import java.util.Properties;
 
 import org.apache.log4j.Logger;
 import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Assume;
 import org.junit.Before;
 import org.openqa.selenium.WebDriver;
@@ -217,8 +218,7 @@ public class SelTestCase {
                     			   getStartTime(),ReportUtil.now(time_date_format),getTestStatus().substring(0, 4));
         }
         Common.closeApplication();
-        ReportUtil.updateEndTime(ReportUtil.now(time_date_format),
-                getTestStatus());
+        ReportUtil.updateEndTime(ReportUtil.now(time_date_format), getTestStatus());
         try {
         	if (getCONFIG().getProperty("browser").equalsIgnoreCase("chrome"))
         	{
