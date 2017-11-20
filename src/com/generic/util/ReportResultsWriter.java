@@ -19,6 +19,18 @@ import com.generic.setup.EnvironmentFiles;
 import com.generic.setup.SelTestCase;
 
 public class ReportResultsWriter {
+	
+	/***
+	 * Writes the result of the executed test case to index.html file 
+	 * @param testCaseName
+	 * @param testCaseDesc
+	 * @param testCaseStartTime
+	 * @param testCaseEndTime
+	 * @param status
+	 * @param out
+	 * @throws IOException
+	 * @throws NumberFormatException
+	 */
 	public static void addExecutedTestCaseToIndex(final String testCaseName, final String testCaseDesc,
 			final String testCaseStartTime, final String testCaseEndTime, final String status, BufferedWriter out)
 					throws IOException, NumberFormatException {
@@ -35,9 +47,9 @@ public class ReportResultsWriter {
 		if (status.startsWith("Pass")) {
 		    out.write("<td width=10% align= center  bgcolor=#BCE954><FONT COLOR=#153E7E FACE=Arial SIZE=2><b>" + status + "</b></td>\n");
 		} else if (status.startsWith("Fail")) {
-		    out.write("<td width=10% align= center  bgcolor=Red><FONT COLOR=#153E7E FACE= Arial  SIZE=2><b>" + status.substring(0,4) + "</b></td>\n");
+		    out.write("<td width=10% align= center  bgcolor=Red><FONT COLOR=#153E7E FACE=Arial SIZE=2><b>" + status.substring(0,4) + "</b></td>\n");
 		} else if (status.startsWith("Ignore")) {
-			out.write("<td width=10% align= center  bgcolor=Yellow><FONT COLOR=#153E7E FACE= Arial  SIZE=2><b>" + status.substring(0,6) + "</b></td>\n");
+			out.write("<td width=10% align= center  bgcolor=Yellow><FONT COLOR=#153E7E FACE=Arial SIZE=2><b>" + status.substring(0,6) + "</b></td>\n");
 		}
 		
 		out.write("<td width=20% align= center ><FONT COLOR=#153E7E FACE= Arial  SIZE=2><b>" + testCaseStartTime + "</b></td>\n");
@@ -57,6 +69,12 @@ public class ReportResultsWriter {
 				+ ".html", Float.parseFloat(SelTestCase.getCONFIG().getProperty("report_analysis_period")));
 	}
 	
+	/***
+	 * Calculates the duration of execution for the test case
+	 * @param testCaseStartTime
+	 * @param testCaseEndTime
+	 * @return
+	 */
 	private static String calculateTestCaseRunTime(final String testCaseStartTime, final String testCaseEndTime) {
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat(SelTestCase.time_date_format);
 		Date start_date = null;
@@ -89,9 +107,14 @@ public class ReportResultsWriter {
 				}
 	}
 	
-	/**
-     * Update the copied template.
-     */
+	/***
+	 * Update the details of copied template for the failed test case.
+	 * @param testCaseFilePath
+	 * @param title
+	 * @param testScriptNumber
+	 * @param failureDetails
+	 * @param screenshotName
+	 */
     public static void updateFailedTestCaseDetails(String testCaseFilePath, String title, String testScriptNumber, String failureDetails, String screenshotName) {
     	SelTestCase.getCurrentFunctionName(true);
     	StringBuffer buf = new StringBuffer();
@@ -106,16 +129,16 @@ public class ReportResultsWriter {
             // Read File Line By Line
             while ((strLine = br.readLine()) != null) {
 
-                if (strLine.indexOf("~TCName~") != -1) {
+                if (strLine.contains("~TCName~")) {
                 	strLine=strLine.replaceAll("~TCName~", title);
                 	
-                } if (strLine.indexOf("~TSNum~") != -1) {
+                } if (strLine.contains("~TSNum~")) {
                 	strLine=strLine.replaceAll("~TSNum~", testScriptNumber);
                 	
-                } if (strLine.indexOf("~Fail Desc~") != -1) {
+                } if (strLine.contains("~Fail Desc~")) {
                 	strLine=strLine.replaceAll("~Fail Desc~", failureDetails);
                 	
-                } if (strLine.indexOf("~ScreenshotPath~") != -1) {
+                } if (strLine.contains("~ScreenshotPath~")) {
                 	strLine=strLine.replaceAll("~ScreenshotPath~", screenshotName);
                 }
                 
@@ -135,6 +158,12 @@ public class ReportResultsWriter {
 
     }
     
+    /***
+     * Copies the failed test case template into the target reports folder
+     * @param testCaseName
+     * @param fstream
+     * @throws IOException
+     */
 	public static void generateFailedTestCasePage(final String testCaseName, FileWriter fstream)
 			throws IOException {
 		BufferedWriter out = null;
@@ -147,7 +176,6 @@ public class ReportResultsWriter {
 			// copying template into target
 			String str;
 		    while ((str = br.readLine()) != null) {
-//		    	SelTestCase.logs.debug("Writing the tag : \n" + str);
 		        out.append(str);
 		    }
 		    br.close();
@@ -162,52 +190,40 @@ public class ReportResultsWriter {
 		SelTestCase.getCurrentFunctionName(false);
 	}
 	
-	public static void writeTestCasesHeader(final String suiteName, BufferedWriter out) throws IOException {
-		try {
-		out.write("<h4> <FONT COLOR=#153E7E FACE= Arial  SIZE=4.5> <u>"
-		    + suiteName + " Report :</u></h4>\r\n");
-		out.write("<table  border=1 cellspacing=1 cellpadding=1 width=100%>\r\n");
-		out.write("<tr>\r\n");
-		out.write("<td width=5%  align= center  bgcolor=#153E7E><FONT COLOR=#E0E0E0 FACE= Arial  SIZE=2><b>Test Script</b></td>\r\n");
-		out.write("<td width=10% align= center  bgcolor=#153E7E><FONT COLOR=#E0E0E0 FACE= Arial  SIZE=2><b>Test Case Name</b></td>\r\n");
-		out.write("<td width=35% align= center  bgcolor=#153E7E><FONT COLOR=#E0E0E0 FACE= Arial  SIZE=2><b>Test Case Description</b></td>\r\n");
-		out.write("<td width=10% align= center  bgcolor=#153E7E><FONT COLOR=#E0E0E0 FACE= Arial  SIZE=2><b>Status</b></td>\r\n");
-		out.write("<td width=20% align= center  bgcolor=#153E7E><FONT COLOR=#E0E0E0 FACE= Arial  SIZE=2><b>Run Start Time</b></td>\r\n");
-		out.write("<td width=20% align= center  bgcolor=#153E7E><FONT COLOR=#E0E0E0 FACE= Arial  SIZE=2><b>Run End Time</b></td>\r\n");
-		out.write("<td width=20% align= center  bgcolor=#153E7E><FONT COLOR=#E0E0E0 FACE= Arial  SIZE=2><b>exec. time</b></td>\r\n");
-		out.write("<td width=20% align= center  bgcolor=#153E7E><FONT COLOR=#E0E0E0 FACE= Arial  SIZE=2><b>Logs</b></td>\r\n");
-
-		out.write("</tr>\r\n");
-		}
-		catch(Throwable t) {
-		} finally {
-			out.close();
-		}
-	}
+	/***
+	 * Copies the template of test cases execution index into the target reports folder and update
+	 * the related details of the execution.
+	 * @param testStartTime
+	 * @param out
+	 * @param rUNDATE
+	 * @param eNVIRONMENT
+	 * @param rBrowserType
+	 * @param testSuiteName
+	 * @throws IOException
+	 */
 	public static void writeReportTestDetails(final String testStartTime, BufferedWriter out, String rUNDATE,
 			String eNVIRONMENT, String rBrowserType, String testSuiteName) throws IOException {
 		try {
 			SelTestCase.getCurrentFunctionName(true);
 			SelTestCase.logs.debug("Copying the template into the target failed test case");
-			BufferedReader br = new BufferedReader(new FileReader(EnvironmentFiles.getTestCasesIndexReportTemplate()));
+			BufferedReader br = new BufferedReader(new FileReader(EnvironmentFiles.getExecutinResultsIndexFileTemplate()));
 			
 			// copying template into target
 			String str;
 		    while ((str = br.readLine()) != null) {
-		    	SelTestCase.logs.debug("Writing the tag : \n" + str);
-		    	if (str.indexOf("~RunDate~") != -1) {
+		    	if (str.contains("~RunDate~")) {
 		    		str=str.replaceAll("~RunDate~", rUNDATE);
                 	
-                } if (str.indexOf("~Env~") != -1) {
+                } if (str.contains("~Env~")) {
                 	str=str.replaceAll("~Env~", eNVIRONMENT);
                 	
-                } if (str.indexOf("~BrowserType~") != -1) {
+                } if (str.contains("~BrowserType~")) {
                 	str=str.replaceAll("~BrowserType~", rBrowserType);
                 	
-                } if (str.indexOf("~StartTime~") != -1) {
+                } if (str.contains("~StartTime~")) {
                 	str=str.replaceAll("~StartTime~", testStartTime);
                 	
-                } if (str.indexOf("~SuiteName~") != -1) {
+                } if (str.contains("~SuiteName~")) {
                 	str=str.replaceAll("~SuiteName~", testSuiteName);
                 }
                 

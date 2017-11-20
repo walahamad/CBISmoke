@@ -140,7 +140,7 @@ public class Common extends SelTestCase {
      */
     public static void testFail(Throwable t, String screenShotName) {
         setTestStatus("Fail: " + t.getMessage());
-        setScreenShotName(screenShotName + ".jpg");
+        setScreenShotName(screenShotName + "_" + counter + ".jpg");
         ReportUtil.addError(getTestStatus(), getScreenShotName());
         logs.debug("Current URL: "+SelTestCase.getDriver().getCurrentUrl());
     }
@@ -161,12 +161,9 @@ public class Common extends SelTestCase {
      *
      */
     public static void takeScreenShot() {
-        if (GlobalVariables.flag) {
             captureScreen(subDir + "/" + getScreenShotName());
-            GlobalVariables.flag = false;
             ReportUtil.takeScreenShot(getDriver(), subDir + "/" + getScreenShotName());
         }
-    }
 
     /** Closes the opened browsers by selenium.
      *

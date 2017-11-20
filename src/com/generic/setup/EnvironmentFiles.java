@@ -16,7 +16,7 @@ public class EnvironmentFiles {
 	//Failed Test Case Template HTML File
 	public static String failedTestCaseReportTemplate = System.getProperty("user.dir")+"//src//com//generic//reports//reportsTemplates//failedTCTemplate.html";
 	//Index Test Cases Template HTML File
-	public static String testCasesIndexReportTemplate = System.getProperty("user.dir")+"//src//com//generic//reports//reportsTemplates//indexTemplate.html";
+	public static String executinResultsIndexFileTemplate = System.getProperty("user.dir")+"//src//com//generic//reports//reportsTemplates//indexTemplate.html";
 	
 	public static String getConfigFilePath() {
 		return configFilePath;
@@ -52,7 +52,13 @@ public class EnvironmentFiles {
 	}
 
 	public static void setLogFileName(String logFileName) {
+		if (logFileName.endsWith(".log")) {
 		EnvironmentFiles.logFileName = logFileName;
+		} else {
+			EnvironmentFiles.logFileName = logFileName + ".log";
+		}
+		System.setProperty("logfilename", "logs/" + EnvironmentFiles.getLogFileName());
+		System.out.println("The Value of system file is " + System.getProperty("logfilename"));
 	}
 	
 	public static String getReportsFolderPath() {
@@ -77,17 +83,17 @@ public class EnvironmentFiles {
 	}
 
 	/**
-	 * @return the testCasesIndexReportTemplate
+	 * @return the executinResultsIndexFileTemplate
 	 */
-	public static String getTestCasesIndexReportTemplate() {
-		return testCasesIndexReportTemplate;
+	public static String getExecutinResultsIndexFileTemplate() {
+		return executinResultsIndexFileTemplate;
 	}
 
 	/**
-	 * @param testCasesIndexReportTemplate the testCasesIndexReportTemplate to set
+	 * @param executinResultsIndexFileTemplate
 	 */
-	public static void setTestCasesIndexReportTemplate(String testCasesIndexReportTemplate) {
-		EnvironmentFiles.testCasesIndexReportTemplate = testCasesIndexReportTemplate;
+	public static void setExecutinResultsIndexFileTemplate(String executinResultsIndexFileTemplate) {
+		EnvironmentFiles.executinResultsIndexFileTemplate = executinResultsIndexFileTemplate;
 	}
 	
 }
