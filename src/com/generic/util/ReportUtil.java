@@ -286,9 +286,11 @@ public final class ReportUtil extends SelTestCase {
             // Read File Line By Line
 
             while ((strLine = br.readLine()) != null) {
-
-                if (strLine.contains("~EndTime~")) {
-                	strLine=strLine.replaceAll("~EndTime~",endTime);
+            	
+            	
+                if (strLine.indexOf("end_time") != -1) {
+                	strLine=strLine.replaceAll("'end_time'><FONT COLOR=#153E7E FACE=Arial SIZE=2.75><b>.*</b></td></tr><tr id='Done_end'>", 
+                			"'end_time'><FONT COLOR=#153E7E FACE=Arial SIZE=2.75><b>" +endTime+ "</b></td></tr><tr id='Done_end'>");
                 }
                 buf.append(strLine);
             }

@@ -218,7 +218,7 @@ public class SelTestCase {
                     			   getStartTime(),ReportUtil.now(time_date_format),getTestStatus().substring(0, 4));
         }
         Common.closeApplication();
-
+        ReportUtil.updateEndTime(ReportUtil.now(time_date_format), getTestStatus());
         try {
         	if (getCONFIG().getProperty("browser").equalsIgnoreCase("chrome"))
         	{
@@ -237,11 +237,4 @@ public class SelTestCase {
        
         getCurrentFunctionName(false);
     }
-    
-    @AfterClass
-    public static void updateExecutionTime() {
-    	logs.debug("Updating the end time of the execution");
-    	 ReportUtil.updateEndTime(ReportUtil.now(time_date_format),
-                 getTestStatus());
-    } 
 }
