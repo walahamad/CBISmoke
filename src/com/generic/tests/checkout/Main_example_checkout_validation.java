@@ -41,19 +41,21 @@ public class Main_example_checkout_validation extends SelTestCase {
 			
 			//PDP
 			//getDriver().get("https://hybrisdemo.conexus.co.uk:9002/yacceleratorstorefront/en/Categories/Bags%2BBoardbags/Bags/Seizure-Satchel/p/300613490");
-			String url = "https://hybrisdemo.conexus.co.uk:9002/yacceleratorstorefront/en/Brands/Toko/Snowboard-Ski-Tool-Toko-Waxremover-HC3-500ml/p/45572";
+			//String url = "https://hybrisdemo.conexus.co.uk:9002/yacceleratorstorefront/en/Brands/Toko/Snowboard-Ski-Tool-Toko-Waxremover-HC3-500ml/p/45572";
 			//PDP.addProductsToCart("brown", "                                                 SIZE UNI, £34.79  15", "5"); 
-			PDP.addProductsToCart(url,"","", "5");
+			//PDP.addProductsToCart(url,"","", "5");
 			//PDP
 			
 			//CART
 			getDriver().get("https://hybrisdemo.conexus.co.uk:9002/yacceleratorstorefront/en/cart");
 			//cart.clickContinueShopiing();
-			cart.getNumberOfproducts();
-			cart.ordarTotal();
-			cart.ordarSubTotal();
-			cart.applyCoupon("Coupon name");
-			cart.clickCheckout();
+			//cart.getNumberOfproducts();
+			//cart.ordarTotal();
+			//cart.ordarSubTotal();
+			//cart.applyCoupon("Coupon name");
+			//cart.clickCheckout();
+			//cart.updateQuantityValue("0");
+			cart.removeAllItemsFromCart();
 			
 			//signin
 			//getDriver().get("https://hybrisdemo.conexus.co.uk:9002/yacceleratorstorefront/en/login");
@@ -70,35 +72,35 @@ public class Main_example_checkout_validation extends SelTestCase {
 				//	"49 Featherstone Street", "LONDON", "EC1Y 8SY", "545452154", true);
 			
 			//old user to pick from Address book
-			checkOut.shippingAddress.fillAndClickNext(true);
+			//checkOut.shippingAddress.fillAndClickNext(true);
 			
 			//checkout pages- shipping method
-			checkOut.shippingMethod.fillAndclickNext("PREMIUM DELIVERY");
+			//checkOut.shippingMethod.fillAndclickNext("PREMIUM DELIVERY");
 			
 			//checkout pages - payment information
 			//new user has no payment methods
 			//checkOut.paymentInnformation.fillAndclickNext("VISA", "Accept", "4111111111111111", "4", "2020", "333",true, true);
 			
 			//old user has a already saved cards
-			checkOut.paymentInnformation.fillAndclickNext(true);
+			//checkOut.paymentInnformation.fillAndclickNext(true);
 			
 			//checkout pages- review information/ place order
-			checkOut.reviewInformation.getSubtotal();
-			checkOut.reviewInformation.shippingCost();
-			checkOut.reviewInformation.gettotal(); 
-			checkOut.reviewInformation.acceptTerms(true);
-			checkOut.reviewInformation.placeOrder();
+//			checkOut.reviewInformation.getSubtotal();
+//			checkOut.reviewInformation.shippingCost();
+//			checkOut.reviewInformation.gettotal(); 
+//			checkOut.reviewInformation.acceptTerms(true);
+//			checkOut.reviewInformation.placeOrder();
 			
 			
 			//getDriver().get("http://10.20.20.99:8000/Order%20Confirmation%20_%20Apparel%20Site%20UK.html");
 			
 			//checkout pages- order confirmation
-			checkOut.orderConfirmation.getOrderid();
-			checkOut.orderConfirmation.getOrdertotal();
-			checkOut.orderConfirmation.getSubtotal();
-			checkOut.orderConfirmation.getShippingcost();
-			checkOut.orderConfirmation.getbillingAddrerss();
-			checkOut.orderConfirmation.getshippingAddrerss();
+//			checkOut.orderConfirmation.getOrderid();
+//			checkOut.orderConfirmation.getOrdertotal();
+//			checkOut.orderConfirmation.getSubtotal();
+//			checkOut.orderConfirmation.getShippingcost();
+//			checkOut.orderConfirmation.getbillingAddrerss();
+//			checkOut.orderConfirmation.getshippingAddrerss();
 			
 			Common.testPass();
 		} catch (Throwable t) {

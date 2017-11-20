@@ -84,14 +84,13 @@ public class base_checkout extends SelTestCase {
 		return Arrays.asList(data);
 	}
 	
-	
 
 	@Test
 	public void Checkout() throws Exception {
 		try 
 		{
 			//TODO: write all values to sheet
-			if (runTest.equals(""))
+			if ("".equals(runTest))
 			{
 				logs.debug("Ignoring the current case ");
 				Common.testIgnored();
@@ -130,7 +129,7 @@ public class base_checkout extends SelTestCase {
 				cart.applyCoupon(coupon);
 				if (coupon.contains("invalid"))
 				{
-					//TODO: add logic to validate the error msg 
+					cart.validateinvaldcoupon(); 
 				}
 			}
 			cart.getNumberOfproducts();

@@ -19,6 +19,7 @@ import org.openqa.selenium.support.ui.Select;
 
 import com.generic.setup.ActionDriver;
 import com.generic.setup.SelTestCase;
+import com.generic.setup.ExceptionMsg;
 
 
 public class SelectorUtil extends SelTestCase {
@@ -130,13 +131,15 @@ public class SelectorUtil extends SelTestCase {
 				        	return "check";
 					} else if (e.tagName().equals("button") ||
 							e.tagName().equals("img") ||
-							e.tagName().equals("a") )
+							e.tagName().equals("a")||
+							e.tagName().equals("li"))
 					{
 						return "click";
 					} else if (e.tagName().equals("input") && e.attr("type").equals("submit")) {
 						return "click";
 					}
-					else if (e.tagName().equals("p")) {
+					else if (e.tagName().equals("p")||
+							e.tagName().equals("body")) {
 						return "gettext";
 					}else if (e.tagName().equals("div"))
 					{
@@ -354,8 +357,7 @@ public class SelectorUtil extends SelTestCase {
 	    		}
 	    		else
 	    		{
-	    			//TODO: edit message 
-	    			assertNull("no operation nor selctor found");
+	    			throw new Exception (ExceptionMsg.noValidSelector);
 	    		}
 	        }
 	    	catch (Exception e)
