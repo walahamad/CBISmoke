@@ -140,7 +140,7 @@ public class Common extends SelTestCase {
      */
     public static void testFail(Throwable t, String screenShotName) {
         setTestStatus("Fail: " + t.getMessage());
-        setScreenShotName(screenShotName + ".jpg");
+        setScreenShotName(screenShotName + "_" + counter + ".jpg");
         ReportUtil.addError(getTestStatus(), getScreenShotName());
         logs.debug("Current URL: "+SelTestCase.getDriver().getCurrentUrl());
     }
@@ -161,12 +161,9 @@ public class Common extends SelTestCase {
      *
      */
     public static void takeScreenShot() {
-        if (GlobalVariables.flag) {
             captureScreen(subDir + "/" + getScreenShotName());
-            GlobalVariables.flag = false;
             ReportUtil.takeScreenShot(getDriver(), subDir + "/" + getScreenShotName());
         }
-    }
 
     /** Closes the opened browsers by selenium.
      *
@@ -388,5 +385,41 @@ public class Common extends SelTestCase {
 		}
 		return products;
 	}//read payments
+
+	public static LinkedHashMap<String, Object> readTestparams(String testSheet, int caseIndex) {
+		/*
+		 * [{
+			    desc = logged in user with saved maistro payment and shipping address,
+			    proprties = loggedin,
+			    products = P2,
+			    shippingMethod = STANDARD DELIVERY,
+			    payment = maistro,
+			    shippingAddress = A1,
+			    billingAddress = A2,
+			    coupon = ,
+			    email = ibatta @dbi.com,
+			    orderId = ,
+			    orderTotal = ,
+			    orderSubtotal = ,
+			    orderTax = ,
+			    orderShipping =
+			}]
+		 */
+		LinkedHashMap<String, Object> tests = new LinkedHashMap<>();
+		Object[][] data = TestUtilities.getData(testSheet, 1);
+		
+		//data map
+		int header = 0;
+		for (int row = 1; row < data.length; row++)
+		{
+			LinkedHashMap<String, String> params = new LinkedHashMap<>();
+			for (int col = 1; col < data[0].length; col++)
+			{
+				params.put((String) data[header][col], (String) data[row][col]);
+			}//for col
+			tests.put(Integer.toString(row), params);
+		}//for rows
+		return tests;
+	}//read test param
 	
-}
+}//class
