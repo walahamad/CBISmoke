@@ -28,7 +28,7 @@ public class base_checkout extends SelTestCase {
 	public static final LinkedHashMap<String, Object> addresses = Common.readAddresses();
 	public static final LinkedHashMap<String, Object> invintory = Common.readLocalInventory();
 	public static final LinkedHashMap<String, Object> paymentCards = Common.readPaymentcards();
-	
+
 	String runTest;
 	String desc;
 	String proprties;
@@ -44,7 +44,15 @@ public class base_checkout extends SelTestCase {
 	String orderSubtotal;
 	String orderTax;
 	String orderShipping;
-	
+
+	// user types
+	public static final String guestUser = "guest";
+	public static final String freshUser = "fresh";
+	public static final String loggedInUser = "loggedin";
+
+	// payment types
+	// TOOD: add payment properties
+
 	@BeforeClass
 	public static void initialSetUp() throws Exception {
 		tempTCID = SheetVariables.checkoutTestCaseId + "_" + testCaseID;
@@ -52,19 +60,18 @@ public class base_checkout extends SelTestCase {
 		TestUtilities.initialize();
 	}
 
-	public base_checkout(String runTest, String desc, String proprties, String products,
-			String shippingMethod, String payment, String shippingAddress, String billingAddress,
-			String coupon, String email, String orderId, String orderTotal,
-			String orderSubtotal, String orderTax, String orderShipping ) {
-		
-		//moving variables from parameterize module to class variables 
+	public base_checkout(String runTest, String desc, String proprties, String products, String shippingMethod,
+			String payment, String shippingAddress, String billingAddress, String coupon, String email, String orderId,
+			String orderTotal, String orderSubtotal, String orderTax, String orderShipping) {
+
+		// moving variables from parameterize module to class variables
 		this.runTest = runTest;
 		this.desc = desc;
 		this.proprties = proprties;
 
-		//get all products need to be added in case  
+		// get all products need to be added in case
 		this.products = products.split("\n");
-		
+
 		this.shippingMethod = shippingMethod;
 		this.payment = payment;
 		this.shippingAddress = shippingAddress;
@@ -76,6 +83,8 @@ public class base_checkout extends SelTestCase {
 		this.orderSubtotal = orderSubtotal;
 		this.orderTax = orderTax;
 		this.orderShipping = orderShipping;
+		
+		logs.debug(Arrays.asList(paymentCards));
 	}
 
 	@Parameters(name = "{index}_:{1}")
@@ -83,111 +92,114 @@ public class base_checkout extends SelTestCase {
 		Object[][] data = TestUtilities.getData(SheetVariables.checkoutSheet);
 		return Arrays.asList(data);
 	}
-	
 
+	@SuppressWarnings("unchecked") // avoid warning from linked hashmap
 	@Test
 	public void Checkout() throws Exception {
-		try 
-		{
-			//TODO: write all values to sheet
-			if ("".equals(runTest))
-			{
+		try {
+			// TODO: write all values to sheet
+			if ("".equals(runTest)) {
 				logs.debug("Ignoring the current case ");
 				Common.testIgnored();
 				return;
 			}
-			
-			if (proprties.contains("loggedin"))
-			{
-				//TODO: pull user mail from sheet 
+
+			if (proprties.contains(loggedInUser)) {
+				// TODO: pull user mail from sheet
 				signIn.logIn("ibatta@dbi.com", "1234567");
 			}
-			if(proprties.contains("fresh"))
-			{
-				//TODO: add flow for register 
+			if (proprties.contains(freshUser)) {
+				// TODO: add flow for register
 				String mail = RandomUtilities.getRandomEmail().toLowerCase();
-				
-				//TODO: write random mail from previous step to sheet
-				//TODO: register with information
-				//TODO: create sheet for users or pull then from config file
-				//TODO: write function to get user information from sheet
+
+				// TODO: write random mail from previous step to sheet
+				// TODO: register with information
+				// TODO: create sheet for users or pull then from config file
+				// TODO: write function to get user information from sheet
 			}
-			
-			//TODO: move all keys to one file make sure to move them also from the function it self
-			for (String product :products )
-			{
+
+			// TODO: move all keys to one file make sure to move them also from the function
+			// it self
+			for (String product : products) {
 				logs.debug("Adding product " + product);
-				LinkedHashMap<String, Object> productDetails= (LinkedHashMap<String, Object>) invintory.get(product);
-				PDP.addProductsToCart((String) productDetails.get("url"),(String) productDetails.get("color"),
-						(String) productDetails.get("size"), (String) productDetails.get("qty"));
-				
+				LinkedHashMap<String, Object> productDetails = (LinkedHashMap<String, Object>) invintory.get(product);
+				PDP.addProductsToCart((String) productDetails.get(PDP.keys.url),
+						(String) productDetails.get(PDP.keys.color), (String) productDetails.get(PDP.keys.size),
+						(String) productDetails.get(PDP.keys.qty));
+
 			}
-			
-			
-			if (!coupon.equals(""))
-			{
+
+			// flow to support coupon validation
+			if (!"".equals(coupon)) {
 				cart.applyCoupon(coupon);
-				if (coupon.contains("invalid"))
-				{
-					cart.validateinvaldcoupon(); 
+				if (coupon.contains(cart.keys.invalidCoupon)) {
+					cart.validateinvaldcoupon();
 				}
 			}
 			cart.getNumberOfproducts();
 			cart.ordarTotal();
 			cart.ordarSubTotal();
 			cart.clickCheckout();
-			
-			//signIn.logIn("ibatta@dbi.com", "1234567");
-			
-			if(proprties.contains("guest"))
-			{
-				//TODO: add flow for guest 
+
+			// signIn.logIn("ibatta@dbi.com", "1234567");
+
+			if (proprties.contains(guestUser)) {
+				// TODO: add flow for guest
+				// TODO: in checkout file add input guest mail function
 			}
-			
-			//checkout- shipping address 
-			if (proprties.contains("saved-shipping") &&
-					!proprties.contains("fersh") &&
-					!proprties.contains("guest"))
-			{
+
+			// checkout- shipping address
+			if (proprties.contains(checkOut.shippingAddress.keys.isSavedShipping) && !proprties.contains(freshUser)
+					&& !proprties.contains(guestUser)) {
 				checkOut.shippingAddress.fillAndClickNext(true);
+			} else {
+				LinkedHashMap<String, Object> addressdetails = (LinkedHashMap<String, Object>) addresses
+						.get(shippingAddress);
+
+				checkOut.shippingAddress.fillAndClickNext(
+						(String) addressdetails.get(checkOut.shippingAddress.keys.countery),
+						(String) addressdetails.get(checkOut.shippingAddress.keys.title),
+						(String) addressdetails.get(checkOut.shippingAddress.keys.firstName),
+						(String) addressdetails.get(checkOut.shippingAddress.keys.lastName),
+						(String) addressdetails.get(checkOut.shippingAddress.keys.adddressLine),
+						(String) addressdetails.get(checkOut.shippingAddress.keys.city),
+						(String) addressdetails.get(checkOut.shippingAddress.keys.postal),
+						(String) addressdetails.get(checkOut.shippingAddress.keys.phone), true);
 			}
-			else
-			{
-				checkOut.shippingAddress.fillAndClickNext("United Kingdom", "Mr.","Accept", "Tester",
-						"49 Featherstone Street", "LONDON", "EC1Y 8SY", "545452154", true);
+
+			checkOut.shippingMethod.fillAndclickNext(shippingMethod);
+
+			// checkout- payment
+			if (proprties.contains(checkOut.paymentInnformation.keys.isSavedPayement) && !proprties.contains(freshUser)
+					&& !proprties.contains(guestUser)) {
+				checkOut.paymentInnformation.fillAndclickNext(true);
+			} else {
+
+				LinkedHashMap<String, Object> paymentDetails = (LinkedHashMap<String, Object>) paymentCards
+						.get(payment);
+				checkOut.paymentInnformation.fillAndclickNext(payment,
+						(String) paymentDetails.get(checkOut.paymentInnformation.keys.name),
+						(String) paymentDetails.get(checkOut.paymentInnformation.keys.number),
+						(String) paymentDetails.get(checkOut.paymentInnformation.keys.expireMonth),
+						(String) paymentDetails.get(checkOut.paymentInnformation.keys.expireYear),
+						(String) paymentDetails.get(checkOut.paymentInnformation.keys.CVCC), true, true);
 			}
-			
-			checkOut.shippingMethod.fillAndclickNext("PREMIUM DELIVERY");
-			
-			//checkout- payment
-			if (proprties.contains("saved-payment")&&
-					!proprties.contains("fersh") &&
-					!proprties.contains("guest"))
-			{
-				checkOut.paymentInnformation.fillAndclickNext(true);  
-			}
-			else
-			{
-				checkOut.paymentInnformation.fillAndclickNext("VISA", "Accept", "4111111111111111", "4", "2020", "333",true, true);
-			}
-			
+
 			checkOut.reviewInformation.getSubtotal();
 			checkOut.reviewInformation.shippingCost();
-			checkOut.reviewInformation.gettotal(); 
+			checkOut.reviewInformation.gettotal();
 			checkOut.reviewInformation.acceptTerms(true);
 			checkOut.reviewInformation.placeOrder();
-			
+
 			checkOut.orderConfirmation.getOrderid();
 			checkOut.orderConfirmation.getOrdertotal();
 			checkOut.orderConfirmation.getSubtotal();
 			checkOut.orderConfirmation.getShippingcost();
 			checkOut.orderConfirmation.getbillingAddrerss();
 			checkOut.orderConfirmation.getshippingAddrerss();
-			
+
 			Common.testPass();
-		} 
-		catch (Throwable t)
-		{
+		} catch (Throwable t) {
 			setTestCaseDescription(getTestCaseDescription());
 			logs.debug(t.getMessage());
 			t.printStackTrace();
@@ -195,6 +207,6 @@ public class base_checkout extends SelTestCase {
 			Common.testFail(t, temp);
 			Common.takeScreenShot();
 			Assert.assertTrue(t.getMessage(), false);
-		}//catch
-	}//test
-}//class
+		} // catch
+	}// test
+}// class

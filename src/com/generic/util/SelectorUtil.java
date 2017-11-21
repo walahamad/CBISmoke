@@ -389,7 +389,7 @@ public class SelectorUtil extends SelTestCase {
 			}
 			try
 			{
-				//Keeping this for Debugging purposes.  
+				//Keeping this for Debugging purposes.
 				logs.debug(Arrays.asList(webElementsInfo));
 				SelectorUtil.initializeElementsSelectorsMaps(webElementsInfo, isValidationStep);
 				logs.debug(Arrays.asList(webElementsInfo));
