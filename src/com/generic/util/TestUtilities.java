@@ -139,7 +139,6 @@ public class TestUtilities extends SelTestCase {
     	{
     		logs.debug("TestConfigurations Already Initialized");
     	}
-
         getCurrentFunctionName(false);
     }
 
