@@ -8,8 +8,8 @@ import com.generic.setup.SelTestCase;
 import com.generic.util.SelectorUtil;
 
 public class PDP extends SelTestCase {
-	static List<String> subStrArr = new ArrayList<String>();
-	static List<String> valuesArr = new ArrayList<String>();
+	private static List<String> subStrArr = new ArrayList<String>();
+	private static List<String> valuesArr = new ArrayList<String>();
 	
 	public static class keys
 	{

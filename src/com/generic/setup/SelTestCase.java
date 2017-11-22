@@ -171,6 +171,7 @@ public class SelTestCase {
             counter = counter + 1;
             
             //Initialize the property file
+            TestUtilities.initialize();
             TestUtilities.reportSetup(); // Initialize html report setup
             TestUtilities.prepareLogs();
 

@@ -116,7 +116,6 @@ public class TestUtilities extends SelTestCase {
     public static void initialize() throws Exception{
     	getCurrentFunctionName(true);
         logs.debug("Execute initialize function");
-
         // config property file
         setCONFIG(new Properties());
         FileInputStream fn =new FileInputStream(EnvironmentFiles.getConfigFilePath());
