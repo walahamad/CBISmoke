@@ -1,5 +1,6 @@
 package com.generic.tests.checkout;
 
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,6 +12,7 @@ import com.generic.page.cart;
 import com.generic.page.checkOut;
 import com.generic.page.signIn;
 import com.generic.setup.Common;
+import com.generic.setup.LoggingMsg;
 import com.generic.setup.SelTestCase;
 import com.generic.setup.SheetVariables;
 import com.generic.util.ReportUtil;
@@ -105,7 +107,7 @@ public class Main_example_checkout_validation extends SelTestCase {
 			Common.testPass();
 		} catch (Throwable t) {
 			setTestCaseDescription(getTestCaseDescription());
-			logs.debug(t.getMessage());
+			logs.debug(MessageFormat.format(LoggingMsg.DEBUGGING_TEXT, t.getMessage()));
 			t.printStackTrace();
 			String temp = getTestCaseId();
 			Common.testFail(t, temp);

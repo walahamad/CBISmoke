@@ -10,12 +10,14 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.text.MessageFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
 import com.generic.setup.EnvironmentFiles;
+import com.generic.setup.LoggingMsg;
 import com.generic.setup.SelTestCase;
 
 public class ReportResultsWriter {
@@ -169,7 +171,7 @@ public class ReportResultsWriter {
 		BufferedWriter out = null;
 		try {
 			SelTestCase.getCurrentFunctionName(true);
-			SelTestCase.logs.debug("Copying the template into the target failed test case");
+			SelTestCase.logs.debug(MessageFormat.format(LoggingMsg.DEBUGGING_TEXT, "Copying the template into the target failed test case"));
 			out = new BufferedWriter(fstream);
 			BufferedReader br = new BufferedReader(new FileReader(EnvironmentFiles.getFailedTestCaseReportTemplate()));
 			
@@ -180,7 +182,7 @@ public class ReportResultsWriter {
 		    }
 		    br.close();
 		} catch(Throwable t) {
-			SelTestCase.logs.debug("Error in generateFailedTestCase function : ");
+			SelTestCase.logs.debug(MessageFormat.format(LoggingMsg.DEBUGGING_TEXT, "Error in generateFailedTestCase function : "));
 			t.printStackTrace();
 		} finally {
 			out.close();
@@ -205,7 +207,7 @@ public class ReportResultsWriter {
 			String eNVIRONMENT, String rBrowserType, String testSuiteName) throws IOException {
 		try {
 			SelTestCase.getCurrentFunctionName(true);
-			SelTestCase.logs.debug("Copying the template into the target failed test case");
+			SelTestCase.logs.debug(MessageFormat.format(LoggingMsg.DEBUGGING_TEXT, "Copying the template into the target failed test case"));
 			BufferedReader br = new BufferedReader(new FileReader(EnvironmentFiles.getExecutinResultsIndexFileTemplate()));
 			
 			// copying template into target
@@ -231,7 +233,7 @@ public class ReportResultsWriter {
 		    }
 		    br.close();
 		} catch(Throwable t) {
-			SelTestCase.logs.debug("Error in writing index file ");
+			SelTestCase.logs.debug(LoggingMsg.WRITING_INDEX_FILE_ERROR_MSG);
 			t.printStackTrace();
 		} finally {
 			out.close();

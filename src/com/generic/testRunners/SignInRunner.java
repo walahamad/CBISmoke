@@ -1,10 +1,13 @@
 package com.generic.testRunners;
 
+import java.text.MessageFormat;
+
 import org.junit.AfterClass;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
+import com.generic.setup.LoggingMsg;
 import com.generic.setup.SelTestCase;
 import com.generic.tests.LogIn.Login_validation;
 import com.generic.util.SendMail;
@@ -29,7 +32,7 @@ public class SignInRunner {
         }
         else
         {
-        	SelTestCase.logs.debug("Ignor sending report");
+        	SelTestCase.logs.debug(MessageFormat.format(LoggingMsg.DEBUGGING_TEXT, "Ignor sending report"));
         }
         SelTestCase.getCurrentFunctionName(false);
 	}

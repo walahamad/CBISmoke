@@ -2,10 +2,12 @@ package com.generic.util;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.text.MessageFormat;
 import java.util.Properties;
 import javax.mail.*;
 import javax.mail.internet.*;
 
+import com.generic.setup.LoggingMsg;
 import com.generic.setup.SelTestCase;
 
 
@@ -32,7 +34,7 @@ public class SendMail extends SelTestCase{
 		final String from = getCONFIG().getProperty("fromEmail");
 		final String password = getCONFIG().getProperty("fromEmailPassword");
 		
-		logs.debug("sending mail to: "+ mail_to);
+		logs.debug(MessageFormat.format(LoggingMsg.SENDING_MAIL_TO, mail_to));
 		
 		String host = "smtp.gmail.com";
 		try {
@@ -58,10 +60,10 @@ public class SendMail extends SelTestCase{
 
 			Transport.send(message);
 
-			logs.debug("message sent successfully...");
+			logs.debug(LoggingMsg.SUCCESSFULLY_SENT_MSG);
 		}
 		catch (Throwable e) {
-			logs.debug("Fail to send message");
+			logs.debug(LoggingMsg.FAILED_SENDING_MSG);
 			System.out.println(e.getMessage());
 		}
 		getCurrentFunctionName(false);

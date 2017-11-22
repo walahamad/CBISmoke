@@ -1,5 +1,6 @@
 package com.generic.tests.checkout;
 
+import java.text.MessageFormat;
 import java.util.Arrays;
 import java.util.Collection;
 
@@ -16,6 +17,7 @@ import com.generic.page.cart;
 import com.generic.page.checkOut;
 import com.generic.page.signIn;
 import com.generic.setup.Common;
+import com.generic.setup.LoggingMsg;
 import com.generic.setup.SelTestCase;
 import com.generic.setup.SheetVariables;
 import com.generic.util.TestUtilities;
@@ -83,7 +85,7 @@ public class base_checkout extends SelTestCase {
 		this.orderTax = orderTax;
 		this.orderShipping = orderShipping;
 		
-		logs.debug(Arrays.asList(paymentCards));
+		logs.debug(MessageFormat.format(LoggingMsg.DEBUGGING_TEXT, Arrays.asList(paymentCards)));
 	}
 
 	@Parameters(name = "{index}_:{1}")
@@ -98,7 +100,7 @@ public class base_checkout extends SelTestCase {
 		try {
 			// TODO: write all values to sheet
 			if ("".equals(runTest)) {
-				logs.debug("Ignoring the current case ");
+				logs.debug(LoggingMsg.IGNORE_CURRENT_CASE);
 				Common.testIgnored();
 				return;
 			}
@@ -121,7 +123,7 @@ public class base_checkout extends SelTestCase {
 			// TODO: move all keys to one file make sure to move them also from the function
 			// it self
 			for (String product : products) {
-				logs.debug("Adding product " + product);
+				logs.debug(MessageFormat.format(LoggingMsg.ADDING_PRODUCT, product));
 				LinkedHashMap<String, Object> productDetails = (LinkedHashMap<String, Object>) invintory.get(product);
 				PDP.addProductsToCart((String) productDetails.get(PDP.keys.url),
 						(String) productDetails.get(PDP.keys.color), (String) productDetails.get(PDP.keys.size),
@@ -201,7 +203,7 @@ public class base_checkout extends SelTestCase {
 			Common.testPass();
 		} catch (Throwable t) {
 			setTestCaseDescription(getTestCaseDescription());
-			logs.debug(t.getMessage());
+			logs.debug(MessageFormat.format(LoggingMsg.DEBUGGING_TEXT, t.getMessage()));
 			t.printStackTrace();
 			String temp = getTestCaseId();
 			Common.testFail(t, temp);

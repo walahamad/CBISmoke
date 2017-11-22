@@ -3,19 +3,21 @@ package com.generic.util;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.PrintWriter;
+import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Properties;
 
 import com.generic.setup.EnvironmentFiles;
+import com.generic.setup.LoggingMsg;
 import com.generic.setup.SelTestCase;
 
 
 public class TestUtilities extends SelTestCase {
 	
 	public static void prepareLogs() throws Exception {
-		logs.debug("Clearing logs file");
+		logs.debug(MessageFormat.format(LoggingMsg.CLEAR_LOGS_MSG,""));
 		String logs_dir = EnvironmentFiles.getLogFilePath();
 		String log_file = EnvironmentFiles.getLogFileName();
 		String log_abs_path = logs_dir + "/" + log_file;
@@ -23,33 +25,33 @@ public class TestUtilities extends SelTestCase {
 		PrintWriter writer = new PrintWriter(log_abs_path);
 		writer.print("");
 		writer.close();
-		logs.debug("Clearing logs file done");
+		logs.debug(MessageFormat.format(LoggingMsg.CLEAR_LOGS_MSG, " done"));
 	}
 
      public static void reportSetup() throws Exception {
 
             try {
                 if(runReportSetup) {
-                    logs.debug("Execute reportSetup");
+                    logs.debug(LoggingMsg.EXECUTE_REPORT_SETUP);
                     setBrowserName(getCONFIG().getProperty("browser"));
                     try {
                         mainDir = EnvironmentFiles.getReportsFolderPath();
                         
-                        logs.debug("Reports dir. : "+mainDir);
+                        logs.debug(MessageFormat.format(LoggingMsg.REPORT_DIR, mainDir));
                         
                         File dir1 = new File(mainDir);
                         boolean exists = dir1.exists();
                         if (!exists) {
-                            logs.debug("the main directory you are searching does not exist : " + exists);
+                            logs.debug(MessageFormat.format(LoggingMsg.MAIN_DIR_EXISTANCE_MSG, "does not", exists));
                             dir1.mkdir(); // creating main directory if it doesn't exist
                             createSubDir();
                         } else {
-                            logs.debug("the main directory you are searching exists : " + exists);
+                            logs.debug(MessageFormat.format(LoggingMsg.MAIN_DIR_EXISTANCE_MSG, "does", exists));
                             createSubDir();
                         }
                     } catch (Throwable t) {
                         t.printStackTrace();
-                        logs.debug("FAILS TO CREATE REPORT FOLDERS");
+                        logs.debug(LoggingMsg.FAILED_REPORT_FOLDERS_CREATION_MSG);
                     }
 
                     ReportUtil.startTesting(subDir + "//index.html",
@@ -98,7 +100,7 @@ public class TestUtilities extends SelTestCase {
           rows = SelTestCase.getDatatable().getRowCount(testName); 
           int cols = SelTestCase.getDatatable().getColumnCount(testName);
           
-          logs.debug("Test Name -- "+testName);
+          logs.debug(MessageFormat.format(LoggingMsg.TEST_NAME, testName));
           Object data[][] = new Object[rows-(startingRow-1)][cols];//rows -1 since we dont have to include header
 
           for(int rowNum = startingRow ; rowNum <= rows ; rowNum++)
@@ -119,16 +121,16 @@ public class TestUtilities extends SelTestCase {
     	if (initializeConfigurations)
     	{
     		initializeConfigurations = false;
-    		logs.debug("Execute initialize function");
+    		logs.debug(MessageFormat.format(LoggingMsg.DEBUGGING_TEXT, "Execute initialize function"));
     		// config property file
     		setCONFIG(new Properties());
     		FileInputStream fn =new FileInputStream(EnvironmentFiles.getConfigFilePath());
     		getCONFIG().load(fn);
-    		logs.debug("adding environment: " + getCONFIG().getProperty("testEnvironment"));
+    		logs.debug(MessageFormat.format(LoggingMsg.ADDED_ENVIRONMENT_NAME, getCONFIG().getProperty("testEnvironment")));
     		getCONFIG().setProperty("testSiteName", "https://"+getCONFIG().getProperty("testEnvironment")+"/"+getCONFIG().getProperty("testSiteName"));
     		//getCONFIG().setProperty("logout", "https://"+getCONFIG().getProperty("testEnvironment")+"."+getCONFIG().getProperty("logout"));
     		
-    		logs.debug("tempTCID is : " + tempTCID );
+    		logs.debug(MessageFormat.format(LoggingMsg.TCID_MSG, tempTCID));
     		
     		setDatatable(new Xls_Reader(EnvironmentFiles.getDataSheetPath()));
     		
@@ -141,6 +143,5 @@ public class TestUtilities extends SelTestCase {
     	}
         getCurrentFunctionName(false);
     }
-
 
 }

@@ -1,10 +1,13 @@
 package com.generic.util;
 
 
+import java.text.MessageFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Random;
 import org.apache.log4j.Logger;
+
+import com.generic.setup.LoggingMsg;
 
 //Auto-generated Javadoc
 /**
@@ -125,7 +128,7 @@ public final class RandomUtilities {
     public static String getRandomEmail() {
         final int num = 10000;
         String email = getRandomWord() + random.nextInt(num) + "@" + "Random" + ".com"; //$NON-NLS-1$ //$NON-NLS-2$
-        logs.debug("The random email is: " + email);
+        logs.debug(MessageFormat.format(LoggingMsg.RANDOM_EMAIL_MSG, email));
         return email;
     }
 

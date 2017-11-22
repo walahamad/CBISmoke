@@ -10,9 +10,11 @@ import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.xssf.usermodel.*;
 
+import com.generic.setup.LoggingMsg;
 import com.generic.setup.SelTestCase;
 
 import java.io.*;
+import java.text.MessageFormat;
 import java.util.Calendar;
 
 
@@ -179,8 +181,7 @@ public class Xls_Reader {
     // returns true if data is set successfully else false
     public boolean setCellData(String sheetName,String colName,int rowNum, String data){
         try{
-        	logs.debug("writing data to sheet: "+ sheetName + " location: " +
-        rowNum+"/"+ colName + " data: "+ data  );
+        	logs.debug(MessageFormat.format(LoggingMsg.SHEET_NAME_LOCATION_TO_WRITE, sheetName, rowNum, colName, data));
         fis = new FileInputStream(path);
         workbook = new XSSFWorkbook(fis);
         
@@ -192,7 +193,7 @@ public class Xls_Reader {
         int colNum=-1;
         if(index==-1)
         {
-        	logs.debug("Sheet is not exist");
+        	logs.debug(MessageFormat.format(LoggingMsg.NOT_EXIST_MSG, "Sheet"));
             return false;
         }
         sheet = workbook.getSheetAt(index);
@@ -203,12 +204,12 @@ public class Xls_Reader {
         }
         if(colNum==-1)
         {
-            logs.debug("Col is not exist ");
+        	logs.debug(MessageFormat.format(LoggingMsg.NOT_EXIST_MSG, "Col"));
         	return false;
         }
         else
         {
-        	//logs.debug("Col index is: " + colNum);
+        	//logs.debug(MessageFormat.format(LoggingMsg.COL_INDEX_MSG, colNum));
         }
 
         sheet.autoSizeColumn(colNum);

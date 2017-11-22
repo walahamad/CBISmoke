@@ -12,6 +12,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.file.Files;
+import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -22,6 +23,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.Augmenter;
 
 import com.generic.setup.EnvironmentFiles;
+import com.generic.setup.LoggingMsg;
 import com.generic.setup.SelTestCase;
 
 
@@ -201,7 +203,7 @@ public final class ReportUtil extends SelTestCase {
     public static void addTestCase(final String testCaseName, final String testCaseDesc, final String testCaseStartTime,
     							   final String testCaseEndTime, final String status) {
     	SelTestCase.getCurrentFunctionName(true);
-    	logs.debug("Adding a "+ status +" case to report");
+    	logs.debug(MessageFormat.format(LoggingMsg.ADDING_STATUS_CASE_TO_REPORT, status));
         newTest = true;
         FileWriter fstream = null;
         BufferedWriter out = null;

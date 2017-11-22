@@ -2,6 +2,7 @@ package com.generic.setup;
 
 
 import java.io.IOException;
+import java.text.MessageFormat;
 import java.util.Properties;
 
 import org.apache.log4j.Logger;
@@ -149,12 +150,12 @@ public class SelTestCase {
     public static void getCurrentFunctionName(Boolean start)
     {
     	if (start){
-    	logs.debug(">>> Starting "+Thread.currentThread().getStackTrace()[2]+" >>>");
-    	}
-    	else
-    	{
-    		logs.debug("<<< Ending "+Thread.currentThread().getStackTrace()[2]+"<<<");
-    	}
+        	logs.debug(MessageFormat.format(LoggingMsg.STARTING_THREAD, Thread.currentThread().getStackTrace()[2]));
+        	}
+        	else
+        	{
+        		logs.debug(MessageFormat.format(LoggingMsg.ENDING_THREAD, Thread.currentThread().getStackTrace()[2]));
+        	}
     	
 	}
     
@@ -169,7 +170,7 @@ public class SelTestCase {
         try {                   
             setTestCaseId(tempTCID);
             setStartTime(ReportUtil.now(time_date_format));
-            logs.debug("The value of the counter is : " + counter);
+            logs.debug(MessageFormat.format(LoggingMsg.COUNTER_VALUE, counter));
             counter = counter + 1;
             
             //Initialize the property file
@@ -182,7 +183,7 @@ public class SelTestCase {
             Assume.assumeTrue(false);
         }
 
-        logs.debug("Execute test case " + getTestCaseId());
+        logs.debug(MessageFormat.format(LoggingMsg.EXECUTE_TEST_CASE, getTestCaseId()));
         setTestCaseDescription(getDatatable().getCellData("Test Cases","Description", getTestCaseRowNum()));
         Common.initializeBrowser();
 
@@ -191,7 +192,7 @@ public class SelTestCase {
 
         } catch(Throwable t) {
             Error = t;
-            logs.debug(t);
+            logs.debug(MessageFormat.format(LoggingMsg.DEBUGGING_TEXT, t));
             throw new Exception(t);
         }
         getCurrentFunctionName(false);
@@ -208,7 +209,7 @@ public class SelTestCase {
     @After
     public void tearDown() {
     	getCurrentFunctionName(true);
-    	logs.debug(getDriver().getCurrentUrl());
+    	logs.debug(MessageFormat.format(LoggingMsg.DEBUGGING_TEXT, getDriver().getCurrentUrl()));
 
         if(! Strings.isNullOrEmpty(getTestStatus())) {
         	ReportUtil.addTestCase(getTestCaseId() + "_" + counter, getTestCaseDescription(),
@@ -225,10 +226,10 @@ public class SelTestCase {
         try {
         	if (getCONFIG().getProperty("browser").equalsIgnoreCase("chrome"))
         	{
-        		logs.debug("terminating chrome drivers");
+        		logs.debug(MessageFormat.format(LoggingMsg.TERMINATING_DRIVERS, "chrome"));
             	Runtime.getRuntime().exec("taskkill /F /IM chromedriver.exe");
         	}
-        	logs.debug("#########--> \nTest "+getTestCaseId()+" was: " + getTestStatus()+"\n<--######### \n");
+        	logs.debug(MessageFormat.format(LoggingMsg.TEST_CASE_STATUS, getTestCaseId(), getTestStatus()));
 			Thread.sleep(1000);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block

@@ -1,5 +1,6 @@
 package com.generic.setup;
 
+import java.text.MessageFormat;
 import java.util.ArrayList;
 
 import com.generic.setup.SelTestCase;
@@ -25,7 +26,7 @@ public class GlobalVariables extends SelTestCase {
    
     public GlobalVariables(String sheetName, int row) {
     	getCurrentFunctionName(true);
-    	logs.debug("reading data from sheet: " + sheetName + " row:" + row);
+    	logs.debug(MessageFormat.format(LoggingMsg.READING_DATA_FROM_SHEET, sheetName, row));
 
        /* firstName = SelTestCase.getCONFIG().getProperty("firstName");
         lastName = SelTestCase.getCONFIG().getProperty("lastName");
