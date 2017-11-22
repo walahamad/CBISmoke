@@ -3,7 +3,6 @@ package com.generic.tests.checkout;
 import java.util.Arrays;
 import java.util.Collection;
 
-import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;

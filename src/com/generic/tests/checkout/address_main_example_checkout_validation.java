@@ -25,7 +25,7 @@ public class address_main_example_checkout_validation extends SelTestCase {
 	public static void initialSetUp() throws Exception {
 		tempTCID = SheetVariables.checkoutTestCaseId + "_" + testCaseID;
 		caseIndex = 2;
-		TestUtilities.ConfigInitialization();
+		TestUtilities.configInitialization();
 	}
 
 	

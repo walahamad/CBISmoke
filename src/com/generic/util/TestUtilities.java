@@ -113,7 +113,7 @@ public class TestUtilities extends SelTestCase {
           return data;
       }
      
-    public static void ConfigInitialization() throws Exception{
+    public static void configInitialization() throws Exception{
     	getCurrentFunctionName(true);
     	
     	if (initializeConfigurations)

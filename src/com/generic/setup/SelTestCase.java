@@ -173,7 +173,7 @@ public class SelTestCase {
             counter = counter + 1;
             
             //Initialize the property file
-            TestUtilities.ConfigInitialization();
+            TestUtilities.configInitialization();
             TestUtilities.reportSetup(); // Initialize html report setup
             TestUtilities.prepareLogs();
 
