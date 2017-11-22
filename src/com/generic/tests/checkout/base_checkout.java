@@ -3,6 +3,7 @@ package com.generic.tests.checkout;
 import java.util.Arrays;
 import java.util.Collection;
 
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -29,6 +30,14 @@ public class base_checkout extends SelTestCase {
 	public static final LinkedHashMap<String, Object> invintory = Common.readLocalInventory();
 	public static final LinkedHashMap<String, Object> paymentCards = Common.readPaymentcards();
 
+	// user types
+	public static final String guestUser = "guest";
+	public static final String freshUser = "fresh";
+	public static final String loggedInUser = "loggedin";
+	
+	//used sheet in test
+	public static final String testDataSheet = SheetVariables.checkoutSheet;
+	
 	String runTest;
 	String desc;
 	String proprties;
@@ -45,21 +54,12 @@ public class base_checkout extends SelTestCase {
 	String orderTax;
 	String orderShipping;
 
-	// user types
-	public static final String guestUser = "guest";
-	public static final String freshUser = "fresh";
-	public static final String loggedInUser = "loggedin";
-
-	// payment types
-	// TOOD: add payment properties
-
 	@BeforeClass
 	public static void initialSetUp() throws Exception {
 		tempTCID = SheetVariables.checkoutTestCaseId + "_" + testCaseID;
 		caseIndex = 2;
-		TestUtilities.initialize();
 	}
-
+	
 	public base_checkout(String runTest, String desc, String proprties, String products, String shippingMethod,
 			String payment, String shippingAddress, String billingAddress, String coupon, String email, String orderId,
 			String orderTotal, String orderSubtotal, String orderTax, String orderShipping) {
@@ -89,7 +89,7 @@ public class base_checkout extends SelTestCase {
 
 	@Parameters(name = "{index}_:{1}")
 	public static Collection<Object[]> loadTestData() throws Exception {
-		Object[][] data = TestUtilities.getData(SheetVariables.checkoutSheet);
+		Object[][] data = TestUtilities.getData(testDataSheet);
 		return Arrays.asList(data);
 	}
 
@@ -107,6 +107,7 @@ public class base_checkout extends SelTestCase {
 			if (proprties.contains(loggedInUser)) {
 				// TODO: pull user mail from sheet
 				signIn.logIn("ibatta@dbi.com", "1234567");
+				 //getDatatable().setCellData(testDataSheet, "EmailUsed", row, email);
 			}
 			if (proprties.contains(freshUser)) {
 				// TODO: add flow for register

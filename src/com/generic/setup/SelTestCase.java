@@ -47,6 +47,8 @@ public class SelTestCase {
     public static String testCaseDescription = null;
     
     public static int caseIndex;
+    
+    public static boolean initializeConfigurations = true;
 
     public static String getBrowserName() {
         return browserName;
@@ -171,6 +173,7 @@ public class SelTestCase {
             counter = counter + 1;
             
             //Initialize the property file
+            TestUtilities.ConfigInitialization();
             TestUtilities.reportSetup(); // Initialize html report setup
             TestUtilities.prepareLogs();
 

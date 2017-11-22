@@ -52,7 +52,7 @@ public class Login_validation extends SelTestCase {
 	public static void initialSetUp() throws Exception {
 		tempTCID = SheetVariables.registrationTestCaseId + "_" + testCaseID;
 		caseIndex = 2;
-		TestUtilities.initialize();
+		TestUtilities.ConfigInitialization();
 
 		int sheetColNum = getDatatable().getColumnCount(SheetVariables.registrationSheet);
 		for (int i = 0; i < sheetColNum; i++) {

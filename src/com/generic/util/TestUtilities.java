@@ -113,26 +113,33 @@ public class TestUtilities extends SelTestCase {
           return data;
       }
      
-    public static void initialize() throws Exception{
+    public static void ConfigInitialization() throws Exception{
     	getCurrentFunctionName(true);
-        logs.debug("Execute initialize function");
+    	
+    	if (initializeConfigurations)
+    	{
+    		initializeConfigurations = false;
+    		logs.debug("Execute initialize function");
+    		// config property file
+    		setCONFIG(new Properties());
+    		FileInputStream fn =new FileInputStream(EnvironmentFiles.getConfigFilePath());
+    		getCONFIG().load(fn);
+    		logs.debug("adding environment: " + getCONFIG().getProperty("testEnvironment"));
+    		getCONFIG().setProperty("testSiteName", "https://"+getCONFIG().getProperty("testEnvironment")+"/"+getCONFIG().getProperty("testSiteName"));
+    		//getCONFIG().setProperty("logout", "https://"+getCONFIG().getProperty("testEnvironment")+"."+getCONFIG().getProperty("logout"));
+    		
+    		logs.debug("tempTCID is : " + tempTCID );
+    		
+    		setDatatable(new Xls_Reader(EnvironmentFiles.getDataSheetPath()));
+    		
+    		//set the max wait time
+    		setWaitTime(Integer.parseInt(getCONFIG().getProperty("waitTime")));
+    	}
+    	else
+    	{
+    		logs.debug("TestConfigurations Already Initialized");
+    	}
 
-        // config property file
-        setCONFIG(new Properties());
-        FileInputStream fn =new FileInputStream(EnvironmentFiles.getConfigFilePath());
-        getCONFIG().load(fn);
-        logs.debug("adding environment: " + getCONFIG().getProperty("testEnvironment"));
-        getCONFIG().setProperty("testSiteName", "https://"+getCONFIG().getProperty("testEnvironment")+"/"+getCONFIG().getProperty("testSiteName"));
-        //getCONFIG().setProperty("logout", "https://"+getCONFIG().getProperty("testEnvironment")+"."+getCONFIG().getProperty("logout"));
-
-        logs.debug("tempTCID is : " + tempTCID );
-        
-        setDatatable(new Xls_Reader(EnvironmentFiles.getDataSheetPath()));
-
-        //set the max wait time
-        setWaitTime(Integer.parseInt(getCONFIG().getProperty("waitTime")));
-
-       
         getCurrentFunctionName(false);
     }
 
