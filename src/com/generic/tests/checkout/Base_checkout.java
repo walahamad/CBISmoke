@@ -39,23 +39,23 @@ public class Base_checkout extends SelTestCase {
 	// used sheet in test
 	public static final String testDataSheet = SheetVariables.checkoutSheet;
 
-	String caseId;
-	int caseIndexInDatasheet;
-	String runTest;
-	String desc;
-	String proprties;
-	String[] products;
-	String shippingMethod;
-	String payment;
-	String shippingAddress;
-	String billingAddress;
-	String coupon;
-	String email;
-	String orderId;
-	String orderTotal;
-	String orderSubtotal;
-	String orderTax;
-	String orderShipping;
+	private String caseId;
+	private int caseIndexInDatasheet;
+	private String runTest;
+	private String desc;
+	private String proprties;
+	private String[] products;
+	private String shippingMethod;
+	private String payment;
+	private String shippingAddress;
+	private String billingAddress;
+	private String coupon;
+	private String email;
+	private String orderId;
+	private String orderTotal;
+	private String orderSubtotal;
+	private String orderTax;
+	private String orderShipping;
 
 	@BeforeClass
 	public static void initialSetUp() throws Exception {
@@ -100,7 +100,7 @@ public class Base_checkout extends SelTestCase {
 	@SuppressWarnings("unchecked") // avoid warning from linked hashmap
 	@Test
 	public void checkOutBaseTest() throws Exception {
-		setTestCaseDescription(MessageFormat.format(LoggingMsg.CHECKOUTDESC, this.getClass().getCanonicalName(),
+		setTestCaseDescription(MessageFormat.format(LoggingMsg.CHECKOUTDESC, this.getClass().getCanonicalName(), desc,
 				proprties.replace("\n", "<br>- ")));
 		caseIndexInDatasheet = getDatatable().getCellRowNum(testDataSheet, CheckOut.keys.caseId, caseId);
 		initializeTestResults(testDataSheet, caseIndexInDatasheet);

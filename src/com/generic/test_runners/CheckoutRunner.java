@@ -10,7 +10,6 @@ import org.junit.runners.Suite.SuiteClasses;
 import com.generic.setup.LoggingMsg;
 import com.generic.setup.SelTestCase;
 import com.generic.tests.checkout.Base_checkout;
-import com.generic.tests.checkout.Base_checkout2;
 import com.generic.util.SendMail;
 
 
@@ -18,7 +17,6 @@ import com.generic.util.SendMail;
 @RunWith(Suite.class)
 @SuiteClasses({
 	Base_checkout.class,
-	Base_checkout2.class
 })
 
 public class CheckoutRunner {
