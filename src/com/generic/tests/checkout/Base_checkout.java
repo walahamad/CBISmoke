@@ -56,10 +56,10 @@ public class Base_checkout extends SelTestCase {
 	String orderSubtotal;
 	String orderTax;
 	String orderShipping;
-	
+
 	@BeforeClass
 	public static void initialSetUp() throws Exception {
-		testCaseRepotId = SheetVariables.checkoutTestCaseId; 
+		testCaseRepotId = SheetVariables.checkoutTestCaseId;
 	}
 
 	public Base_checkout(String caseId, String runTest, String desc, String proprties, String products,
@@ -100,7 +100,8 @@ public class Base_checkout extends SelTestCase {
 	@SuppressWarnings("unchecked") // avoid warning from linked hashmap
 	@Test
 	public void checkOutBaseTest() throws Exception {
-		setTestCaseDescription(MessageFormat.format(LoggingMsg.CHECKOUTDESC,this.getClass().getCanonicalName(), proprties.replace("\n", "<br>- ")));
+		setTestCaseDescription(MessageFormat.format(LoggingMsg.CHECKOUTDESC, this.getClass().getCanonicalName(),
+				proprties.replace("\n", "<br>- ")));
 		caseIndexInDatasheet = getDatatable().getCellRowNum(testDataSheet, CheckOut.keys.caseId, caseId);
 		initializeTestResults(testDataSheet, caseIndexInDatasheet);
 		try {
@@ -228,7 +229,7 @@ public class Base_checkout extends SelTestCase {
 			CheckOut.orderConfirmation.getBillingAddrerss();
 			CheckOut.orderConfirmation.getShippingAddrerss();
 
-			writeResultsToTestDatasheet(testDataSheet,caseIndexInDatasheet);
+			writeResultsToTestDatasheet(testDataSheet, caseIndexInDatasheet);
 
 			Common.testPass();
 		} catch (Throwable t) {
@@ -244,27 +245,27 @@ public class Base_checkout extends SelTestCase {
 
 	private void writeResultsToTestDatasheet(String sheetName, int row) {
 		getCurrentFunctionName(true);
-		SelTestCase.getDatatable().setCellData(sheetName, CheckOut.orderConfirmation.keys.orderId, row, orderId);
+		getDatatable().setCellData(sheetName, CheckOut.orderConfirmation.keys.orderId, row, orderId);
 		if (this.email.contains("random")) {
-			SelTestCase.getDatatable().setCellData(sheetName, CheckOut.orderConfirmation.keys.email, row, email);
+			getDatatable().setCellData(sheetName, CheckOut.orderConfirmation.keys.email, row, email);
 		}
-		SelTestCase.getDatatable().setCellData(sheetName, CheckOut.orderConfirmation.keys.orderSubtotal, row, orderSubtotal);
-		SelTestCase.getDatatable().setCellData(sheetName, CheckOut.orderConfirmation.keys.orderShipping, row, orderShipping);
-		SelTestCase.getDatatable().setCellData(sheetName, CheckOut.orderConfirmation.keys.orderTax, row, orderTax);
-		SelTestCase.getDatatable().setCellData(sheetName, CheckOut.orderConfirmation.keys.orderTotal, row, orderTotal);
+		getDatatable().setCellData(sheetName, CheckOut.orderConfirmation.keys.orderSubtotal, row, orderSubtotal);
+		getDatatable().setCellData(sheetName, CheckOut.orderConfirmation.keys.orderShipping, row, orderShipping);
+		getDatatable().setCellData(sheetName, CheckOut.orderConfirmation.keys.orderTax, row, orderTax);
+		getDatatable().setCellData(sheetName, CheckOut.orderConfirmation.keys.orderTotal, row, orderTotal);
 		getCurrentFunctionName(false);
-	}//write results 
+	}// write results
 
 	private void initializeTestResults(String sheetName, int row) {
 		getCurrentFunctionName(true);
-		SelTestCase.getDatatable().setCellData(sheetName, CheckOut.orderConfirmation.keys.orderId, row, "");
+		getDatatable().setCellData(sheetName, CheckOut.orderConfirmation.keys.orderId, row, "");
 		if (this.email.contains("random")) {
 			SelTestCase.getDatatable().setCellData(sheetName, CheckOut.orderConfirmation.keys.email, row, "");
 		}
-		SelTestCase.getDatatable().setCellData(sheetName, CheckOut.orderConfirmation.keys.orderShipping, row, "");
-		SelTestCase.getDatatable().setCellData(sheetName, CheckOut.orderConfirmation.keys.orderSubtotal, row, "");
-		SelTestCase.getDatatable().setCellData(sheetName, CheckOut.orderConfirmation.keys.orderTax, row, "");
-		SelTestCase.getDatatable().setCellData(sheetName, CheckOut.orderConfirmation.keys.orderTotal, row, "");
+		getDatatable().setCellData(sheetName, CheckOut.orderConfirmation.keys.orderShipping, row, "");
+		getDatatable().setCellData(sheetName, CheckOut.orderConfirmation.keys.orderSubtotal, row, "");
+		getDatatable().setCellData(sheetName, CheckOut.orderConfirmation.keys.orderTax, row, "");
+		getDatatable().setCellData(sheetName, CheckOut.orderConfirmation.keys.orderTotal, row, "");
 		getCurrentFunctionName(false);
 	}// initializeTestResults
 }// class
