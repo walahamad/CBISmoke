@@ -12,21 +12,25 @@ import com.generic.util.SelectorUtil;
 public class CheckOut extends SelTestCase {
 	private static List<String> subStrArr = new ArrayList<String>();
 	private static List<String> valuesArr = new ArrayList<String>();
-
+	
+	public static class keys {
+		public static final String caseId = "caseId";
+	}
+	
 	public static class shippingAddress {
 
 		public static class keys {
 
 			public static final String isSavedShipping = "saved-shipping";
 
-			public static final Object countery = "countery";
-			public static final Object title = "title";
-			public static final Object lastName = "lastName";
-			public static final Object firstName = "firstName";
-			public static final Object adddressLine = "adddressLine";
-			public static final Object city = "city";
-			public static final Object postal = "postal";
-			public static final Object phone = "phone";
+			public static final String countery = "countery";
+			public static final String title = "title";
+			public static final String lastName = "lastName";
+			public static final String firstName = "firstName";
+			public static final String adddressLine = "adddressLine";
+			public static final String city = "city";
+			public static final String postal = "postal";
+			public static final String phone = "phone";
 		}
 
 		public static void selectCountery(String countery) throws Exception {
@@ -584,7 +588,7 @@ public class CheckOut extends SelTestCase {
 
 		}
 
-		public static String getbillingAddrerss() throws Exception {
+		public static String getBillingAddrerss() throws Exception {
 			getCurrentFunctionName(true);
 			subStrArr.add(CheckOutSelectors.orderconfirmationBillingAddress);
 			valuesArr.add("");
@@ -595,7 +599,7 @@ public class CheckOut extends SelTestCase {
 
 		}
 
-		public static String getshippingAddrerss() throws Exception {
+		public static String getShippingAddrerss() throws Exception {
 			getCurrentFunctionName(true);
 			subStrArr.add(CheckOutSelectors.orderconfirmationshippingAddress);
 			valuesArr.add("");

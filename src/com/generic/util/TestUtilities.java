@@ -74,7 +74,7 @@ public class TestUtilities extends SelTestCase {
          SimpleDateFormat ft = new SimpleDateFormat (SelTestCase.reportFolderDateStampFormat);
          Calendar cal = Calendar.getInstance();
          SimpleDateFormat sdf = new SimpleDateFormat(SelTestCase.reportFolderTimeStampFormat);
-    	 subDir = mainDir + "/" + tempTCID + ft.format(dNow) + "-Time-" + sdf.format(cal.getTime());
+    	 subDir = mainDir + "/" + testCaseRepotId + ft.format(dNow) + "-Time-" + sdf.format(cal.getTime());
          new File(subDir).mkdir();
 
      }
@@ -170,7 +170,7 @@ public class TestUtilities extends SelTestCase {
     		getCONFIG().setProperty("testSiteName", "https://"+getCONFIG().getProperty("testEnvironment")+"/"+getCONFIG().getProperty("testSiteName"));
     		//getCONFIG().setProperty("logout", "https://"+getCONFIG().getProperty("testEnvironment")+"."+getCONFIG().getProperty("logout"));
     		
-    		logs.debug(MessageFormat.format(LoggingMsg.TCID_MSG, tempTCID));
+    		logs.debug(MessageFormat.format(LoggingMsg.TCID_MSG, testCaseRepotId));
     		
     		setDatatable(new Xls_Reader(EnvironmentFiles.getDataSheetPath()));
     		

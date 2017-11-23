@@ -52,7 +52,7 @@ public class LoginValidation extends SelTestCase {
 
 	@BeforeClass
 	public static void initialSetUp() throws Exception {
-		tempTCID = SheetVariables.registrationTestCaseId + "_" + testCaseID;
+		testCaseRepotId = SheetVariables.registrationTestCaseId + "_" + testCaseID;
 		caseIndex = 2;
 		TestUtilities.configInitialization();
 

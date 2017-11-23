@@ -43,7 +43,7 @@ public class SelTestCase {
     
     public static String logDir= null;
     
-    public static String tempTCID = null;
+    public static String testCaseRepotId = null;
     public static String testCaseDescription = null;
     
     public static int caseIndex;
@@ -167,7 +167,7 @@ public class SelTestCase {
     public void setUp() throws Exception  {
     	getCurrentFunctionName(true);
         try {                   
-            setTestCaseId(tempTCID);
+            setTestCaseId(testCaseRepotId);
             setStartTime(ReportUtil.now(time_date_format));
             logs.debug(MessageFormat.format(LoggingMsg.COUNTER_VALUE, counter));
             counter = counter + 1;

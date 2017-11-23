@@ -25,8 +25,9 @@ import com.generic.util.TestUtilities;
 import com.generic.util.RandomUtilities;
 
 @RunWith(Parameterized.class)
-public class Base_checkout extends SelTestCase {
+public class Base_checkout2 extends SelTestCase {
 
+	private static int testCaseID;
 	public static final LinkedHashMap<String, Object> addresses = Common.readAddresses();
 	public static final LinkedHashMap<String, Object> invintory = Common.readLocalInventory();
 	public static final LinkedHashMap<String, Object> paymentCards = Common.readPaymentcards();
@@ -40,7 +41,6 @@ public class Base_checkout extends SelTestCase {
 	public static final String testDataSheet = SheetVariables.checkoutSheet;
 
 	String caseId;
-	int caseIndexInDatasheet;
 	String runTest;
 	String desc;
 	String proprties;
@@ -56,13 +56,15 @@ public class Base_checkout extends SelTestCase {
 	String orderSubtotal;
 	String orderTax;
 	String orderShipping;
-	
+
 	@BeforeClass
 	public static void initialSetUp() throws Exception {
-		testCaseRepotId = SheetVariables.checkoutTestCaseId; 
+		testCaseRepotId = SheetVariables.checkoutTestCaseId;
+		counter = 0; 
+		caseIndex = 2;
 	}
 
-	public Base_checkout(String caseId, String runTest, String desc, String proprties, String products,
+	public Base_checkout2(String caseId, String runTest, String desc, String proprties, String products,
 			String shippingMethod, String payment, String shippingAddress, String billingAddress, String coupon,
 			String email, String orderId, String orderTotal, String orderSubtotal, String orderTax,
 			String orderShipping) {
@@ -100,9 +102,8 @@ public class Base_checkout extends SelTestCase {
 	@SuppressWarnings("unchecked") // avoid warning from linked hashmap
 	@Test
 	public void checkOutBaseTest() throws Exception {
-		setTestCaseDescription(MessageFormat.format(LoggingMsg.CHECKOUTDESC,this.getClass().getCanonicalName(), proprties.replace("\n", "<br>- ")));
-		caseIndexInDatasheet = getDatatable().getCellRowNum(testDataSheet, CheckOut.keys.caseId, caseId);
-		initializeTestResults(testDataSheet, caseIndexInDatasheet);
+		setTestCaseDescription("dddddddddddddddddddddddd");
+		initializeTestResults(testDataSheet, 2);// TODO: replace 1 with test index
 		try {
 			// TODO: write all values to sheet
 			if (proprties.contains(loggedInUser)) {
@@ -228,7 +229,7 @@ public class Base_checkout extends SelTestCase {
 			CheckOut.orderConfirmation.getBillingAddrerss();
 			CheckOut.orderConfirmation.getShippingAddrerss();
 
-			writeResultsToTestDatasheet(testDataSheet,caseIndexInDatasheet);
+			// TODO: write results to sheet
 
 			Common.testPass();
 		} catch (Throwable t) {
@@ -241,19 +242,6 @@ public class Base_checkout extends SelTestCase {
 			Assert.assertTrue(t.getMessage(), false);
 		} // catch
 	}// test
-
-	private void writeResultsToTestDatasheet(String sheetName, int row) {
-		getCurrentFunctionName(true);
-		SelTestCase.getDatatable().setCellData(sheetName, CheckOut.orderConfirmation.keys.orderId, row, orderId);
-		if (this.email.contains("random")) {
-			SelTestCase.getDatatable().setCellData(sheetName, CheckOut.orderConfirmation.keys.email, row, email);
-		}
-		SelTestCase.getDatatable().setCellData(sheetName, CheckOut.orderConfirmation.keys.orderSubtotal, row, orderSubtotal);
-		SelTestCase.getDatatable().setCellData(sheetName, CheckOut.orderConfirmation.keys.orderShipping, row, orderShipping);
-		SelTestCase.getDatatable().setCellData(sheetName, CheckOut.orderConfirmation.keys.orderTax, row, orderTax);
-		SelTestCase.getDatatable().setCellData(sheetName, CheckOut.orderConfirmation.keys.orderTotal, row, orderTotal);
-		getCurrentFunctionName(false);
-	}//write results 
 
 	private void initializeTestResults(String sheetName, int row) {
 		getCurrentFunctionName(true);
