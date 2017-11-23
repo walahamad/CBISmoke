@@ -36,10 +36,11 @@ public class Base_checkout extends SelTestCase {
 	public static final String guestUser = "guest";
 	public static final String freshUser = "fresh";
 	public static final String loggedInUser = "loggedin";
-	
-	//used sheet in test
+
+	// used sheet in test
 	public static final String testDataSheet = SheetVariables.checkoutSheet;
-	
+
+	String caseId;
 	String runTest;
 	String desc;
 	String proprties;
@@ -59,14 +60,15 @@ public class Base_checkout extends SelTestCase {
 	@BeforeClass
 	public static void initialSetUp() throws Exception {
 		tempTCID = SheetVariables.checkoutTestCaseId + "_" + testCaseID;
-		//TODO: clear results in sheet 
 		caseIndex = 2;
 	}
-	
-	public Base_checkout(String runTest, String desc, String proprties, String products, String shippingMethod,
-			String payment, String shippingAddress, String billingAddress, String coupon, String email, String orderId,
-			String orderTotal, String orderSubtotal, String orderTax, String orderShipping) {
 
+	public Base_checkout(String caseId, String runTest, String desc, String proprties, String products,
+			String shippingMethod, String payment, String shippingAddress, String billingAddress, String coupon,
+			String email, String orderId, String orderTotal, String orderSubtotal, String orderTax,
+			String orderShipping) {
+
+		this.caseId = caseId;
 		// moving variables from parameterize module to class variables
 		this.runTest = runTest;
 		this.desc = desc;
@@ -86,11 +88,11 @@ public class Base_checkout extends SelTestCase {
 		this.orderSubtotal = orderSubtotal;
 		this.orderTax = orderTax;
 		this.orderShipping = orderShipping;
-		
+
 		logs.debug(MessageFormat.format(LoggingMsg.DEBUGGING_TEXT, Arrays.asList(paymentCards)));
 	}
 
-	@Parameters(name = "{index}_:{1}")
+	@Parameters(name = "{index}_:{2}")
 	public static Collection<Object[]> loadTestData() throws Exception {
 		Object[][] data = TestUtilities.getData(testDataSheet);
 		return Arrays.asList(data);
@@ -99,22 +101,18 @@ public class Base_checkout extends SelTestCase {
 	@SuppressWarnings("unchecked") // avoid warning from linked hashmap
 	@Test
 	public void checkOutBaseTest() throws Exception {
+		initializeTestResults(testDataSheet, 2);// TODO: replace 1 with test index
 		try {
 			// TODO: write all values to sheet
-			if ("".equals(runTest)) {
-				logs.debug(LoggingMsg.IGNORE_CURRENT_CASE);
-				Common.testIgnored();
-				return;
-			}
 
 			if (proprties.contains(loggedInUser)) {
 				// TODO: pull user mail from sheet
 				SignIn.logIn("ibatta@dbi.com", "1234567");
-				 //getDatatable().setCellData(testDataSheet, "EmailUsed", row, email);
+				// getDatatable().setCellData(testDataSheet, "EmailUsed", row, email);
 			}
 			if (proprties.contains(freshUser)) {
 				// TODO: add flow for register
-				String mail = RandomUtilities.getRandomEmail().toLowerCase();
+				String randomMail = RandomUtilities.getRandomEmail();
 
 				// TODO: write random mail from previous step to sheet
 				// TODO: register with information
@@ -143,7 +141,7 @@ public class Base_checkout extends SelTestCase {
 			Cart.getNumberOfproducts();
 			orderSubtotal = Cart.getOrderSubTotal();
 			orderTax = Cart.getOrderTax();
-			
+
 			Cart.clickCheckout();
 
 			// signIn.logIn("ibatta@dbi.com", "1234567");
@@ -152,10 +150,10 @@ public class Base_checkout extends SelTestCase {
 				// TODO: add flow for guest
 				// TODO: in checkout file add input guest mail function
 			}
-			
-			//Validate the order sub total in shipping address form section
-			assertEquals(CheckOut.shippingAddress.getOrdersubTotal(), orderSubtotal );
-			
+
+			// Validate the order sub total in shipping address form section
+			assertEquals(CheckOut.shippingAddress.getOrdersubTotal(), orderSubtotal);
+
 			// checkout- shipping address
 			if (proprties.contains(CheckOut.shippingAddress.keys.isSavedShipping) && !proprties.contains(freshUser)
 					&& !proprties.contains(guestUser)) {
@@ -174,34 +172,34 @@ public class Base_checkout extends SelTestCase {
 						(String) addressDetails.get(CheckOut.shippingAddress.keys.postal),
 						(String) addressDetails.get(CheckOut.shippingAddress.keys.phone), true);
 			}
-			
-			//Validate the order sub total in shipping method section
-			assertEquals(CheckOut.shippingMethod.getOrderSubTotal(), orderSubtotal );
-			
-			//Shipping method 
+
+			// Validate the order sub total in shipping method section
+			assertEquals(CheckOut.shippingMethod.getOrderSubTotal(), orderSubtotal);
+
+			// Shipping method
 			CheckOut.shippingMethod.fillAndclickNext(shippingMethod);
 
-			//Validate the order sub total in billing form section
-			assertEquals(CheckOut.paymentInnformation.getOrderSubTotal(), orderSubtotal );
-			
+			// Validate the order sub total in billing form section
+			assertEquals(CheckOut.paymentInnformation.getOrderSubTotal(), orderSubtotal);
+
 			// checkout- payment
 			if (proprties.contains(CheckOut.paymentInnformation.keys.isSavedPayement) && !proprties.contains(freshUser)
 					&& !proprties.contains(guestUser)) {
 				CheckOut.paymentInnformation.fillAndclickNext(true);
 			} else {
-				
+
 				boolean saveBilling = true;
 				LinkedHashMap<String, Object> paymentDetails = (LinkedHashMap<String, Object>) paymentCards
 						.get(payment);
 				LinkedHashMap<String, Object> billAddressDetails = (LinkedHashMap<String, Object>) addresses
 						.get(billingAddress);
-				
+
 				CheckOut.paymentInnformation.fillAndclickNext(payment,
 						(String) paymentDetails.get(CheckOut.paymentInnformation.keys.name),
 						(String) paymentDetails.get(CheckOut.paymentInnformation.keys.number),
 						(String) paymentDetails.get(CheckOut.paymentInnformation.keys.expireMonth),
 						(String) paymentDetails.get(CheckOut.paymentInnformation.keys.expireYear),
-						(String) paymentDetails.get(CheckOut.paymentInnformation.keys.CVCC), saveBilling, 
+						(String) paymentDetails.get(CheckOut.paymentInnformation.keys.CVCC), saveBilling,
 						billingAddress.equalsIgnoreCase(shippingAddress),
 						(String) billAddressDetails.get(CheckOut.shippingAddress.keys.countery),
 						(String) billAddressDetails.get(CheckOut.shippingAddress.keys.title),
@@ -212,28 +210,26 @@ public class Base_checkout extends SelTestCase {
 						(String) billAddressDetails.get(CheckOut.shippingAddress.keys.postal),
 						(String) billAddressDetails.get(CheckOut.shippingAddress.keys.phone));
 			}
-			
-			//Validate the order subtotal in order review section
-			assertEquals(CheckOut.reviewInformation.getSubtotal(), orderSubtotal );
-			
+
+			// Validate the order subtotal in order review section
+			assertEquals(CheckOut.reviewInformation.getSubtotal(), orderSubtotal);
+
 			CheckOut.reviewInformation.acceptTerms(true);
 			CheckOut.reviewInformation.placeOrder();
 
-			
-			//Validate the order sub total in order review section
-			assertEquals(CheckOut.orderConfirmation.getSubTotal(), orderSubtotal );
-			
+			// Validate the order sub total in order review section
+			assertEquals(CheckOut.orderConfirmation.getSubTotal(), orderSubtotal);
+
 			orderTotal = CheckOut.orderConfirmation.getOrderTotal();
 			orderShipping = CheckOut.orderConfirmation.getShippingCost();
 			orderId = CheckOut.orderConfirmation.getOrderId();
-			
-			//TODO: compare addresses 
+
+			// TODO: compare addresses
 			CheckOut.orderConfirmation.getbillingAddrerss();
 			CheckOut.orderConfirmation.getshippingAddrerss();
-			
-			//TODO: write results to sheet 
-			
-			
+
+			// TODO: write results to sheet
+
 			Common.testPass();
 		} catch (Throwable t) {
 			setTestCaseDescription(getTestCaseDescription());
@@ -245,4 +241,17 @@ public class Base_checkout extends SelTestCase {
 			Assert.assertTrue(t.getMessage(), false);
 		} // catch
 	}// test
+
+	private void initializeTestResults(String sheetName, int row) {
+		getCurrentFunctionName(true);
+		SelTestCase.getDatatable().setCellData(sheetName, CheckOut.orderConfirmation.keys.orderId, row, "");
+		if (this.email.contains("random")) {
+			SelTestCase.getDatatable().setCellData(sheetName, CheckOut.orderConfirmation.keys.email, row, "");
+		}
+		SelTestCase.getDatatable().setCellData(sheetName, CheckOut.orderConfirmation.keys.orderShipping, row, "");
+		SelTestCase.getDatatable().setCellData(sheetName, CheckOut.orderConfirmation.keys.orderSubtotal, row, "");
+		SelTestCase.getDatatable().setCellData(sheetName, CheckOut.orderConfirmation.keys.orderTax, row, "");
+		SelTestCase.getDatatable().setCellData(sheetName, CheckOut.orderConfirmation.keys.orderTotal, row, "");
+		getCurrentFunctionName(false);
+	}// initializeTestResults
 }// class

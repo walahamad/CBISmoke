@@ -127,9 +127,9 @@ public final class RandomUtilities {
      */
     public static String getRandomEmail() {
         final int num = 10000;
-        String email = getRandomWord() + random.nextInt(num) + "@" + "Random" + ".com"; //$NON-NLS-1$ //$NON-NLS-2$
+        String email = getRandomWord() + random.nextInt(num) + "@" + "random" + ".com"; //$NON-NLS-1$ //$NON-NLS-2$
         logs.debug(MessageFormat.format(LoggingMsg.RANDOM_EMAIL_MSG, email));
-        return email;
+        return email.toLowerCase();
     }
 
     /**getRandomNumber.

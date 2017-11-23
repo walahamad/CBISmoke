@@ -207,7 +207,7 @@ public class CheckOut extends SelTestCase {
 			getCurrentFunctionName(false);
 
 		}
-	}
+	}//shipping address
 
 	public static class shippingMethod {
 
@@ -257,7 +257,7 @@ public class CheckOut extends SelTestCase {
 			return SelectorUtil.textValue;
 		}
 
-	}
+	}//shipping method
 
 	public static class paymentInnformation {
 
@@ -460,7 +460,7 @@ public class CheckOut extends SelTestCase {
 			getCurrentFunctionName(false);
 			return SelectorUtil.textValue;
 		}
-	}
+	}//payment info 
 
 	public static class reviewInformation {
 
@@ -527,6 +527,18 @@ public class CheckOut extends SelTestCase {
 	}//order review information 
 	
 	public static class orderConfirmation {
+		
+		public static class keys {
+			public static final String isSavedPayement = "saved-payment";
+
+			public static final String orderId = "orderId";
+			public static final String email = "email";
+			public static final String orderTotal = "orderTotal";
+			public static final String orderSubtotal = "orderSubtotal"; 
+			public static final String orderTax = "orderTax"; 
+			public static final String orderShipping = "orderShipping";
+
+		}
 
 		public static String getOrderId() throws Exception {
 			getCurrentFunctionName(true);
@@ -594,6 +606,6 @@ public class CheckOut extends SelTestCase {
 
 		}
 
-	}
+	}//order confirmation page 
 
 }
