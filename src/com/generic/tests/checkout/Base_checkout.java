@@ -98,7 +98,7 @@ public class Base_checkout extends SelTestCase {
 
 	@SuppressWarnings("unchecked") // avoid warning from linked hashmap
 	@Test
-	public void Checkout() throws Exception {
+	public void checkOutBaseTest() throws Exception {
 		try {
 			// TODO: write all values to sheet
 			if ("".equals(runTest)) {

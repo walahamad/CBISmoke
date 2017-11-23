@@ -29,7 +29,7 @@ public class CheckOut extends SelTestCase {
 			public static final Object phone = "phone";
 		}
 
-		public static void SelectCountery(String countery) throws Exception {
+		public static void selectCountery(String countery) throws Exception {
 			getCurrentFunctionName(true);
 			logs.debug(MessageFormat.format(LoggingMsg.SELECTING_ELEMENT_VALUE,"Countery ", countery));
 			subStrArr.add(CheckOutSelectors.countery);
@@ -153,7 +153,7 @@ public class CheckOut extends SelTestCase {
 			getCurrentFunctionName(true);
 
 			if (!"".equals(Countery))
-				SelectCountery(Countery);
+				selectCountery(Countery);
 
 			if (!"".equals(title))
 				selectTitle(title);
@@ -309,7 +309,7 @@ public class CheckOut extends SelTestCase {
 			getCurrentFunctionName(true);
 
 			if (!"".equals(countery))
-				shippingAddress.SelectCountery(countery);
+				shippingAddress.selectCountery(countery);
 			if (!"".equals(title))
 				shippingAddress.selectTitle(title);
 			if (!"".equals(firstName))

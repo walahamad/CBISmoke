@@ -1,4 +1,4 @@
-package com.generic.testRunners;
+package com.generic.test_runners;
 
 import java.text.MessageFormat;
 
@@ -9,17 +9,17 @@ import org.junit.runners.Suite.SuiteClasses;
 
 import com.generic.setup.LoggingMsg;
 import com.generic.setup.SelTestCase;
-import com.generic.tests.checkout.Base_checkout;
+import com.generic.tests.logIn.loginValidation;
 import com.generic.util.SendMail;
 
 
 
 @RunWith(Suite.class)
 @SuiteClasses({
-	Base_checkout.class  
+	loginValidation.class  
 })
 
-public class CheckoutRunner {
+public class SignInRunner {
 
 	@AfterClass
 	public static void globalTearDown()
