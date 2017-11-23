@@ -1,5 +1,8 @@
 package com.generic.tests.checkout;
 
+import static org.testng.Assert.assertEquals;
+
+import java.text.MessageFormat;
 import java.util.Arrays;
 import java.util.Collection;
 
@@ -16,6 +19,7 @@ import com.generic.page.cart;
 import com.generic.page.checkOut;
 import com.generic.page.signIn;
 import com.generic.setup.Common;
+import com.generic.setup.LoggingMsg;
 import com.generic.setup.SelTestCase;
 import com.generic.setup.SheetVariables;
 import com.generic.util.TestUtilities;
@@ -56,6 +60,7 @@ public class base_checkout extends SelTestCase {
 	@BeforeClass
 	public static void initialSetUp() throws Exception {
 		tempTCID = SheetVariables.checkoutTestCaseId + "_" + testCaseID;
+		//TODO: clear results in sheet 
 		caseIndex = 2;
 	}
 	
@@ -83,7 +88,7 @@ public class base_checkout extends SelTestCase {
 		this.orderTax = orderTax;
 		this.orderShipping = orderShipping;
 		
-		logs.debug(Arrays.asList(paymentCards));
+		logs.debug(MessageFormat.format(LoggingMsg.DEBUGGING_TEXT, Arrays.asList(paymentCards)));
 	}
 
 	@Parameters(name = "{index}_:{1}")
@@ -98,7 +103,7 @@ public class base_checkout extends SelTestCase {
 		try {
 			// TODO: write all values to sheet
 			if ("".equals(runTest)) {
-				logs.debug("Ignoring the current case ");
+				logs.debug(LoggingMsg.IGNORE_CURRENT_CASE);
 				Common.testIgnored();
 				return;
 			}
@@ -121,7 +126,7 @@ public class base_checkout extends SelTestCase {
 			// TODO: move all keys to one file make sure to move them also from the function
 			// it self
 			for (String product : products) {
-				logs.debug("Adding product " + product);
+				logs.debug(MessageFormat.format(LoggingMsg.ADDING_PRODUCT, product));
 				LinkedHashMap<String, Object> productDetails = (LinkedHashMap<String, Object>) invintory.get(product);
 				PDP.addProductsToCart((String) productDetails.get(PDP.keys.url),
 						(String) productDetails.get(PDP.keys.color), (String) productDetails.get(PDP.keys.size),
@@ -137,8 +142,9 @@ public class base_checkout extends SelTestCase {
 				}
 			}
 			cart.getNumberOfproducts();
-			cart.ordarTotal();
-			cart.ordarSubTotal();
+			orderSubtotal = cart.getOrdarSubTotal();
+			orderTax = cart.getOrdarTax();
+			
 			cart.clickCheckout();
 
 			// signIn.logIn("ibatta@dbi.com", "1234567");
@@ -147,61 +153,92 @@ public class base_checkout extends SelTestCase {
 				// TODO: add flow for guest
 				// TODO: in checkout file add input guest mail function
 			}
-
+			
+			//Validate the order sub total in shipping address form section
+			assertEquals(checkOut.shippingAddress.getOrdersubTotal(), orderSubtotal );
+			
 			// checkout- shipping address
 			if (proprties.contains(checkOut.shippingAddress.keys.isSavedShipping) && !proprties.contains(freshUser)
 					&& !proprties.contains(guestUser)) {
 				checkOut.shippingAddress.fillAndClickNext(true);
 			} else {
-				LinkedHashMap<String, Object> addressdetails = (LinkedHashMap<String, Object>) addresses
+				LinkedHashMap<String, Object> addressDetails = (LinkedHashMap<String, Object>) addresses
 						.get(shippingAddress);
 
 				checkOut.shippingAddress.fillAndClickNext(
-						(String) addressdetails.get(checkOut.shippingAddress.keys.countery),
-						(String) addressdetails.get(checkOut.shippingAddress.keys.title),
-						(String) addressdetails.get(checkOut.shippingAddress.keys.firstName),
-						(String) addressdetails.get(checkOut.shippingAddress.keys.lastName),
-						(String) addressdetails.get(checkOut.shippingAddress.keys.adddressLine),
-						(String) addressdetails.get(checkOut.shippingAddress.keys.city),
-						(String) addressdetails.get(checkOut.shippingAddress.keys.postal),
-						(String) addressdetails.get(checkOut.shippingAddress.keys.phone), true);
+						(String) addressDetails.get(checkOut.shippingAddress.keys.countery),
+						(String) addressDetails.get(checkOut.shippingAddress.keys.title),
+						(String) addressDetails.get(checkOut.shippingAddress.keys.firstName),
+						(String) addressDetails.get(checkOut.shippingAddress.keys.lastName),
+						(String) addressDetails.get(checkOut.shippingAddress.keys.adddressLine),
+						(String) addressDetails.get(checkOut.shippingAddress.keys.city),
+						(String) addressDetails.get(checkOut.shippingAddress.keys.postal),
+						(String) addressDetails.get(checkOut.shippingAddress.keys.phone), true);
 			}
-
+			
+			//Validate the order sub total in shipping method section
+			assertEquals(checkOut.shippingMethod.getOrderSubTotal(), orderSubtotal );
+			
+			//Shipping method 
 			checkOut.shippingMethod.fillAndclickNext(shippingMethod);
 
+			//Validate the order sub total in billing form section
+			assertEquals(checkOut.paymentInnformation.getOrderSubTotal(), orderSubtotal );
+			
 			// checkout- payment
 			if (proprties.contains(checkOut.paymentInnformation.keys.isSavedPayement) && !proprties.contains(freshUser)
 					&& !proprties.contains(guestUser)) {
 				checkOut.paymentInnformation.fillAndclickNext(true);
 			} else {
-
+				
+				boolean saveBilling = true;
 				LinkedHashMap<String, Object> paymentDetails = (LinkedHashMap<String, Object>) paymentCards
 						.get(payment);
+				LinkedHashMap<String, Object> billAddressDetails = (LinkedHashMap<String, Object>) addresses
+						.get(billingAddress);
+				
 				checkOut.paymentInnformation.fillAndclickNext(payment,
 						(String) paymentDetails.get(checkOut.paymentInnformation.keys.name),
 						(String) paymentDetails.get(checkOut.paymentInnformation.keys.number),
 						(String) paymentDetails.get(checkOut.paymentInnformation.keys.expireMonth),
 						(String) paymentDetails.get(checkOut.paymentInnformation.keys.expireYear),
-						(String) paymentDetails.get(checkOut.paymentInnformation.keys.CVCC), true, true);
+						(String) paymentDetails.get(checkOut.paymentInnformation.keys.CVCC), saveBilling, 
+						billingAddress.equalsIgnoreCase(shippingAddress),
+						(String) billAddressDetails.get(checkOut.shippingAddress.keys.countery),
+						(String) billAddressDetails.get(checkOut.shippingAddress.keys.title),
+						(String) billAddressDetails.get(checkOut.shippingAddress.keys.firstName),
+						(String) billAddressDetails.get(checkOut.shippingAddress.keys.lastName),
+						(String) billAddressDetails.get(checkOut.shippingAddress.keys.adddressLine),
+						(String) billAddressDetails.get(checkOut.shippingAddress.keys.city),
+						(String) billAddressDetails.get(checkOut.shippingAddress.keys.postal),
+						(String) billAddressDetails.get(checkOut.shippingAddress.keys.phone));
 			}
-
-			checkOut.reviewInformation.getSubtotal();
-			checkOut.reviewInformation.shippingCost();
-			checkOut.reviewInformation.gettotal();
+			
+			//Validate the order subtotal in order review section
+			assertEquals(checkOut.reviewInformation.getSubtotal(), orderSubtotal );
+			
 			checkOut.reviewInformation.acceptTerms(true);
 			checkOut.reviewInformation.placeOrder();
 
-			checkOut.orderConfirmation.getOrderid();
-			checkOut.orderConfirmation.getOrdertotal();
-			checkOut.orderConfirmation.getSubtotal();
-			checkOut.orderConfirmation.getShippingcost();
+			
+			//Validate the order sub total in order review section
+			assertEquals(checkOut.orderConfirmation.getSubtotal(), orderSubtotal );
+			
+			orderTotal = checkOut.orderConfirmation.getOrderTotal();
+			orderShipping = checkOut.orderConfirmation.getShippingcost();
+			orderId = checkOut.orderConfirmation.getOrderid();
+			
+			//TODO: compare addresses 
 			checkOut.orderConfirmation.getbillingAddrerss();
 			checkOut.orderConfirmation.getshippingAddrerss();
-
+			
+			//TODO: write results to sheet 
+			
+			
 			Common.testPass();
 		} catch (Throwable t) {
 			setTestCaseDescription(getTestCaseDescription());
-			logs.debug(t.getMessage());
+			logs.debug(MessageFormat.format(LoggingMsg.DEBUGGING_TEXT, t.getMessage()));
 			t.printStackTrace();
 			String temp = getTestCaseId();
 			Common.testFail(t, temp);

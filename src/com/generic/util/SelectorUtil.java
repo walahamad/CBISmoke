@@ -3,6 +3,7 @@ package com.generic.util;
 import static org.junit.Assert.assertNull;
 
 import java.io.IOException;
+import java.text.MessageFormat;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -21,6 +22,7 @@ import org.openqa.selenium.support.ui.Select;
 import com.generic.setup.ActionDriver;
 import com.generic.setup.SelTestCase;
 import com.generic.setup.ExceptionMsg;
+import com.generic.setup.LoggingMsg;
 
 
 public class SelectorUtil extends SelTestCase {
@@ -47,53 +49,59 @@ public class SelectorUtil extends SelTestCase {
 				 
 				 if (foundElements.isEmpty())
 				 {
-					 //logs.debug("in exact class");
+					//logs.debug(MessageFormat.format(LoggingMsg.IN_SELECTOR_TYPE, "exact class"));
 					 foundElements = doc.select("[class="+subStr+"]");
 					 selectorType = (!(foundElements.isEmpty()) ? "class":selectorType);
 				 }
 				 
 				 if (foundElements.isEmpty())
 				 {
-					 //logs.debug("in i class");
+					//logs.debug(MessageFormat.format(LoggingMsg.IN_SELECTOR_TYPE, "i class"));
 					 foundElements = doc.select("[class="+subStr+" i]");
 					 selectorType = (!(foundElements.isEmpty()) ? "class":selectorType);
 				 }
 				 
 				 if (foundElements.isEmpty())
 				 {
-					 //logs.debug("in exact name");
+					//logs.debug(MessageFormat.format(LoggingMsg.IN_SELECTOR_TYPE, "exact name"));
 					 foundElements = doc.select("[name="+subStr+"]");
 					 selectorType = (!(foundElements.isEmpty()) ? "name":selectorType);
 				 }
 				 
 				 if(foundElements.isEmpty())
 				 {
-					 //logs.debug("in *id");
+					//logs.debug(MessageFormat.format(LoggingMsg.IN_SELECTOR_TYPE, "*id"));
 				  //use regular expression (register.)?firstName for example
 				  foundElements = doc.select("[id~=(register.)?"+subStr+"$]");
 				  selectorType = (!(foundElements.isEmpty()) ? "id":selectorType);
 				 }
 				 if (foundElements.isEmpty())
 				 {
+					 //logs.debug("in *id");
+					 foundElements = doc.select("[id*="+subStr+"]");
+					 selectorType = (!(foundElements.isEmpty()) ? "id":selectorType);
+				 }
+				 if (foundElements.isEmpty())
+				 {
 				  //use * to mean contains
-					 //logs.debug("in *class");
+					//logs.debug(MessageFormat.format(LoggingMsg.IN_SELECTOR_TYPE, "*class"));
 					 foundElements = doc.select("[class*="+subStr+"]");
 					 selectorType = (!(foundElements.isEmpty()) ? "class":selectorType);
 				 }
 				 if (foundElements.isEmpty()) {
-					 //logs.debug("in *name");
+					//logs.debug(MessageFormat.format(LoggingMsg.IN_SELECTOR_TYPE, "*name"));
 					 foundElements = doc.select("[name*="+subStr+"]");
 					 selectorType = (!(foundElements.isEmpty()) ? "name":selectorType);
 				 }
 				 if (foundElements.isEmpty())
 				 {
-					 //logs.debug("in *title"); 
+					//logs.debug(MessageFormat.format(LoggingMsg.IN_SELECTOR_TYPE, "*title"));  
 					 foundElements = doc.select("[title*="+subStr+"]");
 					 selectorType = (!(foundElements.isEmpty()) ? "title":selectorType);
 				 }
 				 if (foundElements.isEmpty())
 	    	     {
-	    	    	 //logs.debug("in xpath");
+					//logs.debug(MessageFormat.format(LoggingMsg.IN_SELECTOR_TYPE, "xpath"));
 	    	    	 foundElements = doc.select("*:containsOwn("+ subStr +")");
 	    	    	 selectorType = (!(foundElements.isEmpty()) ? subStr:selectorType);
 	    	     }
@@ -105,12 +113,12 @@ public class SelectorUtil extends SelTestCase {
 					  webElementInfo.put("SelType",selectorType);
 					  webElementInfo.put("by",getBySelectorForElements(foundElements,selectorType));
 					  webElementInfo.put("action",getActiontype(foundElements));
-					  SelTestCase.logs.debug("Found a valid selector: " + Arrays.asList(webElementInfo));
+					  SelTestCase.logs.debug(MessageFormat.format(LoggingMsg.VALID_SEL_MSG, Arrays.asList(webElementInfo)));
 				  
 				 } 
 				 else
 				 {
-					 logs.debug("XXX>> NO Valid Selector Found <<XXX");
+					 logs.debug(LoggingMsg.NO_VALID_SEL_ERROR_MSG);
 				 }
 			 index++;
 			}
@@ -148,7 +156,7 @@ public class SelectorUtil extends SelTestCase {
 					}
 					else
 					{
-						logs.debug("Returning the default action");
+						logs.debug(LoggingMsg.DEFAULT_ACTION_MSG);
 						return "Validate"; 
 					}
 			}
@@ -193,7 +201,7 @@ public class SelectorUtil extends SelTestCase {
 	    public static String getStringSelectorForElements(Elements foundElements, String selType) {
 	    	getCurrentFunctionName(true);
 	    	
-	    	logs.debug("selector type is " + selType);
+	    	logs.debug(MessageFormat.format(LoggingMsg.SEL_TYPE, selType));
 	    	
 	    	String selector = ""; 
 			for (org.jsoup.nodes.Element e : foundElements) {
@@ -243,14 +251,14 @@ public class SelectorUtil extends SelTestCase {
 		    		{
 					   if (action.equals("type"))
 					   {
-						  logs.debug("writing " + value +" to "+ byAction.toString());
+						  logs.debug(MessageFormat.format(LoggingMsg.WRITING_TO_SEL, "", value, byAction.toString()));
 						  WebElement field = getDriver().findElement(byAction);
 						  field.clear();
 						  field.sendKeys(value);
 					   }
 					   else if (action.equals("click"))
 					   {
-						   logs.debug("clicking on " +  byAction.toString());
+						   logs.debug(MessageFormat.format(LoggingMsg.CLICKING_SEL, byAction.toString()));
 						   JavascriptExecutor jse = (JavascriptExecutor)getDriver();
 						   jse.executeScript("arguments[0].scrollIntoView()", getDriver().findElement(byAction)); 
 						   ActionDriver.click(byAction);
@@ -258,40 +266,40 @@ public class SelectorUtil extends SelTestCase {
 					   else if (action.equals("check"))
 					   {
 						   WebElement checkboxE = getDriver().findElement(byAction);  
-						   logs.debug("check box  " +  byAction.toString() + " " + value);
+						   logs.debug(MessageFormat.format(LoggingMsg.CHECKBOX_SEL_VAL, byAction.toString(), value));
 						   if(value.contains("true"))
 						   {
 							   if (!checkboxE.isSelected())
 							   {
-								   logs.debug("checking the check box- check box status is not checked");
+								   logs.debug(MessageFormat.format(LoggingMsg.CHECKING_UNCHECKING_MSG, "", "not "));
 								   getDriver().findElement(byAction).click();
 							   }
 							   else
 							   {
-								   logs.debug("checking the check box- check box status is checked");
+								   logs.debug(MessageFormat.format(LoggingMsg.CHECKING_UNCHECKING_MSG, "", ""));
 							   }
 						   }
 						   else
 						   {
 							   if (checkboxE.isSelected())
 							   {
-								   logs.debug("unchecking the check box- check box status is checked");
+								   logs.debug(MessageFormat.format(LoggingMsg.CHECKING_UNCHECKING_MSG,"un",""));
 								   getDriver().findElement(byAction).click();
 							   }
 							   else
 							   {
-								   logs.debug("checking the check box- check box status is checked");
+								   logs.debug(MessageFormat.format(LoggingMsg.CHECKING_UNCHECKING_MSG, "", ""));
 							   }
 						   }
 					   }
 					   else if (action.equals("gettext"))
 					   {
-						   logs.debug("getting txt from " +  byAction.toString());
+						   logs.debug(MessageFormat.format(LoggingMsg.GETTING_SEL,"txt", byAction.toString()));
 						   return getDriver().findElement(byAction).getText();
 					   }
 					   else if (action.equals("click,gettext"))
 					   {
-						   logs.debug("getting txt, click from " +  byAction.toString());
+						   logs.debug(MessageFormat.format(LoggingMsg.GETTING_SEL, "txt, click", byAction.toString()));
 						   
 						   WebElement element = getDriver().findElement(byAction);
 						   
@@ -304,21 +312,21 @@ public class SelectorUtil extends SelTestCase {
 							   textVal = element.getText();
 						   }catch(Exception e)
 						   {
-						   		logs.debug("Failed to get text");
+						   		logs.debug(MessageFormat.format(LoggingMsg.FAILED_ACTION_MSG, "get text"));
 						   }
 						   try 
 						   {
 							   element.click();
 						   }catch(Exception e)
 						   {
-						   		logs.debug("Failed to click");
+						   		logs.debug(MessageFormat.format(LoggingMsg.FAILED_ACTION_MSG, "click"));
 						   }
 						   
 						   return textVal;
 					   }
 					   else if (action.equals("selectByText"))
 					   {
-						   logs.debug("selecting value " + byAction.toString()); 
+						   logs.debug(MessageFormat.format(LoggingMsg.SELECTING_ELEMENT_VALUE, "value", byAction.toString())); 
 						   Select select = new Select(getDriver().findElement(byAction));
 						   
 //						   //Keep the block below for debugging purposes  
@@ -333,14 +341,14 @@ public class SelectorUtil extends SelTestCase {
 						   }
 						   catch(Exception e)
 						   {
-							   logs.debug("Try alternative way: ");
+							   logs.debug(LoggingMsg.TRY_ALT_WAY_MSG);
 							   List<WebElement> options = select.getOptions();
 							   for(int i=0; i<options.size(); i++)
 							   {
 								  // logs.debug(options.get(i).getText().trim());
 							   	    if (options.get(i).getText().toLowerCase().trim().contains(value.toLowerCase()))
 							   	    {
-										logs.debug("selected index is" + i ); 
+										logs.debug(MessageFormat.format(LoggingMsg.SELECTED_INDEX, i )); 
 							   	    	select.selectByIndex(i);
 							   	    }
 							   	}
@@ -352,7 +360,7 @@ public class SelectorUtil extends SelTestCase {
 				       if (!value.isEmpty())
 				       {
 				        Assert.assertEquals("The "+ selector + " has incorrect error msg", getDriver().findElement(byAction).getText(), value);
-				        logs.debug("The "+ selector + " is found and has correct error msg");
+				        logs.debug(MessageFormat.format(LoggingMsg.ERROR_VERIFICATION_SEL_MSG, selector));
 				       }
 		    		}
 	    		}
@@ -390,9 +398,9 @@ public class SelectorUtil extends SelTestCase {
 			try
 			{
 				//Keeping this for Debugging purposes.
-				logs.debug(Arrays.asList(webElementsInfo));
+				logs.debug(MessageFormat.format(LoggingMsg.DEBUGGING_TEXT, Arrays.asList(webElementsInfo)));
 				SelectorUtil.initializeElementsSelectorsMaps(webElementsInfo, isValidationStep);
-				logs.debug(Arrays.asList(webElementsInfo));
+				logs.debug(MessageFormat.format(LoggingMsg.DEBUGGING_TEXT, Arrays.asList(webElementsInfo)));
 	
 				for (String key : webElementsInfo.keySet()) {
 					LinkedHashMap<String, Object> webElementInfo = webElementsInfo.get(key);
@@ -403,7 +411,7 @@ public class SelectorUtil extends SelTestCase {
 				Thread.sleep(1000);
 			}catch(Exception e)
 			{
-				logs.debug("ERROR >>>-->>> : "+e.getMessage() );
+				logs.debug(MessageFormat.format(LoggingMsg.FORMATTED_ERROR_MSG, e.getMessage()));
 				throw new NoSuchElementException("No such element: "  + Arrays.asList(webElementsInfo)); 
 				
 			}finally
@@ -413,7 +421,7 @@ public class SelectorUtil extends SelTestCase {
 			}
 			
 			
-			logs.debug("FINISHED doing correct action on elements: " +Arrays.asList(webElementsInfo));
+			logs.debug(MessageFormat.format(LoggingMsg.FINISHED_ACTION_ON_ELEMENTS_MSG, Arrays.asList(webElementsInfo)));
 
 		}
 }

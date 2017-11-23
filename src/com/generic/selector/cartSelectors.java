@@ -16,5 +16,8 @@ public class cartSelectors
 	public static final String actionMenue = "editEntry_";
 	public static final String removeItem = "actionEntry_";
 	public static final String cartContent = "yCmsComponent yComponentWrapper content__empty";
+	public static final String cartOrderTotal = "test_cart_totalPrice_label_$2";
+	public static final String cartOrderShipping = "cart-totals";
+	public static final String cartOrderTax = "test_cart_taxes_label_$3";
 	
 }

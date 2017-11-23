@@ -1,11 +1,13 @@
 package com.generic.page;
 
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
 import com.generic.selector.cartSelectors;
 import com.generic.setup.SelTestCase;
 import com.generic.setup.ExceptionMsg;
+import com.generic.setup.LoggingMsg;
 import com.generic.util.SelectorUtil;
 
 public class cart extends SelTestCase {
@@ -20,7 +22,7 @@ public class cart extends SelTestCase {
 	
 	public static void clickCheckout() throws Exception {
 		getCurrentFunctionName(true);
-		logs.debug("clicking on checkout btn from cart");
+		logs.debug(MessageFormat.format(LoggingMsg.CLICKING_CART_BUTTON, "checkout"));
 		subStrArr.add(cartSelectors.checkoutBtn);
 		valuesArr.add("");
 		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
@@ -30,7 +32,7 @@ public class cart extends SelTestCase {
 
 	public static void clickContinueShoping() throws Exception {
 		getCurrentFunctionName(true);
-		logs.debug("clicking on continue shopping from cart");
+		logs.debug(MessageFormat.format(LoggingMsg.CLICKING_CART_BUTTON,"continue shopping"));
 		subStrArr.add(cartSelectors.continueShopping);
 		valuesArr.add("");
 		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
@@ -43,40 +45,62 @@ public class cart extends SelTestCase {
 		subStrArr.add(cartSelectors.numberOfProducts);
 		valuesArr.add("");
 		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
-		logs.debug("number of products: " + SelectorUtil.textValue);
+		logs.debug(MessageFormat.format(LoggingMsg.NUMBER_OF_PRODUCTS, SelectorUtil.textValue));
 		getCurrentFunctionName(false);
 		return SelectorUtil.textValue;
 	}
 
-	public static String ordarTotal() throws Exception {
+	public static String getOrdarTotal() throws Exception {
 		getCurrentFunctionName(true);
-		subStrArr.add(cartSelectors.numberOfProducts);
+		subStrArr.add(cartSelectors.cartOrderTotal);
 		valuesArr.add("");
 		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
-		logs.debug("Order total: " + SelectorUtil.textValue);
+		logs.debug(MessageFormat.format(LoggingMsg.ORDER_TOTAL, SelectorUtil.textValue));
 		getCurrentFunctionName(false);
 		return SelectorUtil.textValue;
 	}
 
-	public static String ordarSubTotal() throws Exception {
+	public static String getOrdarSubTotal() throws Exception {
 		getCurrentFunctionName(true);
 		subStrArr.add(cartSelectors.OrderSubTotal);
 		valuesArr.add("");
 		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
-		logs.debug("Order subtotal: " + SelectorUtil.textValue);
+		logs.debug(MessageFormat.format(LoggingMsg.ORDER_SUBTOTAL, SelectorUtil.textValue));
+		getCurrentFunctionName(false);
+		return SelectorUtil.textValue;
+
+	}
+	
+	public static String getOrdarshipping() throws Exception {
+		getCurrentFunctionName(true);
+		subStrArr.add(cartSelectors.cartOrderShipping);
+		valuesArr.add("");
+		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
+		logs.debug("Order shipping: " + SelectorUtil.textValue);
 		getCurrentFunctionName(false);
 		return SelectorUtil.textValue;
 
 	}
 
+	public static String getOrdarTax() throws Exception {
+		getCurrentFunctionName(true);
+		subStrArr.add(cartSelectors.cartOrderTax);
+		valuesArr.add("");
+		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
+		logs.debug("Order tax: " + SelectorUtil.textValue);
+		getCurrentFunctionName(false);
+		return SelectorUtil.textValue;
+
+	}
+	
 	public static void applyCoupon(String coupon) throws Exception {
 		getCurrentFunctionName(true);
 		if (!"".equals(coupon)) {
-			logs.debug("Applying Coupon " + coupon);
+			logs.debug(MessageFormat.format(LoggingMsg.APPLYING_COUPON, "Applying", coupon));
 			writeCoupon(coupon);
 			clickApplycoupon();
 		} else {
-			logs.debug("cannot apply coupon " + coupon);
+			logs.debug(MessageFormat.format(LoggingMsg.APPLYING_COUPON, "cannot apply", coupon));
 		}
 		getCurrentFunctionName(false);
 	}
@@ -103,7 +127,7 @@ public class cart extends SelTestCase {
 		valuesArr.add("");
 		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
 		getCurrentFunctionName(false);
-		logs.debug(SelectorUtil.textValue);
+		logs.debug(MessageFormat.format(LoggingMsg.SEL_TEXT, SelectorUtil.textValue));
 		return !"".equals(SelectorUtil.textValue);
 	}
 
@@ -138,7 +162,7 @@ public class cart extends SelTestCase {
 			subStrArr.add(cartSelectors.errorMessage);
 			valuesArr.add("");
 			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
-			logs.debug("Error message is: " + SelectorUtil.textValue);
+			logs.debug(MessageFormat.format(LoggingMsg.ERROR_MSG, SelectorUtil.textValue));
 		} catch (Exception e) {
 			// to make sure the application is throwing the correct exception
 			if (ExceptionMsg.noValidSelector.contains(e.getMessage()))
@@ -156,7 +180,7 @@ public class cart extends SelTestCase {
 			subStrArr.add(cartSelectors.errorMessage);
 			valuesArr.add("");
 			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
-			logs.debug("Error message is: " + SelectorUtil.textValue);
+			logs.debug(MessageFormat.format(LoggingMsg.ERROR_MSG, SelectorUtil.textValue));
 		} catch (Exception e) {
 			// to make sure the application is throwing the correct exception
 			if (ExceptionMsg.noValidSelector.contains(e.getMessage()))
@@ -176,7 +200,7 @@ public class cart extends SelTestCase {
 			SelectorUtil.textValue = "";
 			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
 		} catch (Exception e) {
-			logs.debug("Cart is not empty " + e.getMessage());
+			logs.debug(MessageFormat.format(LoggingMsg.EMPTY_CART_ERROR_MSG, e.getMessage()));
 		}
 		getCurrentFunctionName(false);
 		return (SelectorUtil.textValue.contains("empty") ? true : false);
@@ -187,11 +211,11 @@ public class cart extends SelTestCase {
 
 		if (!isCartEmpty()) {
 			int numberOfItems = Integer.parseInt(getNumberOfproducts().split(" ")[0]);
-			logs.debug("removing all items from cart");
+			logs.debug(LoggingMsg.REMOVE_ALL_ITEMS_FROM_CART);
 			for (int itemIndex = numberOfItems - 1; itemIndex >= 0; itemIndex--)
 				removeItemFromCart(0); // keep always remove the first item
 		} else {
-			logs.debug("No items to be removed");
+			logs.debug(LoggingMsg.NO_ITEMS_TO_BE_REMOVED);
 		}
 
 		getCurrentFunctionName(false);
