@@ -16,7 +16,7 @@ import com.generic.setup.SheetVariables;
 import com.generic.util.ReportUtil;
 import com.generic.util.TestUtilities;
 
-public class address_main_example_checkout_validation extends SelTestCase {
+public class Address_main_example_checkout_validation extends SelTestCase {
 
 	private static int testCaseID;
 

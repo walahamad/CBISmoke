@@ -1,6 +1,6 @@
 package com.generic.selector;
 
-public class cartSelectors
+public class CartSelectors
 {
 	public static final String checkoutBtn = "test_checkoutButton_$1";
 	public static final String continueShopping = "btn--continue-shopping";

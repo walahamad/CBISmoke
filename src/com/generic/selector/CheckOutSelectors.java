@@ -1,5 +1,5 @@
 package com.generic.selector;
-public class checkOutSelectors
+public class CheckOutSelectors
 {
 	
 	//Shipping Address

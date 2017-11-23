@@ -66,7 +66,7 @@ public class ReportResultsWriter {
 		        + ".html>" + testCaseName + "</a></b></td>\n");
 		
 		out.write("</tr>\n");
-		reportAnalyzer.analyze(ReportUtil.currentDir + "//" + ReportUtil.currentSuiteName + "_TC_log"
+		ReportAnalyzer.analyze(ReportUtil.currentDir + "//" + ReportUtil.currentSuiteName + "_TC_log"
 				+ ReportUtil.tcid + "_" + testCaseName.replaceAll(" ", "_")
 				+ ".html", Float.parseFloat(SelTestCase.getCONFIG().getProperty("report_analysis_period")));
 	}

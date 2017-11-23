@@ -4,13 +4,13 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.generic.selector.cartSelectors;
+import com.generic.selector.CartSelectors;
 import com.generic.setup.SelTestCase;
 import com.generic.setup.ExceptionMsg;
 import com.generic.setup.LoggingMsg;
 import com.generic.util.SelectorUtil;
 
-public class cart extends SelTestCase {
+public class Cart extends SelTestCase {
 	private static List<String> subStrArr = new ArrayList<String>();
 	private static List<String> valuesArr = new ArrayList<String>();
 
@@ -23,7 +23,7 @@ public class cart extends SelTestCase {
 	public static void clickCheckout() throws Exception {
 		getCurrentFunctionName(true);
 		logs.debug(MessageFormat.format(LoggingMsg.CLICKING_CART_BUTTON, "checkout"));
-		subStrArr.add(cartSelectors.checkoutBtn);
+		subStrArr.add(CartSelectors.checkoutBtn);
 		valuesArr.add("");
 		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
 		getCurrentFunctionName(false);
@@ -33,7 +33,7 @@ public class cart extends SelTestCase {
 	public static void clickContinueShoping() throws Exception {
 		getCurrentFunctionName(true);
 		logs.debug(MessageFormat.format(LoggingMsg.CLICKING_CART_BUTTON, "continue shopping"));
-		subStrArr.add(cartSelectors.continueShopping);
+		subStrArr.add(CartSelectors.continueShopping);
 		valuesArr.add("");
 		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
 		getCurrentFunctionName(false);
@@ -42,7 +42,7 @@ public class cart extends SelTestCase {
 
 	public static String getNumberOfproducts() throws Exception {
 		getCurrentFunctionName(true);
-		subStrArr.add(cartSelectors.numberOfProducts);
+		subStrArr.add(CartSelectors.numberOfProducts);
 		valuesArr.add("");
 		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
 		logs.debug(MessageFormat.format(LoggingMsg.NUMBER_OF_PRODUCTS, SelectorUtil.textValue));
@@ -52,7 +52,7 @@ public class cart extends SelTestCase {
 
 	public static String getOrderTotal() throws Exception {
 		getCurrentFunctionName(true);
-		subStrArr.add(cartSelectors.cartOrderTotal);
+		subStrArr.add(CartSelectors.cartOrderTotal);
 		valuesArr.add("");
 		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
 		logs.debug(MessageFormat.format(LoggingMsg.ORDER_TOTAL, SelectorUtil.textValue));
@@ -62,7 +62,7 @@ public class cart extends SelTestCase {
 
 	public static String getOrderSubTotal() throws Exception {
 		getCurrentFunctionName(true);
-		subStrArr.add(cartSelectors.OrderSubTotal);
+		subStrArr.add(CartSelectors.OrderSubTotal);
 		valuesArr.add("");
 		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
 		logs.debug(MessageFormat.format(LoggingMsg.ORDER_SUBTOTAL, SelectorUtil.textValue));
@@ -73,7 +73,7 @@ public class cart extends SelTestCase {
 
 	public static String getOrderTax() throws Exception {
 		getCurrentFunctionName(true);
-		subStrArr.add(cartSelectors.cartOrderTax);
+		subStrArr.add(CartSelectors.cartOrderTax);
 		valuesArr.add("");
 		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
 		logs.debug("Order tax: " + SelectorUtil.textValue);
@@ -96,7 +96,7 @@ public class cart extends SelTestCase {
 
 	private static void clickApplycoupon() throws Exception {
 		getCurrentFunctionName(true);
-		subStrArr.add(cartSelectors.applyCouponButton);
+		subStrArr.add(CartSelectors.applyCouponButton);
 		valuesArr.add("");
 		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
 		getCurrentFunctionName(false);
@@ -104,7 +104,7 @@ public class cart extends SelTestCase {
 
 	private static void writeCoupon(String coupon) throws Exception {
 		getCurrentFunctionName(true);
-		subStrArr.add(cartSelectors.couponField);
+		subStrArr.add(CartSelectors.couponField);
 		valuesArr.add(coupon);
 		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
 		getCurrentFunctionName(false);
@@ -112,7 +112,7 @@ public class cart extends SelTestCase {
 
 	public static boolean validateinvaldcoupon() throws Exception {
 		getCurrentFunctionName(true);
-		subStrArr.add(cartSelectors.couponErrorMessage);
+		subStrArr.add(CartSelectors.couponErrorMessage);
 		valuesArr.add("");
 		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
 		getCurrentFunctionName(false);
@@ -130,7 +130,7 @@ public class cart extends SelTestCase {
 
 	private static void updateQunatity() throws Exception {
 		getCurrentFunctionName(true);
-		subStrArr.add(cartSelectors.updateQunatityBtn);
+		subStrArr.add(CartSelectors.updateQunatityBtn);
 		valuesArr.add("");
 		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
 		getCurrentFunctionName(false);
@@ -139,7 +139,7 @@ public class cart extends SelTestCase {
 
 	private static void writeNewQunatity(String qty) throws Exception {
 		getCurrentFunctionName(true);
-		subStrArr.add(cartSelectors.qty);
+		subStrArr.add(CartSelectors.qty);
 		valuesArr.add(qty);
 		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
 		getCurrentFunctionName(false);
@@ -148,7 +148,7 @@ public class cart extends SelTestCase {
 	public static String getErrorMsg() throws Exception {
 		getCurrentFunctionName(true);
 		try {
-			subStrArr.add(cartSelectors.errorMessage);
+			subStrArr.add(CartSelectors.errorMessage);
 			valuesArr.add("");
 			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
 			logs.debug(MessageFormat.format(LoggingMsg.ERROR_MSG, SelectorUtil.textValue));
@@ -166,7 +166,7 @@ public class cart extends SelTestCase {
 	public static String getCartMsg() throws Exception {
 		getCurrentFunctionName(true);
 		try {
-			subStrArr.add(cartSelectors.errorMessage);
+			subStrArr.add(CartSelectors.errorMessage);
 			valuesArr.add("");
 			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
 			logs.debug(MessageFormat.format(LoggingMsg.ERROR_MSG, SelectorUtil.textValue));
@@ -183,7 +183,7 @@ public class cart extends SelTestCase {
 
 	public static boolean isCartEmpty() throws Exception {
 		getCurrentFunctionName(true);
-		subStrArr.add(cartSelectors.cartContent);
+		subStrArr.add(CartSelectors.cartContent);
 		valuesArr.add("");
 		try {
 			SelectorUtil.textValue = "";
@@ -220,7 +220,7 @@ public class cart extends SelTestCase {
 
 	private static void clickOnRemove(int itemIndex) throws Exception {
 		getCurrentFunctionName(true);
-		subStrArr.add(cartSelectors.removeItem + itemIndex);
+		subStrArr.add(CartSelectors.removeItem + itemIndex);
 		valuesArr.add("");
 		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
 		getCurrentFunctionName(false);
@@ -228,7 +228,7 @@ public class cart extends SelTestCase {
 
 	private static void clickOnactionMenue(int itemIndex) throws Exception {
 		getCurrentFunctionName(true);
-		subStrArr.add(cartSelectors.actionMenue + itemIndex);
+		subStrArr.add(CartSelectors.actionMenue + itemIndex);
 		valuesArr.add("");
 		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
 		getCurrentFunctionName(false);
@@ -236,7 +236,7 @@ public class cart extends SelTestCase {
 
 	public static String getOrdarshipping() throws Exception {
 		getCurrentFunctionName(true);
-		subStrArr.add(cartSelectors.cartOrderShipping);
+		subStrArr.add(CartSelectors.cartOrderShipping);
 		valuesArr.add("");
 		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
 		logs.debug("Order shipping: " + SelectorUtil.textValue);

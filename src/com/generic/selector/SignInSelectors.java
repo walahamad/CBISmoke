@@ -1,5 +1,5 @@
 package com.generic.selector;
-public class signInSelectors
+public class SignInSelectors
 {
 	public static final String userName = "j_username";
 	public static final String  password = "j_password";
