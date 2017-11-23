@@ -13,13 +13,13 @@ import com.generic.util.SelectorUtil;
 public class cart extends SelTestCase {
 	private static List<String> subStrArr = new ArrayList<String>();
 	private static List<String> valuesArr = new ArrayList<String>();
-	
-	public static class keys{
+
+	public static class keys {
 
 		public static final String invalidCoupon = "invalid";
-		
+
 	}
-	
+
 	public static void clickCheckout() throws Exception {
 		getCurrentFunctionName(true);
 		logs.debug(MessageFormat.format(LoggingMsg.CLICKING_CART_BUTTON, "checkout"));
@@ -32,7 +32,7 @@ public class cart extends SelTestCase {
 
 	public static void clickContinueShoping() throws Exception {
 		getCurrentFunctionName(true);
-		logs.debug(MessageFormat.format(LoggingMsg.CLICKING_CART_BUTTON,"continue shopping"));
+		logs.debug(MessageFormat.format(LoggingMsg.CLICKING_CART_BUTTON, "continue shopping"));
 		subStrArr.add(cartSelectors.continueShopping);
 		valuesArr.add("");
 		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
@@ -81,7 +81,7 @@ public class cart extends SelTestCase {
 		return SelectorUtil.textValue;
 
 	}
-	
+
 	public static void applyCoupon(String coupon) throws Exception {
 		getCurrentFunctionName(true);
 		if (!"".equals(coupon)) {
@@ -234,4 +234,13 @@ public class cart extends SelTestCase {
 		getCurrentFunctionName(false);
 	}
 
+	public static String getOrdarshipping() throws Exception {
+		getCurrentFunctionName(true);
+		subStrArr.add(cartSelectors.cartOrderShipping);
+		valuesArr.add("");
+		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
+		logs.debug("Order shipping: " + SelectorUtil.textValue);
+		getCurrentFunctionName(false);
+		return SelectorUtil.textValue;
+	}
 }

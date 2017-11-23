@@ -513,8 +513,18 @@ public class checkOut extends SelTestCase {
 			getCurrentFunctionName(false);
 			return SelectorUtil.textValue;
 		}
+		
+		public static String gettotal() throws Exception {
+			getCurrentFunctionName(true);
+			subStrArr.add(checkOutSelectors.orderTotalOrderSumary );
+			valuesArr.add("");
+			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
+			logs.debug(MessageFormat.format(LoggingMsg.SEL_TEXT, SelectorUtil.textValue));
+			getCurrentFunctionName(false);
+			return SelectorUtil.textValue;
+		}
 
-	}
+	}//order review information 
 	
 	public static class orderConfirmation {
 
