@@ -50,7 +50,7 @@ public class cart extends SelTestCase {
 		return SelectorUtil.textValue;
 	}
 
-	public static String getOrdarTotal() throws Exception {
+	public static String getOrderTotal() throws Exception {
 		getCurrentFunctionName(true);
 		subStrArr.add(cartSelectors.cartOrderTotal);
 		valuesArr.add("");
@@ -60,32 +60,18 @@ public class cart extends SelTestCase {
 		return SelectorUtil.textValue;
 	}
 
-	public static String getOrdarSubTotal() throws Exception {
+	public static String getOrderSubTotal() throws Exception {
 		getCurrentFunctionName(true);
 		subStrArr.add(cartSelectors.OrderSubTotal);
 		valuesArr.add("");
 		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
 		logs.debug(MessageFormat.format(LoggingMsg.ORDER_SUBTOTAL, SelectorUtil.textValue));
-<<<<<<< HEAD
-		getCurrentFunctionName(false);
-		return SelectorUtil.textValue;
-
-	}
-	
-	public static String getOrdarshipping() throws Exception {
-		getCurrentFunctionName(true);
-		subStrArr.add(cartSelectors.cartOrderShipping);
-		valuesArr.add("");
-		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
-		logs.debug("Order shipping: " + SelectorUtil.textValue);
-=======
->>>>>>> branch 'master' of https://github.com/ibatta/SelFW.git
 		getCurrentFunctionName(false);
 		return SelectorUtil.textValue;
 
 	}
 
-	public static String getOrdarTax() throws Exception {
+	public static String getOrderTax() throws Exception {
 		getCurrentFunctionName(true);
 		subStrArr.add(cartSelectors.cartOrderTax);
 		valuesArr.add("");

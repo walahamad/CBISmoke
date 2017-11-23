@@ -481,20 +481,6 @@ public class checkOut extends SelTestCase {
 			valuesArr.add("");
 			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
 			logs.debug(MessageFormat.format(LoggingMsg.SEL_TEXT,SelectorUtil.textValue));
-<<<<<<< HEAD
-=======
-			getCurrentFunctionName(false);
-			return SelectorUtil.textValue;
-
-		}
-
-		public static String gettotal() throws Exception {
-			getCurrentFunctionName(true);
-			subStrArr.add(checkOutSelectors.orderTotal);
-			valuesArr.add("");
-			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
-			logs.debug(MessageFormat.format(LoggingMsg.SEL_TEXT, SelectorUtil.textValue));
->>>>>>> branch 'master' of https://github.com/ibatta/SelFW.git
 			getCurrentFunctionName(false);
 			return SelectorUtil.textValue;
 
@@ -532,7 +518,7 @@ public class checkOut extends SelTestCase {
 	
 	public static class orderConfirmation {
 
-		public static String getOrderid() throws Exception {
+		public static String getOrderId() throws Exception {
 			getCurrentFunctionName(true);
 			subStrArr.add(checkOutSelectors.orderId);
 			valuesArr.add("");
@@ -554,7 +540,7 @@ public class checkOut extends SelTestCase {
 
 		}
 
-		public static String getSubtotal() throws Exception {
+		public static String getSubTotal() throws Exception {
 			getCurrentFunctionName(true);
 			subStrArr.add(checkOutSelectors.orderConfirmationSubtotal);
 			valuesArr.add("");
@@ -565,7 +551,7 @@ public class checkOut extends SelTestCase {
 
 		}
 
-		public static String getShippingcost() throws Exception {
+		public static String getShippingCost() throws Exception {
 			getCurrentFunctionName(true);
 			subStrArr.add(checkOutSelectors.orderConfirmationShippingCost);
 			valuesArr.add("");

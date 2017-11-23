@@ -1,10 +1,6 @@
 package com.generic.tests.checkout;
 
-<<<<<<< HEAD
 import static org.testng.Assert.assertEquals;
-
-=======
->>>>>>> branch 'master' of https://github.com/ibatta/SelFW.git
 import java.text.MessageFormat;
 import java.util.Arrays;
 import java.util.Collection;
@@ -145,8 +141,8 @@ public class base_checkout extends SelTestCase {
 				}
 			}
 			cart.getNumberOfproducts();
-			orderSubtotal = cart.getOrdarSubTotal();
-			orderTax = cart.getOrdarTax();
+			orderSubtotal = cart.getOrderSubTotal();
+			orderTax = cart.getOrderTax();
 			
 			cart.clickCheckout();
 
@@ -225,11 +221,11 @@ public class base_checkout extends SelTestCase {
 
 			
 			//Validate the order sub total in order review section
-			assertEquals(checkOut.orderConfirmation.getSubtotal(), orderSubtotal );
+			assertEquals(checkOut.orderConfirmation.getSubTotal(), orderSubtotal );
 			
 			orderTotal = checkOut.orderConfirmation.getOrderTotal();
-			orderShipping = checkOut.orderConfirmation.getShippingcost();
-			orderId = checkOut.orderConfirmation.getOrderid();
+			orderShipping = checkOut.orderConfirmation.getShippingCost();
+			orderId = checkOut.orderConfirmation.getOrderId();
 			
 			//TODO: compare addresses 
 			checkOut.orderConfirmation.getbillingAddrerss();
