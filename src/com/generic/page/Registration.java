@@ -9,7 +9,6 @@ import com.generic.setup.SelTestCase;
 import com.generic.util.SelectorUtil;
 
 public class Registration extends SelTestCase {
-    private static final String DOC_URL = getCONFIG().getProperty("testSiteName");
     private static List<String> subStrArr = new ArrayList<String>();
     private static List<String> valuesArr = new ArrayList<String>();
 

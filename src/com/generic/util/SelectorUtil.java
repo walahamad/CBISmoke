@@ -1,7 +1,5 @@
 package com.generic.util;
 
-import static org.junit.Assert.assertNull;
-
 import java.io.IOException;
 import java.text.MessageFormat;
 import java.util.Arrays;
@@ -37,7 +35,7 @@ public class SelectorUtil extends SelTestCase {
 	    	String selectorType = null;
 	    	
 	    	Document doc = Jsoup.parse(SelTestCase.getDriver().getPageSource());
-			int index = 0;
+			int index = 0; 
 			
 			
 			for(String subStr: webElementsInfo.keySet()) {
