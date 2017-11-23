@@ -66,6 +66,7 @@ public class cart extends SelTestCase {
 		valuesArr.add("");
 		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
 		logs.debug(MessageFormat.format(LoggingMsg.ORDER_SUBTOTAL, SelectorUtil.textValue));
+<<<<<<< HEAD
 		getCurrentFunctionName(false);
 		return SelectorUtil.textValue;
 
@@ -77,6 +78,8 @@ public class cart extends SelTestCase {
 		valuesArr.add("");
 		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
 		logs.debug("Order shipping: " + SelectorUtil.textValue);
+=======
+>>>>>>> branch 'master' of https://github.com/ibatta/SelFW.git
 		getCurrentFunctionName(false);
 		return SelectorUtil.textValue;
 

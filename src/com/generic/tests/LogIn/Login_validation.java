@@ -1,5 +1,6 @@
 package com.generic.tests.LogIn;
 
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -14,6 +15,7 @@ import org.junit.runners.Parameterized.Parameters;
 import java.util.LinkedHashMap;
 
 import com.generic.setup.Common;
+import com.generic.setup.LoggingMsg;
 import com.generic.setup.SelTestCase;
 import com.generic.setup.SheetVariables;
 import com.generic.util.SelectorUtil;
@@ -137,7 +139,7 @@ public class Login_validation extends SelTestCase {
 			Common.testPass();
 		} catch (Throwable t) {
 			setTestCaseDescription(getTestCaseDescription());
-			logs.debug(t.getMessage());
+			logs.debug(MessageFormat.format(LoggingMsg.DEBUGGING_TEXT, t.getMessage()));
 			t.printStackTrace();
 			String temp = getTestCaseId();
 			Common.testFail(t, temp);
@@ -164,9 +166,9 @@ public class Login_validation extends SelTestCase {
 			webElementsInfo.remove(key);
 			webElementsInfo.put(key, webElementInfo);
 		}
-		logs.debug(Arrays.asList(webElementsInfo));
+		logs.debug(MessageFormat.format(LoggingMsg.DEBUGGING_TEXT, Arrays.asList(webElementsInfo)));
 		SelectorUtil.initializeElementsSelectorsMaps(webElementsInfo, isValidationStep);
-		logs.debug(Arrays.asList(webElementsInfo));
+		logs.debug(MessageFormat.format(LoggingMsg.DEBUGGING_TEXT, Arrays.asList(webElementsInfo)));
 
 		for (String key : webElementsInfo.keySet()) {
 			LinkedHashMap<String, Object> webElementInfo = webElementsInfo.get(key);
@@ -185,30 +187,30 @@ public class Login_validation extends SelTestCase {
 			 || !pwd_errors.trim().equals("")
 			 || !checkPwd_errors.trim().equals(""))
 		{
-			logs.debug("==============> Validation <================");
-			logs.debug("email: "+email);
-			logs.debug("checkEmail: "+checkEmail);
-			logs.debug("firstName: "+firstName);
-			logs.debug("lastName: "+lastName);
-			logs.debug("country: "+country);
-			logs.debug("postalCode: "+postalCode);
-			logs.debug("password: "+password);
-			logs.debug("checkPwd: "+checkPwd);
-			logs.debug("createAccount: "+createAccount);
-			logs.debug("email_errors: "+email_errors);
-			logs.debug("checkEmail_errors: "+checkEmail_errors);
-			logs.debug("firstName_errors: "+firstName_errors);
-			logs.debug("lastName_errors: "+lastName_errors);
-			logs.debug("country_errors: "+country_errors);
-			logs.debug("postalCode_errors: "+postalCode_errors);
-			logs.debug("pwd_errors: "+pwd_errors);
-			logs.debug("checkPwd_errors: "+checkPwd_errors);
+			logs.debug(LoggingMsg.VALIDATION_DIVIDER);
+			logs.debug(MessageFormat.format(LoggingMsg.FORM_FIELDS_WITH_VALUES, "email: ", email));
+			logs.debug(MessageFormat.format(LoggingMsg.FORM_FIELDS_WITH_VALUES, "checkEmail: ", checkEmail));
+			logs.debug(MessageFormat.format(LoggingMsg.FORM_FIELDS_WITH_VALUES, "firstName: ", firstName));
+			logs.debug(MessageFormat.format(LoggingMsg.FORM_FIELDS_WITH_VALUES, "lastName: ", lastName));
+			logs.debug(MessageFormat.format(LoggingMsg.FORM_FIELDS_WITH_VALUES, "country: ", country));
+			logs.debug(MessageFormat.format(LoggingMsg.FORM_FIELDS_WITH_VALUES, "postalCode: ", postalCode));
+			logs.debug(MessageFormat.format(LoggingMsg.FORM_FIELDS_WITH_VALUES, "password: ", password));
+			logs.debug(MessageFormat.format(LoggingMsg.FORM_FIELDS_WITH_VALUES, "checkPwd: ", checkPwd));
+			logs.debug(MessageFormat.format(LoggingMsg.FORM_FIELDS_WITH_VALUES, "createAccount: ", createAccount));
+			logs.debug(MessageFormat.format(LoggingMsg.FORM_FIELDS_WITH_VALUES, "email_errors: ", email_errors));
+			logs.debug(MessageFormat.format(LoggingMsg.FORM_FIELDS_WITH_VALUES, "checkEmail_errors: ", checkEmail_errors));
+			logs.debug(MessageFormat.format(LoggingMsg.FORM_FIELDS_WITH_VALUES, "firstName_errors: ", firstName_errors));
+			logs.debug(MessageFormat.format(LoggingMsg.FORM_FIELDS_WITH_VALUES, "lastName_errors: ", lastName_errors));
+			logs.debug(MessageFormat.format(LoggingMsg.FORM_FIELDS_WITH_VALUES, "country_errors: ", country_errors));
+			logs.debug(MessageFormat.format(LoggingMsg.FORM_FIELDS_WITH_VALUES, "postalCode_errors: ", postalCode_errors));
+			logs.debug(MessageFormat.format(LoggingMsg.FORM_FIELDS_WITH_VALUES, "pwd_errors: ", pwd_errors));
+			logs.debug(MessageFormat.format(LoggingMsg.FORM_FIELDS_WITH_VALUES, "checkPwd_errors: ", checkPwd_errors));
 			
 			isValidationStep = true;
 			// TODO: make isValidationStep value come with case 
-			logs.debug(Arrays.asList(webElementsInfo));
+			logs.debug(MessageFormat.format(LoggingMsg.DEBUGGING_TEXT, Arrays.asList(webElementsInfo)));
 			SelectorUtil.initializeElementsSelectorsMaps(webElementsInfo, isValidationStep);
-			logs.debug(Arrays.asList(webElementsInfo));
+			logs.debug(MessageFormat.format(LoggingMsg.DEBUGGING_TEXT, Arrays.asList(webElementsInfo)));
 			for (String key : webElementsInfo.keySet())
 			{
 			   LinkedHashMap<String, Object> webElementInfo = webElementsInfo.get(key);
@@ -221,7 +223,7 @@ public class Login_validation extends SelTestCase {
 		}
 		
 		valuesArr.clear();
-		logs.debug("FINISHED");
+		logs.debug(MessageFormat.format(LoggingMsg.FINISHED_MSG, "FINISHED"));
 
 	}
 

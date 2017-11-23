@@ -1,5 +1,6 @@
 package com.generic.tests.checkout;
 
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
@@ -9,6 +10,7 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import com.generic.setup.Common;
+import com.generic.setup.LoggingMsg;
 import com.generic.setup.SelTestCase;
 import com.generic.setup.SheetVariables;
 import com.generic.util.ReportUtil;
@@ -38,17 +40,17 @@ public class address_main_example_checkout_validation extends SelTestCase {
 			//read addresses
 			LinkedHashMap<String, Object> addresses = new LinkedHashMap<>();
 			addresses = Common.readAddresses();
-			logs.debug(Arrays.asList(addresses));
+			logs.debug(MessageFormat.format(LoggingMsg.DEBUGGING_TEXT, Arrays.asList(addresses)));
 			
 			//read products
 			LinkedHashMap<String, Object> products = new LinkedHashMap<>();
 			products = Common.readLocalInventory();
-			logs.debug(Arrays.asList(products));
+			logs.debug(MessageFormat.format(LoggingMsg.DEBUGGING_TEXT, Arrays.asList(products)));
 			
 			//read payments
 			LinkedHashMap<String, Object> payments = new LinkedHashMap<>();
 			payments = Common.readPaymentcards();
-			logs.debug(Arrays.asList(payments));
+			logs.debug(MessageFormat.format(LoggingMsg.DEBUGGING_TEXT, Arrays.asList(payments)));
 			
 			//Parameterized class with flow control 
 			
@@ -56,7 +58,7 @@ public class address_main_example_checkout_validation extends SelTestCase {
 			Common.testPass();
 		} catch (Throwable t) {
 			setTestCaseDescription(getTestCaseDescription());
-			logs.debug(t.getMessage());
+			logs.debug(MessageFormat.format(LoggingMsg.DEBUGGING_TEXT, t.getMessage()));
 			t.printStackTrace();
 			String temp = getTestCaseId();
 			Common.testFail(t, temp);

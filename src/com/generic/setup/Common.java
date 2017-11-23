@@ -9,6 +9,7 @@ import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.InputStreamReader;
+import java.text.MessageFormat;
 import java.util.LinkedHashMap;
 import java.util.List;
 import javax.imageio.ImageIO;
@@ -36,7 +37,7 @@ public class Common extends SelTestCase {
 	public static void initializeBrowser() throws Exception {
 		getCurrentFunctionName(true);
 	    try {
-	    	logs.debug("the browser is: " + SelTestCase.getCONFIG().getProperty("browser").toString());
+	    	logs.debug(MessageFormat.format(LoggingMsg.BROWSER_NAME, SelTestCase.getCONFIG().getProperty("browser").toString()));
 	        DesiredCapabilities capabilities = new DesiredCapabilities();
 	        
 	        if(SelTestCase.getCONFIG().getProperty("browser").equalsIgnoreCase("chrome")){
@@ -62,12 +63,12 @@ public class Common extends SelTestCase {
 	            System.setProperty("webdriver.chrome.driver", "C:/softwares/servers/chromedriver.exe");
 	            SelTestCase.setDriver(new ChromeDriver(capabilities));
 	
-	            logs.debug(SelTestCase.getDriver().toString());
+	            logs.debug(MessageFormat.format(LoggingMsg.SEL_TEXT, SelTestCase.getDriver().toString()));
 	            
 	            
 	        } else {
-	            logs.debug("Invalid browser. Check the config file");
-	            throw new Exception("Invalid browser. Check the config file");
+	            logs.debug(LoggingMsg.INVALID_BROWSER_ERROR_MSG);
+	            throw new Exception(LoggingMsg.INVALID_BROWSER_ERROR_MSG);
 	        }
 	      
 	    } catch(Throwable t) {
@@ -88,11 +89,11 @@ public class Common extends SelTestCase {
     public static void launchApplication() throws Exception {
     	getCurrentFunctionName(true);
     	
-        logs.debug("Test environment is: " + SelTestCase.getCONFIG().getProperty("testEnvironment"));
+        logs.debug(MessageFormat.format(LoggingMsg.TEST_ENVIRONMENT_NAME, SelTestCase.getCONFIG().getProperty("testEnvironment")));
 
         if (getCONFIG().getProperty("chached_chrome").equalsIgnoreCase("yes")) {
         	//TODO: please enable it later with correct url 
-        	logs.debug("Please enable this block for future");
+        	logs.debug(LoggingMsg.ENABLE_BLOCK_FOR_FUTURE);
 //        	logs.debug("signing out from all users");
 //        	logs.debug(getCONFIG().getProperty("logout"));
 //        	getDriver().get(getCONFIG().getProperty("logout"));
@@ -113,7 +114,7 @@ public class Common extends SelTestCase {
     public static void wait(int waitTime) {
 
         try {
-            logs.debug("wait for " + waitTime);
+            logs.debug(MessageFormat.format(LoggingMsg.WAIT_FOR_TIME, waitTime));
             Thread.sleep(waitTime);
         } catch (InterruptedException e) {
             // TODO Auto-generated catch block
@@ -142,7 +143,7 @@ public class Common extends SelTestCase {
         setTestStatus("Fail: " + t.getMessage());
         setScreenShotName(screenShotName + "_" + counter + ".jpg");
         ReportUtil.addError(getTestStatus(), getScreenShotName());
-        logs.debug("Current URL: "+SelTestCase.getDriver().getCurrentUrl());
+        logs.debug(MessageFormat.format(LoggingMsg.CURRENT_URL, SelTestCase.getDriver().getCurrentUrl()));
     }
 
     public static void testFailTemp(List<Exception> t, String screenShotName) {
@@ -183,19 +184,19 @@ public class Common extends SelTestCase {
      * @throws Exception
      */
     public static void verifyText(String expected, By locator) throws Exception {
-        logs.debug("In verify Text function");
+        logs.debug(MessageFormat.format(LoggingMsg.FUNCTION_NAME, "In verify Text function"));
         String actual = "";
         int i = 1;
         WebDriverWait wait = new WebDriverWait(SelTestCase.getDriver(), SelTestCase.getWaitTime());
         try {
-            logs.debug("Expected Text :" + expected);
+            logs.debug(MessageFormat.format(LoggingMsg.EXPECTED_TEXT, expected));
             while (i <= getWaitTime()) {
                 actual = wait.until(ExpectedConditions.presenceOfElementLocated(locator)).getText();
-                  logs.debug("ACTUAL TEXT IS:" + actual);
+                  logs.debug(MessageFormat.format(LoggingMsg.ACTUAL_TEXT, actual));
                    if (actual.contains(expected)) {
                        break;
                    }
-                   logs.debug("Wait : " + i + " Sec");
+                   logs.debug(MessageFormat.format(LoggingMsg.WAIT_SECONDS, i));
                    Thread.sleep(1000);
                    i = i + 1;
             }
@@ -204,7 +205,7 @@ public class Common extends SelTestCase {
         }
 
         if(i > getWaitTime()) {
-            logs.debug("Error - >" + "Actual : " + actual + "Expected : " + expected);
+            logs.debug(MessageFormat.format(LoggingMsg.ACTUAL_EXPECTED_ERROR, actual, expected));
             throw new Exception("Actual : " + actual + "Expected : " + expected);
         }
     }
@@ -222,9 +223,9 @@ public class Common extends SelTestCase {
             if(pidInfo.contains("chromedriver.exe"))
             {
                 Runtime.getRuntime().exec("taskkill /F /IM chromedriver.exe");
-                logs.debug("Killing chromeDriver.exe process");
+                logs.debug(MessageFormat.format(LoggingMsg.KILLING_PROCESS, "chromeDriver.exe"));
             } else {
-                logs.debug("chromeDriver.exe process is not running. Starting Scripts execution on chrome");
+                logs.debug(MessageFormat.format(LoggingMsg.NOT_RUNNING_PROCESS_ERROR_MSG, "chromeDriver.exe", "chrome"));
             }
         }
 

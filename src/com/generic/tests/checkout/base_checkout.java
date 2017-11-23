@@ -1,7 +1,10 @@
 package com.generic.tests.checkout;
 
+<<<<<<< HEAD
 import static org.testng.Assert.assertEquals;
 
+=======
+>>>>>>> branch 'master' of https://github.com/ibatta/SelFW.git
 import java.text.MessageFormat;
 import java.util.Arrays;
 import java.util.Collection;

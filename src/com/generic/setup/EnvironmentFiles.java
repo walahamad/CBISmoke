@@ -1,5 +1,7 @@
 package com.generic.setup;
 
+import java.text.MessageFormat;
+
 import org.testng.util.Strings;
 
 public class EnvironmentFiles {
@@ -36,7 +38,7 @@ public class EnvironmentFiles {
 	
 	public static String getLogFilePath() {
 		if(Strings.isNullOrEmpty(logFilePath)) {
-			SelTestCase.logs.debug("The Log file path is null, then generating it");
+			SelTestCase.logs.debug(MessageFormat.format(LoggingMsg.NULL_FILE_PATH_ERROR_MSG, "Log"));
 			return System.getProperty("user.dir") + "/" + SelTestCase.getCONFIG().getProperty("logs");
 		} else {
 			return logFilePath;
@@ -63,7 +65,7 @@ public class EnvironmentFiles {
 	
 	public static String getReportsFolderPath() {
 		if(Strings.isNullOrEmpty(reportsFolderPath)) {
-			SelTestCase.logs.debug("The Reports file path is null, then generating it");
+			SelTestCase.logs.debug(MessageFormat.format(LoggingMsg.NULL_FILE_PATH_ERROR_MSG, "Reports"));
 			return System.getProperty("user.dir") + "/" + SelTestCase.getCONFIG().getProperty("reportFolderName");
 		} else {
 			return reportsFolderPath;

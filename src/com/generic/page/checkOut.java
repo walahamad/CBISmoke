@@ -481,6 +481,20 @@ public class checkOut extends SelTestCase {
 			valuesArr.add("");
 			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
 			logs.debug(MessageFormat.format(LoggingMsg.SEL_TEXT,SelectorUtil.textValue));
+<<<<<<< HEAD
+=======
+			getCurrentFunctionName(false);
+			return SelectorUtil.textValue;
+
+		}
+
+		public static String gettotal() throws Exception {
+			getCurrentFunctionName(true);
+			subStrArr.add(checkOutSelectors.orderTotal);
+			valuesArr.add("");
+			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
+			logs.debug(MessageFormat.format(LoggingMsg.SEL_TEXT, SelectorUtil.textValue));
+>>>>>>> branch 'master' of https://github.com/ibatta/SelFW.git
 			getCurrentFunctionName(false);
 			return SelectorUtil.textValue;
 

@@ -1,5 +1,6 @@
 package com.generic.setup;
 
+import java.text.MessageFormat;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
@@ -29,7 +30,7 @@ public class ActionDriver extends SelTestCase{
 //        	if(SelTestCase.getCONFIG().getProperty("browser").equalsIgnoreCase("Chrome")){
 //        	Thread.sleep(3000);
 //        	}
-        	logs.debug("get elemet by locator " + locator.toString());
+        	logs.debug(MessageFormat.format(LoggingMsg.GET_ELEMENT_BY_LOCATOR, locator.toString()));
             //explicit wait
             return waitForElementPresent(locator);
         } catch(Throwable t){
@@ -117,7 +118,7 @@ public class ActionDriver extends SelTestCase{
      *
      */
     public static void closeBrowser() {
-        logs.debug("Terminating session ");
+    	logs.debug(LoggingMsg.TERMINATING_SESSION);
 
         if (getDriver() != null) {
             try {
@@ -136,7 +137,7 @@ public class ActionDriver extends SelTestCase{
      * @throws Exception
      */
     public static void type(By locator, String testData) throws Exception {
-    	logs.debug("Writing: "+ testData +" to: " + locator.toString());
+    	logs.debug(MessageFormat.format(LoggingMsg.WRITING_TO_SEL,"",testData, locator.toString()));
         WebDriverWait wait = new WebDriverWait(SelTestCase.getDriver(), SelTestCase.getWaitTime());
         WebElement element = null;
         element = wait.until(ExpectedConditions.presenceOfElementLocated(locator));
@@ -145,7 +146,7 @@ public class ActionDriver extends SelTestCase{
     }
 
     public static void forceType(By locator, String testData) throws Exception {
-    	logs.debug("Force Writing: "+ testData +" to: " + locator.toString());
+    	logs.debug(MessageFormat.format(LoggingMsg.WRITING_TO_SEL, "Force ", testData, locator.toString()));
         WebDriverWait wait = new WebDriverWait(SelTestCase.getDriver(), SelTestCase.getWaitTime());
         WebElement element = null;
         element = wait.until(ExpectedConditions.presenceOfElementLocated(locator));
@@ -161,7 +162,7 @@ public class ActionDriver extends SelTestCase{
      */
     public static void click(By locator) throws Exception {
         try {
-        	logs.debug("Click element " + locator.toString());
+        	logs.debug(MessageFormat.format(LoggingMsg.CLICK_ELEMENT_SEL, locator.toString()));
         	getElement(locator).click();
         }catch (Throwable t) {
             //t.printStackTrace();
