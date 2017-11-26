@@ -9,7 +9,7 @@ import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import org.apache.commons.io.FileUtils;
 
-public class reportAnalyzer {
+public class ReportAnalyzer {
 	public static void analyze(String path, float period_step ) throws IOException
 	{
 		System.out.println("Analyzing report: " + path +" Period is: "+ period_step);
@@ -52,7 +52,7 @@ public class reportAnalyzer {
 	
 	public static void main(String[] args) throws IOException {
 		///////////////???????
-		reportAnalyzer.analyze("D:/workspace_svn/DBIAutomation_new/AutomationReport/MiniRegression-Report-12-18-2016-Time-180638/Suite1_TC_log1_DinerOrderPlacment_1.html", 55);
+		ReportAnalyzer.analyze("D:/workspace_svn/DBIAutomation_new/AutomationReport/MiniRegression-Report-12-18-2016-Time-180638/Suite1_TC_log1_DinerOrderPlacment_1.html", 55);
 		
 	}
 

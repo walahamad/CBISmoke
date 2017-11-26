@@ -74,7 +74,7 @@ public class TestUtilities extends SelTestCase {
          SimpleDateFormat ft = new SimpleDateFormat (SelTestCase.reportFolderDateStampFormat);
          Calendar cal = Calendar.getInstance();
          SimpleDateFormat sdf = new SimpleDateFormat(SelTestCase.reportFolderTimeStampFormat);
-    	 subDir = mainDir + "/" + tempTCID + ft.format(dNow) + "-Time-" + sdf.format(cal.getTime());
+    	 subDir = mainDir + "/" + testCaseRepotId + ft.format(dNow) + "-Time-" + sdf.format(cal.getTime());
          new File(subDir).mkdir();
 
      }
@@ -85,6 +85,11 @@ public class TestUtilities extends SelTestCase {
      }
      
      public static Object[][] getData(String testName, int startingRow){
+    	 /*
+    	  * if the sheet is regression then the sheet name should contains the "regression" word and in col 2 
+    	  * should have the property runTest (empty not-> run , full-> run)
+    	  * so this function can ignore the test cases before it's been send to parameterized class
+    	  */
     	 //starting row 1 to rows sheets
       	getCurrentFunctionName(true);
           if(SelTestCase.getDatatable() == null){
@@ -102,17 +107,52 @@ public class TestUtilities extends SelTestCase {
           
           logs.debug(MessageFormat.format(LoggingMsg.TEST_NAME, testName));
           Object data[][] = new Object[rows-(startingRow-1)][cols];//rows -1 since we dont have to include header
-
+          
+          int ignoredCases = 0;
+          
           for(int rowNum = startingRow ; rowNum <= rows ; rowNum++)
           {
-              for(int colNum=0 ; colNum< cols; colNum++)
-              {
-                  data[rowNum-startingRow][colNum]=SelTestCase.getDatatable().getCellData(testName, colNum, rowNum);
-              }
+        	  if (testName.contains("Regression"))
+        	  {
+        		  if( SelTestCase.getDatatable().getCellData(testName, 1, 1).contains("runTest") &&
+    			  !SelTestCase.getDatatable().getCellData(testName, 1, rowNum).equals("")) {
+		        	  for(int colNum=0 ; colNum< cols; colNum++)
+		              {
+		        		  data[rowNum-startingRow][colNum]=SelTestCase.getDatatable().getCellData(testName, colNum, rowNum);
+		              }
+        		  }else
+        		  {
+        			  for(int colNum=0 ; colNum< cols; colNum++)
+		              {
+		        		  data[rowNum-startingRow][colNum]="";
+		              }
+        			  logs.debug(LoggingMsg.IGNORE_CURRENT_CASE);
+        			  ignoredCases++;
+        		  }
+        	  }else {
+        		  for(int colNum=0 ; colNum< cols; colNum++)
+	              {
+	        		  data[rowNum-startingRow][colNum]=SelTestCase.getDatatable().getCellData(testName, colNum, rowNum);
+	              }
+        	  }
           }
-
+          
+          //remove ignored cases
+          Object dataFinal[][] = new Object[rows-(startingRow-1)-ignoredCases][cols];
+          int realRow = 0;
+          for (int row=0; row<data.length;row++) {
+        	  if (!data[row][1].toString().equals(""))
+        	  {
+	        	  for(int colNum=0 ; colNum< cols; colNum++)
+	              {
+	        		  	dataFinal[realRow][colNum] = data[row][colNum];
+	              }
+	        	  realRow++;
+        	  }
+          }
+          
           getCurrentFunctionName(false);
-          return data;
+          return dataFinal;
       }
      
     public static void configInitialization() throws Exception{
@@ -130,7 +170,7 @@ public class TestUtilities extends SelTestCase {
     		getCONFIG().setProperty("testSiteName", "https://"+getCONFIG().getProperty("testEnvironment")+"/"+getCONFIG().getProperty("testSiteName"));
     		//getCONFIG().setProperty("logout", "https://"+getCONFIG().getProperty("testEnvironment")+"."+getCONFIG().getProperty("logout"));
     		
-    		logs.debug(MessageFormat.format(LoggingMsg.TCID_MSG, tempTCID));
+    		logs.debug(MessageFormat.format(LoggingMsg.TCID_MSG, testCaseRepotId));
     		
     		setDatatable(new Xls_Reader(EnvironmentFiles.getDataSheetPath()));
     		

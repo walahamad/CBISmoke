@@ -1,4 +1,4 @@
-package com.generic.tests.LogIn;
+package com.generic.tests.login;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;
@@ -24,7 +24,7 @@ import com.generic.util.RandomUtilities;
 import com.generic.util.ReportUtil;
 
 @RunWith(Parameterized.class)
-public class Login_validation extends SelTestCase {
+public class LoginValidation extends SelTestCase {
 
 	private static int testCaseID;
 
@@ -52,7 +52,7 @@ public class Login_validation extends SelTestCase {
 
 	@BeforeClass
 	public static void initialSetUp() throws Exception {
-		tempTCID = SheetVariables.registrationTestCaseId + "_" + testCaseID;
+		testCaseRepotId = SheetVariables.registrationTestCaseId + "_" + testCaseID;
 		caseIndex = 2;
 		TestUtilities.configInitialization();
 
@@ -65,7 +65,7 @@ public class Login_validation extends SelTestCase {
 
 	}
 
-	public Login_validation(String desc, String email, String checkEmail, String firstName, String lastName, String country,
+	public LoginValidation(String desc, String email, String checkEmail, String firstName, String lastName, String country,
 			String postalCode, String password, String checkPwd, String createAccount, String email_errors,
 			String checkEmail_errors, String firstName_errors, String lastName_errors, String country_errors,
 			String postalCode_errors, String pwd_errors, String checkPwd_errors) {

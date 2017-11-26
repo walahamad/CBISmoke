@@ -1,4 +1,4 @@
-package com.generic.testRunners;
+package com.generic.test_runners;
 
 import java.text.MessageFormat;
 
@@ -9,14 +9,14 @@ import org.junit.runners.Suite.SuiteClasses;
 
 import com.generic.setup.LoggingMsg;
 import com.generic.setup.SelTestCase;
-import com.generic.tests.LogIn.Login_validation;
+import com.generic.tests.login.LoginValidation;
 import com.generic.util.SendMail;
 
 
 
 @RunWith(Suite.class)
 @SuiteClasses({
-	Login_validation.class  
+	LoginValidation.class  
 })
 
 public class SignInRunner {

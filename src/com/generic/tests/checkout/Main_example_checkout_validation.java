@@ -7,10 +7,8 @@ import java.util.List;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import com.generic.page.PDP;
-import com.generic.page.cart;
-import com.generic.page.checkOut;
-import com.generic.page.signIn;
+import com.generic.page.Cart;
+import com.generic.page.SignIn;
 import com.generic.setup.Common;
 import com.generic.setup.LoggingMsg;
 import com.generic.setup.SelTestCase;
@@ -27,7 +25,7 @@ public class Main_example_checkout_validation extends SelTestCase {
 
 	@BeforeClass
 	public static void initialSetUp() throws Exception {
-		tempTCID = SheetVariables.checkoutTestCaseId + "_" + testCaseID;
+		testCaseRepotId = SheetVariables.checkoutTestCaseId + "_" + testCaseID;
 		caseIndex = 2;
 		TestUtilities.configInitialization();
 	}
@@ -39,7 +37,7 @@ public class Main_example_checkout_validation extends SelTestCase {
 
 		try {
 			
-			signIn.logIn("ibatta@dbi.com", "1234567");
+			SignIn.logIn("ibatta@dbi.com", "1234567");
 			
 			//PDP
 			//getDriver().get("https://hybrisdemo.conexus.co.uk:9002/yacceleratorstorefront/en/Categories/Bags%2BBoardbags/Bags/Seizure-Satchel/p/300613490");
@@ -57,7 +55,7 @@ public class Main_example_checkout_validation extends SelTestCase {
 			//cart.applyCoupon("Coupon name");
 			//cart.clickCheckout();
 			//cart.updateQuantityValue("0");
-			cart.removeAllItemsFromCart();
+			Cart.removeAllItemsFromCart();
 			
 			//signin
 			//getDriver().get("https://hybrisdemo.conexus.co.uk:9002/yacceleratorstorefront/en/login");

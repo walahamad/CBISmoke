@@ -16,7 +16,7 @@ import com.generic.setup.SheetVariables;
 import com.generic.util.ReportUtil;
 import com.generic.util.TestUtilities;
 
-public class address_main_example_checkout_validation extends SelTestCase {
+public class Address_main_example_checkout_validation extends SelTestCase {
 
 	private static int testCaseID;
 
@@ -25,7 +25,7 @@ public class address_main_example_checkout_validation extends SelTestCase {
 
 	@BeforeClass
 	public static void initialSetUp() throws Exception {
-		tempTCID = SheetVariables.checkoutTestCaseId + "_" + testCaseID;
+		testCaseRepotId = SheetVariables.checkoutTestCaseId + "_" + testCaseID;
 		caseIndex = 2;
 		TestUtilities.configInitialization();
 	}

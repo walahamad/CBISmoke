@@ -30,10 +30,10 @@ public class Common extends SelTestCase {
     public static String expected = null;
     public static String actual = null;
     
-    /** It initialize the webdriver object with Chrome
-	 *
-	 * @throws Exception
-	 */
+   
+    public static class DataSheetConstants{
+    }
+    
 	public static void initializeBrowser() throws Exception {
 		getCurrentFunctionName(true);
 	    try {
