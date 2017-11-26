@@ -7,7 +7,6 @@ import java.util.List;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import com.generic.page.Cart;
 import com.generic.page.SignIn;
 import com.generic.setup.Common;
 import com.generic.setup.LoggingMsg;
@@ -20,8 +19,6 @@ public class Main_example_sigin_validation extends SelTestCase {
 
 	private static int testCaseID;
 
-	static List<String> subStrArr = new ArrayList<String>();
-	static List<String> valuesArr = new ArrayList<String>();
 
 	@BeforeClass
 	public static void initialSetUp() throws Exception {
