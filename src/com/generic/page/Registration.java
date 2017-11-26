@@ -5,9 +5,7 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.generic.selector.CheckOutSelectors;
 import com.generic.selector.RegistrationSelectors;
-import com.generic.selector.SignInSelectors;
 import com.generic.setup.LoggingMsg;
 import com.generic.setup.SelTestCase;
 import com.generic.util.SelectorUtil;
@@ -94,4 +92,30 @@ public class Registration extends SelTestCase {
 		
 	}
     
+	public static void fillAndClickRegister(String title, String fName, String lName,String email, String pass, String confPass, boolean isConsentGiven1Checked) throws Exception {
+		getCurrentFunctionName(true);
+		if (!"".equals(title))
+			selectTitle(title);
+
+		if (!"".equals(fName))
+			typeFirstName(fName);
+
+		if (!"".equals(lName))
+			typeLastName(lName);
+
+		if (!"".equals(email))
+			typeEmailAddress(email);
+
+		if (!"".equals(pass))
+			typePassword(pass);
+
+		if (!"".equals(confPass))
+			typeConfirmPassword(confPass);
+
+		checkConsentGiven1(isConsentGiven1Checked);
+
+		clickRegistration();
+		getCurrentFunctionName(false);
+		
+	}
 }

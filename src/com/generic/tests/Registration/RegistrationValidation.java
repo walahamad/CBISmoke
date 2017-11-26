@@ -1,10 +1,6 @@
 package com.generic.tests.Registration;
 
 import java.text.MessageFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.LinkedHashMap;
-import java.util.List;
 
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -22,9 +18,6 @@ public class RegistrationValidation extends SelTestCase {
 
 	private static int testCaseID;
 
-	static List<String> subStrArr = new ArrayList<String>();
-	static List<String> valuesArr = new ArrayList<String>();
-
 	@BeforeClass
 	public static void initialSetUp() throws Exception {
 		testCaseRepotId = SheetVariables.registrationSheet + "_" + testCaseID;
@@ -38,14 +31,15 @@ public class RegistrationValidation extends SelTestCase {
 		setStartTime(ReportUtil.now(time_date_format));
 
 		try {
-			Registration.selectTitle("MRS.");
+			/*Registration.selectTitle("MRS.");
 			Registration.typeFirstName("Abeer");
 			Registration.typeLastName("Alia");
 			Registration.typeEmailAddress("aalia@itg.com");
 			Registration.typePassword("123456aA");
 			Registration.typeConfirmPassword("123456aA");
 			Registration.checkConsentGiven1(false);
-			Registration.clickRegistration();
+			Registration.clickRegistration();*/
+			Registration.fillAndClickRegister("MRS.", "Abeer", "Alia", "aalia@itg.com", "123456aA", "123456aA", true);
 			Common.testPass();
 		} catch (Throwable t) {
 			setTestCaseDescription(getTestCaseDescription());
