@@ -9,20 +9,34 @@ import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.InputStreamReader;
+import java.net.URL;
 import java.text.MessageFormat;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
+
 import javax.imageio.ImageIO;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.Platform;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.edge.EdgeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxProfile;
+import org.openqa.selenium.ie.InternetExplorerDriver;
+import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.RemoteWebDriver;
+import org.openqa.selenium.safari.SafariOptions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.generic.util.ReportUtil;
 import com.generic.util.TestUtilities;
+
 
 
 public class Common extends SelTestCase {
@@ -34,52 +48,230 @@ public class Common extends SelTestCase {
     public static class DataSheetConstants{
     }
     
-	public static void initializeBrowser() throws Exception {
-		getCurrentFunctionName(true);
-	    try {
-	    	logs.debug(MessageFormat.format(LoggingMsg.BROWSER_NAME, SelTestCase.getCONFIG().getProperty("browser").toString()));
-	        DesiredCapabilities capabilities = new DesiredCapabilities();
-	        
-	        if(SelTestCase.getCONFIG().getProperty("browser").equalsIgnoreCase("chrome")){
-	        	
-	            capabilities = DesiredCapabilities.chrome();
-	            capabilities.setCapability("platform", "WINDOWS");
-	            capabilities.setBrowserName("chrome");
-	            
-	            ChromeOptions options = new ChromeOptions();
-	            options.addArguments("disable-extensions");
-	            options.addArguments("--start-maximized");
-	            
-	            
-	            if (getCONFIG().getProperty("chached_chrome").equalsIgnoreCase("yes")){
-	            	//options.addArguments("user-data-dir="+System.getProperty("user.home")+"/AppData/Local/Google/Chrome/User Data/");
-	            	options.addArguments("user-data-dir="+System.getProperty("user.home")+"/AppData/Local/Google/Chrome SxS/User Data/");
-	            	options.addArguments("detach=true");
-	            }
-	            capabilities.setCapability(ChromeOptions.CAPABILITY, options);
-	
-	            
-	            
-	            System.setProperty("webdriver.chrome.driver", "C:/softwares/servers/chromedriver.exe");
-	            SelTestCase.setDriver(new ChromeDriver(capabilities));
-	
-	            logs.debug(MessageFormat.format(LoggingMsg.SEL_TEXT, SelTestCase.getDriver().toString()));
+    
+    public static void initializeBrowser() throws Exception {
+    	getCurrentFunctionName(true);
+        try {
+        	logs.debug(MessageFormat.format(LoggingMsg.BROWSER_NAME, SelTestCase.getCONFIG().getProperty("browser").toString()));
+            DesiredCapabilities capabilities = new DesiredCapabilities();
+            String browser = SelTestCase.getCONFIG().getProperty("browser"); 
+            
+            if(browser.equalsIgnoreCase("edge")){
+            	//TODO: move this path to path file or configuration file 
+            	System.setProperty("webdriver.edge.driver", "C:/softwares/servers/MicrosoftWebDriver.exe");
+            	
+            	capabilities = DesiredCapabilities.edge();
+                capabilities.setCapability(CapabilityType.ACCEPT_SSL_CERTS,true);
+                capabilities.setJavascriptEnabled(true);
+                
+            	SelTestCase.setDriver(new EdgeDriver(capabilities));
+            }
+            else if(browser.equalsIgnoreCase("Firefox")){
+                FirefoxProfile fp = new FirefoxProfile();
+                SelTestCase.setDriver(new FirefoxDriver(fp));
+            } else if(browser.equalsIgnoreCase("IE")){
+            	//TODO: move this path to path file or configuration file 
+            	System.setProperty("webdriver.ie.driver", "C:/softwares/servers/IEDriverServer.exe");
+            	capabilities = DesiredCapabilities.internetExplorer();
+                capabilities.setCapability(CapabilityType.ACCEPT_SSL_CERTS,true);
+                capabilities.setCapability(InternetExplorerDriver.INTRODUCE_FLAKINESS_BY_IGNORING_SECURITY_DOMAINS,true);
+                capabilities.setJavascriptEnabled(true);
+                capabilities.setCapability(CapabilityType.ForSeleniumServer.ENSURING_CLEAN_SESSION,true);
+
+                SelTestCase.setDriver(new InternetExplorerDriver(capabilities));
+                
+            }else if(browser.equalsIgnoreCase("chrome")){
+            	
+                capabilities = DesiredCapabilities.chrome();
+                capabilities.setCapability("platform", "WINDOWS");
+                capabilities.setBrowserName("chrome");
+                
+                ChromeOptions options = new ChromeOptions();
+                
+                if (getCONFIG().getProperty("chached_chrome").equalsIgnoreCase("yes")){
+                	//options.addArguments("user-data-dir="+System.getProperty("user.home")+"/AppData/Local/Google/Chrome/User Data/");
+                	//TODO: move this path to path file or configuration file as google cashed profile path 
+                	options.addArguments("user-data-dir="+System.getProperty("user.home")+"/AppData/Local/Google/Chrome SxS/User Data/");
+                	options.addArguments("detach=true");
+                }
+                
+                capabilities.setCapability(ChromeOptions.CAPABILITY, options);
+                //TODO: move this path to path file or configuration 
+                System.setProperty("webdriver.chrome.driver", "C:/softwares/servers/chromedriver.exe");
+                SelTestCase.setDriver(new ChromeDriver(capabilities));
+                logs.debug(SelTestCase.getDriver().toString());
+                
+            } else if(browser.equalsIgnoreCase("iPhone6")) {
+            	capabilities = DesiredCapabilities.chrome();
+                capabilities.setCapability("platform", "WINDOWS");
+                capabilities.setBrowserName("chrome");
+
+                Map<String, String> mobileEmulation = new HashMap<String, String>();
+                mobileEmulation.put("deviceName", "iPad");
+                Map<String, Object> chromeOptions = new HashMap<String, Object>();
+                chromeOptions.put("mobileEmulation", mobileEmulation);
+                
+                ChromeOptions options = new ChromeOptions();
+                
+                if (getCONFIG().getProperty("chached_chrome").equalsIgnoreCase("yes")){
+                	options.addArguments("user-data-dir="+System.getProperty("user.home")+"/AppData/Local/Google/Chrome/User Data/");
+                	options.addArguments("detach=true");
+                }
+                
+                capabilities.setCapability(ChromeOptions.CAPABILITY, options);
+                
+                System.setProperty("webdriver.chrome.driver", "C:/softwares/servers/chromedriver.exe");
+                SelTestCase.setDriver(new ChromeDriver(capabilities));
+                
+                capabilities.setCapability(ChromeOptions.CAPABILITY, chromeOptions);
+//                WebDriver driver = new ChromeDriver(capabilities);
+//                
+//            	Dimension dimension = new Dimension(375, 667);
+//            	SelTestCase.getDriver().manage().window().setSize(dimension);
+                
+            }else if (browser.contains("BS")) {
+            	//Configuration format: BS-iPhone 7 Plus-Safari
+            	String mDevice =  browser.split("-")[1];
+            	String mBrowser =  browser.split("-")[1];
+            	
+            	//TODO: move them to configuration file 
+            	final String USERNAME = "ibrahembatta1";
+            	final String AUTOMATE_KEY = "bwziBLydxfZjPFyR5jsT";
+            	final String URL = "https://" + USERNAME + ":" + AUTOMATE_KEY + "@hub-cloud.browserstack.com/wd/hub";
+            	
+            	DesiredCapabilities caps = new DesiredCapabilities();
+            	caps.setCapability("browser", mBrowser);
+                caps.setCapability("browserstack.debug", "true");
+                caps.setCapability("browserstack.safari.allowAllCookies", "true");
+                caps.setCapability("realMobile", "true");
+                caps.setCapability("device", mDevice);
+                caps.setCapability("build", "First build");
+
+                //devices tests 
+				//caps.setCapability("browserName", "iPhone");
+				//caps.setCapability("platform", "MAC");
+				//caps.setCapability("device", "iPhone 6");
+
+				//caps.setCapability("browser", "chrome");
+				//caps.setCapability("browser_version", "53");
+				//caps.setCapability("os", "Windows");
+				//caps.setCapability("os_version", "10");
+
+				//caps.setCapability("browser", "IE");
+				//caps.setCapability("browser_version", "11.0");
+				//caps.setCapability("os", "Windows");
+				//caps.setCapability("os_version", "7");
+				//caps.setCapability("resolution", "1024x768");
+
+				//browser stack configurations
+				caps.setCapability("browserstack.debug", "true");
+				caps.setCapability("browserstack.local", "true");
+				caps.setCapability("acceptSslCerts", "true");
+                
+                SelTestCase.setDriver(new RemoteWebDriver(new URL(URL), caps));
+
+        
+            }
+            else if (browser.equalsIgnoreCase("safari_grid")) {
+            	SafariOptions options = new SafariOptions();
+                //options.setUseCleanSession(true);
+                capabilities = DesiredCapabilities.safari();
+                capabilities.setCapability(SafariOptions.CAPABILITY, options);
+                //capabilities.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);
+                //capabilities.setPlatform(Platform.MAC);
+                //capabilities.setCapability("ensureCleanSession", true);
+                //TODO: change it and setup grid server 
+                SelTestCase.setDriver(new RemoteWebDriver(new URL("http://10.20.20.54:4444/wd/hub"), capabilities));
+            }
+            else if (browser.contains("mobile"))
+            {
+            	String mobile = browser.split("-")[1];
+            	/*
+            	 * BlackBerry Z30 
+            	 * Google Nexus 6 
+            	 * Google Nexus 7 
+            	 * Google Nexus 4 
+            	 * Google Nexus 5 
+            	 * Apple iPad 
+            	 * Samsung Galaxy Note II 
+            	 * Nokia N9 
+            	 * Samsung Galaxy S4
+            	 * Nokia Lumia 520 
+            	 * BlackBerry PlayBook 
+            	 * Apple iPhone 5 
+            	 * Apple iPhone 4 
+            	 * Apple iPhone 6 
+            	 * LG Optimus L70 
+            	 * Apple iPhone 6 Plus
+            	 * Apple iPad Mini 
+            	 * Amazon Kindle Fire HDX 
+            	 * Samsung Galaxy S III
+            	 * Samsung Galaxy Note 3 
+            	 * Google Nexus 10
+            	*/
+            	
+            	/*capabilities = DesiredCapabilities.chrome();
+                capabilities.setCapability("platform", "WINDOWS");
+                capabilities.setBrowserName("chrome");
+
+                Map<String, String> mobileEmulation = new HashMap<String, String>();
+                mobileEmulation.put("deviceName", mobile);
+                Map<String, Object> chromeOptions = new HashMap<String, Object>();
+                chromeOptions.put("mobileEmulation", mobileEmulation);
+                
+                ChromeOptions options = new ChromeOptions();
+                
+                if (getCONFIG().getProperty("chached_chrome").equalsIgnoreCase("yes")){
+                	options.addArguments("user-data-dir="+System.getProperty("user.home")+"/AppData/Local/Google/Chrome SxS/User Data/");
+                	options.addArguments("detach=true");
+                }
+                
+                capabilities.setCapability(ChromeOptions.CAPABILITY, options);
+                
+                System.setProperty("webdriver.chrome.driver", "C:/softwares/servers/chromedriver.exe");
+                SelTestCase.setDriver(new ChromeDriver(capabilities));
+                
+                logs.debug(MessageFormat.format(LoggingMsg.SEL_TEXT, SelTestCase.getDriver().toString()));*/
+            	capabilities = DesiredCapabilities.chrome();
+//                capabilities.setCapability("platform", "WINDOWS");
+//                capabilities.setBrowserName("chrome");
+
+                Map<String, String> mobileEmulation = new HashMap<String, String>();
+                mobileEmulation.put("deviceName", "iPad");
+                Map<String, Object> chromeOptions = new HashMap<String, Object>();
+                chromeOptions.put("mobileEmulation", mobileEmulation);
+                
+                ChromeOptions options = new ChromeOptions();
+                
+                if (getCONFIG().getProperty("chached_chrome").equalsIgnoreCase("yes")){
+                	options.addArguments("user-data-dir="+System.getProperty("user.home")+"/AppData/Local/Google/Chrome/User Data/");
+                	options.addArguments("detach=true");
+                }
+                
+                capabilities.setCapability(ChromeOptions.CAPABILITY, options);
+                
+                System.setProperty("webdriver.chrome.driver", "C:/softwares/servers/chromedriver.exe");
+                SelTestCase.setDriver(new ChromeDriver(capabilities));
+                
+                capabilities.setCapability(ChromeOptions.CAPABILITY, chromeOptions);
 	            
 	            
 	        } else {
 	            logs.debug(LoggingMsg.INVALID_BROWSER_ERROR_MSG);
 	            throw new Exception(LoggingMsg.INVALID_BROWSER_ERROR_MSG);
 	        }
-	      
-	    } catch(Throwable t) {
-	        t.printStackTrace();
-	        SelTestCase.setTestStatus("Fail: " + t.getMessage());
-	        SelTestCase.setStartTime(ReportUtil.now("dd.MMMMM.yyyy hh.mm.ss aaa"));
-	        ReportUtil.addError(SelTestCase.getTestStatus(), null);
-	        throw new Exception(t);
-	    }
-	    getCurrentFunctionName(false);
-	}
+            
+          
+        } catch(Throwable t) {
+            t.printStackTrace();
+            SelTestCase.setTestStatus("Fail: " + t.getMessage());
+            SelTestCase.setStartTime(ReportUtil.now("dd.MMMMM.yyyy hh.mm.ss aaa"));
+            ReportUtil.addError(SelTestCase.getTestStatus(), null);
+            throw new Exception(t);
+        }
+        getCurrentFunctionName(false);
+    }
+    
 
 	/**Reads URL from config.properties file
      * @throws Exception
