@@ -11,6 +11,7 @@ import java.io.File;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.text.MessageFormat;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -114,7 +115,7 @@ public class Common extends SelTestCase {
                 ChromeOptions options = new ChromeOptions();
                 
                 if (getCONFIG().getProperty("chached_chrome").equalsIgnoreCase("yes")){
-                	options.addArguments("user-data-dir="+System.getProperty("user.home")+"/AppData/Local/Google/Chrome/User Data/");
+                	options.addArguments("user-data-dir="+System.getProperty("user.home")+"/AppData/Local/Google/Chrome SxS/User Data/");
                 	options.addArguments("detach=true");
                 }
                 
@@ -192,7 +193,7 @@ public class Common extends SelTestCase {
             	 * Google Nexus 7 
             	 * Google Nexus 4 
             	 * Google Nexus 5 
-            	 * Apple iPad 
+            	 * "iPad" 
             	 * Samsung Galaxy Note II 
             	 * Nokia N9 
             	 * Samsung Galaxy S4
@@ -200,7 +201,7 @@ public class Common extends SelTestCase {
             	 * BlackBerry PlayBook 
             	 * Apple iPhone 5 
             	 * Apple iPhone 4 
-            	 * Apple iPhone 6 
+            	 * iPhone 6 
             	 * LG Optimus L70 
             	 * Apple iPhone 6 Plus
             	 * Apple iPad Mini 
@@ -209,13 +210,12 @@ public class Common extends SelTestCase {
             	 * Samsung Galaxy Note 3 
             	 * Google Nexus 10
             	*/
-            	
-            	/*capabilities = DesiredCapabilities.chrome();
+            	capabilities = DesiredCapabilities.chrome();
                 capabilities.setCapability("platform", "WINDOWS");
                 capabilities.setBrowserName("chrome");
 
                 Map<String, String> mobileEmulation = new HashMap<String, String>();
-                mobileEmulation.put("deviceName", mobile);
+                mobileEmulation.put("deviceName", "Nexus 5");
                 Map<String, Object> chromeOptions = new HashMap<String, Object>();
                 chromeOptions.put("mobileEmulation", mobileEmulation);
                 
@@ -226,36 +226,13 @@ public class Common extends SelTestCase {
                 	options.addArguments("detach=true");
                 }
                 
+                options.setExperimentalOption("mobileEmulation", mobileEmulation);
                 capabilities.setCapability(ChromeOptions.CAPABILITY, options);
                 
                 System.setProperty("webdriver.chrome.driver", "C:/softwares/servers/chromedriver.exe");
                 SelTestCase.setDriver(new ChromeDriver(capabilities));
                 
-                logs.debug(MessageFormat.format(LoggingMsg.SEL_TEXT, SelTestCase.getDriver().toString()));*/
-            	capabilities = DesiredCapabilities.chrome();
-//                capabilities.setCapability("platform", "WINDOWS");
-//                capabilities.setBrowserName("chrome");
-
-                Map<String, String> mobileEmulation = new HashMap<String, String>();
-                mobileEmulation.put("deviceName", "iPad");
-                Map<String, Object> chromeOptions = new HashMap<String, Object>();
-                chromeOptions.put("mobileEmulation", mobileEmulation);
                 
-                ChromeOptions options = new ChromeOptions();
-                
-                if (getCONFIG().getProperty("chached_chrome").equalsIgnoreCase("yes")){
-                	options.addArguments("user-data-dir="+System.getProperty("user.home")+"/AppData/Local/Google/Chrome/User Data/");
-                	options.addArguments("detach=true");
-                }
-                
-                capabilities.setCapability(ChromeOptions.CAPABILITY, options);
-                
-                System.setProperty("webdriver.chrome.driver", "C:/softwares/servers/chromedriver.exe");
-                SelTestCase.setDriver(new ChromeDriver(capabilities));
-                
-                capabilities.setCapability(ChromeOptions.CAPABILITY, chromeOptions);
-	            
-	            
 	        } else {
 	            logs.debug(LoggingMsg.INVALID_BROWSER_ERROR_MSG);
 	            throw new Exception(LoggingMsg.INVALID_BROWSER_ERROR_MSG);
