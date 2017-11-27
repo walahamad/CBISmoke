@@ -102,7 +102,8 @@ public class Base_checkout extends SelTestCase {
 	@Test
 	public void checkOutBaseTest() throws Exception {
 		setTestCaseDescription(MessageFormat.format(LoggingMsg.CHECKOUTDESC, testDataSheet + "." + caseId,
-				this.getClass().getCanonicalName(), desc, proprties.replace("\n", "<br>- ")));
+				this.getClass().getCanonicalName(), desc, proprties.replace("\n", "<br>- "),payment,shippingMethod));
+		
 		caseIndexInDatasheet = getDatatable().getCellRowNum(testDataSheet, CheckOut.keys.caseId, caseId);
 		initializeTestResults(testDataSheet, caseIndexInDatasheet);
 		try {

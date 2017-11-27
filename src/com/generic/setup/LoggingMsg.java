@@ -2,7 +2,7 @@ package com.generic.setup;
 
 public class LoggingMsg {
 
-	public static final String CHECKOUTDESC = "<b>Case ID: </b>{0} <br><b>File of execution:</b> {1}<br><b>Decrption: </b>{2}<br><b>case proprties:</b><br>- {3}";
+	public static final String CHECKOUTDESC = "<b>Case ID: </b>{0} <br><b>File of execution:</b> {1}<br><b>Decrption: </b>{2}<br><b>case proprties:</b><br>- {3}<br>- {4}<br>- {5}";
 	public static String CLICKING_CART_BUTTON = "clicking on {0} btn from cart";
 	public static String NUMBER_OF_PRODUCTS = "number of products: {0}";
 	public static String ORDER_TOTAL = "Order Total: {0}";
