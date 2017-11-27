@@ -9,6 +9,8 @@ public class PLPSelectors {
 	public static final String shopByStore = "Shop by Stores";
 	public static final String userLocationStore = "user_location_query";
 	public static final String findStoresNearMeAjax = "findStoresNearMeAjax";
+	public static final String addToCartForm = "addToCartForm";
+	public static final String productPickupInStoreButton = "product_";
 	
 	
 }
