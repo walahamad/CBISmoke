@@ -31,11 +31,21 @@ public class PLPValidation extends SelTestCase {
 
 		try {
 			getDriver().get("https://hybrisdemo.conexus.co.uk:9002/yacceleratorstorefront/en/Brands/667/c/667");
-			PLP.selectSortByValue("Top Rated");
+			Thread.sleep(3000);
+			PLP.selectSortOptions1ByValue("Top Rated");
+			Thread.sleep(3000);
+			PLP.selectSortOptions2ByValue("Price (lowest first)");
+			Thread.sleep(3000);
 			String productsNum = PLP.getNumberOfproducts();
 			logs.debug(MessageFormat.format(LoggingMsg.NUMBER_OF_PRODUCTS, productsNum));
 			PLP.doesDisplayedProductsNumTextMatchesProductsDisplayed();
-			//PLP.clickFindStores();
+			PLP.clickFindStores();
+			Thread.sleep(3000);
+			PLP.typeUserLocationStore("Bedford");
+			Thread.sleep(3000);
+			//PLP.clickAddToCart("300389093");
+			PLP.clickProductPickupInStoreButton("3003890930");
+			Thread.sleep(2000);
 			Common.testPass();
 		} catch (Throwable t) {
 			setTestCaseDescription(getTestCaseDescription());

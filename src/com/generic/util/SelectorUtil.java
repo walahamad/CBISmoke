@@ -14,6 +14,7 @@ import org.jsoup.select.Elements;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 
@@ -141,7 +142,8 @@ public class SelectorUtil extends SelTestCase {
 					} else if (e.tagName().equals("button") ||
 							e.tagName().equals("img") ||
 							e.tagName().equals("a")||
-							e.tagName().equals("li"))
+							e.tagName().equals("li") ||
+							e.tagName().equals("form"))
 					{
 						return "click";
 					} else if (e.tagName().equals("input") && e.attr("type").equals("submit")) {
@@ -254,7 +256,14 @@ public class SelectorUtil extends SelTestCase {
 						  logs.debug(MessageFormat.format(LoggingMsg.WRITING_TO_SEL, "", value, byAction.toString()));
 						  WebElement field = getDriver().findElement(byAction);
 						  field.clear();
-						  field.sendKeys(value);
+						  String tempVal = value;
+						  if (value.contains("pressEnter")) {
+							  tempVal = value.split(",")[0];
+						  }
+						  field.sendKeys(tempVal);
+						  if (!tempVal.equals(value)) {
+							field.sendKeys(Keys.ENTER);  
+						  }
 					   }
 					   else if (action.equals("click"))
 					   {
@@ -316,7 +325,9 @@ public class SelectorUtil extends SelTestCase {
 						   }
 						   try 
 						   {
-							   element.click();
+							   if (value.isEmpty()) {
+								   element.click(); 
+							   }
 						   }catch(Exception e)
 						   {
 						   		logs.debug(MessageFormat.format(LoggingMsg.FAILED_ACTION_MSG, "click"));

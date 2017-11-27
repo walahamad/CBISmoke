@@ -15,9 +15,9 @@ public class PLP extends SelTestCase {
     private static List<String> valuesArr = new ArrayList<String>();
     private static int numberOfProductsShownInHeader;
 
-    public static void selectSortByValue(String sortByTxt) throws Exception {
+    public static void selectSortOptions1ByValue(String sortByTxt) throws Exception {
 		getCurrentFunctionName(true);
-		logs.debug(MessageFormat.format(LoggingMsg.SELECTING_ELEMENT_VALUE,"Sort by:", sortByTxt));
+		logs.debug(MessageFormat.format(LoggingMsg.SELECTING_ELEMENT_VALUE,PLPSelectors.sortOptions1, sortByTxt));
 		subStrArr.add(PLPSelectors.sortOptions1);
 		valuesArr.add(sortByTxt);
 		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
@@ -30,6 +30,29 @@ public class PLP extends SelTestCase {
 		getCurrentFunctionName(true);
 		logs.debug(MessageFormat.format(LoggingMsg.GET_ELEMENT_BY_LOCATOR,PLPSelectors.sortOptions2));
 		subStrArr.add(PLPSelectors.sortOptions2);
+		valuesArr.add("");
+		String sortOptions2SelectedValue = "";
+		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
+		sortOptions2SelectedValue = SelectorUtil.textValue;
+		getCurrentFunctionName(false);
+    	return sortOptions2SelectedValue;
+    }
+    
+    public static void selectSortOptions2ByValue(String sortByTxt) throws Exception {
+		getCurrentFunctionName(true);
+		logs.debug(MessageFormat.format(LoggingMsg.SELECTING_ELEMENT_VALUE,PLPSelectors.sortOptions2, sortByTxt));
+		subStrArr.add(PLPSelectors.sortOptions2);
+		valuesArr.add(sortByTxt);
+		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
+		String SelectedOptions1Val = getSortOptions2SelectedValue();
+		logs.debug(MessageFormat.format(LoggingMsg.PLP_SELECTED_SORT_VALUES,"sortOptions2", sortByTxt, "sortOptions1", SelectedOptions1Val.trim()));
+		getCurrentFunctionName(false);
+	}
+    
+    public static String getSortOptions1SelectedValue() throws Exception {
+		getCurrentFunctionName(true);
+		logs.debug(MessageFormat.format(LoggingMsg.GET_ELEMENT_BY_LOCATOR,PLPSelectors.sortOptions1));
+		subStrArr.add(PLPSelectors.sortOptions1);
 		valuesArr.add("");
 		String sortOptions2SelectedValue = "";
 		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
@@ -53,7 +76,7 @@ public class PLP extends SelTestCase {
     public static boolean doesDisplayedProductsNumTextMatchesProductsDisplayed () throws Exception {
     	getCurrentFunctionName(true);
 		subStrArr.add(PLPSelectors.productItem);
-		valuesArr.add("");
+		valuesArr.add("noClick");
 		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
 		logs.debug(MessageFormat.format(LoggingMsg.EXPECTED_TEXT, numberOfProductsShownInHeader));
 		logs.debug(MessageFormat.format(LoggingMsg.ACTUAL_TEXT, SelectorUtil.numberOfFoundElements));
@@ -79,13 +102,28 @@ public class PLP extends SelTestCase {
 		getCurrentFunctionName(true);
 		logs.debug(MessageFormat.format(LoggingMsg.TYPING_ELEMENT_VALUE, PLPSelectors.userLocationStore, storeName));
 		subStrArr.add(PLPSelectors.userLocationStore);
-		valuesArr.add(storeName);
+		valuesArr.add(storeName + ",pressEnter");
 		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
 		getCurrentFunctionName(false);
 	}
     
+    public static void clickAddToCart(String productCodePost) throws Exception {
+		getCurrentFunctionName(true);
+		logs.debug(MessageFormat.format(LoggingMsg.CLICKING_SEL, PLPSelectors.addToCartForm + productCodePost));
+		subStrArr.add(PLPSelectors.addToCartForm + productCodePost);
+		valuesArr.add("");
+		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
+		getCurrentFunctionName(false);
+	}
     
+    public static void clickProductPickupInStoreButton(String productCodePost) throws Exception {
+		getCurrentFunctionName(true);
+		logs.debug(MessageFormat.format(LoggingMsg.CLICKING_SEL, PLPSelectors.productPickupInStoreButton + productCodePost));
+		subStrArr.add(PLPSelectors.productPickupInStoreButton + productCodePost);
+		valuesArr.add("");
+		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
+		getCurrentFunctionName(false);
+	}
     
    
-	
 }
