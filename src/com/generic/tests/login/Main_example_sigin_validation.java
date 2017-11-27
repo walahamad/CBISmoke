@@ -1,8 +1,6 @@
 package com.generic.tests.login;
 
 import java.text.MessageFormat;
-import java.util.ArrayList;
-import java.util.List;
 
 import org.junit.Assert;
 import org.junit.BeforeClass;
