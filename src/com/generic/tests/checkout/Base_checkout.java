@@ -14,6 +14,7 @@ import org.junit.runners.Parameterized.Parameters;
 import java.util.LinkedHashMap;
 
 import com.generic.page.PDP;
+import com.generic.page.Registration;
 import com.generic.page.Cart;
 import com.generic.page.CheckOut;
 import com.generic.page.SignIn;
@@ -88,7 +89,6 @@ public class Base_checkout extends SelTestCase {
 		this.orderTax = orderTax;
 		this.orderShipping = orderShipping;
 
-		logs.debug(MessageFormat.format(LoggingMsg.DEBUGGING_TEXT, Arrays.asList(paymentCards)));
 	}
 
 	@Parameters(name = "{index}_:{2}")
@@ -100,7 +100,7 @@ public class Base_checkout extends SelTestCase {
 	@SuppressWarnings("unchecked") // avoid warning from linked hashmap
 	@Test
 	public void checkOutBaseTest() throws Exception {
-		setTestCaseDescription(MessageFormat.format(LoggingMsg.CHECKOUTDESC, this.getClass().getCanonicalName(), desc,
+		setTestCaseDescription(MessageFormat.format(LoggingMsg.CHECKOUTDESC, testDataSheet+"."+caseId ,this.getClass().getCanonicalName(), desc,
 				proprties.replace("\n", "<br>- ")));
 		caseIndexInDatasheet = getDatatable().getCellRowNum(testDataSheet, CheckOut.keys.caseId, caseId);
 		initializeTestResults(testDataSheet, caseIndexInDatasheet);
@@ -113,9 +113,8 @@ public class Base_checkout extends SelTestCase {
 			}
 			if (proprties.contains(freshUser)) {
 				// TODO: add flow for register
-				String randomMail = RandomUtilities.getRandomEmail();
-
-				// TODO: write random mail from previous step to sheet
+				email = RandomUtilities.getRandomEmail();
+				Registration.fillAndClickRegister("MRS.", "Accept", "tester", email, "123456aA", "123456aA", true);
 				// TODO: register with information
 				// TODO: create sheet for users or pull then from config file
 				// TODO: write function to get user information from sheet
@@ -145,11 +144,9 @@ public class Base_checkout extends SelTestCase {
 
 			Cart.clickCheckout();
 
-			// signIn.logIn("ibatta@dbi.com", "1234567");
-
 			if (proprties.contains(guestUser)) {
-				// TODO: add flow for guest
-				// TODO: in checkout file add input guest mail function
+				email = RandomUtilities.getRandomEmail();
+				CheckOut.guestCheckout.fillAndClickGuestCheckout(email);
 			}
 
 			// Validate the order sub total in shipping address form section
@@ -162,7 +159,12 @@ public class Base_checkout extends SelTestCase {
 			} else {
 				LinkedHashMap<String, Object> addressDetails = (LinkedHashMap<String, Object>) addresses
 						.get(shippingAddress);
-
+				
+				boolean saveShipping = !proprties.contains(guestUser);
+				
+				//in case guest the save shipping checkbox is not exist
+				if (saveShipping)
+				{
 				CheckOut.shippingAddress.fillAndClickNext(
 						(String) addressDetails.get(CheckOut.shippingAddress.keys.countery),
 						(String) addressDetails.get(CheckOut.shippingAddress.keys.title),
@@ -171,7 +173,20 @@ public class Base_checkout extends SelTestCase {
 						(String) addressDetails.get(CheckOut.shippingAddress.keys.adddressLine),
 						(String) addressDetails.get(CheckOut.shippingAddress.keys.city),
 						(String) addressDetails.get(CheckOut.shippingAddress.keys.postal),
-						(String) addressDetails.get(CheckOut.shippingAddress.keys.phone), true);
+						(String) addressDetails.get(CheckOut.shippingAddress.keys.phone), saveShipping);
+				}
+				else
+				{
+					CheckOut.shippingAddress.fillAndClickNext(
+							(String) addressDetails.get(CheckOut.shippingAddress.keys.countery),
+							(String) addressDetails.get(CheckOut.shippingAddress.keys.title),
+							(String) addressDetails.get(CheckOut.shippingAddress.keys.firstName),
+							(String) addressDetails.get(CheckOut.shippingAddress.keys.lastName),
+							(String) addressDetails.get(CheckOut.shippingAddress.keys.adddressLine),
+							(String) addressDetails.get(CheckOut.shippingAddress.keys.city),
+							(String) addressDetails.get(CheckOut.shippingAddress.keys.postal),
+							(String) addressDetails.get(CheckOut.shippingAddress.keys.phone));
+				}
 			}
 
 			// Validate the order sub total in shipping method section
@@ -189,12 +204,14 @@ public class Base_checkout extends SelTestCase {
 				CheckOut.paymentInnformation.fillAndclickNext(true);
 			} else {
 
-				boolean saveBilling = true;
+				//do not save address if scenario is guest user 
+				boolean saveBilling = !proprties.contains(guestUser);
 				LinkedHashMap<String, Object> paymentDetails = (LinkedHashMap<String, Object>) paymentCards
 						.get(payment);
 				LinkedHashMap<String, Object> billAddressDetails = (LinkedHashMap<String, Object>) addresses
 						.get(billingAddress);
 
+				if (saveBilling){
 				CheckOut.paymentInnformation.fillAndclickNext(payment,
 						(String) paymentDetails.get(CheckOut.paymentInnformation.keys.name),
 						(String) paymentDetails.get(CheckOut.paymentInnformation.keys.number),
@@ -210,6 +227,24 @@ public class Base_checkout extends SelTestCase {
 						(String) billAddressDetails.get(CheckOut.shippingAddress.keys.city),
 						(String) billAddressDetails.get(CheckOut.shippingAddress.keys.postal),
 						(String) billAddressDetails.get(CheckOut.shippingAddress.keys.phone));
+				}else
+				{
+					CheckOut.paymentInnformation.fillAndclickNext(payment,
+							(String) paymentDetails.get(CheckOut.paymentInnformation.keys.name),
+							(String) paymentDetails.get(CheckOut.paymentInnformation.keys.number),
+							(String) paymentDetails.get(CheckOut.paymentInnformation.keys.expireMonth),
+							(String) paymentDetails.get(CheckOut.paymentInnformation.keys.expireYear),
+							(String) paymentDetails.get(CheckOut.paymentInnformation.keys.CVCC),
+							billingAddress.equalsIgnoreCase(shippingAddress),
+							(String) billAddressDetails.get(CheckOut.shippingAddress.keys.countery),
+							(String) billAddressDetails.get(CheckOut.shippingAddress.keys.title),
+							(String) billAddressDetails.get(CheckOut.shippingAddress.keys.firstName),
+							(String) billAddressDetails.get(CheckOut.shippingAddress.keys.lastName),
+							(String) billAddressDetails.get(CheckOut.shippingAddress.keys.adddressLine),
+							(String) billAddressDetails.get(CheckOut.shippingAddress.keys.city),
+							(String) billAddressDetails.get(CheckOut.shippingAddress.keys.postal),
+							(String) billAddressDetails.get(CheckOut.shippingAddress.keys.phone));
+				}
 			}
 
 			// Validate the order subtotal in order review section
@@ -228,6 +263,11 @@ public class Base_checkout extends SelTestCase {
 			// TODO: compare addresses
 			CheckOut.orderConfirmation.getBillingAddrerss();
 			CheckOut.orderConfirmation.getShippingAddrerss();
+			
+			if (proprties.contains(guestUser) && proprties.contains("register-guest"))
+			{
+				CheckOut.guestCheckout.fillPreRegFormAndClickRegBtn("1234567", false);
+			}
 
 			writeResultsToTestDatasheet(testDataSheet, caseIndexInDatasheet);
 
@@ -246,7 +286,7 @@ public class Base_checkout extends SelTestCase {
 	private void writeResultsToTestDatasheet(String sheetName, int row) {
 		getCurrentFunctionName(true);
 		getDatatable().setCellData(sheetName, CheckOut.orderConfirmation.keys.orderId, row, orderId);
-		if (this.email.contains("random")) {
+		if (email.contains("random")) {
 			getDatatable().setCellData(sheetName, CheckOut.orderConfirmation.keys.email, row, email);
 		}
 		getDatatable().setCellData(sheetName, CheckOut.orderConfirmation.keys.orderSubtotal, row, orderSubtotal);
@@ -259,7 +299,7 @@ public class Base_checkout extends SelTestCase {
 	private void initializeTestResults(String sheetName, int row) {
 		getCurrentFunctionName(true);
 		getDatatable().setCellData(sheetName, CheckOut.orderConfirmation.keys.orderId, row, "");
-		if (this.email.contains("random")) {
+		if (email.contains("random")) {
 			SelTestCase.getDatatable().setCellData(sheetName, CheckOut.orderConfirmation.keys.email, row, "");
 		}
 		getDatatable().setCellData(sheetName, CheckOut.orderConfirmation.keys.orderShipping, row, "");
