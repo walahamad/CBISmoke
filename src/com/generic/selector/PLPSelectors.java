@@ -11,6 +11,8 @@ public class PLPSelectors {
 	public static final String findStoresNearMeAjax = "findStoresNearMeAjax";
 	public static final String addToCartForm = "addToCartForm";
 	public static final String productPickupInStoreButton = "product_";
+	public static final String moreStores = "js-more-stores-facet-values";
+	public static final String plpProductPriceLabel = "test_searchPage_price_label_{0}_$1";
 	
 	
 }

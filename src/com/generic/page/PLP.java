@@ -125,5 +125,25 @@ public class PLP extends SelTestCase {
 		getCurrentFunctionName(false);
 	}
     
+    public static void clickMoreStores() throws Exception {
+		getCurrentFunctionName(true);
+		logs.debug(MessageFormat.format(LoggingMsg.CLICKING_SEL, PLPSelectors.moreStores));
+		subStrArr.add(PLPSelectors.moreStores);
+		valuesArr.add("");
+		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
+		getCurrentFunctionName(false);
+	}
+    
+    public static String getPLPProductPrice(String productCodePost) throws Exception {
+		getCurrentFunctionName(true);
+		String selText = MessageFormat.format(PLPSelectors.plpProductPriceLabel, productCodePost);
+		logs.debug(MessageFormat.format(LoggingMsg.GETTING_SEL, selText));
+		subStrArr.add(selText);
+		valuesArr.add("noClick");
+		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
+		getCurrentFunctionName(false);
+		return SelectorUtil.textValue;
+	}
+    
    
 }

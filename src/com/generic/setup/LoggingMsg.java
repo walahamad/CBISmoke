@@ -81,4 +81,5 @@ public class LoggingMsg {
 	public static String NOT_EXIST_MSG = "{0} is not exist";
 	public static String COL_INDEX_MSG = "Col index is: {0}";
 	public static String PLP_SELECTED_SORT_VALUES = "{0} is: {1} and {2} is: {3}";
+	public static String PLP_PRODUCT_PRICE = "productPrice is: {0}";
 }
