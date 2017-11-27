@@ -27,6 +27,7 @@ public class SelectorUtil extends SelTestCase {
 	
 	public static Boolean isAnErrorSelector = Boolean.FALSE;
 	public static String textValue;
+	public static int numberOfFoundElements;
 	
 	 public static void initializeElementsSelectorsMaps(LinkedHashMap<String, LinkedHashMap> webElementsInfo , boolean isValidationStep) throws IOException
 	 {
@@ -111,6 +112,7 @@ public class SelectorUtil extends SelTestCase {
 					  webElementInfo.put("SelType",selectorType);
 					  webElementInfo.put("by",getBySelectorForElements(foundElements,selectorType));
 					  webElementInfo.put("action",getActiontype(foundElements));
+					  numberOfFoundElements = foundElements.size();
 					  SelTestCase.logs.debug(MessageFormat.format(LoggingMsg.VALID_SEL_MSG, Arrays.asList(webElementInfo)));
 				  
 				 } 
@@ -335,7 +337,14 @@ public class SelectorUtil extends SelTestCase {
 //							}
 						   
 						   try {
-							   select.selectByVisibleText(value);
+							   String textVal= "";
+							   if (!value.isEmpty()) {
+								   select.selectByVisibleText(value); 
+							   } else {
+								   textVal = select.getFirstSelectedOption().getText();
+								   return textVal;
+							   }
+							   
 						   }
 						   catch(Exception e)
 						   {

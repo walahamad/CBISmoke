@@ -11,6 +11,9 @@ public class SheetVariables {
 	//cards
 	public static final String cards = "cards";
 	
+
+	public static final String plp = "PLP";
+	
 	//users
 	public static final String users = "users";
 	
