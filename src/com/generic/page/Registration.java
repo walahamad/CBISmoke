@@ -14,7 +14,18 @@ public class Registration extends SelTestCase {
     private static List<String> subStrArr = new ArrayList<String>();
     private static List<String> valuesArr = new ArrayList<String>();
 
-
+    
+    public static class keys{
+    	public static final String title = "title";
+    	public static final String name = "name";
+    	public static final String userName = "userName";
+    	public static final String firstName = "firstName";
+    	public static final String lastName = "lastName";
+    	public static final String password = "password";
+    	public static final String email = "email";
+    	
+    }
+    
     public static void selectTitle(String title) throws Exception {
 		getCurrentFunctionName(true);
 		logs.debug(MessageFormat.format(LoggingMsg.SELECTING_ELEMENT_VALUE,"title ", title));

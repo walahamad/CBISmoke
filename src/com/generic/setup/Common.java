@@ -10,6 +10,7 @@ import java.io.File;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.text.MessageFormat;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -434,9 +435,24 @@ public class Common extends SelTestCase {
 
 	public static LinkedHashMap<String, Object> readPaymentcards() {
 		/*
-		 * [ { visa={ number=4111111111111111, name=Accept Tester, expireYear=2022,
-		 * expireMonth=6, CVCC=333 }, master={ number=5555555555554444, name=Accept
-		 * Tester, expireYear=2022, expireMonth=6, CVCC=334 } } ]
+		 [
+		  {
+		    visa={
+		      number=4111111111111111,
+		      name=AcceptTester,
+		      expireYear=2022,
+		      expireMonth=6,
+		      CVCC=333
+		    },
+		    master={
+		      number=5555555555554444,
+		      name=Accept*Tester,
+		      expireYear=2022,
+		      expireMonth=6,
+		      CVCC=334
+		    }
+		  }
+		]
 		 */
 		LinkedHashMap<String, Object> products = new LinkedHashMap<>();
 		Object[][] data = TestUtilities.getData(SheetVariables.cards, 1);
@@ -465,11 +481,24 @@ public class Common extends SelTestCase {
 
 	public static LinkedHashMap<String, Object> readTestparams(String testSheet, int caseIndex) {
 		/*
-		 * [{ desc = logged in user with saved maistro payment and shipping address,
-		 * proprties = loggedin, products = P2, shippingMethod = STANDARD DELIVERY,
-		 * payment = maistro, shippingAddress = A1, billingAddress = A2, coupon = ,
-		 * email = ibatta @dbi.com, orderId = , orderTotal = , orderSubtotal = ,
-		 * orderTax = , orderShipping = }]
+		 * [
+			  {
+			    desc=loggedinuserwithsavedmaistropaymentandshippingaddress,
+			    proprties=loggedin,
+			    products=P2,
+			    shippingMethod=STANDARDDELIVERY,
+			    payment=maistro,
+			    shippingAddress=A1,
+			    billingAddress=A2,
+			    coupon=,
+			    email=ibatta@dbi.com,
+			    orderId=,
+			    orderTotal=,
+			    orderSubtotal=,
+			    orderTax=,
+			    orderShipping=
+			  }
+			]
 		 */
 		LinkedHashMap<String, Object> tests = new LinkedHashMap<>();
 		Object[][] data = TestUtilities.getData(testSheet, 1);
@@ -485,5 +514,49 @@ public class Common extends SelTestCase {
 		} // for rows
 		return tests;
 	}// read test param
+
+	public static LinkedHashMap<String, Object> readUsers() {
+		/*
+		[
+		  {
+		    ibatta@dbi.com={
+		      name=U1,
+		      title=MR.,
+		      username=ibatta,
+		      firstName=Accept,
+		      lastName=Tester,
+		      password=1234567,
+		      mail=ibatta@dbi.com
+		    }
+		  }
+		]
+		 */
+		LinkedHashMap<String, Object> users = new LinkedHashMap<>();
+		Object[][] data = TestUtilities.getData(SheetVariables.users, 1);
+
+		// data map
+		int header = 0;
+		int name = 0;
+		int title = 1;
+		int userName = 2;
+		int firstName = 3;
+		int lastName = 4;
+		int password = 5;
+		int mail = 6;
+
+		for (int row = 1; row < data.length; row++) {
+			LinkedHashMap<String, Object> user = new LinkedHashMap<>();
+			user.put((String) data[header][name], data[row][name]);
+			user.put((String) data[header][title], data[row][title]);
+			user.put((String) data[header][userName], data[row][userName]);
+			user.put((String) data[header][firstName], data[row][firstName]);
+			user.put((String) data[header][lastName], data[row][lastName]);
+			user.put((String) data[header][password], data[row][password]);
+			user.put((String) data[header][mail], data[row][mail]);
+
+			users.put((String) data[row][mail], user);
+		}
+		return users;
+	}//read users
 
 }// class
