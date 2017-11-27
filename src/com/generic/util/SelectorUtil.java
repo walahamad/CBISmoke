@@ -335,14 +335,12 @@ public class SelectorUtil extends SelTestCase {
 //						   for(int i=1; i<options.size(); i++) {
 //						   	    logs.debug(options.get(i).getText());
 //							}
-						   
+						   String textVal= "";
 						   try {
-							   String textVal= "";
 							   if (!value.isEmpty()) {
 								   select.selectByVisibleText(value); 
 							   } else {
 								   textVal = select.getFirstSelectedOption().getText();
-								   return textVal;
 							   }
 							   
 						   }
@@ -360,6 +358,7 @@ public class SelectorUtil extends SelTestCase {
 							   	    }
 							   	}
 						   }
+						   return textVal;
 					   }
 		    		}
 		    		else if (action.equals("Validate") && SelectorUtil.isAnErrorSelector)
