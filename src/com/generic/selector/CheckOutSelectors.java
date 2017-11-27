@@ -55,6 +55,15 @@ public class CheckOutSelectors
 	public static final String orderconfirmationBillingAddress = "col-sm-6 col-md-4 order-billing-address";
 	public static final String orderconfirmationshippingAddress = "order-ship-to";
 	
+	//Guest order
+	public static final String guestMail = "guest.email";
+	public static final String guestConfirmationMail = "confirmGuestEmail form-control";
+	public static final String guestCheckoutButton = "btn btn-default btn-block guestCheckoutBtn";
+	public static final String guestCreateAccButton = "test_guest_Register_button_$1";
+	public static final String guestCreateAccOtpin = "consentForm.consentGiven1";
+	public static final String guestCreateAccCPwd = "guest.checkPwd";
+	public static final String guestCreateAccPwd = "password";
+	
 	
 	
 	

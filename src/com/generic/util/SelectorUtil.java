@@ -130,7 +130,7 @@ public class SelectorUtil extends SelTestCase {
 			for (org.jsoup.nodes.Element e : foundElements) {
 					//logs.debug(e.toString());//Debugging purposes
 				
-					if (e.tagName().equals("input") && (e.attr("type").equals("text") || e.attr("type").equals("password") )) {
+					if (e.tagName().equals("input") && (e.attr("type").equals("text") || e.attr("type").equals("password") || e.attr("type").equals("") )) {
 						return "type";
 					} else if (e.tagName().equals("select")) {
 						return "selectByText";

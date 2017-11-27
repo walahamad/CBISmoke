@@ -2,7 +2,7 @@ package com.generic.setup;
 
 public class LoggingMsg {
 
-	public static final String CHECKOUTDESC = "<b>File of execution:</b> {0}<br><b>Decrption: </b>{1}<br><b>case proprties:</b><br>- {2}";
+	public static final String CHECKOUTDESC = "<b>Case ID: </b>{0} <br><b>File of execution:</b> {1}<br><b>Decrption: </b>{2}<br><b>case proprties:</b><br>- {3}";
 	public static String CLICKING_CART_BUTTON = "clicking on {0} btn from cart";
 	public static String NUMBER_OF_PRODUCTS = "number of products: {0}";
 	public static String ORDER_TOTAL = "Order Total: {0}";
@@ -43,7 +43,7 @@ public class LoggingMsg {
 	public static String DEBUGGING_TEXT = "{0}";
 	public static String TERMINATING_DRIVERS = "terminating {0} drivers";
 	public static String TEST_CASE_STATUS = "#########--> \nTest {0} was: {1} \n<--######### \n";
-	public static String IGNORE_CURRENT_CASE = "Ignoring the current case";
+	public static String IGNORE_CASES = "total of ignored cases: {0} ";
 	public static String ADDING_PRODUCT = "Adding product {0}";
 	public static String VALIDATION_DIVIDER = "==============> Validation <================";
 	public static String FORM_FIELDS_WITH_VALUES = "{0}: {1}";
@@ -65,7 +65,7 @@ public class LoggingMsg {
 	public static String SELECTED_INDEX = "selected index is {0}";
 	public static String ERROR_VERIFICATION_SEL_MSG = "The {0} is found and has correct error msg";
 	public static String FORMATTED_ERROR_MSG = "ERROR >>>-->>> : {0}";
-	public static String FINISHED_ACTION_ON_ELEMENTS_MSG = "FINISHED doing correct action on elements: {0}";
+	public static String FINISHED_ACTION_ON_ELEMENTS_MSG = "<font color='blue'>FINISHED</font> doing correct action on elements: {0}";
 	public static String SENDING_MAIL_TO = "sending mail to: {0}";
 	public static String SUCCESSFULLY_SENT_MSG = "message sent successfully...";
 	public static String FAILED_SENDING_MSG = "Fail to send message";

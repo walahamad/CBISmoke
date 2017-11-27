@@ -126,7 +126,6 @@ public class TestUtilities extends SelTestCase {
 		              {
 		        		  data[rowNum-startingRow][colNum]="";
 		              }
-        			  logs.debug(LoggingMsg.IGNORE_CURRENT_CASE);
         			  ignoredCases++;
         		  }
         	  }else {
@@ -136,6 +135,7 @@ public class TestUtilities extends SelTestCase {
 	              }
         	  }
           }
+          logs.debug(MessageFormat.format(LoggingMsg.IGNORE_CASES, ignoredCases) );
           
           //remove ignored cases
           Object dataFinal[][] = new Object[rows-(startingRow-1)-ignoredCases][cols];

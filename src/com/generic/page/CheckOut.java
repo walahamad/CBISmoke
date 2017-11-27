@@ -12,11 +12,102 @@ import com.generic.util.SelectorUtil;
 public class CheckOut extends SelTestCase {
 	private static List<String> subStrArr = new ArrayList<String>();
 	private static List<String> valuesArr = new ArrayList<String>();
-	
+
 	public static class keys {
 		public static final String caseId = "caseId";
 	}
-	
+
+	public static class guestCheckout {
+		public static void typeGuestMail(String email) throws Exception {
+			getCurrentFunctionName(true);
+			logs.debug(MessageFormat.format(LoggingMsg.TYPING_ELEMENT_VALUE, "guest mail", email));
+			subStrArr.add(CheckOutSelectors.guestMail);
+			valuesArr.add(email);
+			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
+			getCurrentFunctionName(false);
+
+		}
+
+		public static void typeGuestConfMail(String email) throws Exception {
+			getCurrentFunctionName(true);
+			logs.debug(MessageFormat.format(LoggingMsg.TYPING_ELEMENT_VALUE, "guest confirmation mail", email));
+			subStrArr.add(CheckOutSelectors.guestConfirmationMail);
+			valuesArr.add(email);
+			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
+			getCurrentFunctionName(false);
+
+		}
+
+		public static void clickCheckoutAsGuest() throws Exception {
+			getCurrentFunctionName(true);
+			logs.debug(MessageFormat.format(LoggingMsg.CLICK_ELEMENT_SEL, "checkout as guest button"));
+			subStrArr.add(CheckOutSelectors.guestCheckoutButton);
+			valuesArr.add("");
+			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
+			getCurrentFunctionName(false);
+
+		}
+
+		public static void fillAndClickGuestCheckout(String email) throws Exception {
+			getCurrentFunctionName(true);
+			typeGuestMail(email);
+			typeGuestConfMail(email);
+			clickCheckoutAsGuest();
+			getCurrentFunctionName(false);
+		}
+
+		public static void fillPreRegFormAndClickRegBtn(String password, boolean newsLetterOptin) throws Exception {
+			getCurrentFunctionName(true);
+			typeGuestPassPreForm(password);
+			typeGuestPassConfPreForm(password);
+			checkNewsletterOptin(newsLetterOptin);
+			clickCreatAnaccount();
+			getCurrentFunctionName(false);
+
+		}
+
+		public static void clickCreatAnaccount() throws Exception {
+			getCurrentFunctionName(true);
+			logs.debug(MessageFormat.format(LoggingMsg.CLICK_ELEMENT_SEL, "guest creat an account"));
+			subStrArr.add(CheckOutSelectors.guestCreateAccButton);
+			valuesArr.add("");
+			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
+			getCurrentFunctionName(false);
+
+		}
+
+		public static void checkNewsletterOptin(boolean newsLetterOptin) throws Exception {
+			getCurrentFunctionName(true);
+			logs.debug(MessageFormat.format(LoggingMsg.CHECKBOX_SEL_VAL, "News Letter Optin", newsLetterOptin));
+			subStrArr.add(CheckOutSelectors.guestCreateAccOtpin);
+			valuesArr.add(String.valueOf(newsLetterOptin));
+			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
+			getCurrentFunctionName(false);
+
+		}
+
+		public static void typeGuestPassConfPreForm(String password) throws Exception {
+			getCurrentFunctionName(true);
+			logs.debug(MessageFormat.format(LoggingMsg.TYPING_ELEMENT_VALUE, "password confirmation ", password));
+			subStrArr.add(CheckOutSelectors.guestCreateAccCPwd);
+			valuesArr.add(password);
+			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
+			getCurrentFunctionName(false);
+
+		}
+
+		public static void typeGuestPassPreForm(String password) throws Exception {
+			getCurrentFunctionName(true);
+			logs.debug(MessageFormat.format(LoggingMsg.TYPING_ELEMENT_VALUE, "password ", password));
+			subStrArr.add(CheckOutSelectors.guestCreateAccPwd);
+			valuesArr.add(password);
+			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
+			getCurrentFunctionName(false);
+
+		}
+
+	}
+
 	public static class shippingAddress {
 
 		public static class keys {
@@ -35,7 +126,7 @@ public class CheckOut extends SelTestCase {
 
 		public static void selectCountery(String countery) throws Exception {
 			getCurrentFunctionName(true);
-			logs.debug(MessageFormat.format(LoggingMsg.SELECTING_ELEMENT_VALUE,"Countery ", countery));
+			logs.debug(MessageFormat.format(LoggingMsg.SELECTING_ELEMENT_VALUE, "Countery ", countery));
 			subStrArr.add(CheckOutSelectors.countery);
 			valuesArr.add(countery);
 			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
@@ -45,7 +136,7 @@ public class CheckOut extends SelTestCase {
 
 		public static void selectTitle(String title) throws Exception {
 			getCurrentFunctionName(true);
-			logs.debug(MessageFormat.format(LoggingMsg.SELECTING_ELEMENT_VALUE,"title ", title));
+			logs.debug(MessageFormat.format(LoggingMsg.SELECTING_ELEMENT_VALUE, "title ", title));
 			subStrArr.add(CheckOutSelectors.title);
 			valuesArr.add(title);
 			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
@@ -54,7 +145,7 @@ public class CheckOut extends SelTestCase {
 
 		public static void typeFirstName(String firstName) throws Exception {
 			getCurrentFunctionName(true);
-			logs.debug(MessageFormat.format(LoggingMsg.TYPING_ELEMENT_VALUE,"firstname ", firstName));
+			logs.debug(MessageFormat.format(LoggingMsg.TYPING_ELEMENT_VALUE, "firstname ", firstName));
 			subStrArr.add(CheckOutSelectors.firstName);
 			valuesArr.add(firstName);
 			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
@@ -64,7 +155,7 @@ public class CheckOut extends SelTestCase {
 
 		public static void typeAddress(String address) throws Exception {
 			getCurrentFunctionName(true);
-			logs.debug(MessageFormat.format(LoggingMsg.TYPING_ELEMENT_VALUE,"address ", address));
+			logs.debug(MessageFormat.format(LoggingMsg.TYPING_ELEMENT_VALUE, "address ", address));
 			subStrArr.add(CheckOutSelectors.address);
 			valuesArr.add(address);
 			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
@@ -74,7 +165,7 @@ public class CheckOut extends SelTestCase {
 
 		public static void typeLastName(String lastName) throws Exception {
 			getCurrentFunctionName(true);
-			logs.debug(MessageFormat.format(LoggingMsg.TYPING_ELEMENT_VALUE,"lastname ", lastName));
+			logs.debug(MessageFormat.format(LoggingMsg.TYPING_ELEMENT_VALUE, "lastname ", lastName));
 			subStrArr.add(CheckOutSelectors.lastName);
 			valuesArr.add(lastName);
 			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
@@ -94,7 +185,7 @@ public class CheckOut extends SelTestCase {
 
 		public static void typePostalCode(String postal) throws Exception {
 			getCurrentFunctionName(true);
-			logs.debug(MessageFormat.format(LoggingMsg.TYPING_ELEMENT_VALUE,"postal", postal));
+			logs.debug(MessageFormat.format(LoggingMsg.TYPING_ELEMENT_VALUE, "postal", postal));
 			subStrArr.add(CheckOutSelectors.postal);
 			valuesArr.add(postal);
 			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
@@ -121,7 +212,7 @@ public class CheckOut extends SelTestCase {
 			getCurrentFunctionName(false);
 
 		}
-		
+
 		public static String getOrderTotal() throws Exception {
 			getCurrentFunctionName(true);
 			subStrArr.add(CheckOutSelectors.orderTotalShippingAddress);
@@ -131,7 +222,7 @@ public class CheckOut extends SelTestCase {
 			getCurrentFunctionName(false);
 			return SelectorUtil.textValue;
 		}
-		
+
 		public static String getOrdersubTotal() throws Exception {
 			getCurrentFunctionName(true);
 			subStrArr.add(CheckOutSelectors.orderSubTotalShippingAddress);
@@ -186,6 +277,39 @@ public class CheckOut extends SelTestCase {
 			getCurrentFunctionName(false);
 		}
 
+		public static void fillAndClickNext(String Countery, String title, String firstName, String lastName,
+				String address, String city, String postal, String phone) throws Exception {
+			getCurrentFunctionName(true);
+
+			if (!"".equals(Countery))
+				selectCountery(Countery);
+
+			if (!"".equals(title))
+				selectTitle(title);
+
+			if (!"".equals(firstName))
+				typeFirstName(firstName);
+
+			if (!"".equals(lastName))
+				typeLastName(lastName);
+
+			if (!"".equals(address))
+				typeAddress(address);
+
+			if (!"".equals(city))
+				typeCity(city);
+
+			if (!"".equals(postal))
+				typePostalCode(postal);
+
+			if (!"".equals(phone))
+				typePhone(phone);
+
+			clickNext();
+
+			getCurrentFunctionName(false);
+		}
+
 		// in case of using the address book
 		public static void fillAndClickNext(boolean selectFromAddressBook) throws Exception {
 			getCurrentFunctionName(true);
@@ -211,7 +335,8 @@ public class CheckOut extends SelTestCase {
 			getCurrentFunctionName(false);
 
 		}
-	}//shipping address
+
+	}// shipping address
 
 	public static class shippingMethod {
 
@@ -239,7 +364,7 @@ public class CheckOut extends SelTestCase {
 			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
 			getCurrentFunctionName(false);
 		}
-		
+
 		public static String getOrderTotal() throws Exception {
 			getCurrentFunctionName(true);
 			subStrArr.add(CheckOutSelectors.orderTotalShippingMethod);
@@ -249,8 +374,7 @@ public class CheckOut extends SelTestCase {
 			getCurrentFunctionName(false);
 			return SelectorUtil.textValue;
 		}
-		
-		
+
 		public static String getOrderSubTotal() throws Exception {
 			getCurrentFunctionName(true);
 			subStrArr.add(CheckOutSelectors.orderSubTotalShippingMethod);
@@ -261,7 +385,7 @@ public class CheckOut extends SelTestCase {
 			return SelectorUtil.textValue;
 		}
 
-	}//shipping method
+	}// shipping method
 
 	public static class paymentInnformation {
 
@@ -277,9 +401,9 @@ public class CheckOut extends SelTestCase {
 		}
 
 		public static void fillAndclickNext(String cardtype, String cardHolder, String cardNumber, String expireDay,
-				String expireYear, String CVC, boolean savePayment, boolean billSameShip , String countery,
-				String title, String firstName, String lastName,
-				String address, String city, String postal, String phone) throws Exception {
+				String expireYear, String CVC, boolean savePayment, boolean billSameShip, String countery, String title,
+				String firstName, String lastName, String address, String city, String postal, String phone)
+				throws Exception {
 			getCurrentFunctionName(true);
 
 			if (!"".equals(cardtype))
@@ -298,10 +422,37 @@ public class CheckOut extends SelTestCase {
 			savePaymentMethod(savePayment);
 
 			checkBillingAddressSameshipping(billSameShip);
-			
+
 			if (!billSameShip) {
-				fillBillingAddress(countery, title, firstName, lastName,
-				address, city, postal, phone);
+				fillBillingAddress(countery, title, firstName, lastName, address, city, postal, phone);
+			}
+
+			clickNext();
+			getCurrentFunctionName(false);
+		}
+
+		public static void fillAndclickNext(String cardtype, String cardHolder, String cardNumber, String expireDay,
+				String expireYear, String CVC, boolean billSameShip, String countery, String title, String firstName,
+				String lastName, String address, String city, String postal, String phone) throws Exception {
+			getCurrentFunctionName(true);
+
+			if (!"".equals(cardtype))
+				selectCardType(cardtype);
+			if (!"".equals(cardHolder))
+				typeCardholder(cardHolder);
+			if (!"".equals(cardNumber))
+				typeCardNumber(cardNumber);
+			if (!"".equals(expireDay))
+				selectExpireDay(expireDay);
+			if (!"".equals(expireDay))
+				typeExpireYear(expireYear);
+			if (!"".equals(CVC))
+				typeCVC(CVC);
+
+			checkBillingAddressSameshipping(billSameShip);
+
+			if (!billSameShip) {
+				fillBillingAddress(countery, title, firstName, lastName, address, city, postal, phone);
 			}
 
 			clickNext();
@@ -435,7 +586,7 @@ public class CheckOut extends SelTestCase {
 			getCurrentFunctionName(false);
 
 		}
-		
+
 		public static String getOrderTotal() throws Exception {
 			getCurrentFunctionName(true);
 			subStrArr.add(CheckOutSelectors.orderTotalPymentInfo);
@@ -445,7 +596,7 @@ public class CheckOut extends SelTestCase {
 			getCurrentFunctionName(false);
 			return SelectorUtil.textValue;
 		}
-		
+
 		public static String getOrdershipping() throws Exception {
 			getCurrentFunctionName(true);
 			subStrArr.add(CheckOutSelectors.orderShippingPymentInfo);
@@ -455,6 +606,7 @@ public class CheckOut extends SelTestCase {
 			getCurrentFunctionName(false);
 			return SelectorUtil.textValue;
 		}
+
 		public static String getOrderSubTotal() throws Exception {
 			getCurrentFunctionName(true);
 			subStrArr.add(CheckOutSelectors.orderSubtotalPymentInfo);
@@ -464,7 +616,7 @@ public class CheckOut extends SelTestCase {
 			getCurrentFunctionName(false);
 			return SelectorUtil.textValue;
 		}
-	}//payment info 
+	}// payment info
 
 	public static class reviewInformation {
 
@@ -484,7 +636,7 @@ public class CheckOut extends SelTestCase {
 			subStrArr.add(CheckOutSelectors.shippingCost);
 			valuesArr.add("");
 			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
-			logs.debug(MessageFormat.format(LoggingMsg.SEL_TEXT,SelectorUtil.textValue));
+			logs.debug(MessageFormat.format(LoggingMsg.SEL_TEXT, SelectorUtil.textValue));
 			getCurrentFunctionName(false);
 			return SelectorUtil.textValue;
 
@@ -507,7 +659,7 @@ public class CheckOut extends SelTestCase {
 			getCurrentFunctionName(false);
 
 		}
-		
+
 		public static String getOrderTotal() throws Exception {
 			getCurrentFunctionName(true);
 			subStrArr.add(CheckOutSelectors.orderTotalOrderSumary);
@@ -517,10 +669,10 @@ public class CheckOut extends SelTestCase {
 			getCurrentFunctionName(false);
 			return SelectorUtil.textValue;
 		}
-		
+
 		public static String gettotal() throws Exception {
 			getCurrentFunctionName(true);
-			subStrArr.add(CheckOutSelectors.orderTotalOrderSumary );
+			subStrArr.add(CheckOutSelectors.orderTotalOrderSumary);
 			valuesArr.add("");
 			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
 			logs.debug(MessageFormat.format(LoggingMsg.SEL_TEXT, SelectorUtil.textValue));
@@ -528,18 +680,18 @@ public class CheckOut extends SelTestCase {
 			return SelectorUtil.textValue;
 		}
 
-	}//order review information 
-	
+	}// order review information
+
 	public static class orderConfirmation {
-		
+
 		public static class keys {
 			public static final String isSavedPayement = "saved-payment";
 
 			public static final String orderId = "orderId";
 			public static final String email = "email";
 			public static final String orderTotal = "orderTotal";
-			public static final String orderSubtotal = "orderSubtotal"; 
-			public static final String orderTax = "orderTax"; 
+			public static final String orderSubtotal = "orderSubtotal";
+			public static final String orderTax = "orderTax";
 			public static final String orderShipping = "orderShipping";
 
 		}
@@ -549,7 +701,7 @@ public class CheckOut extends SelTestCase {
 			subStrArr.add(CheckOutSelectors.orderId);
 			valuesArr.add("");
 			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
-			logs.debug(MessageFormat.format(LoggingMsg.SEL_TEXT,SelectorUtil.textValue));
+			logs.debug(MessageFormat.format(LoggingMsg.SEL_TEXT, SelectorUtil.textValue));
 			getCurrentFunctionName(false);
 			return SelectorUtil.textValue;
 
@@ -610,6 +762,6 @@ public class CheckOut extends SelTestCase {
 
 		}
 
-	}//order confirmation page 
+	}// order confirmation page
 
 }
