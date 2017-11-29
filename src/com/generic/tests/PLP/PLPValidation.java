@@ -45,11 +45,20 @@ public class PLPValidation extends SelTestCase {
 			Thread.sleep(3000);
 			PLP.typeUserLocationStore("Bedford");
 			Thread.sleep(3000);
-			//PLP.clickAddToCart("300389093");
-			PLP.clickProductPickupInStoreButton("3003890930");
+			PLP.clickAddToCart("300389093");
+			Thread.sleep(3000);
+			String productPriceAddedToCart = PLP.getPLPProductPriceFromCartBag();
+			logs.debug(MessageFormat.format(LoggingMsg.PLP_PRODUCT_PRICE, productPriceAddedToCart));
+			//PLP.clickProductPickupInStoreButton("3003890930");
 			Thread.sleep(2000);
 			String productPrice = PLP.getPLPProductPrice("300389093");
 			logs.debug(MessageFormat.format(LoggingMsg.PLP_PRODUCT_PRICE, productPrice));
+			Thread.sleep(2000);
+			//PLP.clickCheckoutBtn();
+			//PLP.clickContinueShoppingBtn();
+			PLP.clickAddToCartItemCboxCloseBtn();
+			PLP.ClickleftNavCheckBoxCheckBox("London Hospital");
+			logs.debug("selected Store : " + PLP.getFacetNavTitleStoresCount());
 			Common.testPass();
 		} catch (Throwable t) {
 			setTestCaseDescription(getTestCaseDescription());

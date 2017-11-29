@@ -145,5 +145,59 @@ public class PLP extends SelTestCase {
 		return SelectorUtil.textValue;
 	}
     
-   
+    public static String getPLPProductPriceFromCartBag() throws Exception {
+		getCurrentFunctionName(true);
+		logs.debug(MessageFormat.format(LoggingMsg.GETTING_SEL, PLPSelectors.addToCartItemPrice));
+		subStrArr.add(PLPSelectors.addToCartItemPrice);
+		valuesArr.add("noClick");
+		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
+		getCurrentFunctionName(false);
+		return SelectorUtil.textValue;
+	}
+    
+    public static void clickCheckoutBtn() throws Exception {
+		getCurrentFunctionName(true);
+		logs.debug(MessageFormat.format(LoggingMsg.CLICKING_SEL, PLPSelectors.addToCartItemCheckoutBtn));
+		subStrArr.add(PLPSelectors.addToCartItemCheckoutBtn);
+		valuesArr.add("");
+		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
+		getCurrentFunctionName(false);
+	}
+    
+    public static void clickContinueShoppingBtn() throws Exception {
+		getCurrentFunctionName(true);
+		logs.debug(MessageFormat.format(LoggingMsg.CLICKING_SEL, PLPSelectors.addToCartItemContinueShoppingBtn));
+		subStrArr.add(PLPSelectors.addToCartItemContinueShoppingBtn);
+		valuesArr.add("");
+		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
+		getCurrentFunctionName(false);
+	}
+    
+    public static void clickAddToCartItemCboxCloseBtn() throws Exception {
+		getCurrentFunctionName(true);
+		logs.debug(MessageFormat.format(LoggingMsg.CLICKING_SEL, PLPSelectors.addToCartItemCboxCloseBtn));
+		subStrArr.add(PLPSelectors.addToCartItemCboxCloseBtn);
+		valuesArr.add("");
+		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
+		getCurrentFunctionName(false);
+	}
+    
+    public static void ClickleftNavCheckBoxCheckBox(String checkBoxValue) throws Exception {
+		getCurrentFunctionName(true);
+		logs.debug(MessageFormat.format(LoggingMsg.CLICKING_SEL, checkBoxValue));
+		subStrArr.add(checkBoxValue);
+		valuesArr.add("");
+		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
+		getCurrentFunctionName(false);
+	}
+    
+    public static String getFacetNavTitleStoresCount() throws Exception {
+		getCurrentFunctionName(true);
+		logs.debug(MessageFormat.format(LoggingMsg.CLICKING_SEL, PLPSelectors.facetNavTitleStores + ": " + PLPSelectors.facetNavTitleStoresSecondCount));
+		subStrArr.add(PLPSelectors.facetNavTitleStores);
+		valuesArr.add("child,"+PLPSelectors.facetNavTitleStoresSecondCount);
+		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
+		getCurrentFunctionName(false);
+		return SelectorUtil.textValue;
+	}
 }

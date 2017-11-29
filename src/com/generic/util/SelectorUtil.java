@@ -10,6 +10,7 @@ import java.util.NoSuchElementException;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.junit.Assert;
 import org.openqa.selenium.By;
@@ -106,6 +107,22 @@ public class SelectorUtil extends SelTestCase {
 	    	    	 selectorType = (!(foundElements.isEmpty()) ? subStr:selectorType);
 	    	     }
 				 
+				 if (foundElements.isEmpty())
+	    	     {
+					//logs.debug(MessageFormat.format(LoggingMsg.IN_SELECTOR_TYPE, "xpath"));
+	    	    	 foundElements = doc.select(subStr);
+	    	    	 String selType = "css," + subStr;
+	    	    	 selectorType = (!(foundElements.isEmpty()) ? selType:selectorType);
+	    	     }
+				 
+				 if ((webElementsInfo.get(subStr).get("value")).toString().contains("child") && !foundElements.isEmpty()) {
+					 String tempValue = (webElementsInfo.get(subStr).get("value")).toString();
+					 Element e = foundElements.first();
+					 String childSelStr = tempValue.split(",")[1];
+					 foundElements = e.select("[id="+ childSelStr  +"]");
+					 selectorType = (!(foundElements.isEmpty()) ? "id":selectorType);
+				 }
+				 
 				 if (foundElements != null && !foundElements.isEmpty())
 				 {
 					  Map <String, Object> webElementInfo = webElementsInfo.get(subStr);
@@ -152,7 +169,7 @@ public class SelectorUtil extends SelTestCase {
 					else if (e.tagName().equals("p")||
 							e.tagName().equals("body")) {
 						return "gettext";
-					}else if (e.tagName().equals("div"))
+					}else if (e.tagName().equals("div") || e.tagName().equals("span"))
 					{
 						return "click,gettext";
 					}
@@ -190,7 +207,12 @@ public class SelectorUtil extends SelTestCase {
 						break;
 						
 					default:
-						selector = By.xpath("//button[contains(text(),'"+ selType + "')]");
+						if (selType.contains("css")) {
+							String selTemp = selType.split(",")[1];
+							selector = By.cssSelector(selTemp);
+						} else {
+							selector = By.xpath("//*[contains(text(),'"+ selType + "')]");
+						}
 						break;
 					}
 		    		
@@ -229,7 +251,12 @@ public class SelectorUtil extends SelTestCase {
 						break;
 						
 					default:
-						selector = "//button[contains(@text,'"+ selType + "')]";
+						if (selType.contains("css")) {
+							String selTemp = selType.split(",")[1];
+							selector = selTemp;
+						} else {
+							selector = "//*[contains(@text,'"+ selType + "')]";
+						}
 						break;
 					}
 				}
