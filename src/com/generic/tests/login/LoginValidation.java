@@ -161,6 +161,7 @@ public class LoginValidation extends SelTestCase {
 			webElementInfo.put("selector", "");
 			webElementInfo.put("action", "");
 			webElementInfo.put("SelType", "");
+			webElementInfo.put("parentBy", null);
 			index++;
 
 			webElementsInfo.remove(key);
