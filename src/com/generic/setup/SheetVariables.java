@@ -29,8 +29,6 @@ public class SheetVariables {
     public static final String plpTestCaseId = "PLP";
     public static final String personalDetailsTestCaseId = "PersonalDetails";
     public static final String orderHistoryTestCaseId = "OrderHistory";
-
-
-
+	public static final String cartCaseId = "Cart";
     
 }
