@@ -3,8 +3,10 @@ package com.generic.setup;
 public class LoggingMsg {
 
 	public static final String CHECKOUTDESC = "<b>Case ID: </b>{0} <br><b>File of execution:</b> {1}<br><b>Decrption: </b>{2}<br><b>case proprties:</b><br>- {3}<br>- {4}<br>- {5}";
+	public static final String TEST_CASE_DESC = "<b>Case ID: </b>{0} <br><b>File of execution:</b> {1}<br><b>Description: </b>{2}<br>";
 	public static String CLICKING_CART_BUTTON = "clicking on {0} btn from cart";
 	public static String NUMBER_OF_PRODUCTS = "number of products: {0}";
+	public static String NUMBER_OF_ORDERS = "number of orders: {0}";
 	public static String ORDER_TOTAL = "Order Total: {0}";
 	public static String ORDER_SUBTOTAL = "Order subtotal: {0}";
 	public static String APPLYING_COUPON = "{0} Coupon {1}" ;
@@ -82,4 +84,8 @@ public class LoggingMsg {
 	public static String COL_INDEX_MSG = "Col index is: {0}";
 	public static String PLP_SELECTED_SORT_VALUES = "{0} is: {1} and {2} is: {3}";
 	public static String PLP_PRODUCT_PRICE = "productPrice is: {0}";
+	public static String PLP_CHANGE_LOCATION_LINK_FUNCTIONALITY_MSG = "change location link didn't work well";
+	public static String PLP_SELECTED_FILTER_COUNT = "selected {0} count: {1}";
+	public static String PLP_FILTER_FUNCTIONALITY = "Filter is {0}applied correctly";
+	
 }

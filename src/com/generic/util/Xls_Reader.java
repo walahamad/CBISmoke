@@ -8,6 +8,7 @@ import org.apache.poi.hssf.util.HSSFColor;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.IndexedColors;
+import org.apache.poi.ss.util.NumberToTextConverter;
 import org.apache.poi.xssf.usermodel.*;
 
 import com.generic.setup.LoggingMsg;
@@ -145,11 +146,12 @@ public class Xls_Reader {
       if(cell.getCellType()==Cell.CELL_TYPE_STRING)
           return cell.getStringCellValue();
       else if(cell.getCellType()==Cell.CELL_TYPE_NUMERIC || cell.getCellType()==Cell.CELL_TYPE_FORMULA ){
-
-          String cellText  = String.valueOf(cell.getNumericCellValue());
+    	  //Abeer change: use NumberToTextConverter to get the correct number value as written in Excel sheet
+    	  String cellText  = NumberToTextConverter.toText(cell.getNumericCellValue());
+          /*String cellText  = String.valueOf(cell.getNumericCellValue());
           if (cellText.contains(".0")) {
               cellText = cellText.replace(".0", "");
-          }
+          }*/
           if (HSSFDateUtil.isCellDateFormatted(cell)) {
                // format in form of M/D/YY
               double d = cell.getNumericCellValue();
