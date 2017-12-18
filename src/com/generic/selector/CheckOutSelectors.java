@@ -49,9 +49,9 @@ public class CheckOutSelectors
 	
 	//Order confirmation
 	public static final String orderId = "test_orderDetail_overviewOrderID_label_$1";
-	public static final String orderConfirmationTotal = "test_orderTotal_totalPrice_label_$3";
+	public static final String orderConfirmationTotal = "test_orderTotal_totalPrice_label_$";
 	public static final String orderConfirmationSubtotal = "test_orderTotal_subTotal_label_$1";
-	public static final String orderConfirmationShippingCost = "test_orderTotal_devlieryCost_label_$2";
+	public static final String orderConfirmationShippingCost = "test_orderTotal_devlieryCost_label_$";
 	public static final String orderconfirmationBillingAddress = "col-sm-6 col-md-4 order-billing-address";
 	public static final String orderconfirmationshippingAddress = "order-ship-to";
 	
