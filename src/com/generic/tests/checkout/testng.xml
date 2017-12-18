@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Suite" parallel="tests" thread-count="5">
+	<test name="checkout Tests">
+		<parameter name="browserName" value="chrome"></parameter>
+		<classes>
+			<class name="com.generic.tests.checkout.Base_checkout" />
+		</classes>
+	</test><!-- Test -->
+	<test name="Dummy tests">
+		<parameter name="browserName" value="chrome"></parameter>
+		<classes>
+			<class name="com.generic.tests.checkout.Base_checkout2" />
+		</classes>
+	</test>
+	<test name="Dummy2 tests">
+		<parameter name="browserName" value="chrome"></parameter>
+		<classes>
+			<class name="com.generic.tests.checkout.Base_checkout3" />
+		</classes>
+	</test>
+	<test name="Dummy3 tests">
+		<parameter name="browserName" value="chrome"></parameter>
+		<classes>
+			<class name="com.generic.tests.checkout.Base_checkout4" />
+		</classes>
+	</test>
+</suite> <!-- Suite -->

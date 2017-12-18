@@ -24,7 +24,7 @@ public class CartValidationNumberOfProducts extends CartValidationBase {
 			setTestCaseDescription(getTestCaseDescription());
 			logs.debug(MessageFormat.format(LoggingMsg.DEBUGGING_TEXT, t.getMessage()));
 			t.printStackTrace();
-			String temp = getTestCaseId();
+			String temp = getTestCaseReportName();
 			Common.testFail(t, temp);
 			Common.takeScreenShot();
 			Assert.assertTrue(t.getMessage(), false);
@@ -45,7 +45,7 @@ public class CartValidationNumberOfProducts extends CartValidationBase {
 			setTestCaseDescription(getTestCaseDescription());
 			logs.debug(MessageFormat.format(LoggingMsg.DEBUGGING_TEXT, t.getMessage()));
 			t.printStackTrace();
-			String temp = getTestCaseId();
+			String temp = getTestCaseReportName();
 			Common.testFail(t, temp);
 			Common.takeScreenShot();
 			Assert.assertTrue(t.getMessage(), false);

@@ -19,7 +19,7 @@ public final class RandomUtilities {
      * MY_DAYS constant is being used in wait methods.
      */
     public static final int MY_DAYS = 365;
-    public static Logger logs = Logger.getLogger("logs");
+    public static SASLogger logs = new SASLogger("Random");
 
     /**
      * MY_DAYS constant is being used in wait methods.

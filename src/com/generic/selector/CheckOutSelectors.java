@@ -16,13 +16,13 @@ public class CheckOutSelectors
 	public static final String addressBookBtn = "btn btn-default btn-block js-address-book";
 	public static final String selectFirstAddress = "Use this Address";
 	public static final String orderTotalShippingAddress = "test_cart_totalPrice_label_$";
-	public static final String orderSubTotalShippingAddress = "test_Order_Totals_Subtotal_$1";
+	public static final String orderSubTotalShippingAddress = "test_Order_Totals_Subtotal_$";
 	
 	//shipping method
 	public static final String shippingMethod = "delivery_method";
 	public static final String submitShippingMethodbtn = "deliveryMethodSubmit";
 	public static final String orderTotalShippingMethod = "test_cart_totalPrice_label_$";
-	public static final String orderSubTotalShippingMethod = "test_Order_Totals_Subtotal_$1";
+	public static final String orderSubTotalShippingMethod = "test_Order_Totals_Subtotal_$";
 	
 	//Payment info
 	public static final String cardtype = "card_cardType";
@@ -38,11 +38,11 @@ public class CheckOutSelectors
 	public static final String selectFirstPayment = "Use these payment details";
 	public static final String orderTotalPymentInfo = "test_cart_totalPrice_label_$";
 	public static final String orderShippingPymentInfo = "test_Order_Totals_Delivery_$";
-	public static final String orderSubtotalPymentInfo = "test_Order_Totals_Subtotal_$1";
+	public static final String orderSubtotalPymentInfo = "test_Order_Totals_Subtotal_$";
 	
 	//summary - review / place order
-	public static final String summaryTotal = "test_Order_Totals_Subtotal_$1";
-	public static final String shippingCost = "test_Order_Totals_Delivery_$2";
+	public static final String summaryTotal = "test_Order_Totals_Subtotal_$";
+	public static final String shippingCost = "test_Order_Totals_Delivery_$";
 	public static final String acceptTerm = "Terms1";
 	public static final String placeOrderBtn = "placeOrder";
 	public static final String orderTotalOrderSumary = "test_cart_totalPrice_label_$";
@@ -59,7 +59,7 @@ public class CheckOutSelectors
 	public static final String guestMail = "guest.email";
 	public static final String guestConfirmationMail = "confirmGuestEmail form-control";
 	public static final String guestCheckoutButton = "btn btn-default btn-block guestCheckoutBtn";
-	public static final String guestCreateAccButton = "test_guest_Register_button_$1";
+	public static final String guestCreateAccButton = "test_guest_Register_button_$";
 	public static final String guestCreateAccOtpin = "consentForm.consentGiven1";
 	public static final String guestCreateAccCPwd = "guest.checkPwd";
 	public static final String guestCreateAccPwd = "password";

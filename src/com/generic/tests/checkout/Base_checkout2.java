@@ -1,8 +1,15 @@
 package com.generic.tests.checkout;
 
+import static org.testng.Assert.assertEquals;
 import java.text.MessageFormat;
 import java.util.Arrays;
+import java.util.Collection;
+
+import org.apache.log4j.Logger;
+import org.openqa.selenium.By;
 import org.testng.Assert;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -20,11 +27,15 @@ import com.generic.setup.LoggingMsg;
 import com.generic.setup.SelTestCase;
 import com.generic.setup.SheetVariables;
 import com.generic.util.TestUtilities;
+import com.generic.util.Xls_Reader;
+import com.googlecode.javacv.FrameGrabber.Array;
 import com.generic.util.RandomUtilities;
 import com.generic.util.ReportUtil;
 import com.generic.util.SASLogger;
 
-public class Base_checkout extends SelTestCase {
+import org.testng.Reporter;
+
+public class Base_checkout2 extends SelTestCase {
 
 	private static LinkedHashMap<String, Object> addresses = null ;
 	private static  LinkedHashMap<String, Object> invintory = null ;
@@ -37,7 +48,7 @@ public class Base_checkout extends SelTestCase {
 	public static final String loggedInUser = "loggedin";
 
 	// used sheet in test
-	public static final String testDataSheet = SheetVariables.checkoutSheet;
+	public static final String testDataSheet = "CheckOutRegressionTMP";
 
 	private int caseIndexInDatasheet;
 	private String email;
@@ -48,43 +59,76 @@ public class Base_checkout extends SelTestCase {
 	private String orderShipping;
 	
 	private static XmlTest testObject;
-	
+
 	private static ThreadLocal<SASLogger> Testlogs = new ThreadLocal<SASLogger>() ; 
-	
+
 	@BeforeTest
 	public static void initialSetUp(XmlTest test) throws Exception {
+		//you need to add this part for logging/ reporting
+		getCurrentFunctionName(true);
 		Testlogs.set(new SASLogger(test.getName()+test.getIndex()));
 		testObject = test;
 		addresses = Common.readAddresses();
 		invintory = Common.readLocalInventory();
 		paymentCards = Common.readPaymentcards();
 		users = Common.readUsers();
+		getCurrentFunctionName(false);
 	}
 
 	@DataProvider(name = "Orders", parallel = false)
 	public static Object[][] loadTestData() throws Exception {
 		Object[][] data = TestUtilities.getData(testDataSheet);
-		Testlogs.get().debug(Arrays.deepToString(data).replace("\n", "--"));
 		return data;
 	}
+	
+	//@Test
+	public void dummy21() throws InterruptedException
+	{
+		//Reporter.log(Thread.currentThread().getId()+"", true);
+		logCaseDetailds(this.getClass().getCanonicalName());
+		ReportUtil.takeScreenShot(getDriver());
+		Testlogs.get().debug("in dumy test2");
+		Testlogs.get().debug("Case Browser: "  + testObject.getParameter("browserName") );
+		System.out.println( Thread.currentThread().getId()+ "");
+		Testlogs.get().debug("=============>"+SelTestCase.getDriver().toString());
+		getDriver().findElement(By.id("test_loginAndCheckoutButton_$2")).click();
+		Testlogs.get().debug(Arrays.asList(users)+"");
+		Thread.sleep(10000);
+		Common.testPass();
+	}
 
+	//@Test
+	public void dummy22() throws InterruptedException
+	{
+		
+		logCaseDetailds(this.getClass().getCanonicalName());
+		Testlogs.get().debug("Case Browser: "  + testObject.getParameter("browserName") );
+		
+		Testlogs.get().debug("in dumy test22");
+		System.out.println( Thread.currentThread().getId()+ "");
+		Common.testPass();
+	}
+	
 	@SuppressWarnings("unchecked") // avoid warning from linked hashmap
 	@Test(dataProvider = "Orders")
-	public void checkOutBaseTest(String caseId, String runTest, String desc, String proprties, String products,
+	public void checkOutBaseTest_DUMMY(String caseId, String runTest, String desc, String proprties, String products,
 			String shippingMethod, String payment, String shippingAddress, String billingAddress, String coupon,
 			String email, String orderId, String orderTotal, String orderSubtotal, String orderTax,
 			String orderShipping) throws Exception {
 		
 		//Important to add this for logging/reporting 
-		setTestCaseReportName("Checkout Case");
-		//Testlogs.get().debug("Case Browser: "  + testObject.getParameter("browserName") );
 		logCaseDetailds(MessageFormat.format(LoggingMsg.CHECKOUTDESC, testDataSheet + "." + caseId,
+				this.getClass().getCanonicalName(), desc, proprties.replace("\n", "<br>- "), payment, shippingMethod));
+		Testlogs.get().debug("Case Browser: "  + testObject.getParameter("browserName") );
+		setTestCaseDescription(MessageFormat.format(LoggingMsg.CHECKOUTDESC, testDataSheet + "." + caseId,
 				this.getClass().getCanonicalName(), desc, proprties.replace("\n", "<br>- "), payment, shippingMethod));
 		
 		this.email = email;
 		caseIndexInDatasheet = getDatatable().getCellRowNum(testDataSheet, CheckOut.keys.caseId, caseId);
-		
+//		initializeTestResults(testDataSheet, caseIndexInDatasheet);
+		//Thread.sleep(70000);
 		try {
+			
 			if (proprties.contains(loggedInUser)) {
 				LinkedHashMap<String, Object> userdetails = (LinkedHashMap<String, Object>) users.get(this.email);
 				Testlogs.get().debug(this.email );
@@ -97,6 +141,7 @@ public class Base_checkout extends SelTestCase {
 				// take any user as template
 				LinkedHashMap<String, Object> userdetails = (LinkedHashMap<String, Object>) users.entrySet().iterator()
 						.next().getValue();
+				// userdetails.put(Registration.keys.email,email); //TODO: remove it
 
 				boolean acceptRegTerm = true;
 
@@ -113,7 +158,6 @@ public class Base_checkout extends SelTestCase {
 				PDP.addProductsToCart((String) productDetails.get(PDP.keys.url),
 						(String) productDetails.get(PDP.keys.color), (String) productDetails.get(PDP.keys.size),
 						(String) productDetails.get(PDP.keys.qty));
-				Thread.sleep(1000);
 				ReportUtil.takeScreenShot(getDriver());
 			}
 
@@ -250,6 +294,7 @@ public class Base_checkout extends SelTestCase {
 				CheckOut.guestCheckout.fillPreRegFormAndClickRegBtn("1234567", false);
 			}
 
+			//writeResultsToTestDatasheet(testDataSheet, caseIndexInDatasheet);
 			Common.testPass();
 		} catch (Throwable t) {
 			setTestCaseDescription(getTestCaseDescription());
@@ -261,4 +306,30 @@ public class Base_checkout extends SelTestCase {
 			Assert.assertTrue(false, t.getMessage());
 		} // catch
 	}// test
+
+//	private void writeResultsToTestDatasheet(String sheetName, int row) {
+//		getCurrentFunctionName(true);
+//		getDatatable().setCellData(sheetName, CheckOut.orderConfirmation.keys.orderId, row, orderId);
+//		if (email.contains("random")) {
+//			getDatatable().setCellData(sheetName, CheckOut.orderConfirmation.keys.email, row, email);
+//		}
+//		getDatatable().setCellData(sheetName, CheckOut.orderConfirmation.keys.orderSubtotal, row, orderSubtotal);
+//		getDatatable().setCellData(sheetName, CheckOut.orderConfirmation.keys.orderShipping, row, orderShipping);
+//		getDatatable().setCellData(sheetName, CheckOut.orderConfirmation.keys.orderTax, row, orderTax);
+//		getDatatable().setCellData(sheetName, CheckOut.orderConfirmation.keys.orderTotal, row, orderTotal);
+//		getCurrentFunctionName(false);
+//	}// write results
+//
+//	private void initializeTestResults(String sheetName, int row) {
+//		getCurrentFunctionName(true);
+//		getDatatable().setCellData(sheetName, CheckOut.orderConfirmation.keys.orderId, row, "");
+//		if (email.contains("random")) {
+//			getDatatable().setCellData(sheetName, CheckOut.orderConfirmation.keys.email, row, "");
+//		}
+//		getDatatable().setCellData(sheetName, CheckOut.orderConfirmation.keys.orderShipping, row, "");
+//		getDatatable().setCellData(sheetName, CheckOut.orderConfirmation.keys.orderSubtotal, row, "");
+//		getDatatable().setCellData(sheetName, CheckOut.orderConfirmation.keys.orderTax, row, "");
+//		getDatatable().setCellData(sheetName, CheckOut.orderConfirmation.keys.orderTotal, row, "");
+//		getCurrentFunctionName(false);
+//	}// initializeTestResults
 }// class

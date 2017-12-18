@@ -3,43 +3,66 @@ package com.generic.setup;
 
 import java.io.IOException;
 import java.text.MessageFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Properties;
 
-import org.apache.log4j.Logger;
-import org.junit.After;
-import org.junit.Assume;
-import org.junit.Before;
-import org.openqa.selenium.WebDriver;
-import org.testng.util.Strings;
+//import org.apache.log4j.Logger;
 
+import com.generic.util.SASLogger;
+
+import org.testng.Assert;
+import org.testng.annotations.*;
+import org.openqa.selenium.WebDriver;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
+import org.testng.asserts.SoftAssert;
+import org.testng.util.Strings;
+import org.testng.xml.XmlTest;
+
+import com.generic.util.ReportAnalyzer;
 import com.generic.util.ReportUtil;
 import com.generic.util.TestUtilities;
 import com.generic.util.Xls_Reader;
+import com.generic.util.reportBuilder;
 
 public class SelTestCase {
 	
-	public static String time_date_format = "hh:mm:ss aaa";
+	public static String time_date_format = "hh:mm:ss";
+	public static String time_date_formatScreenshot = "hhmmssaaa";
 	public static String reportFolderDateStampFormat = "MM-dd-yyyy";
 	public static String reportFolderTimeStampFormat = "HHmmss";
 	public static String testCaseRunDateStamp = "dd.MMMMM.yyyy";
 
     public static boolean runReportSetup = true;
-    public static String mainDir = null;
-    public static String subDir = null;
+    public static String mainReportDir = null;
+    public static String reportDirectory = null;
     
-    public static Logger logs = Logger.getLogger("logs");
+    public static SASLogger logs = new SASLogger("Default");
+    
+    protected SoftAssert softAssert = new SoftAssert();
+    
+    //private static ThreadLocal<String> testName= new ThreadLocal<String>(); 
+    
     public static int counter ;
     private static Properties CONFIG = null;
-    private static WebDriver driver = null;
+    
+    //private WebDriver driver = null;
+    private static ThreadLocal<WebDriver> webDriver = new ThreadLocal<WebDriver>();
+    
+    private static ThreadLocal<SASLogger>TestLog = new ThreadLocal<SASLogger>();
+    
     private static int waitTime;
     private static Xls_Reader datatable = null;
-    private static String testCaseId = null;
+    protected static String testCaseReportName = "";
     private static String startTime = null;
     private static String testStatus = null;
     private static String screenShotName = null;
     private static String browserName = null;
     private static int testCaseRowNum;
     private static Throwable Error = null;
+    
     
     public static String logDir= null;
     
@@ -48,7 +71,7 @@ public class SelTestCase {
     
     public static int caseIndex;
     
-    public static boolean initializeConfigurations = true;
+    public static String rUNDATE = ReportUtil.now(time_date_format).toString();
 
     public static String getBrowserName() {
         return browserName;
@@ -122,11 +145,11 @@ public class SelTestCase {
 
 
     public static WebDriver getDriver() {
-        return driver;
+    	return webDriver.get();
     }
 
     public static void setDriver(WebDriver driver) {
-        SelTestCase.driver = driver;
+    	webDriver.set(driver);
     }
 
     public static int getTestCaseRowNum() {
@@ -138,14 +161,22 @@ public class SelTestCase {
         SelTestCase.testCaseRowNum = testCaseRowNum;
     }
     
-    public static String getTestCaseId() {
-        return testCaseId;
+    public static String getTestCaseReportName() {
+    	if ("".equals(testCaseReportName))
+    		return "Automation_Case";
+    	return testCaseReportName;
     }
 
-    public static void setTestCaseId(String testId) {
-        testCaseId = testId;
+    public static void setTestCaseReportName(String testId) {
+        testCaseReportName = testId;
     }
 
+    public static void logCaseDetailds(String msg)
+    {
+    	logs.debug("Case started: "+Thread.currentThread().getStackTrace()[2]);
+    	logs.debug("Case Description: "+msg);
+    }
+    
     public static void getCurrentFunctionName(Boolean start)
     {
     	if (start){
@@ -159,33 +190,39 @@ public class SelTestCase {
 	}
     
     
+    
+    public static  SASLogger getlogger()
+    {
+    	return TestLog.get();
+    }
+    public static  void setlogger(SASLogger log)
+    {
+    	TestLog.set(log);
+    }
+    
     /**setUp function will be invoked by Junit before execution of every test case.
      * It initializes the property files and html report setup
      * @throws Exception
      */
-    @Before
-    public void setUp() throws Exception  {
+    @BeforeMethod
+    public void setUp(XmlTest test) throws Exception  {
     	getCurrentFunctionName(true);
-        try {                   
-            setTestCaseId(testCaseRepotId);
-            setStartTime(ReportUtil.now(time_date_format));
-            logs.debug(MessageFormat.format(LoggingMsg.COUNTER_VALUE, counter));
-            counter = counter + 1;
-            
+        try {
+        	if ("".equals(testCaseRepotId))
+        		setTestCaseReportName(test.getName());
+        	else
+        		setTestCaseReportName(testCaseRepotId);
+        	
             //Initialize the property file
             TestUtilities.configInitialization();
-            TestUtilities.reportSetup(); // Initialize html report setup
-            TestUtilities.prepareLogs();
-
         } catch (Exception e) {
             e.printStackTrace();
-            Assume.assumeTrue(false);
+            Assert.assertTrue(false);
         }
 
-        logs.debug(MessageFormat.format(LoggingMsg.EXECUTE_TEST_CASE, getTestCaseId()));
         setTestCaseDescription(getDatatable().getCellData("Test Cases","Description", getTestCaseRowNum()));
-        Common.initializeBrowser();
-
+        setDriver(Common.initializeBrowser(test.getParameter("browserName")));
+        
         try {
         	Common.launchApplication();
 
@@ -195,7 +232,7 @@ public class SelTestCase {
             throw new Exception(t);
         }
         getCurrentFunctionName(false);
-
+        logs.debug("Driver Details: "+getDriver());
     }
 
 
@@ -205,39 +242,57 @@ public class SelTestCase {
      * and send it into corresponding email ids.
      * @throws Exception
      */
-    @After
+    @AfterMethod
     public void tearDown() {
     	getCurrentFunctionName(true);
-    	logs.debug(MessageFormat.format(LoggingMsg.DEBUGGING_TEXT, getDriver().getCurrentUrl()));
-
-        if(! Strings.isNullOrEmpty(getTestStatus())) {
-        	ReportUtil.addTestCase(getTestCaseId() + "_" + counter, getTestCaseDescription(),
-                    			   getStartTime(),ReportUtil.now(time_date_format),getTestStatus());
-        } else if (Strings.isNullOrEmpty(getTestStatus())) {
-            String temp = getTestCaseId() + "_" + counter;
-            Common.testFail(Error, temp);
-            Common.takeScreenShot();
-            ReportUtil.addTestCase(getTestCaseId() + "_" + counter, getTestCaseDescription(),
-                    			   getStartTime(),ReportUtil.now(time_date_format),getTestStatus().substring(0, 4));
+    	
+    	WebDriver driver = SelTestCase.getDriver();
+        if (driver != null) {
+            driver.quit();
         }
-        Common.closeApplication();
-        ReportUtil.updateEndTime(ReportUtil.now(time_date_format), getTestStatus());
-        try {
-        	if (getCONFIG().getProperty("browser").equalsIgnoreCase("chrome"))
-        	{
-        		logs.debug(MessageFormat.format(LoggingMsg.TERMINATING_DRIVERS, "chrome"));
-            	Runtime.getRuntime().exec("taskkill /F /IM chromedriver.exe");
-        	}
-        	logs.debug(MessageFormat.format(LoggingMsg.TEST_CASE_STATUS, getTestCaseId(), getTestStatus()));
-			Thread.sleep(1000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
+        getCurrentFunctionName(false);
+    }
+    
+    
+    @AfterSuite
+    public static void reportMaker()
+    {
+    	ArrayList<HashMap<String, String>> casesDetails = null;
+    	try {
+			TestUtilities.reportSetup();
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
-       
-        getCurrentFunctionName(false);
+    	
+    	ReportAnalyzer.splitLogs();
+    	ReportAnalyzer.splitCases();
+    	ReportAnalyzer.copyScreenShots();
+    	try {
+			casesDetails = reportBuilder.readLogs(reportDirectory);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+    	
+    	int passedNumber = 0, failedNumber = 0, skippedNumber = 0;
+    	
+    	for (HashMap<String, String> status: casesDetails)
+    	{
+    		if ("pass".contains(status.get("Status").toLowerCase())){
+    			passedNumber++;
+    		}else if ("failed".contains(status.get("Status").toLowerCase())) {
+				failedNumber++;
+			}else
+			{
+				skippedNumber++;
+			}
+    		logs.debug(Arrays.asList(status)+"");
+    		ReportUtil.addTestCase(status.get("TestName"), status.get("Details"),status.get("StartTime"),
+    				status.get("EndTime"),status.get("Status"),
+    				status.get("LogFileName"), status.get("Browser"));
+    	}
+    	
+    	ReportUtil.updateEndTime(ReportUtil.now(time_date_format), getTestStatus());
+    	
+    	ReportUtil.endSuite(passedNumber, failedNumber, skippedNumber);
     }
 }

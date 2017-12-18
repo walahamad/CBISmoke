@@ -10,6 +10,7 @@ import java.io.File;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.text.MessageFormat;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -18,6 +19,7 @@ import java.util.Map;
 import javax.imageio.ImageIO;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
@@ -42,14 +44,13 @@ public class Common extends SelTestCase {
 	public static class DataSheetConstants {
 	}
 
-	public static void initializeBrowser() throws Exception {
+	public static WebDriver initializeBrowser(String browser) throws Exception {
 		getCurrentFunctionName(true);
 		try {
-			logs.debug(MessageFormat.format(LoggingMsg.BROWSER_NAME,
-					SelTestCase.getCONFIG().getProperty("browser").toString()));
+			logs.debug(MessageFormat.format(LoggingMsg.BROWSER_NAME,browser));
 			DesiredCapabilities capabilities = new DesiredCapabilities();
-			String browser = SelTestCase.getCONFIG().getProperty("browser");
-
+			//String browser = "chrome";//SelTestCase.getCONFIG().getProperty("browser");
+			WebDriver driver;
 			if (browser.equalsIgnoreCase("edge")) {
 				// TODO: move this path to path file or configuration file
 				System.setProperty("webdriver.edge.driver", "C:/softwares/servers/MicrosoftWebDriver.exe");
@@ -58,7 +59,8 @@ public class Common extends SelTestCase {
 				capabilities.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);
 				capabilities.setJavascriptEnabled(true);
 
-				SelTestCase.setDriver(new EdgeDriver(capabilities));
+				return new EdgeDriver(capabilities);
+				
 			} else if (browser.equalsIgnoreCase("Firefox")) {
 				FirefoxProfile fp = new FirefoxProfile();
 				SelTestCase.setDriver(new FirefoxDriver(fp));
@@ -82,23 +84,49 @@ public class Common extends SelTestCase {
 
 				ChromeOptions options = new ChromeOptions();
 
-				if (getCONFIG().getProperty("chached_chrome").equalsIgnoreCase("yes")) {
-					// options.addArguments("user-data-dir="+System.getProperty("user.home")+"/AppData/Local/Google/Chrome/User
-					// Data/");
-					// TODO: move this path to path file or configuration file as google cashed
-					// profile path
-					options.addArguments("user-data-dir=" + System.getProperty("user.home")
-							+ "/AppData/Local/Google/Chrome SxS/User Data/");
-					options.addArguments("detach=true");
-				}
+//				if (getCONFIG().getProperty("chached_chrome").equalsIgnoreCase("yes")) {
+//					// options.addArguments("user-data-dir="+System.getProperty("user.home")+"/AppData/Local/Google/Chrome/User
+//					// Data/");
+//					// TODO: move this path to path file or configuration file as google cashed
+//					// profile path
+//					options.addArguments("user-data-dir=" + System.getProperty("user.home")
+//							+ "/AppData/Local/Google/Chrome SxS/User Data/");
+//					options.addArguments("detach=true");
+//				}
 
 				capabilities.setCapability(ChromeOptions.CAPABILITY, options);
 				// TODO: move this path to path file or configuration
 				System.setProperty("webdriver.chrome.driver", "C:/softwares/servers/chromedriver.exe");
-				SelTestCase.setDriver(new ChromeDriver(capabilities));
-				logs.debug(SelTestCase.getDriver().toString());
+				driver = new ChromeDriver(capabilities);
+				//SelTestCase.setDriver(driver);
+				return driver;
 
-			} else if (browser.contains("BS")) {
+			}  else if (browser.equalsIgnoreCase("chrome2")) {
+
+				capabilities = DesiredCapabilities.chrome();
+				capabilities.setCapability("platform", "WINDOWS");
+				capabilities.setBrowserName("chrome");
+
+				ChromeOptions options = new ChromeOptions();
+
+//				if (getCONFIG().getProperty("chached_chrome").equalsIgnoreCase("yes")) {
+//					// options.addArguments("user-data-dir="+System.getProperty("user.home")+"/AppData/Local/Google/Chrome/User
+//					// Data/");
+//					// TODO: move this path to path file or configuration file as google cashed
+//					// profile path
+//					options.addArguments("user-data-dir=" + System.getProperty("user.home")
+//							+ "/AppData/Local/Google/Chrome SxS/User Data/");
+//					options.addArguments("detach=true");
+//				}
+
+				capabilities.setCapability(ChromeOptions.CAPABILITY, options);
+				// TODO: move this path to path file or configuration
+				System.setProperty("webdriver.chrome.driver", "C:/softwares/servers/chromedriver2.exe");
+				driver = new ChromeDriver(capabilities);
+				//SelTestCase.setDriver(driver);
+				return driver;
+
+			}else if (browser.contains("BS")) {
 				// Configuration format: BS-iPhone 7 Plus-Safari
 				String mDevice = browser.split("-")[1];
 				String mBrowser = browser.split("-")[1];
@@ -172,7 +200,7 @@ public class Common extends SelTestCase {
 				capabilities.setCapability(ChromeOptions.CAPABILITY, options);
 
 				System.setProperty("webdriver.chrome.driver", "C:/softwares/servers/chromedriver.exe");
-				SelTestCase.setDriver(new ChromeDriver(capabilities));
+				return new ChromeDriver(capabilities);
 
 			} else {
 				logs.debug(LoggingMsg.INVALID_BROWSER_ERROR_MSG);
@@ -187,6 +215,7 @@ public class Common extends SelTestCase {
 			throw new Exception(t);
 		}
 		getCurrentFunctionName(false);
+		return null;
 	}
 
 	/**
@@ -211,6 +240,7 @@ public class Common extends SelTestCase {
 			// logs.debug("Removing all control cookies");
 			// getDriver().manage().deleteAllCookies();
 		}
+		logs.debug("Test URL: " + getCONFIG().getProperty("testSiteName"));
 		getDriver().get(getCONFIG().getProperty("testSiteName"));
 		getDriver().manage().window().maximize();
 
@@ -239,11 +269,13 @@ public class Common extends SelTestCase {
 	 *
 	 */
 	public static void testPass() {
+		logs.debug("Test Status: PASS");
 		setTestStatus("Pass");
 
 	}
 
 	public static void testIgnored() {
+		logs.debug("Test Status: Ignored");
 		setTestStatus("Ignore");
 
 	}
@@ -254,6 +286,7 @@ public class Common extends SelTestCase {
 	 *
 	 */
 	public static void testFail(Throwable t, String screenShotName) {
+		logs.debug("Test Status: Failed");
 		setTestStatus("Fail: " + t.getMessage());
 		setScreenShotName(screenShotName + "_" + counter + ".jpg");
 		ReportUtil.addError(getTestStatus(), getScreenShotName());
@@ -269,17 +302,6 @@ public class Common extends SelTestCase {
 		setTestStatus("Fail: " + temp);
 		setScreenShotName(screenShotName + ".jpg");
 		ReportUtil.addError(getTestStatus(), getScreenShotName());
-	}
-
-	/**
-	 * Take the screen of the browser that will appear in Automation Report
-	 * 
-	 * @throws Exception
-	 *
-	 */
-	public static void takeScreenShot() {
-		captureScreen(subDir + "/" + getScreenShotName());
-		ReportUtil.takeScreenShot(getDriver(), subDir + "/" + getScreenShotName());
 	}
 
 	/**
@@ -398,6 +420,7 @@ public class Common extends SelTestCase {
 
 			addresses.put((String) data[row][addresscode], address);
 		}
+		logs.debug(Arrays.asList(addresses)+"");
 		return addresses;
 	}// readAddresses
 
@@ -429,6 +452,7 @@ public class Common extends SelTestCase {
 
 			products.put((String) data[row][name], product);
 		}
+		logs.debug(Arrays.asList(products)+"");
 		return products;
 	}// readProducts
 
@@ -453,7 +477,7 @@ public class Common extends SelTestCase {
 		  }
 		]
 		 */
-		LinkedHashMap<String, Object> products = new LinkedHashMap<>();
+		LinkedHashMap<String, Object> cards = new LinkedHashMap<>();
 		Object[][] data = TestUtilities.getData(SheetVariables.cards, 1);
 
 		// data map
@@ -466,16 +490,17 @@ public class Common extends SelTestCase {
 		int CVCC = 5;
 
 		for (int row = 1; row < data.length; row++) {
-			LinkedHashMap<String, Object> product = new LinkedHashMap<>();
-			product.put((String) data[header][number], data[row][number]);
-			product.put((String) data[header][name], data[row][name]);
-			product.put((String) data[header][expireMonth], data[row][expireMonth]);
-			product.put((String) data[header][expireYear], data[row][expireYear]);
-			product.put((String) data[header][CVCC], data[row][CVCC]);
+			LinkedHashMap<String, Object> cardOb = new LinkedHashMap<>();
+			cardOb.put((String) data[header][number], data[row][number]);
+			cardOb.put((String) data[header][name], data[row][name]);
+			cardOb.put((String) data[header][expireMonth], data[row][expireMonth]);
+			cardOb.put((String) data[header][expireYear], data[row][expireYear]);
+			cardOb.put((String) data[header][CVCC], data[row][CVCC]);
 
-			products.put((String) data[row][card], product);
+			cards.put((String) data[row][card], cardOb);
 		}
-		return products;
+		logs.debug(Arrays.asList(cards)+"");
+		return cards;
 	}// read payments
 
 	public static LinkedHashMap<String, Object> readTestparams(String testSheet, int caseIndex) {
@@ -555,7 +580,13 @@ public class Common extends SelTestCase {
 
 			users.put((String) data[row][mail], user);
 		}
+		logs.debug(Arrays.asList(users)+"");
 		return users;
 	}//read users
+
+	public static void takeScreenShot() {
+		// TODO Auto-generated method stub
+		ReportUtil.takeScreenShot(getDriver());
+	}
 
 }// class

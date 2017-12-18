@@ -11,7 +11,8 @@ import com.generic.setup.SelTestCase;
 import com.generic.util.SelectorUtil;
 
 public class PLP extends SelTestCase {
-    private static List<String> subStrArr = new ArrayList<String>();
+    //TODO: removing the list declaration to maintain concurrency 
+	private static List<String> subStrArr = new ArrayList<String>();
     private static List<String> valuesArr = new ArrayList<String>();
     private static int numberOfProductsShownInHeader;
     
@@ -21,6 +22,8 @@ public class PLP extends SelTestCase {
 
     public static void selectSortOptions1ByValue(String sortByTxt) throws Exception {
 		getCurrentFunctionName(true);
+		List<String> subStrArr = new ArrayList<String>();
+		List<String> valuesArr = new ArrayList<String>();
 		logs.debug(MessageFormat.format(LoggingMsg.SELECTING_ELEMENT_VALUE,PLPSelectors.sortOptions1, sortByTxt));
 		subStrArr.add(PLPSelectors.sortOptions1);
 		valuesArr.add(sortByTxt);
@@ -32,6 +35,8 @@ public class PLP extends SelTestCase {
     
     public static String getSortOptions2SelectedValue() throws Exception {
 		getCurrentFunctionName(true);
+		List<String> subStrArr = new ArrayList<String>();
+		List<String> valuesArr = new ArrayList<String>();
 		logs.debug(MessageFormat.format(LoggingMsg.GET_ELEMENT_BY_LOCATOR,PLPSelectors.sortOptions2));
 		subStrArr.add(PLPSelectors.sortOptions2);
 		valuesArr.add("");
@@ -44,6 +49,8 @@ public class PLP extends SelTestCase {
     
     public static void selectSortOptions2ByValue(String sortByTxt) throws Exception {
 		getCurrentFunctionName(true);
+		List<String> subStrArr = new ArrayList<String>();
+		List<String> valuesArr = new ArrayList<String>();
 		logs.debug(MessageFormat.format(LoggingMsg.SELECTING_ELEMENT_VALUE,PLPSelectors.sortOptions2, sortByTxt));
 		subStrArr.add(PLPSelectors.sortOptions2);
 		valuesArr.add(sortByTxt);
@@ -55,6 +62,8 @@ public class PLP extends SelTestCase {
     
     public static String getSortOptions1SelectedValue() throws Exception {
 		getCurrentFunctionName(true);
+		List<String> subStrArr = new ArrayList<String>();
+		List<String> valuesArr = new ArrayList<String>();
 		logs.debug(MessageFormat.format(LoggingMsg.GET_ELEMENT_BY_LOCATOR,PLPSelectors.sortOptions1));
 		subStrArr.add(PLPSelectors.sortOptions1);
 		valuesArr.add("");
@@ -67,6 +76,8 @@ public class PLP extends SelTestCase {
     
     public static String getNumberOfproducts() throws Exception {
 		getCurrentFunctionName(true);
+		List<String> subStrArr = new ArrayList<String>();
+		List<String> valuesArr = new ArrayList<String>();
 		subStrArr.add(PLPSelectors.numberOfProductsFound);
 		valuesArr.add("");
 		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
@@ -79,6 +90,8 @@ public class PLP extends SelTestCase {
     
     public static boolean doesDisplayedProductsNumTextMatchesProductsDisplayed () throws Exception {
     	getCurrentFunctionName(true);
+    	List<String> subStrArr = new ArrayList<String>();
+		List<String> valuesArr = new ArrayList<String>();
 		subStrArr.add(PLPSelectors.productItem);
 		valuesArr.add("noClick");
 		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
@@ -95,6 +108,8 @@ public class PLP extends SelTestCase {
     
     public static void clickFindStores() throws Exception {
 		getCurrentFunctionName(true);
+		List<String> subStrArr = new ArrayList<String>();
+		List<String> valuesArr = new ArrayList<String>();
 		logs.debug(MessageFormat.format(LoggingMsg.CLICKING_SEL, PLPSelectors.findStoresNearMeAjax));
 		subStrArr.add(PLPSelectors.findStoresNearMeAjax);
 		valuesArr.add("");
@@ -104,6 +119,8 @@ public class PLP extends SelTestCase {
     
     public static void typeUserLocationStore(String storeName) throws Exception {
 		getCurrentFunctionName(true);
+		List<String> subStrArr = new ArrayList<String>();
+		List<String> valuesArr = new ArrayList<String>();
 		logs.debug(MessageFormat.format(LoggingMsg.TYPING_ELEMENT_VALUE, PLPSelectors.userLocationStore, storeName));
 		subStrArr.add(PLPSelectors.userLocationStore);
 		valuesArr.add(storeName + ",pressEnter");
@@ -113,6 +130,8 @@ public class PLP extends SelTestCase {
     
     public static void clickAddToCart(String productCodePost) throws Exception {
 		getCurrentFunctionName(true);
+		List<String> subStrArr = new ArrayList<String>();
+		List<String> valuesArr = new ArrayList<String>();
 		logs.debug(MessageFormat.format(LoggingMsg.CLICKING_SEL, PLPSelectors.addToCartForm + productCodePost));
 		subStrArr.add(PLPSelectors.addToCartForm + productCodePost);
 		valuesArr.add("");
@@ -122,6 +141,8 @@ public class PLP extends SelTestCase {
     
     public static void clickProductPickupInStoreButton(String productCodePost) throws Exception {
 		getCurrentFunctionName(true);
+		List<String> subStrArr = new ArrayList<String>();
+		List<String> valuesArr = new ArrayList<String>();
 		logs.debug(MessageFormat.format(LoggingMsg.CLICKING_SEL, PLPSelectors.productPickupInStoreButton + productCodePost));
 		subStrArr.add(PLPSelectors.productPickupInStoreButton + productCodePost);
 		valuesArr.add("");

@@ -25,6 +25,7 @@ import org.openqa.selenium.remote.Augmenter;
 import com.generic.setup.EnvironmentFiles;
 import com.generic.setup.LoggingMsg;
 import com.generic.setup.SelTestCase;
+import com.sun.xml.internal.ws.api.config.management.policy.ManagementAssertion.Setting;
 
 
 /**
@@ -158,7 +159,7 @@ public final class ReportUtil extends SelTestCase {
     /**
      * End suite.
      */
-    public static void endSuite() {
+    public static void endSuite(int passedNumber, int failedNumber, int skippedNumber) {
         FileWriter fstream = null;
         BufferedWriter out = null;
 
@@ -166,6 +167,31 @@ public final class ReportUtil extends SelTestCase {
             fstream = new FileWriter(indexResultFilename, true);
             out = new BufferedWriter(fstream);
             out.write("</table>\n");
+            out.write("<script type=\"text/javascript\" src=\"https://www.gstatic.com/charts/loader.js\"></script>\r\n" + 
+            		"\r\n" + 
+            		"<script type=\"text/javascript\">\r\n" + 
+            		"// Load google charts\r\n" + 
+            		"google.charts.load('current', {'packages':['corechart']});\r\n" + 
+            		"google.charts.setOnLoadCallback(drawChart);\r\n" + 
+            		"\r\n" + 
+            		"// Draw the chart and set the chart values\r\n" + 
+            		"function drawChart() {\r\n" + 
+            		"  var data = google.visualization.arrayToDataTable([\r\n" + 
+            		"  ['Executed Test Cases', 'Results'],\r\n" + 
+            		"  ['Passed', "+ passedNumber+"],\r\n" + 
+            		"  ['Failed', "+ failedNumber+"],\r\n" + 
+            		"  ['Skipped', "+ skippedNumber+"]\r\n" + 
+            		"]);\r\n" + 
+            		"\r\n" + 
+            		"  // Optional; add a title and set the width and height of the chart\r\n" + 
+            		"  var options = {'title':'Execution Results', 'width':450, 'height':300, \r\n" + 
+            		"			colors: ['#BCE954', '#e95353', '#e9d753']};\r\n" + 
+            		"\r\n" + 
+            		"  // Display the chart inside the <div> element with id=\"piechart\"\r\n" + 
+            		"  var chart = new google.visualization.PieChart(document.getElementById('piechart'));\r\n" + 
+            		"  chart.draw(data, options);\r\n" + 
+            		"}\r\n" + 
+            		"</script>");
             out.write("</body>\n");
             out.write("</html>");
             out.close();
@@ -179,8 +205,7 @@ public final class ReportUtil extends SelTestCase {
 
     }
     
-    public static void copyLogsFile(File dest)
-    		throws IOException {
+    public static void copyLogsFile(File dest) throws IOException {
     	String logs_dir = EnvironmentFiles.getLogFilePath();
 		String log_file = EnvironmentFiles.getLogFileName();
 		String log_abs_path = logs_dir + "/" + log_file;
@@ -201,7 +226,7 @@ public final class ReportUtil extends SelTestCase {
      *        the status
      */
     public static void addTestCase(final String testCaseName, final String testCaseDesc, final String testCaseStartTime,
-    							   final String testCaseEndTime, final String status) {
+    							   final String testCaseEndTime, final String status, final String logFileName, final String browser) {
     	SelTestCase.getCurrentFunctionName(true);
     	logs.debug(MessageFormat.format(LoggingMsg.ADDING_STATUS_CASE_TO_REPORT, status));
         newTest = true;
@@ -209,29 +234,14 @@ public final class ReportUtil extends SelTestCase {
         BufferedWriter out = null;
         
         
-        File log_file = new File(currentDir + "//" + currentSuiteName + "_TC_log"
-                + tcid + "_" + testCaseName.replaceAll(" ", "_") + ".html");
-        try {
-			copyLogsFile(log_file);
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-        
+        File log_file = new File(currentDir + "//" + logFileName);
         try {
             newTest = true;
-            if (status.startsWith("Fail")) {
-            	failedTestCaseFileName = currentDir + "//" + currentSuiteName + "_TC" + tcid + "_" + testCaseName.replaceAll(" ", "_") + ".html"; 
-                File f = new File(failedTestCaseFileName);
-                f.createNewFile();
-                fstream = new FileWriter(failedTestCaseFileName);
-                ReportResultsWriter.generateFailedTestCasePage(testCaseName, fstream);
-            }
-
             fstream = new FileWriter(indexResultFilename, true);
             out = new BufferedWriter(fstream);
 
-            ReportResultsWriter.addExecutedTestCaseToIndex(testCaseName, testCaseDesc, testCaseStartTime, testCaseEndTime, status, out);
+            ReportResultsWriter.addExecutedTestCaseToIndex(testCaseName, testCaseDesc, 
+            		testCaseStartTime, testCaseEndTime, status, out, logFileName, browser);
 
             tcid++;
             scriptNumber++;
@@ -330,18 +340,14 @@ public final class ReportUtil extends SelTestCase {
      * @param filePath
      *        the file path
      */
-    public static void takeScreenShot(WebDriver driver, String filePath) {
-        File scrFile;
-        if (SelTestCase.getCONFIG().getProperty("browser").contains("android")) {
-            Augmenter augmenter = new Augmenter();
-             TakesScreenshot ts = (TakesScreenshot) augmenter.augment(driver);
-             scrFile = ts.getScreenshotAs(OutputType.FILE);
-        } else {
-            scrFile = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
-        }
-
+    public static void takeScreenShot(WebDriver driver) {
+        File srcFile;
+        srcFile = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
         try {
-            FileUtils.copyFile(scrFile, new File(filePath));
+        	String screenshotName = "sc_"+ now(time_date_formatScreenshot)+ ".png";
+        	String DestFile = EnvironmentFiles.getLogFilePath()+"/"+screenshotName;
+            FileUtils.copyFile(srcFile, new File(DestFile));
+            logs.debug("Case screenshot:<br><img src=" + screenshotName+">");
         } catch (IOException e) {
             e.printStackTrace();
         }

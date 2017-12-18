@@ -11,10 +11,6 @@ import com.generic.setup.SelTestCase;
 import com.generic.util.SelectorUtil;
 
 public class Registration extends SelTestCase {
-    private static List<String> subStrArr = new ArrayList<String>();
-    private static List<String> valuesArr = new ArrayList<String>();
-
-    
     public static class keys{
     	public static final String title = "title";
     	public static final String name = "name";
@@ -28,6 +24,8 @@ public class Registration extends SelTestCase {
     
     public static void selectTitle(String title) throws Exception {
 		getCurrentFunctionName(true);
+		List<String> subStrArr = new ArrayList<String>();
+		List<String> valuesArr = new ArrayList<String>();
 		logs.debug(MessageFormat.format(LoggingMsg.SELECTING_ELEMENT_VALUE,"title ", title));
 		subStrArr.add(RegistrationSelectors.title);
 		valuesArr.add(title);
@@ -37,6 +35,8 @@ public class Registration extends SelTestCase {
 
 	public static void typeFirstName(String firstName) throws Exception {
 		getCurrentFunctionName(true);
+		List<String> subStrArr = new ArrayList<String>();
+		List<String> valuesArr = new ArrayList<String>();
 		logs.debug(MessageFormat.format(LoggingMsg.TYPING_ELEMENT_VALUE,"firstname ", firstName));
 		subStrArr.add(RegistrationSelectors.firstName);
 		valuesArr.add(firstName);
@@ -47,6 +47,8 @@ public class Registration extends SelTestCase {
 	
 	public static void typeLastName(String lastName) throws Exception {
 		getCurrentFunctionName(true);
+		List<String> subStrArr = new ArrayList<String>();
+		List<String> valuesArr = new ArrayList<String>();
 		logs.debug(MessageFormat.format(LoggingMsg.TYPING_ELEMENT_VALUE,"lastname ", lastName));
 		subStrArr.add(RegistrationSelectors.lastName);
 		valuesArr.add(lastName);
@@ -57,6 +59,8 @@ public class Registration extends SelTestCase {
 	
 	public static void typeEmailAddress(String address) throws Exception {
 		getCurrentFunctionName(true);
+		List<String> subStrArr = new ArrayList<String>();
+		List<String> valuesArr = new ArrayList<String>();
 		logs.debug(MessageFormat.format(LoggingMsg.TYPING_ELEMENT_VALUE,"emailAddress ", address));
 		subStrArr.add(RegistrationSelectors.emailAddress);
 		valuesArr.add(address);
@@ -67,6 +71,8 @@ public class Registration extends SelTestCase {
 	
 	public static void typePassword(String password) throws Exception {
 		getCurrentFunctionName(true);
+		List<String> subStrArr = new ArrayList<String>();
+		List<String> valuesArr = new ArrayList<String>();
 		logs.debug(MessageFormat.format(LoggingMsg.TYPING_ELEMENT_VALUE,"password ", password));
 		subStrArr.add(RegistrationSelectors.password);
 		valuesArr.add(password);
@@ -76,6 +82,8 @@ public class Registration extends SelTestCase {
 	
 	public static void typeConfirmPassword(String confPassword) throws Exception {
 		getCurrentFunctionName(true);
+		List<String> subStrArr = new ArrayList<String>();
+		List<String> valuesArr = new ArrayList<String>();
 		logs.debug(MessageFormat.format(LoggingMsg.TYPING_ELEMENT_VALUE,"confirmPassword", confPassword));
 		subStrArr.add(RegistrationSelectors.confirmPassword);
 		valuesArr.add(confPassword);
@@ -85,6 +93,8 @@ public class Registration extends SelTestCase {
 
 	public static void checkConsentGiven1(boolean isConsentGiven1Checked) throws Exception {
 		getCurrentFunctionName(true);
+		List<String> subStrArr = new ArrayList<String>();
+		List<String> valuesArr = new ArrayList<String>();
 		logs.debug(MessageFormat.format(LoggingMsg.CHECKBOX_SEL_VAL,"isConsentGiven1Checked", isConsentGiven1Checked));
 		subStrArr.add(RegistrationSelectors.consentGiven);
 		valuesArr.add(String.valueOf(isConsentGiven1Checked));
@@ -95,6 +105,8 @@ public class Registration extends SelTestCase {
 	
 	public static void clickRegistration() throws Exception {
 		getCurrentFunctionName(true);
+		List<String> subStrArr = new ArrayList<String>();
+		List<String> valuesArr = new ArrayList<String>();
 		logs.debug(MessageFormat.format(LoggingMsg.CLICKING_SEL,"Register btn"));
 		subStrArr.add(RegistrationSelectors.register);
 		valuesArr.add("");

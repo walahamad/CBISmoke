@@ -23,7 +23,7 @@ public class LoggingMsg {
 	public static String TERMINATING_SESSION = "Terminating session";
 	public static String WRITING_TO_SEL = "{0}Writing {1} to: {2}";
 	public static String CLICK_ELEMENT_SEL = "Click element {0}";
-	public static String BROWSER_NAME = "the browser is: {0}";
+	public static String BROWSER_NAME = "Case Browser: {0}";
 	public static String INVALID_BROWSER_ERROR_MSG = "Invalid browser. Check the config file";
 	public static String TEST_ENVIRONMENT_NAME = "Test environment is: {0}";
 	public static String ENABLE_BLOCK_FOR_FUTURE = "Please enable this block for future";
@@ -38,8 +38,8 @@ public class LoggingMsg {
 	public static String NOT_RUNNING_PROCESS_ERROR_MSG = "{0} process is not running. Starting Scripts execution on {1}";
 	public static String NULL_FILE_PATH_ERROR_MSG = "The {0} file path is null, then generating it";
 	public static String READING_DATA_FROM_SHEET = "reading data from sheet: {0} row: {1}";
-	public static String STARTING_THREAD = ">>> Starting {0} >>>";
-	public static String ENDING_THREAD = "<<< Ending {0} <<<";
+	public static String STARTING_THREAD = "<font color='green'>>>> Starting {0} >>> </font>";
+	public static String ENDING_THREAD = "<font color='green'><<< Ending {0} <<< </font>";
 	public static String COUNTER_VALUE = "The value of the counter is: {0}";
 	public static String EXECUTE_TEST_CASE = "Execute test case {0}";
 	public static String DEBUGGING_TEXT = "{0}";
@@ -66,7 +66,7 @@ public class LoggingMsg {
 	public static String TRY_ALT_WAY_MSG = "Try alternative way: ";
 	public static String SELECTED_INDEX = "selected index is {0}";
 	public static String ERROR_VERIFICATION_SEL_MSG = "The {0} is found and has correct error msg";
-	public static String FORMATTED_ERROR_MSG = "ERROR >>>-->>> : {0}";
+	public static String FORMATTED_ERROR_MSG = "<font color='red'>ERROR >>>-->>> </font>: {0}";
 	public static String FINISHED_ACTION_ON_ELEMENTS_MSG = "<font color='blue'>FINISHED</font> doing correct action on elements: {0}";
 	public static String SENDING_MAIL_TO = "sending mail to: {0}";
 	public static String SUCCESSFULLY_SENT_MSG = "message sent successfully...";
@@ -78,7 +78,7 @@ public class LoggingMsg {
 	public static String FAILED_REPORT_FOLDERS_CREATION_MSG = "FAILS TO CREATE REPORT FOLDERS";
 	public static String TEST_NAME = "Test Name -- {0}";
 	public static String ADDED_ENVIRONMENT_NAME = "adding environment: {0}";
-	public static String TCID_MSG = "tempTCID is: {0}";
+	public static String REPORT_TCID_MSG = "Report test case ID is: {0}";
 	public static String SHEET_NAME_LOCATION_TO_WRITE = "writing data to sheet: {0} location: {1}/{2} data: {3}";
 	public static String NOT_EXIST_MSG = "{0} is not exist";
 	public static String COL_INDEX_MSG = "Col index is: {0}";
