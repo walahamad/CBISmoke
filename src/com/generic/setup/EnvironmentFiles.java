@@ -11,6 +11,7 @@ public class EnvironmentFiles {
 	public static String dataSheetPath = System.getProperty("user.dir")+"//src//com//generic//config//DataSheet.xlsx";
 	//log file path,getter and setter
 	public static String logFilePath = null;
+	public static String logReportPath = null;
 	//log file name,getter and setter
 	public static String logFileName = "Application.log";
 	//reports folder directory path,getter and setter
@@ -44,6 +45,15 @@ public class EnvironmentFiles {
 			return logFilePath;
 		}
 	}
+	
+	public static String getLogReportPath() {
+		if(Strings.isNullOrEmpty(logReportPath)) {
+			SelTestCase.logs.debug(MessageFormat.format(LoggingMsg.NULL_FILE_PATH_ERROR_MSG, "reportLogs"));
+			return System.getProperty("user.dir") + "/" + SelTestCase.getCONFIG().getProperty("logs")+ "/" + "reportLogs";
+		} else {
+			return logReportPath;
+		}
+	}
 
 	public static void setLogFilePath(String logFilePath) {
 		EnvironmentFiles.logFilePath = logFilePath;
@@ -66,7 +76,9 @@ public class EnvironmentFiles {
 	public static String getReportsFolderPath() {
 		if(Strings.isNullOrEmpty(reportsFolderPath)) {
 			SelTestCase.logs.debug(MessageFormat.format(LoggingMsg.NULL_FILE_PATH_ERROR_MSG, "Reports"));
-			return System.getProperty("user.dir") + "/" + SelTestCase.getCONFIG().getProperty("reportFolderName");
+			String reportDir = System.getProperty("user.dir") + "/" + SelTestCase.getCONFIG().getProperty("reportFolderName");
+			SelTestCase.logs.debug("the report path is : " + reportDir);
+			return reportDir;
 		} else {
 			return reportsFolderPath;
 		}

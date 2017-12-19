@@ -112,8 +112,8 @@ public class SelectorUtil extends SelTestCase {
 	    	    	 selectorType = (!(foundElements.isEmpty()) ? subStr:selectorType);
 	    	     }
 				 
-				 if (foundElements.isEmpty())
-	    	     {
+				 if (foundElements.isEmpty() && subStr.contains(":eq") )
+	    	     { //TODO: check the if (eq) case 
 					//logs.debug(MessageFormat.format(LoggingMsg.IN_SELECTOR_TYPE, "xpath"));
 	    	    	 foundElements = htmlDoc.select(subStr);
 	    	    	 //nth-child() is the Selenium equivalent to JSoup eq()

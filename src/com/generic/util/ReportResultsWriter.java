@@ -34,41 +34,34 @@ public class ReportResultsWriter {
 	 * @throws NumberFormatException
 	 */
 	public static void addExecutedTestCaseToIndex(final String testCaseName, final String testCaseDesc,
-			final String testCaseStartTime, final String testCaseEndTime, final String status, BufferedWriter out)
+			final String testCaseStartTime, final String testCaseEndTime, final String status, BufferedWriter out, String logFileName, String browser)
 					throws IOException, NumberFormatException {
 		out.write("<tr>\n");
 		out.write("<td width=5% align= center ><FONT COLOR=#153E7E FACE= Arial  SIZE=2><b>" + ReportUtil.scriptNumber + "</b></td>\n");
-		if (status.equalsIgnoreCase("Pass") || status.equalsIgnoreCase("Ignore") ) {
-		    out.write("<td width=10% align= center ><FONT COLOR=#153E7E FACE= Arial  SIZE=2><b>" + testCaseName + "</b></td>\n");
-		} else if (status.startsWith("Fail")) {
-		    out.write("<td width=10% align= center ><FONT COLOR=#153E7E FACE= Arial  SIZE=2><b><a href=" + ReportUtil.currentSuiteName + "_TC" 
-		    		  + ReportUtil.tcid + "_" + testCaseName.replaceAll(" ", "_") + ".html>" + testCaseName + "</a></b></td>\n");
-		}
-
-		out.write("<td width=35% align= center><FONT COLOR=#153E7E FACE=Arial SIZE=2><b>" + testCaseDesc + "</b></td>\n");
-		if (status.startsWith("Pass")) {
+		
+		out.write("<td width=15% align= center ><FONT COLOR=#153E7E FACE= Arial  SIZE=2><b><a href="
+		        +logFileName+">"+ testCaseName + "</a></b></td>\n");
+		out.write("<td width=30% align= center><FONT COLOR=#153E7E FACE=Arial SIZE=2><b>" + testCaseDesc + "</b></td>\n");
+		if (status.toLowerCase().startsWith("pass")) {
 		    out.write("<td width=10% align= center  bgcolor=#BCE954><FONT COLOR=#153E7E FACE=Arial SIZE=2><b>" + status + "</b></td>\n");
-		} else if (status.startsWith("Fail")) {
-		    out.write("<td width=10% align= center  bgcolor=Red><FONT COLOR=#153E7E FACE=Arial SIZE=2><b>" + status.substring(0,4) + "</b></td>\n");
-		} else if (status.startsWith("Ignore")) {
+		} else if (status.toLowerCase().startsWith("fail")) {
+		    out.write("<td width=10% align= center  bgcolor=#e95353><FONT COLOR=#153E7E FACE=Arial SIZE=2><b>" + status.substring(0,4) + "</b></td>\n");
+		} else if (status.toLowerCase().startsWith("ignore")) {
 			out.write("<td width=10% align= center  bgcolor=Yellow><FONT COLOR=#153E7E FACE=Arial SIZE=2><b>" + status.substring(0,6) + "</b></td>\n");
+		}else
+		{
+			out.write("<td width=10% align= center  bgcolor=#b3b3cc><FONT COLOR=#153E7E FACE=Arial SIZE=2><b>" + status + "</b></td>\n");
 		}
 		
-		out.write("<td width=20% align= center ><FONT COLOR=#153E7E FACE= Arial  SIZE=2><b>" + testCaseStartTime + "</b></td>\n");
-		out.write("<td width=20% align= center ><FONT COLOR=#153E7E FACE= Arial  SIZE=2><b>" + testCaseEndTime + "</b></td>\n");
+		out.write("<td width=10% align= center ><FONT COLOR=#153E7E FACE= Arial  SIZE=2><b>" + testCaseStartTime + "</b></td>\n");
+		out.write("<td width=10% align= center ><FONT COLOR=#153E7E FACE= Arial  SIZE=2><b>" + testCaseEndTime + "</b></td>\n");
 
 
 		out.write(calculateTestCaseRunTime(testCaseStartTime, testCaseEndTime));
-		
-		
-		out.write("<td width=10% align= center ><FONT COLOR=#153E7E FACE= Arial  SIZE=2><b><a href="
-		        + ReportUtil.currentSuiteName + "_TC_log" + ReportUtil.tcid + "_" + testCaseName.replaceAll(" ", "_")
-		        + ".html>" + testCaseName + "</a></b></td>\n");
+		out.write("<td width=10% align= center ><FONT COLOR=#153E7E FACE= Arial  SIZE=2><b>" + browser + "</b></td>\n");
 		
 		out.write("</tr>\n");
-		ReportAnalyzer.analyze(ReportUtil.currentDir + "//" + ReportUtil.currentSuiteName + "_TC_log"
-				+ ReportUtil.tcid + "_" + testCaseName.replaceAll(" ", "_")
-				+ ".html", Float.parseFloat(SelTestCase.getCONFIG().getProperty("report_analysis_period")));
+		ReportAnalyzer.analyze(ReportUtil.currentDir + "//" + logFileName, Float.parseFloat(SelTestCase.getCONFIG().getProperty("report_analysis_period")));
 	}
 	
 	/***
@@ -223,7 +216,7 @@ public class ReportResultsWriter {
                 	str=str.replaceAll("~BrowserType~", rBrowserType);
                 	
                 } if (str.contains("~StartTime~")) {
-                	str=str.replaceAll("~StartTime~", testStartTime);
+                	str=str.replaceAll("~StartTime~", SelTestCase.rUNDATE);
                 	
                 } if (str.contains("~SuiteName~")) {
                 	str=str.replaceAll("~SuiteName~", testSuiteName);

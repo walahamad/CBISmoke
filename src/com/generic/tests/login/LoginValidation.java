@@ -20,6 +20,7 @@ import com.generic.setup.SelTestCase;
 import com.generic.setup.SheetVariables;
 import com.generic.util.SelectorUtil;
 import com.generic.util.TestUtilities;
+import com.generic.util.Xls_Reader;
 import com.generic.util.RandomUtilities;
 import com.generic.util.ReportUtil;
 
@@ -141,7 +142,7 @@ public class LoginValidation extends SelTestCase {
 			setTestCaseDescription(getTestCaseDescription());
 			logs.debug(MessageFormat.format(LoggingMsg.DEBUGGING_TEXT, t.getMessage()));
 			t.printStackTrace();
-			String temp = getTestCaseId();
+			String temp = getTestCaseReportName();
 			Common.testFail(t, temp);
 			Common.takeScreenShot();
 			Assert.assertTrue(t.getMessage(), false);

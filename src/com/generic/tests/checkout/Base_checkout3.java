@@ -1,8 +1,14 @@
 package com.generic.tests.checkout;
 
+import static org.testng.Assert.assertEquals;
 import java.text.MessageFormat;
 import java.util.Arrays;
+import java.util.Collection;
+
+import org.openqa.selenium.By;
 import org.testng.Assert;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -20,11 +26,14 @@ import com.generic.setup.LoggingMsg;
 import com.generic.setup.SelTestCase;
 import com.generic.setup.SheetVariables;
 import com.generic.util.TestUtilities;
+import com.generic.util.Xls_Reader;
 import com.generic.util.RandomUtilities;
 import com.generic.util.ReportUtil;
 import com.generic.util.SASLogger;
 
-public class Base_checkout extends SelTestCase {
+import org.testng.Reporter;
+
+public class Base_checkout3 extends SelTestCase {
 
 	private static LinkedHashMap<String, Object> addresses = null ;
 	private static  LinkedHashMap<String, Object> invintory = null ;
@@ -37,7 +46,7 @@ public class Base_checkout extends SelTestCase {
 	public static final String loggedInUser = "loggedin";
 
 	// used sheet in test
-	public static final String testDataSheet = SheetVariables.checkoutSheet;
+	public static final String testDataSheet = "CheckOutRegressionTMP_1";
 
 	private int caseIndexInDatasheet;
 	private String email;
@@ -53,6 +62,12 @@ public class Base_checkout extends SelTestCase {
 	
 	@BeforeTest
 	public static void initialSetUp(XmlTest test) throws Exception {
+		//testCaseRepotId = SheetVariables.checkoutTestCaseId;
+//		logs = new SASLogger(test.getName());
+//    	setlogger(logs);
+//    	
+//    	logs.debug(test.getName());
+		
 		Testlogs.set(new SASLogger(test.getName()+test.getIndex()));
 		testObject = test;
 		addresses = Common.readAddresses();
@@ -67,6 +82,21 @@ public class Base_checkout extends SelTestCase {
 		Testlogs.get().debug(Arrays.deepToString(data).replace("\n", "--"));
 		return data;
 	}
+	
+	//@Test(dataProvider = "Orders", threadPoolSize = 5, invocationCount = 1,  timeOut = 10000)
+	public void dummy(String caseId, String runTest, String desc, String proprties, String products,
+			String shippingMethod, String payment, String shippingAddress, String billingAddress, String coupon,
+			String email, String orderId, String orderTotal, String orderSubtotal, String orderTax,
+			String orderShipping) throws InterruptedException
+	{
+		//Reporter.log(Thread.currentThread().getId()+"", true);
+		Testlogs.get().debug("sdfsdfsdfsdfsdfsdfsdfsdfsdfsdfd");
+		System.out.println( Thread.currentThread().getId()+ "");
+		Testlogs.get().debug("=============>"+SelTestCase.getDriver().toString());
+		getDriver().findElement(By.id("test_loginAndCheckoutButton_$2")).click();
+		Thread.sleep(10000);
+		Common.testPass();
+	}
 
 	@SuppressWarnings("unchecked") // avoid warning from linked hashmap
 	@Test(dataProvider = "Orders")
@@ -74,17 +104,20 @@ public class Base_checkout extends SelTestCase {
 			String shippingMethod, String payment, String shippingAddress, String billingAddress, String coupon,
 			String email, String orderId, String orderTotal, String orderSubtotal, String orderTax,
 			String orderShipping) throws Exception {
-		
 		//Important to add this for logging/reporting 
 		setTestCaseReportName("Checkout Case");
-		//Testlogs.get().debug("Case Browser: "  + testObject.getParameter("browserName") );
+		Testlogs.get().debug("Case Browser: "  + testObject.getParameter("browserName") );
 		logCaseDetailds(MessageFormat.format(LoggingMsg.CHECKOUTDESC, testDataSheet + "." + caseId,
 				this.getClass().getCanonicalName(), desc, proprties.replace("\n", "<br>- "), payment, shippingMethod));
+		Testlogs.get().debug("in basecheckout" );
+		
 		
 		this.email = email;
 		caseIndexInDatasheet = getDatatable().getCellRowNum(testDataSheet, CheckOut.keys.caseId, caseId);
+//		initializeTestResults(testDataSheet, caseIndexInDatasheet);
 		
 		try {
+//			Thread.sleep(10000);
 			if (proprties.contains(loggedInUser)) {
 				LinkedHashMap<String, Object> userdetails = (LinkedHashMap<String, Object>) users.get(this.email);
 				Testlogs.get().debug(this.email );
@@ -97,6 +130,7 @@ public class Base_checkout extends SelTestCase {
 				// take any user as template
 				LinkedHashMap<String, Object> userdetails = (LinkedHashMap<String, Object>) users.entrySet().iterator()
 						.next().getValue();
+				// userdetails.put(Registration.keys.email,email); //TODO: remove it
 
 				boolean acceptRegTerm = true;
 
@@ -113,7 +147,6 @@ public class Base_checkout extends SelTestCase {
 				PDP.addProductsToCart((String) productDetails.get(PDP.keys.url),
 						(String) productDetails.get(PDP.keys.color), (String) productDetails.get(PDP.keys.size),
 						(String) productDetails.get(PDP.keys.qty));
-				Thread.sleep(1000);
 				ReportUtil.takeScreenShot(getDriver());
 			}
 
@@ -250,7 +283,9 @@ public class Base_checkout extends SelTestCase {
 				CheckOut.guestCheckout.fillPreRegFormAndClickRegBtn("1234567", false);
 			}
 
+			//writeResultsToTestDatasheet(testDataSheet, caseIndexInDatasheet);
 			Common.testPass();
+			ReportUtil.takeScreenShot(getDriver());
 		} catch (Throwable t) {
 			setTestCaseDescription(getTestCaseDescription());
 			Testlogs.get().debug(MessageFormat.format(LoggingMsg.DEBUGGING_TEXT, t.getMessage()));
@@ -261,4 +296,30 @@ public class Base_checkout extends SelTestCase {
 			Assert.assertTrue(false, t.getMessage());
 		} // catch
 	}// test
+
+//	private void writeResultsToTestDatasheet(String sheetName, int row) {
+//		getCurrentFunctionName(true);
+//		getDatatable().setCellData(sheetName, CheckOut.orderConfirmation.keys.orderId, row, orderId);
+//		if (email.contains("random")) {
+//			getDatatable().setCellData(sheetName, CheckOut.orderConfirmation.keys.email, row, email);
+//		}
+//		getDatatable().setCellData(sheetName, CheckOut.orderConfirmation.keys.orderSubtotal, row, orderSubtotal);
+//		getDatatable().setCellData(sheetName, CheckOut.orderConfirmation.keys.orderShipping, row, orderShipping);
+//		getDatatable().setCellData(sheetName, CheckOut.orderConfirmation.keys.orderTax, row, orderTax);
+//		getDatatable().setCellData(sheetName, CheckOut.orderConfirmation.keys.orderTotal, row, orderTotal);
+//		getCurrentFunctionName(false);
+//	}// write results
+//
+//	private void initializeTestResults(String sheetName, int row) {
+//		getCurrentFunctionName(true);
+//		getDatatable().setCellData(sheetName, CheckOut.orderConfirmation.keys.orderId, row, "");
+//		if (email.contains("random")) {
+//			getDatatable().setCellData(sheetName, CheckOut.orderConfirmation.keys.email, row, "");
+//		}
+//		getDatatable().setCellData(sheetName, CheckOut.orderConfirmation.keys.orderShipping, row, "");
+//		getDatatable().setCellData(sheetName, CheckOut.orderConfirmation.keys.orderSubtotal, row, "");
+//		getDatatable().setCellData(sheetName, CheckOut.orderConfirmation.keys.orderTax, row, "");
+//		getDatatable().setCellData(sheetName, CheckOut.orderConfirmation.keys.orderTotal, row, "");
+//		getCurrentFunctionName(false);
+//	}// initializeTestResults
 }// class

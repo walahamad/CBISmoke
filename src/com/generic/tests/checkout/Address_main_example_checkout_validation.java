@@ -7,8 +7,10 @@ import java.util.LinkedHashMap;
 import java.util.List;
 
 import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.openqa.selenium.By;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Test;
+
 import com.generic.setup.Common;
 import com.generic.setup.LoggingMsg;
 import com.generic.setup.SelTestCase;
@@ -30,6 +32,16 @@ public class Address_main_example_checkout_validation extends SelTestCase {
 		TestUtilities.configInitialization();
 	}
 
+	
+	public void dummy() throws InterruptedException
+	{
+		//Reporter.log(Thread.currentThread().getId()+"", true);
+		logs.debug("sdfsdfsdfsdfsdfsdfsdfsdfsdfsdfd");
+		logs.debug("=============>"+getDriver().toString());
+		getDriver().findElement(By.id("test_loginAndCheckoutButton_$2")).click();
+		Thread.sleep(10000);
+		Common.testPass();
+	}
 	
 	@Test
 	public void signIn() throws Exception {
@@ -60,7 +72,7 @@ public class Address_main_example_checkout_validation extends SelTestCase {
 			setTestCaseDescription(getTestCaseDescription());
 			logs.debug(MessageFormat.format(LoggingMsg.DEBUGGING_TEXT, t.getMessage()));
 			t.printStackTrace();
-			String temp = getTestCaseId();
+			String temp = getTestCaseReportName();
 			Common.testFail(t, temp);
 			Common.takeScreenShot();
 			Assert.assertTrue(t.getMessage(), false);

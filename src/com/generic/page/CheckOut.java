@@ -10,8 +10,6 @@ import com.generic.setup.SelTestCase;
 import com.generic.util.SelectorUtil;
 
 public class CheckOut extends SelTestCase {
-	private static List<String> subStrArr = new ArrayList<String>();
-	private static List<String> valuesArr = new ArrayList<String>();
 
 	public static class keys {
 		public static final String caseId = "caseId";
@@ -19,6 +17,8 @@ public class CheckOut extends SelTestCase {
 
 	public static class guestCheckout {
 		public static void typeGuestMail(String email) throws Exception {
+			List<String> subStrArr = new ArrayList<String>();
+			List<String> valuesArr = new ArrayList<String>();
 			getCurrentFunctionName(true);
 			logs.debug(MessageFormat.format(LoggingMsg.TYPING_ELEMENT_VALUE, "guest mail", email));
 			subStrArr.add(CheckOutSelectors.guestMail);
@@ -30,6 +30,8 @@ public class CheckOut extends SelTestCase {
 
 		public static void typeGuestConfMail(String email) throws Exception {
 			getCurrentFunctionName(true);
+			List<String> subStrArr = new ArrayList<String>();
+			List<String> valuesArr = new ArrayList<String>();
 			logs.debug(MessageFormat.format(LoggingMsg.TYPING_ELEMENT_VALUE, "guest confirmation mail", email));
 			subStrArr.add(CheckOutSelectors.guestConfirmationMail);
 			valuesArr.add(email);
@@ -40,6 +42,8 @@ public class CheckOut extends SelTestCase {
 
 		public static void clickCheckoutAsGuest() throws Exception {
 			getCurrentFunctionName(true);
+			List<String> subStrArr = new ArrayList<String>();
+			List<String> valuesArr = new ArrayList<String>();
 			logs.debug(MessageFormat.format(LoggingMsg.CLICK_ELEMENT_SEL, "checkout as guest button"));
 			subStrArr.add(CheckOutSelectors.guestCheckoutButton);
 			valuesArr.add("");
@@ -68,6 +72,8 @@ public class CheckOut extends SelTestCase {
 
 		public static void clickCreatAnaccount() throws Exception {
 			getCurrentFunctionName(true);
+			List<String> subStrArr = new ArrayList<String>();
+			List<String> valuesArr = new ArrayList<String>();
 			logs.debug(MessageFormat.format(LoggingMsg.CLICK_ELEMENT_SEL, "guest creat an account"));
 			subStrArr.add(CheckOutSelectors.guestCreateAccButton);
 			valuesArr.add("");
@@ -78,6 +84,8 @@ public class CheckOut extends SelTestCase {
 
 		public static void checkNewsletterOptin(boolean newsLetterOptin) throws Exception {
 			getCurrentFunctionName(true);
+			List<String> subStrArr = new ArrayList<String>();
+			List<String> valuesArr = new ArrayList<String>();
 			logs.debug(MessageFormat.format(LoggingMsg.CHECKBOX_SEL_VAL, "News Letter Optin", newsLetterOptin));
 			subStrArr.add(CheckOutSelectors.guestCreateAccOtpin);
 			valuesArr.add(String.valueOf(newsLetterOptin));
@@ -88,6 +96,8 @@ public class CheckOut extends SelTestCase {
 
 		public static void typeGuestPassConfPreForm(String password) throws Exception {
 			getCurrentFunctionName(true);
+			List<String> subStrArr = new ArrayList<String>();
+			List<String> valuesArr = new ArrayList<String>();
 			logs.debug(MessageFormat.format(LoggingMsg.TYPING_ELEMENT_VALUE, "password confirmation ", password));
 			subStrArr.add(CheckOutSelectors.guestCreateAccCPwd);
 			valuesArr.add(password);
@@ -98,6 +108,8 @@ public class CheckOut extends SelTestCase {
 
 		public static void typeGuestPassPreForm(String password) throws Exception {
 			getCurrentFunctionName(true);
+			List<String> subStrArr = new ArrayList<String>();
+			List<String> valuesArr = new ArrayList<String>();
 			logs.debug(MessageFormat.format(LoggingMsg.TYPING_ELEMENT_VALUE, "password ", password));
 			subStrArr.add(CheckOutSelectors.guestCreateAccPwd);
 			valuesArr.add(password);
@@ -126,6 +138,8 @@ public class CheckOut extends SelTestCase {
 
 		public static void selectCountery(String countery) throws Exception {
 			getCurrentFunctionName(true);
+			List<String> subStrArr = new ArrayList<String>();
+			List<String> valuesArr = new ArrayList<String>();
 			logs.debug(MessageFormat.format(LoggingMsg.SELECTING_ELEMENT_VALUE, "Countery ", countery));
 			subStrArr.add(CheckOutSelectors.countery);
 			valuesArr.add(countery);
@@ -136,6 +150,8 @@ public class CheckOut extends SelTestCase {
 
 		public static void selectTitle(String title) throws Exception {
 			getCurrentFunctionName(true);
+			List<String> subStrArr = new ArrayList<String>();
+			List<String> valuesArr = new ArrayList<String>();
 			logs.debug(MessageFormat.format(LoggingMsg.SELECTING_ELEMENT_VALUE, "title ", title));
 			subStrArr.add(CheckOutSelectors.title);
 			valuesArr.add(title);
@@ -145,6 +161,8 @@ public class CheckOut extends SelTestCase {
 
 		public static void typeFirstName(String firstName) throws Exception {
 			getCurrentFunctionName(true);
+			List<String> subStrArr = new ArrayList<String>();
+			List<String> valuesArr = new ArrayList<String>();
 			logs.debug(MessageFormat.format(LoggingMsg.TYPING_ELEMENT_VALUE, "firstname ", firstName));
 			subStrArr.add(CheckOutSelectors.firstName);
 			valuesArr.add(firstName);
@@ -155,6 +173,8 @@ public class CheckOut extends SelTestCase {
 
 		public static void typeAddress(String address) throws Exception {
 			getCurrentFunctionName(true);
+			List<String> subStrArr = new ArrayList<String>();
+			List<String> valuesArr = new ArrayList<String>();
 			logs.debug(MessageFormat.format(LoggingMsg.TYPING_ELEMENT_VALUE, "address ", address));
 			subStrArr.add(CheckOutSelectors.address);
 			valuesArr.add(address);
@@ -165,6 +185,8 @@ public class CheckOut extends SelTestCase {
 
 		public static void typeLastName(String lastName) throws Exception {
 			getCurrentFunctionName(true);
+			List<String> subStrArr = new ArrayList<String>();
+			List<String> valuesArr = new ArrayList<String>();
 			logs.debug(MessageFormat.format(LoggingMsg.TYPING_ELEMENT_VALUE, "lastname ", lastName));
 			subStrArr.add(CheckOutSelectors.lastName);
 			valuesArr.add(lastName);
@@ -175,6 +197,8 @@ public class CheckOut extends SelTestCase {
 
 		public static void typeCity(String city) throws Exception {
 			getCurrentFunctionName(true);
+			List<String> subStrArr = new ArrayList<String>();
+			List<String> valuesArr = new ArrayList<String>();
 			logs.debug(MessageFormat.format(LoggingMsg.TYPING_ELEMENT_VALUE, "city ", city));
 			subStrArr.add(CheckOutSelectors.city);
 			valuesArr.add(city);
@@ -185,6 +209,8 @@ public class CheckOut extends SelTestCase {
 
 		public static void typePostalCode(String postal) throws Exception {
 			getCurrentFunctionName(true);
+			List<String> subStrArr = new ArrayList<String>();
+			List<String> valuesArr = new ArrayList<String>();
 			logs.debug(MessageFormat.format(LoggingMsg.TYPING_ELEMENT_VALUE, "postal", postal));
 			subStrArr.add(CheckOutSelectors.postal);
 			valuesArr.add(postal);
@@ -195,6 +221,8 @@ public class CheckOut extends SelTestCase {
 
 		public static void typePhone(String phone) throws Exception {
 			getCurrentFunctionName(true);
+			List<String> subStrArr = new ArrayList<String>();
+			List<String> valuesArr = new ArrayList<String>();
 			logs.debug(MessageFormat.format(LoggingMsg.TYPING_ELEMENT_VALUE, "phone", phone));
 			subStrArr.add(CheckOutSelectors.phone);
 			valuesArr.add(phone);
@@ -205,6 +233,8 @@ public class CheckOut extends SelTestCase {
 
 		public static void checkSaveAddress(boolean check) throws Exception {
 			getCurrentFunctionName(true);
+			List<String> subStrArr = new ArrayList<String>();
+			List<String> valuesArr = new ArrayList<String>();
 			logs.debug(LoggingMsg.SAVING_ADDRESS);
 			subStrArr.add(CheckOutSelectors.CheckSaveAddress);
 			valuesArr.add(String.valueOf(check));
@@ -215,6 +245,8 @@ public class CheckOut extends SelTestCase {
 
 		public static String getOrderTotal() throws Exception {
 			getCurrentFunctionName(true);
+			List<String> subStrArr = new ArrayList<String>();
+			List<String> valuesArr = new ArrayList<String>();
 			subStrArr.add(CheckOutSelectors.orderTotalShippingAddress);
 			valuesArr.add("");
 			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
@@ -225,6 +257,8 @@ public class CheckOut extends SelTestCase {
 
 		public static String getOrdersubTotal() throws Exception {
 			getCurrentFunctionName(true);
+			List<String> subStrArr = new ArrayList<String>();
+			List<String> valuesArr = new ArrayList<String>();
 			subStrArr.add(CheckOutSelectors.orderSubTotalShippingAddress);
 			valuesArr.add("");
 			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
@@ -235,6 +269,8 @@ public class CheckOut extends SelTestCase {
 
 		public static void clickNext() throws Exception {
 			getCurrentFunctionName(true);
+			List<String> subStrArr = new ArrayList<String>();
+			List<String> valuesArr = new ArrayList<String>();
 			logs.debug(LoggingMsg.CLICKING_SHIPPING_NEXT_BTN);
 			subStrArr.add(CheckOutSelectors.submitShippingAddressBtn);
 			valuesArr.add("");
@@ -319,6 +355,8 @@ public class CheckOut extends SelTestCase {
 		}
 
 		private static void selectFirstAddress() throws Exception {
+			List<String> subStrArr = new ArrayList<String>();
+			List<String> valuesArr = new ArrayList<String>();
 			getCurrentFunctionName(true);
 			subStrArr.add(CheckOutSelectors.selectFirstAddress);
 			valuesArr.add("");
@@ -328,6 +366,8 @@ public class CheckOut extends SelTestCase {
 		}
 
 		private static void clickOnAddressBook() throws Exception {
+			List<String> subStrArr = new ArrayList<String>();
+			List<String> valuesArr = new ArrayList<String>();
 			getCurrentFunctionName(true);
 			subStrArr.add(CheckOutSelectors.addressBookBtn);
 			valuesArr.add("");
@@ -350,6 +390,8 @@ public class CheckOut extends SelTestCase {
 
 		private static void selectShippingMethod(String shippingMethod) throws Exception {
 			getCurrentFunctionName(true);
+			List<String> subStrArr = new ArrayList<String>();
+			List<String> valuesArr = new ArrayList<String>();
 			subStrArr.add(CheckOutSelectors.shippingMethod);
 			valuesArr.add(shippingMethod);
 			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
@@ -359,6 +401,8 @@ public class CheckOut extends SelTestCase {
 
 		private static void clickNext() throws Exception {
 			getCurrentFunctionName(true);
+			List<String> subStrArr = new ArrayList<String>();
+			List<String> valuesArr = new ArrayList<String>();
 			subStrArr.add(CheckOutSelectors.submitShippingMethodbtn);
 			valuesArr.add("");
 			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
@@ -367,6 +411,8 @@ public class CheckOut extends SelTestCase {
 
 		public static String getOrderTotal() throws Exception {
 			getCurrentFunctionName(true);
+			List<String> subStrArr = new ArrayList<String>();
+			List<String> valuesArr = new ArrayList<String>();
 			subStrArr.add(CheckOutSelectors.orderTotalShippingMethod);
 			valuesArr.add("");
 			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
@@ -377,6 +423,8 @@ public class CheckOut extends SelTestCase {
 
 		public static String getOrderSubTotal() throws Exception {
 			getCurrentFunctionName(true);
+			List<String> subStrArr = new ArrayList<String>();
+			List<String> valuesArr = new ArrayList<String>();
 			subStrArr.add(CheckOutSelectors.orderSubTotalShippingMethod);
 			valuesArr.add("");
 			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
@@ -493,6 +541,8 @@ public class CheckOut extends SelTestCase {
 
 		private static void pickFirstpaymentsaved() throws Exception {
 			getCurrentFunctionName(true);
+			List<String> subStrArr = new ArrayList<String>();
+			List<String> valuesArr = new ArrayList<String>();
 			subStrArr.add(CheckOutSelectors.selectFirstPayment);
 			valuesArr.add("");
 			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
@@ -502,6 +552,8 @@ public class CheckOut extends SelTestCase {
 
 		private static void clickOnUseedSavedCard() throws Exception {
 			getCurrentFunctionName(true);
+			List<String> subStrArr = new ArrayList<String>();
+			List<String> valuesArr = new ArrayList<String>();
 			subStrArr.add(CheckOutSelectors.savedPaymentBtn);
 			valuesArr.add("");
 			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
@@ -510,6 +562,8 @@ public class CheckOut extends SelTestCase {
 
 		public static void clickNext() throws Exception {
 			getCurrentFunctionName(true);
+			List<String> subStrArr = new ArrayList<String>();
+			List<String> valuesArr = new ArrayList<String>();
 			subStrArr.add(CheckOutSelectors.submitPayment);
 			valuesArr.add(String.valueOf(""));
 			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
@@ -518,6 +572,8 @@ public class CheckOut extends SelTestCase {
 
 		public static void checkBillingAddressSameshipping(boolean billSameShip) throws Exception {
 			getCurrentFunctionName(true);
+			List<String> subStrArr = new ArrayList<String>();
+			List<String> valuesArr = new ArrayList<String>();
 			subStrArr.add(CheckOutSelectors.checkSame);
 			valuesArr.add(String.valueOf(billSameShip));
 			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
@@ -527,6 +583,8 @@ public class CheckOut extends SelTestCase {
 
 		private static void savePaymentMethod(boolean savePayment) throws Exception {
 			getCurrentFunctionName(true);
+			List<String> subStrArr = new ArrayList<String>();
+			List<String> valuesArr = new ArrayList<String>();
 			subStrArr.add(CheckOutSelectors.checkSavePayment);
 			valuesArr.add(String.valueOf(savePayment));
 			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
@@ -535,6 +593,8 @@ public class CheckOut extends SelTestCase {
 
 		public static void typeCVC(String CVC) throws Exception {
 			getCurrentFunctionName(true);
+			List<String> subStrArr = new ArrayList<String>();
+			List<String> valuesArr = new ArrayList<String>();
 			subStrArr.add(CheckOutSelectors.CVC);
 			valuesArr.add(CVC);
 			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
@@ -544,6 +604,8 @@ public class CheckOut extends SelTestCase {
 
 		public static void typeExpireYear(String expireYear) throws Exception {
 			getCurrentFunctionName(true);
+			List<String> subStrArr = new ArrayList<String>();
+			List<String> valuesArr = new ArrayList<String>();
 			subStrArr.add(CheckOutSelectors.expireYear);
 			valuesArr.add(expireYear);
 			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
@@ -553,6 +615,8 @@ public class CheckOut extends SelTestCase {
 
 		public static void selectExpireDay(String expireDay) throws Exception {
 			getCurrentFunctionName(true);
+			List<String> subStrArr = new ArrayList<String>();
+			List<String> valuesArr = new ArrayList<String>();
 			subStrArr.add(CheckOutSelectors.expireDay);
 			valuesArr.add(expireDay);
 			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
@@ -562,6 +626,8 @@ public class CheckOut extends SelTestCase {
 
 		public static void typeCardNumber(String cardNumber) throws Exception {
 			getCurrentFunctionName(true);
+			List<String> subStrArr = new ArrayList<String>();
+			List<String> valuesArr = new ArrayList<String>();
 			subStrArr.add(CheckOutSelectors.cardNumber);
 			valuesArr.add(cardNumber);
 			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
@@ -571,6 +637,8 @@ public class CheckOut extends SelTestCase {
 
 		public static void typeCardholder(String cardHolder) throws Exception {
 			getCurrentFunctionName(true);
+			List<String> subStrArr = new ArrayList<String>();
+			List<String> valuesArr = new ArrayList<String>();
 			subStrArr.add(CheckOutSelectors.cardHolder);
 			valuesArr.add(cardHolder);
 			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
@@ -580,6 +648,8 @@ public class CheckOut extends SelTestCase {
 
 		public static void selectCardType(String cardtype) throws Exception {
 			getCurrentFunctionName(true);
+			List<String> subStrArr = new ArrayList<String>();
+			List<String> valuesArr = new ArrayList<String>();
 			subStrArr.add(CheckOutSelectors.cardtype);
 			valuesArr.add(cardtype);
 			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
@@ -589,6 +659,8 @@ public class CheckOut extends SelTestCase {
 
 		public static String getOrderTotal() throws Exception {
 			getCurrentFunctionName(true);
+			List<String> subStrArr = new ArrayList<String>();
+			List<String> valuesArr = new ArrayList<String>();
 			subStrArr.add(CheckOutSelectors.orderTotalPymentInfo);
 			valuesArr.add("");
 			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
@@ -599,6 +671,8 @@ public class CheckOut extends SelTestCase {
 
 		public static String getOrdershipping() throws Exception {
 			getCurrentFunctionName(true);
+			List<String> subStrArr = new ArrayList<String>();
+			List<String> valuesArr = new ArrayList<String>();
 			subStrArr.add(CheckOutSelectors.orderShippingPymentInfo);
 			valuesArr.add("");
 			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
@@ -609,6 +683,8 @@ public class CheckOut extends SelTestCase {
 
 		public static String getOrderSubTotal() throws Exception {
 			getCurrentFunctionName(true);
+			List<String> subStrArr = new ArrayList<String>();
+			List<String> valuesArr = new ArrayList<String>();
 			subStrArr.add(CheckOutSelectors.orderSubtotalPymentInfo);
 			valuesArr.add("");
 			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
@@ -622,6 +698,8 @@ public class CheckOut extends SelTestCase {
 
 		public static String getSubtotal() throws Exception {
 			getCurrentFunctionName(true);
+			List<String> subStrArr = new ArrayList<String>();
+			List<String> valuesArr = new ArrayList<String>();
 			subStrArr.add(CheckOutSelectors.summaryTotal);
 			valuesArr.add("");
 			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
@@ -633,6 +711,8 @@ public class CheckOut extends SelTestCase {
 
 		public static String shippingCost() throws Exception {
 			getCurrentFunctionName(true);
+			List<String> subStrArr = new ArrayList<String>();
+			List<String> valuesArr = new ArrayList<String>();
 			subStrArr.add(CheckOutSelectors.shippingCost);
 			valuesArr.add("");
 			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
@@ -644,6 +724,8 @@ public class CheckOut extends SelTestCase {
 
 		public static void acceptTerms(boolean acceptTerm) throws Exception {
 			getCurrentFunctionName(true);
+			List<String> subStrArr = new ArrayList<String>();
+			List<String> valuesArr = new ArrayList<String>();
 			subStrArr.add(CheckOutSelectors.acceptTerm);
 			valuesArr.add(String.valueOf(acceptTerm));
 			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
@@ -653,6 +735,8 @@ public class CheckOut extends SelTestCase {
 
 		public static void placeOrder() throws Exception {
 			getCurrentFunctionName(true);
+			List<String> subStrArr = new ArrayList<String>();
+			List<String> valuesArr = new ArrayList<String>();
 			subStrArr.add(CheckOutSelectors.placeOrderBtn);
 			valuesArr.add("");
 			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
@@ -662,6 +746,8 @@ public class CheckOut extends SelTestCase {
 
 		public static String getOrderTotal() throws Exception {
 			getCurrentFunctionName(true);
+			List<String> subStrArr = new ArrayList<String>();
+			List<String> valuesArr = new ArrayList<String>();
 			subStrArr.add(CheckOutSelectors.orderTotalOrderSumary);
 			valuesArr.add("");
 			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
@@ -672,6 +758,8 @@ public class CheckOut extends SelTestCase {
 
 		public static String gettotal() throws Exception {
 			getCurrentFunctionName(true);
+			List<String> subStrArr = new ArrayList<String>();
+			List<String> valuesArr = new ArrayList<String>();
 			subStrArr.add(CheckOutSelectors.orderTotalOrderSumary);
 			valuesArr.add("");
 			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
@@ -698,6 +786,8 @@ public class CheckOut extends SelTestCase {
 
 		public static String getOrderId() throws Exception {
 			getCurrentFunctionName(true);
+			List<String> subStrArr = new ArrayList<String>();
+			List<String> valuesArr = new ArrayList<String>();
 			subStrArr.add(CheckOutSelectors.orderId);
 			valuesArr.add("");
 			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
@@ -709,6 +799,8 @@ public class CheckOut extends SelTestCase {
 
 		public static String getOrderTotal() throws Exception {
 			getCurrentFunctionName(true);
+			List<String> subStrArr = new ArrayList<String>();
+			List<String> valuesArr = new ArrayList<String>();
 			subStrArr.add(CheckOutSelectors.orderConfirmationTotal);
 			valuesArr.add("");
 			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
@@ -720,6 +812,8 @@ public class CheckOut extends SelTestCase {
 
 		public static String getSubTotal() throws Exception {
 			getCurrentFunctionName(true);
+			List<String> subStrArr = new ArrayList<String>();
+			List<String> valuesArr = new ArrayList<String>();
 			subStrArr.add(CheckOutSelectors.orderConfirmationSubtotal);
 			valuesArr.add("");
 			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
@@ -731,6 +825,8 @@ public class CheckOut extends SelTestCase {
 
 		public static String getShippingCost() throws Exception {
 			getCurrentFunctionName(true);
+			List<String> subStrArr = new ArrayList<String>();
+			List<String> valuesArr = new ArrayList<String>();
 			subStrArr.add(CheckOutSelectors.orderConfirmationShippingCost);
 			valuesArr.add("");
 			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
@@ -742,6 +838,8 @@ public class CheckOut extends SelTestCase {
 
 		public static String getBillingAddrerss() throws Exception {
 			getCurrentFunctionName(true);
+			List<String> subStrArr = new ArrayList<String>();
+			List<String> valuesArr = new ArrayList<String>();
 			subStrArr.add(CheckOutSelectors.orderconfirmationBillingAddress);
 			valuesArr.add("");
 			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
@@ -753,6 +851,8 @@ public class CheckOut extends SelTestCase {
 
 		public static String getShippingAddrerss() throws Exception {
 			getCurrentFunctionName(true);
+			List<String> subStrArr = new ArrayList<String>();
+			List<String> valuesArr = new ArrayList<String>();
 			subStrArr.add(CheckOutSelectors.orderconfirmationshippingAddress);
 			valuesArr.add("");
 			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);

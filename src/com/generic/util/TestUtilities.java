@@ -33,28 +33,29 @@ public class TestUtilities extends SelTestCase {
             try {
                 if(runReportSetup) {
                     logs.debug(LoggingMsg.EXECUTE_REPORT_SETUP);
-                    setBrowserName(getCONFIG().getProperty("browser"));
+                    
+                    //TODO: to delete 
+                    //setBrowserName(getCONFIG().getProperty("browser"));
                     try {
-                        mainDir = EnvironmentFiles.getReportsFolderPath();
+                        mainReportDir = EnvironmentFiles.getReportsFolderPath();
                         
-                        logs.debug(MessageFormat.format(LoggingMsg.REPORT_DIR, mainDir));
+                        logs.debug(MessageFormat.format(LoggingMsg.REPORT_DIR, mainReportDir));
                         
-                        File dir1 = new File(mainDir);
+                        File dir1 = new File(mainReportDir);
                         boolean exists = dir1.exists();
                         if (!exists) {
                             logs.debug(MessageFormat.format(LoggingMsg.MAIN_DIR_EXISTANCE_MSG, "does not", exists));
                             dir1.mkdir(); // creating main directory if it doesn't exist
-                            createSubDir();
                         } else {
                             logs.debug(MessageFormat.format(LoggingMsg.MAIN_DIR_EXISTANCE_MSG, "does", exists));
-                            createSubDir();
                         }
+                        createRunReportDirectory();
                     } catch (Throwable t) {
                         t.printStackTrace();
                         logs.debug(LoggingMsg.FAILED_REPORT_FOLDERS_CREATION_MSG);
                     }
 
-                    ReportUtil.startTesting(subDir + "//index.html",
+                    ReportUtil.startTesting(reportDirectory + "//index.html",
                             ReportUtil.now(SelTestCase.time_date_format),
                             SelTestCase.getCONFIG().getProperty("testEnvironment"),
                             getBrowserName() );
@@ -69,13 +70,13 @@ public class TestUtilities extends SelTestCase {
 
         }
 
-     public static void createSubDir() {
+     public static void createRunReportDirectory() {
          Date dNow = new Date( );
          SimpleDateFormat ft = new SimpleDateFormat (SelTestCase.reportFolderDateStampFormat);
          Calendar cal = Calendar.getInstance();
          SimpleDateFormat sdf = new SimpleDateFormat(SelTestCase.reportFolderTimeStampFormat);
-    	 subDir = mainDir + "/" + testCaseRepotId + ft.format(dNow) + "-Time-" + sdf.format(cal.getTime());
-         new File(subDir).mkdir();
+    	 reportDirectory = mainReportDir + "/" +"AutoRep_" +ft.format(dNow) + sdf.format(cal.getTime());
+         new File(reportDirectory).mkdir();
 
      }
 
@@ -158,29 +159,22 @@ public class TestUtilities extends SelTestCase {
     public static void configInitialization() throws Exception{
     	getCurrentFunctionName(true);
     	
-    	if (initializeConfigurations)
-    	{
-    		initializeConfigurations = false;
-    		logs.debug(MessageFormat.format(LoggingMsg.DEBUGGING_TEXT, "Execute initialize function"));
-    		// config property file
-    		setCONFIG(new Properties());
-    		FileInputStream fn =new FileInputStream(EnvironmentFiles.getConfigFilePath());
-    		getCONFIG().load(fn);
-    		logs.debug(MessageFormat.format(LoggingMsg.ADDED_ENVIRONMENT_NAME, getCONFIG().getProperty("testEnvironment")));
-    		getCONFIG().setProperty("testSiteName", "https://"+getCONFIG().getProperty("testEnvironment")+"/"+getCONFIG().getProperty("testSiteName"));
-    		//getCONFIG().setProperty("logout", "https://"+getCONFIG().getProperty("testEnvironment")+"."+getCONFIG().getProperty("logout"));
-    		
-    		logs.debug(MessageFormat.format(LoggingMsg.TCID_MSG, testCaseRepotId));
-    		
-    		setDatatable(new Xls_Reader(EnvironmentFiles.getDataSheetPath()));
-    		
-    		//set the max wait time
-    		setWaitTime(Integer.parseInt(getCONFIG().getProperty("waitTime")));
-    	}
-    	else
-    	{
-    		logs.debug("TestConfigurations Already Initialized");
-    	}
+		logs.debug(MessageFormat.format(LoggingMsg.DEBUGGING_TEXT, "Execute initialize function"));
+		// config property file
+		setCONFIG(new Properties());
+		FileInputStream fn =new FileInputStream(EnvironmentFiles.getConfigFilePath());
+		getCONFIG().load(fn);
+		logs.debug(MessageFormat.format(LoggingMsg.ADDED_ENVIRONMENT_NAME, getCONFIG().getProperty("testEnvironment")));
+		getCONFIG().setProperty("testSiteName", "https://"+getCONFIG().getProperty("testEnvironment")+"/"+getCONFIG().getProperty("testSiteName"));
+		//getCONFIG().setProperty("logout", "https://"+getCONFIG().getProperty("testEnvironment")+"."+getCONFIG().getProperty("logout"));
+		
+		logs.debug(MessageFormat.format(LoggingMsg.REPORT_TCID_MSG, testCaseRepotId));
+		
+		setDatatable(new Xls_Reader(EnvironmentFiles.getDataSheetPath()));
+		
+		//set the max wait time
+		setWaitTime(Integer.parseInt(getCONFIG().getProperty("waitTime")));
+		
         getCurrentFunctionName(false);
     }
 

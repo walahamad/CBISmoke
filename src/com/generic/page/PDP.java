@@ -8,8 +8,6 @@ import com.generic.setup.SelTestCase;
 import com.generic.util.SelectorUtil;
 
 public class PDP extends SelTestCase {
-	private static List<String> subStrArr = new ArrayList<String>();
-	private static List<String> valuesArr = new ArrayList<String>();
 	
 	public static class keys
 	{
@@ -36,6 +34,8 @@ public class PDP extends SelTestCase {
 
 	public static String getPrice() throws Exception {
 		getCurrentFunctionName(true);
+		List<String> subStrArr = new ArrayList<String>();
+		List<String> valuesArr = new ArrayList<String>();
 		subStrArr.add(PDPSelectors.price);
 		valuesArr.add("");
 		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
@@ -45,6 +45,8 @@ public class PDP extends SelTestCase {
 
 	private static void clickcheckoutBtnCartPopup() throws Exception {
 		getCurrentFunctionName(true);
+		List<String> subStrArr = new ArrayList<String>();
+		List<String> valuesArr = new ArrayList<String>();
 		subStrArr.add(PDPSelectors.cart_popup);
 		valuesArr.add("");
 		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
@@ -53,6 +55,8 @@ public class PDP extends SelTestCase {
 
 	private static void clickAddToCartBtn() throws Exception {
 		getCurrentFunctionName(true);
+		List<String> subStrArr = new ArrayList<String>();
+		List<String> valuesArr = new ArrayList<String>();
 		subStrArr.add(PDPSelectors.addToCartBtn);
 		valuesArr.add("");
 		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
@@ -61,6 +65,8 @@ public class PDP extends SelTestCase {
 
 	private static void defineQty(String qty) throws Exception {
 		getCurrentFunctionName(true);
+		List<String> subStrArr = new ArrayList<String>();
+		List<String> valuesArr = new ArrayList<String>();
 		subStrArr.add(PDPSelectors.qty);
 		valuesArr.add(qty);
 		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
@@ -69,6 +75,8 @@ public class PDP extends SelTestCase {
 
 	private static void selectsize(String size) throws Exception {
 		getCurrentFunctionName(true);
+		List<String> subStrArr = new ArrayList<String>();
+		List<String> valuesArr = new ArrayList<String>();
 		subStrArr.add(PDPSelectors.size);
 		valuesArr.add(size);
 		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
@@ -77,6 +85,8 @@ public class PDP extends SelTestCase {
 
 	private static void selectcolor(String color) throws Exception {
 		getCurrentFunctionName(true);
+		List<String> subStrArr = new ArrayList<String>();
+		List<String> valuesArr = new ArrayList<String>();
 		subStrArr.add(color);
 		valuesArr.add("");
 		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
