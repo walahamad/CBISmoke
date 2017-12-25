@@ -11,8 +11,7 @@ import com.generic.setup.SelTestCase;
 import com.generic.util.SelectorUtil;
 
 public class PLP extends SelTestCase {
-    //TODO: removing the list declaration to maintain concurrency 
-	private static List<String> subStrArr = new ArrayList<String>();
+    private static List<String> subStrArr = new ArrayList<String>();
     private static List<String> valuesArr = new ArrayList<String>();
     private static int numberOfProductsShownInHeader;
     
@@ -172,9 +171,9 @@ public class PLP extends SelTestCase {
     
     public static String getPLPProductPriceFromCartBag() throws Exception {
 		getCurrentFunctionName(true);
-		logs.debug(MessageFormat.format(LoggingMsg.GETTING_SEL, PLPSelectors.addToCartItemPrice));
-		subStrArr.add(PLPSelectors.addToCartItemPrice);
-		valuesArr.add("noClick");
+		logs.debug(MessageFormat.format(LoggingMsg.GETTING_SEL, PLPSelectors.addToCartItemPriceParent + ":"+ PLPSelectors.addToCartItemPrice));
+		subStrArr.add(PLPSelectors.addToCartItemPriceParent);
+		valuesArr.add("child,"+PLPSelectors.addToCartItemPrice);
 		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
 		getCurrentFunctionName(false);
 		return SelectorUtil.textValue;
@@ -358,40 +357,40 @@ public class PLP extends SelTestCase {
     
     public static void clickPickUpInStoreAddToBagBtn(String productCodePost) throws Exception {
 		getCurrentFunctionName(true);
-		String pickupModalAddToBagBtn = MessageFormat.format(PLPSelectors.pickupAddToBagBtn, productCodePost);
-		logs.debug(MessageFormat.format(LoggingMsg.CLICKING_SEL, pickupModalAddToBagBtn));
+		String pickupModalAddToBagBtn = MessageFormat.format(PLPSelectors.pickupInStoreProduct, productCodePost);
+		logs.debug(MessageFormat.format(LoggingMsg.CLICKING_SEL, pickupModalAddToBagBtn + ":"+ PLPSelectors.pickupAddToBagBtn));
 		subStrArr.add(pickupModalAddToBagBtn);
-		valuesArr.add("");
+		valuesArr.add("child,"+PLPSelectors.pickupAddToBagBtn);
 		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
 		getCurrentFunctionName(false);
 	}
     
     public static void clickPickUpInStoreDecreaseQtyBtn(String productCodePost) throws Exception {
 		getCurrentFunctionName(true);
-		String pickupModalDecreaseQtyBtn = MessageFormat.format(PLPSelectors.pickupDecreaseQtyBtn, productCodePost);
-		logs.debug(MessageFormat.format(LoggingMsg.CLICKING_SEL, pickupModalDecreaseQtyBtn));
+		String pickupModalDecreaseQtyBtn = MessageFormat.format(PLPSelectors.pickupInStoreProduct, productCodePost);
+		logs.debug(MessageFormat.format(LoggingMsg.CLICKING_SEL, pickupModalDecreaseQtyBtn + ":" + PLPSelectors.pickupDecreaseQtyBtn));
 		subStrArr.add(pickupModalDecreaseQtyBtn);
-		valuesArr.add("");
+		valuesArr.add("child,"+PLPSelectors.pickupDecreaseQtyBtn);
 		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
 		getCurrentFunctionName(false);
 	}
     
     public static void clickPickUpInStoreIncreaseQtyBtn(String productCodePost) throws Exception {
 		getCurrentFunctionName(true);
-		String pickupModalIncreaseQtyBtn = MessageFormat.format(PLPSelectors.pickupIncreaseQtyBtn, productCodePost);
-		logs.debug(MessageFormat.format(LoggingMsg.CLICKING_SEL, pickupModalIncreaseQtyBtn));
+		String pickupModalIncreaseQtyBtn = MessageFormat.format(PLPSelectors.pickupInStoreProduct, productCodePost);
+		logs.debug(MessageFormat.format(LoggingMsg.CLICKING_SEL, pickupModalIncreaseQtyBtn + ":" + PLPSelectors.pickupIncreaseQtyBtn));
 		subStrArr.add(pickupModalIncreaseQtyBtn);
-		valuesArr.add("");
+		valuesArr.add("child,"+ PLPSelectors.pickupIncreaseQtyBtn);
 		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
 		getCurrentFunctionName(false);
 	}
     
     public static void typePickUpInStoreQty(String productCodePost, String qty) throws Exception {
 		getCurrentFunctionName(true);
-		String pickupModalQtyInput = MessageFormat.format(PLPSelectors.pickupQtyInput, productCodePost);
-		logs.debug(MessageFormat.format(LoggingMsg.TYPING_ELEMENT_VALUE, pickupModalQtyInput, qty));
+		String pickupModalQtyInput = MessageFormat.format(PLPSelectors.pickupInStoreProduct, productCodePost);
+		logs.debug(MessageFormat.format(LoggingMsg.TYPING_ELEMENT_VALUE, pickupModalQtyInput + ":" + PLPSelectors.pickupQtyInput, qty));
 		subStrArr.add(pickupModalQtyInput);
-		valuesArr.add(qty);
+		valuesArr.add("child," + PLPSelectors.pickupQtyInput + "," + qty);
 		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
 		getCurrentFunctionName(false);
 	}

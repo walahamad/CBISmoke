@@ -12,7 +12,8 @@ public class PLPSelectors {
 	public static final String productPickupInStoreButton = "product_";
 	public static final String moreStores = "js-more-stores-facet-values";
 	public static final String plpProductPriceLabel = "test_searchPage_price_label_{0}_$1";
-	public static final String addToCartItemPrice = ".add-to-cart .add-to-cart-item .price";
+	public static final String addToCartItemPriceParent = "add-to-cart-item";
+	public static final String addToCartItemPrice = "price";
 	public static final String addToCartItemCheckoutBtn = "test_checkoutLinkInPopup_$2";
 	public static final String addToCartItemContinueShoppingBtn = "Continue Shopping";
 	public static final String cboxCloseBtn = "cboxClose";
@@ -29,8 +30,9 @@ public class PLPSelectors {
 	public static final String pickupInStoreLocationSearch = "locationForSearch";
 	public static final String pickupNthAccessibleTabIcon = "accessibletabsnavigation0-{0}";
 	public static final String pickupInStoreList = "pickup-store-list-entry";
-	public static final String pickupAddToBagBtn = "#pickupModal_product_{0} .js-add-to-cart-for-pickup-popup";
-	public static final String pickupDecreaseQtyBtn = "#pickupModal_product_{0} .js-qty-selector-minus";
-	public static final String pickupIncreaseQtyBtn = "#pickupModal_product_{0} .js-qty-selector-plus";
-	public static final String pickupQtyInput = "#pickupModal_product_{0} .js-qty-selector-input";
+	public static final String pickupInStoreProduct = "pickupModal_product_{0}";
+	public static final String pickupAddToBagBtn = "js-add-to-cart-for-pickup-popup";
+	public static final String pickupDecreaseQtyBtn = "js-qty-selector-minus";
+	public static final String pickupIncreaseQtyBtn = "js-qty-selector-plus";
+	public static final String pickupQtyInput = "js-qty-selector-input";
 }

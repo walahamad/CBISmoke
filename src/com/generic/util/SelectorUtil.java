@@ -112,21 +112,20 @@ public class SelectorUtil extends SelTestCase {
 	    	    	 selectorType = (!(foundElements.isEmpty()) ? subStr:selectorType);
 	    	     }
 				 
-				 if (foundElements.isEmpty() && subStr.contains(":eq") )
-	    	     { //TODO: check the if (eq) case 
+				 if (foundElements.isEmpty() && subStr.contains(":eq"))
+	    	     {
 					//logs.debug(MessageFormat.format(LoggingMsg.IN_SELECTOR_TYPE, "xpath"));
 	    	    	 foundElements = htmlDoc.select(subStr);
 	    	    	 //nth-child() is the Selenium equivalent to JSoup eq()
 	    	    	 String subStrTemp = subStr;
-	    	    	 if (subStr.contains(":eq")) {
-	    	    		 int startIndex = subStr.indexOf("(")+1;
-	    	    		 int endIndex = subStr.indexOf(")");
-	    	    		 String nthIndex = subStr.substring(startIndex, endIndex);
-	    	    		 //eq() is zero-base but nth-child() is one-base
-	    	    		 int nthIndexVal = Integer.parseInt(nthIndex) + 1;
-	    	    		 subStrTemp = subStr.replace(nthIndex, ""+nthIndexVal);
-	    	    		 subStrTemp = subStrTemp.replace(":eq", ":nth-child");
-	    	    	 }
+	    	    	
+    	    		 int startIndex = subStr.indexOf("(")+1;
+    	    		 int endIndex = subStr.indexOf(")");
+    	    		 String nthIndex = subStr.substring(startIndex, endIndex);
+    	    		 //eq() is zero-base but nth-child() is one-base
+    	    		 int nthIndexVal = Integer.parseInt(nthIndex) + 1;
+    	    		 subStrTemp = subStr.replace(nthIndex, ""+nthIndexVal);
+    	    		 subStrTemp = subStrTemp.replace(":eq", ":nth-child");
 	    	    	 String selType = "css," + subStrTemp;
 	    	    	 selectorType = (!(foundElements.isEmpty()) ? selType:selectorType);
 	    	     }
@@ -135,11 +134,16 @@ public class SelectorUtil extends SelTestCase {
 				 if (webElementsInfo.get(subStr) != null && (webElementsInfo.get(subStr).get("value")).toString().contains("child") && !foundElements.isEmpty()) {
 					 String tempValue = (webElementsInfo.get(subStr).get("value")).toString();
 					 Element e = foundElements.first();
-					 String childSelStr = tempValue.split(",")[1];
+					 String[] tempValArr = tempValue.split(",");
+					 String childSelStr = tempValArr[1];
+					 String childVal = "";
+					 if (tempValArr.length == 3) {
+						 childVal = tempValArr[2];
+					 }
 					 List<String> subStrArr = new ArrayList<String>();
 					 List<String> valuesArr = new ArrayList<String>();
 					 subStrArr.add(childSelStr);
-					 valuesArr.add("");
+					 valuesArr.add(childVal);
 					 LinkedHashMap<String, Object> webElementInfo = new LinkedHashMap<>();
 					 webElementInfo.put("value", "");
 					 webElementInfo.put("selector", "");
