@@ -12,7 +12,7 @@ import com.generic.setup.Common;
 import com.generic.setup.LoggingMsg;
 import com.generic.util.ReportUtil;
 
-public class CartValidationNegativeQty extends CartValidationBase {
+public class CartValidationNegativeQty extends Base_cart {
 
 	@Test
 	public void signIn() throws Exception {

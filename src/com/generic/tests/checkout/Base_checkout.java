@@ -53,7 +53,7 @@ public class Base_checkout extends SelTestCase {
 	
 	@BeforeTest
 	public static void initialSetUp(XmlTest test) throws Exception {
-		Testlogs.set(new SASLogger(test.getName()+test.getIndex()));
+		Testlogs.set(new SASLogger("checkout_setup"));
 		testObject = test;
 		addresses = Common.readAddresses();
 		invintory = Common.readLocalInventory();
@@ -61,8 +61,14 @@ public class Base_checkout extends SelTestCase {
 		users = Common.readUsers();
 	}
 
-	@DataProvider(name = "Orders", parallel = false)
+	@DataProvider(name = "Orders", parallel = true)
+	//concurrency mentainance on sheet reading 
 	public static Object[][] loadTestData() throws Exception {
+		if (testObject.getParameter("browserName").equals("firefox"))
+			Thread.sleep(500);
+		if (testObject.getParameter("browserName").equals("chrome"))
+			Thread.sleep(700);
+
 		Object[][] data = TestUtilities.getData(testDataSheet);
 		Testlogs.get().debug(Arrays.deepToString(data).replace("\n", "--"));
 		return data;
@@ -74,25 +80,26 @@ public class Base_checkout extends SelTestCase {
 			String shippingMethod, String payment, String shippingAddress, String billingAddress, String coupon,
 			String email, String orderId, String orderTotal, String orderSubtotal, String orderTax,
 			String orderShipping) throws Exception {
-		
+		Testlogs.set(new SASLogger("checkout_"+getBrowserName()));
 		//Important to add this for logging/reporting 
 		setTestCaseReportName("Checkout Case");
 		//Testlogs.get().debug("Case Browser: "  + testObject.getParameter("browserName") );
 		logCaseDetailds(MessageFormat.format(LoggingMsg.CHECKOUTDESC, testDataSheet + "." + caseId,
 				this.getClass().getCanonicalName(), desc, proprties.replace("\n", "<br>- "), payment, shippingMethod));
 		
-		this.email = email;
+		this.email = email.replace("tester", "tester_"+getBrowserName().replace(" ", "_"));
 		caseIndexInDatasheet = getDatatable().getCellRowNum(testDataSheet, CheckOut.keys.caseId, caseId);
 		
 		try {
 			if (proprties.contains(loggedInUser)) {
-				LinkedHashMap<String, Object> userdetails = (LinkedHashMap<String, Object>) users.get(this.email);
-				Testlogs.get().debug(this.email );
+				//you need to maintain the concurrency and get the main account information and log in in browser account 
+				LinkedHashMap<String, Object> userdetails = (LinkedHashMap<String, Object>) users.get(email);
+				Testlogs.get().debug(this.email);
 				Testlogs.get().debug((String) userdetails.get(Registration.keys.password) );
 				SignIn.logIn(this.email, (String) userdetails.get(Registration.keys.password));
 			}
 			if (proprties.contains(freshUser)) {
-				this.email = RandomUtilities.getRandomEmail();
+				this.email = email;//RandomUtilities.getRandomEmail();
 
 				// take any user as template
 				LinkedHashMap<String, Object> userdetails = (LinkedHashMap<String, Object>) users.entrySet().iterator()
@@ -113,8 +120,8 @@ public class Base_checkout extends SelTestCase {
 				PDP.addProductsToCart((String) productDetails.get(PDP.keys.url),
 						(String) productDetails.get(PDP.keys.color), (String) productDetails.get(PDP.keys.size),
 						(String) productDetails.get(PDP.keys.qty));
-				Thread.sleep(1000);
-				ReportUtil.takeScreenShot(getDriver());
+//				Thread.sleep(1000);
+//				ReportUtil.takeScreenShot(getDriver());
 			}
 
 			// flow to support coupon validation
@@ -124,7 +131,7 @@ public class Base_checkout extends SelTestCase {
 					Cart.validateinvaldcoupon();
 				}
 			}
-			Cart.getNumberOfproducts();
+			//Cart.getNumberOfproducts();
 			this.orderSubtotal = Cart.getOrderSubTotal();
 			this.orderTax = Cart.getOrderTax();
 
@@ -135,6 +142,7 @@ public class Base_checkout extends SelTestCase {
 				CheckOut.guestCheckout.fillAndClickGuestCheckout(this.email);
 			}
 
+			Thread.sleep(1000);
 			// Validate the order sub total in shipping address form section
 			softAssert.assertEquals(CheckOut.shippingAddress.getOrdersubTotal(), this.orderSubtotal);
 

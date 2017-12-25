@@ -9,7 +9,7 @@ import com.generic.setup.Common;
 import com.generic.setup.LoggingMsg;
 import com.generic.util.ReportUtil;
 
-public class CartValidationNumberOfProducts extends CartValidationBase {
+public class CartValidationNumberOfProducts extends Base_cart {
 
 	@Test
 	public void signIn() throws Exception {

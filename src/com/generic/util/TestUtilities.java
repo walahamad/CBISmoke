@@ -57,8 +57,7 @@ public class TestUtilities extends SelTestCase {
 
                     ReportUtil.startTesting(reportDirectory + "//index.html",
                             ReportUtil.now(SelTestCase.time_date_format),
-                            SelTestCase.getCONFIG().getProperty("testEnvironment"),
-                            getBrowserName() );
+                            SelTestCase.getCONFIG().getProperty("testEnvironment"));
 
                     runReportSetup = false;
                 }

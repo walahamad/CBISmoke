@@ -28,6 +28,7 @@ public class PDP extends SelTestCase {
 
 		defineQty(qty);
 		clickAddToCartBtn();
+		Thread.sleep(2000);
 		clickcheckoutBtnCartPopup();
 		getCurrentFunctionName(false);
 	}

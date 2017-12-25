@@ -144,6 +144,7 @@ public class CheckOut extends SelTestCase {
 			subStrArr.add(CheckOutSelectors.countery);
 			valuesArr.add(countery);
 			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
+			Thread.sleep(1000);
 			getCurrentFunctionName(false);
 
 		}
@@ -476,6 +477,7 @@ public class CheckOut extends SelTestCase {
 			}
 
 			clickNext();
+			Thread.sleep(1000);
 			getCurrentFunctionName(false);
 		}
 

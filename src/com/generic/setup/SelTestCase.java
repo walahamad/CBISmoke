@@ -42,6 +42,7 @@ public class SelTestCase {
     public static SASLogger logs = new SASLogger("Default");
     
     protected SoftAssert softAssert = new SoftAssert();
+    private static ThreadLocal<XmlTest> testObj = new ThreadLocal<XmlTest>();
     
     //private static ThreadLocal<String> testName= new ThreadLocal<String>(); 
     
@@ -74,11 +75,12 @@ public class SelTestCase {
     public static String rUNDATE = ReportUtil.now(time_date_format).toString();
 
     public static String getBrowserName() {
-        return browserName;
+        //return browserName;
+        return testObj.get().getParameter("browserName");
     }
 
     public static void setBrowserName(String browserName) {
-        SelTestCase.browserName = browserName;
+        //SelTestCase.browserName = browserName;
     }
 
     public static String getScreenShotName() {
@@ -207,6 +209,7 @@ public class SelTestCase {
     @BeforeMethod
     public void setUp(XmlTest test) throws Exception  {
     	getCurrentFunctionName(true);
+    	testObj.set(test);
         try {
         	if ("".equals(testCaseRepotId))
         		setTestCaseReportName(test.getName());
@@ -277,19 +280,17 @@ public class SelTestCase {
     	
     	for (HashMap<String, String> status: casesDetails)
     	{
-    		if ("pass".contains(status.get("Status").toLowerCase())){
+    		if (status.get("Status").toLowerCase().contains("pass")){
     			passedNumber++;
-    		}else if ("failed".contains(status.get("Status").toLowerCase())) {
+    		}else if (status.get("Status").toLowerCase().contains("fail")) {
 				failedNumber++;
-			}else
-			{
-				skippedNumber++;
 			}
     		logs.debug(Arrays.asList(status)+"");
-    		ReportUtil.addTestCase(status.get("TestName"), status.get("Details"),status.get("StartTime"),
+    		if (!(status.get("TestName").equals("") || status.get("StartTime").equals("") || status.get("EndTime").equals("")))
+    			ReportUtil.addTestCase(status.get("TestName"), status.get("Details"),status.get("StartTime"),
     				status.get("EndTime"),status.get("Status"),
     				status.get("LogFileName"), status.get("Browser"));
-    	}
+    	}//for
     	
     	ReportUtil.updateEndTime(ReportUtil.now(time_date_format), getTestStatus());
     	

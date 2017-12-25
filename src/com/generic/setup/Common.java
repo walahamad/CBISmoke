@@ -15,6 +15,8 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
 
 import javax.imageio.ImageIO;
 
@@ -23,9 +25,13 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
+import org.openqa.selenium.firefox.FirefoxBinary;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.ie.InternetExplorerDriver;
+import org.openqa.selenium.logging.LogType;
+import org.openqa.selenium.logging.LoggingPreferences;
 import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
@@ -61,10 +67,45 @@ public class Common extends SelTestCase {
 
 				return new EdgeDriver(capabilities);
 				
-			} else if (browser.equalsIgnoreCase("Firefox")) {
-				FirefoxProfile fp = new FirefoxProfile();
-				SelTestCase.setDriver(new FirefoxDriver(fp));
-			} else if (browser.equalsIgnoreCase("IE")) {
+			}else if (browser.equalsIgnoreCase("Firefox")) {
+				
+				System.setProperty("webdriver.gecko.driver","C:\\softwares\\servers\\geckodriver.exe");
+				
+				LoggingPreferences pref = new LoggingPreferences();
+			    pref.enable(LogType.BROWSER, Level.OFF);
+			    pref.enable(LogType.CLIENT, Level.OFF);
+			    pref.enable(LogType.DRIVER, Level.OFF);
+			    pref.enable(LogType.PERFORMANCE, Level.OFF);
+			    pref.enable(LogType.PROFILER, Level.OFF);
+			    pref.enable(LogType.SERVER, Level.OFF);
+				
+			    
+				//DesiredCapabilities dc=DesiredCapabilities.firefox();
+				//FirefoxProfile profile = new FirefoxProfile();
+//				dc.setCapability(FirefoxDriver.PROFILE, profile);
+//				dc.setCapability("marionette", true);
+//				dc.setCapability(CapabilityType.LOGGING_PREFS, pref);
+		        
+				FirefoxOptions fo = new FirefoxOptions();
+				driver = new FirefoxDriver(fo);
+				driver.manage().timeouts().pageLoadTimeout(120,TimeUnit.SECONDS);
+				return driver;
+				
+//				System.setProperty("webdriver.gecko.driver","C:/softwares/servers/geckodriver.exe");
+//				
+//				FirefoxOptions options = new FirefoxOptions();
+//				options.setBinary("C:\\Program Files\\Mozilla Firefox\\firefox.exe"); //Location where Firefox is installed
+//		 
+//				capabilities = DesiredCapabilities.firefox();
+//				capabilities.setCapability("moz:firefoxOptions", options);
+//				//set more capabilities as per your requirements
+//				FirefoxProfile profile = new FirefoxProfile();
+//				capabilities.setCapability(FirefoxDriver.PROFILE, profile);
+//				capabilities.setCapability("marionette", true);
+//		 
+//				return new FirefoxDriver(capabilities);
+				
+			}else if (browser.equalsIgnoreCase("IE")) {
 				// TODO: move this path to path file or configuration file
 				System.setProperty("webdriver.ie.driver", "C:/softwares/servers/IEDriverServer.exe");
 				capabilities = DesiredCapabilities.internetExplorer();
@@ -78,9 +119,9 @@ public class Common extends SelTestCase {
 
 			} else if (browser.equalsIgnoreCase("chrome")) {
 
-				capabilities = DesiredCapabilities.chrome();
-				capabilities.setCapability("platform", "WINDOWS");
-				capabilities.setBrowserName("chrome");
+				//capabilities = DesiredCapabilities.chrome();
+				//capabilities.setCapability("platform", "WINDOWS");
+				//capabilities.setBrowserName("chrome");
 
 				ChromeOptions options = new ChromeOptions();
 
@@ -94,10 +135,11 @@ public class Common extends SelTestCase {
 //					options.addArguments("detach=true");
 //				}
 
-				capabilities.setCapability(ChromeOptions.CAPABILITY, options);
+				//capabilities.setCapability(ChromeOptions.CAPABILITY, options);
 				// TODO: move this path to path file or configuration
 				System.setProperty("webdriver.chrome.driver", "C:/softwares/servers/chromedriver.exe");
-				driver = new ChromeDriver(capabilities);
+				ChromeOptions co = new ChromeOptions();
+				driver = new ChromeDriver(co);
 				//SelTestCase.setDriver(driver);
 				return driver;
 
@@ -178,7 +220,7 @@ public class Common extends SelTestCase {
 				// TODO: change it and setup grid server
 				SelTestCase.setDriver(new RemoteWebDriver(new URL("http://10.20.20.54:4444/wd/hub"), capabilities));
 			} else if (browser.contains("mobile")) {
-				String mobile = browser.split("-")[1];
+				String mobile = browser.split("_")[1];
 				capabilities = DesiredCapabilities.chrome();
 				capabilities.setCapability("platform", "WINDOWS");
 				capabilities.setBrowserName("chrome");
@@ -314,40 +356,40 @@ public class Common extends SelTestCase {
 		}
 	}
 
-	/**
-	 * It compares the expected text with actual(read from application). If they are
-	 * not equal then it throws an error and fail the test case.
-	 *
-	 * @param expected
-	 * @param locator
-	 * @throws Exception
-	 */
-	public static void verifyText(String expected, By locator) throws Exception {
-		logs.debug(MessageFormat.format(LoggingMsg.FUNCTION_NAME, "In verify Text function"));
-		String actual = "";
-		int i = 1;
-		WebDriverWait wait = new WebDriverWait(SelTestCase.getDriver(), SelTestCase.getWaitTime());
-		try {
-			logs.debug(MessageFormat.format(LoggingMsg.EXPECTED_TEXT, expected));
-			while (i <= getWaitTime()) {
-				actual = wait.until(ExpectedConditions.presenceOfElementLocated(locator)).getText();
-				logs.debug(MessageFormat.format(LoggingMsg.ACTUAL_TEXT, actual));
-				if (actual.contains(expected)) {
-					break;
-				}
-				logs.debug(MessageFormat.format(LoggingMsg.WAIT_SECONDS, i));
-				Thread.sleep(1000);
-				i = i + 1;
-			}
-		} catch (Throwable t) {
-			throw new Exception(locator + " is missing " + t);
-		}
-
-		if (i > getWaitTime()) {
-			logs.debug(MessageFormat.format(LoggingMsg.ACTUAL_EXPECTED_ERROR, actual, expected));
-			throw new Exception("Actual : " + actual + "Expected : " + expected);
-		}
-	}
+//	/**
+//	 * It compares the expected text with actual(read from application). If they are
+//	 * not equal then it throws an error and fail the test case.
+//	 *
+//	 * @param expected
+//	 * @param locator
+//	 * @throws Exception
+//	 */
+//	public static void verifyText(String expected, By locator) throws Exception {
+//		logs.debug(MessageFormat.format(LoggingMsg.FUNCTION_NAME, "In verify Text function"));
+//		String actual = "";
+//		int i = 1;
+//		WebDriverWait wait = new WebDriverWait(SelTestCase.getDriver(), SelTestCase.getWaitTime());
+//		try {
+//			logs.debug(MessageFormat.format(LoggingMsg.EXPECTED_TEXT, expected));
+//			while (i <= getWaitTime()) {
+//				actual = wait.until(ExpectedConditions.presenceOfElementLocated(locator)).getText();
+//				logs.debug(MessageFormat.format(LoggingMsg.ACTUAL_TEXT, actual));
+//				if (actual.contains(expected)) {
+//					break;
+//				}
+//				logs.debug(MessageFormat.format(LoggingMsg.WAIT_SECONDS, i));
+//				Thread.sleep(1000);
+//				i = i + 1;
+//			}
+//		} catch (Throwable t) {
+//			throw new Exception(locator + " is missing " + t);
+//		}
+//
+//		if (i > getWaitTime()) {
+//			logs.debug(MessageFormat.format(LoggingMsg.ACTUAL_EXPECTED_ERROR, actual, expected));
+//			throw new Exception("Actual : " + actual + "Expected : " + expected);
+//		}
+//	}
 
 	public static void killDriverServerIfRunning() throws Exception {
 		String line;

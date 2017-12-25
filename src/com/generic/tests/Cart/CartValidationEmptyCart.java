@@ -18,7 +18,7 @@ import com.generic.setup.SheetVariables;
 import com.generic.util.ReportUtil;
 import com.generic.util.TestUtilities;
 
-public class CartValidationEmptyCart extends CartValidationBase {
+public class CartValidationEmptyCart extends Base_cart {
 
 	@Test
 	public void signIn() throws Exception {

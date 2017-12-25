@@ -16,7 +16,7 @@ import com.generic.setup.SheetVariables;
 import com.generic.util.ReportUtil;
 import com.generic.util.TestUtilities;
 
-public class CartValidationContinueShopping extends CartValidationBase {
+public class CartValidationContinueShopping extends Base_cart {
 	@Test
 	public void signIn() throws Exception {
 		setTestCaseDescription("");

@@ -1,14 +1,22 @@
 package com.generic.util;
 
-import org.apache.log4j.Logger;
+import org.apache.poi.common.usermodel.HyperlinkType;
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
 import org.apache.poi.hssf.usermodel.HSSFDateUtil;
 import org.apache.poi.hssf.util.HSSFColor;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.ss.util.NumberToTextConverter;
-import org.apache.poi.xssf.usermodel.*;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.apache.poi.xssf.usermodel.XSSFCell;
+import org.apache.poi.xssf.usermodel.XSSFCellStyle;
+import org.apache.poi.xssf.usermodel.XSSFCreationHelper;
+import org.apache.poi.xssf.usermodel.XSSFFont;
+import org.apache.poi.xssf.usermodel.XSSFHyperlink;
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
 
 import com.generic.setup.LoggingMsg;
 import com.generic.setup.SelTestCase;
@@ -164,16 +172,16 @@ public class Xls_Reader {
 				}
 
 				return cellText;
-			}else if (cell.getCellType() ==  Cell.CELL_TYPE_BOOLEAN) {
-				cell.setCellType(Cell.CELL_TYPE_STRING);
-				logs.debug("Cell is boolean: " + cell.getCellType() + " " +String.valueOf(cell.getBooleanCellValue()) );
-				logs.debug("Cell is not fit to any type : " + cell.getCellType() + "sheet:ROW/COL: " + sheetName+":"+colNum +"/"+rowNum );
+			}else if (cell.getCellTypeEnum() ==  CellType.BOOLEAN) {
+				cell.setCellType(CellType.STRING);
+				logs.debug("Cell is boolean: " + cell.getCellTypeEnum() + " " +String.valueOf(cell.getBooleanCellValue()) );
+				logs.debug("Cell is not fit to any type : " + cell.getCellTypeEnum() + "sheet:ROW/COL: " + sheetName+":"+colNum +"/"+rowNum );
 				return String.valueOf(cell.getBooleanCellValue());
-			}else if (cell.getCellType() == Cell.CELL_TYPE_BLANK)
+			}else if (cell.getCellTypeEnum() == CellType.BLANK)
 				return "";
 			else {
-				logs.debug("Cell is not fit to any type : " + cell.getCellType() + " sheet:ROW/COL: " + sheetName+":"+colNum +"/"+rowNum );
-				cell.setCellType(Cell.CELL_TYPE_STRING);
+				logs.debug("Cell is not fit to any type : " + cell.getCellTypeEnum() + " sheet:ROW/COL: " + sheetName+":"+colNum +"/"+rowNum );
+				cell.setCellType(CellType.STRING);
 				logs.debug("Cell new Value is  :  " + cell.getStringCellValue());
 				return String.valueOf(cell.getStringCellValue());
 			}
@@ -294,7 +302,7 @@ public class Xls_Reader {
 			hlink_style.setFont(hlink_font);
 			// hlink_style.setWrapText(true);
 
-			XSSFHyperlink link = createHelper.createHyperlink(XSSFHyperlink.LINK_FILE);
+			XSSFHyperlink link = createHelper.createHyperlink(HyperlinkType.URL);
 			link.setAddress(url);
 			cell.setHyperlink(link);
 			cell.setCellStyle(hlink_style);
@@ -348,83 +356,83 @@ public class Xls_Reader {
 	}
 
 	// returns true if column is created successfully
-	public boolean addColumn(String sheetName, String colName) {
-		// System.out.println("**************addColumn*********************");
-
-		try {
-			fis = new FileInputStream(path);
-			workbook = new XSSFWorkbook(fis);
-			int index = workbook.getSheetIndex(sheetName);
-			if (index == -1)
-				return false;
-
-			XSSFCellStyle style = workbook.createCellStyle();
-			style.setFillForegroundColor(HSSFColor.GREY_40_PERCENT.index);
-			style.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
-
-			sheet = workbook.getSheetAt(index);
-
-			row = sheet.getRow(0);
-			if (row == null)
-				row = sheet.createRow(0);
-
-			// cell = row.getCell();
-			// if (cell == null)
-			// System.out.println(row.getLastCellNum());
-			if (row.getLastCellNum() == -1)
-				cell = row.createCell(0);
-			else
-				cell = row.createCell(row.getLastCellNum());
-
-			cell.setCellValue(colName);
-			cell.setCellStyle(style);
-
-			fileOut = new FileOutputStream(path);
-			workbook.write(fileOut);
-			fileOut.close();
-
-		} catch (Exception e) {
-			e.printStackTrace();
-			return false;
-		}
-
-		return true;
-
-	}
-
-	// removes a column and all the contents
-	public boolean removeColumn(String sheetName, int colNum) {
-		try {
-			if (!isSheetExist(sheetName))
-				return false;
-			fis = new FileInputStream(path);
-			workbook = new XSSFWorkbook(fis);
-			sheet = workbook.getSheet(sheetName);
-			XSSFCellStyle style = workbook.createCellStyle();
-			style.setFillForegroundColor(HSSFColor.GREY_40_PERCENT.index);
-			XSSFCreationHelper createHelper = workbook.getCreationHelper();
-			style.setFillPattern(HSSFCellStyle.NO_FILL);
-
-			for (int i = 0; i < getRowCount(sheetName); i++) {
-				row = sheet.getRow(i);
-				if (row != null) {
-					cell = row.getCell(colNum);
-					if (cell != null) {
-						cell.setCellStyle(style);
-						row.removeCell(cell);
-					}
-				}
-			}
-			fileOut = new FileOutputStream(path);
-			workbook.write(fileOut);
-			fileOut.close();
-		} catch (Exception e) {
-			e.printStackTrace();
-			return false;
-		}
-		return true;
-
-	}
+//	public boolean addColumn(String sheetName, String colName) {
+//		// System.out.println("**************addColumn*********************");
+//
+//		try {
+//			fis = new FileInputStream(path);
+//			workbook = new XSSFWorkbook(fis);
+//			int index = workbook.getSheetIndex(sheetName);
+//			if (index == -1)
+//				return false;
+//
+//			XSSFCellStyle style = workbook.createCellStyle();
+//			style.setFillForegroundColor(HSSFColor.GREY_40_PERCENT.index);
+//			style.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
+//
+//			sheet = workbook.getSheetAt(index);
+//
+//			row = sheet.getRow(0);
+//			if (row == null)
+//				row = sheet.createRow(0);
+//
+//			// cell = row.getCell();
+//			// if (cell == null)
+//			// System.out.println(row.getLastCellNum());
+//			if (row.getLastCellNum() == -1)
+//				cell = row.createCell(0);
+//			else
+//				cell = row.createCell(row.getLastCellNum());
+//
+//			cell.setCellValue(colName);
+//			cell.setCellStyle(style);
+//
+//			fileOut = new FileOutputStream(path);
+//			workbook.write(fileOut);
+//			fileOut.close();
+//
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//			return false;
+//		}
+//
+//		return true;
+//
+//	}
+//
+//	// removes a column and all the contents
+//	public boolean removeColumn(String sheetName, int colNum) {
+//		try {
+//			if (!isSheetExist(sheetName))
+//				return false;
+//			fis = new FileInputStream(path);
+//			workbook = new XSSFWorkbook(fis);
+//			sheet = workbook.getSheet(sheetName);
+//			XSSFCellStyle style = workbook.createCellStyle();
+//			style.setFillForegroundColor(HSSFColor.GREY_40_PERCENT.index);
+//			XSSFCreationHelper createHelper = workbook.getCreationHelper();
+//			style.setFillPattern(HSSFCellStyle.NO_FILL);
+//
+//			for (int i = 0; i < getRowCount(sheetName); i++) {
+//				row = sheet.getRow(i);
+//				if (row != null) {
+//					cell = row.getCell(colNum);
+//					if (cell != null) {
+//						cell.setCellStyle(style);
+//						row.removeCell(cell);
+//					}
+//				}
+//			}
+//			fileOut = new FileOutputStream(path);
+//			workbook.write(fileOut);
+//			fileOut.close();
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//			return false;
+//		}
+//		return true;
+//
+//	}
 
 	// find whether sheets exists
 	public boolean isSheetExist(String sheetName) {

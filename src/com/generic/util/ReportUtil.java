@@ -122,10 +122,8 @@ public final class ReportUtil extends SelTestCase {
      *        the env
      * @param rel
      *        the rel
-     * @param browser
-     *        This is the browser type that executed the test.
      */
-    public static void startTesting(final String filename, final String testStartTime, final String env, final String browser) {
+    public static void startTesting(final String filename, final String testStartTime, final String env) {
     	currentSuiteName = getCONFIG().getProperty("testSuiteName").replaceAll(" ", "_");
         indexResultFilename = filename;
         currentDir = indexResultFilename.substring(0,indexResultFilename.lastIndexOf("//"));
@@ -143,9 +141,9 @@ public final class ReportUtil extends SelTestCase {
             String eNVIRONMENT = env;
 
             // Added so the report will show the browser type.
-            String rBrowserType = browser;
+            //String rBrowserType = browser;
 
-            ReportResultsWriter.writeReportTestDetails(testStartTime, out, rUNDATE, eNVIRONMENT, rBrowserType, getCONFIG().getProperty("testSuiteName"));
+            ReportResultsWriter.writeReportTestDetails(testStartTime, out, rUNDATE, eNVIRONMENT, getCONFIG().getProperty("testSuiteName"));
             
         } catch (Exception e) {
             System.err.println("Error: " + e.getMessage());

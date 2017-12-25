@@ -4,6 +4,7 @@ import java.text.MessageFormat;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
@@ -166,12 +167,45 @@ public class ActionDriver extends SelTestCase {
 	public static void click(By locator) throws Exception {
 		try {
 			logs.debug(MessageFormat.format(LoggingMsg.CLICK_ELEMENT_SEL, locator.toString()));
-			getElement(locator).click();
+			if (getBrowserName().contains("mobile"))
+			{
+				logs.debug("Clicking on " + locator.toString());
+				((JavascriptExecutor) getDriver()).executeScript("arguments[0].scrollIntoView(true)", getElement(locator));
+				Thread.sleep(50000);
+				getElement(locator).click();
+			}
+			else {
+				getElement(locator).click();
+			}
+			
 		} catch (Throwable t) {
 			// t.printStackTrace();
 			throw new Exception(locator + " is missing " + t);
 		}
 	}
+	
+	
+	
+	public static void click(WebElement field) throws Exception {
+		try {
+			logs.debug(MessageFormat.format(LoggingMsg.CLICK_ELEMENT_SEL, field.toString()));
+			if (getBrowserName().contains("mobile"))
+				{
+				((JavascriptExecutor) getDriver()).executeScript("arguments[0].scrollIntoView(true)", field);
+				Thread.sleep(3000);
+				((JavascriptExecutor) getDriver()).executeScript("arguments[0].click()", field);
+				//field.click();
+				}//mobile
+			else {
+				field.click();
+			}
+			
+		} catch (Throwable t) {
+			// t.printStackTrace();
+			throw new Exception(field + " is missing " + t);
+		}
+	}
+	
 
 	/**
 	 * It clicks on web element

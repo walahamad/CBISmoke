@@ -8,5 +8,5 @@ public class RegistrationSelectors {
 	public static final String password = "password";
 	public static final String confirmPassword = "register.checkPwd";
 	public static final String consentGiven = "consentForm.consentGiven1";
-	public static final String register = "test_register_Register_button_$1";
+	public static final String register = "btn btn-default btn-block";
 }

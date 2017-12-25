@@ -8,6 +8,8 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
+import java.util.concurrent.TimeUnit;
+import java.util.function.Function;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -17,10 +19,14 @@ import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.Wait;
 
 import com.generic.setup.SelTestCase;
+import com.generic.setup.ActionDriver;
 import com.generic.setup.ExceptionMsg;
 import com.generic.setup.LoggingMsg;
 
@@ -32,11 +38,20 @@ public class SelectorUtil extends SelTestCase {
 	public static int numberOfFoundElements;
 	private static By parentBy = null;
 	
-	public static void initializeElementsSelectorsMaps(LinkedHashMap<String, LinkedHashMap> webElementsInfo , boolean isValidationStep) throws IOException
+	public static void initializeElementsSelectorsMaps(LinkedHashMap<String, LinkedHashMap> webElementsInfo , boolean isValidationStep) throws IOException, InterruptedException
 	 {
+		Thread.sleep(1000);
+		try {
 		Document doc = Jsoup.parse(SelTestCase.getDriver().getPageSource());
 		Element htmlDoc = doc.select("html").first();
 		initializeElementsSelectorsMaps(webElementsInfo, isValidationStep, htmlDoc);
+		}catch (NoSuchElementException e) {
+			Thread.sleep(2000);
+			logs.debug("Second try for getting element");
+			Document doc = Jsoup.parse(SelTestCase.getDriver().getPageSource());
+			Element htmlDoc = doc.select("html").first();
+			initializeElementsSelectorsMaps(webElementsInfo, isValidationStep, htmlDoc);
+		}
 	 }
 	
 	 public static void initializeElementsSelectorsMaps(LinkedHashMap<String, LinkedHashMap> webElementsInfo , boolean isValidationStep, Element htmlDoc) throws IOException
@@ -112,20 +127,21 @@ public class SelectorUtil extends SelTestCase {
 	    	    	 selectorType = (!(foundElements.isEmpty()) ? subStr:selectorType);
 	    	     }
 				 
-				 if (foundElements.isEmpty() && subStr.contains(":eq"))
-	    	     {
+				 if (foundElements.isEmpty() && subStr.contains(":eq") )
+	    	     { //TODO: check the if (eq) case 
 					//logs.debug(MessageFormat.format(LoggingMsg.IN_SELECTOR_TYPE, "xpath"));
 	    	    	 foundElements = htmlDoc.select(subStr);
 	    	    	 //nth-child() is the Selenium equivalent to JSoup eq()
 	    	    	 String subStrTemp = subStr;
-	    	    	
-    	    		 int startIndex = subStr.indexOf("(")+1;
-    	    		 int endIndex = subStr.indexOf(")");
-    	    		 String nthIndex = subStr.substring(startIndex, endIndex);
-    	    		 //eq() is zero-base but nth-child() is one-base
-    	    		 int nthIndexVal = Integer.parseInt(nthIndex) + 1;
-    	    		 subStrTemp = subStr.replace(nthIndex, ""+nthIndexVal);
-    	    		 subStrTemp = subStrTemp.replace(":eq", ":nth-child");
+	    	    	 if (subStr.contains(":eq")) {
+	    	    		 int startIndex = subStr.indexOf("(")+1;
+	    	    		 int endIndex = subStr.indexOf(")");
+	    	    		 String nthIndex = subStr.substring(startIndex, endIndex);
+	    	    		 //eq() is zero-base but nth-child() is one-base
+	    	    		 int nthIndexVal = Integer.parseInt(nthIndex) + 1;
+	    	    		 subStrTemp = subStr.replace(nthIndex, ""+nthIndexVal);
+	    	    		 subStrTemp = subStrTemp.replace(":eq", ":nth-child");
+	    	    	 }
 	    	    	 String selType = "css," + subStrTemp;
 	    	    	 selectorType = (!(foundElements.isEmpty()) ? selType:selectorType);
 	    	     }
@@ -134,16 +150,11 @@ public class SelectorUtil extends SelTestCase {
 				 if (webElementsInfo.get(subStr) != null && (webElementsInfo.get(subStr).get("value")).toString().contains("child") && !foundElements.isEmpty()) {
 					 String tempValue = (webElementsInfo.get(subStr).get("value")).toString();
 					 Element e = foundElements.first();
-					 String[] tempValArr = tempValue.split(",");
-					 String childSelStr = tempValArr[1];
-					 String childVal = "";
-					 if (tempValArr.length == 3) {
-						 childVal = tempValArr[2];
-					 }
+					 String childSelStr = tempValue.split(",")[1];
 					 List<String> subStrArr = new ArrayList<String>();
 					 List<String> valuesArr = new ArrayList<String>();
 					 subStrArr.add(childSelStr);
-					 valuesArr.add(childVal);
+					 valuesArr.add("");
 					 LinkedHashMap<String, Object> webElementInfo = new LinkedHashMap<>();
 					 webElementInfo.put("value", "");
 					 webElementInfo.put("selector", "");
@@ -180,6 +191,7 @@ public class SelectorUtil extends SelTestCase {
 				 else
 				 {
 					 logs.debug(LoggingMsg.NO_VALID_SEL_ERROR_MSG);
+					 throw new NoSuchElementException();
 				 }
 			}
 			getCurrentFunctionName(false);
@@ -309,6 +321,9 @@ public class SelectorUtil extends SelTestCase {
 	    public static void doAppropriateAction(Map <String, Object> webElementInfo ) throws Exception {
 	    	getCurrentFunctionName(true);
 	    	SelectorUtil.textValue = "";
+	    	
+	    	String browser = SelTestCase.getBrowserName();
+	    	
 	    	try
 	        {
 	    		String selector = (String) webElementInfo.get("selector");
@@ -361,11 +376,29 @@ public class SelectorUtil extends SelTestCase {
 					   }
 					   else if (action.equals("click"))
 					   {
+					   		Wait<WebDriver> wait = new FluentWait<WebDriver>(SelTestCase.getDriver())
+						       .withTimeout(30, TimeUnit.SECONDS)
+						       .pollingEvery(5, TimeUnit.SECONDS)
+						       .ignoring(NoSuchElementException.class);
+					   		
+					   
 						   logs.debug(MessageFormat.format(LoggingMsg.CLICKING_SEL, byAction.toString()));
 						   JavascriptExecutor jse = (JavascriptExecutor)getDriver();
 						   jse.executeScript("arguments[0].scrollIntoView()", field); 
-						   //ActionDriver.click(byAction);
-						   field.click();
+						   Thread.sleep(200);
+						    WebElement field2 = wait.until(new Function<WebDriver, WebElement>() {
+							   public WebElement apply(WebDriver driver) {
+								   return driver.findElement(byAction);
+							   }});
+						    logs.debug("PPPPPPPPPPPPPPPPPPPPPPP..."+ browser);
+						   if(browser.contains("firefox") || browser.contains("chrome") )
+						   {
+							   logs.debug("clicking..."+ SelTestCase.getBrowserName());
+							   field2.click();
+						   }
+						   else
+							   ((JavascriptExecutor) SelTestCase.getDriver()).executeScript("arguments[0].click()", field2);
+						   
 					   }
 					   else if (action.equals("check"))
 					   {
@@ -375,7 +408,28 @@ public class SelectorUtil extends SelTestCase {
 							   if (!field.isSelected())
 							   {
 								   logs.debug(MessageFormat.format(LoggingMsg.CHECKING_UNCHECKING_MSG, "", "not "));
-								   field.click();
+								   Wait<WebDriver> wait = new FluentWait<WebDriver>(SelTestCase.getDriver())
+									       .withTimeout(30, TimeUnit.SECONDS)
+									       .pollingEvery(5, TimeUnit.SECONDS)
+									       .ignoring(NoSuchElementException.class);
+								   		
+								   
+									   logs.debug(MessageFormat.format(LoggingMsg.CLICKING_SEL, byAction.toString()));
+									   JavascriptExecutor jse = (JavascriptExecutor)getDriver();
+									   jse.executeScript("arguments[0].scrollIntoView()", field); 
+									   Thread.sleep(200);
+									    WebElement field2 = wait.until(new Function<WebDriver, WebElement>() {
+										   public WebElement apply(WebDriver driver) {
+											   return driver.findElement(byAction);
+										   }});
+									    logs.debug("PPPPPPPPPPPPPPPPPPPPPPP..."+ browser);
+									   if(browser.contains("firefox") || browser.contains("chrome") )
+									   {
+										   logs.debug("clicking..."+ browser);
+										   field2.click();
+									   }
+									   else
+										   ((JavascriptExecutor) SelTestCase.getDriver()).executeScript("arguments[0].click()", field2);
 							   }
 							   else
 							   {
@@ -387,7 +441,28 @@ public class SelectorUtil extends SelTestCase {
 							   if (field.isSelected())
 							   {
 								   logs.debug(MessageFormat.format(LoggingMsg.CHECKING_UNCHECKING_MSG,"un",""));
-								   field.click();
+								   Wait<WebDriver> wait = new FluentWait<WebDriver>(SelTestCase.getDriver())
+									       .withTimeout(30, TimeUnit.SECONDS)
+									       .pollingEvery(5, TimeUnit.SECONDS)
+									       .ignoring(NoSuchElementException.class);
+								   		
+								 //	TODO: move this to function 
+									   logs.debug(MessageFormat.format(LoggingMsg.CLICKING_SEL, byAction.toString()));
+									   JavascriptExecutor jse = (JavascriptExecutor)getDriver();
+									   jse.executeScript("arguments[0].scrollIntoView()", field); 
+									   Thread.sleep(200);
+									    WebElement field2 = wait.until(new Function<WebDriver, WebElement>() {
+										   public WebElement apply(WebDriver driver) {
+											   return driver.findElement(byAction);
+										   }});
+									    logs.debug("browser..."+ browser);
+									   if(browser.contains("firefox") || browser.contains("chrome") )
+									   {
+										   logs.debug("clicking..."+ browser);
+										   field2.click();
+									   }
+									   else
+										   ((JavascriptExecutor) SelTestCase.getDriver()).executeScript("arguments[0].click()", field2);
 							   }
 							   else
 							   {
@@ -421,7 +496,29 @@ public class SelectorUtil extends SelTestCase {
 						   try 
 						   {
 							   if (value.isEmpty()) {
-								   field.click(); 
+								   Wait<WebDriver> wait = new FluentWait<WebDriver>(SelTestCase.getDriver())
+									       .withTimeout(30, TimeUnit.SECONDS)
+									       .pollingEvery(5, TimeUnit.SECONDS)
+									       .ignoring(NoSuchElementException.class);
+								   		//TODO: move this to function 
+								   
+									   logs.debug(MessageFormat.format(LoggingMsg.CLICKING_SEL, byAction.toString()));
+									   JavascriptExecutor jse1 = (JavascriptExecutor)getDriver();
+									   jse1.executeScript("arguments[0].scrollIntoView()", field); 
+									   Thread.sleep(200);
+									   WebElement field2 = wait.until(new Function<WebDriver, WebElement>() {
+										   public WebElement apply(WebDriver driver) {
+											   return driver.findElement(byAction);
+										   }});
+									    logs.debug("browser..."+ browser);
+									   if(browser.contains("firefox") || browser.contains("chrome") )
+									   {
+										   logs.debug("clicking..."+ browser);
+										   field2.click();
+									   }
+									   else
+										   ((JavascriptExecutor) SelTestCase.getDriver()).executeScript("arguments[0].click()", field2);
+								   //field.click(); 
 							   }
 						   }catch(Exception e)
 						   {
@@ -488,8 +585,15 @@ public class SelectorUtil extends SelTestCase {
 	    	getCurrentFunctionName(false);
 		}
 	    
+	    @SuppressWarnings("rawtypes")
+		public static LinkedHashMap<String, LinkedHashMap> initializeSelectorsAndDoActions(List<String> subStrArr,
+	    		List<String> valuesArr ) throws Exception {
+	    	return initializeSelectorsAndDoActions(subStrArr,valuesArr , true);
+	    }
 	    
-		public static void initializeSelectorsAndDoActions(List<String> subStrArr, List<String> valuesArr) throws Exception {
+	    @SuppressWarnings("rawtypes")
+		public static LinkedHashMap<String, LinkedHashMap> initializeSelectorsAndDoActions(List<String> subStrArr,
+				List<String> valuesArr , boolean action) throws Exception {
 			LinkedHashMap<String, LinkedHashMap> webElementsInfo = new LinkedHashMap<String, LinkedHashMap>();
 			
 			int index = 0;
@@ -512,14 +616,15 @@ public class SelectorUtil extends SelTestCase {
 				logs.debug(MessageFormat.format(LoggingMsg.DEBUGGING_TEXT, Arrays.asList(webElementsInfo)));
 				SelectorUtil.initializeElementsSelectorsMaps(webElementsInfo, isValidationStep);
 				logs.debug(MessageFormat.format(LoggingMsg.DEBUGGING_TEXT, Arrays.asList(webElementsInfo)));
-	
-				for (String key : webElementsInfo.keySet()) {
-					LinkedHashMap<String, Object> webElementInfo = webElementsInfo.get(key);
-					SelectorUtil.doAppropriateAction(webElementInfo);
-				}
-	
 				
-				Thread.sleep(1000);
+				if (action) {
+					for (String key : webElementsInfo.keySet()) {
+						LinkedHashMap<String, Object> webElementInfo = webElementsInfo.get(key);
+						SelectorUtil.doAppropriateAction(webElementInfo);
+					}
+		
+					Thread.sleep(1000);
+				}
 			}catch(Exception e)
 			{
 				logs.debug(MessageFormat.format(LoggingMsg.FORMATTED_ERROR_MSG, e.getMessage()));
@@ -531,8 +636,8 @@ public class SelectorUtil extends SelTestCase {
 				subStrArr.clear();
 			}
 			
-			
 			logs.debug(MessageFormat.format(LoggingMsg.FINISHED_ACTION_ON_ELEMENTS_MSG, Arrays.asList(webElementsInfo)));
+			return webElementsInfo;
 
 		}
 }

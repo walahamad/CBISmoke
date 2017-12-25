@@ -11,7 +11,7 @@ import com.generic.setup.Common;
 import com.generic.setup.LoggingMsg;
 import com.generic.util.ReportUtil;
 
-public class CartValidation0Qty extends CartValidationBase {
+public class CartValidation0Qty extends Base_cart {
 
 	@Test
 	public void signIn() throws Exception {
@@ -56,5 +56,7 @@ public class CartValidation0Qty extends CartValidationBase {
 		}
 
 	}
+
+	
 
 }

@@ -81,6 +81,8 @@ public class ReportResultsWriter {
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			System.out.print(testCaseStartTime + testCaseEndTime );
+			return "<td width=10% align= center bgcolor=#ffbfbf ><FONT COLOR=#153E7E FACE= Arial  SIZE=2><b>NA</b></td>\n";
 		}
 		long duration  = end_date.getTime() - start_date.getTime();
 		//assume duration not more than one day 
@@ -197,7 +199,7 @@ public class ReportResultsWriter {
 	 * @throws IOException
 	 */
 	public static void writeReportTestDetails(final String testStartTime, BufferedWriter out, String rUNDATE,
-			String eNVIRONMENT, String rBrowserType, String testSuiteName) throws IOException {
+			String eNVIRONMENT, String testSuiteName) throws IOException {
 		try {
 			SelTestCase.getCurrentFunctionName(true);
 			SelTestCase.logs.debug(MessageFormat.format(LoggingMsg.DEBUGGING_TEXT, "Copying the template into the target failed test case"));
@@ -213,7 +215,7 @@ public class ReportResultsWriter {
                 	str=str.replaceAll("~Env~", eNVIRONMENT);
                 	
                 } if (str.contains("~BrowserType~")) {
-                	str=str.replaceAll("~BrowserType~", rBrowserType);
+                	str=str.replaceAll("~BrowserType~", "");
                 	
                 } if (str.contains("~StartTime~")) {
                 	str=str.replaceAll("~StartTime~", SelTestCase.rUNDATE);

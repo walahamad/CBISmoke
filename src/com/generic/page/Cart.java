@@ -53,7 +53,19 @@ public class Cart extends SelTestCase {
 		getCurrentFunctionName(false);
 		return SelectorUtil.textValue;
 	}
-
+	
+	public static String checkProductsExsist() throws Exception {
+		getCurrentFunctionName(true);
+		List<String> subStrArr = new ArrayList<String>();
+		List<String> valuesArr = new ArrayList<String>();
+		subStrArr.add(CartSelectors.numberOfProducts);
+		valuesArr.add("");
+		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
+		logs.debug(MessageFormat.format(LoggingMsg.NUMBER_OF_PRODUCTS, SelectorUtil.textValue));
+		getCurrentFunctionName(false);
+		return SelectorUtil.textValue;
+	}
+	
 	public static String getOrderTotal() throws Exception {
 		getCurrentFunctionName(true);
 		List<String> subStrArr = new ArrayList<String>();

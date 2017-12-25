@@ -11,7 +11,7 @@ import com.generic.setup.Common;
 import com.generic.setup.LoggingMsg;
 import com.generic.util.ReportUtil;
 
-public class CartValidationMinQty extends CartValidationBase {
+public class CartValidationMinQty extends Base_cart {
 
 	@Test
 	public void signIn() throws Exception {
