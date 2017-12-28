@@ -103,4 +103,9 @@ public class LoggingMsg {
 	public static String NUMBER_OF_ADDRESSES = "number of addresses: {0}";
 	public static String CLICKING_BACK_TO_ADDRESSES_BUTTON = "clicking on {0} btn from add address";
 	public static String DEFAULT_ADDRESS_UPDATE_MESSAGE = "Address update message: {0}";
+	public static String PAMENT_DETAILS = "Payment Dtails: {0}";
+	public static String PAYMENT_CARD_REMOVED_MESSAGE = "Remove card message: {0}";
+	public static final String ADDRESSPOOKDESC = "<b>Case ID: </b>{0} <br><b>File of execution:</b> {1}<br><b>Decrption: </b>{2}";
+	public static final String PAYMENTDESC = "<b>Case ID: </b>{0} <br><b>File of execution:</b> {1}<br><b>Decrption: </b>{2}";
+
 }
