@@ -282,8 +282,7 @@ public class Common extends SelTestCase {
 			// logs.debug("Removing all control cookies");
 			// getDriver().manage().deleteAllCookies();
 		}
-		logs.debug("Test URL: " + getCONFIG().getProperty("testSiteName"));
-		getDriver().get(getCONFIG().getProperty("testSiteName"));
+		getDriver().get(getCONFIG().getProperty("testEnvironment"));
 		getDriver().manage().window().maximize();
 
 		getCurrentFunctionName(false);

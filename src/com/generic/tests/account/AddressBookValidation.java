@@ -3,12 +3,15 @@ package com.generic.tests.account;
 import static org.testng.Assert.assertNotEquals;
 
 import java.text.MessageFormat;
+
+import org.apache.commons.lang3.RandomUtils;
 import org.testng.Assert;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.xml.XmlTest;
 import java.util.LinkedHashMap;
+
 import com.generic.page.Registration;
 import com.generic.page.AddressBook;
 import com.generic.page.CheckOut;
@@ -51,13 +54,9 @@ public class AddressBookValidation extends SelTestCase {
 	}
 
 	@DataProvider(name = "AddressBook", parallel = true)
-	// concurrency maintenance on sheet reading
 	public static Object[][] loadTestData() throws Exception {
-		if (testObject.getParameter("browserName").equals("firefox"))
-			Thread.sleep(500);
-		if (testObject.getParameter("browserName").equals("chrome"))
-			Thread.sleep(700);
-
+		// concurrency maintenance on sheet reading
+		getBrowserWait(testObject.getParameter("browserName"));
 		Object[][] data = TestUtilities.getData(testDataSheet);
 		return data;
 	}
@@ -66,8 +65,8 @@ public class AddressBookValidation extends SelTestCase {
 	@Test(dataProvider = "AddressBook")
 	public void BookAddressTest(String caseId, String runTest, String url, String desc, String email, String newaddress)
 			throws Exception {
-		Testlogs.set(new SASLogger("Address_Book " + getBrowserName()));
 		// Important to add this for logging/reporting
+		Testlogs.set(new SASLogger("Address_Book " + getBrowserName()));
 		setTestCaseReportName("Address Book Case");
 		logCaseDetailds(MessageFormat.format(LoggingMsg.ADDRESSPOOKDESC, testDataSheet + "." + caseId,
 				this.getClass().getCanonicalName(), desc));
@@ -78,11 +77,7 @@ public class AddressBookValidation extends SelTestCase {
 			LinkedHashMap<String, Object> userdetails = (LinkedHashMap<String, Object>) users.get(email);
 			Testlogs.get().debug(this.email);
 			Testlogs.get().debug((String) userdetails.get(Registration.keys.password));
-			// SignIn.logIn(this.email, (String)
-			// userdetails.get(Registration.keys.password));
-			// AddressBook.clickmyaccount();
-			// AddressBook.clickaddressbook();
-			// getDriver().get(url);
+			
 			if (desc.contains("edit")) {
 				SignIn.logIn(this.email, (String) userdetails.get(Registration.keys.password));
 				getDriver().get(url);
@@ -90,7 +85,6 @@ public class AddressBookValidation extends SelTestCase {
 				AddressBook.clickEditAddress();
 				AddressBook.updateAddress();
 				AddressBook.clickAddressBackBtn();
-				// getDriver().get(AddressBookSelectors.addressbookurl);
 				assertNotEquals(addressbook, AddressBook.getFirstAddressDetails());
 			}
 			if (desc.contains("form validation")) {
@@ -101,7 +95,7 @@ public class AddressBookValidation extends SelTestCase {
 				AddressBook.clearAddress();
 				AddressBook.verifyAddressFormError();
 			}
-			if (desc.contains("new")) {
+			if (desc.contains("new") || desc.contains("default") || desc.contains("delete")) {
 				SignIn.logIn(this.email, (String) userdetails.get(Registration.keys.password));
 				getDriver().get(url);
 				addressbook = AddressBook.getFirstAddressDetails();
@@ -113,41 +107,23 @@ public class AddressBookValidation extends SelTestCase {
 				logs.debug("test");
 				AddressBook.fillAndClickSave((String) addressDetails.get(CheckOut.shippingAddress.keys.countery),
 						(String) addressDetails.get(CheckOut.shippingAddress.keys.title),
-						(String) addressDetails.get(CheckOut.shippingAddress.keys.firstName),
+						"NEW_"+RandomUtils.nextInt(1000,9000),
 						(String) addressDetails.get(CheckOut.shippingAddress.keys.lastName),
 						(String) addressDetails.get(CheckOut.shippingAddress.keys.adddressLine),
 						(String) addressDetails.get(CheckOut.shippingAddress.keys.city),
 						(String) addressDetails.get(CheckOut.shippingAddress.keys.postal),
 						(String) addressDetails.get(CheckOut.shippingAddress.keys.phone), defaultAddress);
 				AddressBook.clickAddressBackBtn();
-				// getDriver().get(AddressBookSelectors.addressbookurl);
-				assertNotEquals(addressbook, AddressBook.getFirstAddressDetails());
-			}
+				sassert().assertNotEquals(addressbook, AddressBook.getFirstAddressDetails());
+			
 			if (desc.contains("default")) {
-				SignIn.logIn(this.email, (String) userdetails.get(Registration.keys.password));
 				getDriver().get(url);
-				AddressBook.clickAddNewAddress();
-				getDriver().get(AddressBookSelectors.addaddressurl);
-				LinkedHashMap<String, Object> addressDetails = (LinkedHashMap<String, Object>) addresses
-						.get(newaddress);
-				logs.debug("test");
-				AddressBook.fillAndClickSave((String) addressDetails.get(CheckOut.shippingAddress.keys.countery),
-						(String) addressDetails.get(CheckOut.shippingAddress.keys.title),
-						(String) addressDetails.get(CheckOut.shippingAddress.keys.firstName),
-						(String) addressDetails.get(CheckOut.shippingAddress.keys.lastName),
-						(String) addressDetails.get(CheckOut.shippingAddress.keys.adddressLine),
-						(String) addressDetails.get(CheckOut.shippingAddress.keys.city),
-						(String) addressDetails.get(CheckOut.shippingAddress.keys.postal),
-						(String) addressDetails.get(CheckOut.shippingAddress.keys.phone), false);
-				AddressBook.clickAddressBackBtn();
 				addressbook = AddressBook.getFirstAddressDetails();
 				AddressBook.clickSetAsDefault();
 				AddressBook.getAlertInfo();
-				// assertNotEquals(addressbook,
-				// AddressBook.getFirstAddressDetails());
+				sassert().assertNotEquals(addressbook, AddressBook.getFirstAddressDetails());
 			}
 			if (desc.contains("delete")) {
-				SignIn.logIn("etabib@pfsweb.com", "password");
 				getDriver().get(url);
 				AddressBook.getAddressBookList();
 				logs.debug(MessageFormat.format(LoggingMsg.ACTUAL_TEXT, SelectorUtil.numberOfFoundElements));
@@ -157,8 +133,10 @@ public class AddressBookValidation extends SelTestCase {
 				Thread.sleep(7000);
 				AddressBook.getAddressBookList();
 				logs.debug(MessageFormat.format(LoggingMsg.ACTUAL_TEXT, SelectorUtil.numberOfFoundElements));
-				assertNotEquals(numberofaddresses, SelectorUtil.numberOfFoundElements);
+				sassert().assertNotEquals(numberofaddresses, SelectorUtil.numberOfFoundElements);
 			}
+			}
+			sassert().assertAll();
 			Common.testPass();
 		} catch (Throwable t) {
 			setTestCaseDescription(getTestCaseDescription());

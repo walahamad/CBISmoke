@@ -5,6 +5,8 @@ import static org.testng.Assert.assertNotEquals;
 
 import java.text.MessageFormat;
 import java.util.Arrays;
+
+import org.apache.commons.lang3.RandomUtils;
 import org.testng.Assert;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.DataProvider;
@@ -49,7 +51,7 @@ public class PaymentDetailsValidation extends SelTestCase {
 
 	@BeforeTest
 	public static void initialSetUp(XmlTest test) throws Exception {
-		Testlogs.set(new SASLogger("checkout_setup"));
+		Testlogs.set(new SASLogger("paymentDetails_setup"));
 		testObject = test;
 		addresses = Common.readAddresses();
 		invintory = Common.readLocalInventory();
@@ -60,11 +62,7 @@ public class PaymentDetailsValidation extends SelTestCase {
 	@DataProvider(name = "Payment", parallel = true)
 	// concurrency maintenance on sheet reading
 	public static Object[][] loadTestData() throws Exception {
-		if (testObject.getParameter("browserName").equals("firefox"))
-			Thread.sleep(500);
-		if (testObject.getParameter("browserName").equals("chrome"))
-			Thread.sleep(700);
-
+		getBrowserWait(testObject.getParameter("browserName"));
 		Object[][] data = TestUtilities.getData(testDataSheet);
 		Testlogs.get().debug(Arrays.deepToString(data).replace("\n", "--"));
 		return data;
@@ -74,8 +72,7 @@ public class PaymentDetailsValidation extends SelTestCase {
 	@Test(dataProvider = "Payment")
 	public void PaymentDetailsTest(String caseId, String runTest, String desc, String proprties, String url,
 			String products, String shippingMethod, String payment, String shippingAddress, String billingAddress,
-			String email, String orderId, String orderTotal, String orderSubtotal, String orderTax,
-			String orderShipping) throws Exception {
+			String email) throws Exception {
 		Testlogs.set(new SASLogger("Payment_" + getBrowserName()));
 		// Important to add this for logging/reporting
 		setTestCaseReportName("Payment Case");
@@ -91,125 +88,89 @@ public class PaymentDetailsValidation extends SelTestCase {
 			LinkedHashMap<String, Object> userdetails = (LinkedHashMap<String, Object>) users.get(email);
 			Testlogs.get().debug(this.email);
 			Testlogs.get().debug((String) userdetails.get(Registration.keys.password));
-			// SignIn.logIn(this.email, (String)
-			// userdetails.get(Registration.keys.password));
-
+			
+			SignIn.logIn(this.email, (String) userdetails.get(Registration.keys.password));
+			// Go to Payment details page.
+			//TODO: get from config remove from Xls
 			if (proprties.contains("update default")) {
-				SignIn.logIn(this.email, (String) userdetails.get(Registration.keys.password));
-				// Go to Payment details page.
 				getDriver().get(url);
 				// Save first payment(Default Payment).
 				DefaultPaymentDetails = PaymentDetails.getFirstPaymentDetails();
+			}
 
-				//
-				for (String product : products.split("\n")) {
-					Testlogs.get().debug(MessageFormat.format(LoggingMsg.ADDING_PRODUCT, product));
-					LinkedHashMap<String, Object> productDetails = (LinkedHashMap<String, Object>) invintory
-							.get(product);
-					PDP.addProductsToCart((String) productDetails.get(PDP.keys.url),
-							(String) productDetails.get(PDP.keys.color), (String) productDetails.get(PDP.keys.size),
-							(String) productDetails.get(PDP.keys.qty));
-					// Thread.sleep(1000);
-					// ReportUtil.takeScreenShot(getDriver());
-				}
+			for (String product : products.split("\n")) {
+				Testlogs.get().debug(MessageFormat.format(LoggingMsg.ADDING_PRODUCT, product));
+				LinkedHashMap<String, Object> productDetails = (LinkedHashMap<String, Object>) invintory
+						.get(product);
+				PDP.addProductsToCart((String) productDetails.get(PDP.keys.url),
+						(String) productDetails.get(PDP.keys.color), (String) productDetails.get(PDP.keys.size),
+						(String) productDetails.get(PDP.keys.qty));
+			}
 
-				// Cart.getNumberOfproducts();
-				this.orderSubtotal = Cart.getOrderSubTotal();
-				this.orderTax = Cart.getOrderTax();
+			Cart.clickCheckout();
 
-				Cart.clickCheckout();
+			// checkout- shipping address
+			LinkedHashMap<String, Object> addressDetails = (LinkedHashMap<String, Object>) addresses
+					.get(shippingAddress);
 
-				// Validate the order sub total in shipping address form section
-				sassert().assertEquals(CheckOut.shippingAddress.getOrdersubTotal(), this.orderSubtotal);
+			CheckOut.shippingAddress.fillAndClickNext(
+					(String) addressDetails.get(CheckOut.shippingAddress.keys.countery),
+					(String) addressDetails.get(CheckOut.shippingAddress.keys.title),
+					"NEW_"+RandomUtils.nextInt(1000,9999),
+					(String) addressDetails.get(CheckOut.shippingAddress.keys.lastName),
+					(String) addressDetails.get(CheckOut.shippingAddress.keys.adddressLine),
+					(String) addressDetails.get(CheckOut.shippingAddress.keys.city),
+					(String) addressDetails.get(CheckOut.shippingAddress.keys.postal),
+					(String) addressDetails.get(CheckOut.shippingAddress.keys.phone), true);
 
-				// checkout- shipping address
+			// Shipping method
+			CheckOut.shippingMethod.fillAndclickNext(shippingMethod);
 
-				LinkedHashMap<String, Object> addressDetails = (LinkedHashMap<String, Object>) addresses
-						.get(shippingAddress);
+			// checkout- payment
+			LinkedHashMap<String, Object> paymentDetails = (LinkedHashMap<String, Object>) paymentCards
+					.get(payment);
+			LinkedHashMap<String, Object> billAddressDetails = (LinkedHashMap<String, Object>) addresses
+					.get(billingAddress);
 
-				CheckOut.shippingAddress.fillAndClickNext(
-						(String) addressDetails.get(CheckOut.shippingAddress.keys.countery),
-						(String) addressDetails.get(CheckOut.shippingAddress.keys.title),
-						(String) addressDetails.get(CheckOut.shippingAddress.keys.firstName),
-						(String) addressDetails.get(CheckOut.shippingAddress.keys.lastName),
-						(String) addressDetails.get(CheckOut.shippingAddress.keys.adddressLine),
-						(String) addressDetails.get(CheckOut.shippingAddress.keys.city),
-						(String) addressDetails.get(CheckOut.shippingAddress.keys.postal),
-						(String) addressDetails.get(CheckOut.shippingAddress.keys.phone), true);
+			CheckOut.paymentInnformation.fillAndclickNext(payment,
+					(String) paymentDetails.get(CheckOut.paymentInnformation.keys.name),
+					(String) paymentDetails.get(CheckOut.paymentInnformation.keys.number),
+					(String) paymentDetails.get(CheckOut.paymentInnformation.keys.expireMonth),
+					(String) paymentDetails.get(CheckOut.paymentInnformation.keys.expireYear),
+					(String) paymentDetails.get(CheckOut.paymentInnformation.keys.CVCC), true,
+					billingAddress.equalsIgnoreCase(shippingAddress),
+					(String) billAddressDetails.get(CheckOut.shippingAddress.keys.countery),
+					(String) billAddressDetails.get(CheckOut.shippingAddress.keys.title),
+					(String) billAddressDetails.get(CheckOut.shippingAddress.keys.firstName),
+					(String) billAddressDetails.get(CheckOut.shippingAddress.keys.lastName),
+					(String) billAddressDetails.get(CheckOut.shippingAddress.keys.adddressLine),
+					(String) billAddressDetails.get(CheckOut.shippingAddress.keys.city),
+					(String) billAddressDetails.get(CheckOut.shippingAddress.keys.postal),
+					(String) billAddressDetails.get(CheckOut.shippingAddress.keys.phone));
 
-				// Validate the order sub total in shipping method section
-				sassert().assertEquals(CheckOut.shippingMethod.getOrderSubTotal(), this.orderSubtotal);
-
-				// Shipping method
-				CheckOut.shippingMethod.fillAndclickNext(shippingMethod);
-
-				// Validate the order sub total in billing form section
-				sassert().assertEquals(CheckOut.paymentInnformation.getOrderSubTotal(), this.orderSubtotal);
-
-				// checkout- payment
-
-				LinkedHashMap<String, Object> paymentDetails = (LinkedHashMap<String, Object>) paymentCards
-						.get(payment);
-				LinkedHashMap<String, Object> billAddressDetails = (LinkedHashMap<String, Object>) addresses
-						.get(billingAddress);
-
-				CheckOut.paymentInnformation.fillAndclickNext(payment,
-						(String) paymentDetails.get(CheckOut.paymentInnformation.keys.name),
-						(String) paymentDetails.get(CheckOut.paymentInnformation.keys.number),
-						(String) paymentDetails.get(CheckOut.paymentInnformation.keys.expireMonth),
-						(String) paymentDetails.get(CheckOut.paymentInnformation.keys.expireYear),
-						(String) paymentDetails.get(CheckOut.paymentInnformation.keys.CVCC), true,
-						billingAddress.equalsIgnoreCase(shippingAddress),
-						(String) billAddressDetails.get(CheckOut.shippingAddress.keys.countery),
-						(String) billAddressDetails.get(CheckOut.shippingAddress.keys.title),
-						(String) billAddressDetails.get(CheckOut.shippingAddress.keys.firstName),
-						(String) billAddressDetails.get(CheckOut.shippingAddress.keys.lastName),
-						(String) billAddressDetails.get(CheckOut.shippingAddress.keys.adddressLine),
-						(String) billAddressDetails.get(CheckOut.shippingAddress.keys.city),
-						(String) billAddressDetails.get(CheckOut.shippingAddress.keys.postal),
-						(String) billAddressDetails.get(CheckOut.shippingAddress.keys.phone));
-
-				// Validate the order subtotal in order review section
-				sassert().assertEquals(CheckOut.reviewInformation.getSubtotal(), this.orderSubtotal);
-
-				CheckOut.reviewInformation.acceptTerms(true);
-				CheckOut.reviewInformation.placeOrder();
-
-				// Validate the order sub total in order review section
-				sassert().assertEquals(CheckOut.orderConfirmation.getSubTotal(), this.orderSubtotal);
-
-				this.orderTotal = CheckOut.orderConfirmation.getOrderTotal();
-				this.orderShipping = CheckOut.orderConfirmation.getShippingCost();
-				this.orderId = CheckOut.orderConfirmation.getOrderId();
-
-				// TODO: compare addresses
-				CheckOut.orderConfirmation.getBillingAddrerss();
-				CheckOut.orderConfirmation.getShippingAddrerss();
-				// A new billing information is added successfully.
-
-				// Validate the default billing address is updated correctly
-				getDriver().get(url);
+			CheckOut.reviewInformation.acceptTerms(true);
+			CheckOut.reviewInformation.placeOrder();
+			
+			getDriver().get(url);
+			
+			if (proprties.contains("update default")) {
+				// Validate the default billing address is not updated to newly added address
 				assertEquals(DefaultPaymentDetails, PaymentDetails.getFirstPaymentDetails());
 				PaymentDetails.clickSetAsDefault();
+				// Validate the default billing address is updated to newly added address
 				assertNotEquals(DefaultPaymentDetails, PaymentDetails.getFirstPaymentDetails());
 			}
-			 if (desc.contains("delete")) {
-			 SignIn.logIn("etabib@pfsweb.com", "password");
-			 getDriver().get(url);
-			 PaymentDetails.getFirstPaymentDetails();
-			 logs.debug(MessageFormat.format(LoggingMsg.ACTUAL_TEXT,
-			 SelectorUtil.numberOfFoundElements));
-			 int numberofSavedPayments = SelectorUtil.numberOfFoundElements;
-			 PaymentDetails.clickRemovePaymentDetailsBtn();
-			 Thread.sleep(7000);
-			 PaymentDetails.clickDeleteBtn();
-			
-			 PaymentDetails.getFirstPaymentDetails();
-			 logs.debug(MessageFormat.format(LoggingMsg.ACTUAL_TEXT,
-			 SelectorUtil.numberOfFoundElements));
-			 assertNotEquals(numberofSavedPayments,
-			 SelectorUtil.numberOfFoundElements);
-			 }
+			if (desc.contains("delete")) {
+				PaymentDetails.getFirstPaymentDetails();
+				logs.debug(MessageFormat.format(LoggingMsg.ACTUAL_TEXT,SelectorUtil.numberOfFoundElements));
+				int numberofSavedPayments = SelectorUtil.numberOfFoundElements;
+				PaymentDetails.clickRemovePaymentDetailsBtn();
+				PaymentDetails.clickDeleteBtn();
+				
+				PaymentDetails.getFirstPaymentDetails();
+				logs.debug(MessageFormat.format(LoggingMsg.ACTUAL_TEXT,SelectorUtil.numberOfFoundElements));
+				assertNotEquals(numberofSavedPayments,SelectorUtil.numberOfFoundElements);
+			}
 
 			Common.testPass();
 		} catch (Throwable t) {

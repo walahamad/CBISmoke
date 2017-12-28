@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 
+import org.apache.commons.lang3.RandomUtils;
+
 import com.generic.selector.AddressBookSelectors;
 import com.generic.setup.SelTestCase;
 import com.generic.page.CheckOut.shippingAddress;

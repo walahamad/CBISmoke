@@ -506,6 +506,15 @@ public class CheckOut extends SelTestCase {
 			}
 
 			clickNext();
+			Thread.sleep(1000);
+			getCurrentFunctionName(false);
+		}
+
+		// in case of using wallet
+		public static void fillAndclickNext(boolean useAlreadySavedPayment) throws Exception {
+			getCurrentFunctionName(true);
+			clickOnUseedSavedCard();
+			pickFirstpaymentsaved();
 			getCurrentFunctionName(false);
 		}
 
@@ -530,14 +539,6 @@ public class CheckOut extends SelTestCase {
 			if (!"".equals(phone))
 				shippingAddress.typePhone(phone);
 
-			getCurrentFunctionName(false);
-		}
-
-		// in case of using wallet
-		public static void fillAndclickNext(boolean useAlreadySavedPayment) throws Exception {
-			getCurrentFunctionName(true);
-			clickOnUseedSavedCard();
-			pickFirstpaymentsaved();
 			getCurrentFunctionName(false);
 		}
 
