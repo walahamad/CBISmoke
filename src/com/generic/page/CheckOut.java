@@ -251,9 +251,9 @@ public class CheckOut extends SelTestCase {
 			subStrArr.add(CheckOutSelectors.orderTotalShippingAddress);
 			valuesArr.add("");
 			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
-			logs.debug(SelectorUtil.textValue);
+			logs.debug(SelectorUtil.textValue.get());
 			getCurrentFunctionName(false);
-			return SelectorUtil.textValue;
+			return SelectorUtil.textValue.get();
 		}
 
 		public static String getOrdersubTotal() throws Exception {
@@ -263,9 +263,9 @@ public class CheckOut extends SelTestCase {
 			subStrArr.add(CheckOutSelectors.orderSubTotalShippingAddress);
 			valuesArr.add("");
 			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
-			logs.debug(SelectorUtil.textValue);
+			logs.debug(SelectorUtil.textValue.get());
 			getCurrentFunctionName(false);
-			return SelectorUtil.textValue;
+			return SelectorUtil.textValue.get();
 		}
 
 		public static void clickNext() throws Exception {
@@ -417,9 +417,9 @@ public class CheckOut extends SelTestCase {
 			subStrArr.add(CheckOutSelectors.orderTotalShippingMethod);
 			valuesArr.add("");
 			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
-			logs.debug(SelectorUtil.textValue);
+			logs.debug(SelectorUtil.textValue.get());
 			getCurrentFunctionName(false);
-			return SelectorUtil.textValue;
+			return SelectorUtil.textValue.get();
 		}
 
 		public static String getOrderSubTotal() throws Exception {
@@ -429,9 +429,9 @@ public class CheckOut extends SelTestCase {
 			subStrArr.add(CheckOutSelectors.orderSubTotalShippingMethod);
 			valuesArr.add("");
 			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
-			logs.debug(SelectorUtil.textValue);
+			logs.debug(SelectorUtil.textValue.get());
 			getCurrentFunctionName(false);
-			return SelectorUtil.textValue;
+			return SelectorUtil.textValue.get();
 		}
 
 	}// shipping method
@@ -666,9 +666,9 @@ public class CheckOut extends SelTestCase {
 			subStrArr.add(CheckOutSelectors.orderTotalPymentInfo);
 			valuesArr.add("");
 			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
-			logs.debug(SelectorUtil.textValue);
+			logs.debug(SelectorUtil.textValue.get());
 			getCurrentFunctionName(false);
-			return SelectorUtil.textValue;
+			return SelectorUtil.textValue.get();
 		}
 
 		public static String getOrdershipping() throws Exception {
@@ -678,9 +678,9 @@ public class CheckOut extends SelTestCase {
 			subStrArr.add(CheckOutSelectors.orderShippingPymentInfo);
 			valuesArr.add("");
 			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
-			logs.debug(SelectorUtil.textValue);
+			logs.debug(SelectorUtil.textValue.get());
 			getCurrentFunctionName(false);
-			return SelectorUtil.textValue;
+			return SelectorUtil.textValue.get();
 		}
 
 		public static String getOrderSubTotal() throws Exception {
@@ -690,9 +690,9 @@ public class CheckOut extends SelTestCase {
 			subStrArr.add(CheckOutSelectors.orderSubtotalPymentInfo);
 			valuesArr.add("");
 			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
-			logs.debug(SelectorUtil.textValue);
+			logs.debug(SelectorUtil.textValue.get());
 			getCurrentFunctionName(false);
-			return SelectorUtil.textValue;
+			return SelectorUtil.textValue.get();
 		}
 	}// payment info
 
@@ -705,9 +705,9 @@ public class CheckOut extends SelTestCase {
 			subStrArr.add(CheckOutSelectors.summaryTotal);
 			valuesArr.add("");
 			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
-			logs.debug(MessageFormat.format(LoggingMsg.SEL_TEXT, SelectorUtil.textValue));
+			logs.debug(MessageFormat.format(LoggingMsg.SEL_TEXT, SelectorUtil.textValue.get()));
 			getCurrentFunctionName(false);
-			return SelectorUtil.textValue;
+			return SelectorUtil.textValue.get();
 
 		}
 
@@ -718,9 +718,9 @@ public class CheckOut extends SelTestCase {
 			subStrArr.add(CheckOutSelectors.shippingCost);
 			valuesArr.add("");
 			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
-			logs.debug(MessageFormat.format(LoggingMsg.SEL_TEXT, SelectorUtil.textValue));
+			logs.debug(MessageFormat.format(LoggingMsg.SEL_TEXT, SelectorUtil.textValue.get()));
 			getCurrentFunctionName(false);
-			return SelectorUtil.textValue;
+			return SelectorUtil.textValue.get();
 
 		}
 
@@ -753,9 +753,9 @@ public class CheckOut extends SelTestCase {
 			subStrArr.add(CheckOutSelectors.orderTotalOrderSumary);
 			valuesArr.add("");
 			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
-			logs.debug(SelectorUtil.textValue);
+			logs.debug(SelectorUtil.textValue.get());
 			getCurrentFunctionName(false);
-			return SelectorUtil.textValue;
+			return SelectorUtil.textValue.get();
 		}
 
 		public static String gettotal() throws Exception {
@@ -765,9 +765,9 @@ public class CheckOut extends SelTestCase {
 			subStrArr.add(CheckOutSelectors.orderTotalOrderSumary);
 			valuesArr.add("");
 			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
-			logs.debug(MessageFormat.format(LoggingMsg.SEL_TEXT, SelectorUtil.textValue));
+			logs.debug(MessageFormat.format(LoggingMsg.SEL_TEXT, SelectorUtil.textValue.get()));
 			getCurrentFunctionName(false);
-			return SelectorUtil.textValue;
+			return SelectorUtil.textValue.get();
 		}
 
 	}// order review information
@@ -793,9 +793,9 @@ public class CheckOut extends SelTestCase {
 			subStrArr.add(CheckOutSelectors.orderId);
 			valuesArr.add("");
 			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
-			logs.debug(MessageFormat.format(LoggingMsg.SEL_TEXT, SelectorUtil.textValue));
+			logs.debug(MessageFormat.format(LoggingMsg.SEL_TEXT, SelectorUtil.textValue.get()));
 			getCurrentFunctionName(false);
-			return SelectorUtil.textValue;
+			return SelectorUtil.textValue.get();
 
 		}
 
@@ -806,9 +806,9 @@ public class CheckOut extends SelTestCase {
 			subStrArr.add(CheckOutSelectors.orderConfirmationTotal);
 			valuesArr.add("");
 			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
-			logs.debug(MessageFormat.format(LoggingMsg.SEL_TEXT, SelectorUtil.textValue));
+			logs.debug(MessageFormat.format(LoggingMsg.SEL_TEXT, SelectorUtil.textValue.get()));
 			getCurrentFunctionName(false);
-			return SelectorUtil.textValue;
+			return SelectorUtil.textValue.get();
 
 		}
 
@@ -819,9 +819,9 @@ public class CheckOut extends SelTestCase {
 			subStrArr.add(CheckOutSelectors.orderConfirmationSubtotal);
 			valuesArr.add("");
 			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
-			logs.debug(MessageFormat.format(LoggingMsg.SEL_TEXT, SelectorUtil.textValue));
+			logs.debug(MessageFormat.format(LoggingMsg.SEL_TEXT, SelectorUtil.textValue.get()));
 			getCurrentFunctionName(false);
-			return SelectorUtil.textValue;
+			return SelectorUtil.textValue.get();
 
 		}
 
@@ -832,9 +832,9 @@ public class CheckOut extends SelTestCase {
 			subStrArr.add(CheckOutSelectors.orderConfirmationShippingCost);
 			valuesArr.add("");
 			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
-			logs.debug(MessageFormat.format(LoggingMsg.SEL_TEXT, SelectorUtil.textValue));
+			logs.debug(MessageFormat.format(LoggingMsg.SEL_TEXT, SelectorUtil.textValue.get()));
 			getCurrentFunctionName(false);
-			return SelectorUtil.textValue;
+			return SelectorUtil.textValue.get();
 
 		}
 
@@ -845,9 +845,9 @@ public class CheckOut extends SelTestCase {
 			subStrArr.add(CheckOutSelectors.orderconfirmationBillingAddress);
 			valuesArr.add("");
 			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
-			logs.debug(MessageFormat.format(LoggingMsg.SEL_TEXT, SelectorUtil.textValue));
+			logs.debug(MessageFormat.format(LoggingMsg.SEL_TEXT, SelectorUtil.textValue.get()));
 			getCurrentFunctionName(false);
-			return SelectorUtil.textValue;
+			return SelectorUtil.textValue.get();
 
 		}
 
@@ -858,9 +858,9 @@ public class CheckOut extends SelTestCase {
 			subStrArr.add(CheckOutSelectors.orderconfirmationshippingAddress);
 			valuesArr.add("");
 			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
-			logs.debug(MessageFormat.format(LoggingMsg.SEL_TEXT, SelectorUtil.textValue));
+			logs.debug(MessageFormat.format(LoggingMsg.SEL_TEXT, SelectorUtil.textValue.get()));
 			getCurrentFunctionName(false);
-			return SelectorUtil.textValue;
+			return SelectorUtil.textValue.get();
 
 		}
 

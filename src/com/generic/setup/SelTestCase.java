@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Properties;
+import java.util.Random;
 
 //import org.apache.log4j.Logger;
 
@@ -14,6 +15,7 @@ import com.generic.util.SASLogger;
 
 import org.testng.Assert;
 import org.testng.annotations.*;
+import org.apache.commons.lang3.RandomUtils;
 import org.openqa.selenium.WebDriver;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
@@ -30,7 +32,7 @@ import com.generic.util.reportBuilder;
 public class SelTestCase {
 	
 	public static String time_date_format = "hh:mm:ss";
-	public static String time_date_formatScreenshot = "hhmmssaaa";
+	public static String time_date_formatScreenshot = "hhmmss.SSSaaa";
 	public static String reportFolderDateStampFormat = "MM-dd-yyyy";
 	public static String reportFolderTimeStampFormat = "HHmmss";
 	public static String testCaseRunDateStamp = "dd.MMMMM.yyyy";
@@ -41,7 +43,8 @@ public class SelTestCase {
     
     public static SASLogger logs = new SASLogger("Default");
     
-    protected SoftAssert softAssert = new SoftAssert();
+    //protected SoftAssert softAssert = new SoftAssert();
+    private static ThreadLocal<SoftAssert> softAssert = new ThreadLocal<SoftAssert>();
     private static ThreadLocal<XmlTest> testObj = new ThreadLocal<XmlTest>();
     
     //private static ThreadLocal<String> testName= new ThreadLocal<String>(); 
@@ -179,6 +182,26 @@ public class SelTestCase {
     	logs.debug("Case Description: "+msg);
     }
     
+    public static void getBrowserWait(String BrowserName)
+    {
+    	try {
+			if (BrowserName.equals("firefox"))
+				Thread.sleep(500);
+			else if (BrowserName.equals("chrome"))
+				Thread.sleep(100);
+			else
+				Thread.sleep(RandomUtils.nextInt(900,1200));
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+    }
+    
+    public static String getSubMailAccount(String email)
+    {
+		return email.replace("tester", "tester_"+getBrowserName().replace(" ", "_"));
+    	
+    }
+    
     public static void getCurrentFunctionName(Boolean start)
     {
     	if (start){
@@ -202,6 +225,15 @@ public class SelTestCase {
     	TestLog.set(log);
     }
     
+    public static  SoftAssert sassert()
+    {
+    	return softAssert.get();
+    }
+    public static  void setAssert()
+    {
+    	softAssert.set(new SoftAssert());
+    }
+    
     /**setUp function will be invoked by Junit before execution of every test case.
      * It initializes the property files and html report setup
      * @throws Exception
@@ -210,6 +242,7 @@ public class SelTestCase {
     public void setUp(XmlTest test) throws Exception  {
     	getCurrentFunctionName(true);
     	testObj.set(test);
+    	setAssert();
         try {
         	if ("".equals(testCaseRepotId))
         		setTestCaseReportName(test.getName());

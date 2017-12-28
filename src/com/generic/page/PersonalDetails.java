@@ -24,7 +24,7 @@ public class PersonalDetails extends SelTestCase {
 		valuesArr.add("");
 		String titleVal = "";
 		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
-		titleVal = SelectorUtil.textValue;
+		titleVal = SelectorUtil.textValue.get();
 		getCurrentFunctionName(false);
     	return titleVal;
     }
@@ -36,7 +36,7 @@ public class PersonalDetails extends SelTestCase {
 		valuesArr.add("getCurrentValue");
 		String firstName = "";
 		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
-		firstName = SelectorUtil.textValue;
+		firstName = SelectorUtil.textValue.get();
 		getCurrentFunctionName(false);
     	return firstName;
     }
@@ -48,7 +48,7 @@ public class PersonalDetails extends SelTestCase {
 		valuesArr.add("getCurrentValue");
 		String lastName = "";
 		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
-		lastName = SelectorUtil.textValue;
+		lastName = SelectorUtil.textValue.get();
 		getCurrentFunctionName(false);
     	return lastName;
     }
@@ -119,7 +119,7 @@ public class PersonalDetails extends SelTestCase {
 		valuesArr.add("");
 		String globalAlertMsg = "";
 		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
-		globalAlertMsg = SelectorUtil.textValue;
+		globalAlertMsg = SelectorUtil.textValue.get();
 		getCurrentFunctionName(false);
     	return globalAlertMsg;
     }
@@ -131,7 +131,7 @@ public class PersonalDetails extends SelTestCase {
 		valuesArr.add("noClick");
 		String firstNameErrorMsg = "";
 		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
-		firstNameErrorMsg = SelectorUtil.textValue;
+		firstNameErrorMsg = SelectorUtil.textValue.get();
 		getCurrentFunctionName(false);
     	return firstNameErrorMsg;
     }
@@ -143,7 +143,7 @@ public class PersonalDetails extends SelTestCase {
 		valuesArr.add("noClick");
 		String lastNameErrorMsg = "";
 		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
-		lastNameErrorMsg = SelectorUtil.textValue;
+		lastNameErrorMsg = SelectorUtil.textValue.get();
 		getCurrentFunctionName(false);
     	return lastNameErrorMsg;
     }

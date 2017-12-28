@@ -12,6 +12,7 @@ public class LoggingMsg {
 	public static String ORDER_SUBTOTAL = "Order subtotal: {0}";
 	public static String APPLYING_COUPON = "{0} Coupon {1}" ;
 	public static String SEL_TEXT = "{0}";
+	public static String COUPON_MSG = "The coupon msg is : {0}";
 	public static String ERROR_MSG ="Error message is: {0}";
 	public static String EMPTY_CART_ERROR_MSG = "Cart is not empty: {0}";
 	public static String REMOVE_ALL_ITEMS_FROM_CART = "removing all items from cart";

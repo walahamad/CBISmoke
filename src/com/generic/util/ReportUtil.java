@@ -345,7 +345,9 @@ public final class ReportUtil extends SelTestCase {
         	String screenshotName = "sc_"+ now(time_date_formatScreenshot)+ ".png";
         	String DestFile = EnvironmentFiles.getLogFilePath()+"/"+screenshotName;
             FileUtils.copyFile(srcFile, new File(DestFile));
-            logs.debug("Case screenshot:<br><img src=" + screenshotName+">");
+            //logs.debug("Case screenshot:<br><img src=" + screenshotName+">");
+            logs.debug("Case screenshot:<br><a target=\"_blank\" href="+ screenshotName+"><img src=" + screenshotName+" alt=" + screenshotName+" style=\"width:150px\"></a>");
+            
         } catch (IOException e) {
             e.printStackTrace();
         }
