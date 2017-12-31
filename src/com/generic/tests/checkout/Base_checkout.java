@@ -62,12 +62,9 @@ public class Base_checkout extends SelTestCase {
 	}
 
 	@DataProvider(name = "Orders", parallel = true)
-	//concurrency mentainance on sheet reading 
 	public static Object[][] loadTestData() throws Exception {
-		if (testObject.getParameter("browserName").equals("firefox"))
-			Thread.sleep(500);
-		if (testObject.getParameter("browserName").equals("chrome"))
-			Thread.sleep(700);
+		//concurrency mentainance on sheet reading 
+		getBrowserWait(testObject.getParameter("browserName"));
 
 		Object[][] data = TestUtilities.getData(testDataSheet);
 		Testlogs.get().debug(Arrays.deepToString(data).replace("\n", "--"));
@@ -80,14 +77,13 @@ public class Base_checkout extends SelTestCase {
 			String shippingMethod, String payment, String shippingAddress, String billingAddress, String coupon,
 			String email, String orderId, String orderTotal, String orderSubtotal, String orderTax,
 			String orderShipping) throws Exception {
-		Testlogs.set(new SASLogger("checkout_"+getBrowserName()));
 		//Important to add this for logging/reporting 
+		Testlogs.set(new SASLogger("checkout_"+getBrowserName()));
 		setTestCaseReportName("Checkout Case");
-		//Testlogs.get().debug("Case Browser: "  + testObject.getParameter("browserName") );
 		logCaseDetailds(MessageFormat.format(LoggingMsg.CHECKOUTDESC, testDataSheet + "." + caseId,
 				this.getClass().getCanonicalName(), desc, proprties.replace("\n", "<br>- "), payment, shippingMethod));
 		
-		this.email = email.replace("tester", "tester_"+getBrowserName().replace(" ", "_"));
+		this.email = getSubMailAccount(email);
 		caseIndexInDatasheet = getDatatable().getCellRowNum(testDataSheet, CheckOut.keys.caseId, caseId);
 		
 		try {
@@ -99,7 +95,7 @@ public class Base_checkout extends SelTestCase {
 				SignIn.logIn(this.email, (String) userdetails.get(Registration.keys.password));
 			}
 			if (proprties.contains(freshUser)) {
-				this.email = email;//RandomUtilities.getRandomEmail();
+				this.email = RandomUtilities.getRandomEmail();
 
 				// take any user as template
 				LinkedHashMap<String, Object> userdetails = (LinkedHashMap<String, Object>) users.entrySet().iterator()
@@ -120,15 +116,13 @@ public class Base_checkout extends SelTestCase {
 				PDP.addProductsToCart((String) productDetails.get(PDP.keys.url),
 						(String) productDetails.get(PDP.keys.color), (String) productDetails.get(PDP.keys.size),
 						(String) productDetails.get(PDP.keys.qty));
-//				Thread.sleep(1000);
-//				ReportUtil.takeScreenShot(getDriver());
 			}
 
 			// flow to support coupon validation
 			if (!"".equals(coupon)) {
 				Cart.applyCoupon(coupon);
 				if (coupon.contains(Cart.keys.invalidCoupon)) {
-					Cart.validateinvaldcoupon();
+					Cart.validateCoupon();
 				}
 			}
 			//Cart.getNumberOfproducts();
@@ -144,7 +138,7 @@ public class Base_checkout extends SelTestCase {
 
 			Thread.sleep(1000);
 			// Validate the order sub total in shipping address form section
-			softAssert.assertEquals(CheckOut.shippingAddress.getOrdersubTotal(), this.orderSubtotal);
+			sassert().assertEquals(CheckOut.shippingAddress.getOrdersubTotal(), this.orderSubtotal);
 
 			// checkout- shipping address
 			if (proprties.contains(CheckOut.shippingAddress.keys.isSavedShipping) && !proprties.contains(freshUser)
@@ -181,13 +175,13 @@ public class Base_checkout extends SelTestCase {
 			}
 
 			// Validate the order sub total in shipping method section
-			softAssert.assertEquals(CheckOut.shippingMethod.getOrderSubTotal(), this.orderSubtotal);
+			sassert().assertEquals(CheckOut.shippingMethod.getOrderSubTotal(), this.orderSubtotal);
 
 			// Shipping method
 			CheckOut.shippingMethod.fillAndclickNext(shippingMethod);
 
 			// Validate the order sub total in billing form section
-			softAssert.assertEquals(CheckOut.paymentInnformation.getOrderSubTotal(), this.orderSubtotal);
+			sassert().assertEquals(CheckOut.paymentInnformation.getOrderSubTotal(), this.orderSubtotal);
 
 			// checkout- payment
 			if (proprties.contains(CheckOut.paymentInnformation.keys.isSavedPayement) && !proprties.contains(freshUser)
@@ -238,13 +232,13 @@ public class Base_checkout extends SelTestCase {
 			}
 
 			// Validate the order subtotal in order review section
-			softAssert.assertEquals(CheckOut.reviewInformation.getSubtotal(), this.orderSubtotal);
+			sassert().assertEquals(CheckOut.reviewInformation.getSubtotal(), this.orderSubtotal);
 
 			CheckOut.reviewInformation.acceptTerms(true);
 			CheckOut.reviewInformation.placeOrder();
 
 			// Validate the order sub total in order review section
-			softAssert.assertEquals(CheckOut.orderConfirmation.getSubTotal(), this.orderSubtotal);
+			sassert().assertEquals(CheckOut.orderConfirmation.getSubTotal(), this.orderSubtotal);
 
 			this.orderTotal = CheckOut.orderConfirmation.getOrderTotal();
 			this.orderShipping = CheckOut.orderConfirmation.getShippingCost();

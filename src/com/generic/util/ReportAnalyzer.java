@@ -10,14 +10,53 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
+
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import com.generic.setup.EnvironmentFiles;
+import com.generic.setup.SelTestCase;
 
 public class ReportAnalyzer {
+	public static void analyze2(String path, float period_step ) throws IOException
+	{
+		System.out.println("Analyzing report: " + path + " Period is: " + period_step);
+		String content;
+		content = new String(Files.readAllBytes(Paths.get(path)));
+		SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss");
+
+		String Pline = content.split("\n")[0];
+		String result = "0: " + Pline;
+
+		int current_line = 0;
+		String[] lines = content.split("\n");
+		String [] body = Arrays.copyOfRange(lines, 1, lines.length);
+		for (String Cline : body) {
+			long diff = 0;
+			try {
+				diff = (format.parse(Cline.split(" ")[1]).getTime()) - (format.parse(Pline.split(" ")[1]).getTime());
+			} catch (Exception t) {
+				t.printStackTrace();
+				System.out.println("Line is not parsable" + current_line);
+				diff = 0;
+			}
+
+			if (diff > period_step) {
+				result = result + "<SPAN STYLE='background-color: #ffffcc'>" + diff / 1000 + ": " + Cline + "</SPAN>\n";
+			} else {
+				result = result + diff / 1000 + ": " + Cline + "\n";
+			}
+			current_line++;
+			Pline = content.split("\n")[current_line];
+		}
+		FileUtils.writeStringToFile(new File(path), result, true);
+		System.out.print(result);
+	}
+	
 	public static void analyze(String path, float period_step ) throws IOException
 	{
+		//TODO: remove this function 
 		System.out.println("Analyzing report: " + path +" Period is: "+ period_step);
 		String content;
 		content = new String(Files.readAllBytes(Paths.get(path)));
@@ -53,13 +92,13 @@ public class ReportAnalyzer {
 			}
 			Pline = new String(Cline);
 		}
-		
+		FileUtils.writeStringToFile(new File(path), "<style>img {    border: 1px solid #ddd;    border-radius: 4px;    padding: 5px;    width: 150px;}img:hover {    box-shadow: 0 0 2px 1px rgba(0, 140, 186, 0.5);}</style>", true) ;
 	}
 	
 	public static void splitLogs()
 	{
-		Path PathObj = Paths.get(EnvironmentFiles.getLogFilePath(),EnvironmentFiles.getLogFileName());
-		//Path PathObj = Paths.get("F:\\WS\\SAS_FW\\logs\\Application.log");
+		//Path PathObj = Paths.get(EnvironmentFiles.getLogFilePath(),EnvironmentFiles.getLogFileName());
+		Path PathObj = Paths.get("F:\\WS\\SAS_FW\\logs\\Application.log");
 		FileWriter fw = null;
 		BufferedWriter bw = null;
 		String[] content = null;
@@ -80,24 +119,33 @@ public class ReportAnalyzer {
 			e1.printStackTrace();
 		}
 
+		String lastThreadID = "";
 		for (String line : content) {
 			try {
-
-				if (!getThreadID(line).equals("")) {
-					File logfile = new File(PathObj.getParent()+"\\reportLogs\\"+ getThreadID(line) + ".html");
-					// if file doesnt exists, then create it
-					if (!logfile.exists()) {
-						logfile.createNewFile();
-						fw = new FileWriter(logfile.getAbsoluteFile(), true);
-						bw = new BufferedWriter(fw);
-						bw.write("<font face='monospace'>\n"+line+"\n");
-					}else
-					{
-						fw = new FileWriter(logfile.getAbsoluteFile(), true);
-						bw = new BufferedWriter(fw);
-						bw.write(line+"\n");
-					}
-				} // if
+				String currentthreadID =  getThreadID(line) ;
+				File logfile ;
+				if (!currentthreadID.equals("")) {
+					lastThreadID = currentthreadID;
+					logfile = new File(PathObj.getParent()+"\\reportLogs\\"+ currentthreadID + ".html");
+				}
+				else
+				{
+					logfile = new File(PathObj.getParent()+"\\reportLogs\\"+ lastThreadID + ".html");
+				}
+				
+				// if file doesnt exists, then create it
+				if (!logfile.exists()) {
+					logfile.createNewFile();
+					fw = new FileWriter(logfile.getAbsoluteFile(), true);
+					bw = new BufferedWriter(fw);
+					bw.write("<font face='monospace'>\n"+line+"\n");
+				}else
+				{
+					fw = new FileWriter(logfile.getAbsoluteFile(), true);
+					bw = new BufferedWriter(fw);
+					bw.write(line+"\n");
+				}
+				
 			} catch (IOException e) {
 				e.printStackTrace();
 			} finally {
@@ -198,7 +246,7 @@ public class ReportAnalyzer {
 	}
 	
 	public static void main(String[] args) throws IOException {
-		ReportAnalyzer.splitLogs();
+		ReportAnalyzer.analyze("F:\\WS\\SAS_FW/AutomationReport/AutoRep_12-26-2017142235//12.html",5000);
 		
 	}
 

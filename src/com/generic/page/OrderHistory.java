@@ -36,7 +36,7 @@ public class OrderHistory extends SelTestCase {
 		valuesArr.add("");
 		String sortOptions2SelectedValue = "";
 		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
-		sortOptions2SelectedValue = SelectorUtil.textValue;
+		sortOptions2SelectedValue = SelectorUtil.textValue.get();
 		getCurrentFunctionName(false);
     	return sortOptions2SelectedValue;
     }
@@ -59,7 +59,7 @@ public class OrderHistory extends SelTestCase {
 		valuesArr.add("");
 		String sortOptions2SelectedValue = "";
 		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
-		sortOptions2SelectedValue = SelectorUtil.textValue;
+		sortOptions2SelectedValue = SelectorUtil.textValue.get();
 		getCurrentFunctionName(false);
     	return sortOptions2SelectedValue;
     }
@@ -69,9 +69,9 @@ public class OrderHistory extends SelTestCase {
 		subStrArr.add(OrderHistorySelector.ordersNumberLabel);
 		valuesArr.add("");
 		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
-		logs.debug(MessageFormat.format(LoggingMsg.NUMBER_OF_ORDERS, SelectorUtil.textValue));
+		logs.debug(MessageFormat.format(LoggingMsg.NUMBER_OF_ORDERS, SelectorUtil.textValue.get()));
 		getCurrentFunctionName(false);
-		String ordersNum = SelectorUtil.textValue.split(" ")[0];
+		String ordersNum = SelectorUtil.textValue.get().split(" ")[0];
 		numberOfOrdersShownInHeader = Integer.parseInt(ordersNum);
 		return ordersNum;
 	}
@@ -101,7 +101,7 @@ public class OrderHistory extends SelTestCase {
 		valuesArr.add("index," + index);
 		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
 		getCurrentFunctionName(false);
-		return SelectorUtil.textValue;
+		return SelectorUtil.textValue.get();
 	}
     // nthChild is the index of all elements (here all td at the same index in all tr in the table)
     // index is the index of the exact element extracted from all elements returned
@@ -113,6 +113,6 @@ public class OrderHistory extends SelTestCase {
 		valuesArr.add("index," + index);
 		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
 		getCurrentFunctionName(false);
-		return SelectorUtil.textValue;
+		return SelectorUtil.textValue.get();
 	}
 }

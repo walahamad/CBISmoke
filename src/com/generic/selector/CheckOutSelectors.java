@@ -17,6 +17,13 @@ public class CheckOutSelectors
 	public static final String selectFirstAddress = "Use this Address";
 	public static final String orderTotalShippingAddress = "test_cart_totalPrice_label_$";
 	public static final String orderSubTotalShippingAddress = "test_Order_Totals_Subtotal_$";
+	public static final String fnameError = "firstName.errors";
+	public static final String lnameError = "lastName.errors";
+	public static final String address1Error = "line1.errors";
+	public static final String cityError = "townCity.errors";
+	public static final String postcodeEerror = "postcode.errors";
+	public static final String alertInfo = "alert alert-info alert-dismissable";
+	public static final String titleError = "titleCode.errors";
 	
 	//shipping method
 	public static final String shippingMethod = "delivery_method";
@@ -39,7 +46,13 @@ public class CheckOutSelectors
 	public static final String orderTotalPymentInfo = "test_cart_totalPrice_label_$";
 	public static final String orderShippingPymentInfo = "test_Order_Totals_Delivery_$";
 	public static final String orderSubtotalPymentInfo = "test_Order_Totals_Subtotal_$";
-	
+	public static final String cardTypeError = "card_cardType.errors";
+	public static final String accountNumberError = "card_accountNumber.errors";
+	public static final String expirationMonthError = "card_expirationMonth.errors";
+	public static final String expirationYearError = "card_expirationYear.errors";
+	public static final String cvNumberError = "card_cvNumber.errors";
+	public static final String billToCountryError = "billTo_country.errors";
+		
 	//summary - review / place order
 	public static final String summaryTotal = "test_Order_Totals_Subtotal_$";
 	public static final String shippingCost = "test_Order_Totals_Delivery_$";

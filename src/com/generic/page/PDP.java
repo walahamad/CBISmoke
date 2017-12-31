@@ -41,7 +41,7 @@ public class PDP extends SelTestCase {
 		valuesArr.add("");
 		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
 		getCurrentFunctionName(false);
-		return SelectorUtil.textValue;
+		return SelectorUtil.textValue.get();
 	}
 
 	private static void clickcheckoutBtnCartPopup() throws Exception {

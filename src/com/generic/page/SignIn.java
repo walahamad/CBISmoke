@@ -58,7 +58,7 @@ public class SignIn extends SelTestCase {
 			subStrArr.add(SignInSelectors.errorMessage);
 			valuesArr.add("");
 			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
-			logs.debug(MessageFormat.format(LoggingMsg.ERROR_MSG, SelectorUtil.textValue));
+			logs.debug(MessageFormat.format(LoggingMsg.ERROR_MSG, SelectorUtil.textValue.get()));
 		} catch (Exception e) {
 			// to make sure the application is throwing the correct exception
 			if (ExceptionMsg.noValidSelector.contains(e.getMessage()))
@@ -67,7 +67,7 @@ public class SignIn extends SelTestCase {
 				throw new Exception(e);
 		}
 		getCurrentFunctionName(false);
-		return SelectorUtil.textValue;
+		return SelectorUtil.textValue.get();
 	}
 
 }

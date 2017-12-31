@@ -1,18 +1,18 @@
 package com.generic.tests.account;
 
-import java.text.MessageFormat;
-import static org.testng.Assert.*;
-import java.util.Arrays;
-import java.util.Collection;
+import static org.testng.Assert.assertNotEquals;
 
-import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
-import org.junit.runners.Parameterized.Parameters;
+import java.text.MessageFormat;
+
+import org.apache.commons.lang3.RandomUtils;
+import org.testng.Assert;
+import org.testng.annotations.BeforeTest;
+import org.testng.annotations.DataProvider;
+import org.testng.annotations.Test;
+import org.testng.xml.XmlTest;
 import java.util.LinkedHashMap;
 
+import com.generic.page.Registration;
 import com.generic.page.AddressBook;
 import com.generic.page.CheckOut;
 import com.generic.page.SignIn;
@@ -21,13 +21,14 @@ import com.generic.setup.Common;
 import com.generic.setup.LoggingMsg;
 import com.generic.setup.SelTestCase;
 import com.generic.setup.SheetVariables;
-import com.generic.util.SelectorUtil;
 import com.generic.util.TestUtilities;
+import com.generic.util.ReportUtil;
+import com.generic.util.SASLogger;
+import com.generic.util.SelectorUtil;
 
-@RunWith(Parameterized.class)
 public class AddressBookValidation extends SelTestCase {
-
-	public static final LinkedHashMap<String, Object> addresses = Common.readAddresses();
+	private static LinkedHashMap<String, Object> addresses = null;
+	private static LinkedHashMap<String, Object> users = null;
 	boolean defaultAddress = true;
 	private String addressbook;
 	private int numberofaddresses;
@@ -39,52 +40,64 @@ public class AddressBookValidation extends SelTestCase {
 	private String url;
 	private String desc;
 	private String newaddress;
+	private String email;
 
-	@BeforeClass
-	public static void initialSetUp() throws Exception {
-		testCaseRepotId = SheetVariables.addressbookTestCaseId;
-		TestUtilities.configInitialization();
+	private static XmlTest testObject;
+
+	private static ThreadLocal<SASLogger> Testlogs = new ThreadLocal<SASLogger>();
+
+	@BeforeTest
+	public static void initialSetUp(XmlTest test) throws Exception {
+		addresses = Common.readAddresses();
+		users = Common.readUsers();
+		testObject = test;
 	}
 
-	public AddressBookValidation(String caseId, String runTest, String url, String desc, String newaddress) {
-		this.caseId = caseId;
-		this.runTest = runTest;
-		this.url = url;
-		this.desc = desc;
-		this.newaddress = newaddress;
-	}
-
-	@Parameters(name = "{index}_:{3}")
-	public static Collection<Object[]> loadTestData() throws Exception {
+	@DataProvider(name = "AddressBook", parallel = true)
+	public static Object[][] loadTestData() throws Exception {
+		// concurrency maintenance on sheet reading
+		getBrowserWait(testObject.getParameter("browserName"));
 		Object[][] data = TestUtilities.getData(testDataSheet);
-		return Arrays.asList(data);
+		return data;
 	}
 
 	@SuppressWarnings("unchecked") // avoid warning from linked hashmap
-	@Test
-	public void BookAddressTest() throws Exception {
+	@Test(dataProvider = "AddressBook")
+	public void BookAddressTest(String caseId, String runTest, String url, String desc, String email, String newaddress)
+			throws Exception {
+		// Important to add this for logging/reporting
+		Testlogs.set(new SASLogger("Address_Book " + getBrowserName()));
+		setTestCaseReportName("Address Book Case");
+		logCaseDetailds(MessageFormat.format(LoggingMsg.ADDRESSPOOKDESC, testDataSheet + "." + caseId,
+				this.getClass().getCanonicalName(), desc));
+
+		this.email = email.replace("tester", "tester_" + getBrowserName().replace(" ", "_"));
+
 		try {
-			SignIn.typeUsername("etabib@pfsweb.com");
-			SignIn.typePassword("password");
-			SignIn.clickLogin();
-			// AddressBook.clickmyaccount();
-			// AddressBook.clickaddressbook();
-			getDriver().get(url);
+			LinkedHashMap<String, Object> userdetails = (LinkedHashMap<String, Object>) users.get(email);
+			Testlogs.get().debug(this.email);
+			Testlogs.get().debug((String) userdetails.get(Registration.keys.password));
+			
 			if (desc.contains("edit")) {
+				SignIn.logIn(this.email, (String) userdetails.get(Registration.keys.password));
+				getDriver().get(url);
 				addressbook = AddressBook.getFirstAddressDetails();
 				AddressBook.clickEditAddress();
 				AddressBook.updateAddress();
 				AddressBook.clickAddressBackBtn();
-				// getDriver().get(AddressBookSelectors.addressbookurl);
 				assertNotEquals(addressbook, AddressBook.getFirstAddressDetails());
 			}
 			if (desc.contains("form validation")) {
+				SignIn.logIn(this.email, (String) userdetails.get(Registration.keys.password));
+				getDriver().get(url);
 				addressbook = AddressBook.getFirstAddressDetails();
 				AddressBook.clickEditAddress();
 				AddressBook.clearAddress();
 				AddressBook.verifyAddressFormError();
 			}
-			if (desc.contains("new")) {
+			if (desc.contains("new") || desc.contains("default") || desc.contains("delete")) {
+				SignIn.logIn(this.email, (String) userdetails.get(Registration.keys.password));
+				getDriver().get(url);
 				addressbook = AddressBook.getFirstAddressDetails();
 				Thread.sleep(1000);
 				AddressBook.clickAddNewAddress();
@@ -94,24 +107,24 @@ public class AddressBookValidation extends SelTestCase {
 				logs.debug("test");
 				AddressBook.fillAndClickSave((String) addressDetails.get(CheckOut.shippingAddress.keys.countery),
 						(String) addressDetails.get(CheckOut.shippingAddress.keys.title),
-						(String) addressDetails.get(CheckOut.shippingAddress.keys.firstName),
+						"NEW_"+RandomUtils.nextInt(1000,9000),
 						(String) addressDetails.get(CheckOut.shippingAddress.keys.lastName),
 						(String) addressDetails.get(CheckOut.shippingAddress.keys.adddressLine),
 						(String) addressDetails.get(CheckOut.shippingAddress.keys.city),
 						(String) addressDetails.get(CheckOut.shippingAddress.keys.postal),
 						(String) addressDetails.get(CheckOut.shippingAddress.keys.phone), defaultAddress);
 				AddressBook.clickAddressBackBtn();
-				// getDriver().get(AddressBookSelectors.addressbookurl);
-				assertNotEquals(addressbook, AddressBook.getFirstAddressDetails());
-			}
+				sassert().assertNotEquals(addressbook, AddressBook.getFirstAddressDetails());
+			
 			if (desc.contains("default")) {
+				getDriver().get(url);
 				addressbook = AddressBook.getFirstAddressDetails();
 				AddressBook.clickSetAsDefault();
 				AddressBook.getAlertInfo();
-				// assertNotEquals(addressbook,
-				// AddressBook.getFirstAddressDetails());
+				sassert().assertNotEquals(addressbook, AddressBook.getFirstAddressDetails());
 			}
 			if (desc.contains("delete")) {
+				getDriver().get(url);
 				AddressBook.getAddressBookList();
 				logs.debug(MessageFormat.format(LoggingMsg.ACTUAL_TEXT, SelectorUtil.numberOfFoundElements));
 				numberofaddresses = SelectorUtil.numberOfFoundElements;
@@ -120,17 +133,19 @@ public class AddressBookValidation extends SelTestCase {
 				Thread.sleep(7000);
 				AddressBook.getAddressBookList();
 				logs.debug(MessageFormat.format(LoggingMsg.ACTUAL_TEXT, SelectorUtil.numberOfFoundElements));
-				assertNotEquals(numberofaddresses, SelectorUtil.numberOfFoundElements);
+				sassert().assertNotEquals(numberofaddresses, SelectorUtil.numberOfFoundElements);
 			}
+			}
+			sassert().assertAll();
 			Common.testPass();
 		} catch (Throwable t) {
 			setTestCaseDescription(getTestCaseDescription());
-			logs.debug(MessageFormat.format(LoggingMsg.DEBUGGING_TEXT, t.getMessage()));
+			Testlogs.get().debug(MessageFormat.format(LoggingMsg.DEBUGGING_TEXT, t.getMessage()));
 			t.printStackTrace();
 			String temp = getTestCaseReportName();
 			Common.testFail(t, temp);
-			Common.takeScreenShot();
-			Assert.assertTrue(t.getMessage(), false);
+			ReportUtil.takeScreenShot(getDriver());
+			Assert.assertTrue(false, t.getMessage());
 		} // catch
 	}// test
 }// class

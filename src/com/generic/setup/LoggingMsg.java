@@ -12,6 +12,7 @@ public class LoggingMsg {
 	public static String ORDER_SUBTOTAL = "Order subtotal: {0}";
 	public static String APPLYING_COUPON = "{0} Coupon {1}" ;
 	public static String SEL_TEXT = "{0}";
+	public static String COUPON_MSG = "The coupon msg is : {0}";
 	public static String ERROR_MSG ="Error message is: {0}";
 	public static String EMPTY_CART_ERROR_MSG = "Cart is not empty: {0}";
 	public static String REMOVE_ALL_ITEMS_FROM_CART = "removing all items from cart";
@@ -102,4 +103,9 @@ public class LoggingMsg {
 	public static String NUMBER_OF_ADDRESSES = "number of addresses: {0}";
 	public static String CLICKING_BACK_TO_ADDRESSES_BUTTON = "clicking on {0} btn from add address";
 	public static String DEFAULT_ADDRESS_UPDATE_MESSAGE = "Address update message: {0}";
+	public static String PAMENT_DETAILS = "Payment Dtails: {0}";
+	public static String PAYMENT_CARD_REMOVED_MESSAGE = "Remove card message: {0}";
+	public static final String ADDRESSPOOKDESC = "<b>Case ID: </b>{0} <br><b>File of execution:</b> {1}<br><b>Decrption: </b>{2}";
+	public static final String PAYMENTDESC = "<b>Case ID: </b>{0} <br><b>File of execution:</b> {1}<br><b>Decrption: </b>{2}";
+
 }

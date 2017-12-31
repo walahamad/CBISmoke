@@ -26,6 +26,7 @@ import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.Wait;
 
 import com.generic.setup.SelTestCase;
+import com.generic.selector.CartSelectors;
 import com.generic.setup.ActionDriver;
 import com.generic.setup.ExceptionMsg;
 import com.generic.setup.LoggingMsg;
@@ -34,7 +35,8 @@ import com.generic.setup.LoggingMsg;
 public class SelectorUtil extends SelTestCase {
 	
 	public static Boolean isAnErrorSelector = Boolean.FALSE;
-	public static String textValue;
+	//public static String textValue;
+	public static ThreadLocal<String> textValue = new ThreadLocal<String>() ;
 	public static int numberOfFoundElements;
 	private static By parentBy = null;
 	
@@ -124,6 +126,13 @@ public class SelectorUtil extends SelTestCase {
 	    	     {
 					//logs.debug(MessageFormat.format(LoggingMsg.IN_SELECTOR_TYPE, "xpath"));
 	    	    	 foundElements = htmlDoc.select("*:containsOwn("+ subStr +")");
+	    	    	 selectorType = (!(foundElements.isEmpty()) ? subStr:selectorType);
+	    	     }
+				 
+				 if (foundElements.isEmpty()&& subStr.contains("css,"))
+	    	     {
+					//logs.debug(MessageFormat.format(LoggingMsg.IN_SELECTOR_TYPE, "CSS"));
+	    	    	 foundElements = htmlDoc.select(subStr.replace("css,", ""));
 	    	    	 selectorType = (!(foundElements.isEmpty()) ? subStr:selectorType);
 	    	     }
 				 
@@ -236,44 +245,38 @@ public class SelectorUtil extends SelTestCase {
     	return ActionType;
 	}
 
-	    public static By getBySelectorForElements(Elements foundElements, String selType) {
-	    	By selector = null; 
-			for (org.jsoup.nodes.Element e : foundElements) {
-				selector = null;
-					switch(selType) {
-					case "id":
-						selector = By.id(e.id());
-						break;
-					case "class":
-						String[] tempClassArr = e.className().split(" ");
-						StringBuilder className = new StringBuilder();
-						for (String s : tempClassArr) {
-							className.append(".");
-							className.append(s);
-						}
-						selector = By.cssSelector(className.toString());
-						break;
-					case "name":
-						selector = By.name(e.attr("name"));
-						break;
-					case "title":
-						selector = By.xpath("//*[contains(@"+selType+",'"+ e.attr(selType) + "')]");
-						break;
-						
-					default:
-						if (selType.contains("css")) {
-							String selTemp = selType.split(",")[1];
-							selector = By.cssSelector(selTemp);
-						} else {
-							selector = By.xpath("//*[contains(text(),'"+ selType + "')]");
-						}
-						break;
-					}
-		    		
+	public static By getBySelectorForElements(Elements foundElements, String selType) {
+		By selector = null;
+		for (org.jsoup.nodes.Element e : foundElements) {
+			selector = null;
+			if (selType.equals("id")) {
+				selector = By.id(e.id());
+			} else if (selType.equals("class")) {
+				String[] tempClassArr = e.className().split(" ");
+				StringBuilder className = new StringBuilder();
+				for (String s : tempClassArr) {
+					className.append(".");
+					className.append(s);
 				}
-			return selector;
-	    	
-	    }
+				selector = By.cssSelector(className.toString());
+			} else if (selType.equals("name")) {
+				selector = By.name(e.attr("name"));
+			} else if (selType.equals("title")) {
+				selector = By.xpath("//*[contains(@" + selType + ",'" + e.attr(selType) + "')]");
+			} else {
+
+				if (selType.contains("css")) {
+					String selTemp = selType.split(",")[1];
+					selector = By.cssSelector(selTemp);
+				} else {
+					selector = By.xpath("//*[contains(text(),'" + selType + "')]");
+				}
+			}
+
+		}
+		return selector;
+
+	}
 	    
 
 	    public static String getStringSelectorForElements(Elements foundElements, String selType) {
@@ -320,7 +323,7 @@ public class SelectorUtil extends SelTestCase {
 	    
 	    public static void doAppropriateAction(Map <String, Object> webElementInfo ) throws Exception {
 	    	getCurrentFunctionName(true);
-	    	SelectorUtil.textValue = "";
+	    	textValue.set(""); 
 	    	
 	    	String browser = SelTestCase.getBrowserName();
 	    	
@@ -359,11 +362,14 @@ public class SelectorUtil extends SelTestCase {
 							  JavascriptExecutor jse = (JavascriptExecutor)getDriver();
 							   jse.executeScript("arguments[0].scrollIntoView()", field);
 							  // I used the value attr instead of getText() as the input has the text as a value
-							   SelectorUtil.textValue = field.getAttribute("value");
+							   textValue.set(field.getAttribute("value"));
+							   logs.debug("the text value is: " + SelectorUtil.textValue.get());
 						  } else {
 
 							  logs.debug(MessageFormat.format(LoggingMsg.WRITING_TO_SEL, "", value, byAction.toString()));
-							  field.clear();
+							  JavascriptExecutor jse = (JavascriptExecutor)getDriver();
+							   jse.executeScript("arguments[0].scrollIntoView()", field);
+							   field.clear();
 							  String tempVal = value;
 							  if (value.contains("pressEnter")) {
 								  tempVal = value.split(",")[0];
@@ -380,7 +386,7 @@ public class SelectorUtil extends SelTestCase {
 						       .withTimeout(30, TimeUnit.SECONDS)
 						       .pollingEvery(5, TimeUnit.SECONDS)
 						       .ignoring(NoSuchElementException.class);
-					   		
+							   //TODO: move it to general function
 					   
 						   logs.debug(MessageFormat.format(LoggingMsg.CLICKING_SEL, byAction.toString()));
 						   JavascriptExecutor jse = (JavascriptExecutor)getDriver();
@@ -390,7 +396,7 @@ public class SelectorUtil extends SelTestCase {
 							   public WebElement apply(WebDriver driver) {
 								   return driver.findElement(byAction);
 							   }});
-						    logs.debug("PPPPPPPPPPPPPPPPPPPPPPP..."+ browser);
+						    logs.debug("browser..."+ browser);
 						   if(browser.contains("firefox") || browser.contains("chrome") )
 						   {
 							   logs.debug("clicking..."+ SelTestCase.getBrowserName());
@@ -413,7 +419,7 @@ public class SelectorUtil extends SelTestCase {
 									       .pollingEvery(5, TimeUnit.SECONDS)
 									       .ignoring(NoSuchElementException.class);
 								   		
-								   
+								   //TODO: move it to general function
 									   logs.debug(MessageFormat.format(LoggingMsg.CLICKING_SEL, byAction.toString()));
 									   JavascriptExecutor jse = (JavascriptExecutor)getDriver();
 									   jse.executeScript("arguments[0].scrollIntoView()", field); 
@@ -422,7 +428,7 @@ public class SelectorUtil extends SelTestCase {
 										   public WebElement apply(WebDriver driver) {
 											   return driver.findElement(byAction);
 										   }});
-									    logs.debug("PPPPPPPPPPPPPPPPPPPPPPP..."+ browser);
+									    logs.debug("browser..."+ browser);
 									   if(browser.contains("firefox") || browser.contains("chrome") )
 									   {
 										   logs.debug("clicking..."+ browser);
@@ -473,7 +479,7 @@ public class SelectorUtil extends SelTestCase {
 					   else if (action.equals("gettext"))
 					   {
 						   logs.debug(MessageFormat.format(LoggingMsg.GETTING_SEL,"txt", byAction.toString()));
-						   SelectorUtil.textValue = field.getText();
+						   textValue.set(field.getText());
 					   }
 					   else if (action.equals("click,gettext"))
 					   {
@@ -486,7 +492,7 @@ public class SelectorUtil extends SelTestCase {
 						   try 
 						   {
 							   textVal = field.getText();
-							   SelectorUtil.textValue = textVal;
+							   textValue.set(textVal);
 						   }catch(Exception e)
 						   {
 						   		logs.debug(MessageFormat.format(LoggingMsg.FAILED_ACTION_MSG, "get text"));
@@ -561,7 +567,7 @@ public class SelectorUtil extends SelTestCase {
 							   	    }
 							   	}
 						   }
-						   SelectorUtil.textValue = textVal;
+						   textValue.set(textVal);
 					   }
 		    		}
 		    		else if (action.equals("Validate") && SelectorUtil.isAnErrorSelector)
@@ -586,10 +592,39 @@ public class SelectorUtil extends SelTestCase {
 		}
 	    
 	    @SuppressWarnings("rawtypes")
-		public static LinkedHashMap<String, LinkedHashMap> initializeSelectorsAndDoActions(List<String> subStrArr,
-	    		List<String> valuesArr ) throws Exception {
+		public static boolean isDiplayed(List<String> subStrArr) throws Exception
+	    {
+	    	getCurrentFunctionName(true);
+	    	List<String> valuesArr = new ArrayList<String>();
+	    	valuesArr.add("");
+	    	LinkedHashMap<String, LinkedHashMap> webelementsInfo = initializeSelectorsAndDoActions(new ArrayList<String>(subStrArr), valuesArr, false);
+	    	
+	    	List <WebElement> items = getDriver().findElements((By) webelementsInfo.get(subStrArr.get(0)).get("by"));
+	    	boolean isDisplayed = true;
+    		if (!items.get(0).isDisplayed())
+    			isDisplayed = false;
+	    	getCurrentFunctionName(false);
+	    	return isDisplayed;
+	    }
+	    
+	    @SuppressWarnings("rawtypes")
+		public static String getAttr(List<String> subStrArr,String attr) throws Exception
+	    {
+	    	getCurrentFunctionName(true);
+	    	List<String> valuesArr = new ArrayList<String>();
+	    	valuesArr.add("");
+	    	LinkedHashMap<String, LinkedHashMap> webelementsInfo = initializeSelectorsAndDoActions(new ArrayList<String>(subStrArr), valuesArr, false);
+	    	List <WebElement> items = getDriver().findElements((By) webelementsInfo.get(subStrArr.get(0)).get("by"));
+	    	String attrValue = items.get(0).getAttribute(attr);
+	    	getCurrentFunctionName(false);
+			return attrValue;
+	    }
+	    
+	    @SuppressWarnings("rawtypes")
+		public static LinkedHashMap<String, LinkedHashMap> initializeSelectorsAndDoActions(List<String> subStrArr, List<String> valuesArr ) throws Exception {
 	    	return initializeSelectorsAndDoActions(subStrArr,valuesArr , true);
 	    }
+	    
 	    
 	    @SuppressWarnings("rawtypes")
 		public static LinkedHashMap<String, LinkedHashMap> initializeSelectorsAndDoActions(List<String> subStrArr,

@@ -164,7 +164,7 @@ public class TestUtilities extends SelTestCase {
 		FileInputStream fn =new FileInputStream(EnvironmentFiles.getConfigFilePath());
 		getCONFIG().load(fn);
 		logs.debug(MessageFormat.format(LoggingMsg.ADDED_ENVIRONMENT_NAME, getCONFIG().getProperty("testEnvironment")));
-		getCONFIG().setProperty("testSiteName", "https://"+getCONFIG().getProperty("testEnvironment")+"/"+getCONFIG().getProperty("testSiteName"));
+		//getCONFIG().setProperty("testSiteName", "https://"+getCONFIG().getProperty("testEnvironment")+"/"+getCONFIG().getProperty("testSiteName"));
 		//getCONFIG().setProperty("logout", "https://"+getCONFIG().getProperty("testEnvironment")+"."+getCONFIG().getProperty("logout"));
 		
 		logs.debug(MessageFormat.format(LoggingMsg.REPORT_TCID_MSG, testCaseRepotId));

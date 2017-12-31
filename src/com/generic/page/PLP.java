@@ -41,7 +41,7 @@ public class PLP extends SelTestCase {
 		valuesArr.add("");
 		String sortOptions2SelectedValue = "";
 		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
-		sortOptions2SelectedValue = SelectorUtil.textValue;
+		sortOptions2SelectedValue = SelectorUtil.textValue.get();
 		getCurrentFunctionName(false);
     	return sortOptions2SelectedValue;
     }
@@ -68,7 +68,7 @@ public class PLP extends SelTestCase {
 		valuesArr.add("");
 		String sortOptions2SelectedValue = "";
 		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
-		sortOptions2SelectedValue = SelectorUtil.textValue;
+		sortOptions2SelectedValue = SelectorUtil.textValue.get();
 		getCurrentFunctionName(false);
     	return sortOptions2SelectedValue;
     }
@@ -80,9 +80,9 @@ public class PLP extends SelTestCase {
 		subStrArr.add(PLPSelectors.numberOfProductsFound);
 		valuesArr.add("");
 		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
-		logs.debug(MessageFormat.format(LoggingMsg.NUMBER_OF_PRODUCTS, SelectorUtil.textValue));
+		logs.debug(MessageFormat.format(LoggingMsg.NUMBER_OF_PRODUCTS, SelectorUtil.textValue.get()));
 		getCurrentFunctionName(false);
-		String productsNum = SelectorUtil.textValue.split(" ")[0];
+		String productsNum = SelectorUtil.textValue.get().split(" ")[0];
 		numberOfProductsShownInHeader = Integer.parseInt(productsNum);
 		return productsNum;
 	}
@@ -166,7 +166,7 @@ public class PLP extends SelTestCase {
 		valuesArr.add("noClick");
 		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
 		getCurrentFunctionName(false);
-		return SelectorUtil.textValue;
+		return SelectorUtil.textValue.get();
 	}
     
     public static String getPLPProductPriceFromCartBag() throws Exception {
@@ -176,7 +176,7 @@ public class PLP extends SelTestCase {
 		valuesArr.add("child,"+PLPSelectors.addToCartItemPrice);
 		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
 		getCurrentFunctionName(false);
-		return SelectorUtil.textValue;
+		return SelectorUtil.textValue.get();
 	}
     
     public static void clickCheckoutBtn() throws Exception {
@@ -222,7 +222,7 @@ public class PLP extends SelTestCase {
 		valuesArr.add("child,"+PLPSelectors.facetNavSecondCount);
 		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
 		getCurrentFunctionName(false);
-		return SelectorUtil.textValue;
+		return SelectorUtil.textValue.get();
 	}
     
     public static String getFacetNavTitlePriceCount() throws Exception {
@@ -232,7 +232,7 @@ public class PLP extends SelTestCase {
 		valuesArr.add("child,"+PLPSelectors.facetNavThirdCount);
 		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
 		getCurrentFunctionName(false);
-		return SelectorUtil.textValue;
+		return SelectorUtil.textValue.get();
 	}
     
     public static String getFacetNavTitleColourCount() throws Exception {
@@ -242,7 +242,7 @@ public class PLP extends SelTestCase {
 		valuesArr.add("child,"+PLPSelectors.facetNavThirdCount);
 		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
 		getCurrentFunctionName(false);
-		return SelectorUtil.textValue;
+		return SelectorUtil.textValue.get();
 	}
     public static String getFacetNavTitleSizeCount() throws Exception {
 		getCurrentFunctionName(true);
@@ -251,7 +251,7 @@ public class PLP extends SelTestCase {
 		valuesArr.add("child,"+PLPSelectors.facetNavThirdCount);
 		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
 		getCurrentFunctionName(false);
-		return SelectorUtil.textValue;
+		return SelectorUtil.textValue.get();
 	}
     
     public static void clickChangeLocationLink() throws Exception {

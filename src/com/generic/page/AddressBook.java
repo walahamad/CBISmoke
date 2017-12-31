@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 
+import org.apache.commons.lang3.RandomUtils;
+
 import com.generic.selector.AddressBookSelectors;
 import com.generic.setup.SelTestCase;
 import com.generic.page.CheckOut.shippingAddress;
@@ -85,9 +87,9 @@ public class AddressBook extends SelTestCase {
 		subStrArr.add(AddressBookSelectors.addressDetail);
 		valuesArr.add("");
 		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
-		logs.debug(MessageFormat.format(LoggingMsg.ADDRESS_DETAIL, SelectorUtil.textValue));
+		logs.debug(MessageFormat.format(LoggingMsg.ADDRESS_DETAIL, SelectorUtil.textValue.get()));
 		getCurrentFunctionName(false);
-		return SelectorUtil.textValue;
+		return SelectorUtil.textValue.get();
 	}
 
 	public static void getAlertInfo() throws Exception {
@@ -98,7 +100,7 @@ public class AddressBook extends SelTestCase {
 		subStrArr.add(AddressBookSelectors.alertInfo);
 		valuesArr.add("");
 		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
-		logs.debug(MessageFormat.format(LoggingMsg.DEFAULT_ADDRESS_UPDATE_MESSAGE, SelectorUtil.textValue));
+		logs.debug(MessageFormat.format(LoggingMsg.DEFAULT_ADDRESS_UPDATE_MESSAGE, SelectorUtil.textValue.get()));
 		getCurrentFunctionName(false);
 	}
 
@@ -178,7 +180,7 @@ public class AddressBook extends SelTestCase {
 		valuesArr.add("");
 		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
 		getCurrentFunctionName(false);
-		return SelectorUtil.textValue;
+		return SelectorUtil.textValue.get();
 	}
 
 	public static void clickDeleteBtn() throws Exception {
@@ -237,7 +239,7 @@ public class AddressBook extends SelTestCase {
 		subStrArr.add(AddressBookSelectors.fnameError);
 		valuesArr.add("");
 		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
-		logs.debug(MessageFormat.format(LoggingMsg.ERROR_MSG, SelectorUtil.textValue));
+		logs.debug(MessageFormat.format(LoggingMsg.ERROR_MSG, SelectorUtil.textValue.get()));
 		getCurrentFunctionName(false);
 
 	}
@@ -250,7 +252,7 @@ public class AddressBook extends SelTestCase {
 		subStrArr.add(AddressBookSelectors.lnameError);
 		valuesArr.add("");
 		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
-		logs.debug(MessageFormat.format(LoggingMsg.ERROR_MSG, SelectorUtil.textValue));
+		logs.debug(MessageFormat.format(LoggingMsg.ERROR_MSG, SelectorUtil.textValue.get()));
 		getCurrentFunctionName(false);
 
 	}
@@ -263,7 +265,7 @@ public class AddressBook extends SelTestCase {
 		subStrArr.add(AddressBookSelectors.address1Error);
 		valuesArr.add("");
 		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
-		logs.debug(MessageFormat.format(LoggingMsg.ERROR_MSG, SelectorUtil.textValue));
+		logs.debug(MessageFormat.format(LoggingMsg.ERROR_MSG, SelectorUtil.textValue.get()));
 		getCurrentFunctionName(false);
 
 	}
@@ -276,7 +278,7 @@ public class AddressBook extends SelTestCase {
 		subStrArr.add(AddressBookSelectors.cityError);
 		valuesArr.add("");
 		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
-		logs.debug(MessageFormat.format(LoggingMsg.ERROR_MSG, SelectorUtil.textValue));
+		logs.debug(MessageFormat.format(LoggingMsg.ERROR_MSG, SelectorUtil.textValue.get()));
 		getCurrentFunctionName(false);
 
 	}
@@ -289,7 +291,7 @@ public class AddressBook extends SelTestCase {
 		subStrArr.add(AddressBookSelectors.postcodeEerror);
 		valuesArr.add("");
 		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
-		logs.debug(MessageFormat.format(LoggingMsg.ERROR_MSG, SelectorUtil.textValue));
+		logs.debug(MessageFormat.format(LoggingMsg.ERROR_MSG, SelectorUtil.textValue.get()));
 		getCurrentFunctionName(false);
 
 	}

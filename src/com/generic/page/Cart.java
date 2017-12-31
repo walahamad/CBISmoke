@@ -2,7 +2,11 @@ package com.generic.page;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 
 import com.generic.selector.CartSelectors;
 import com.generic.setup.SelTestCase;
@@ -49,9 +53,24 @@ public class Cart extends SelTestCase {
 		subStrArr.add(CartSelectors.numberOfProducts);
 		valuesArr.add("");
 		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
-		logs.debug(MessageFormat.format(LoggingMsg.NUMBER_OF_PRODUCTS, SelectorUtil.textValue));
+		logs.debug(MessageFormat.format(LoggingMsg.NUMBER_OF_PRODUCTS, SelectorUtil.textValue.get()));
 		getCurrentFunctionName(false);
-		return SelectorUtil.textValue;
+		return SelectorUtil.textValue.get();
+	}
+	
+	public static String getProductQty(String browser, int lineOrder) throws Exception {
+		getCurrentFunctionName(true);
+		List<String> subStrArr = new ArrayList<String>();
+		List<String> valuesArr = new ArrayList<String>();
+		if (browser.contains("mobile"))
+			subStrArr.add(CartSelectors.productQtyBoxMobile+lineOrder);
+		else
+			subStrArr.add(CartSelectors.productQtyBox+lineOrder);
+		valuesArr.add("getCurrentValue");
+		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
+		logs.debug(MessageFormat.format(LoggingMsg.NUMBER_OF_PRODUCTS, SelectorUtil.textValue.get()));
+		getCurrentFunctionName(false);
+		return SelectorUtil.textValue.get();
 	}
 	
 	public static String checkProductsExsist() throws Exception {
@@ -61,9 +80,9 @@ public class Cart extends SelTestCase {
 		subStrArr.add(CartSelectors.numberOfProducts);
 		valuesArr.add("");
 		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
-		logs.debug(MessageFormat.format(LoggingMsg.NUMBER_OF_PRODUCTS, SelectorUtil.textValue));
+		logs.debug(MessageFormat.format(LoggingMsg.NUMBER_OF_PRODUCTS, SelectorUtil.textValue.get()));
 		getCurrentFunctionName(false);
-		return SelectorUtil.textValue;
+		return SelectorUtil.textValue.get();
 	}
 	
 	public static String getOrderTotal() throws Exception {
@@ -73,9 +92,9 @@ public class Cart extends SelTestCase {
 		subStrArr.add(CartSelectors.cartOrderTotal);
 		valuesArr.add("");
 		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
-		logs.debug(MessageFormat.format(LoggingMsg.ORDER_TOTAL, SelectorUtil.textValue));
+		logs.debug(MessageFormat.format(LoggingMsg.ORDER_TOTAL, SelectorUtil.textValue.get()));
 		getCurrentFunctionName(false);
-		return SelectorUtil.textValue;
+		return SelectorUtil.textValue.get();
 	}
 
 	public static String getOrderSubTotal() throws Exception {
@@ -85,9 +104,9 @@ public class Cart extends SelTestCase {
 		subStrArr.add(CartSelectors.OrderSubTotal);
 		valuesArr.add("");
 		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
-		logs.debug(MessageFormat.format(LoggingMsg.ORDER_SUBTOTAL, SelectorUtil.textValue));
+		logs.debug(MessageFormat.format(LoggingMsg.ORDER_SUBTOTAL, SelectorUtil.textValue.get()));
 		getCurrentFunctionName(false);
-		return SelectorUtil.textValue;
+		return SelectorUtil.textValue.get();
 
 	}
 
@@ -98,9 +117,9 @@ public class Cart extends SelTestCase {
 		subStrArr.add(CartSelectors.cartOrderTax);
 		valuesArr.add("");
 		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
-		logs.debug("Order tax: " + SelectorUtil.textValue);
+		logs.debug("Order tax: " + SelectorUtil.textValue.get());
 		getCurrentFunctionName(false);
-		return SelectorUtil.textValue;
+		return SelectorUtil.textValue.get();
 
 	}
 
@@ -115,6 +134,16 @@ public class Cart extends SelTestCase {
 		} else {
 			logs.debug(MessageFormat.format(LoggingMsg.APPLYING_COUPON, "cannot apply", coupon));
 		}
+		getCurrentFunctionName(false);
+	}
+	
+	public static void removeCoupon() throws Exception {
+		getCurrentFunctionName(true);
+		List<String> subStrArr = new ArrayList<String>();
+		List<String> valuesArr = new ArrayList<String>();
+		subStrArr.add(CartSelectors.removeCoupon);
+		valuesArr.add("");
+		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
 		getCurrentFunctionName(false);
 	}
 
@@ -138,7 +167,7 @@ public class Cart extends SelTestCase {
 		getCurrentFunctionName(false);
 	}
 
-	public static boolean validateinvaldcoupon() throws Exception {
+	public static String validateCoupon() throws Exception {
 		getCurrentFunctionName(true);
 		List<String> subStrArr = new ArrayList<String>();
 		List<String> valuesArr = new ArrayList<String>();
@@ -146,34 +175,25 @@ public class Cart extends SelTestCase {
 		valuesArr.add("");
 		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
 		getCurrentFunctionName(false);
-		logs.debug(MessageFormat.format(LoggingMsg.SEL_TEXT, SelectorUtil.textValue));
-		return !"".equals(SelectorUtil.textValue);
+		logs.debug(MessageFormat.format(LoggingMsg.COUPON_MSG, SelectorUtil.textValue.get()));
+		return SelectorUtil.textValue.get();
 	}
 
-	public static void updateQuantityValue(String qty) throws Exception {
+	public static void updateQuantityValue(String browser, String lineOrder, String qty) throws Exception {
 		// Limited to edit first product qty
 		getCurrentFunctionName(true);
-		writeNewQunatity(qty);
-		updateQunatity();
+		writeNewQunatity(browser, lineOrder, qty+",pressEnter");
 		getCurrentFunctionName(false);
 	}
 
-	private static void updateQunatity() throws Exception {
+	private static void writeNewQunatity(String browser, String lineOrder, String qty) throws Exception {
 		getCurrentFunctionName(true);
 		List<String> subStrArr = new ArrayList<String>();
 		List<String> valuesArr = new ArrayList<String>();
-		subStrArr.add(CartSelectors.updateQunatityBtn);
-		valuesArr.add("");
-		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
-		getCurrentFunctionName(false);
-
-	}
-
-	private static void writeNewQunatity(String qty) throws Exception {
-		getCurrentFunctionName(true);
-		List<String> subStrArr = new ArrayList<String>();
-		List<String> valuesArr = new ArrayList<String>();
-		subStrArr.add(CartSelectors.qty);
+		if (browser.contains("mobile"))
+			subStrArr.add(CartSelectors.productQtyBoxMobile+lineOrder);
+		else
+			subStrArr.add(CartSelectors.productQtyBox+lineOrder);
 		valuesArr.add(qty);
 		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
 		getCurrentFunctionName(false);
@@ -187,7 +207,7 @@ public class Cart extends SelTestCase {
 			subStrArr.add(CartSelectors.errorMessage);
 			valuesArr.add("");
 			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
-			logs.debug(MessageFormat.format(LoggingMsg.ERROR_MSG, SelectorUtil.textValue));
+			logs.debug(MessageFormat.format(LoggingMsg.ERROR_MSG, SelectorUtil.textValue.get()));
 		} catch (Exception e) {
 			// to make sure the application is throwing the correct exception
 			if (ExceptionMsg.noValidSelector.contains(e.getMessage()))
@@ -196,7 +216,7 @@ public class Cart extends SelTestCase {
 				throw new Exception(e);
 		}
 		getCurrentFunctionName(false);
-		return SelectorUtil.textValue;
+		return SelectorUtil.textValue.get();
 	}
 
 	public static String getCartMsg() throws Exception {
@@ -207,7 +227,7 @@ public class Cart extends SelTestCase {
 			subStrArr.add(CartSelectors.errorMessage);
 			valuesArr.add("");
 			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
-			logs.debug(MessageFormat.format(LoggingMsg.ERROR_MSG, SelectorUtil.textValue));
+			logs.debug(MessageFormat.format(LoggingMsg.ERROR_MSG, SelectorUtil.textValue.get()));
 		} catch (Exception e) {
 			// to make sure the application is throwing the correct exception
 			if (ExceptionMsg.noValidSelector.contains(e.getMessage()))
@@ -216,7 +236,7 @@ public class Cart extends SelTestCase {
 				throw new Exception(e);
 		}
 		getCurrentFunctionName(false);
-		return SelectorUtil.textValue;
+		return SelectorUtil.textValue.get();
 	}
 
 	public static boolean isCartEmpty() throws Exception {
@@ -226,13 +246,13 @@ public class Cart extends SelTestCase {
 		subStrArr.add(CartSelectors.cartContent);
 		valuesArr.add("");
 		try {
-			SelectorUtil.textValue = "";
+			SelectorUtil.textValue.set("");
 			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
 		} catch (Exception e) {
 			logs.debug(MessageFormat.format(LoggingMsg.EMPTY_CART_ERROR_MSG, e.getMessage()));
 		}
 		getCurrentFunctionName(false);
-		return (SelectorUtil.textValue.contains("empty") ? true : false);
+		return (SelectorUtil.textValue.get().contains("empty") ? true : false);
 	}
 
 	public static void removeAllItemsFromCart() throws Exception {
@@ -285,8 +305,30 @@ public class Cart extends SelTestCase {
 		subStrArr.add(CartSelectors.cartOrderShipping);
 		valuesArr.add("");
 		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
-		logs.debug("Order shipping: " + SelectorUtil.textValue);
+		logs.debug("Order shipping: " + SelectorUtil.textValue.get());
 		getCurrentFunctionName(false);
-		return SelectorUtil.textValue;
+		return SelectorUtil.textValue.get();
+	}
+	
+	public static boolean checkItemImage() throws Exception {
+		getCurrentFunctionName(true);
+		List<String> subStrArr = new ArrayList<String>();
+		subStrArr.add(CartSelectors.itemImages);
+		
+		boolean isDisplayed = SelectorUtil.isDiplayed(subStrArr);
+		logs.debug("images check result is " + isDisplayed);
+		getCurrentFunctionName(false);
+		return isDisplayed;
+	}
+	
+	public static boolean checkProductLink(String PLink) throws Exception {
+		getCurrentFunctionName(true);
+		List<String> subStrArr = new ArrayList<String>();
+		subStrArr.add(CartSelectors.itemLink);
+		String attrValue =SelectorUtil.getAttr(subStrArr, "href");
+		logs.debug("links check result is: " + attrValue);
+		logs.debug("links is: " + PLink);
+		getCurrentFunctionName(false);
+		return PLink.contains(attrValue);
 	}
 }
