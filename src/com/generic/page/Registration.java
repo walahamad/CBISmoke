@@ -4,6 +4,7 @@ package com.generic.page;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import com.generic.selector.RegistrationSelectors;
 import com.generic.setup.LoggingMsg;
@@ -12,6 +13,7 @@ import com.generic.util.SelectorUtil;
 
 public class Registration extends SelTestCase {
     public static class keys{
+    	public static final String caseId = "caseId";
     	public static final String title = "title";
     	public static final String name = "name";
     	public static final String userName = "userName";
@@ -138,6 +140,118 @@ public class Registration extends SelTestCase {
 		checkConsentGiven1(isConsentGiven1Checked);
 
 		clickRegistration();
+		getCurrentFunctionName(false);
+		
+	}
+	public static void getFirstNameError() throws Exception {
+		getCurrentFunctionName(true);
+		List<String> subStrArr = new ArrayList<String>();
+		List<String> valuesArr = new ArrayList<String>();
+		logs.debug(MessageFormat.format(LoggingMsg.GETTING_TEXT,"First Name Error"));
+		subStrArr.add(RegistrationSelectors.firstNameError);
+		valuesArr.add("");
+		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
+		getCurrentFunctionName(false);
+		
+	}
+	public static void getLastNameError() throws Exception {
+		getCurrentFunctionName(true);
+		List<String> subStrArr = new ArrayList<String>();
+		List<String> valuesArr = new ArrayList<String>();
+		logs.debug(MessageFormat.format(LoggingMsg.GETTING_TEXT,"Last Name Error"));
+		subStrArr.add(RegistrationSelectors.lastNameError);
+		valuesArr.add("");
+		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
+		getCurrentFunctionName(false);
+		
+	}
+	public static void getTitleError() throws Exception {
+		getCurrentFunctionName(true);
+		List<String> subStrArr = new ArrayList<String>();
+		List<String> valuesArr = new ArrayList<String>();
+		logs.debug(MessageFormat.format(LoggingMsg.GETTING_TEXT,"Title Error"));
+		subStrArr.add(RegistrationSelectors.titleError);
+		valuesArr.add("index,1");
+		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
+		getCurrentFunctionName(false);
+	}
+	public static void getEmailAddressError() throws Exception {
+		getCurrentFunctionName(true);
+		List<String> subStrArr = new ArrayList<String>();
+		List<String> valuesArr = new ArrayList<String>();
+		logs.debug(MessageFormat.format(LoggingMsg.GETTING_TEXT,"Email Address Error"));
+		subStrArr.add(RegistrationSelectors.emailAddressError);
+		valuesArr.add("");
+		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
+		getCurrentFunctionName(false);
+	}
+	public static void getPasswordError() throws Exception {
+		getCurrentFunctionName(true);
+		List<String> subStrArr = new ArrayList<String>();
+		List<String> valuesArr = new ArrayList<String>();
+		logs.debug(MessageFormat.format(LoggingMsg.GETTING_TEXT,"Password Error"));
+		subStrArr.add(RegistrationSelectors.passwordError);
+		valuesArr.add("");
+		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
+		getCurrentFunctionName(false);
+	}
+	public static void getConfirmPasswordError() throws Exception {
+		getCurrentFunctionName(true);
+		List<String> subStrArr = new ArrayList<String>();
+		List<String> valuesArr = new ArrayList<String>();
+		logs.debug(MessageFormat.format(LoggingMsg.GETTING_TEXT,"Confirm Password Error"));
+		subStrArr.add(RegistrationSelectors.confirmPasswordError);
+		valuesArr.add("");
+		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
+		getCurrentFunctionName(false);
+	}
+	public static void getPasswordRulesError() throws Exception {
+		getCurrentFunctionName(true);
+		List<String> subStrArr = new ArrayList<String>();
+		List<String> valuesArr = new ArrayList<String>();
+		logs.debug(MessageFormat.format(LoggingMsg.GETTING_TEXT,"Password Rules Error"));
+		subStrArr.add(RegistrationSelectors.passwordRulesError);
+		valuesArr.add("");
+		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
+		getCurrentFunctionName(false);
+	}
+	public static void getPasswordMatchError() throws Exception {
+		getCurrentFunctionName(true);
+		List<String> subStrArr = new ArrayList<String>();
+		List<String> valuesArr = new ArrayList<String>();
+		logs.debug(MessageFormat.format(LoggingMsg.GETTING_TEXT,"Password Mismatch Error"));
+		subStrArr.add(RegistrationSelectors.passwordMatchError);
+		valuesArr.add("");
+		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
+		getCurrentFunctionName(false);
+	}
+	public static String getRandomTitle() {
+		String [] titles = {
+				"Mr.", "Mrs.", "Miss", "Ms.","Dr.", "Rev." 
+		};
+		Random random = new Random();
+		return titles[random.nextInt(titles.length)];
+	}
+	public static void verifyRegistrationFormErrors() throws Exception {
+		getCurrentFunctionName(true);
+		getTitleError();
+		getFirstNameError();
+		getLastNameError();
+		getEmailAddressError();
+		getPasswordError();
+		getConfirmPasswordError();
+		getPasswordRulesError();
+		getCurrentFunctionName(false);
+	}
+
+	public static void getRegistrationSuccessMessage() throws Exception {
+		getCurrentFunctionName(true);
+		List<String> subStrArr = new ArrayList<String>();
+		List<String> valuesArr = new ArrayList<String>();
+		logs.debug(MessageFormat.format(LoggingMsg.GETTING_TEXT,"Account created success message"));
+		subStrArr.add(RegistrationSelectors.registrationSuccess);
+		valuesArr.add("");
+		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
 		getCurrentFunctionName(false);
 		
 	}

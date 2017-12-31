@@ -5,6 +5,8 @@ import java.text.MessageFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Random;
+
+import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.log4j.Logger;
 
 import com.generic.setup.LoggingMsg;
@@ -168,4 +170,9 @@ public final class RandomUtilities {
     public static String getRandomName() {
         return getRandomWord() +  getRandomWord();
     }
+    
+    public static String getRandomPassword(int passwordLength) {
+		String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789~`!@#$%^&*()-_=+[{]}\\|;:\'\",<.>/?";
+		return RandomStringUtils.random( passwordLength, characters );
+	}
 }

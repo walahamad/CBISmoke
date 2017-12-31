@@ -3,6 +3,7 @@ package com.generic.setup;
 public class LoggingMsg {
 
 	public static final String CHECKOUTDESC = "<b>Case ID: </b>{0} <br><b>File of execution:</b> {1}<br><b>Decrption: </b>{2}<br><b>case proprties:</b><br>- {3}<br>- {4}<br>- {5}";
+	public static final String REGISTRATIONDESC = "<b>Case ID: </b>{0} <br><b>File of execution:</b> {1}<br><b>Decrption: </b>{2}<br><b>fields to validate:</b><br>- {3}<br>";
 	public static final String CARTDESC = "<b>Case ID: </b>{0} <br><b>File of execution:</b> {1}<br><b>Decrption: </b>{2}<br><b>case proprties:</b><br>- {3}<br>- coupon: {4}<br>- new QTY: {5}";
 	public static final String TEST_CASE_DESC = "<b>Case ID: </b>{0} <br><b>File of execution:</b> {1}<br><b>Description: </b>{2}<br>";
 	public static String CLICKING_CART_BUTTON = "clicking on {0} btn from cart";
@@ -107,5 +108,6 @@ public class LoggingMsg {
 	public static String PAYMENT_CARD_REMOVED_MESSAGE = "Remove card message: {0}";
 	public static final String ADDRESSPOOKDESC = "<b>Case ID: </b>{0} <br><b>File of execution:</b> {1}<br><b>Decrption: </b>{2}";
 	public static final String PAYMENTDESC = "<b>Case ID: </b>{0} <br><b>File of execution:</b> {1}<br><b>Decrption: </b>{2}";
-
+	public static String GETTING_TEXT = "Getting text of : {0}";
+	public static String REGISTRATION_FIELDS_ERRORS = "Verifying {0} Message";
 }

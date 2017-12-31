@@ -25,6 +25,7 @@ public class SheetVariables {
     public static final String testCasesSheet = "Test Cases";
     public static final String AddressBookSheet = "AddressBookRegression";
     public static final String PaymentDetailsSheet = "PaymentDetailsRegression";
+    public static final String myAccountSheet = "MyAccountRegression";
     //Test Case id
     public static final String registrationTestCaseId = "Registration";
     public static final String checkoutTestCaseId = "CheckOut";
@@ -34,4 +35,5 @@ public class SheetVariables {
 	public static final String cartCaseId = "Cart";
 	public static String addressbookTestCaseId="AddressBook";
 	public static final String PaymentDetailsTestCaseId = "PaymentDetails";
+	public static String registrationRegressionSheet = "RegistrationRegression";
 }
