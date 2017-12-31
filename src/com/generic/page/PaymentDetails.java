@@ -74,9 +74,16 @@ public class PaymentDetails extends SelTestCase {
 		getCurrentFunctionName(false);
 	}
 
-	public static void addNewPaymentThroughCheckout() {
-		// TODO Auto-generated method stub
-		
+	public static String getNumberOfPayments(String selc) throws Exception {
+		getCurrentFunctionName(true);
+		List<String> subStrArr = new ArrayList<String>();
+		List<String> valuesArr = new ArrayList<String>();
+		subStrArr.add(selc);
+		valuesArr.add("");
+		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
+		logs.debug(MessageFormat.format(LoggingMsg.ACTUAL_TEXT,SelectorUtil.numberOfFoundElements));
+		getCurrentFunctionName(false);
+		return SelectorUtil.numberOfFoundElements.get();
 	}
 
 }

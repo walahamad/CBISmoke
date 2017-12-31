@@ -864,7 +864,7 @@ public class CheckOut extends SelTestCase {
 			return SelectorUtil.textValue.get();
 		}
 		
-		public static void getAlertInfo() throws Exception {
+		public static String getAlertInfo() throws Exception {
 			getCurrentFunctionName(true);
 			List<String> subStrArr = new ArrayList<String>();
 			List<String> valuesArr = new ArrayList<String>();
@@ -872,12 +872,12 @@ public class CheckOut extends SelTestCase {
 			subStrArr.add(CheckOutSelectors.alertInfo);
 			valuesArr.add("");
 			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
-			logs.debug(MessageFormat.format(LoggingMsg.ERROR_MSG, SelectorUtil.textValue));
+			logs.debug(MessageFormat.format(LoggingMsg.ERROR_MSG, SelectorUtil.textValue.get()));
 			getCurrentFunctionName(false);
-			
+			return SelectorUtil.textValue.get();
 		}
 		
-		private static void getFirstNameError() throws Exception {
+		private static String getFirstNameError() throws Exception {
 			getCurrentFunctionName(true);
 			List<String> subStrArr = new ArrayList<String>();
 			List<String> valuesArr = new ArrayList<String>();
@@ -885,12 +885,12 @@ public class CheckOut extends SelTestCase {
 			subStrArr.add(CheckOutSelectors.fnameError);
 			valuesArr.add("");
 			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
-			logs.debug(MessageFormat.format(LoggingMsg.ERROR_MSG, SelectorUtil.textValue));
+			logs.debug(MessageFormat.format(LoggingMsg.ERROR_MSG, SelectorUtil.textValue.get()));
 			getCurrentFunctionName(false);
-
+			return SelectorUtil.textValue.get();
 		}
 
-		private static void getLastNameError() throws Exception {
+		private static String getLastNameError() throws Exception {
 			getCurrentFunctionName(true);
 			List<String> subStrArr = new ArrayList<String>();
 			List<String> valuesArr = new ArrayList<String>();
@@ -898,12 +898,12 @@ public class CheckOut extends SelTestCase {
 			subStrArr.add(CheckOutSelectors.lnameError);
 			valuesArr.add("");
 			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
-			logs.debug(MessageFormat.format(LoggingMsg.ERROR_MSG, SelectorUtil.textValue));
+			logs.debug(MessageFormat.format(LoggingMsg.ERROR_MSG, SelectorUtil.textValue.get()));
 			getCurrentFunctionName(false);
-
+			return SelectorUtil.textValue.get();
 		}
 
-		private static void getAddress1Error() throws Exception {
+		private static String getAddress1Error() throws Exception {
 			getCurrentFunctionName(true);
 			List<String> subStrArr = new ArrayList<String>();
 			List<String> valuesArr = new ArrayList<String>();
@@ -911,12 +911,12 @@ public class CheckOut extends SelTestCase {
 			subStrArr.add(CheckOutSelectors.address1Error);
 			valuesArr.add("");
 			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
-			logs.debug(MessageFormat.format(LoggingMsg.ERROR_MSG, SelectorUtil.textValue));
+			logs.debug(MessageFormat.format(LoggingMsg.ERROR_MSG, SelectorUtil.textValue.get()));
 			getCurrentFunctionName(false);
-
+			return SelectorUtil.textValue.get();
 		}
 
-		private static void getCityError() throws Exception {
+		private static String getCityError() throws Exception {
 			getCurrentFunctionName(true);
 			List<String> subStrArr = new ArrayList<String>();
 			List<String> valuesArr = new ArrayList<String>();
@@ -924,12 +924,12 @@ public class CheckOut extends SelTestCase {
 			subStrArr.add(CheckOutSelectors.cityError);
 			valuesArr.add("");
 			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
-			logs.debug(MessageFormat.format(LoggingMsg.ERROR_MSG, SelectorUtil.textValue));
+			logs.debug(MessageFormat.format(LoggingMsg.ERROR_MSG, SelectorUtil.textValue.get()));
 			getCurrentFunctionName(false);
-
+			return SelectorUtil.textValue.get();
 		}
 
-		private static void getPostCodeEerror() throws Exception {
+		private static String getPostCodeEerror() throws Exception {
 			getCurrentFunctionName(true);
 			List<String> subStrArr = new ArrayList<String>();
 			List<String> valuesArr = new ArrayList<String>();
@@ -937,12 +937,12 @@ public class CheckOut extends SelTestCase {
 			subStrArr.add(CheckOutSelectors.postcodeEerror);
 			valuesArr.add("");
 			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
-			logs.debug(MessageFormat.format(LoggingMsg.ERROR_MSG, SelectorUtil.textValue));
+			logs.debug(MessageFormat.format(LoggingMsg.ERROR_MSG, SelectorUtil.textValue.get()));
 			getCurrentFunctionName(false);
-
+			return SelectorUtil.textValue.get();
 		}
 		
-		private static void getTitelError() throws Exception {
+		private static String getTitelError() throws Exception {
 			getCurrentFunctionName(true);
 			List<String> subStrArr = new ArrayList<String>();
 			List<String> valuesArr = new ArrayList<String>();
@@ -950,12 +950,12 @@ public class CheckOut extends SelTestCase {
 			subStrArr.add(CheckOutSelectors.titleError);
 			valuesArr.add("");
 			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
-			logs.debug(MessageFormat.format(LoggingMsg.ERROR_MSG, SelectorUtil.textValue));
+			logs.debug(MessageFormat.format(LoggingMsg.ERROR_MSG, SelectorUtil.textValue.get()));
 			getCurrentFunctionName(false);
-	
+			return SelectorUtil.textValue.get();
 		}
 		
-		public static void getCardTypeError() throws Exception {
+		public static String getCardTypeError() throws Exception {
 			getCurrentFunctionName(true);
 			List<String> subStrArr = new ArrayList<String>();
 			List<String> valuesArr = new ArrayList<String>();
@@ -963,12 +963,12 @@ public class CheckOut extends SelTestCase {
 			subStrArr.add(CheckOutSelectors.cardTypeError);
 			valuesArr.add("");
 			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
-			logs.debug(MessageFormat.format(LoggingMsg.ERROR_MSG, SelectorUtil.textValue));
+			logs.debug(MessageFormat.format(LoggingMsg.ERROR_MSG, SelectorUtil.textValue.get()));
 			getCurrentFunctionName(false);
-			
+			return SelectorUtil.textValue.get();
 		}
 		
-		public static void getCardNumberError() throws Exception {
+		public static String getCardNumberError() throws Exception {
 			getCurrentFunctionName(true);
 			List<String> subStrArr = new ArrayList<String>();
 			List<String> valuesArr = new ArrayList<String>();
@@ -976,24 +976,24 @@ public class CheckOut extends SelTestCase {
 			subStrArr.add(CheckOutSelectors.accountNumberError);
 			valuesArr.add("");
 			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
-			logs.debug(MessageFormat.format(LoggingMsg.ERROR_MSG, SelectorUtil.textValue));
+			logs.debug(MessageFormat.format(LoggingMsg.ERROR_MSG, SelectorUtil.textValue.get()));
 			getCurrentFunctionName(false);
-			
+			return SelectorUtil.textValue.get();
 		}
 		
-		public static void getExpirationMonthError() throws Exception {
+		public static String getExpirationMonthError() throws Exception {
 			getCurrentFunctionName(true);
 			List<String> subStrArr = new ArrayList<String>();
 			List<String> valuesArr = new ArrayList<String>();
 			logs.debug(MessageFormat.format(LoggingMsg.GET_ELEMENT_BY_LOCATOR,CheckOutSelectors.expirationMonthError));
 			subStrArr.add(CheckOutSelectors.expirationMonthError);
 			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
-			logs.debug(MessageFormat.format(LoggingMsg.ERROR_MSG, SelectorUtil.textValue));
+			logs.debug(MessageFormat.format(LoggingMsg.ERROR_MSG, SelectorUtil.textValue.get()));
 			getCurrentFunctionName(false);
-			
+			return SelectorUtil.textValue.get();
 		}
 		
-		public static void getExpirationYearError() throws Exception {
+		public static String getExpirationYearError() throws Exception {
 			getCurrentFunctionName(true);
 			List<String> subStrArr = new ArrayList<String>();
 			List<String> valuesArr = new ArrayList<String>();
@@ -1001,12 +1001,12 @@ public class CheckOut extends SelTestCase {
 			subStrArr.add(CheckOutSelectors.expirationYearError);
 			valuesArr.add("");
 			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
-			logs.debug(MessageFormat.format(LoggingMsg.ERROR_MSG, SelectorUtil.textValue));
+			logs.debug(MessageFormat.format(LoggingMsg.ERROR_MSG, SelectorUtil.textValue.get()));
 			getCurrentFunctionName(false);
-			
+			return SelectorUtil.textValue.get();
 		}
 		
-		public static void getCVNumberError() throws Exception {
+		public static String getCVNumberError() throws Exception {
 			getCurrentFunctionName(true);
 			List<String> subStrArr = new ArrayList<String>();
 			List<String> valuesArr = new ArrayList<String>();
@@ -1014,12 +1014,12 @@ public class CheckOut extends SelTestCase {
 			subStrArr.add(CheckOutSelectors.cvNumberError);
 			valuesArr.add("");
 			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
-			logs.debug(MessageFormat.format(LoggingMsg.ERROR_MSG, SelectorUtil.textValue));
+			logs.debug(MessageFormat.format(LoggingMsg.ERROR_MSG, SelectorUtil.textValue.get()));
 			getCurrentFunctionName(false);
-			
+			return SelectorUtil.textValue.get();
 		}
 		
-		public static void getBillToCountryError() throws Exception {
+		public static String getBillToCountryError() throws Exception {
 			getCurrentFunctionName(true);
 			List<String> subStrArr = new ArrayList<String>();
 			List<String> valuesArr = new ArrayList<String>();
@@ -1027,9 +1027,9 @@ public class CheckOut extends SelTestCase {
 			subStrArr.add(CheckOutSelectors.billToCountryError);
 			valuesArr.add("");
 			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
-			logs.debug(MessageFormat.format(LoggingMsg.ERROR_MSG, SelectorUtil.textValue));
+			logs.debug(MessageFormat.format(LoggingMsg.ERROR_MSG, SelectorUtil.textValue.get()));
 			getCurrentFunctionName(false);
-			
+			return SelectorUtil.textValue.get();
 		}
 
 	}// order confirmation page

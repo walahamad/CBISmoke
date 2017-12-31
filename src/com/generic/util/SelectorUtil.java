@@ -37,7 +37,8 @@ public class SelectorUtil extends SelTestCase {
 	public static Boolean isAnErrorSelector = Boolean.FALSE;
 	//public static String textValue;
 	public static ThreadLocal<String> textValue = new ThreadLocal<String>() ;
-	public static int numberOfFoundElements;
+	//public static int numberOfFoundElements;
+	public static ThreadLocal<String> numberOfFoundElements  = new ThreadLocal<String>() ;
 	private static By parentBy = null;
 	
 	public static void initializeElementsSelectorsMaps(LinkedHashMap<String, LinkedHashMap> webElementsInfo , boolean isValidationStep) throws IOException, InterruptedException
@@ -193,7 +194,7 @@ public class SelectorUtil extends SelTestCase {
 					  webElementInfo.put("action",getActiontype(foundElements));
 					  webElementInfo.put("parentBy", parentBy);
 					  parentBy = null;
-					  numberOfFoundElements = foundElements.size();
+					  numberOfFoundElements.set(foundElements.size()+"");
 					  SelTestCase.logs.debug(MessageFormat.format(LoggingMsg.VALID_SEL_MSG, Arrays.asList(webElementInfo)));
 				  
 				 } 

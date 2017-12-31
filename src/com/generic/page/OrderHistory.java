@@ -85,7 +85,7 @@ public class OrderHistory extends SelTestCase {
 		logs.debug(MessageFormat.format(LoggingMsg.EXPECTED_TEXT, numberOfOrdersShownInHeader));
 		logs.debug(MessageFormat.format(LoggingMsg.ACTUAL_TEXT, SelectorUtil.numberOfFoundElements));
 		getCurrentFunctionName(false);
-		if (numberOfOrdersShownInHeader == SelectorUtil.numberOfFoundElements) {
+		if (numberOfOrdersShownInHeader == Integer.parseInt(SelectorUtil.numberOfFoundElements.get())) {
     		return true;
     	} else {
     		logs.debug(MessageFormat.format(LoggingMsg.ACTUAL_EXPECTED_ERROR, SelectorUtil.numberOfFoundElements, numberOfOrdersShownInHeader));
