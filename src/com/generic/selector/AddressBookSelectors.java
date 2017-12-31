@@ -13,7 +13,7 @@ public class AddressBookSelectors {
 	public static final String saveAddress = "btn btn-primary btn-block change_address_button show_processing_message";
 	public static final String addNewAddress = "css,main>div>div>div>div>div>div>a";
 	public static final String defaultAddress = "defaultAddress";
-	public static final String deleteaddress = "css,body>div>div>div>div>div>div>div>div>div>div>a";
+	public static final String deleteaddress = "css,body>div>div>div>div>div>div>div>div>div>div>div>a";
 	public static final String addressBackBtn = "addressBackBtn";
 	public static final String accountAddressbookList = "col-xs-12 col-sm-6 col-md-4 card";
 	public static final String fnameError = "firstName.errors";

@@ -1,4 +1,4 @@
-package com.generic.tests.personalDetails;
+package com.generic.tests.account;
 
 import java.text.MessageFormat;
 import java.util.Arrays;

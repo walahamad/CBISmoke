@@ -19,6 +19,7 @@ import com.generic.page.Registration;
 import com.generic.page.Cart;
 import com.generic.page.CheckOut;
 import com.generic.page.SignIn;
+import com.generic.selector.PaymentDetailsSelectors;
 import com.generic.setup.Common;
 import com.generic.setup.LoggingMsg;
 import com.generic.setup.SelTestCase;
@@ -132,6 +133,8 @@ public class PaymentDetailsValidation extends SelTestCase {
 			LinkedHashMap<String, Object> billAddressDetails = (LinkedHashMap<String, Object>) addresses
 					.get(billingAddress);
 
+			logs.debug(Arrays.asList(paymentDetails)+"");
+			
 			CheckOut.paymentInnformation.fillAndclickNext(payment,
 					(String) paymentDetails.get(CheckOut.paymentInnformation.keys.name),
 					(String) paymentDetails.get(CheckOut.paymentInnformation.keys.number),
@@ -161,15 +164,12 @@ public class PaymentDetailsValidation extends SelTestCase {
 				assertNotEquals(DefaultPaymentDetails, PaymentDetails.getFirstPaymentDetails());
 			}
 			if (desc.contains("delete")) {
-				PaymentDetails.getFirstPaymentDetails();
-				logs.debug(MessageFormat.format(LoggingMsg.ACTUAL_TEXT,SelectorUtil.numberOfFoundElements));
-				int numberofSavedPayments = SelectorUtil.numberOfFoundElements;
+				String numberofSavedPayments = PaymentDetails.getNumberOfPayments(PaymentDetailsSelectors.PaymentDetailsList);
 				PaymentDetails.clickRemovePaymentDetailsBtn();
 				PaymentDetails.clickDeleteBtn();
-				
-				PaymentDetails.getFirstPaymentDetails();
-				logs.debug(MessageFormat.format(LoggingMsg.ACTUAL_TEXT,SelectorUtil.numberOfFoundElements));
-				assertNotEquals(numberofSavedPayments,SelectorUtil.numberOfFoundElements);
+				Thread.sleep(1000);
+				logs.debug("number of Saved Payments before deleting any payment: "+numberofSavedPayments);
+				assertNotEquals(numberofSavedPayments,PaymentDetails.getNumberOfPayments(PaymentDetailsSelectors.PaymentDetailsList));
 			}
 
 			Common.testPass();

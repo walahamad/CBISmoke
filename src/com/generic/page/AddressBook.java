@@ -92,7 +92,7 @@ public class AddressBook extends SelTestCase {
 		return SelectorUtil.textValue.get();
 	}
 
-	public static void getAlertInfo() throws Exception {
+	public static String getAlertInfo() throws Exception {
 		getCurrentFunctionName(true);
 		List<String> subStrArr = new ArrayList<String>();
 		List<String> valuesArr = new ArrayList<String>();
@@ -102,6 +102,7 @@ public class AddressBook extends SelTestCase {
 		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
 		logs.debug(MessageFormat.format(LoggingMsg.DEFAULT_ADDRESS_UPDATE_MESSAGE, SelectorUtil.textValue.get()));
 		getCurrentFunctionName(false);
+		return SelectorUtil.textValue.get();
 	}
 
 	public static void clickAddNewAddress() throws Exception {
@@ -144,12 +145,30 @@ public class AddressBook extends SelTestCase {
 		shippingAddress.typePhone(phone);
 		if (defaultAddress)
 			checkSetAsDefaultAddress(defaultAddress);
-		Thread.sleep(6000);
+		Thread.sleep(1000);
 		clickSave();
 
 		getCurrentFunctionName(false);
 	}
 
+	public static void fillAndClickSave(String Countery, String title, String firstName, String lastName,
+			String address, String city, String postal, String phone) throws Exception {
+		getCurrentFunctionName(true);
+
+		shippingAddress.selectCountery(Countery);
+		shippingAddress.selectTitle(title);
+		shippingAddress.typeFirstName(firstName);
+		shippingAddress.typeLastName(lastName);
+		shippingAddress.typeAddress(address);
+		shippingAddress.typeCity(city);
+		shippingAddress.typePostalCode(postal);
+		shippingAddress.typePhone(phone);
+		Thread.sleep(1000);
+		clickSave();
+
+		getCurrentFunctionName(false);
+	}
+	
 	public static void clickSave() throws Exception {
 		getCurrentFunctionName(true);
 		List<String> subStrArr = new ArrayList<String>();
@@ -231,7 +250,7 @@ public class AddressBook extends SelTestCase {
 
 	}
 
-	private static void getFirstNameError() throws Exception {
+	private static String getFirstNameError() throws Exception {
 		getCurrentFunctionName(true);
 		List<String> subStrArr = new ArrayList<String>();
 		List<String> valuesArr = new ArrayList<String>();
@@ -241,10 +260,10 @@ public class AddressBook extends SelTestCase {
 		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
 		logs.debug(MessageFormat.format(LoggingMsg.ERROR_MSG, SelectorUtil.textValue.get()));
 		getCurrentFunctionName(false);
-
+		return SelectorUtil.textValue.get();
 	}
 
-	private static void getLastNameError() throws Exception {
+	private static String getLastNameError() throws Exception {
 		getCurrentFunctionName(true);
 		List<String> subStrArr = new ArrayList<String>();
 		List<String> valuesArr = new ArrayList<String>();
@@ -254,10 +273,10 @@ public class AddressBook extends SelTestCase {
 		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
 		logs.debug(MessageFormat.format(LoggingMsg.ERROR_MSG, SelectorUtil.textValue.get()));
 		getCurrentFunctionName(false);
-
+		return SelectorUtil.textValue.get();
 	}
 
-	private static void getAddress1Error() throws Exception {
+	private static String getAddress1Error() throws Exception {
 		getCurrentFunctionName(true);
 		List<String> subStrArr = new ArrayList<String>();
 		List<String> valuesArr = new ArrayList<String>();
@@ -267,10 +286,10 @@ public class AddressBook extends SelTestCase {
 		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
 		logs.debug(MessageFormat.format(LoggingMsg.ERROR_MSG, SelectorUtil.textValue.get()));
 		getCurrentFunctionName(false);
-
+		return SelectorUtil.textValue.get();
 	}
 
-	private static void getCityError() throws Exception {
+	private static String getCityError() throws Exception {
 		getCurrentFunctionName(true);
 		List<String> subStrArr = new ArrayList<String>();
 		List<String> valuesArr = new ArrayList<String>();
@@ -280,10 +299,10 @@ public class AddressBook extends SelTestCase {
 		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
 		logs.debug(MessageFormat.format(LoggingMsg.ERROR_MSG, SelectorUtil.textValue.get()));
 		getCurrentFunctionName(false);
-
+		return SelectorUtil.textValue.get();
 	}
 
-	private static void getPostCodeEerror() throws Exception {
+	private static String getPostCodeEerror() throws Exception {
 		getCurrentFunctionName(true);
 		List<String> subStrArr = new ArrayList<String>();
 		List<String> valuesArr = new ArrayList<String>();
@@ -293,7 +312,18 @@ public class AddressBook extends SelTestCase {
 		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
 		logs.debug(MessageFormat.format(LoggingMsg.ERROR_MSG, SelectorUtil.textValue.get()));
 		getCurrentFunctionName(false);
-
+		return SelectorUtil.textValue.get();
 	}
 
+	public static String getNumberOfAddresses(String selc) throws Exception {
+		getCurrentFunctionName(true);
+		List<String> subStrArr = new ArrayList<String>();
+		List<String> valuesArr = new ArrayList<String>();
+		subStrArr.add(selc);
+		valuesArr.add("");
+		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
+		logs.debug(MessageFormat.format(LoggingMsg.ACTUAL_TEXT,SelectorUtil.numberOfFoundElements));
+		getCurrentFunctionName(false);
+		return SelectorUtil.numberOfFoundElements.get();
+	}
 }

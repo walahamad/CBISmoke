@@ -97,7 +97,7 @@ public class PLP extends SelTestCase {
 		logs.debug(MessageFormat.format(LoggingMsg.EXPECTED_TEXT, numberOfProductsShownInHeader));
 		logs.debug(MessageFormat.format(LoggingMsg.ACTUAL_TEXT, SelectorUtil.numberOfFoundElements));
 		getCurrentFunctionName(false);
-		if (numberOfProductsShownInHeader == SelectorUtil.numberOfFoundElements) {
+		if (numberOfProductsShownInHeader == Integer.parseInt(SelectorUtil.numberOfFoundElements.get())) {
     		return true;
     	} else {
     		logs.debug(MessageFormat.format(LoggingMsg.ACTUAL_EXPECTED_ERROR, SelectorUtil.numberOfFoundElements, numberOfProductsShownInHeader));

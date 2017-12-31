@@ -97,8 +97,8 @@ public class ReportAnalyzer {
 	
 	public static void splitLogs()
 	{
-		//Path PathObj = Paths.get(EnvironmentFiles.getLogFilePath(),EnvironmentFiles.getLogFileName());
-		Path PathObj = Paths.get("F:\\WS\\SAS_FW\\logs\\Application.log");
+		Path PathObj = Paths.get(EnvironmentFiles.getLogFilePath(),EnvironmentFiles.getLogFileName());
+		//Path PathObj = Paths.get("F:\\WS\\SAS_FW\\logs\\Application.log");
 		FileWriter fw = null;
 		BufferedWriter bw = null;
 		String[] content = null;

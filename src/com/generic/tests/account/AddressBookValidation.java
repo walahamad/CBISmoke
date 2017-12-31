@@ -31,7 +31,7 @@ public class AddressBookValidation extends SelTestCase {
 	private static LinkedHashMap<String, Object> users = null;
 	boolean defaultAddress = true;
 	private String addressbook;
-	private int numberofaddresses;
+	private String numberofaddresses;
 	// used sheet in test
 	public static final String testDataSheet = SheetVariables.AddressBookSheet;
 
@@ -83,7 +83,17 @@ public class AddressBookValidation extends SelTestCase {
 				getDriver().get(url);
 				addressbook = AddressBook.getFirstAddressDetails();
 				AddressBook.clickEditAddress();
-				AddressBook.updateAddress();
+				LinkedHashMap<String, Object> addressDetails = (LinkedHashMap<String, Object>) addresses
+						.get(newaddress);
+				logs.debug("test");
+				AddressBook.fillAndClickSave((String) addressDetails.get(CheckOut.shippingAddress.keys.countery),
+						(String) addressDetails.get(CheckOut.shippingAddress.keys.title),
+						"NEW_" + RandomUtils.nextInt(1000, 9000),
+						(String) addressDetails.get(CheckOut.shippingAddress.keys.lastName),
+						(String) addressDetails.get(CheckOut.shippingAddress.keys.adddressLine),
+						(String) addressDetails.get(CheckOut.shippingAddress.keys.city),
+						(String) addressDetails.get(CheckOut.shippingAddress.keys.postal),
+						(String) addressDetails.get(CheckOut.shippingAddress.keys.phone));
 				AddressBook.clickAddressBackBtn();
 				assertNotEquals(addressbook, AddressBook.getFirstAddressDetails());
 			}
@@ -107,34 +117,32 @@ public class AddressBookValidation extends SelTestCase {
 				logs.debug("test");
 				AddressBook.fillAndClickSave((String) addressDetails.get(CheckOut.shippingAddress.keys.countery),
 						(String) addressDetails.get(CheckOut.shippingAddress.keys.title),
-						"NEW_"+RandomUtils.nextInt(1000,9000),
+						"NEW_" + RandomUtils.nextInt(1000, 9000),
 						(String) addressDetails.get(CheckOut.shippingAddress.keys.lastName),
 						(String) addressDetails.get(CheckOut.shippingAddress.keys.adddressLine),
 						(String) addressDetails.get(CheckOut.shippingAddress.keys.city),
 						(String) addressDetails.get(CheckOut.shippingAddress.keys.postal),
 						(String) addressDetails.get(CheckOut.shippingAddress.keys.phone), defaultAddress);
 				AddressBook.clickAddressBackBtn();
-				sassert().assertNotEquals(addressbook, AddressBook.getFirstAddressDetails());
-			
-			if (desc.contains("default")) {
-				getDriver().get(url);
-				addressbook = AddressBook.getFirstAddressDetails();
-				AddressBook.clickSetAsDefault();
-				AddressBook.getAlertInfo();
-				sassert().assertNotEquals(addressbook, AddressBook.getFirstAddressDetails());
-			}
-			if (desc.contains("delete")) {
-				getDriver().get(url);
-				AddressBook.getAddressBookList();
-				logs.debug(MessageFormat.format(LoggingMsg.ACTUAL_TEXT, SelectorUtil.numberOfFoundElements));
-				numberofaddresses = SelectorUtil.numberOfFoundElements;
-				AddressBook.clickRemoveAddress();
-				AddressBook.clickDeleteBtn();
-				Thread.sleep(7000);
-				AddressBook.getAddressBookList();
-				logs.debug(MessageFormat.format(LoggingMsg.ACTUAL_TEXT, SelectorUtil.numberOfFoundElements));
-				sassert().assertNotEquals(numberofaddresses, SelectorUtil.numberOfFoundElements);
-			}
+				if (desc.contains("new")) {
+					sassert().assertNotEquals(addressbook, AddressBook.getFirstAddressDetails());
+				}
+				if (desc.contains("default")) {
+					getDriver().get(url);
+					addressbook = AddressBook.getFirstAddressDetails();
+					AddressBook.clickSetAsDefault();
+					AddressBook.getAlertInfo();
+					sassert().assertNotEquals(addressbook, AddressBook.getFirstAddressDetails());
+				}
+				if (desc.contains("delete")) {
+					getDriver().get(url);
+					String numberofaddresses = AddressBook.getNumberOfAddresses(AddressBookSelectors.accountAddressbookList);
+					AddressBook.clickRemoveAddress();
+					AddressBook.clickDeleteBtn();
+					Thread.sleep(1000);
+					logs.debug("number of Saved addresses before deleting any address: "+numberofaddresses);
+					sassert().assertNotEquals(numberofaddresses,AddressBook.getNumberOfAddresses(AddressBookSelectors.accountAddressbookList));
+				}
 			}
 			sassert().assertAll();
 			Common.testPass();
