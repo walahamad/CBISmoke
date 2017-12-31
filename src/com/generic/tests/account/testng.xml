@@ -9,5 +9,13 @@
 		   	<class name="com.generic.tests.account.PaymentDetailsValidation" />
 		</classes>
 	</test><!-- Test -->
+	<test name="Account chrome">
+		<parameter name="browserName" value="chrome"></parameter>
+		<classes>
+			<class name="com.generic.tests.account.AddressBookValidation" />
+		   	<class name="com.generic.tests.account.PaymentDetailsValidation" />
+		</classes>
+	</test><!-- Test -->
+	
 
 </suite> <!-- Suite -->
