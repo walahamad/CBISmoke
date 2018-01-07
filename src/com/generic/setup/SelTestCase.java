@@ -12,6 +12,7 @@ import java.util.Random;
 //import org.apache.log4j.Logger;
 
 import com.generic.util.SASLogger;
+import com.generic.util.SendMail;
 
 import org.testng.Assert;
 import org.testng.annotations.*;
@@ -45,7 +46,7 @@ public class SelTestCase {
     
     //protected SoftAssert softAssert = new SoftAssert();
     private static ThreadLocal<SoftAssert> softAssert = new ThreadLocal<SoftAssert>();
-    private static ThreadLocal<XmlTest> testObj = new ThreadLocal<XmlTest>();
+    protected static ThreadLocal<XmlTest> testObj = new ThreadLocal<XmlTest>();
     
     //private static ThreadLocal<String> testName= new ThreadLocal<String>(); 
     
@@ -260,7 +261,7 @@ public class SelTestCase {
         setDriver(Common.initializeBrowser(test.getParameter("browserName")));
         
         try {
-        	Common.launchApplication();
+        	Common.launchApplication(test.getParameter("browserName"));
 
         } catch(Throwable t) {
             Error = t;
@@ -328,5 +329,14 @@ public class SelTestCase {
     	ReportUtil.updateEndTime(ReportUtil.now(time_date_format), getTestStatus());
     	
     	ReportUtil.endSuite(passedNumber, failedNumber, skippedNumber);
+    	
+    	 if (SelTestCase.getCONFIG().getProperty("EmailReport").equalsIgnoreCase("yes"))
+         {
+         	SendMail.sendSummeryMail(SelTestCase.logDir + "//" +"index.html");
+         }
+         else
+         {
+         	SelTestCase.logs.debug(MessageFormat.format(LoggingMsg.DEBUGGING_TEXT, "Ignor sending report"));
+         }
     }
 }

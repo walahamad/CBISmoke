@@ -224,10 +224,13 @@ public class SelectorUtil extends SelTestCase {
 							e.tagName().equals("img") ||
 							e.tagName().equals("a")||
 							e.tagName().equals("li") ||
-							e.tagName().equals("form"))
+							e.tagName().equals("form")||
+							e.tagName().equals("label"))
 					{
 						return "click";
 					} else if (e.tagName().equals("input") && e.attr("type").equals("submit")) {
+						return "click";
+					}else if (e.tagName().equals("input") && e.attr("type").equals("radio")) {
 						return "click";
 					}
 					else if (e.tagName().equals("p")||
