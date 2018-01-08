@@ -2,6 +2,8 @@ package com.generic.tests.ordersHistory;
 
 import java.text.MessageFormat;
 import java.util.Arrays;
+import java.util.LinkedHashMap;
+
 import org.testng.Assert;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.DataProvider;

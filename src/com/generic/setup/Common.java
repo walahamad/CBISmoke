@@ -358,6 +358,10 @@ public class Common extends SelTestCase {
 		}
 	}
 
+	public static void refreshBrowser() {
+
+		ActionDriver.refreshBrowser();
+	}
 //	/**
 //	 * It compares the expected text with actual(read from application). If they are
 //	 * not equal then it throws an error and fail the test case.

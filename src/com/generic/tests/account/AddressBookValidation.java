@@ -126,6 +126,9 @@ public class AddressBookValidation extends SelTestCase {
 				AddressBook.clickAddressBackBtn();
 				if (desc.contains("new")) {
 					sassert().assertNotEquals(addressbook, AddressBook.getFirstAddressDetails());
+					//Remove the created address.
+					AddressBook.clickRemoveAddress(0);
+					AddressBook.clickDeleteBtn();
 				}
 				if (desc.contains("default")) {
 					getDriver().get(url);
@@ -133,11 +136,14 @@ public class AddressBookValidation extends SelTestCase {
 					AddressBook.clickSetAsDefault();
 					AddressBook.getAlertInfo();
 					sassert().assertNotEquals(addressbook, AddressBook.getFirstAddressDetails());
+					//Remove the created address.
+					AddressBook.clickRemoveAddress(1);
+					AddressBook.clickDeleteBtn();
 				}
 				if (desc.contains("delete")) {
 					getDriver().get(url);
 					String numberofaddresses = AddressBook.getNumberOfAddresses(AddressBookSelectors.accountAddressbookList);
-					AddressBook.clickRemoveAddress();
+					AddressBook.clickRemoveAddress(0);
 					AddressBook.clickDeleteBtn();
 					Thread.sleep(1000);
 					logs.debug("number of Saved addresses before deleting any address: "+numberofaddresses);

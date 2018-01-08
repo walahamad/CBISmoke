@@ -158,10 +158,17 @@ public class PaymentDetailsValidation extends SelTestCase {
 			
 			if (proprties.contains("update default")) {
 				// Validate the default billing address is not updated to newly added address
-				assertEquals(DefaultPaymentDetails, PaymentDetails.getFirstPaymentDetails());
+				sassert().assertEquals(DefaultPaymentDetails, PaymentDetails.getFirstPaymentDetails());
+				sassert().assertTrue((DefaultPaymentDetails.contains(PaymentDetails.getFirstPaymentDetails())),
+						"<font color=#f442cb>Default Payment is updated which is Not expoectd</font>");
 				PaymentDetails.clickSetAsDefault();
 				// Validate the default billing address is updated to newly added address
-				assertNotEquals(DefaultPaymentDetails, PaymentDetails.getFirstPaymentDetails());
+				sassert().assertNotEquals(DefaultPaymentDetails, PaymentDetails.getFirstPaymentDetails());
+				sassert().assertTrue(!(DefaultPaymentDetails.contains(PaymentDetails.getFirstPaymentDetails())),
+						"<font color=#f442cb>Default Payment is Not updated correctly</font>");
+				// Remove the created Payment.
+				PaymentDetails.clickRemovePaymentDetailsBtn();
+				PaymentDetails.clickDeleteBtn();
 			}
 			if (desc.contains("delete")) {
 				String numberofSavedPayments = PaymentDetails.getNumberOfPayments(PaymentDetailsSelectors.PaymentDetailsList);
@@ -169,9 +176,11 @@ public class PaymentDetailsValidation extends SelTestCase {
 				PaymentDetails.clickDeleteBtn();
 				Thread.sleep(1000);
 				logs.debug("number of Saved Payments before deleting any payment: "+numberofSavedPayments);
-				assertNotEquals(numberofSavedPayments,PaymentDetails.getNumberOfPayments(PaymentDetailsSelectors.PaymentDetailsList));
+				sassert().assertNotEquals(numberofSavedPayments,PaymentDetails.getNumberOfPayments(PaymentDetailsSelectors.PaymentDetailsList));
+				sassert().assertTrue(!(numberofSavedPayments.contains(PaymentDetails.getNumberOfPayments(PaymentDetailsSelectors.PaymentDetailsList))),
+						"<font color=#f442cb>Payment is Not deleted</font>");
 			}
-
+			sassert().assertAll();
 			Common.testPass();
 		} catch (Throwable t) {
 			setTestCaseDescription(getTestCaseDescription());

@@ -83,7 +83,7 @@ public class OrderHistory extends SelTestCase {
 		valuesArr.add("noClick");
 		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
 		logs.debug(MessageFormat.format(LoggingMsg.EXPECTED_TEXT, numberOfOrdersShownInHeader));
-		logs.debug(MessageFormat.format(LoggingMsg.ACTUAL_TEXT, SelectorUtil.numberOfFoundElements));
+		logs.debug(MessageFormat.format(LoggingMsg.ACTUAL_TEXT, SelectorUtil.numberOfFoundElements.get()));
 		getCurrentFunctionName(false);
 		if (numberOfOrdersShownInHeader == Integer.parseInt(SelectorUtil.numberOfFoundElements.get())) {
     		return true;
@@ -115,4 +115,14 @@ public class OrderHistory extends SelTestCase {
 		getCurrentFunctionName(false);
 		return SelectorUtil.textValue.get();
 	}
+
+    public static String getNoOrdersMessage() throws Exception {
+		getCurrentFunctionName(true);
+		logs.debug(MessageFormat.format(LoggingMsg.GET_ELEMENT_BY_LOCATOR,OrderHistorySelector.orderHistoryNoOrders));
+		subStrArr.add(OrderHistorySelector.orderHistoryNoOrders);
+		valuesArr.add("");
+		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
+		getCurrentFunctionName(false);
+    	return SelectorUtil.textValue.get();
+    }
 }

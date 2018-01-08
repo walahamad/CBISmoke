@@ -315,7 +315,7 @@ public class Cart extends SelTestCase {
 		List<String> subStrArr = new ArrayList<String>();
 		subStrArr.add(CartSelectors.itemImages);
 		
-		boolean isDisplayed = SelectorUtil.isDiplayed(subStrArr);
+		boolean isDisplayed = SelectorUtil.isDisplayed(subStrArr);
 		logs.debug("images check result is " + isDisplayed);
 		getCurrentFunctionName(false);
 		return isDisplayed;

@@ -18,5 +18,5 @@
 		<classes>
 			<class name="com.generic.tests.storeLocator.StoreLocatorBase" />
 		</classes>
-	</test><!-- Test -->
+	</test><!-- Test -->	
 </suite> <!-- Suite -->
