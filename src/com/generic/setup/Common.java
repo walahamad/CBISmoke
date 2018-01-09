@@ -25,6 +25,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
+import org.openqa.selenium.edge.EdgeOptions;
 import org.openqa.selenium.firefox.FirefoxBinary;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
@@ -61,11 +62,10 @@ public class Common extends SelTestCase {
 				// TODO: move this path to path file or configuration file
 				System.setProperty("webdriver.edge.driver", "C:/softwares/servers/MicrosoftWebDriver.exe");
 
-				capabilities = DesiredCapabilities.edge();
-				capabilities.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);
-				capabilities.setJavascriptEnabled(true);
-
-				return new EdgeDriver(capabilities);
+				//capabilities = DesiredCapabilities.edge();
+				//capabilities.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);
+				//capabilities.setJavascriptEnabled(true);
+				return new EdgeDriver(new EdgeOptions());
 				
 			}else if (browser.equalsIgnoreCase("Firefox")) {
 				
@@ -267,7 +267,7 @@ public class Common extends SelTestCase {
 	 *
 	 *
 	 */
-	public static void launchApplication() throws Exception {
+	public static void launchApplication(String Browser) throws Exception {
 		getCurrentFunctionName(true);
 
 		logs.debug(MessageFormat.format(LoggingMsg.TEST_ENVIRONMENT_NAME,
@@ -284,7 +284,10 @@ public class Common extends SelTestCase {
 		}
 		getDriver().get(getCONFIG().getProperty("testEnvironment"));
 		getDriver().manage().window().maximize();
-
+		if (Browser.contains("IE") || Browser.contains("edge")) {
+			Thread.sleep(2000);
+			getDriver().navigate().to("javascript:document.getElementById('overridelink').click()");
+		}
 		getCurrentFunctionName(false);
 	}
 
@@ -355,6 +358,10 @@ public class Common extends SelTestCase {
 		}
 	}
 
+	public static void refreshBrowser() {
+
+		ActionDriver.refreshBrowser();
+	}
 //	/**
 //	 * It compares the expected text with actual(read from application). If they are
 //	 * not equal then it throws an error and fail the test case.

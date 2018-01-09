@@ -132,6 +132,31 @@ public class ActionDriver extends SelTestCase {
 		}
 	}
 
+	/*
+	 * Refresh the current page.
+	 */
+	public static void refreshBrowser() {
+
+		try {
+			logs.debug(LoggingMsg.REFRESH_SESSION);
+			getDriver().navigate().refresh();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	/*
+	 * Returns to previous page.
+	 */
+	public static void returnPreviousPage() {
+		try {
+			logs.debug(LoggingMsg.RETURNING_TO_PREVIOUS_PAGE);
+			getDriver().navigate().back();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+      
 	/**
 	 * It will type the test data into an input box
 	 *

@@ -106,6 +106,9 @@ public class LoggingMsg {
 	public static String DEFAULT_ADDRESS_UPDATE_MESSAGE = "Address update message: {0}";
 	public static String PAMENT_DETAILS = "Payment Dtails: {0}";
 	public static String PAYMENT_CARD_REMOVED_MESSAGE = "Remove card message: {0}";
+	public static String REFRESH_SESSION = "REFRESH_SESSION";
+	public static String RETURNING_TO_PREVIOUS_PAGE= "BACK TO PREVIOUS PAGE";
+	public static String ORDER_HISTORY_NO_ORDERS = "No Orders";
 	public static final String ADDRESSPOOKDESC = "<b>Case ID: </b>{0} <br><b>File of execution:</b> {1}<br><b>Decrption: </b>{2}";
 	public static final String PAYMENTDESC = "<b>Case ID: </b>{0} <br><b>File of execution:</b> {1}<br><b>Decrption: </b>{2}";
 	public static String GETTING_TEXT = "Getting text of : {0}";

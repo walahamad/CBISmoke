@@ -11,8 +11,6 @@ import com.generic.setup.SelTestCase;
 import com.generic.util.SelectorUtil;
 
 public class PLP extends SelTestCase {
-    private static List<String> subStrArr = new ArrayList<String>();
-    private static List<String> valuesArr = new ArrayList<String>();
     private static int numberOfProductsShownInHeader;
     
     public static class keys {
@@ -95,12 +93,12 @@ public class PLP extends SelTestCase {
 		valuesArr.add("noClick");
 		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
 		logs.debug(MessageFormat.format(LoggingMsg.EXPECTED_TEXT, numberOfProductsShownInHeader));
-		logs.debug(MessageFormat.format(LoggingMsg.ACTUAL_TEXT, SelectorUtil.numberOfFoundElements));
+		logs.debug(MessageFormat.format(LoggingMsg.ACTUAL_TEXT, SelectorUtil.numberOfFoundElements.get()));
 		getCurrentFunctionName(false);
 		if (numberOfProductsShownInHeader == Integer.parseInt(SelectorUtil.numberOfFoundElements.get())) {
     		return true;
     	} else {
-    		logs.debug(MessageFormat.format(LoggingMsg.ACTUAL_EXPECTED_ERROR, SelectorUtil.numberOfFoundElements, numberOfProductsShownInHeader));
+    		logs.debug(MessageFormat.format(LoggingMsg.ACTUAL_EXPECTED_ERROR, SelectorUtil.numberOfFoundElements.get(), numberOfProductsShownInHeader));
     		return false;
     	}
     }
@@ -151,6 +149,8 @@ public class PLP extends SelTestCase {
     
     public static void clickMoreStores() throws Exception {
 		getCurrentFunctionName(true);
+		List<String> subStrArr = new ArrayList<String>();
+		List<String> valuesArr = new ArrayList<String>();
 		logs.debug(MessageFormat.format(LoggingMsg.CLICKING_SEL, PLPSelectors.moreStores));
 		subStrArr.add(PLPSelectors.moreStores);
 		valuesArr.add("");
@@ -160,6 +160,8 @@ public class PLP extends SelTestCase {
     
     public static String getPLPProductPrice(String productCodePost) throws Exception {
 		getCurrentFunctionName(true);
+		List<String> subStrArr = new ArrayList<String>();
+		List<String> valuesArr = new ArrayList<String>();
 		String selText = MessageFormat.format(PLPSelectors.plpProductPriceLabel, productCodePost);
 		logs.debug(MessageFormat.format(LoggingMsg.GETTING_SEL, selText));
 		subStrArr.add(selText);
@@ -171,6 +173,8 @@ public class PLP extends SelTestCase {
     
     public static String getPLPProductPriceFromCartBag() throws Exception {
 		getCurrentFunctionName(true);
+		List<String> subStrArr = new ArrayList<String>();
+		List<String> valuesArr = new ArrayList<String>();
 		logs.debug(MessageFormat.format(LoggingMsg.GETTING_SEL, PLPSelectors.addToCartItemPriceParent + ":"+ PLPSelectors.addToCartItemPrice));
 		subStrArr.add(PLPSelectors.addToCartItemPriceParent);
 		valuesArr.add("child,"+PLPSelectors.addToCartItemPrice);
@@ -181,6 +185,8 @@ public class PLP extends SelTestCase {
     
     public static void clickCheckoutBtn() throws Exception {
 		getCurrentFunctionName(true);
+		List<String> subStrArr = new ArrayList<String>();
+		List<String> valuesArr = new ArrayList<String>();
 		logs.debug(MessageFormat.format(LoggingMsg.CLICKING_SEL, PLPSelectors.addToCartItemCheckoutBtn));
 		subStrArr.add(PLPSelectors.addToCartItemCheckoutBtn);
 		valuesArr.add("");
@@ -190,6 +196,8 @@ public class PLP extends SelTestCase {
     
     public static void clickContinueShoppingBtn() throws Exception {
 		getCurrentFunctionName(true);
+		List<String> subStrArr = new ArrayList<String>();
+		List<String> valuesArr = new ArrayList<String>();
 		logs.debug(MessageFormat.format(LoggingMsg.CLICKING_SEL, PLPSelectors.addToCartItemContinueShoppingBtn));
 		subStrArr.add(PLPSelectors.addToCartItemContinueShoppingBtn);
 		valuesArr.add("");
@@ -199,6 +207,8 @@ public class PLP extends SelTestCase {
     
     public static void clickCboxCloseBtn() throws Exception {
 		getCurrentFunctionName(true);
+		List<String> subStrArr = new ArrayList<String>();
+		List<String> valuesArr = new ArrayList<String>();
 		logs.debug(MessageFormat.format(LoggingMsg.CLICKING_SEL, PLPSelectors.cboxCloseBtn));
 		subStrArr.add(PLPSelectors.cboxCloseBtn);
 		valuesArr.add("");
@@ -208,6 +218,8 @@ public class PLP extends SelTestCase {
     
     public static void clickleftNavCheckBoxCheckBox(String checkBoxValue) throws Exception {
 		getCurrentFunctionName(true);
+		List<String> subStrArr = new ArrayList<String>();
+		List<String> valuesArr = new ArrayList<String>();
 		logs.debug(MessageFormat.format(LoggingMsg.CLICKING_SEL, checkBoxValue));
 		subStrArr.add(checkBoxValue);
 		valuesArr.add("");
@@ -217,6 +229,8 @@ public class PLP extends SelTestCase {
     
     public static String getFacetNavTitleStoresCount() throws Exception {
 		getCurrentFunctionName(true);
+		List<String> subStrArr = new ArrayList<String>();
+		List<String> valuesArr = new ArrayList<String>();
 		logs.debug(MessageFormat.format(LoggingMsg.CLICKING_SEL, PLPSelectors.facetNavTitleStores + ": " + PLPSelectors.facetNavSecondCount));
 		subStrArr.add(PLPSelectors.facetNavTitleStores);
 		valuesArr.add("child,"+PLPSelectors.facetNavSecondCount);
@@ -227,6 +241,8 @@ public class PLP extends SelTestCase {
     
     public static String getFacetNavTitlePriceCount() throws Exception {
 		getCurrentFunctionName(true);
+		List<String> subStrArr = new ArrayList<String>();
+		List<String> valuesArr = new ArrayList<String>();
 		logs.debug(MessageFormat.format(LoggingMsg.CLICKING_SEL, PLPSelectors.facetNavTitlePrice + ": " + PLPSelectors.facetNavThirdCount));
 		subStrArr.add(PLPSelectors.facetNavTitlePrice);
 		valuesArr.add("child,"+PLPSelectors.facetNavThirdCount);
@@ -237,6 +253,8 @@ public class PLP extends SelTestCase {
     
     public static String getFacetNavTitleColourCount() throws Exception {
 		getCurrentFunctionName(true);
+		List<String> subStrArr = new ArrayList<String>();
+		List<String> valuesArr = new ArrayList<String>();
 		logs.debug(MessageFormat.format(LoggingMsg.CLICKING_SEL, PLPSelectors.facetNavTitleColour + ": " + PLPSelectors.facetNavThirdCount));
 		subStrArr.add(PLPSelectors.facetNavTitleColour);
 		valuesArr.add("child,"+PLPSelectors.facetNavThirdCount);
@@ -246,6 +264,8 @@ public class PLP extends SelTestCase {
 	}
     public static String getFacetNavTitleSizeCount() throws Exception {
 		getCurrentFunctionName(true);
+		List<String> subStrArr = new ArrayList<String>();
+		List<String> valuesArr = new ArrayList<String>();
 		logs.debug(MessageFormat.format(LoggingMsg.CLICKING_SEL, PLPSelectors.facetNavTitleSize + ": " + PLPSelectors.facetNavThirdCount));
 		subStrArr.add(PLPSelectors.facetNavTitleSize);
 		valuesArr.add("child,"+PLPSelectors.facetNavThirdCount);
@@ -256,6 +276,8 @@ public class PLP extends SelTestCase {
     
     public static void clickChangeLocationLink() throws Exception {
 		getCurrentFunctionName(true);
+		List<String> subStrArr = new ArrayList<String>();
+		List<String> valuesArr = new ArrayList<String>();
 		logs.debug(MessageFormat.format(LoggingMsg.CLICKING_SEL, PLPSelectors.changeLocationLink));
 		subStrArr.add(PLPSelectors.changeLocationLink);
 		valuesArr.add("");
@@ -265,6 +287,8 @@ public class PLP extends SelTestCase {
     
     public static boolean isLocationFacetContainerHidden() {
 		getCurrentFunctionName(true);
+		List<String> subStrArr = new ArrayList<String>();
+		List<String> valuesArr = new ArrayList<String>();
 		boolean isLocationContainerHidden = false;
 		logs.debug(MessageFormat.format(LoggingMsg.CLICKING_SEL, PLPSelectors.locationFacetContainer));
 		subStrArr.add(PLPSelectors.locationFacetContainer);
@@ -318,6 +342,8 @@ public class PLP extends SelTestCase {
     
     public static void clickNthProductItem(String nthChild) throws Exception {
 		getCurrentFunctionName(true);
+		List<String> subStrArr = new ArrayList<String>();
+		List<String> valuesArr = new ArrayList<String>();
 		String selText = MessageFormat.format(PLPSelectors.nthProductItem, nthChild);
 		logs.debug(MessageFormat.format(LoggingMsg.CLICKING_SEL, selText));
 		subStrArr.add(selText);
@@ -328,6 +354,8 @@ public class PLP extends SelTestCase {
     
     public static void removeNthAppliedFacet(String nthChild) throws Exception {
 		getCurrentFunctionName(true);
+		List<String> subStrArr = new ArrayList<String>();
+		List<String> valuesArr = new ArrayList<String>();
 		String selText = MessageFormat.format(PLPSelectors.nthAppliedFacets, nthChild);
 		logs.debug(MessageFormat.format(LoggingMsg.CLICKING_SEL, selText));
 		subStrArr.add(selText);
@@ -338,6 +366,8 @@ public class PLP extends SelTestCase {
     
     public static void typePickUpInStoreLocationForSearch(String storeName) throws Exception {
 		getCurrentFunctionName(true);
+		List<String> subStrArr = new ArrayList<String>();
+		List<String> valuesArr = new ArrayList<String>();
 		logs.debug(MessageFormat.format(LoggingMsg.TYPING_ELEMENT_VALUE, PLPSelectors.pickupInStoreLocationSearch, storeName));
 		subStrArr.add(PLPSelectors.pickupInStoreLocationSearch);
 		valuesArr.add(storeName + ",pressEnter");
@@ -347,6 +377,8 @@ public class PLP extends SelTestCase {
     
     public static void clickPickupNthAccessibleTabIcon(String nthIcon) throws Exception {
 		getCurrentFunctionName(true);
+		List<String> subStrArr = new ArrayList<String>();
+		List<String> valuesArr = new ArrayList<String>();
 		String pickupNthAccessibleTabIcon = MessageFormat.format(PLPSelectors.pickupNthAccessibleTabIcon, nthIcon);
 		logs.debug(MessageFormat.format(LoggingMsg.CLICKING_SEL, pickupNthAccessibleTabIcon));
 		subStrArr.add(pickupNthAccessibleTabIcon);
@@ -357,6 +389,8 @@ public class PLP extends SelTestCase {
     
     public static void clickPickUpInStoreAddToBagBtn(String productCodePost) throws Exception {
 		getCurrentFunctionName(true);
+		List<String> subStrArr = new ArrayList<String>();
+		List<String> valuesArr = new ArrayList<String>();
 		String pickupModalAddToBagBtn = MessageFormat.format(PLPSelectors.pickupInStoreProduct, productCodePost);
 		logs.debug(MessageFormat.format(LoggingMsg.CLICKING_SEL, pickupModalAddToBagBtn + ":"+ PLPSelectors.pickupAddToBagBtn));
 		subStrArr.add(pickupModalAddToBagBtn);
@@ -367,6 +401,8 @@ public class PLP extends SelTestCase {
     
     public static void clickPickUpInStoreDecreaseQtyBtn(String productCodePost) throws Exception {
 		getCurrentFunctionName(true);
+		List<String> subStrArr = new ArrayList<String>();
+		List<String> valuesArr = new ArrayList<String>();
 		String pickupModalDecreaseQtyBtn = MessageFormat.format(PLPSelectors.pickupInStoreProduct, productCodePost);
 		logs.debug(MessageFormat.format(LoggingMsg.CLICKING_SEL, pickupModalDecreaseQtyBtn + ":" + PLPSelectors.pickupDecreaseQtyBtn));
 		subStrArr.add(pickupModalDecreaseQtyBtn);
@@ -377,6 +413,8 @@ public class PLP extends SelTestCase {
     
     public static void clickPickUpInStoreIncreaseQtyBtn(String productCodePost) throws Exception {
 		getCurrentFunctionName(true);
+		List<String> subStrArr = new ArrayList<String>();
+		List<String> valuesArr = new ArrayList<String>();
 		String pickupModalIncreaseQtyBtn = MessageFormat.format(PLPSelectors.pickupInStoreProduct, productCodePost);
 		logs.debug(MessageFormat.format(LoggingMsg.CLICKING_SEL, pickupModalIncreaseQtyBtn + ":" + PLPSelectors.pickupIncreaseQtyBtn));
 		subStrArr.add(pickupModalIncreaseQtyBtn);
@@ -387,6 +425,8 @@ public class PLP extends SelTestCase {
     
     public static void typePickUpInStoreQty(String productCodePost, String qty) throws Exception {
 		getCurrentFunctionName(true);
+		List<String> subStrArr = new ArrayList<String>();
+		List<String> valuesArr = new ArrayList<String>();
 		String pickupModalQtyInput = MessageFormat.format(PLPSelectors.pickupInStoreProduct, productCodePost);
 		logs.debug(MessageFormat.format(LoggingMsg.TYPING_ELEMENT_VALUE, pickupModalQtyInput + ":" + PLPSelectors.pickupQtyInput, qty));
 		subStrArr.add(pickupModalQtyInput);

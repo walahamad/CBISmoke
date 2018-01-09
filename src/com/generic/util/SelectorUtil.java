@@ -224,10 +224,13 @@ public class SelectorUtil extends SelTestCase {
 							e.tagName().equals("img") ||
 							e.tagName().equals("a")||
 							e.tagName().equals("li") ||
-							e.tagName().equals("form"))
+							e.tagName().equals("form")||
+							e.tagName().equals("label"))
 					{
 						return "click";
 					} else if (e.tagName().equals("input") && e.attr("type").equals("submit")) {
+						return "click";
+					}else if (e.tagName().equals("input") && e.attr("type").equals("radio")) {
 						return "click";
 					}
 					else if (e.tagName().equals("p")||
@@ -593,7 +596,7 @@ public class SelectorUtil extends SelTestCase {
 		}
 	    
 	    @SuppressWarnings("rawtypes")
-		public static boolean isDiplayed(List<String> subStrArr) throws Exception
+		public static boolean isDisplayed(List<String> subStrArr) throws Exception
 	    {
 	    	getCurrentFunctionName(true);
 	    	List<String> valuesArr = new ArrayList<String>();
@@ -606,6 +609,24 @@ public class SelectorUtil extends SelTestCase {
     			isDisplayed = false;
 	    	getCurrentFunctionName(false);
 	    	return isDisplayed;
+	    }
+	    
+	    @SuppressWarnings("rawtypes")
+		public static boolean isNotDisplayed(List<String> subStrArr) throws Exception
+	    {
+	    	getCurrentFunctionName(true);
+	    	boolean isNotDisplayed = false;
+	    	
+			try {
+				List<String> valuesArr = new ArrayList<String>();
+		    	valuesArr.add("");
+		    	LinkedHashMap<String, LinkedHashMap> webelementsInfo = initializeSelectorsAndDoActions(new ArrayList<String>(subStrArr), valuesArr, false);
+				return isNotDisplayed;
+				
+				}catch (NoSuchElementException e) {
+					isNotDisplayed = true;
+					return isNotDisplayed;
+				}
 	    }
 	    
 	    @SuppressWarnings("rawtypes")

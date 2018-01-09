@@ -10,8 +10,6 @@ import com.generic.setup.SelTestCase;
 import com.generic.util.SelectorUtil;
 
 public class PersonalDetails extends SelTestCase {
-	private static List<String> subStrArr = new ArrayList<String>();
-    private static List<String> valuesArr = new ArrayList<String>();
     
     public static class keys {
 		public static final String caseId = "caseId";
@@ -19,6 +17,8 @@ public class PersonalDetails extends SelTestCase {
     
     public static String getTitleValue() throws Exception {
 		getCurrentFunctionName(true);
+		List<String> subStrArr = new ArrayList<String>();
+	    List<String> valuesArr = new ArrayList<String>();
 		logs.debug(MessageFormat.format(LoggingMsg.GET_ELEMENT_BY_LOCATOR,PersonalDetailsSelectors.title));
 		subStrArr.add(PersonalDetailsSelectors.title);
 		valuesArr.add("");
@@ -31,6 +31,8 @@ public class PersonalDetails extends SelTestCase {
     
     public static String getFirstNameValue() throws Exception {
 		getCurrentFunctionName(true);
+		List<String> subStrArr = new ArrayList<String>();
+	    List<String> valuesArr = new ArrayList<String>();
 		logs.debug(MessageFormat.format(LoggingMsg.GET_ELEMENT_BY_LOCATOR,PersonalDetailsSelectors.firstName));
 		subStrArr.add(PersonalDetailsSelectors.firstName);
 		valuesArr.add("getCurrentValue");
@@ -43,6 +45,8 @@ public class PersonalDetails extends SelTestCase {
     
     public static String getLastNameValue() throws Exception {
 		getCurrentFunctionName(true);
+		List<String> subStrArr = new ArrayList<String>();
+	    List<String> valuesArr = new ArrayList<String>();
 		logs.debug(MessageFormat.format(LoggingMsg.GET_ELEMENT_BY_LOCATOR,PersonalDetailsSelectors.lastName));
 		subStrArr.add(PersonalDetailsSelectors.lastName);
 		valuesArr.add("getCurrentValue");
@@ -55,6 +59,8 @@ public class PersonalDetails extends SelTestCase {
     
     public static void clickCancelBtn() throws Exception {
 		getCurrentFunctionName(true);
+		List<String> subStrArr = new ArrayList<String>();
+	    List<String> valuesArr = new ArrayList<String>();
 		logs.debug(MessageFormat.format(LoggingMsg.CLICKING_SEL, PersonalDetailsSelectors.cancelBtn));
 		subStrArr.add(PersonalDetailsSelectors.cancelBtn);
 		valuesArr.add("");
@@ -64,6 +70,8 @@ public class PersonalDetails extends SelTestCase {
     
     public static void clickUpdateBtn() throws Exception {
 		getCurrentFunctionName(true);
+		List<String> subStrArr = new ArrayList<String>();
+	    List<String> valuesArr = new ArrayList<String>();
 		logs.debug(MessageFormat.format(LoggingMsg.CLICKING_SEL, PersonalDetailsSelectors.updateBtn));
 		subStrArr.add(PersonalDetailsSelectors.updateBtn);
 		valuesArr.add("");
@@ -73,6 +81,8 @@ public class PersonalDetails extends SelTestCase {
     
     public static void selectTitle(String title) throws Exception {
 		getCurrentFunctionName(true);
+		List<String> subStrArr = new ArrayList<String>();
+	    List<String> valuesArr = new ArrayList<String>();
 		logs.debug(MessageFormat.format(LoggingMsg.SELECTING_ELEMENT_VALUE,PersonalDetailsSelectors.title, title));
 		subStrArr.add(PersonalDetailsSelectors.title);
 		valuesArr.add(title);
@@ -82,6 +92,8 @@ public class PersonalDetails extends SelTestCase {
     
     public static void typeFirstName(String firstName) throws Exception {
 		getCurrentFunctionName(true);
+		List<String> subStrArr = new ArrayList<String>();
+	    List<String> valuesArr = new ArrayList<String>();
 		logs.debug(MessageFormat.format(LoggingMsg.TYPING_ELEMENT_VALUE, PersonalDetailsSelectors.firstName, firstName));
 		subStrArr.add(PersonalDetailsSelectors.firstName);
 		valuesArr.add(firstName);
@@ -91,6 +103,8 @@ public class PersonalDetails extends SelTestCase {
     
     public static void typeLastName(String lastName) throws Exception {
 		getCurrentFunctionName(true);
+		List<String> subStrArr = new ArrayList<String>();
+	    List<String> valuesArr = new ArrayList<String>();
 		logs.debug(MessageFormat.format(LoggingMsg.TYPING_ELEMENT_VALUE, PersonalDetailsSelectors.lastName, lastName));
 		subStrArr.add(PersonalDetailsSelectors.lastName);
 		valuesArr.add(lastName);
@@ -114,6 +128,8 @@ public class PersonalDetails extends SelTestCase {
     
     public static String getGlobalAlertsMsg() throws Exception {
 		getCurrentFunctionName(true);
+		List<String> subStrArr = new ArrayList<String>();
+	    List<String> valuesArr = new ArrayList<String>();
 		logs.debug(MessageFormat.format(LoggingMsg.GET_ELEMENT_BY_LOCATOR,PersonalDetailsSelectors.globalAlerts));
 		subStrArr.add(PersonalDetailsSelectors.globalAlerts);
 		valuesArr.add("");
@@ -126,6 +142,8 @@ public class PersonalDetails extends SelTestCase {
     
     public static String getFirstNameErrorMsg() throws Exception {
 		getCurrentFunctionName(true);
+		List<String> subStrArr = new ArrayList<String>();
+	    List<String> valuesArr = new ArrayList<String>();
 		logs.debug(MessageFormat.format(LoggingMsg.GET_ELEMENT_BY_LOCATOR,PersonalDetailsSelectors.firstNameErrors));
 		subStrArr.add(PersonalDetailsSelectors.firstNameErrors);
 		valuesArr.add("noClick");
@@ -138,6 +156,8 @@ public class PersonalDetails extends SelTestCase {
     
     public static String getLastNameErrorMsg() throws Exception {
 		getCurrentFunctionName(true);
+		List<String> subStrArr = new ArrayList<String>();
+	    List<String> valuesArr = new ArrayList<String>();
 		logs.debug(MessageFormat.format(LoggingMsg.GET_ELEMENT_BY_LOCATOR,PersonalDetailsSelectors.lastNameErrors));
 		subStrArr.add(PersonalDetailsSelectors.lastNameErrors);
 		valuesArr.add("noClick");

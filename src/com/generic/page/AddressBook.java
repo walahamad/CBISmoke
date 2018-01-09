@@ -56,13 +56,13 @@ public class AddressBook extends SelTestCase {
 
 	}
 
-	public static void clickRemoveAddress() throws Exception {
+	public static void clickRemoveAddress(int index) throws Exception {
 		getCurrentFunctionName(true);
 		List<String> subStrArr = new ArrayList<String>();
 		List<String> valuesArr = new ArrayList<String>();
 		logs.debug(MessageFormat.format(LoggingMsg.CLICKING_REMOVE_BUTTON, "remove address"));
 		subStrArr.add(AddressBookSelectors.removeAddress);
-		valuesArr.add("");
+		valuesArr.add("index,"+index);
 		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
 		getCurrentFunctionName(false);
 

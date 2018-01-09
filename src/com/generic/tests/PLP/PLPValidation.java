@@ -1,89 +1,71 @@
 package com.generic.tests.PLP;
 
 import java.text.MessageFormat;
+
+import org.testng.Assert;
+import org.testng.annotations.BeforeTest;
+import org.testng.annotations.DataProvider;
+import org.testng.annotations.Test;
+import org.testng.xml.XmlTest;
+
 import java.util.Arrays;
-import java.util.Collection;
-
-import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
-import org.junit.runners.Parameterized.Parameters;
-
-import com.generic.page.PLP;
 import com.generic.setup.Common;
 import com.generic.setup.LoggingMsg;
 import com.generic.setup.SelTestCase;
 import com.generic.setup.SheetVariables;
 import com.generic.util.TestUtilities;
+import com.generic.util.ReportUtil;
+import com.generic.util.SASLogger;
+import com.generic.page.PLP;
 
-@RunWith(Parameterized.class)
 public class PLPValidation extends SelTestCase {
 
 	// used sheet in test
 	public static final String testDataSheet = SheetVariables.plpSheet;
 
-	private String caseId;
-	private String runTest;
-	private String desc;
-	private String url;
-	private String sortOptions1;
-	private String sortOptions2;
-	private String userLocationStore;
-	private String addToCartProduct;
-	private String pickUpInStoreProduct;
-	private String pickupNthIconIndex;
-	private String pickupInStoreQty;
-	private String plpFilter;
-	private String nthProductItem;
-	private String nthAppliedFacet;
 	private boolean doClickAddToCart;
 	private boolean doClickPickupInStore;
 	private boolean doClickNthProductItem;
 	private boolean doClickCheckoutBtn;
 	private boolean doClickCloseBtn;
+	private int caseIndexInDatasheet;
+	private static XmlTest testObject;
 
-	@BeforeClass
-	public static void initialSetUp() throws Exception {
-		testCaseRepotId = SheetVariables.plpTestCaseId;
+	private static ThreadLocal<SASLogger> Testlogs = new ThreadLocal<SASLogger>();
+	@BeforeTest
+	public static void initialSetUp(XmlTest test) throws Exception {
+		Testlogs.set(new SASLogger(""));
+		testObject = test;
+	}
+	
+	@DataProvider(name = "PLP", parallel = true)
+	// concurrency maintenance on sheet reading
+	public static Object[][] loadTestData() throws Exception {
+		getBrowserWait(testObject.getParameter("browserName"));
+
+		Object[][] data = TestUtilities.getData(testDataSheet);
+		Testlogs.get().debug(Arrays.deepToString(data).replace("\n", "--"));
+		return data;
 	}
 
-	public PLPValidation(String caseId, String runTest, String desc, String url, String sortOptions1,
+	@Test(dataProvider = "PLP")
+	public void verifyPLP(String caseId, String runTest, String desc, String url, String sortOptions1,
 			String sortOptions2, String userLocationStore, String addToCartProduct, String pickUpInStoreProduct, String pickupNthIconIndex, String pickupInStoreQty,String plpFilter, String nthProductItem,
-			String nthAppliedFacet, String doClickAddToCart, String doClickPickupInStore, String doClickNthProductItem, String doClickCheckoutBtn, String doClickCloseBtn) {
-		// moving variables from parameterize module to class variables
-		this.caseId = caseId;
-		this.runTest = runTest;
-		this.desc = desc;
-		this.url = url;
-		this.sortOptions1 = sortOptions1;
-		this.sortOptions2 = sortOptions2;
-		this.userLocationStore = userLocationStore;
-		this.addToCartProduct = addToCartProduct;
-		this.pickUpInStoreProduct = pickUpInStoreProduct;
-		this.pickupNthIconIndex = pickupNthIconIndex;
-		this.pickupInStoreQty = pickupInStoreQty;
-		this.plpFilter = plpFilter;
-		this.nthProductItem = nthProductItem;
-		this.nthAppliedFacet = nthAppliedFacet;
+			String nthAppliedFacet, String doClickAddToCart, String doClickPickupInStore, String doClickNthProductItem, String doClickCheckoutBtn, String doClickCloseBtn) throws Exception {
+		
 		this.doClickAddToCart = Boolean.valueOf(doClickAddToCart);
 		this.doClickPickupInStore = Boolean.valueOf(doClickPickupInStore);
 		this.doClickNthProductItem = Boolean.valueOf(doClickNthProductItem);
 		this.doClickCheckoutBtn = Boolean.valueOf(doClickCheckoutBtn);
 		this.doClickCloseBtn = Boolean.valueOf(doClickCloseBtn);
-	}
-	
-	@Parameters(name = "{index}_:{2}")
-	public static Collection<Object[]> loadTestData() throws Exception {
-		Object[][] data = TestUtilities.getData(testDataSheet);
-		return Arrays.asList(data);
-	}
-	
-	@Test
-	public void verifyPLP() throws Exception {
-		setTestCaseDescription(MessageFormat.format(LoggingMsg.TEST_CASE_DESC, testDataSheet + "." + caseId,
+		
+		Testlogs.set(new SASLogger("PLP" + getBrowserName()));
+		// Important to add this for logging/reporting
+		setTestCaseReportName("PLP Case");
+		logCaseDetailds(MessageFormat.format(LoggingMsg.TEST_CASE_DESC, testDataSheet + "." + caseId,
 				this.getClass().getCanonicalName(), desc));
+
+		caseIndexInDatasheet = getDatatable().getCellRowNum(testDataSheet, PLP.keys.caseId, caseId);
 		
 		try {
 			getDriver().get(url);
@@ -99,15 +81,17 @@ public class PLPValidation extends SelTestCase {
 			logs.debug(MessageFormat.format(LoggingMsg.NUMBER_OF_PRODUCTS, productsNum));
 			
 			PLP.doesDisplayedProductsNumTextMatchesProductsDisplayed();
+		
+			PLP.typeUserLocationStore(userLocationStore);
+			Thread.sleep(4000);
 			
-			PLP.clickFindStores();
-			Thread.sleep(3000);
+//			PLP.clickFindStores();
+//			Thread.sleep(3000);
 			
 			PLP.clickMoreStores();
 			Thread.sleep(3000);
 			
-			PLP.typeUserLocationStore(userLocationStore);
-			Thread.sleep(3000);
+		
 			
 			PLP.clickleftNavCheckBoxCheckBox("London Hospital");
 			//logs.debug(MessageFormat.format(LoggingMsg.PLP_SELECTED_FILTER_COUNT, "Store", PLP.getFacetNavTitleStoresCount()));
@@ -123,7 +107,7 @@ public class PLPValidation extends SelTestCase {
 			
 		    PLP.verifyChangeLocationLink();
 		    
-		    if (doClickAddToCart) {
+		    if (this.doClickAddToCart) {
 		    	PLP.clickAddToCart(addToCartProduct);
 				Thread.sleep(3000);
 				String productPriceAddedToCart = PLP.getPLPProductPriceFromCartBag();
@@ -131,16 +115,16 @@ public class PLPValidation extends SelTestCase {
 				String productPrice = PLP.getPLPProductPrice(addToCartProduct);
 				logs.debug(MessageFormat.format(LoggingMsg.PLP_PRODUCT_PRICE, productPrice));
 				Thread.sleep(2000);
-				if (doClickCloseBtn) {
+				if (this.doClickCloseBtn) {
 					PLP.clickCboxCloseBtn();
-				} else if (doClickCheckoutBtn) {
+				} else if (this.doClickCheckoutBtn) {
 					PLP.clickCheckoutBtn();
 				} else {
 					PLP.clickContinueShoppingBtn();
 				}
 			}
 		    
-		    if (doClickPickupInStore) {
+		    if (this.doClickPickupInStore) {
 		    	PLP.clickProductPickupInStoreButton(pickUpInStoreProduct);
 		    	PLP.typePickUpInStoreLocationForSearch(userLocationStore);
 		    	PLP.clickPickupNthAccessibleTabIcon(pickupNthIconIndex);
@@ -152,7 +136,7 @@ public class PLPValidation extends SelTestCase {
 		    	Thread.sleep(2000);
 		    }
 		    
-		    if (doClickNthProductItem) {
+		    if (this.doClickNthProductItem) {
 		    	PLP.clickNthProductItem(nthProductItem);
 		    }
 		    
@@ -160,12 +144,12 @@ public class PLPValidation extends SelTestCase {
 			Common.testPass();
 		} catch (Throwable t) {
 			setTestCaseDescription(getTestCaseDescription());
-			logs.debug(MessageFormat.format(LoggingMsg.DEBUGGING_TEXT, t.getMessage()));
+			Testlogs.get().debug(MessageFormat.format(LoggingMsg.DEBUGGING_TEXT, t.getMessage()));
 			t.printStackTrace();
 			String temp = getTestCaseReportName();
 			Common.testFail(t, temp);
-			Common.takeScreenShot();
-			Assert.assertTrue(t.getMessage(), false);
+			ReportUtil.takeScreenShot(getDriver());
+			Assert.assertTrue(false, t.getMessage());
 		}
 
 	}

@@ -2,6 +2,8 @@ package com.generic.tests.account;
 
 import java.text.MessageFormat;
 import java.util.Arrays;
+import java.util.LinkedHashMap;
+
 import org.testng.Assert;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.DataProvider;
@@ -13,35 +15,42 @@ import com.generic.setup.LoggingMsg;
 import com.generic.setup.SelTestCase;
 import com.generic.setup.SheetVariables;
 import com.generic.util.TestUtilities;
+
+import sun.util.logging.resources.logging;
+
 import com.generic.util.ReportUtil;
 import com.generic.util.SASLogger;
+import com.generic.page.CheckOut;
 import com.generic.page.PersonalDetails;
+import com.generic.page.Registration;
 
-public class PersonalDertailsValidation extends SelTestCase {
+public class PersonalDetailsValidation extends SelTestCase {
 
 	// used sheet in test
 	public static final String testDataSheet = SheetVariables.personalDetailsSheet;
 	private boolean doVerifyCurrent;
 	private boolean doClickCancelBtn;
 	private boolean doClickUpdateBtn;
+	private String email;
+	private int caseIndexInDatasheet;
+	private boolean revertChanges;
 
 	private static XmlTest testObject;
 
 	private static ThreadLocal<SASLogger> Testlogs = new ThreadLocal<SASLogger>();
+	private static LinkedHashMap<String, Object> users;
 
 	@BeforeTest
 	public static void initialSetUp(XmlTest test) throws Exception {
 		Testlogs.set(new SASLogger(""));
 		testObject = test;
+		users = Common.readUsers();
 	}
 
 	@DataProvider(name = "personalDetails", parallel = true)
 	// concurrency maintenance on sheet reading
 	public static Object[][] loadTestData() throws Exception {
-		if (testObject.getParameter("browserName").equals("firefox"))
-			Thread.sleep(500);
-		if (testObject.getParameter("browserName").equals("chrome"))
-			Thread.sleep(700);
+		getBrowserWait(testObject.getParameter("browserName"));
 
 		Object[][] data = TestUtilities.getData(testDataSheet);
 		Testlogs.get().debug(Arrays.deepToString(data).replace("\n", "--"));
@@ -50,14 +59,16 @@ public class PersonalDertailsValidation extends SelTestCase {
 
 	@SuppressWarnings("unchecked") // avoid warning from linked hashmap
 	@Test(dataProvider = "personalDetails")
-	public void verifyPersonalDetails(String caseId, String runTest, String desc, String userName, String password,
-			String url, String title, String firstName, String lastName, String doVerifyCurrent1,
-			String doClickCancelBtn1, String doClickUpdateBtn1, String globalAlerts, String firstNameErrors,
+	public void verifyPersonalDetails(String caseId, String runTest, String desc, String proprties, String email,
+			String url, String firstName, String lastName, String globalAlerts, String firstNameErrors,
 			String lastNameErrors) throws Exception {
 
-		doVerifyCurrent = Boolean.valueOf(doVerifyCurrent1);
-		doClickCancelBtn = Boolean.valueOf(doClickCancelBtn1);
-		doClickUpdateBtn = Boolean.valueOf(doClickUpdateBtn1);
+		doVerifyCurrent =  proprties.contains("Verify current user");
+		doClickCancelBtn = proprties.contains("click cancel");
+		doClickUpdateBtn = proprties.contains("click update");
+		revertChanges = proprties.contains("revert changes");
+		
+		LinkedHashMap<String, Object> userDetails = (LinkedHashMap<String, Object>) users.get(email);
 
 		Testlogs.set(new SASLogger("personalDetails_" + getBrowserName()));
 		// Important to add this for logging/reporting
@@ -65,47 +76,62 @@ public class PersonalDertailsValidation extends SelTestCase {
 		logCaseDetailds(MessageFormat.format(LoggingMsg.TEST_CASE_DESC, testDataSheet + "." + caseId,
 				this.getClass().getCanonicalName(), desc));
 
-		// this.email = email.replace("tester",
-		// "tester_"+getBrowserName().replace(" ", "_"));
+		this.email = getSubMailAccount(email);
+		caseIndexInDatasheet = getDatatable().getCellRowNum(testDataSheet, CheckOut.keys.caseId, caseId);
 
 		try {
 
-			SignIn.logIn(userName, password);
-			Thread.sleep(2000);
+			SignIn.logIn(this.email, (String)userDetails.get(Registration.keys.password));
 			getDriver().get(url);
-			Thread.sleep(3000);
-
+			
 			if (doVerifyCurrent) {
 				String incorrectTitleErrorMsg = MessageFormat.format(LoggingMsg.ACTUAL_EXPECTED_ERROR,
-						PersonalDetails.getTitleValue(), title);
+						PersonalDetails.getTitleValue(), (String) userDetails.get(Registration.keys.title));
 				String incorrectFirstNameErrorMsg = MessageFormat.format(LoggingMsg.ACTUAL_EXPECTED_ERROR,
 						PersonalDetails.getFirstNameValue(), firstName);
 				String incorrectlastNameErrorMsg = MessageFormat.format(LoggingMsg.ACTUAL_EXPECTED_ERROR,
 						PersonalDetails.getLastNameValue(), lastName);
-				Assert.assertEquals(incorrectTitleErrorMsg, title, PersonalDetails.getTitleValue());
-				Assert.assertEquals(incorrectFirstNameErrorMsg, firstName, PersonalDetails.getFirstNameValue());
-				Assert.assertEquals(incorrectlastNameErrorMsg, lastName, PersonalDetails.getLastNameValue());
+				
+				sassert().assertEquals((String) userDetails.get(Registration.keys.title),
+						PersonalDetails.getTitleValue(), incorrectTitleErrorMsg);
+				sassert().assertEquals((String) userDetails.get(Registration.keys.firstName),
+						PersonalDetails.getFirstNameValue(),incorrectFirstNameErrorMsg);
+				sassert().assertEquals((String) userDetails.get(Registration.keys.lastName),
+						PersonalDetails.getLastNameValue(),incorrectlastNameErrorMsg);
 			} else {
-				PersonalDetails.fillInNewValuesAndClickUpdateOrCancel(title, firstName, lastName, doClickUpdateBtn,
+				PersonalDetails.fillInNewValuesAndClickUpdateOrCancel((String) userDetails.get(Registration.keys.title)
+						, firstName, lastName, doClickUpdateBtn,
 						doClickCancelBtn);
-				Thread.sleep(2000);
+				Thread.sleep(3000);
 				if (doClickUpdateBtn) {
 					String globalAlertMsg = MessageFormat.format(LoggingMsg.ACTUAL_EXPECTED_ERROR,
 							PersonalDetails.getGlobalAlertsMsg(), globalAlerts);
-					Assert.assertEquals(globalAlertMsg, globalAlerts, PersonalDetails.getGlobalAlertsMsg());
-					if (!firstNameErrors.isEmpty()) {
-						String firstNameErrorMsg = MessageFormat.format(LoggingMsg.ACTUAL_EXPECTED_ERROR,
-								PersonalDetails.getFirstNameErrorMsg(), firstNameErrors);
-						Assert.assertEquals(firstNameErrorMsg, firstNameErrors, PersonalDetails.getFirstNameErrorMsg());
+					Assert.assertTrue(globalAlertMsg.contains(globalAlerts), globalAlertMsg);
+					if (!firstNameErrors.equals("")) {
+						String currentMsg = PersonalDetails.getFirstNameErrorMsg();
+						String firstNameErrorMsg = MessageFormat.format(LoggingMsg.ACTUAL_EXPECTED_ERROR,currentMsg, lastNameErrors);
+						sassert().assertTrue(currentMsg.contains(firstNameErrors), firstNameErrorMsg );
 					}
-					if (!lastNameErrors.isEmpty()) {
+					if (!lastNameErrors.equals("")) {
+						String currentMsg = PersonalDetails.getLastNameErrorMsg();
+						logs.debug(currentMsg);
 						String lastNameErrorMsg = MessageFormat.format(LoggingMsg.ACTUAL_EXPECTED_ERROR,
-								PersonalDetails.getLastNameErrorMsg(), lastNameErrors);
-						Assert.assertEquals(lastNameErrorMsg, lastNameErrors, PersonalDetails.getLastNameErrorMsg());
+								currentMsg, lastNameErrors);
+						sassert().assertTrue(currentMsg.contains(lastNameErrors) , lastNameErrorMsg);
 					}
 				}
 			}
-
+			
+			if(revertChanges)
+			{
+				getDriver().get(url);
+				PersonalDetails.fillInNewValuesAndClickUpdateOrCancel((String) userDetails.get(Registration.keys.title),
+						(String) userDetails.get(Registration.keys.firstName),
+						(String) userDetails.get(Registration.keys.lastName), doClickUpdateBtn, doClickCancelBtn);
+				Thread.sleep(2000);
+			}
+			
+			sassert().assertAll();
 			Common.testPass();
 		} catch (Throwable t) {
 			setTestCaseDescription(getTestCaseDescription());
