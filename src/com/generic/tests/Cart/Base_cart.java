@@ -65,7 +65,7 @@ public class Base_cart extends SelTestCase {
 	public void checkOutBaseTest(String caseId, String runTest, String desc, String proprties, String products,
 			String email, String newQTY, String coupon, String ValidationMsg) throws Exception {
 		// Important to add this for logging/reporting
-		Testlogs.set(new SASLogger("checkout_" + getBrowserName()));
+		Testlogs.set(new SASLogger("cart_" + getBrowserName()));
 		setTestCaseReportName("cart Case");
 		logCaseDetailds(MessageFormat.format(LoggingMsg.CARTDESC, testDataSheet + "." + caseId,
 				this.getClass().getCanonicalName(), desc, proprties.replace("\n", "<br>- "), coupon, newQTY));
