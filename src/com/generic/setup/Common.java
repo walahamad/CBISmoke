@@ -20,16 +20,13 @@ import java.util.logging.Level;
 
 import javax.imageio.ImageIO;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.edge.EdgeOptions;
-import org.openqa.selenium.firefox.FirefoxBinary;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
-import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.logging.LogType;
 import org.openqa.selenium.logging.LoggingPreferences;
@@ -37,9 +34,6 @@ import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.safari.SafariOptions;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
-
 import com.generic.util.ReportUtil;
 import com.generic.util.TestUtilities;
 
@@ -51,25 +45,19 @@ public class Common extends SelTestCase {
 	public static class DataSheetConstants {
 	}
 
+	@SuppressWarnings("deprecation")
 	public static WebDriver initializeBrowser(String browser) throws Exception {
 		getCurrentFunctionName(true);
 		try {
 			logs.debug(MessageFormat.format(LoggingMsg.BROWSER_NAME,browser));
 			DesiredCapabilities capabilities = new DesiredCapabilities();
-			//String browser = "chrome";//SelTestCase.getCONFIG().getProperty("browser");
 			WebDriver driver;
 			if (browser.equalsIgnoreCase("edge")) {
-				// TODO: move this path to path file or configuration file
-				System.setProperty("webdriver.edge.driver", "C:/softwares/servers/MicrosoftWebDriver.exe");
-
-				//capabilities = DesiredCapabilities.edge();
-				//capabilities.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);
-				//capabilities.setJavascriptEnabled(true);
+				System.setProperty("webdriver.edge.driver", PagesURLs.getDriversPath(browser));
 				return new EdgeDriver(new EdgeOptions());
 				
 			}else if (browser.equalsIgnoreCase("Firefox")) {
-				
-				System.setProperty("webdriver.gecko.driver","C:\\softwares\\servers\\geckodriver.exe");
+				System.setProperty("webdriver.gecko.driver",PagesURLs.getDriversPath(browser));
 				
 				LoggingPreferences pref = new LoggingPreferences();
 			    pref.enable(LogType.BROWSER, Level.OFF);
@@ -79,35 +67,13 @@ public class Common extends SelTestCase {
 			    pref.enable(LogType.PROFILER, Level.OFF);
 			    pref.enable(LogType.SERVER, Level.OFF);
 				
-			    
-				//DesiredCapabilities dc=DesiredCapabilities.firefox();
-				//FirefoxProfile profile = new FirefoxProfile();
-//				dc.setCapability(FirefoxDriver.PROFILE, profile);
-//				dc.setCapability("marionette", true);
-//				dc.setCapability(CapabilityType.LOGGING_PREFS, pref);
-		        
 				FirefoxOptions fo = new FirefoxOptions();
 				driver = new FirefoxDriver(fo);
 				driver.manage().timeouts().pageLoadTimeout(120,TimeUnit.SECONDS);
 				return driver;
-				
-//				System.setProperty("webdriver.gecko.driver","C:/softwares/servers/geckodriver.exe");
-//				
-//				FirefoxOptions options = new FirefoxOptions();
-//				options.setBinary("C:\\Program Files\\Mozilla Firefox\\firefox.exe"); //Location where Firefox is installed
-//		 
-//				capabilities = DesiredCapabilities.firefox();
-//				capabilities.setCapability("moz:firefoxOptions", options);
-//				//set more capabilities as per your requirements
-//				FirefoxProfile profile = new FirefoxProfile();
-//				capabilities.setCapability(FirefoxDriver.PROFILE, profile);
-//				capabilities.setCapability("marionette", true);
-//		 
-//				return new FirefoxDriver(capabilities);
-				
+								
 			}else if (browser.equalsIgnoreCase("IE")) {
-				// TODO: move this path to path file or configuration file
-				System.setProperty("webdriver.ie.driver", "C:/softwares/servers/IEDriverServer.exe");
+				System.setProperty("webdriver.ie.driver", PagesURLs.getDriversPath(browser));
 				capabilities = DesiredCapabilities.internetExplorer();
 				capabilities.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);
 				capabilities.setCapability(InternetExplorerDriver.INTRODUCE_FLAKINESS_BY_IGNORING_SECURITY_DOMAINS,
@@ -119,28 +85,9 @@ public class Common extends SelTestCase {
 
 			} else if (browser.equalsIgnoreCase("chrome")) {
 
-				//capabilities = DesiredCapabilities.chrome();
-				//capabilities.setCapability("platform", "WINDOWS");
-				//capabilities.setBrowserName("chrome");
-
-				ChromeOptions options = new ChromeOptions();
-
-//				if (getCONFIG().getProperty("chached_chrome").equalsIgnoreCase("yes")) {
-//					// options.addArguments("user-data-dir="+System.getProperty("user.home")+"/AppData/Local/Google/Chrome/User
-//					// Data/");
-//					// TODO: move this path to path file or configuration file as google cashed
-//					// profile path
-//					options.addArguments("user-data-dir=" + System.getProperty("user.home")
-//							+ "/AppData/Local/Google/Chrome SxS/User Data/");
-//					options.addArguments("detach=true");
-//				}
-
-				//capabilities.setCapability(ChromeOptions.CAPABILITY, options);
-				// TODO: move this path to path file or configuration
-				System.setProperty("webdriver.chrome.driver", "C:/softwares/servers/chromedriver.exe");
+				System.setProperty("webdriver.chrome.driver", PagesURLs.getDriversPath(browser));
 				ChromeOptions co = new ChromeOptions();
 				driver = new ChromeDriver(co);
-				//SelTestCase.setDriver(driver);
 				return driver;
 
 			}  else if (browser.equalsIgnoreCase("chrome2")) {
@@ -151,63 +98,10 @@ public class Common extends SelTestCase {
 
 				ChromeOptions options = new ChromeOptions();
 
-//				if (getCONFIG().getProperty("chached_chrome").equalsIgnoreCase("yes")) {
-//					// options.addArguments("user-data-dir="+System.getProperty("user.home")+"/AppData/Local/Google/Chrome/User
-//					// Data/");
-//					// TODO: move this path to path file or configuration file as google cashed
-//					// profile path
-//					options.addArguments("user-data-dir=" + System.getProperty("user.home")
-//							+ "/AppData/Local/Google/Chrome SxS/User Data/");
-//					options.addArguments("detach=true");
-//				}
-
 				capabilities.setCapability(ChromeOptions.CAPABILITY, options);
-				// TODO: move this path to path file or configuration
-				System.setProperty("webdriver.chrome.driver", "C:/softwares/servers/chromedriver2.exe");
+				System.setProperty("webdriver.chrome.driver", PagesURLs.getDriversPath(browser));
 				driver = new ChromeDriver(capabilities);
-				//SelTestCase.setDriver(driver);
 				return driver;
-
-			}else if (browser.contains("BS")) {
-				// Configuration format: BS-iPhone 7 Plus-Safari
-				String mDevice = browser.split("-")[1];
-				String mBrowser = browser.split("-")[1];
-
-				// TODO: move them to configuration file
-				final String USERNAME = "ibrahembatta1";
-				final String AUTOMATE_KEY = "bwziBLydxfZjPFyR5jsT";
-				final String URL = "https://" + USERNAME + ":" + AUTOMATE_KEY + "@hub-cloud.browserstack.com/wd/hub";
-
-				DesiredCapabilities caps = new DesiredCapabilities();
-				caps.setCapability("browser", mBrowser);
-				caps.setCapability("browserstack.debug", "true");
-				caps.setCapability("browserstack.safari.allowAllCookies", "true");
-				caps.setCapability("realMobile", "true");
-				caps.setCapability("device", mDevice);
-				caps.setCapability("build", "First build");
-
-				// devices tests
-				// caps.setCapability("browserName", "iPhone");
-				// caps.setCapability("platform", "MAC");
-				// caps.setCapability("device", "iPhone 6");
-
-				// caps.setCapability("browser", "chrome");
-				// caps.setCapability("browser_version", "53");
-				// caps.setCapability("os", "Windows");
-				// caps.setCapability("os_version", "10");
-
-				// caps.setCapability("browser", "IE");
-				// caps.setCapability("browser_version", "11.0");
-				// caps.setCapability("os", "Windows");
-				// caps.setCapability("os_version", "7");
-				// caps.setCapability("resolution", "1024x768");
-
-				// browser stack configurations
-				caps.setCapability("browserstack.debug", "true");
-				caps.setCapability("browserstack.local", "true");
-				caps.setCapability("acceptSslCerts", "true");
-
-				SelTestCase.setDriver(new RemoteWebDriver(new URL(URL), caps));
 
 			} else if (browser.equalsIgnoreCase("safari_grid")) {
 				SafariOptions options = new SafariOptions();
@@ -241,7 +135,7 @@ public class Common extends SelTestCase {
 				options.setExperimentalOption("mobileEmulation", mobileEmulation);
 				capabilities.setCapability(ChromeOptions.CAPABILITY, options);
 
-				System.setProperty("webdriver.chrome.driver", "C:/softwares/servers/chromedriver.exe");
+				System.setProperty("webdriver.chrome.driver", PagesURLs.getDriversPath(browser));
 				return new ChromeDriver(capabilities);
 
 			} else {
@@ -274,13 +168,11 @@ public class Common extends SelTestCase {
 				SelTestCase.getCONFIG().getProperty("testEnvironment")));
 
 		if (getCONFIG().getProperty("chached_chrome").equalsIgnoreCase("yes")) {
-			// TODO: please enable it later with correct url
+			// TODO: please enable it later with correct url in case Chrome Cached
 			logs.debug(LoggingMsg.ENABLE_BLOCK_FOR_FUTURE);
 			 logs.debug("signing out from all users");
-			 logs.debug(getCONFIG().getProperty("logout"));
-			 getDriver().get(getCONFIG().getProperty("logout"));
-			// logs.debug("Removing all control cookies");
-			// getDriver().manage().deleteAllCookies();
+			 logs.debug(PagesURLs.getSignOutPage());
+			 getDriver().get(PagesURLs.getSignOutPage());
 		}
 		getDriver().get(getCONFIG().getProperty("testEnvironment"));
 		getDriver().manage().window().maximize();
@@ -303,7 +195,6 @@ public class Common extends SelTestCase {
 			logs.debug(MessageFormat.format(LoggingMsg.WAIT_FOR_TIME, waitTime));
 			Thread.sleep(waitTime);
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
