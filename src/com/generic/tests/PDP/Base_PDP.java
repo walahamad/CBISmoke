@@ -123,6 +123,12 @@ public class Base_PDP extends SelTestCase {
 				ReportUtil.takeScreenShot(getDriver());
 			}//desc check
 			
+			if (proprties.contains("add to cart button") ){
+				logs.debug("checking PDP add to cart button");
+				sassert().assertTrue(PDP.checkAddToCartButton(), "<font color=#f442cb>product desc is not expected</font>");
+				ReportUtil.takeScreenShot(getDriver());
+			}//add to cart button check
+			
 			if (proprties.contains("stock level indicator") ){
 				logs.debug("checking PDP stock level indicator");
 				String SL = PDP.getStockLevel();

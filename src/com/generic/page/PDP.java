@@ -3,6 +3,7 @@ package com.generic.page;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.generic.selector.CartSelectors;
 import com.generic.selector.PDPSelectors;
 import com.generic.setup.SelTestCase;
 import com.generic.util.SelectorUtil;
@@ -158,4 +159,13 @@ public class PDP extends SelTestCase {
 		return SelectorUtil.textValue.get();
 	}
 
+	public static boolean checkAddToCartButton() throws Exception {
+		getCurrentFunctionName(true);
+		List<String> subStrArr = new ArrayList<String>();
+		subStrArr.add(PDPSelectors.addToCartBtn);
+		boolean isDisplayed = SelectorUtil.isDisplayed(subStrArr);
+		logs.debug("existence check result is " + isDisplayed);
+		getCurrentFunctionName(false);
+		return isDisplayed;
+	}
 }

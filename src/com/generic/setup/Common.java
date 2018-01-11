@@ -102,6 +102,27 @@ public class Common extends SelTestCase {
 				SelTestCase.setDriver(new RemoteWebDriver(new URL("http://10.20.20.54:4444/wd/hub"), capabilities));
 				
 			} else if (browser.contains("mobile")) {
+				  /*
+				   * https://cs.chromium.org/chromium/src/chrome/test/chromedriver/chrome/mobile_device_list.cc
+				   	  iPad
+					  Nexus 6
+					  Nexus 5
+					  Galaxy Note 3
+					  Nexus 6P
+					  iPhone 8 Plus
+					  iPhone 7 Plus
+					  Nexus 7
+					  iPhone 7
+					  Nexus 10
+					  iPhone 8
+					  iPhone 6
+					  Nexus 5X
+					  Galaxy Note II
+					  iPhone 6 Plus
+					  iPhone X
+					  Galaxy S5
+				   */
+				  
 				String mobile = browser.split("_")[1];
 				capabilities = DesiredCapabilities.chrome();
 				capabilities.setCapability("platform", "WINDOWS");
