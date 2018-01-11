@@ -3,8 +3,6 @@ package com.generic.setup;
 import java.text.MessageFormat;
 import java.util.NoSuchElementException;
 
-import org.apache.poi.hssf.usermodel.examples.NewSheet;
-
 public class PagesURLs extends SelTestCase {
 	public static String driversPath = "driversPath";
 	public static String personalDetailsPage = "personalDetailsPage";
@@ -22,9 +20,16 @@ public class PagesURLs extends SelTestCase {
 	public static String storeFinderPage = "storeFinderPage";
 	
 	
-	public static String getDriversPath() {
+	public static String getDriversPath(String driverName) {
 		try {
-		return getCONFIG().getProperty(driversPath);
+			String driverFolder = getCONFIG().getProperty(driversPath);
+			String driverFullPath = "";
+			if(driverFolder.endsWith("\\")) {
+				driverFullPath = driverFolder + driverName + "Driver.exe";
+			} else {
+				driverFullPath = driverFolder + "\\" + driverName + "Driver.exe";
+			}
+		return driverFullPath;
 		} catch(Throwable t) {
 			throw new NoSuchElementException(MessageFormat.format(LoggingMsg.PROPERTY_ERROR_MSG, driversPath));
 		}
