@@ -114,4 +114,5 @@ public class LoggingMsg {
 	public static final String PAYMENTDESC = "<b>Case ID: </b>{0} <br><b>File of execution:</b> {1}<br><b>Decrption: </b>{2}";
 	public static String GETTING_TEXT = "Getting text of : {0}";
 	public static String REGISTRATION_FIELDS_ERRORS = "Verifying {0} Message";
+	public static String PROPERTY_ERROR_MSG = "The following property: {0} is not found";
 }
