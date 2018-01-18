@@ -16,6 +16,11 @@ public class SignIn extends SelTestCase {
 		typeUsername(userName);
 		typePassword(Password);
 		clickLogin();
+		Thread.sleep(1000);
+		if(!checkUserAccount())
+		{
+			throw new Exception("Login failed");
+		}
 		getCurrentFunctionName(false);
 	}
 
@@ -68,6 +73,23 @@ public class SignIn extends SelTestCase {
 		}
 		getCurrentFunctionName(false);
 		return SelectorUtil.textValue.get();
+	}
+	
+	public static boolean checkUserAccount() throws Exception {
+		getCurrentFunctionName(true);
+		boolean LoggedUser = true;
+		try {
+
+			List<String> subStrArr = new ArrayList<String>();
+			List<String> valuesArr = new ArrayList<String>();
+			subStrArr.add(SignInSelectors.WelcomeMsg);
+			valuesArr.add("");
+			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
+		} catch (Exception e) {
+			LoggedUser = false;
+		}
+		getCurrentFunctionName(false);
+		return LoggedUser;
 	}
 
 }

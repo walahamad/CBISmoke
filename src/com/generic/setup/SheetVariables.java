@@ -29,10 +29,13 @@ public class SheetVariables {
     public static final String myAccountSheet = "MyAccountRegression";
     public static final String storeLocatorSheet = "StoreLocatorRegression";
 	public static final String orderDetailsSheet = "OrderDetailsRegression";
-	public static final String EmailAddressRegression = "EmailAddressRegression";
-	public static final String PasswordRegression = "PasswordRegression";
+	public static final String EmailAddressRegressionSheet = "EmailAddressRegression";
+	public static final String PasswordRegressionSheet = "PasswordRegression";
 	public static String registrationRegressionSheet = "RegistrationRegression";
-	
+	public static final String ErrorPagesRegressionSheet = "ErrorPagesRegression";
+	public static final String checkoutNegativeCasesSheet = "CheckOutNegativeCasesRegression";
+	public static String checkoutB2BSheet = "CheckOutB2BRegression";
+	public static final String SearchSheet = "SearchRegression";
     //Test Case id
     public static final String registrationTestCaseId = "Registration";
     public static final String checkoutTestCaseId = "CheckOut";

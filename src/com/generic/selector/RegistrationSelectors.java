@@ -11,7 +11,7 @@ public class RegistrationSelectors {
 	public static final String register = "btn btn-default btn-block";
 	public static final String registrationSuccess = "global-alerts";
 	//ErrorMessages Selectors
-	public static final String titleError = "[id='titleCode.errors']:eq(1)";
+	public static final String titleError = "titleCode.errors";
 			//.help-block #titleCode\\.errors";
 	public static final String firstNameError = "firstName.errors";
 	public static final String lastNameError = "lastName.errors";

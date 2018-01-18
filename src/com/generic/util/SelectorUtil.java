@@ -50,6 +50,8 @@ public class SelectorUtil extends SelTestCase {
 		initializeElementsSelectorsMaps(webElementsInfo, isValidationStep, htmlDoc);
 		}catch (NoSuchElementException e) {
 			Thread.sleep(2000);
+			if (SelTestCase.getBrowserName().contains("firfox"))
+				Thread.sleep(2000);
 			logs.debug("Second try for getting element");
 			Document doc = Jsoup.parse(SelTestCase.getDriver().getPageSource());
 			Element htmlDoc = doc.select("html").first();
@@ -331,6 +333,9 @@ public class SelectorUtil extends SelTestCase {
 	    	
 	    	String browser = SelTestCase.getBrowserName();
 	    	
+//	    	if (SelTestCase.getBrowserName().contains("firefox"))
+//				Thread.sleep(1000);
+	    	
 	    	try
 	        {
 	    		String selector = (String) webElementInfo.get("selector");
@@ -401,7 +406,7 @@ public class SelectorUtil extends SelTestCase {
 								   return driver.findElement(byAction);
 							   }});
 						    logs.debug("browser..."+ browser);
-						   if(browser.contains("firefox") || browser.contains("chrome") )
+						   if(browser.contains("firefox") )
 						   {
 							   logs.debug("clicking..."+ SelTestCase.getBrowserName());
 							   field2.click();
@@ -433,7 +438,7 @@ public class SelectorUtil extends SelTestCase {
 											   return driver.findElement(byAction);
 										   }});
 									    logs.debug("browser..."+ browser);
-									   if(browser.contains("firefox") || browser.contains("chrome") )
+									   if(browser.contains("firefox") )
 									   {
 										   logs.debug("clicking..."+ browser);
 										   field2.click();
@@ -466,7 +471,7 @@ public class SelectorUtil extends SelTestCase {
 											   return driver.findElement(byAction);
 										   }});
 									    logs.debug("browser..."+ browser);
-									   if(browser.contains("firefox") || browser.contains("chrome") )
+									   if(browser.contains("firefox")  )
 									   {
 										   logs.debug("clicking..."+ browser);
 										   field2.click();
@@ -521,7 +526,7 @@ public class SelectorUtil extends SelTestCase {
 											   return driver.findElement(byAction);
 										   }});
 									    logs.debug("browser..."+ browser);
-									   if(browser.contains("firefox") || browser.contains("chrome") )
+									   if(browser.contains("firefox")  )
 									   {
 										   logs.debug("clicking..."+ browser);
 										   field2.click();
@@ -551,25 +556,30 @@ public class SelectorUtil extends SelTestCase {
 						   String textVal= "";
 						   try {
 							   if (!value.isEmpty()) {
-								   select.selectByVisibleText(value); 
-							   } else {
+								   List<WebElement> options = select.getOptions();
+								   for(int i=0; i<options.size(); i++)
+								   {
+									   // logs.debug(options.get(i).getText().trim());
+									   if (options.get(i).getText().toLowerCase().trim().contains(value.toLowerCase()) && !value.equals(""))
+									   {
+										   logs.debug(MessageFormat.format(LoggingMsg.SELECTED_INDEX, i )); 
+										   select.selectByIndex(i);
+									   }
+								   }
+							   }
+							   else
+							   {
 								   textVal = select.getFirstSelectedOption().getText();
 							   }
-							   
 						   }
 						   catch(Exception e)
 						   {
 							   logs.debug(LoggingMsg.TRY_ALT_WAY_MSG);
-							   List<WebElement> options = select.getOptions();
-							   for(int i=0; i<options.size(); i++)
-							   {
-								  // logs.debug(options.get(i).getText().trim());
-							   	    if (options.get(i).getText().toLowerCase().trim().contains(value.toLowerCase()))
-							   	    {
-										logs.debug(MessageFormat.format(LoggingMsg.SELECTED_INDEX, i )); 
-							   	    	select.selectByIndex(i);
-							   	    }
-							   	}
+							   if (!value.isEmpty()) {
+								   select.selectByVisibleText(value); 
+							   } else {
+								   textVal = select.getFirstSelectedOption().getText();
+							   }
 						   }
 						   textValue.set(textVal);
 					   }

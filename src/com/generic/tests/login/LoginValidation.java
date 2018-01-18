@@ -21,6 +21,7 @@ import com.generic.setup.SheetVariables;
 import com.generic.util.SelectorUtil;
 import com.generic.util.TestUtilities;
 import com.generic.util.Xls_Reader;
+import com.generic.util.dataProviderUtils;
 import com.generic.util.RandomUtilities;
 import com.generic.util.ReportUtil;
 
@@ -105,7 +106,8 @@ public class LoginValidation extends SelTestCase {
 	@Parameters(name = "caseID_:{0}_{index}")
 	public static Collection<Object[]> loadTestData() throws Exception {
 
-		Object[][] data = TestUtilities.getData(SheetVariables.registrationTestCaseId);
+		dataProviderUtils TDP = dataProviderUtils.getInstance();
+		Object[][] data = TDP.getData(SheetVariables.registrationTestCaseId);
 		return Arrays.asList(data);
 
 	}

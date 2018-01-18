@@ -19,9 +19,11 @@ import com.generic.page.SignIn;
 import com.generic.selector.AddressBookSelectors;
 import com.generic.setup.Common;
 import com.generic.setup.LoggingMsg;
+import com.generic.setup.PagesURLs;
 import com.generic.setup.SelTestCase;
 import com.generic.setup.SheetVariables;
 import com.generic.util.TestUtilities;
+import com.generic.util.dataProviderUtils;
 import com.generic.util.ReportUtil;
 import com.generic.util.SASLogger;
 import com.generic.util.SelectorUtil;
@@ -48,6 +50,7 @@ public class AddressBookValidation extends SelTestCase {
 
 	@BeforeTest
 	public static void initialSetUp(XmlTest test) throws Exception {
+		Testlogs.set(new SASLogger(test.getName() + test.getIndex()));
 		addresses = Common.readAddresses();
 		users = Common.readUsers();
 		testObject = test;
@@ -57,13 +60,15 @@ public class AddressBookValidation extends SelTestCase {
 	public static Object[][] loadTestData() throws Exception {
 		// concurrency maintenance on sheet reading
 		getBrowserWait(testObject.getParameter("browserName"));
-		Object[][] data = TestUtilities.getData(testDataSheet);
+		dataProviderUtils TDP = dataProviderUtils.getInstance();
+		Object[][] data = TDP.getData(testDataSheet);
 		return data;
+		
 	}
 
 	@SuppressWarnings("unchecked") // avoid warning from linked hashmap
 	@Test(dataProvider = "AddressBook")
-	public void BookAddressTest(String caseId, String runTest, String url, String desc, String email, String newaddress)
+	public void BookAddressTest(String caseId, String runTest, String desc, String email, String newaddress)
 			throws Exception {
 		// Important to add this for logging/reporting
 		Testlogs.set(new SASLogger("Address_Book " + getBrowserName()));
@@ -71,8 +76,9 @@ public class AddressBookValidation extends SelTestCase {
 		logCaseDetailds(MessageFormat.format(LoggingMsg.ADDRESSPOOKDESC, testDataSheet + "." + caseId,
 				this.getClass().getCanonicalName(), desc));
 
-		this.email = email.replace("tester", "tester_" + getBrowserName().replace(" ", "_"));
-
+		this.email = getSubMailAccount(email);
+		String url = PagesURLs.getAddressBookPage();
+		
 		try {
 			LinkedHashMap<String, Object> userdetails = (LinkedHashMap<String, Object>) users.get(email);
 			Testlogs.get().debug(this.email);
@@ -85,7 +91,6 @@ public class AddressBookValidation extends SelTestCase {
 				AddressBook.clickEditAddress();
 				LinkedHashMap<String, Object> addressDetails = (LinkedHashMap<String, Object>) addresses
 						.get(newaddress);
-				logs.debug("test");
 				AddressBook.fillAndClickSave((String) addressDetails.get(CheckOut.shippingAddress.keys.countery),
 						(String) addressDetails.get(CheckOut.shippingAddress.keys.title),
 						"NEW_" + RandomUtils.nextInt(1000, 9000),
@@ -114,7 +119,6 @@ public class AddressBookValidation extends SelTestCase {
 				getDriver().get(AddressBookSelectors.addaddressurl);
 				LinkedHashMap<String, Object> addressDetails = (LinkedHashMap<String, Object>) addresses
 						.get(newaddress);
-				logs.debug("test");
 				AddressBook.fillAndClickSave((String) addressDetails.get(CheckOut.shippingAddress.keys.countery),
 						(String) addressDetails.get(CheckOut.shippingAddress.keys.title),
 						"NEW_" + RandomUtils.nextInt(1000, 9000),

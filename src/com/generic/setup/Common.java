@@ -20,6 +20,7 @@ import java.util.logging.Level;
 
 import javax.imageio.ImageIO;
 
+import org.openqa.selenium.PageLoadStrategy;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -36,6 +37,9 @@ import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.safari.SafariOptions;
 import com.generic.util.ReportUtil;
 import com.generic.util.TestUtilities;
+import com.generic.util.dataProviderUtils;
+
+import net.bytebuddy.dynamic.loading.InjectionClassLoader.Strategy;
 
 public class Common extends SelTestCase {
 
@@ -59,17 +63,10 @@ public class Common extends SelTestCase {
 			}else if (browser.equalsIgnoreCase("Firefox")) {
 				System.setProperty("webdriver.gecko.driver",PagesURLs.getDriversPath(browser));
 				
-				LoggingPreferences pref = new LoggingPreferences();
-			    pref.enable(LogType.BROWSER, Level.OFF);
-			    pref.enable(LogType.CLIENT, Level.OFF);
-			    pref.enable(LogType.DRIVER, Level.OFF);
-			    pref.enable(LogType.PERFORMANCE, Level.OFF);
-			    pref.enable(LogType.PROFILER, Level.OFF);
-			    pref.enable(LogType.SERVER, Level.OFF);
-				
 				FirefoxOptions fo = new FirefoxOptions();
 				driver = new FirefoxDriver(fo);
-				driver.manage().timeouts().pageLoadTimeout(120,TimeUnit.SECONDS);
+				driver.manage().timeouts().pageLoadTimeout(60,TimeUnit.SECONDS);
+				driver.manage().timeouts().implicitlyWait(10,TimeUnit.SECONDS);
 				return driver;
 								
 			}else if (browser.equalsIgnoreCase("IE")) {
@@ -88,6 +85,8 @@ public class Common extends SelTestCase {
 				System.setProperty("webdriver.chrome.driver", PagesURLs.getDriversPath(browser));
 				ChromeOptions co = new ChromeOptions();
 				driver = new ChromeDriver(co);
+				driver.manage().timeouts().pageLoadTimeout(60,TimeUnit.SECONDS);
+				driver.manage().timeouts().implicitlyWait(10,TimeUnit.SECONDS);
 				return driver;
 
 			} else if (browser.equalsIgnoreCase("safari_grid")) {
@@ -341,7 +340,8 @@ public class Common extends SelTestCase {
 		 */
 
 		LinkedHashMap<String, Object> addresses = new LinkedHashMap<>();
-		Object[][] data = TestUtilities.getData(SheetVariables.addresses, 1);
+		dataProviderUtils TDP = dataProviderUtils.getInstance();
+		Object[][] data = TDP.getData(SheetVariables.addresses, 1);
 
 		// data map
 		int header = 0;
@@ -381,9 +381,10 @@ public class Common extends SelTestCase {
 		 * /300441924, color=claycourt, size=SizeUni, £24.26 4, qty=1 } } ]
 		 */
 		LinkedHashMap<String, Object> products = new LinkedHashMap<>();
-		Object[][] data = TestUtilities.getData(SheetVariables.products, 1);
+		
+		dataProviderUtils TDP = dataProviderUtils.getInstance();
+		Object[][] data = TDP.getData(SheetVariables.products, 1);
 
-		logs.debug("=====================>" +Arrays.deepToString(data).replace("\n", "--"));
 		
 		// data map
 		int header = 0;
@@ -417,7 +418,6 @@ public class Common extends SelTestCase {
 
 			products.put((String) data[row][name], product);
 		}
-		logs.debug("=====================>" + Arrays.asList(products));
 		return products;
 	}// readProducts
 
@@ -443,7 +443,9 @@ public class Common extends SelTestCase {
 		]
 		 */
 		LinkedHashMap<String, Object> cards = new LinkedHashMap<>();
-		Object[][] data = TestUtilities.getData(SheetVariables.cards, 1);
+		
+		dataProviderUtils TDP = dataProviderUtils.getInstance();
+		Object[][] data = TDP.getData(SheetVariables.cards, 1);
 
 		// data map
 		int header = 0;
@@ -490,7 +492,8 @@ public class Common extends SelTestCase {
 			]
 		 */
 		LinkedHashMap<String, Object> tests = new LinkedHashMap<>();
-		Object[][] data = TestUtilities.getData(testSheet, 1);
+		dataProviderUtils TDP = dataProviderUtils.getInstance();
+		Object[][] data = TDP.getData(testSheet, 1);
 
 		// data map
 		int header = 0;
@@ -521,7 +524,9 @@ public class Common extends SelTestCase {
 		]
 		 */
 		LinkedHashMap<String, Object> users = new LinkedHashMap<>();
-		Object[][] data = TestUtilities.getData(SheetVariables.users, 1);
+		
+		dataProviderUtils TDP = dataProviderUtils.getInstance();
+		Object[][] data = TDP.getData(SheetVariables.users, 1);
 
 		// data map
 		int header = 0;

@@ -18,11 +18,12 @@ import com.generic.util.dataProviderUtils;
 import com.generic.util.ReportUtil;
 import com.generic.util.SASLogger;
 import com.generic.page.PLP;
+import com.generic.page.SearchResults;
 
-public class PLPValidation extends SelTestCase {
+public class SearchResultValidation extends SelTestCase {
 
 	// used sheet in test
-	public static final String testDataSheet = SheetVariables.plpSheet;
+	public static final String testDataSheet = SheetVariables.SearchSheet;
 
 	private boolean doClickAddToCart;
 	private boolean doClickPickupInStore;
@@ -39,7 +40,7 @@ public class PLPValidation extends SelTestCase {
 		testObject = test;
 	}
 	
-	@DataProvider(name = "PLP", parallel = true)
+	@DataProvider(name = "Search", parallel = true)
 	// concurrency maintenance on sheet reading
 	public static Object[][] loadTestData() throws Exception {
 		getBrowserWait(testObject.getParameter("browserName"));
@@ -50,8 +51,8 @@ public class PLPValidation extends SelTestCase {
 		return data;
 	}
 
-	@Test(dataProvider = "PLP")
-	public void verifyPLP(String caseId, String runTest, String desc, String url, String sortOptions1,
+	@Test(dataProvider = "Search")
+	public void verifySearchResultsPage(String caseId, String runTest, String desc, String searchValues, String sortOptions1,
 			String sortOptions2, String userLocationStore, String addToCartProduct, String pickUpInStoreProduct, String pickupNthIconIndex, String pickupInStoreQty,String plpFilter, String nthProductItem,
 			String nthAppliedFacet, String doClickAddToCart, String doClickPickupInStore, String doClickNthProductItem, String doClickCheckoutBtn, String doClickCloseBtn) throws Exception {
 		
@@ -61,16 +62,16 @@ public class PLPValidation extends SelTestCase {
 		this.doClickCheckoutBtn = Boolean.valueOf(doClickCheckoutBtn);
 		this.doClickCloseBtn = Boolean.valueOf(doClickCloseBtn);
 		
-		Testlogs.set(new SASLogger("PLP" + getBrowserName()));
+		Testlogs.set(new SASLogger("Search" + getBrowserName()));
 		// Important to add this for logging/reporting
-		setTestCaseReportName("PLP Case");
+		setTestCaseReportName("Search Case");
 		logCaseDetailds(MessageFormat.format(LoggingMsg.TEST_CASE_DESC, testDataSheet + "." + caseId,
 				this.getClass().getCanonicalName(), desc));
 
-		caseIndexInDatasheet = getDatatable().getCellRowNum(testDataSheet, PLP.keys.caseId, caseId);
+		caseIndexInDatasheet = getDatatable().getCellRowNum(testDataSheet, SearchResults.keys.caseId, caseId);
 		
 		try {
-			getDriver().get(url);
+			SearchResults.typeSearchText(searchValues);
 			Thread.sleep(3000);
 			
 			PLP.selectSortOptions1ByValue(sortOptions1);

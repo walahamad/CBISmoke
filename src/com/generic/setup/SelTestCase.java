@@ -187,9 +187,9 @@ public class SelTestCase {
     {
     	try {
 			if (BrowserName.equals("firefox"))
-				Thread.sleep(500);
+				Thread.sleep(1000);
 			else if (BrowserName.equals("chrome"))
-				Thread.sleep(100);
+				Thread.sleep(1500);
 			else
 				Thread.sleep(RandomUtils.nextInt(900,1200));
 		} catch (InterruptedException e) {

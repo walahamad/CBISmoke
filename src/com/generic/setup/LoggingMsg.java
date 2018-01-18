@@ -37,7 +37,7 @@ public class LoggingMsg {
 	public static String EXPECTED_TEXT = "Expected Text: {0}";
 	public static String ACTUAL_TEXT = "ACTUAL TEXT IS: {0}";
 	public static String WAIT_SECONDS = "Wait: {0} Sec";
-	public static String ACTUAL_EXPECTED_ERROR = "Error -> Actual {0} Expected: {1}";
+	public static String ACTUAL_EXPECTED_ERROR = "Error -> Actual: {0} Expected: {1}";
 	public static String KILLING_PROCESS = "Killing {0} process";
 	public static String NOT_RUNNING_PROCESS_ERROR_MSG = "{0} process is not running. Starting Scripts execution on {1}";
 	public static String NULL_FILE_PATH_ERROR_MSG = "The {0} file path is null, then generating it";
@@ -80,7 +80,7 @@ public class LoggingMsg {
 	public static String REPORT_DIR = "Reports dir.: {0}";
 	public static String MAIN_DIR_EXISTANCE_MSG = "the main directory you are searching {0} exist: {1}";
 	public static String FAILED_REPORT_FOLDERS_CREATION_MSG = "FAILS TO CREATE REPORT FOLDERS";
-	public static String TEST_NAME = "Test Name -- {0}";
+	public static String TEST_NAME = "Reading sheet Name -- {0}";
 	public static String ADDED_ENVIRONMENT_NAME = "adding environment: {0}";
 	public static String REPORT_TCID_MSG = "Report test case ID is: {0}";
 	public static String SHEET_NAME_LOCATION_TO_WRITE = "writing data to sheet: {0} location: {1}/{2} data: {3}";
@@ -115,4 +115,6 @@ public class LoggingMsg {
 	public static String GETTING_TEXT = "Getting text of : {0}";
 	public static String REGISTRATION_FIELDS_ERRORS = "Verifying {0} Message";
 	public static String PROPERTY_ERROR_MSG = "The following property: {0} is not found";
+	public static String SearchResulstHeader_Search_Empty = "0 items found for keyword {0}";
+	public static String SearchResulstHeader_Search = "You searched for '{0}''";
 }

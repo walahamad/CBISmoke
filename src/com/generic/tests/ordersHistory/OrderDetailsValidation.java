@@ -17,6 +17,7 @@ import com.generic.setup.LoggingMsg;
 import com.generic.setup.SelTestCase;
 import com.generic.setup.SheetVariables;
 import com.generic.util.TestUtilities;
+import com.generic.util.dataProviderUtils;
 import com.generic.util.ReportUtil;
 import com.generic.util.SASLogger;
 import com.generic.page.Cart;
@@ -65,7 +66,8 @@ public class OrderDetailsValidation extends SelTestCase {
 	// concurrency maintenance on sheet reading
 	public static Object[][] loadTestData() throws Exception {
 		getBrowserWait(testObject.getParameter("browserName"));
-		Object[][] data = TestUtilities.getData(testDataSheet);
+		dataProviderUtils TDP = dataProviderUtils.getInstance();
+		Object[][] data = TDP.getData(testDataSheet);
 		Testlogs.get().debug(Arrays.deepToString(data).replace("\n", "--"));
 		return data;
 	}
@@ -188,7 +190,8 @@ public class OrderDetailsValidation extends SelTestCase {
 		    //Order Cancellation period has been updated to 1 minute, after that the order will be shipped.
 			//and the user will not be able to cancel it.
 			//and will be able to return the order.
-		    Thread.sleep(80000);
+			logs.debug("Wating session to be done and order to have return button ");
+			Thread.sleep(80000);
 		    Common.refreshBrowser();
 		    Thread.sleep(4000);
 			sassert().assertTrue(shippingMethod.contains(OrderDetails.getDeliveryMethod()),

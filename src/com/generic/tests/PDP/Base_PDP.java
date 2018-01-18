@@ -25,6 +25,7 @@ import com.generic.setup.SheetVariables;
 import com.generic.util.ReportUtil;
 import com.generic.util.SASLogger;
 import com.generic.util.TestUtilities;
+import com.generic.util.dataProviderUtils;
 import com.sun.xml.internal.bind.v2.runtime.unmarshaller.XsiNilLoader.Array;
 
 public class Base_PDP extends SelTestCase {
@@ -58,7 +59,8 @@ public class Base_PDP extends SelTestCase {
 	public static Object[][] loadTestData() throws Exception {
 		// concurrency maintenance on sheet reading
 		getBrowserWait(testObject.getParameter("browserName"));
-		Object[][] data = TestUtilities.getData(testDataSheet);
+		dataProviderUtils TDP = dataProviderUtils.getInstance();
+		Object[][] data = TDP.getData(testDataSheet);
 		Testlogs.get().debug(Arrays.deepToString(data).replace("\n", "--"));
 		return data;
 	}

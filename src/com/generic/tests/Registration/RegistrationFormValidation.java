@@ -25,6 +25,7 @@ import com.generic.util.ReportUtil;
 import com.generic.util.SASLogger;
 import com.generic.util.SelectorUtil;
 import com.generic.util.TestUtilities;
+import com.generic.util.dataProviderUtils;
 
 public class RegistrationFormValidation extends SelTestCase {
 	private static  LinkedHashMap<String, Object> users =null ;
@@ -73,7 +74,8 @@ public class RegistrationFormValidation extends SelTestCase {
 		if (testObject.getParameter("browserName").equals("chrome"))
 			Thread.sleep(700);
 
-		Object[][] data = TestUtilities.getData(testDataSheet);
+		dataProviderUtils TDP = dataProviderUtils.getInstance();
+		Object[][] data = TDP.getData(testDataSheet);
 		Testlogs.get().debug(Arrays.deepToString(data).replace("\n", "--"));
 		return data;
 	}

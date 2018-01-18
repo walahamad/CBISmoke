@@ -24,6 +24,7 @@ import com.generic.setup.SheetVariables;
 import com.generic.util.ReportUtil;
 import com.generic.util.SASLogger;
 import com.generic.util.TestUtilities;
+import com.generic.util.dataProviderUtils;
 
 public class Base_cart extends SelTestCase {
 
@@ -56,7 +57,8 @@ public class Base_cart extends SelTestCase {
 	public static Object[][] loadTestData() throws Exception {
 		// concurrency mentainance on sheet reading
 		getBrowserWait(testObject.getParameter("browserName"));
-		Object[][] data = TestUtilities.getData(testDataSheet);
+		dataProviderUtils TDP = dataProviderUtils.getInstance();
+		Object[][] data = TDP.getData(testDataSheet);
 		Testlogs.get().debug(Arrays.deepToString(data).replace("\n", "--"));
 		return data;
 	}
