@@ -1,4 +1,4 @@
-package com.generic.tests.PLP;
+package com.generic.tests.Search;
 
 import java.text.MessageFormat;
 
