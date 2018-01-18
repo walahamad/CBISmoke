@@ -31,7 +31,6 @@ public class Base_checkout_negativeCases extends SelTestCase {
 
 	// used sheet in test
 	public static final String testDataSheet = SheetVariables.checkoutNegativeCasesSheet;
-	private String email;
 
 	private static XmlTest testObject;
 
@@ -50,7 +49,6 @@ public class Base_checkout_negativeCases extends SelTestCase {
 	public static Object[][] loadTestData() throws Exception {
 		// concurrency mentainance on sheet reading
 		getBrowserWait(testObject.getParameter("browserName"));
-
 		dataProviderUtils TDP = dataProviderUtils.getInstance();
 		Object[][] data = TDP.getData(testDataSheet);
 		Testlogs.get().debug(Arrays.deepToString(data).replace("\n", "--"));
@@ -80,20 +78,29 @@ public class Base_checkout_negativeCases extends SelTestCase {
 
 			Cart.clickCheckout();
 
-			this.email = RandomUtilities.getRandomEmail();
-			CheckOut.guestCheckout.fillAndClickGuestCheckout(this.email);
+			String submailEmail = RandomUtilities.getRandomEmail();
+			CheckOut.guestCheckout.fillAndClickGuestCheckout(submailEmail);
 
 			Thread.sleep(1000);
 
 			LinkedHashMap<String, Object> addressDetails = (LinkedHashMap<String, Object>) addresses
 					.get(shippingAddress);
 
-			// boolean saveShipping = !proprties.contains(guestUser);
 
+			String countery  = (String) addressDetails.get(CheckOut.shippingAddress.keys.countery);
+			String title = (String) addressDetails.get(CheckOut.shippingAddress.keys.title);
+			String firstName = (String) addressDetails.get(CheckOut.shippingAddress.keys.firstName);
+			String lastName = (String) addressDetails.get(CheckOut.shippingAddress.keys.lastName);
+			String adddressLine = (String) addressDetails.get(CheckOut.shippingAddress.keys.adddressLine);
+			String city = (String) addressDetails.get(CheckOut.shippingAddress.keys.city);
+			String postal = (String) addressDetails.get(CheckOut.shippingAddress.keys.postal);
+			String phone = (String) addressDetails.get(CheckOut.shippingAddress.keys.phone);
+			
+			
 			// in case guest the save shipping checkbox is not exist
 			if (proprties.contains("Shipping_Without country")) {
 
-				CheckOut.shippingAddress.fillAndClickNext("", "", "", "", "", "", "", "");
+				CheckOut.shippingAddress.clickNext();
 
 				String globalAlertMsg = MessageFormat.format(LoggingMsg.ACTUAL_EXPECTED_ERROR,
 						CheckOut.shippingAddress.getAlertInfo(), globalAlerts);
@@ -123,13 +130,6 @@ public class Base_checkout_negativeCases extends SelTestCase {
 				String ErrorMsg = MessageFormat.format(LoggingMsg.ACTUAL_EXPECTED_ERROR, currentEerrorsMsg,
 						ValidationMsg);
 				sassert().assertTrue(currentEerrorsMsg.contains(ValidationMsg), ErrorMsg);
-				// String currentTitleEerrorsMsg =
-				// CheckOut.shippingAddress.getTitelError();
-				// String titleErrorMsg =
-				// MessageFormat.format(LoggingMsg.ACTUAL_EXPECTED_ERROR,currentTitleEerrorsMsg,
-				// titleErrors);
-				// sassert().assertTrue(currentTitleEerrorsMsg.contains(titleErrors),
-				// titleErrorMsg );
 			}
 			if (proprties.contains("Shipping_Without firstName")) {
 
@@ -149,13 +149,6 @@ public class Base_checkout_negativeCases extends SelTestCase {
 				String ErrorMsg = MessageFormat.format(LoggingMsg.ACTUAL_EXPECTED_ERROR, currentEerrorsMsg,
 						ValidationMsg);
 				sassert().assertTrue(currentEerrorsMsg.contains(ValidationMsg), ErrorMsg);
-				// String currentFirstNameEerrorsMsg =
-				// CheckOut.shippingAddress.getFirstNameError();
-				// String fisrtNameErrorMsg =
-				// MessageFormat.format(LoggingMsg.ACTUAL_EXPECTED_ERROR,currentFirstNameEerrorsMsg,
-				// firstNameEerrors);
-				// sassert().assertTrue(currentFirstNameEerrorsMsg.contains(firstNameEerrors),
-				// fisrtNameErrorMsg );
 			}
 			if (proprties.contains("Shipping_Without last name")) {
 
@@ -175,13 +168,6 @@ public class Base_checkout_negativeCases extends SelTestCase {
 				String ErrorMsg = MessageFormat.format(LoggingMsg.ACTUAL_EXPECTED_ERROR, currentEerrorsMsg,
 						ValidationMsg);
 				sassert().assertTrue(currentEerrorsMsg.contains(ValidationMsg), ErrorMsg);
-				// String currentLastNameEerrorsMsg =
-				// CheckOut.shippingAddress.getLastNameError();
-				// String lastNameErrorMsg =
-				// MessageFormat.format(LoggingMsg.ACTUAL_EXPECTED_ERROR,currentLastNameEerrorsMsg,
-				// lastNameEerrors);
-				// sassert().assertTrue(currentLastNameEerrorsMsg.contains(lastNameEerrors),
-				// lastNameErrorMsg );
 
 			}
 			if (proprties.contains("Shipping_Without address")) {
@@ -202,13 +188,6 @@ public class Base_checkout_negativeCases extends SelTestCase {
 				String ErrorMsg = MessageFormat.format(LoggingMsg.ACTUAL_EXPECTED_ERROR, currentEerrorsMsg,
 						ValidationMsg);
 				sassert().assertTrue(currentEerrorsMsg.contains(ValidationMsg), ErrorMsg);
-				// String currentAddressEerrorsMsg =
-				// CheckOut.shippingAddress.getAddress1Error();
-				// String addressErrorMsg =
-				// MessageFormat.format(LoggingMsg.ACTUAL_EXPECTED_ERROR,currentAddressEerrorsMsg,
-				// address1Eerrors);
-				// sassert().assertTrue(currentAddressEerrorsMsg.contains(address1Eerrors),
-				// addressErrorMsg );
 			}
 			if (proprties.contains("Shipping_Without city")) {
 
@@ -228,13 +207,6 @@ public class Base_checkout_negativeCases extends SelTestCase {
 				String ErrorMsg = MessageFormat.format(LoggingMsg.ACTUAL_EXPECTED_ERROR, currentEerrorsMsg,
 						ValidationMsg);
 				sassert().assertTrue(currentEerrorsMsg.contains(ValidationMsg), ErrorMsg);
-				// String currentCityEerrorsMsg =
-				// CheckOut.shippingAddress.getCityError();
-				// String cityErrorMsg =
-				// MessageFormat.format(LoggingMsg.ACTUAL_EXPECTED_ERROR,currentCityEerrorsMsg,
-				// cityEerrors);
-				// sassert().assertTrue(currentCityEerrorsMsg.contains(cityEerrors),
-				// cityErrorMsg );
 
 			}
 			if (proprties.contains("Shipping_Without postcode")) {
@@ -255,13 +227,6 @@ public class Base_checkout_negativeCases extends SelTestCase {
 				String ErrorMsg = MessageFormat.format(LoggingMsg.ACTUAL_EXPECTED_ERROR, currentEerrorsMsg,
 						ValidationMsg);
 				sassert().assertTrue(currentEerrorsMsg.contains(ValidationMsg), ErrorMsg);
-				// String currentPostCodeEerrorsMsg =
-				// CheckOut.shippingAddress.getPostCodeEerror();
-				// String pstCodeErrorMsg =
-				// MessageFormat.format(LoggingMsg.ACTUAL_EXPECTED_ERROR,currentPostCodeEerrorsMsg,
-				// postcodeEerrors);
-				// sassert().assertTrue(currentPostCodeEerrorsMsg.contains(postcodeEerrors),
-				// pstCodeErrorMsg );
 
 			}
 
@@ -461,12 +426,6 @@ public class Base_checkout_negativeCases extends SelTestCase {
 							ValidationMsg);
 					sassert().assertTrue(currentEerrorsMsg.contains(ValidationMsg), ErrorMsg);
 				}
-				// CheckOut.reviewInformation.acceptTerms(true);
-				// CheckOut.reviewInformation.placeOrder();
-				// if (proprties.contains(guestUser) &&
-				// proprties.contains("register-guest")) {
-				// CheckOut.guestCheckout.fillPreRegFormAndClickRegBtn("1234567",
-				// false);
 			}
 			sassert().assertAll();
 			Common.testPass();
