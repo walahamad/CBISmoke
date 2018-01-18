@@ -11,6 +11,7 @@ import java.util.Arrays;
 import com.generic.page.errorPages;
 import com.generic.setup.Common;
 import com.generic.setup.LoggingMsg;
+import com.generic.setup.PagesURLs;
 import com.generic.setup.SelTestCase;
 import com.generic.setup.SheetVariables;
 import com.generic.util.TestUtilities;
@@ -57,7 +58,7 @@ public class ErrorPagesValidation extends SelTestCase {
 		try {
 			
 			if (proprties.contains("404")) {
-				url = "https://hybrisdemo.conexus.co.uk:9002/yacceleratorstorefront/en/j_spring_security_check";
+				String url = PagesURLs.getErrorPage();
 				getDriver().get(url);
 				String currentMsg = errorPages.getGlobalAlertsMsg();
 				logs.debug(currentMsg);

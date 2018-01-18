@@ -18,6 +18,7 @@ public class PagesURLs extends SelTestCase {
 	public static String shoppingCartPage = "shoppingCartPage";
 	public static String signOutPage = "signOutPage";
 	public static String storeFinderPage = "storeFinderPage";
+	public static String errorPage = "errorPage";
 	
 	
 	public static String getDriversPath(String driverName) {
@@ -221,6 +222,20 @@ public class PagesURLs extends SelTestCase {
 			getCONFIG().setProperty(storeFinderPage,newStoreFinderPage);
 			} catch(Throwable t) {
 				throw new NoSuchElementException(MessageFormat.format(LoggingMsg.PROPERTY_ERROR_MSG, storeFinderPage));
+			}
+	}
+	public static String getErrorPage() {
+		try {
+			return getCONFIG().getProperty(errorPage);
+			} catch(Throwable t) {
+				throw new NoSuchElementException(MessageFormat.format(LoggingMsg.PROPERTY_ERROR_MSG, storeFinderPage));
+			}
+	}
+	public static void setErrorPage(String newErrorPage) {
+		try {
+			getCONFIG().setProperty(errorPage,newErrorPage);
+			} catch(Throwable t) {
+				throw new NoSuchElementException(MessageFormat.format(LoggingMsg.PROPERTY_ERROR_MSG, newErrorPage));
 			}
 	}
 

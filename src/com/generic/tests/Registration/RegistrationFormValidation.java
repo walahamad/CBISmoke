@@ -94,12 +94,10 @@ public class RegistrationFormValidation extends SelTestCase {
 			}
 			if (proprties.contains(existingUser)) {
 				// take any user as template
-				logs.debug(Arrays.asList(users)+"======================>");
 				
 				LinkedHashMap<String, Object> userdetails = (LinkedHashMap<String, Object>) users.entrySet().iterator()
 						.next().getValue();
 				
-				logs.debug(Arrays.asList(userdetails)+"======================>");
 				
 				String title = Registration.getRandomTitle();
 				String firstName = RandomUtilities.getRandomName();
@@ -108,7 +106,7 @@ public class RegistrationFormValidation extends SelTestCase {
 				//TODO: move this to sheet
 				String email = (String) userdetails.get(Registration.keys.email);
 						//(String) userdetails.get(Registration.keys.email);
-				logs.debug("==============||||>"+email);
+				logs.debug("Registration mail: "+email);
 				Registration.fillAndClickRegister(title,firstName,lastName,email,password,password,true);
 			}
 			if (proprties.contains(emptyData)) {
