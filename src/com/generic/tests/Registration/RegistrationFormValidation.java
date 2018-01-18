@@ -52,16 +52,13 @@ public class RegistrationFormValidation extends SelTestCase {
 	// used sheet in test
 	public static final String testDataSheet = SheetVariables.registrationRegressionSheet;
 
-	private int caseIndexInDatasheet;
-	private String email;
-	
 	private static XmlTest testObject;
 	
 	private static ThreadLocal<SASLogger> Testlogs = new ThreadLocal<SASLogger>() ; 
 	
 	@BeforeTest
 	public static void initialSetUp(XmlTest test) throws Exception {
-		Testlogs.set(new SASLogger("registration_setup"));
+		Testlogs.set(new SASLogger(test.getName() + test.getIndex()));
 		testObject = test;
 		users = Common.readUsers();
 	}
@@ -69,11 +66,7 @@ public class RegistrationFormValidation extends SelTestCase {
 	@DataProvider(name = "Registration", parallel = true)
 	//concurrency maintenance on sheet reading 
 	public static Object[][] loadTestData() throws Exception {
-		if (testObject.getParameter("browserName").equals("firefox"))
-			Thread.sleep(500);
-		if (testObject.getParameter("browserName").equals("chrome"))
-			Thread.sleep(700);
-
+		getBrowserWait(testObject.getParameter("browserName"));
 		dataProviderUtils TDP = dataProviderUtils.getInstance();
 		Object[][] data = TDP.getData(testDataSheet);
 		Testlogs.get().debug(Arrays.deepToString(data).replace("\n", "--"));
@@ -83,14 +76,12 @@ public class RegistrationFormValidation extends SelTestCase {
 	@SuppressWarnings("unchecked") // avoid warning from linked hashmap
 	@Test(dataProvider = "Registration")
 	public void registrationRegressionTest(String caseId, String runTest, String desc, String proprties, String fieldsValidation) throws Exception {
-		Testlogs.set(new SASLogger("registration_"+getBrowserName()));
+		Testlogs.set(new SASLogger("registration "+getBrowserName()));
 		//Important to add this for logging/reporting 
 		setTestCaseReportName("Registration Case");
 		//Testlogs.get().debug("Case Browser: "  + testObject.getParameter("browserName") );
 		logCaseDetailds(MessageFormat.format(LoggingMsg.REGISTRATIONDESC, testDataSheet + "." + caseId,
 				this.getClass().getCanonicalName(), desc, proprties.replace("\n", "<br>- ")));
-		
-		caseIndexInDatasheet = getDatatable().getCellRowNum(testDataSheet, Registration.keys.caseId, caseId);
 		
 		try {
 			if (proprties.contains(freshUser)) {
@@ -103,17 +94,21 @@ public class RegistrationFormValidation extends SelTestCase {
 			}
 			if (proprties.contains(existingUser)) {
 				// take any user as template
+				logs.debug(Arrays.asList(users)+"======================>");
+				
 				LinkedHashMap<String, Object> userdetails = (LinkedHashMap<String, Object>) users.entrySet().iterator()
 						.next().getValue();
+				
+				logs.debug(Arrays.asList(userdetails)+"======================>");
 				
 				String title = Registration.getRandomTitle();
 				String firstName = RandomUtilities.getRandomName();
 				String lastName = RandomUtilities.getRandomName();
 				String password = RandomUtilities.getRandomPassword(7);
-				String email = "ibatta@dbi.com";
+				//TODO: move this to sheet
+				String email = (String) userdetails.get(Registration.keys.email);
 						//(String) userdetails.get(Registration.keys.email);
-				logs.debug(""+email);
-				logs.debug(""+(String) userdetails.get(Registration.keys.email));
+				logs.debug("==============||||>"+email);
 				Registration.fillAndClickRegister(title,firstName,lastName,email,password,password,true);
 			}
 			if (proprties.contains(emptyData)) {
@@ -144,7 +139,9 @@ public class RegistrationFormValidation extends SelTestCase {
 				String email = RandomUtilities.getRandomEmail();
 				Registration.fillAndClickRegister(title,firstName,lastName,email,password,password,true);
 			}
-
+			
+			Thread.sleep(2000);
+			
 			for (String message : fieldsValidation.split("\n")) {
 				String key = message.split(":")[0];
 				String messageText = message.split(":")[1];

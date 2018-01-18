@@ -18,6 +18,6 @@ public class RegistrationSelectors {
 	public static final String emailAddressError = "email.errors";
 	public static final String confirmPasswordError = "checkPwd.errors"; 
 	public static final String passwordError = "password_minchar";
-	public static final String passwordRulesError = "pwd\\.errors";
+	public static final String passwordRulesError = "pwd.errors";
 	public static final String passwordMatchError = "checkPwd.errors";
 }
