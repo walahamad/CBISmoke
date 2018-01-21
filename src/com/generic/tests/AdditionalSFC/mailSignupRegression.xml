@@ -4,19 +4,19 @@
 	<test name="Storelocator chrome">
 		<parameter name="browserName" value="chrome"></parameter>
 		<classes>
-			<class name="com.generic.tests.storeLocator.StoreLocatorBase" />
+			<class name="com.generic.tests.AdditionalSFC.mailSignupBase" />
 		</classes>
 	</test><!-- Test -->
 	<test name="Storelocator firefox">
 		<parameter name="browserName" value="firefox"></parameter>
 		<classes>
-			<class name="com.generic.tests.storeLocator.StoreLocatorBase" />
+			<class name="com.generic.tests.AdditionalSFC.mailSignupBase" />
 		</classes>
 	</test><!-- Test -->
 	<test name="Storelocator mobile_Nexus 5">
 		<parameter name="browserName" value="mobile_Nexus 5"></parameter>
 		<classes>
-			<class name="com.generic.tests.storeLocator.StoreLocatorBase" />
+			<class name="com.generic.tests.AdditionalSFC.mailSignupBase" />
 		</classes>
 	</test><!-- Test -->	
 </suite> <!-- Suite -->

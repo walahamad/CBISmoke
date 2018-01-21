@@ -30,13 +30,6 @@ public class StoreLocatorBase extends SelTestCase {
 
 	// used sheet in test
 	public static final String testDataSheet = SheetVariables.storeLocatorSheet;
-	private boolean doVerifyCurrent;
-	private boolean doClickCancelBtn;
-	private boolean doClickUpdateBtn;
-	private String email;
-	private int caseIndexInDatasheet;
-	private boolean revertChanges;
-
 	private static XmlTest testObject;
 
 	private static ThreadLocal<SASLogger> Testlogs = new ThreadLocal<SASLogger>();

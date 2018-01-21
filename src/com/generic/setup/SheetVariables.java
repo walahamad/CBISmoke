@@ -31,11 +31,14 @@ public class SheetVariables {
 	public static final String orderDetailsSheet = "OrderDetailsRegression";
 	public static final String EmailAddressRegressionSheet = "EmailAddressRegression";
 	public static final String PasswordRegressionSheet = "PasswordRegression";
-	public static String registrationRegressionSheet = "RegistrationRegression";
+	public static final String registrationRegressionSheet = "RegistrationRegression";
 	public static final String ErrorPagesRegressionSheet = "ErrorPagesRegression";
 	public static final String checkoutNegativeCasesSheet = "CheckOutNegativeCasesRegression";
-	public static String checkoutB2BSheet = "CheckOutB2BRegression";
+	public static final String checkoutB2BSheet = "CheckOutB2BRegression";
 	public static final String SearchSheet = "SearchRegression";
+	public static final String MailSignupRegressionSheet = "MailSignupRegression";
+	public static final String QuickViewRegressionSheet = "QuickViewRegression";
+	
     //Test Case id
     public static final String registrationTestCaseId = "Registration";
     public static final String checkoutTestCaseId = "CheckOut";
@@ -46,5 +49,7 @@ public class SheetVariables {
 	public static final String PDPCaseId = "PDP";
 	public static final String addressbookTestCaseId="AddressBook";
 	public static final String PaymentDetailsTestCaseId = "PaymentDetails";
+	public static final String MailSignupTestCaseId = "MailSignup";
+	public static final String QuickViewTestCaseId = "QuickView";
 
 }
