@@ -559,11 +559,12 @@ public class SelectorUtil extends SelTestCase {
 								   List<WebElement> options = select.getOptions();
 								   for(int i=0; i<options.size(); i++)
 								   {
-									   // logs.debug(options.get(i).getText().trim());
+									   logs.debug(options.get(i).getText().trim());
 									   if (options.get(i).getText().toLowerCase().trim().contains(value.toLowerCase()) && !value.equals(""))
 									   {
 										   logs.debug(MessageFormat.format(LoggingMsg.SELECTED_INDEX, i )); 
 										   select.selectByIndex(i);
+										   break;
 									   }
 								   }
 							   }
@@ -574,7 +575,7 @@ public class SelectorUtil extends SelTestCase {
 						   }
 						   catch(Exception e)
 						   {
-							   logs.debug(LoggingMsg.TRY_ALT_WAY_MSG);
+							   logs.debug(LoggingMsg.TRY_ALT_WAY_MSG + e.getStackTrace());
 							   if (!value.isEmpty()) {
 								   select.selectByVisibleText(value); 
 							   } else {

@@ -29,7 +29,7 @@ public class PLPValidation extends SelTestCase {
 	private static ThreadLocal<SASLogger> Testlogs = new ThreadLocal<SASLogger>();
 	@BeforeTest
 	public static void initialSetUp(XmlTest test) throws Exception {
-		Testlogs.set(new SASLogger(""));
+		Testlogs.set(new SASLogger(test.getName() + test.getIndex()));
 		testObject = test;
 	}
 	
