@@ -144,7 +144,7 @@ public class Registration extends SelTestCase {
 
 	}
 
-	public static void getFirstNameError() throws Exception {
+	public static String getFirstNameError() throws Exception {
 		getCurrentFunctionName(true);
 		List<String> subStrArr = new ArrayList<String>();
 		List<String> valuesArr = new ArrayList<String>();
@@ -153,10 +153,11 @@ public class Registration extends SelTestCase {
 		valuesArr.add("");
 		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
 		getCurrentFunctionName(false);
+		return SelectorUtil.textValue.get();
 
 	}
 
-	public static void getLastNameError() throws Exception {
+	public static String getLastNameError() throws Exception {
 		getCurrentFunctionName(true);
 		List<String> subStrArr = new ArrayList<String>();
 		List<String> valuesArr = new ArrayList<String>();
@@ -165,10 +166,11 @@ public class Registration extends SelTestCase {
 		valuesArr.add("");
 		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
 		getCurrentFunctionName(false);
+		return SelectorUtil.textValue.get();
 
 	}
 
-	public static void getTitleError() throws Exception {
+	public static String getTitleError() throws Exception {
 		getCurrentFunctionName(true);
 		List<String> subStrArr = new ArrayList<String>();
 		List<String> valuesArr = new ArrayList<String>();
@@ -177,9 +179,10 @@ public class Registration extends SelTestCase {
 		valuesArr.add("index,1");
 		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
 		getCurrentFunctionName(false);
+		return SelectorUtil.textValue.get();
 	}
 
-	public static void getEmailAddressError() throws Exception {
+	public static String getEmailAddressError() throws Exception {
 		getCurrentFunctionName(true);
 		List<String> subStrArr = new ArrayList<String>();
 		List<String> valuesArr = new ArrayList<String>();
@@ -188,9 +191,10 @@ public class Registration extends SelTestCase {
 		valuesArr.add("");
 		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
 		getCurrentFunctionName(false);
+		return SelectorUtil.textValue.get();
 	}
 
-	public static void getPasswordError() throws Exception {
+	public static String getPasswordError() throws Exception {
 		getCurrentFunctionName(true);
 		List<String> subStrArr = new ArrayList<String>();
 		List<String> valuesArr = new ArrayList<String>();
@@ -199,9 +203,10 @@ public class Registration extends SelTestCase {
 		valuesArr.add("");
 		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
 		getCurrentFunctionName(false);
+		return SelectorUtil.textValue.get();
 	}
 
-	public static void getConfirmPasswordError() throws Exception {
+	public static String getConfirmPasswordError() throws Exception {
 		getCurrentFunctionName(true);
 		List<String> subStrArr = new ArrayList<String>();
 		List<String> valuesArr = new ArrayList<String>();
@@ -210,9 +215,10 @@ public class Registration extends SelTestCase {
 		valuesArr.add("");
 		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
 		getCurrentFunctionName(false);
+		return SelectorUtil.textValue.get();
 	}
 
-	public static void getPasswordRulesError() throws Exception {
+	public static String getPasswordRulesError() throws Exception {
 		getCurrentFunctionName(true);
 		List<String> subStrArr = new ArrayList<String>();
 		List<String> valuesArr = new ArrayList<String>();
@@ -221,9 +227,10 @@ public class Registration extends SelTestCase {
 		valuesArr.add("");
 		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
 		getCurrentFunctionName(false);
+		return SelectorUtil.textValue.get();
 	}
 
-	public static void getPasswordMatchError() throws Exception {
+	public static String getPasswordMatchError() throws Exception {
 		getCurrentFunctionName(true);
 		List<String> subStrArr = new ArrayList<String>();
 		List<String> valuesArr = new ArrayList<String>();
@@ -232,6 +239,7 @@ public class Registration extends SelTestCase {
 		valuesArr.add("");
 		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
 		getCurrentFunctionName(false);
+		return SelectorUtil.textValue.get();
 	}
 
 	public static String getRandomTitle() {
@@ -252,7 +260,7 @@ public class Registration extends SelTestCase {
 		getCurrentFunctionName(false);
 	}
 
-	public static void getRegistrationSuccessMessage() throws Exception {
+	public static String getRegistrationSuccessMessage() throws Exception {
 		getCurrentFunctionName(true);
 		List<String> subStrArr = new ArrayList<String>();
 		List<String> valuesArr = new ArrayList<String>();
@@ -261,6 +269,7 @@ public class Registration extends SelTestCase {
 		valuesArr.add("");
 		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
 		getCurrentFunctionName(false);
+		return SelectorUtil.textValue.get();
 
 	}
 }

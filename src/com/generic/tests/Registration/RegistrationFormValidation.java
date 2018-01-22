@@ -145,57 +145,48 @@ public class RegistrationFormValidation extends SelTestCase {
 				String messageText = message.split(":")[1];
 				Testlogs.get().debug(MessageFormat.format(LoggingMsg.REGISTRATION_FIELDS_ERRORS, key));
 				if (key.equalsIgnoreCase(successMessage)) {
-					Registration.getRegistrationSuccessMessage();
-					String actualMessage = SelectorUtil.textValue.get();
+					String actualMessage = Registration.getRegistrationSuccessMessage();
 					String expectedMessage = messageText;
 					boolean isIncluded = actualMessage.contains(expectedMessage);
 					sassert().assertEquals(isIncluded, true);
 				}
 				if (key.equalsIgnoreCase(invalidEmail)) {
-					Registration.getEmailAddressError();
-					String actualMessage = SelectorUtil.textValue.get();
+					String actualMessage =Registration.getEmailAddressError();
 					String expectedMessage = messageText;
 					sassert().assertEquals(actualMessage, expectedMessage);
 				}
 				if (key.equalsIgnoreCase(titleError)) {
-					Registration.getTitleError();
-					String actualMessage = SelectorUtil.textValue.get();
+					String actualMessage =Registration.getTitleError();
 					String expectedMessage = messageText;
 					sassert().assertEquals(actualMessage, expectedMessage);
 				}
 				if (key.equalsIgnoreCase(firstNameError)) {
-					Registration.getFirstNameError();
-					String actualMessage = SelectorUtil.textValue.get();
+					String actualMessage =Registration.getFirstNameError();
 					String expectedMessage = messageText;
 					sassert().assertEquals(actualMessage, expectedMessage);
 				}
 				if (key.equalsIgnoreCase(lastNameError)) {
-					Registration.getLastNameError();
-					String actualMessage = SelectorUtil.textValue.get();
+					String actualMessage =Registration.getLastNameError();
 					String expectedMessage = messageText;
 					sassert().assertEquals(actualMessage, expectedMessage);
 				}
 				if (key.equalsIgnoreCase(passwordError)) {
-					Registration.getPasswordError();
-					String actualMessage = SelectorUtil.textValue.get();
+					String actualMessage =Registration.getPasswordError();
 					String expectedMessage = messageText;
 					sassert().assertEquals(actualMessage, expectedMessage);
 				}
 				if (key.equalsIgnoreCase(confPasswordError)) {
-					Registration.getConfirmPasswordError();
-					String actualMessage = SelectorUtil.textValue.get();
+					String actualMessage =Registration.getConfirmPasswordError();
 					String expectedMessage = messageText;
 					sassert().assertEquals(actualMessage, expectedMessage);
 				}
 				if (key.equalsIgnoreCase(passwordRulesError)) {
-					Registration.getPasswordRulesError();
-					String actualMessage = SelectorUtil.textValue.get();
+					String actualMessage =Registration.getPasswordRulesError();
 					String expectedMessage = messageText;
 					sassert().assertEquals(actualMessage, expectedMessage);
 				}
 				if (key.equalsIgnoreCase(passwordMisatchError)) {
-					Registration.getPasswordMatchError();
-					String actualMessage = SelectorUtil.textValue.get();
+					String actualMessage = Registration.getPasswordMatchError();
 					String expectedMessage = messageText;
 					sassert().assertEquals(actualMessage, expectedMessage);
 				}
