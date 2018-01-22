@@ -583,7 +583,7 @@ public class SelectorUtil extends SelTestCase {
 								   List<WebElement> options = select.getOptions();
 								   for(int i=0; i<options.size(); i++)
 								   {
-									   logs.debug(options.get(i).getText().trim());
+									   // logs.debug(options.get(i).getText().trim());
 									   if (options.get(i).getText().toLowerCase().trim().contains(value.toLowerCase()) && !value.equals(""))
 									   {
 										   logs.debug(MessageFormat.format(LoggingMsg.SELECTED_INDEX, i )); 
@@ -599,7 +599,7 @@ public class SelectorUtil extends SelTestCase {
 						   }
 						   catch(Exception e)
 						   {
-							   logs.debug(LoggingMsg.TRY_ALT_WAY_MSG + e.getStackTrace());
+							   logs.debug(LoggingMsg.TRY_ALT_WAY_MSG);
 							   if (!value.isEmpty()) {
 								   select.selectByVisibleText(value); 
 							   } else {
@@ -647,6 +647,22 @@ public class SelectorUtil extends SelTestCase {
 	    }
 	    
 	    @SuppressWarnings("rawtypes")
+		public static boolean isDisplayed(List<String> subStrArr, int index) throws Exception
+	    {
+	      	getCurrentFunctionName(true);
+	    	List<String> valuesArr = new ArrayList<String>();
+	    	valuesArr.add("");
+	    	LinkedHashMap<String, LinkedHashMap> webelementsInfo = initializeSelectorsAndDoActions(new ArrayList<String>(subStrArr), valuesArr, false);
+	    	List <WebElement> items = getDriver().findElements((By) webelementsInfo.get(subStrArr.get(0)).get("by"));
+	    	
+	    	boolean isDisplayed = true;
+    		if (!items.get(index).isDisplayed())
+    			isDisplayed = false;
+	    	getCurrentFunctionName(false);
+	    	return isDisplayed;
+	    }
+	    
+	    @SuppressWarnings("rawtypes")
 		public static boolean isNotDisplayed(List<String> subStrArr) throws Exception
 	    {
 	    	getCurrentFunctionName(true);
@@ -677,6 +693,19 @@ public class SelectorUtil extends SelTestCase {
 			return attrValue;
 	    }
 	    
+	@SuppressWarnings("rawtypes")
+	public static String getAttr(List<String> subStrArr, String attr, int index) throws Exception {
+		getCurrentFunctionName(true);
+		List<String> valuesArr = new ArrayList<String>();
+		valuesArr.add("");
+		LinkedHashMap<String, LinkedHashMap> webelementsInfo = initializeSelectorsAndDoActions(
+				new ArrayList<String>(subStrArr), valuesArr, false);
+		List<WebElement> items = getDriver().findElements((By) webelementsInfo.get(subStrArr.get(0)).get("by"));
+		String attrValue = items.get(index).getAttribute(attr);
+		getCurrentFunctionName(false);
+		return attrValue;
+	}
+
 	    @SuppressWarnings("rawtypes")
 		public static LinkedHashMap<String, LinkedHashMap> initializeSelectorsAndDoActions(List<String> subStrArr, List<String> valuesArr ) throws Exception {
 	    	return initializeSelectorsAndDoActions(subStrArr,valuesArr , true);

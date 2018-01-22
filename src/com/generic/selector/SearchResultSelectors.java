@@ -3,12 +3,17 @@ package com.generic.selector;
 public class SearchResultSelectors {
 	public static final String searchInput = "js-site-search-input";
 	public static final String searchBtn = "btn btn-link js_search_button";
+	public static final String nthResponsiveListItemListLink = ".ui-menu.ui-widget.ui-widget-content.ui-autocomplete.ui-front>.ui-menu-item a:eq(1)";
+	public static final String nthResponsiveListItemColumn = ".ui-menu.ui-widget.ui-widget-content.ui-autocomplete.ui-front>.ui-menu-item>a :eq({0})";
+	public static final String nthResponsiveListItemListImg = "css,.ui-menu.ui-widget.ui-widget-content.ui-autocomplete.ui-front>.ui-menu-item>a>div>img";
+	
 	public static final String 	searchMenuItems = "ui-menu-item";
 	public static final String 	searchMenuItems_Link = "ui-menu-item-wrapper";
 	public static final String 	searchMenuItems_Name = "name";
 	public static final String 	searchMenuItems_Price = "price";
 	public static final String 	searchMenuItems_Image = "img";
-	public static final String 	searchResultsHeader = "css,body>main>div:nth-child(7)>div.row>div.col-sm-12.col-md-9>div>div>div>div.results";
+	public static final String 	searchResultsHeader = "results";
+	public static final String 	searchResultsHeaderSearchEmpty = "headline";
 	public static final String 	searchResultsContinueShopping = "btn btn-default  js-shopping-button";
 	public static final String sortOptions1 = "sortOptions1";
 	public static final String sortOptions2 = "sortOptions2";

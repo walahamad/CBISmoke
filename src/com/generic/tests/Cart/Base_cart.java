@@ -175,7 +175,7 @@ public class Base_cart extends SelTestCase {
 	public void prepareCartNotLoggedInUser(String product) throws Exception {
 		logs.debug(MessageFormat.format(LoggingMsg.ADDING_PRODUCT, product));
 		productDetails = (LinkedHashMap<String, Object>) invintory.get(product);
-		PDP.addProductsToCart((String) productDetails.get(PDP.keys.url), (String) productDetails.get(PDP.keys.color),
+		PDP.addProductsToCartAndClickCheckOut((String) productDetails.get(PDP.keys.url), (String) productDetails.get(PDP.keys.color),
 				(String) productDetails.get(PDP.keys.size), (String) productDetails.get(PDP.keys.qty));
 	}
 
@@ -188,7 +188,7 @@ public class Base_cart extends SelTestCase {
 
 		logs.debug(MessageFormat.format(LoggingMsg.ADDING_PRODUCT, product));
 		productDetails = (LinkedHashMap<String, Object>) invintory.get(product);
-		PDP.addProductsToCart((String) productDetails.get(PDP.keys.url), (String) productDetails.get(PDP.keys.color),
+		PDP.addProductsToCartAndClickCheckOut((String) productDetails.get(PDP.keys.url), (String) productDetails.get(PDP.keys.color),
 				(String) productDetails.get(PDP.keys.size), (String) productDetails.get(PDP.keys.qty));
 
 	}

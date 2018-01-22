@@ -9,4 +9,5 @@
               <class name="com.generic.tests.Search.SearchResultValidation" />
 		</classes>
 	</test><!-- Test -->
+
 </suite> <!-- Suite -->

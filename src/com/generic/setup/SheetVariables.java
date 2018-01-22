@@ -16,7 +16,7 @@ public class SheetVariables {
 	public static final String users = "users";
 	
 	//SheetNames
-    public static final String registrationSheet = "Registration";
+    public static final String loginSheet = "LoginRegression";
     public static final String checkoutSheet = "CheckOutRegression";
     public static final String plpSheet = "PLPRegression";
     public static final String personalDetailsSheet = "PersonalDetailsRegression";

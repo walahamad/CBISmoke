@@ -72,10 +72,10 @@ public class PLPValidation extends SelTestCase {
 			PLP.selectSortOptions2ByValue(sortOptions2);
 			Thread.sleep(3000);
 			
-			String productsNum = PLP.getNumberOfproducts();
-			logs.debug(MessageFormat.format(LoggingMsg.NUMBER_OF_PRODUCTS, productsNum));
+//			String productsNum = PLP.getNumberOfproducts();
+//			logs.debug(MessageFormat.format(LoggingMsg.NUMBER_OF_PRODUCTS, productsNum));
 			
-			PLP.doesDisplayedProductsNumTextMatchesProductsDisplayed();
+			sassert().assertTrue(PLP.doesDisplayedProductsNumTextMatchesProductsDisplayed());
 		
 			PLP.typeUserLocationStore(userLocationStore);
 			Thread.sleep(4000);
@@ -88,12 +88,12 @@ public class PLPValidation extends SelTestCase {
 			
 		
 			
-			PLP.clickleftNavCheckBoxCheckBox("London Hospital");
+		     // PLP.clickleftNavCheckBoxCheckBox("London Hospital");
 			//logs.debug(MessageFormat.format(LoggingMsg.PLP_SELECTED_FILTER_COUNT, "Store", PLP.getFacetNavTitleStoresCount()));
 			//logs.debug(MessageFormat.format(LoggingMsg.PLP_SELECTED_FILTER_COUNT, "price", PLP.getFacetNavTitlePriceCount()));
 			//logs.debug(MessageFormat.format(LoggingMsg.PLP_SELECTED_FILTER_COUNT, "colour", PLP.getFacetNavTitleColourCount()));
 			//logs.debug(MessageFormat.format(LoggingMsg.PLP_SELECTED_FILTER_COUNT, "Size", PLP.getFacetNavTitleSizeCount()));
-			PLP.compareAppliedFilterWithDisplayedProductNumber(plpFilter);
+			sassert().assertTrue(PLP.compareAppliedFilterWithDisplayedProductNumber(plpFilter));
 			
 			PLP.removeNthAppliedFacet(nthAppliedFacet);
 			
@@ -136,6 +136,7 @@ public class PLPValidation extends SelTestCase {
 		    }
 		    
 			Thread.sleep(4000);
+			sassert().assertAll();
 			Common.testPass();
 		} catch (Throwable t) {
 			setTestCaseDescription(getTestCaseDescription());

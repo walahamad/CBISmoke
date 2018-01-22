@@ -71,7 +71,7 @@ public class Base_checkout_negativeCases extends SelTestCase {
 			for (String product : products.split("\n")) {
 				Testlogs.get().debug(MessageFormat.format(LoggingMsg.ADDING_PRODUCT, product));
 				LinkedHashMap<String, Object> productDetails = (LinkedHashMap<String, Object>) invintory.get(product);
-				PDP.addProductsToCart((String) productDetails.get(PDP.keys.url),
+				PDP.addProductsToCartAndClickCheckOut((String) productDetails.get(PDP.keys.url),
 						(String) productDetails.get(PDP.keys.color), (String) productDetails.get(PDP.keys.size),
 						(String) productDetails.get(PDP.keys.qty));
 			}

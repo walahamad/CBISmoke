@@ -116,5 +116,11 @@ public class LoggingMsg {
 	public static String REGISTRATION_FIELDS_ERRORS = "Verifying {0} Message";
 	public static String PROPERTY_ERROR_MSG = "The following property: {0} is not found";
 	public static String SearchResulstHeader_Search_Empty = "0 items found for keyword {0}";
-	public static String SearchResulstHeader_Search = "You searched for '{0}''";
+	public static String SearchResulstHeader_Search = "You searched for {0}{1}{2}";
+	public static String NUMBER_OF_MENUE_ITEMS = "Number of menue itesms is: {0}";
+	public static String NUMBER_OF_ACTIVE_STARS = "Nnumber of active stars {0}";
+	public static String NUMBER_OF_ACTIVE_VARIANTS =  "Nnumber of active variants {0}";
+	public static String NUMBER_OF_ACTIVE_SIZES = "Nnumber of active sizes {0}";
+	public static String APPLIED_FILTER_COUNT ="Number of applied filters count is: {0}";
+	public static String USER_IS_NOT_LOGGED_IN_SUCCESSFULLY = "Your username or password was incorrect";
 }

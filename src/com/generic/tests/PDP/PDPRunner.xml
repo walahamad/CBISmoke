@@ -13,7 +13,7 @@
 			<class name="com.generic.tests.PDP.Base_PDP" />
 		</classes>
 	</test><!-- Test -->
-	<test name="cart Tests _ mobile_iPhone 6">
+	<test name="cart Tests _ mobile_Nexus 5">
 		<parameter name="browserName" value="mobile_iPhone 6"></parameter>
 		<classes>
 			<class name="com.generic.tests.PDP.Base_PDP" />
