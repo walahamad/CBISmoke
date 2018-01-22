@@ -38,6 +38,7 @@ public class SheetVariables {
 	public static final String SearchSheet = "SearchRegression";
 	public static final String MailSignupRegressionSheet = "MailSignupRegression";
 	public static final String QuickViewRegressionSheet = "QuickViewRegression";
+	public static final String VisualTestingHPRegressionsheet = "VisualTestingHPRegression";
 	
     //Test Case id
     public static final String registrationTestCaseId = "Registration";
@@ -51,5 +52,6 @@ public class SheetVariables {
 	public static final String PaymentDetailsTestCaseId = "PaymentDetails";
 	public static final String MailSignupTestCaseId = "MailSignup";
 	public static final String QuickViewTestCaseId = "QuickView";
+	public static final String VisualTestingHPTestCaseId = "VisualTestingHP case";
 
 }

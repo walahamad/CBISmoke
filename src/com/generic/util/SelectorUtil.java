@@ -1,5 +1,6 @@
 package com.generic.util;
 
+import java.io.File;
 import java.io.IOException;
 import java.text.MessageFormat;
 import java.util.ArrayList;
@@ -10,6 +11,8 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
+
+import javax.imageio.ImageIO;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -26,6 +29,10 @@ import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.Wait;
 
 import com.generic.setup.SelTestCase;
+
+import ru.yandex.qatools.ashot.AShot;
+import ru.yandex.qatools.ashot.Screenshot;
+
 import com.generic.selector.CartSelectors;
 import com.generic.setup.ActionDriver;
 import com.generic.setup.ExceptionMsg;
@@ -37,6 +44,7 @@ public class SelectorUtil extends SelTestCase {
 	public static Boolean isAnErrorSelector = Boolean.FALSE;
 	//public static String textValue;
 	public static ThreadLocal<String> textValue = new ThreadLocal<String>() ;
+	public static ThreadLocal<Screenshot> screenShot = new ThreadLocal<Screenshot>() ;
 	//public static int numberOfFoundElements;
 	public static ThreadLocal<String> numberOfFoundElements  = new ThreadLocal<String>() ;
 	private static By parentBy = null;
@@ -332,10 +340,7 @@ public class SelectorUtil extends SelTestCase {
 	    	textValue.set(""); 
 	    	
 	    	String browser = SelTestCase.getBrowserName();
-	    	
-//	    	if (SelTestCase.getBrowserName().contains("firefox"))
-//				Thread.sleep(1000);
-	    	
+	    		    	
 	    	try
 	        {
 	    		String selector = (String) webElementInfo.get("selector");
@@ -388,6 +393,25 @@ public class SelectorUtil extends SelTestCase {
 								field.sendKeys(Keys.ENTER);  
 							  }
 						  }
+					   }
+					   else if(value.contains("VisualTesting"))
+					   {
+						   Wait<WebDriver> wait = new FluentWait<WebDriver>(SelTestCase.getDriver())
+							       .withTimeout(30, TimeUnit.SECONDS)
+							       .pollingEvery(5, TimeUnit.SECONDS)
+							       .ignoring(NoSuchElementException.class);
+								   //TODO: move it to general function
+						   
+						   logs.debug("Visual testing for: " + field.toString());
+						   JavascriptExecutor jse = (JavascriptExecutor)getDriver();
+						   jse.executeScript("arguments[0].scrollIntoView()", field);
+						   
+						   
+						   WebElement field2 = wait.until(new Function<WebDriver, WebElement>() {
+							   public WebElement apply(WebDriver driver) {
+								   return driver.findElement(byAction);
+							   }});
+						   screenShot.set(new AShot().takeScreenshot(SelTestCase.getDriver(),field2));
 					   }
 					   else if (action.equals("click"))
 					   {

@@ -4,6 +4,7 @@ import java.text.MessageFormat;
 import java.util.NoSuchElementException;
 
 public class PagesURLs extends SelTestCase {
+	public static String HP = "HomePage";
 	public static String driversPath = "driversPath";
 	public static String personalDetailsPage = "personalDetailsPage";
 	public static String emailAddressPage = "emailAddressPage";
@@ -251,6 +252,20 @@ public class PagesURLs extends SelTestCase {
 			getCONFIG().setProperty(PLP,newPLP);
 			} catch(Throwable t) {
 				throw new NoSuchElementException(MessageFormat.format(LoggingMsg.PROPERTY_ERROR_MSG, PLP));
+			}
+	}
+	public static String getHomePage() {
+		try {
+			return getCONFIG().getProperty(HP);
+			} catch(Throwable t) {
+				throw new NoSuchElementException(MessageFormat.format(LoggingMsg.PROPERTY_ERROR_MSG, storeFinderPage));
+			}
+	}
+	public static void setHomePage(String newHomePage) {
+		try {
+			getCONFIG().setProperty(HP,newHomePage);
+			} catch(Throwable t) {
+				throw new NoSuchElementException(MessageFormat.format(LoggingMsg.PROPERTY_ERROR_MSG, HP));
 			}
 	}
 
