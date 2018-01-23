@@ -8,6 +8,7 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.xml.XmlTest;
 
+import com.generic.page.CLP;
 import com.generic.page.HomePage;
 import com.generic.setup.Common;
 import com.generic.setup.LoggingMsg;
@@ -33,11 +34,9 @@ public class CLPBase extends SelTestCase {
 	public static final String update = "update";
 	public static final String verify = "verify";
 	public static final String header = "header";
-	public static final String footer = "footer";
-	public static final String body = "body";
 
 	// used sheet in test
-	public static final String testDataSheet = SheetVariables.VisualTestingHPRegressionsheet;
+	public static final String testDataSheet = SheetVariables.VisualTestingCLPRegressionsheet;
 
 	private static XmlTest testObject;
 	
@@ -49,7 +48,7 @@ public class CLPBase extends SelTestCase {
 		testObject = test;
 	}
 
-	@DataProvider(name = "HP_SC", parallel = true)
+	@DataProvider(name = "CLP_SC", parallel = true)
 	//concurrency maintenance on sheet reading 
 	public static Object[][] loadTestData() throws Exception {
 		getBrowserWait(testObject.getParameter("browserName"));
@@ -60,9 +59,9 @@ public class CLPBase extends SelTestCase {
 	}
 
 
-	@Test(dataProvider = "HP_SC")
-	public void registrationRegressionTest(String caseId, String runTest, String desc, String proprties, String baseline) throws Exception {
-		Testlogs.set(new SASLogger("HP_SC "+getBrowserName()));
+	@Test(dataProvider = "CLP_SC")
+	public void CLPBaseTest(String caseId, String runTest, String desc, String proprties, String baseline) throws Exception {
+		Testlogs.set(new SASLogger("CLP_SC "+getBrowserName()));
 		//Important to add this for logging/reporting 
 		setTestCaseReportName(SheetVariables.VisualTestingHPTestCaseId);
 		//Testlogs.get().debug("Case Browser: "  + testObject.getParameter("browserName") );
@@ -70,29 +69,23 @@ public class CLPBase extends SelTestCase {
 				this.getClass().getCanonicalName(), desc));
 		
 		try {
-			String url = PagesURLs.getHomePage();
+			String url = PagesURLs.getCLP();
 			getDriver().get(url);
+			
+			String baseline_browser = baseline+"_"+getBrowserName();
 			
 			if (proprties.contains(this.update))
 			{
 				if (proprties.contains(this.header))
-					HomePage.updateHeaderBaseline(baseline);
-				if (proprties.contains(this.footer))
-					HomePage.updateFooterBaseline(baseline);
-				if (proprties.contains(this.body))
-					HomePage.updateBodyBaseline(baseline);
+					CLP.updateHeaderBaseline(baseline_browser);
 				
-				HomePage.prepareBaselineforLogs(baseline);
+				CLP.prepareBaselineforLogs(baseline_browser);
 			}
 			else if (proprties.contains(this.verify))
 			{
 				if (proprties.contains(this.header))
-					sassert().assertTrue(HomePage.verifyHeader(baseline),"headerbase line is not same site header");
-				if (proprties.contains(this.footer))
-					sassert().assertTrue(HomePage.verifyFooter(baseline),"headerbase line is not same site footer");
-				if (proprties.contains(this.body))
-					sassert().assertTrue(HomePage.verifyBody(baseline),"headerbase line is not same site body");
-				HomePage.prepareBaselineforLogs(baseline);
+					sassert().assertTrue(CLP.verifyHeader(baseline_browser),"headerbase line is not same site header");
+				CLP.prepareBaselineforLogs(baseline_browser);
 			}
 			else {
 				Testlogs.get().debug("please check proprties provided in excel sheet");

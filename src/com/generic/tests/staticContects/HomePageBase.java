@@ -69,30 +69,34 @@ public class HomePageBase extends SelTestCase {
 		logCaseDetailds(MessageFormat.format(LoggingMsg.TEST_CASE_DESC, testDataSheet + "." + caseId,
 				this.getClass().getCanonicalName(), desc));
 		
+		String baseline_browser = baseline+"_"+getBrowserName();
+		
 		try {
 			String url = PagesURLs.getHomePage();
 			getDriver().get(url);
+			Thread.sleep(1500);
 			
 			if (proprties.contains(this.update))
 			{
 				if (proprties.contains(this.header))
-					HomePage.updateHeaderBaseline(baseline);
+					HomePage.updateHeaderBaseline(baseline_browser);
 				if (proprties.contains(this.footer))
-					HomePage.updateFooterBaseline(baseline);
+					HomePage.updateFooterBaseline(baseline_browser);
 				if (proprties.contains(this.body))
-					HomePage.updateBodyBaseline(baseline);
+					HomePage.updateBodyBaseline(baseline_browser);
 				
-				HomePage.prepareBaselineforLogs(baseline);
+				HomePage.prepareBaselineforLogs(baseline_browser);
 			}
 			else if (proprties.contains(this.verify))
 			{
 				if (proprties.contains(this.header))
-					sassert().assertTrue(HomePage.verifyHeader(baseline),"headerbase line is not same site header");
+					sassert().assertTrue(HomePage.verifyHeader(baseline_browser),"headerbase line is not same site header");
 				if (proprties.contains(this.footer))
-					sassert().assertTrue(HomePage.verifyFooter(baseline),"headerbase line is not same site footer");
+					sassert().assertTrue(HomePage.verifyFooter(baseline_browser),"headerbase line is not same site footer");
 				if (proprties.contains(this.body))
-					sassert().assertTrue(HomePage.verifyBody(baseline),"headerbase line is not same site body");
-				HomePage.prepareBaselineforLogs(baseline);
+					sassert().assertTrue(HomePage.verifyBody(baseline_browser),"headerbase line is not same site body");
+				
+				HomePage.prepareBaselineforLogs(baseline_browser);
 			}
 			else {
 				Testlogs.get().debug("please check proprties provided in excel sheet");

@@ -21,7 +21,7 @@ public class PagesURLs extends SelTestCase {
 	public static String storeFinderPage = "storeFinderPage";
 	public static String errorPage = "errorPage";
 	public static String PLP = "PLP";
-	
+	public static String CLP = "CLP";
 	
 	public static String getDriversPath(String driverName) {
 		try {
@@ -258,7 +258,7 @@ public class PagesURLs extends SelTestCase {
 		try {
 			return getCONFIG().getProperty(HP);
 			} catch(Throwable t) {
-				throw new NoSuchElementException(MessageFormat.format(LoggingMsg.PROPERTY_ERROR_MSG, storeFinderPage));
+				throw new NoSuchElementException(MessageFormat.format(LoggingMsg.PROPERTY_ERROR_MSG, HP));
 			}
 	}
 	public static void setHomePage(String newHomePage) {
@@ -266,6 +266,20 @@ public class PagesURLs extends SelTestCase {
 			getCONFIG().setProperty(HP,newHomePage);
 			} catch(Throwable t) {
 				throw new NoSuchElementException(MessageFormat.format(LoggingMsg.PROPERTY_ERROR_MSG, HP));
+			}
+	}
+	public static String getCLP() {
+		try {
+			return getCONFIG().getProperty(CLP);
+			} catch(Throwable t) {
+				throw new NoSuchElementException(MessageFormat.format(LoggingMsg.PROPERTY_ERROR_MSG, CLP));
+			}
+	}
+	public static void setCLP(String newCLP) {
+		try {
+			getCONFIG().setProperty(CLP,newCLP);
+			} catch(Throwable t) {
+				throw new NoSuchElementException(MessageFormat.format(LoggingMsg.PROPERTY_ERROR_MSG, CLP));
 			}
 	}
 
