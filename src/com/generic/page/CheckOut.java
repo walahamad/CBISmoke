@@ -117,6 +117,50 @@ public class CheckOut extends SelTestCase {
 			getCurrentFunctionName(false);
 
 		}
+		
+		public static void returningCustomerLogin(String username, String password) throws Exception
+		{
+			getCurrentFunctionName(true);
+			typeRetuRningcustomerUserName(username);
+			typeRetuRningcustomerPassword(password);
+			clickRetuRningcustomerLogin();
+			getCurrentFunctionName(false);
+		}
+
+		private static void clickRetuRningcustomerLogin() throws Exception {
+			getCurrentFunctionName(true);
+			List<String> subStrArr = new ArrayList<String>();
+			List<String> valuesArr = new ArrayList<String>();
+			logs.debug(MessageFormat.format(LoggingMsg.CLICKING_SEL, "Log In and Check Out"));
+			subStrArr.add(CheckOutSelectors.returningcustomerloginBtn);
+			valuesArr.add("");
+			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
+			getCurrentFunctionName(false);
+			
+		}
+
+		private static void typeRetuRningcustomerPassword(String password) throws Exception {
+			getCurrentFunctionName(true);
+			List<String> subStrArr = new ArrayList<String>();
+			List<String> valuesArr = new ArrayList<String>();
+			logs.debug(MessageFormat.format(LoggingMsg.TYPING_ELEMENT_VALUE, "returning customer password ", password));
+			subStrArr.add(CheckOutSelectors.returningcustomerPassword);
+			valuesArr.add(password);
+			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
+			getCurrentFunctionName(false);
+			
+		}
+
+		private static void typeRetuRningcustomerUserName(String username) throws Exception {
+			getCurrentFunctionName(true);
+			List<String> subStrArr = new ArrayList<String>();
+			List<String> valuesArr = new ArrayList<String>();
+			logs.debug(MessageFormat.format(LoggingMsg.TYPING_ELEMENT_VALUE, "returning customer username ", username));
+			subStrArr.add(CheckOutSelectors.returningcustomerUsername);
+			valuesArr.add(username);
+			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
+			getCurrentFunctionName(false);
+		}
 
 	}
 

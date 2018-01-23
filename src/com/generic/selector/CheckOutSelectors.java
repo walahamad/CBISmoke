@@ -90,6 +90,9 @@ public class CheckOutSelectors
 	public static final String guestCreateAccOtpin = "consentForm.consentGiven1";
 	public static final String guestCreateAccCPwd = "guest.checkPwd";
 	public static final String guestCreateAccPwd = "password";
+	public static final String returningcustomerUsername = "j_username";
+	public static final String returningcustomerPassword = "j_password";
+	public static final String returningcustomerloginBtn = "Log In and Check Out";
 	
 	
 	

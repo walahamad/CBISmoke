@@ -38,15 +38,8 @@ public class AccountsSetup extends SelTestCase {
 	public static final String loggedInUser = "loggedin";
 
 	// used sheet in test
-	public static final String testDataSheet = "AccountSetup";
+	public static final String testDataSheet = "AccountSetupRegression";
 
-	private int caseIndexInDatasheet;
-	private String email;
-	private String orderId;
-	private String orderTotal;
-	private String orderSubtotal;
-	private String orderTax;
-	private String orderShipping;
 
 	private static XmlTest testObject;
 
@@ -83,17 +76,17 @@ public class AccountsSetup extends SelTestCase {
 		logCaseDetailds(MessageFormat.format(LoggingMsg.CHECKOUTDESC, testDataSheet + "." + caseId,
 				this.getClass().getCanonicalName(), email, email, payment, shippingMethod));
 
-		this.email = getSubMailAccount(email);
+		String Pemail = getSubMailAccount(email);
 		try {
 			LinkedHashMap<String, Object> userdetails = (LinkedHashMap<String, Object>) users.get(email);
-			Testlogs.get().debug(this.email);
+			Testlogs.get().debug(Pemail);
 			Testlogs.get().debug((String) userdetails.get(Registration.keys.password));
 
 			Registration.fillAndClickRegister((String) userdetails.get(Registration.keys.title), "Accept", "tester",
-					this.email, (String) userdetails.get(Registration.keys.password),
+					Pemail, (String) userdetails.get(Registration.keys.password),
 					(String) userdetails.get(Registration.keys.password), true);
 			
-			//SignIn.logIn(this.email, "1234567");
+			//SignIn.logIn(Pemail, "1234567");
 
 			Testlogs.get().debug(MessageFormat.format(LoggingMsg.ADDING_PRODUCT, products.split("\n")[0]));
 			LinkedHashMap<String, Object> productDetails = (LinkedHashMap<String, Object>) invintory

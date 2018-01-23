@@ -36,18 +36,11 @@ public class Base_checkout extends SelTestCase {
 	public static final String guestUser = "guest";
 	public static final String freshUser = "fresh";
 	public static final String loggedInUser = "loggedin";
+	public static final String loggedDuringChcOt = "logging During Checkout";
 
 	// used sheet in test
 	public static final String testDataSheet = SheetVariables.checkoutSheet;
 
-	private int caseIndexInDatasheet;
-	private String email;
-	private String orderId;
-	private String orderTotal;
-	private String orderSubtotal;
-	private String orderTax;
-	private String orderShipping;
-	
 	private static XmlTest testObject;
 	
 	private static ThreadLocal<SASLogger> Testlogs = new ThreadLocal<SASLogger>() ; 
@@ -84,19 +77,25 @@ public class Base_checkout extends SelTestCase {
 		logCaseDetailds(MessageFormat.format(LoggingMsg.CHECKOUTDESC, testDataSheet + "." + caseId,
 				this.getClass().getCanonicalName(), desc, proprties.replace("\n", "<br>- "), payment, shippingMethod));
 		
-		this.email = getSubMailAccount(email);
-		caseIndexInDatasheet = getDatatable().getCellRowNum(testDataSheet, CheckOut.keys.caseId, caseId);
+		String Pemail;
+		String orderId;
+		String orderTotal;
+		String orderSubtotal;
+		String orderTax;
+		String orderShipping;
+		
+		Pemail = getSubMailAccount(email);
 		
 		try {
 			if (proprties.contains(loggedInUser)) {
 				//you need to maintain the concurrency and get the main account information and log in in browser account 
 				LinkedHashMap<String, Object> userdetails = (LinkedHashMap<String, Object>) users.get(email);
-				Testlogs.get().debug(this.email);
+				Testlogs.get().debug(Pemail);
 				Testlogs.get().debug((String) userdetails.get(Registration.keys.password) );
-				SignIn.logIn(this.email, (String) userdetails.get(Registration.keys.password));
+				SignIn.logIn(Pemail, (String) userdetails.get(Registration.keys.password));
 			}
 			if (proprties.contains(freshUser)) {
-				this.email = RandomUtilities.getRandomEmail();
+				Pemail = RandomUtilities.getRandomEmail();
 
 				// take any user as template
 				LinkedHashMap<String, Object> userdetails = (LinkedHashMap<String, Object>) users.entrySet().iterator()
@@ -106,7 +105,7 @@ public class Base_checkout extends SelTestCase {
 
 				Registration.fillAndClickRegister((String) userdetails.get(Registration.keys.title),
 						(String) userdetails.get(Registration.keys.firstName),
-						(String) userdetails.get(Registration.keys.lastName), this.email,
+						(String) userdetails.get(Registration.keys.lastName), Pemail,
 						(String) userdetails.get(Registration.keys.password),
 						(String) userdetails.get(Registration.keys.password), acceptRegTerm);
 			}
@@ -127,20 +126,25 @@ public class Base_checkout extends SelTestCase {
 				}
 			}
 			//Cart.getNumberOfproducts();
-			this.orderSubtotal = Cart.getOrderSubTotal();
-			this.orderTax = Cart.getOrderTax();
+			orderSubtotal = Cart.getOrderSubTotal();
+			orderTax = Cart.getOrderTax();
 
 			Cart.clickCheckout();
 			
-			//TODO: not logged in loggin during checkout support  
+			if (proprties.contains(loggedDuringChcOt)) {
+				LinkedHashMap<String, Object> userdetails = (LinkedHashMap<String, Object>) users.get(email);
+				Testlogs.get().debug("Login during checkout with: "+Pemail);
+				Testlogs.get().debug("Using password: "+(String) userdetails.get(Registration.keys.password) );
+				CheckOut.guestCheckout.returningCustomerLogin(Pemail, (String) userdetails.get(Registration.keys.password));
+			}
 			if (proprties.contains(guestUser)) {
-				this.email = RandomUtilities.getRandomEmail();
-				CheckOut.guestCheckout.fillAndClickGuestCheckout(this.email);
+				Pemail = RandomUtilities.getRandomEmail();
+				CheckOut.guestCheckout.fillAndClickGuestCheckout(Pemail);
 			}
 
 			Thread.sleep(1000);
 			// Validate the order sub total in shipping address form section
-			sassert().assertEquals(CheckOut.shippingAddress.getOrdersubTotal(), this.orderSubtotal);
+			sassert().assertEquals(CheckOut.shippingAddress.getOrdersubTotal(), orderSubtotal);
 
 			// checkout- shipping address
 			if (proprties.contains(CheckOut.shippingAddress.keys.isSavedShipping) && !proprties.contains(freshUser)
@@ -178,13 +182,13 @@ public class Base_checkout extends SelTestCase {
 			}
 
 			// Validate the order sub total in shipping method section
-			sassert().assertEquals(CheckOut.shippingMethod.getOrderSubTotal(), this.orderSubtotal);
+			sassert().assertEquals(CheckOut.shippingMethod.getOrderSubTotal(), orderSubtotal);
 
 			// Shipping method
 			CheckOut.shippingMethod.fillAndclickNext(shippingMethod);
 
 			// Validate the order sub total in billing form section
-			sassert().assertEquals(CheckOut.paymentInnformation.getOrderSubTotal(), this.orderSubtotal);
+			sassert().assertEquals(CheckOut.paymentInnformation.getOrderSubTotal(), orderSubtotal);
 
 			// checkout- payment
 			if (proprties.contains(CheckOut.paymentInnformation.keys.isSavedPayement) && !proprties.contains(freshUser)
@@ -238,17 +242,17 @@ public class Base_checkout extends SelTestCase {
 			Thread.sleep(1000);
 			
 			// Validate the order sub-total in order review section
-			sassert().assertEquals(CheckOut.reviewInformation.getSubtotal(), this.orderSubtotal);
+			sassert().assertEquals(CheckOut.reviewInformation.getSubtotal(), orderSubtotal);
 
 			CheckOut.reviewInformation.acceptTerms(true);
 			CheckOut.reviewInformation.placeOrder();
 
 			// Validate the order sub total in order review section
-			sassert().assertEquals(CheckOut.orderConfirmation.getSubTotal(), this.orderSubtotal);
+			sassert().assertEquals(CheckOut.orderConfirmation.getSubTotal(), orderSubtotal);
 
-			this.orderTotal = CheckOut.orderConfirmation.getOrderTotal();
-			this.orderShipping = CheckOut.orderConfirmation.getShippingCost();
-			this.orderId = CheckOut.orderConfirmation.getOrderId();
+			orderTotal = CheckOut.orderConfirmation.getOrderTotal();
+			orderShipping = CheckOut.orderConfirmation.getShippingCost();
+			orderId = CheckOut.orderConfirmation.getOrderId();
 
 			// TODO: compare addresses
 			CheckOut.orderConfirmation.getBillingAddrerss();
@@ -257,6 +261,8 @@ public class Base_checkout extends SelTestCase {
 			if (proprties.contains(guestUser) && proprties.contains("register-guest")) {
 				CheckOut.guestCheckout.fillPreRegFormAndClickRegBtn("1234567", false);
 			}
+			
+			Testlogs.get().debug(MessageFormat.format(LoggingMsg.CHECKOUT_RESULT , Pemail,orderId,orderTotal,orderSubtotal, orderTax, orderShipping));
 
 			Common.testPass();
 		} catch (Throwable t) {
