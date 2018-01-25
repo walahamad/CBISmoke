@@ -38,26 +38,6 @@
 			<class name="com.generic.tests.storeLocator.StoreLocatorBase" />
 		</classes>
 	</test><!-- Test -->
-	<test name="Search chrome">
-		<parameter name="browserName" value="chrome"></parameter>
-		<classes>
-			<class name="com.generic.tests.Search.SearchResultValidation" />
-		</classes>
-	</test><!-- Test -->
-
-	<test name="Search firefox">
-		<parameter name="browserName" value="firefox"></parameter>
-		<classes>
-			<class name="com.generic.tests.Search.SearchResultValidation" />
-		</classes>
-	</test><!-- Test -->
-
-	<test name="Search mobile_Nexus 5">
-		<parameter name="browserName" value="mobile_Nexus 5"></parameter>
-		<classes>
-			<class name="com.generic.tests.Search.SearchResultValidation" />
-		</classes>
-	</test><!-- Test -->
 	<test name="Registration Chrome">
 		<parameter name="browserName" value="chrome"></parameter>
 		<classes>
@@ -225,25 +205,8 @@
 			<class name="com.generic.tests.staticContects.CLPBase" />
 		</classes>
 	</test><!-- Test -->
-	<test name="checkout Chrome">
-		<parameter name="browserName" value="chrome"></parameter>
-		<classes>
-			<class name="com.generic.tests.checkout.Base_checkout_B2B" />
-		</classes>
-	</test><!-- Test -->
-	<test name="checkoutb2b firefox">
-		<parameter name="browserName" value="firefox"></parameter>
-		<classes>
-			<class name="com.generic.tests.checkout.Base_checkout_B2B" />
-		</classes>
-	</test><!-- Test -->
-	<test name="checkoutb2b mobile_Nexus 5">
-		<parameter name="browserName" value=" mobile_Nexus 5"></parameter>
-		<classes>
-			<class name="com.generic.tests.checkout.Base_checkout_B2B" />
-		</classes>
-	</test><!-- Test -->
-	<test name="checkoutb2b chrome">
+	
+	<test name="checkout chrome">
 		<parameter name="browserName" value="chrome"></parameter>
 		<classes>
 			<class name="com.generic.tests.checkout.Base_checkout" />
