@@ -390,7 +390,11 @@ public class SelectorUtil extends SelTestCase {
 							  }
 							  field.sendKeys(tempVal);
 							  if (!tempVal.equals(value)) {
-								field.sendKeys(Keys.ENTER);  
+								field.sendKeys(Keys.ENTER); 
+								if(browser.contains("edge") )
+								   {
+									field.sendKeys(Keys.ENTER); 
+								   }
 							  }
 						  }
 					   }

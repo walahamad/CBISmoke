@@ -78,7 +78,7 @@ public class Common extends SelTestCase {
 				capabilities.setJavascriptEnabled(true);
 				capabilities.setCapability(CapabilityType.ForSeleniumServer.ENSURING_CLEAN_SESSION, true);
 
-				SelTestCase.setDriver(new InternetExplorerDriver(capabilities));
+				return new InternetExplorerDriver(capabilities);
 
 			} else if (browser.equalsIgnoreCase("chrome")) {
 
