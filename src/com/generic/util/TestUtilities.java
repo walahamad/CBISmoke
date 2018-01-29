@@ -34,8 +34,6 @@ public class TestUtilities extends SelTestCase {
                 if(runReportSetup) {
                     logs.debug(LoggingMsg.EXECUTE_REPORT_SETUP);
                     
-                    //TODO: to delete 
-                    //setBrowserName(getCONFIG().getProperty("browser"));
                     try {
                         mainReportDir = EnvironmentFiles.getReportsFolderPath();
                         
