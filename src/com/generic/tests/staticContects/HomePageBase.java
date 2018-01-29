@@ -69,7 +69,7 @@ public class HomePageBase extends SelTestCase {
 		logCaseDetailds(MessageFormat.format(LoggingMsg.TEST_CASE_DESC, testDataSheet + "." + caseId,
 				this.getClass().getCanonicalName(), desc));
 		
-		String baseline_browser = baseline+"_"+getBrowserName();
+		String baseline_browser = baseline+"_"+getBrowserName().replace(" ", "_");
 		
 		try {
 			String url = PagesURLs.getHomePage();

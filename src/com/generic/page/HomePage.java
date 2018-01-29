@@ -28,6 +28,7 @@ import ru.yandex.qatools.ashot.comparison.ImageDiffer;
 public class HomePage extends SelTestCase {
 	
 	public static void prepareBaselineforLogs(String baseline) throws Exception {
+		getCurrentFunctionName(true);
 		String VTAs =EnvironmentFiles.getVisualTestingAssetsPath();
 		String baselineAbsPath = VTAs + "/" + baseline+ ".png";
 		String logs_dir = EnvironmentFiles.getLogFilePath();	
@@ -35,6 +36,7 @@ public class HomePage extends SelTestCase {
 		FileUtils.copyFileToDirectory(baseLineFile, Paths.get(logs_dir).toFile());
 		String baselinePathInLogs =  logs_dir + "/" + baseline + ".png";
 		logs.debug("IMAGE:<br><a target=\"_blank\" href="+ baseline + ".png"+"><img src=" + baseline + ".png"+" alt=" + baseline + ".png"+" style=\"width:150px\"></a>");
+		getCurrentFunctionName(false);
 	}
 	
 	public static void updateHeaderBaseline(String baseline) throws Exception {

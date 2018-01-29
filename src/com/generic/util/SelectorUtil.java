@@ -407,6 +407,8 @@ public class SelectorUtil extends SelTestCase {
 						   JavascriptExecutor jse = (JavascriptExecutor)getDriver();
 						   jse.executeScript("arguments[0].scrollIntoView()", field);
 						   
+						   Thread.sleep(500);
+						   
 						   
 						   WebElement field2 = wait.until(new Function<WebDriver, WebElement>() {
 							   public WebElement apply(WebDriver driver) {
