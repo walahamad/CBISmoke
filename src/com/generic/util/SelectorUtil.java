@@ -1,6 +1,5 @@
 package com.generic.util;
 
-import java.io.File;
 import java.io.IOException;
 import java.text.MessageFormat;
 import java.util.ArrayList;
@@ -11,8 +10,6 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
-
-import javax.imageio.ImageIO;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -33,8 +30,6 @@ import com.generic.setup.SelTestCase;
 import ru.yandex.qatools.ashot.AShot;
 import ru.yandex.qatools.ashot.Screenshot;
 
-import com.generic.selector.CartSelectors;
-import com.generic.setup.ActionDriver;
 import com.generic.setup.ExceptionMsg;
 import com.generic.setup.LoggingMsg;
 
@@ -49,6 +44,7 @@ public class SelectorUtil extends SelTestCase {
 	public static ThreadLocal<String> numberOfFoundElements  = new ThreadLocal<String>() ;
 	private static By parentBy = null;
 	
+	@SuppressWarnings("rawtypes")
 	public static void initializeElementsSelectorsMaps(LinkedHashMap<String, LinkedHashMap> webElementsInfo , boolean isValidationStep) throws IOException, InterruptedException
 	 {
 		Thread.sleep(1000);
@@ -67,7 +63,8 @@ public class SelectorUtil extends SelTestCase {
 		}
 	 }
 	
-	 public static void initializeElementsSelectorsMaps(LinkedHashMap<String, LinkedHashMap> webElementsInfo , boolean isValidationStep, Element htmlDoc) throws IOException
+	 @SuppressWarnings({ "rawtypes", "unchecked" })
+	public static void initializeElementsSelectorsMaps(LinkedHashMap<String, LinkedHashMap> webElementsInfo , boolean isValidationStep, Element htmlDoc) throws IOException
 	 {
 		 	getCurrentFunctionName(true);
 	    	Elements foundElements = null;
@@ -666,7 +663,7 @@ public class SelectorUtil extends SelTestCase {
 	    	return isDisplayed;
 	    }
 	    
-	    @SuppressWarnings("rawtypes")
+	    @SuppressWarnings({ "rawtypes", "unused" })
 		public static boolean isNotDisplayed(List<String> subStrArr) throws Exception
 	    {
 	    	getCurrentFunctionName(true);
@@ -716,7 +713,7 @@ public class SelectorUtil extends SelTestCase {
 	    }
 	    
 	    
-	    @SuppressWarnings("rawtypes")
+	    @SuppressWarnings({ "rawtypes", "unchecked" })
 		public static LinkedHashMap<String, LinkedHashMap> initializeSelectorsAndDoActions(List<String> subStrArr,
 				List<String> valuesArr , boolean action) throws Exception {
 			LinkedHashMap<String, LinkedHashMap> webElementsInfo = new LinkedHashMap<String, LinkedHashMap>();
