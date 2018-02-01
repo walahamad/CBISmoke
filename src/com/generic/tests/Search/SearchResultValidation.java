@@ -13,7 +13,6 @@ import com.generic.setup.Common;
 import com.generic.setup.LoggingMsg;
 import com.generic.setup.SelTestCase;
 import com.generic.setup.SheetVariables;
-import com.generic.util.TestUtilities;
 import com.generic.util.dataProviderUtils;
 import com.generic.util.ReportUtil;
 import com.generic.util.SASLogger;
@@ -49,7 +48,7 @@ public class SearchResultValidation extends SelTestCase {
 
 	@Test(dataProvider = "Search")
 	public void verifySearchResultsPage(String caseId, String runTest, String desc, String searchValues, String sortOptions1,
-			String sortOptions2, String userLocationStore, String addToCartProduct, String pickUpInStoreProduct, String pickupNthIconIndex, String pickupInStoreQty,String plpFilter, String nthProductItem,
+			String sortOptions2, String userLocationStore, String pickupNthIconIndex, String pickupInStoreQty,String plpFilter, String nthProductItem,
 			String nthAppliedFacet, String SdoClickAddToCart, String SdoClickPickupInStore, String SdoClickNthProductItem, String SdoClickCheckoutBtn, String SdoClickCloseBtn) throws Exception {
 		
 		boolean doClickAddToCart = Boolean.valueOf(SdoClickAddToCart);
@@ -75,7 +74,7 @@ public class SearchResultValidation extends SelTestCase {
 				sassert().assertTrue(numberOfMenuItems == ExpectedNumberOfMenuItems);
 				// Type again because getNumberOfMenuItems will click on the first element.
 				 SearchResults.typeSearchText(searchValues);
-				Thread.sleep(1000);
+				Thread.sleep(500);
 
 				for (int index = 0; index < numberOfMenuItems; index++) {
 					// Verify image, name and price for each item.
@@ -86,9 +85,8 @@ public class SearchResultValidation extends SelTestCase {
 
 					}
 				}
-
+				Thread.sleep(1500);
 				SearchResults.typeSearchTextAndPressEnter(searchValues);
-				Thread.sleep(1000);
 				String ExpectedText = MessageFormat.format(LoggingMsg.SearchResulstHeader_Search, '"', searchValues,
 						'"');
 				String ActualText = SearchResults.getSearchResultsHeader();
@@ -117,36 +115,38 @@ public class SearchResultValidation extends SelTestCase {
 			//	PLP.clickleftNavCheckBoxCheckBox("London Hospital");
 				sassert().assertTrue(PLP.compareAppliedFilterWithDisplayedProductNumber(plpFilter));
 
-				if (doClickAddToCart) {
-					PLP.clickAddToCart(addToCartProduct);
+				if (Boolean.valueOf(doClickAddToCart)) {
+					SearchResults.clickAddToCart();
 					Thread.sleep(3000);
-					String productPriceAddedToCart = PLP.getPLPProductPriceFromCartBag();
+					String productPriceAddedToCart = SearchResults.getPLPProductPriceFromCartBag();
 					logs.debug(MessageFormat.format(LoggingMsg.PLP_PRODUCT_PRICE, productPriceAddedToCart));
-					String productPrice = PLP.getPLPProductPrice(addToCartProduct);
+					String productPrice = SearchResults.getPLPProductPrice();
 					logs.debug(MessageFormat.format(LoggingMsg.PLP_PRODUCT_PRICE, productPrice));
 					Thread.sleep(2000);
-					if (doClickCloseBtn) {
+					if (Boolean.valueOf(doClickCloseBtn)) {
+						Thread.sleep(1000);
 						PLP.clickCboxCloseBtn();
-					} else if (doClickCheckoutBtn) {
+					} else if (Boolean.valueOf(doClickCheckoutBtn)) {
+						Thread.sleep(1000);
 						PLP.clickCheckoutBtn();
 					} else {
+						Thread.sleep(1000);
 						PLP.clickContinueShoppingBtn();
 					}
 				}
 
-				if (doClickPickupInStore) {
-					PLP.clickProductPickupInStoreButton(pickUpInStoreProduct);
+				if (Boolean.valueOf(doClickPickupInStore)) {
+					SearchResults.clickProductPickupInStoreButton();
 					PLP.typePickUpInStoreLocationForSearch(userLocationStore);
 					PLP.clickPickupNthAccessibleTabIcon(pickupNthIconIndex);
-					PLP.clickPickUpInStoreDecreaseQtyBtn(pickUpInStoreProduct);
-					PLP.clickPickUpInStoreIncreaseQtyBtn(pickUpInStoreProduct);
-					PLP.typePickUpInStoreQty(pickUpInStoreProduct, pickupInStoreQty);
-					PLP.clickPickUpInStoreAddToBagBtn(pickUpInStoreProduct);
+					Thread.sleep(1500);
+					SearchResults.typePickUpInStoreQty(pickupInStoreQty);
+					SearchResults.clickPickUpInStoreAddToBagBtn();
 					PLP.clickCboxCloseBtn();
 					Thread.sleep(2000);
 				}
 
-				if (doClickNthProductItem) {
+				if (Boolean.valueOf(doClickNthProductItem)) {
 					PLP.clickNthProductItem(nthProductItem);
 				}
 			} else {

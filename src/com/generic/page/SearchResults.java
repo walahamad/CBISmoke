@@ -5,6 +5,7 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.generic.selector.PLPSelectors;
 import com.generic.selector.SearchResultSelectors;
 import com.generic.setup.LoggingMsg;
 import com.generic.setup.SelTestCase;
@@ -124,5 +125,90 @@ public class SearchResults extends SelTestCase {
 		getCurrentFunctionName(false);
     	return SelectorUtil.textValue.get();
     }
-  
+    public static void clickAddToCart() throws Exception {
+		getCurrentFunctionName(true);
+		List<String> subStrArr = new ArrayList<String>();
+		List<String> valuesArr = new ArrayList<String>();
+		logs.debug(MessageFormat.format(LoggingMsg.CLICKING_SEL, SearchResultSelectors.addToCartForm));
+		subStrArr.add(SearchResultSelectors.addToCartForm );
+		valuesArr.add("");
+		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
+		getCurrentFunctionName(false);
+	}
+    
+    public static void clickProductPickupInStoreButton() throws Exception {
+		getCurrentFunctionName(true);
+		List<String> subStrArr = new ArrayList<String>();
+		List<String> valuesArr = new ArrayList<String>();
+		logs.debug(MessageFormat.format(LoggingMsg.CLICKING_SEL, SearchResultSelectors.productPickupInStoreButton));
+		subStrArr.add(SearchResultSelectors.productPickupInStoreButton );
+		valuesArr.add("");
+		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
+		getCurrentFunctionName(false);
+	}
+    public static void clickPickUpInStoreAddToBagBtn() throws Exception {
+  		getCurrentFunctionName(true);
+  		List<String> subStrArr = new ArrayList<String>();
+  		List<String> valuesArr = new ArrayList<String>();
+  		subStrArr.add(SearchResultSelectors.pickupAddToBagBtn);
+  		valuesArr.add("");
+  		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
+  		getCurrentFunctionName(false);
+  	}
+      
+      public static void clickPickUpInStoreDecreaseQtyBtn() throws Exception {
+  		getCurrentFunctionName(true);
+  		List<String> subStrArr = new ArrayList<String>();
+  		List<String> valuesArr = new ArrayList<String>();
+  		logs.debug(MessageFormat.format(LoggingMsg.CLICKING_SEL, SearchResultSelectors.pickupDecreaseQtyBtn));
+  		subStrArr.add(SearchResultSelectors.pickupDecreaseQtyBtn);
+  		valuesArr.add("");
+  		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
+  		getCurrentFunctionName(false);
+  	}
+      
+      public static void clickPickUpInStoreIncreaseQtyBtn() throws Exception {
+  		getCurrentFunctionName(true);
+  		List<String> subStrArr = new ArrayList<String>();
+  		List<String> valuesArr = new ArrayList<String>();
+  		logs.debug(MessageFormat.format(LoggingMsg.CLICKING_SEL,SearchResultSelectors.pickupIncreaseQtyBtn));
+  		subStrArr.add(SearchResultSelectors.pickupIncreaseQtyBtn);
+  		valuesArr.add("");
+  		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
+  		getCurrentFunctionName(false);
+  	}
+      
+      public static void typePickUpInStoreQty(String qty) throws Exception {
+  		getCurrentFunctionName(true);
+  		List<String> subStrArr = new ArrayList<String>();
+  		List<String> valuesArr = new ArrayList<String>();
+  		logs.debug(MessageFormat.format(LoggingMsg.TYPING_ELEMENT_VALUE, SearchResultSelectors.pickupQtyInput, qty));
+  		subStrArr.add(SearchResultSelectors.pickupQtyInput);
+  		valuesArr.add(qty);
+  		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
+  		getCurrentFunctionName(false);
+  	}
+      public static String getPLPProductPrice() throws Exception {
+  		getCurrentFunctionName(true);
+  		List<String> subStrArr = new ArrayList<String>();
+  		List<String> valuesArr = new ArrayList<String>();
+  		logs.debug(MessageFormat.format(LoggingMsg.GETTING_SEL, SearchResultSelectors.plpProductPriceLabel));
+  		subStrArr.add(SearchResultSelectors.plpProductPriceLabel);
+  		valuesArr.add("noClick");
+  		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
+  		getCurrentFunctionName(false);
+  		return SelectorUtil.textValue.get();
+  	}
+      
+      public static String getPLPProductPriceFromCartBag() throws Exception {
+  		getCurrentFunctionName(true);
+  		List<String> subStrArr = new ArrayList<String>();
+  		List<String> valuesArr = new ArrayList<String>();
+  		logs.debug(MessageFormat.format(LoggingMsg.GETTING_SEL, SearchResultSelectors.addToCartItemPrice));
+  		subStrArr.add(SearchResultSelectors.addToCartItemPrice);
+  		valuesArr.add("");
+  		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
+  		getCurrentFunctionName(false);
+  		return SelectorUtil.textValue.get();
+  	}
 }
