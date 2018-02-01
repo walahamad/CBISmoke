@@ -13,10 +13,7 @@ import com.generic.util.SelectorUtil;
 public class SignIn extends SelTestCase {
 	public static void logIn(String userName, String Password) throws Exception {
 		getCurrentFunctionName(true);
-		typeUsername(userName);
-		typePassword(Password);
-		clickLogin();
-		Thread.sleep(1000);
+		fillLoginFormAndClickSubmit(userName,Password);
 		if(!checkUserAccount())
 		{
 			throw new Exception("Login failed");

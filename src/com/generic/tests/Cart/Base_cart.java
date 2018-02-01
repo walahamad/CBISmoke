@@ -64,7 +64,7 @@ public class Base_cart extends SelTestCase {
 	}
 
 	@Test(dataProvider = "Carts")
-	public void checkOutBaseTest(String caseId, String runTest, String desc, String proprties, String products,
+	public void CartBaseTest(String caseId, String runTest, String desc, String proprties, String products,
 			String email, String newQTY, String coupon, String ValidationMsg) throws Exception {
 		// Important to add this for logging/reporting
 		Testlogs.set(new SASLogger("cart_" + getBrowserName()));

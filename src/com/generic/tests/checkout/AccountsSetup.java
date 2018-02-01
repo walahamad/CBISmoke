@@ -47,7 +47,7 @@ public class AccountsSetup extends SelTestCase {
 
 	@BeforeTest
 	public static void initialSetUp(XmlTest test) throws Exception {
-		Testlogs.set(new SASLogger("checkout_setup"));
+		Testlogs.set(new SASLogger("Account_setup"));
 		testObject = test;
 		addresses = Common.readAddresses();
 		invintory = Common.readLocalInventory();
@@ -55,7 +55,7 @@ public class AccountsSetup extends SelTestCase {
 		users = Common.readUsers();
 	}
 
-	@DataProvider(name = "Orders", parallel = true)
+	@DataProvider(name = "Account_Setup", parallel = true)
 	public static Object[][] loadTestData() throws Exception {
 		// concurrency mentainance on sheet reading
 		getBrowserWait(testObject.getParameter("browserName"));
@@ -67,12 +67,12 @@ public class AccountsSetup extends SelTestCase {
 	}
 
 	@SuppressWarnings("unchecked") // avoid warning from linked hashmap
-	@Test(dataProvider = "Orders")
-	public void checkOutBaseTest(String caseId, String runTest, String products, String shippingMethod, String payment,
+	@Test(dataProvider = "Account_Setup")
+	public void accountSetupBaseTest(String caseId, String runTest, String products, String shippingMethod, String payment,
 			String shippingAddress, String billingAddress, String email) throws Exception {
 		// Important to add this for logging/reporting
-		Testlogs.set(new SASLogger("checkout_" + getBrowserName()));
-		setTestCaseReportName("Checkout Case");
+		Testlogs.set(new SASLogger("AccountSetup_" + getBrowserName()));
+		setTestCaseReportName("AccountSetup Case");
 		logCaseDetailds(MessageFormat.format(LoggingMsg.CHECKOUTDESC, testDataSheet + "." + caseId,
 				this.getClass().getCanonicalName(), email, email, payment, shippingMethod));
 
@@ -86,6 +86,11 @@ public class AccountsSetup extends SelTestCase {
 					Pemail, (String) userdetails.get(Registration.keys.password),
 					(String) userdetails.get(Registration.keys.password), true);
 			
+			if(!SignIn.checkUserAccount())
+			{
+				Testlogs.get().debug("Registeration failed");
+				throw new Exception("Registeration failed");
+			}
 			//SignIn.logIn(Pemail, "1234567");
 
 			Testlogs.get().debug(MessageFormat.format(LoggingMsg.ADDING_PRODUCT, products.split("\n")[0]));

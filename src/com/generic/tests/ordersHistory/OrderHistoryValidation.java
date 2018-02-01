@@ -12,6 +12,7 @@ import org.testng.xml.XmlTest;
 import com.generic.page.SignIn;
 import com.generic.setup.Common;
 import com.generic.setup.LoggingMsg;
+import com.generic.setup.PagesURLs;
 import com.generic.setup.SelTestCase;
 import com.generic.setup.SheetVariables;
 import com.generic.util.TestUtilities;
@@ -63,8 +64,7 @@ public class OrderHistoryValidation extends SelTestCase {
 
 	@SuppressWarnings("unchecked") // avoid warning from linked hashmap
 	@Test(dataProvider = "ordersHistory")
-	public void verifyOrderHistory(String caseId, String runTest, String desc, String email,
-			String url, String sortByText, String ordersNthChildren, String orderNumToBeClicked) throws Exception {
+	public void verifyOrderHistory(String caseId, String runTest, String desc, String email, String sortByText, String ordersNthChildren, String orderNumToBeClicked) throws Exception {
 
 		Testlogs.set(new SASLogger("ordersHistory" + getBrowserName()));
 		// Important to add this for logging/reporting
@@ -74,6 +74,7 @@ public class OrderHistoryValidation extends SelTestCase {
 
 		this.email = getSubMailAccount(email);
 		caseIndexInDatasheet = getDatatable().getCellRowNum(testDataSheet, OrderDetails.keys.caseId, caseId);
+		String url = PagesURLs.getOrderHistoryPage();
 
 
 		try {

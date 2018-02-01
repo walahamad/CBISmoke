@@ -68,7 +68,7 @@ public class AddressBookValidation extends SelTestCase {
 
 	@SuppressWarnings("unchecked") // avoid warning from linked hashmap
 	@Test(dataProvider = "AddressBook")
-	public void BookAddressTest(String caseId, String runTest, String desc, String email, String newaddress)
+	public void BookAddressTest(String caseId, String runTest,String desc, String prop, String email, String newaddress)
 			throws Exception {
 		// Important to add this for logging/reporting
 		Testlogs.set(new SASLogger("Address_Book " + getBrowserName()));
@@ -84,7 +84,7 @@ public class AddressBookValidation extends SelTestCase {
 			Testlogs.get().debug(this.email);
 			Testlogs.get().debug((String) userdetails.get(Registration.keys.password));
 			
-			if (desc.contains("edit")) {
+			if (prop.contains("edit")) {
 				SignIn.logIn(this.email, (String) userdetails.get(Registration.keys.password));
 				getDriver().get(url);
 				addressbook = AddressBook.getFirstAddressDetails();
@@ -102,7 +102,7 @@ public class AddressBookValidation extends SelTestCase {
 				AddressBook.clickAddressBackBtn();
 				assertNotEquals(addressbook, AddressBook.getFirstAddressDetails());
 			}
-			if (desc.contains("form validation")) {
+			if (prop.contains("form validation")) {
 				SignIn.logIn(this.email, (String) userdetails.get(Registration.keys.password));
 				getDriver().get(url);
 				addressbook = AddressBook.getFirstAddressDetails();
@@ -110,7 +110,7 @@ public class AddressBookValidation extends SelTestCase {
 				AddressBook.clearAddress();
 				AddressBook.verifyAddressFormError();
 			}
-			if (desc.contains("new") || desc.contains("default") || desc.contains("delete")) {
+			if (prop.contains("new") || prop.contains("default") || prop.contains("delete")) {
 				SignIn.logIn(this.email, (String) userdetails.get(Registration.keys.password));
 				getDriver().get(url);
 				addressbook = AddressBook.getFirstAddressDetails();
@@ -128,13 +128,13 @@ public class AddressBookValidation extends SelTestCase {
 						(String) addressDetails.get(CheckOut.shippingAddress.keys.postal),
 						(String) addressDetails.get(CheckOut.shippingAddress.keys.phone), defaultAddress);
 				AddressBook.clickAddressBackBtn();
-				if (desc.contains("new")) {
+				if (prop.contains("new")) {
 					sassert().assertNotEquals(addressbook, AddressBook.getFirstAddressDetails());
 					//Remove the created address.
 					AddressBook.clickRemoveAddress(0);
 					AddressBook.clickDeleteBtn();
 				}
-				if (desc.contains("default")) {
+				if (prop.contains("default")) {
 					getDriver().get(url);
 					addressbook = AddressBook.getFirstAddressDetails();
 					AddressBook.clickSetAsDefault();
@@ -144,7 +144,7 @@ public class AddressBookValidation extends SelTestCase {
 					AddressBook.clickRemoveAddress(1);
 					AddressBook.clickDeleteBtn();
 				}
-				if (desc.contains("delete")) {
+				if (prop.contains("delete")) {
 					getDriver().get(url);
 					String numberofaddresses = AddressBook.getNumberOfAddresses(AddressBookSelectors.accountAddressbookList);
 					AddressBook.clickRemoveAddress(0);

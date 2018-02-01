@@ -14,6 +14,7 @@ import com.generic.page.SignIn;
 import com.generic.setup.ActionDriver;
 import com.generic.setup.Common;
 import com.generic.setup.LoggingMsg;
+import com.generic.setup.PagesURLs;
 import com.generic.setup.SelTestCase;
 import com.generic.setup.SheetVariables;
 import com.generic.util.TestUtilities;
@@ -74,7 +75,7 @@ public class OrderDetailsValidation extends SelTestCase {
 
 	@SuppressWarnings("unchecked") // avoid warning from linked hashmap
 	@Test(dataProvider = "ordersDetails")
-	public void verifyOrdeDetails(String caseId, String runTest, String desc, String email,String products, String shippingMethod, String payment, String shippingAddress, String billingAddress, String url, String orderNumToBeClicked) throws Exception {
+	public void verifyOrdeDetails(String caseId, String runTest, String desc, String email,String products, String shippingMethod, String payment, String shippingAddress, String billingAddress, String orderNumToBeClicked) throws Exception {
 
 		Testlogs.set(new SASLogger("ordersDetails" + getBrowserName()));
 		setTestCaseReportName("ordersDetails Case");
@@ -82,7 +83,7 @@ public class OrderDetailsValidation extends SelTestCase {
 				this.getClass().getCanonicalName(), desc));
 		this.email = getSubMailAccount(email);
 		caseIndexInDatasheet = getDatatable().getCellRowNum(testDataSheet, OrderDetails.keys.caseId, caseId);
-
+		String url = PagesURLs.getOrderHistoryPage();
 		try {
 
 			LinkedHashMap<String, Object> userdetails = (LinkedHashMap<String, Object>) users.get(email);
@@ -152,6 +153,8 @@ public class OrderDetailsValidation extends SelTestCase {
 			this.shippingAddrerss = CheckOut.orderConfirmation.getShippingAddrerss();
 			
 			// Go to Order History Page.
+			Testlogs.get().debug("wait to be sure that the new order is diplayed in Order History page");
+			Thread.sleep(2000);
 			getDriver().get(url);
 			//Click on first order on order history page
 			OrderHistory.clickNthResponsiveTableItemTableCellAnchor("1",

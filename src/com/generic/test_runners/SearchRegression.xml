@@ -16,12 +16,5 @@
               <class name="com.generic.tests.Search.SearchResultValidation" />
 		</classes>
 	</test><!-- Test -->
-	
-	<test name="Search mobile_Nexus 5">
-		<parameter name="browserName" value="mobile_Nexus 5"></parameter>
-		<classes>
-              <class name="com.generic.tests.Search.SearchResultValidation" />
-		</classes>
-	</test><!-- Test -->
 
 </suite> <!-- Suite -->
