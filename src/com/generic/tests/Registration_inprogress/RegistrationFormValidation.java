@@ -1,4 +1,4 @@
-package com.generic.tests.Registration;
+package com.generic.tests.Registration_inprogress;
 
 import java.text.MessageFormat;
 import java.util.Arrays;
@@ -90,7 +90,7 @@ public class RegistrationFormValidation extends SelTestCase {
 				String lastName = RandomUtilities.getRandomName();
 				String password = RandomUtilities.getRandomPassword(7);
 				String email = RandomUtilities.getRandomEmail();
-				Registration.fillAndClickRegister(title,firstName,lastName,email,password,password,true);
+				Registration.fillAndClickRegister(firstName,lastName,email,password,password);
 			}
 			if (proprties.contains(existingUser)) {
 				// take any user as template
@@ -107,10 +107,10 @@ public class RegistrationFormValidation extends SelTestCase {
 				String email = (String) userdetails.get(Registration.keys.email);
 						//(String) userdetails.get(Registration.keys.email);
 				logs.debug("Registration mail: "+email);
-				Registration.fillAndClickRegister(title,firstName,lastName,email,password,password,true);
+				Registration.fillAndClickRegister(firstName,lastName,email,password,password);
 			}
 			if (proprties.contains(emptyData)) {
-				Registration.clickRegistration();
+				Registration.clickRegisterButton();
 			}
 			if (proprties.contains(invalidUserID)) {
 				String title = Registration.getRandomTitle();
@@ -118,7 +118,7 @@ public class RegistrationFormValidation extends SelTestCase {
 				String lastName = RandomUtilities.getRandomName();
 				String password = RandomUtilities.getRandomPassword(7);
 				String email = "invalid@valid";
-				Registration.fillAndClickRegister(title,firstName,lastName,email,password,password,true);
+				Registration.fillAndClickRegister(firstName,lastName,email,password,password);
 			}
 			if (proprties.contains(passwordMismatch)) {
 				String title = Registration.getRandomTitle();
@@ -127,7 +127,7 @@ public class RegistrationFormValidation extends SelTestCase {
 				String password = RandomUtilities.getRandomPassword(7);
 				String confPassword = RandomUtilities.getRandomPassword(7);
 				String email = RandomUtilities.getRandomEmail();
-				Registration.fillAndClickRegister(title,firstName,lastName,email,password,confPassword,true);
+				Registration.fillAndClickRegister(firstName,lastName,email,password,confPassword);
 			}
 			if (proprties.contains(invalidPassword)) {
 				String title = Registration.getRandomTitle();
@@ -135,7 +135,7 @@ public class RegistrationFormValidation extends SelTestCase {
 				String lastName = RandomUtilities.getRandomName();
 				String password = RandomUtilities.getRandomPassword(5);
 				String email = RandomUtilities.getRandomEmail();
-				Registration.fillAndClickRegister(title,firstName,lastName,email,password,password,true);
+				Registration.fillAndClickRegister(firstName,lastName,email,password,password);
 			}
 			
 			Thread.sleep(2000);

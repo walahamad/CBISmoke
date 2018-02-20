@@ -106,11 +106,10 @@ public class Base_checkout_B2B extends SelTestCase {
 
 				boolean acceptRegTerm = true;
 
-				Registration.fillAndClickRegister((String) userdetails.get(Registration.keys.title),
-						(String) userdetails.get(Registration.keys.firstName),
-						(String) userdetails.get(Registration.keys.lastName), this.email,
-						(String) userdetails.get(Registration.keys.password),
-						(String) userdetails.get(Registration.keys.password), acceptRegTerm);
+				Registration.fillAndClickRegister((String) userdetails.get(Registration.keys.firstName),
+						(String) userdetails.get(Registration.keys.lastName),
+						this.email, (String) userdetails.get(Registration.keys.password),
+						(String) userdetails.get(Registration.keys.password));
 			}
 
 			for (String product : products.split("\n")) {

@@ -1,23 +1,20 @@
 package com.generic.selector;
 
 public class RegistrationSelectors {
-	public static final String title = "register.title";
-	public static final String firstName = "register.firstName";
-	public static final String lastName = "register.lastName";
-	public static final String emailAddress = "register.email";
+	//Done
+	public static final String firstName = "firstName";
+	public static final String lastName = "lastName";
+	public static final String emailAddress = "email";
 	public static final String password = "password";
-	public static final String confirmPassword = "register.checkPwd";
-	public static final String consentGiven = "consentForm.consentGiven1";
-	public static final String register = "btn btn-default btn-block";
-	public static final String registrationSuccess = "global-alerts";
+	public static final String confirmPassword = "checkPwd";
+	public static final String registerBtn = "submitregister";
+	public static final String registrationSuccess = "information-message positive";
+	
 	//ErrorMessages Selectors
-	public static final String titleError = "titleCode.errors";
-			//.help-block #titleCode\\.errors";
-	public static final String firstNameError = "firstName.errors";
-	public static final String lastNameError = "lastName.errors";
-	public static final String emailAddressError = "email.errors";
-	public static final String confirmPasswordError = "checkPwd.errors"; 
-	public static final String passwordError = "password_minchar";
-	public static final String passwordRulesError = "pwd.errors";
-	public static final String passwordMatchError = "checkPwd.errors";
+	public static final String firstNameError = "firstName-error";
+	public static final String lastNameError = "lastName-error";
+	public static final String emailAddressError = "email-error";
+	public static final String passwordError = "password-error";
+	public static final String confirmPasswordError = "checkPwd-error"; 
+	
 }

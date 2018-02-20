@@ -82,9 +82,8 @@ public class AccountsSetup extends SelTestCase {
 			Testlogs.get().debug(Pemail);
 			Testlogs.get().debug((String) userdetails.get(Registration.keys.password));
 
-			Registration.fillAndClickRegister((String) userdetails.get(Registration.keys.title), "Accept", "tester",
-					Pemail, (String) userdetails.get(Registration.keys.password),
-					(String) userdetails.get(Registration.keys.password), true);
+			Registration.fillAndClickRegister("Accept", "tester", Pemail,
+					(String) userdetails.get(Registration.keys.password), (String) userdetails.get(Registration.keys.password));
 			
 			if(!SignIn.checkUserAccount())
 			{
