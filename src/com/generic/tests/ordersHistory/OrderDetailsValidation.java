@@ -96,7 +96,6 @@ public class OrderDetailsValidation extends SelTestCase {
 				Testlogs.get().debug(MessageFormat.format(LoggingMsg.ADDING_PRODUCT, product));
 				productDetails = (LinkedHashMap<String, Object>) invintory.get(product);
 				PDP.addProductsToCartAndClickCheckOut((String) productDetails.get(PDP.keys.url),
-						(String) productDetails.get(PDP.keys.color), (String) productDetails.get(PDP.keys.size),
 						(String) productDetails.get(PDP.keys.qty));
 			}
 

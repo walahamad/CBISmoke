@@ -1,65 +1,58 @@
 package com.generic.page;
 
-import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.concurrent.TimeUnit;
+import java.util.function.Function;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
-import com.generic.selector.CartSelectors;
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.FluentWait;
+import org.openqa.selenium.support.ui.Wait;
+
 import com.generic.selector.PDPSelectors;
-import com.generic.setup.LoggingMsg;
 import com.generic.setup.SelTestCase;
 import com.generic.util.SelectorUtil;
 
 public class PDP extends SelTestCase {
-	
-	public static class keys
-	{
+
+	public static class keys {
 		public static final String id = "id";
 		public static final String name = "name";
 		public static final String title = "title";
 		public static final String url = "url";
-		public static final String color = "color";
-		public static final String size = "size";
 		public static final String qty = "qty";
-		public static final String summary = "summary";
+		public static final String overview = "overview";
 		public static final String price = "price";
-		public static final String desc = "desc";
-		public static final String reviews = "reviews";
-		public static final String rating = "rating";
-		
-		
+		public static final String features = "features";
+
 	}
-	public static void addProductsToCartAndClickCheckOut(String url, String color, String size, String qty) throws Exception {
-		getDriver().get(url);
+
+	// Done
+	public static void addProductsToCartAndClickCheckOut(String url, String qty) throws Exception {
 		getCurrentFunctionName(true);
-		if (!"".equals(color))
-			selectcolor(color);
-
-		if (!"".equals(size))
-			selectsize(size);
-
-		defineQty(qty);
-		clickAddToCartBtn();
-		Thread.sleep(2000);
+		addProductsToCart(url, qty);
 		clickcheckoutBtnCartPopup();
 		getCurrentFunctionName(false);
 	}
-	
-	public static void addProductsToCart(String url, String color, String size, String qty) throws Exception {
-		getDriver().get(url);
+
+	// Done
+	public static void addProductsToCart(String url, String qty) throws Exception {
 		getCurrentFunctionName(true);
-		if (!"".equals(color))
-			selectcolor(color);
-
-		if (!"".equals(size))
-			selectsize(size);
-
+		getDriver().get(url);
 		defineQty(qty);
 		clickAddToCartBtn();
-		Thread.sleep(2000);
+		Thread.sleep(1000);
 		getCurrentFunctionName(false);
 	}
 
+	// Done
 	public static String getPrice() throws Exception {
 		getCurrentFunctionName(true);
 		List<String> subStrArr = new ArrayList<String>();
@@ -71,6 +64,7 @@ public class PDP extends SelTestCase {
 		return SelectorUtil.textValue.get();
 	}
 
+	// done
 	private static void clickcheckoutBtnCartPopup() throws Exception {
 		getCurrentFunctionName(true);
 		List<String> subStrArr = new ArrayList<String>();
@@ -81,6 +75,7 @@ public class PDP extends SelTestCase {
 		getCurrentFunctionName(false);
 	}
 
+	// done
 	private static void clickAddToCartBtn() throws Exception {
 		getCurrentFunctionName(true);
 		List<String> subStrArr = new ArrayList<String>();
@@ -91,6 +86,7 @@ public class PDP extends SelTestCase {
 		getCurrentFunctionName(false);
 	}
 
+	// done
 	private static void defineQty(String qty) throws Exception {
 		getCurrentFunctionName(true);
 		List<String> subStrArr = new ArrayList<String>();
@@ -101,26 +97,7 @@ public class PDP extends SelTestCase {
 		getCurrentFunctionName(false);
 	}
 
-	public static void selectsize(String size) throws Exception {
-		getCurrentFunctionName(true);
-		List<String> subStrArr = new ArrayList<String>();
-		List<String> valuesArr = new ArrayList<String>();
-		subStrArr.add(PDPSelectors.size);
-		valuesArr.add(size);
-		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
-		getCurrentFunctionName(false);
-	}
-
-	public static void selectcolor(String color) throws Exception {
-		getCurrentFunctionName(true);
-		List<String> subStrArr = new ArrayList<String>();
-		List<String> valuesArr = new ArrayList<String>();
-		subStrArr.add(color);
-		valuesArr.add("");
-		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
-		getCurrentFunctionName(false);
-	}
-
+	// done
 	public static String getId() throws Exception {
 		getCurrentFunctionName(true);
 		List<String> subStrArr = new ArrayList<String>();
@@ -132,6 +109,7 @@ public class PDP extends SelTestCase {
 		return SelectorUtil.textValue.get();
 	}
 
+	// done
 	public static String getTitle() throws Exception {
 		getCurrentFunctionName(true);
 		List<String> subStrArr = new ArrayList<String>();
@@ -143,39 +121,59 @@ public class PDP extends SelTestCase {
 		return SelectorUtil.textValue.get();
 	}
 
-	public static String getSummary() throws Exception {
+	// done
+	public static String getOverView() throws Exception {
 		getCurrentFunctionName(true);
 		List<String> subStrArr = new ArrayList<String>();
 		List<String> valuesArr = new ArrayList<String>();
-		subStrArr.add(PDPSelectors.summary);
+		subStrArr.add(PDPSelectors.information);
+		valuesArr.add("");
+		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
+		getCurrentFunctionName(false);
+
+		Pattern p = Pattern.compile("OVERVIEW(.*)FEATURES");
+		Matcher m = p.matcher(SelectorUtil.textValue.get().replace("\n", "").replace("\r", "")); // get a matcher object
+		String OverView = "";
+		if (m.find())
+			OverView = m.group(1);
+		logs.debug("Over View: " + OverView);
+
+		return OverView;
+	}
+
+	// done
+	public static String getFeatures() throws Exception {
+		getCurrentFunctionName(true);
+		List<String> subStrArr = new ArrayList<String>();
+		List<String> valuesArr = new ArrayList<String>();
+		subStrArr.add(PDPSelectors.information);
+		valuesArr.add("");
+		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
+		getCurrentFunctionName(false);
+
+		Pattern p = Pattern.compile("FEATURES(.*)SKU NUMBER");
+		Matcher m = p.matcher(SelectorUtil.textValue.get().replace("\n", "").replace("\r", "")); // get a matcher object
+		String Features = "";
+		if (m.find())
+			Features = m.group(1);
+		logs.debug("Features: " + Features);
+
+		return Features;
+	}
+
+	// done
+	public static String getStockAvailability() throws Exception {
+		getCurrentFunctionName(true);
+		List<String> subStrArr = new ArrayList<String>();
+		List<String> valuesArr = new ArrayList<String>();
+		subStrArr.add(PDPSelectors.SA);
 		valuesArr.add("");
 		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
 		getCurrentFunctionName(false);
 		return SelectorUtil.textValue.get();
 	}
 
-	public static String getDesc() throws Exception {
-		getCurrentFunctionName(true);
-		List<String> subStrArr = new ArrayList<String>();
-		List<String> valuesArr = new ArrayList<String>();
-		subStrArr.add(PDPSelectors.desc);
-		valuesArr.add("");
-		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
-		getCurrentFunctionName(false);
-		return SelectorUtil.textValue.get();
-	}
-
-	public static String getStockLevel() throws Exception {
-		getCurrentFunctionName(true);
-		List<String> subStrArr = new ArrayList<String>();
-		List<String> valuesArr = new ArrayList<String>();
-		subStrArr.add(PDPSelectors.SL);
-		valuesArr.add("");
-		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
-		getCurrentFunctionName(false);
-		return SelectorUtil.textValue.get();
-	}
-
+	// done
 	public static boolean checkAddToCartButton() throws Exception {
 		getCurrentFunctionName(true);
 		List<String> subStrArr = new ArrayList<String>();
@@ -186,51 +184,30 @@ public class PDP extends SelTestCase {
 		return isDisplayed;
 	}
 
-	public static String getRating() throws Exception {
+	//done
+	public static void hoverMiniCart() throws Exception {
 		getCurrentFunctionName(true);
-		List<String> subStrArr = new ArrayList<String>();
-		List<String> valuesArr = new ArrayList<String>();
-		subStrArr.add(PDPSelectors.rating);
-		valuesArr.add("");
-		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
-		getCurrentFunctionName(false);
-		return SelectorUtil.textValue.get();
-	}
+		Wait<WebDriver> wait = new FluentWait<WebDriver>(SelTestCase.getDriver()).withTimeout(30, TimeUnit.SECONDS)
+				.pollingEvery(5, TimeUnit.SECONDS).ignoring(NoSuchElementException.class);
 	
+		WebElement field = getDriver().findElement(By.id(PDPSelectors.minicart));
+		
+		JavascriptExecutor jse = (JavascriptExecutor) getDriver();
+		jse.executeScript("arguments[0].scrollIntoView(false)", field);
+		Thread.sleep(200);
+		WebElement field2 = wait.until(new Function<WebDriver, WebElement>() {
+				public WebElement apply(WebDriver driver) {
+				return driver.findElement(By.id(PDPSelectors.minicart));
+				}
+			});
+	
+			Actions HoverAction = new Actions(getDriver());
+			HoverAction.moveToElement(field2).click().build().perform();
+		getCurrentFunctionName(false);
+	}
 
-	public static void clickShowReviewsBtn() throws Exception {
-		getCurrentFunctionName(true);
-		List<String> subStrArr = new ArrayList<String>();
-		List<String> valuesArr = new ArrayList<String>();
-		subStrArr.add(PDPSelectors.showReviews);
-		valuesArr.add("");
-		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
-		getCurrentFunctionName(false);
-	}
-	
-	public static String getReviewEntry() throws Exception {
-		getCurrentFunctionName(true);
-		List<String> subStrArr = new ArrayList<String>();
-		List<String> valuesArr = new ArrayList<String>();
-		subStrArr.add(PDPSelectors.reviewEntry);
-		valuesArr.add("");
-		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
-		getCurrentFunctionName(false);
-		return SelectorUtil.textValue.get();
-	}
-	
-	public static String getCartPopupError() throws Exception {
-		getCurrentFunctionName(true);
-		List<String> subStrArr = new ArrayList<String>();
-		List<String> valuesArr = new ArrayList<String>();
-		subStrArr.add(PDPSelectors.cartPopupError);
-		valuesArr.add("");
-		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
-		getCurrentFunctionName(false);
-		return SelectorUtil.textValue.get();
-	}
-	
-	public static String getProductQtyInCartPopyp() throws Exception {
+	// done
+	public static String getProductQtyInMiniCart() throws Exception {
 		getCurrentFunctionName(true);
 		List<String> subStrArr = new ArrayList<String>();
 		List<String> valuesArr = new ArrayList<String>();
@@ -240,140 +217,13 @@ public class PDP extends SelTestCase {
 		getCurrentFunctionName(false);
 		return SelectorUtil.textValue.get();
 	}
-	
-    public static String getRatingCalc() throws Exception {
-		getCurrentFunctionName(true);
-		List<String> subStrArr = new ArrayList<String>();		
-		logs.debug(MessageFormat.format(LoggingMsg.GET_ELEMENT_BY_LOCATOR, PDPSelectors.ratingValue));
-		subStrArr.add(PDPSelectors.ratingValue);
-		String dataRating = SelectorUtil.getAttr(subStrArr, "data-rating");
-		logs.debug("data-rating is: " + dataRating);
-		getCurrentFunctionName(false);
-		return dataRating;
-	}
-    
-    public static String getActiveStars() throws Exception {
-    	getCurrentFunctionName(true);
-		List<String> subStrArr = new ArrayList<String>();
-		List<String> valuesArr = new ArrayList<String>();
-		subStrArr.add(PDPSelectors.activeStars);
-		valuesArr.add("noClick");
-		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
-		String numberOfFoundElements = SelectorUtil.numberOfFoundElements.get();
-		logs.debug(MessageFormat.format(LoggingMsg.NUMBER_OF_ACTIVE_STARS, numberOfFoundElements));
-		getCurrentFunctionName(false);
-		return numberOfFoundElements;
-    }
-    
-	public static String getSizeOptions() throws Exception {
+
+	// done
+	public static String getProductUnitPriceInMiniCart() throws Exception {
 		getCurrentFunctionName(true);
 		List<String> subStrArr = new ArrayList<String>();
 		List<String> valuesArr = new ArrayList<String>();
-		subStrArr.add(PDPSelectors.size);
-		valuesArr.add("");
-		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
-		getCurrentFunctionName(false);
-		return SelectorUtil.textValue.get();
-	}
-	
-	public static String getDisplayedSizeName() throws Exception {
-		getCurrentFunctionName(true);
-		List<String> subStrArr = new ArrayList<String>();
-		List<String> valuesArr = new ArrayList<String>();
-		subStrArr.add(PDPSelectors.displayedVariantSizeName);
-		valuesArr.add("");
-		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
-		getCurrentFunctionName(false);
-		return SelectorUtil.textValue.get();
-	}
-	
-	public static String getSelectedSizeName() throws Exception {
-		getCurrentFunctionName(true);
-		List<String> subStrArr = new ArrayList<String>();
-		List<String> valuesArr = new ArrayList<String>();
-		subStrArr.add(PDPSelectors.size);
-		valuesArr.add("");
-		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
-		getCurrentFunctionName(false);
-		return SelectorUtil.textValue.get();
-	}
-    public static String getSizeOptionsCount() throws Exception {
-    	getCurrentFunctionName(true);
-		List<String> subStrArr = new ArrayList<String>();
-		List<String> valuesArr = new ArrayList<String>();
-		subStrArr.add(PDPSelectors.sizeOptions);
-		valuesArr.add("noClick");
-		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
-		String numberOfFoundElements = SelectorUtil.numberOfFoundElements.get();
-		logs.debug(MessageFormat.format(LoggingMsg.NUMBER_OF_ACTIVE_SIZES, numberOfFoundElements));
-		getCurrentFunctionName(false);
-		return numberOfFoundElements;
-    }
-    
-	public static String getSizeOptionByIndex(int index) throws Exception {
-		getCurrentFunctionName(true);
-		List<String> subStrArr = new ArrayList<String>();
-		List<String> valuesArr = new ArrayList<String>();	
-		logs.debug(MessageFormat.format(LoggingMsg.GET_ELEMENT_BY_LOCATOR, PDPSelectors.sizeOptions));
-		subStrArr.add(PDPSelectors.sizeOptions);
-		valuesArr.add("index,"+index);
-		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
-		getCurrentFunctionName(false);
-		return SelectorUtil.textValue.get();
-	}
-    
-    public static String getVariantListCount() throws Exception {
-    	getCurrentFunctionName(true);
-		List<String> subStrArr = new ArrayList<String>();
-		List<String> valuesArr = new ArrayList<String>();
-		subStrArr.add(PDPSelectors.variantList);
-		valuesArr.add("noClick");
-		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
-		String numberOfFoundElements = SelectorUtil.numberOfFoundElements.get();
-		logs.debug(MessageFormat.format(LoggingMsg.NUMBER_OF_ACTIVE_VARIANTS, numberOfFoundElements));
-		getCurrentFunctionName(false);
-		return numberOfFoundElements;
-    }
-    
-	public static String getVariantList(int index) throws Exception {
-		getCurrentFunctionName(true);
-		List<String> subStrArr = new ArrayList<String>();		
-		logs.debug(MessageFormat.format(LoggingMsg.GET_ELEMENT_BY_LOCATOR, PDPSelectors.variantList));
-		subStrArr.add(PDPSelectors.variantList);
-		String variantName = SelectorUtil.getAttr(subStrArr, "title",index);
-		logs.debug("Variant name is: " + variantName);
-		getCurrentFunctionName(false);
-		return variantName;
-	}
-	
-	public static String getcurrentStyleValue() throws Exception {
-		getCurrentFunctionName(true);
-		List<String> subStrArr = new ArrayList<String>();		
-		logs.debug(MessageFormat.format(LoggingMsg.GET_ELEMENT_BY_LOCATOR, PDPSelectors.currentStyleValue));
-		subStrArr.add(PDPSelectors.currentStyleValue);
-		String variantName = SelectorUtil.getAttr(subStrArr, "title");
-		logs.debug("current Style Value is: " + variantName);
-		getCurrentFunctionName(false);
-		return variantName;
-	}
-	
-	public static String getVariantSelectedStyleName() throws Exception {
-		getCurrentFunctionName(true);
-		List<String> subStrArr = new ArrayList<String>();
-		List<String> valuesArr = new ArrayList<String>();
-		logs.debug(MessageFormat.format(LoggingMsg.GET_ELEMENT_BY_LOCATOR, PDPSelectors.variantSelectedStyleName));
-		subStrArr.add(PDPSelectors.variantSelectedStyleName);
-		valuesArr.add("");
-		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
-		getCurrentFunctionName(false);
-		return SelectorUtil.textValue.get();
-	}
-	
-	public static String getColorOptions() throws Exception {
-		getCurrentFunctionName(true);
-		List<String> subStrArr = new ArrayList<String>();
-		List<String> valuesArr = new ArrayList<String>();
-		subStrArr.add(PDPSelectors.size);
+		subStrArr.add(PDPSelectors.miniCartProductUnitPrice);
 		valuesArr.add("");
 		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
 		getCurrentFunctionName(false);

@@ -392,14 +392,11 @@ public class Common extends SelTestCase {
 		int id = 1;
 		int title = 2;
 		int url = 3;
-		int color = 4;
-		int size = 5;
-		int qty = 6;
-		int summary = 7;
-		int price = 8; 
-		int desc = 9; 
-		int reviews = 10; 
-		int rating = 11;
+		int qty = 4;
+		int overview = 5;
+		int price = 6; 
+		int features = 7; 
+		
 		
 
 		for (int row = 1; row < data.length; row++) {
@@ -407,14 +404,10 @@ public class Common extends SelTestCase {
 			product.put((String) data[header][id], data[row][id]);
 			product.put((String) data[header][title], data[row][title]);
 			product.put((String) data[header][url], data[row][url]);
-			product.put((String) data[header][color], data[row][color]);
-			product.put((String) data[header][size], data[row][size]);
 			product.put((String) data[header][qty], data[row][qty]);
-			product.put((String) data[header][summary], data[row][summary]);
+			product.put((String) data[header][overview], data[row][overview]);
 			product.put((String) data[header][price], data[row][price]);
-			product.put((String) data[header][desc], data[row][desc]);
-			product.put((String) data[header][reviews], data[row][reviews]);
-			product.put((String) data[header][rating], data[row][rating]);
+			product.put((String) data[header][features], data[row][features]);
 
 			products.put((String) data[row][name], product);
 		}

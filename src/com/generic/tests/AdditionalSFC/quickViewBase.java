@@ -66,9 +66,9 @@ public class quickViewBase extends SelTestCase {
 		try {
 
 			LinkedHashMap<String, Object> productDetails = (LinkedHashMap<String, Object>) invintory.get(product);
-			PLP_QuickView.addProductsToCart((String) productDetails.get(PDP.keys.url),
-					(String) productDetails.get(PDP.keys.color), (String) productDetails.get(PDP.keys.size),
-					(String) productDetails.get(PDP.keys.qty));
+			PLP_QuickView.addProductsToCart((String) productDetails.get(PLP_QuickView.keys.url),
+					(String) productDetails.get(PLP_QuickView.keys.color), (String) productDetails.get(PLP_QuickView.keys.size),
+					(String) productDetails.get(PLP_QuickView.keys.qty));
 
 			sassert().assertAll();
 			Common.testPass();

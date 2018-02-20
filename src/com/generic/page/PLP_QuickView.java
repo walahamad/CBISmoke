@@ -130,7 +130,7 @@ public class PLP_QuickView extends SelTestCase {
 		getCurrentFunctionName(true);
 		List<String> subStrArr = new ArrayList<String>();
 		List<String> valuesArr = new ArrayList<String>();
-		subStrArr.add(PDPSelectors.summary);
+		subStrArr.add(PDPSelectors.OverView);
 		valuesArr.add("");
 		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
 		getCurrentFunctionName(false);
@@ -152,7 +152,7 @@ public class PLP_QuickView extends SelTestCase {
 		getCurrentFunctionName(true);
 		List<String> subStrArr = new ArrayList<String>();
 		List<String> valuesArr = new ArrayList<String>();
-		subStrArr.add(PDPSelectors.SL);
+		subStrArr.add(PDPSelectors.SA);
 		valuesArr.add("");
 		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
 		getCurrentFunctionName(false);

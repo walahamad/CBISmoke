@@ -96,9 +96,7 @@ public class AccountsSetup extends SelTestCase {
 			Testlogs.get().debug(MessageFormat.format(LoggingMsg.ADDING_PRODUCT, products.split("\n")[0]));
 			LinkedHashMap<String, Object> productDetails = (LinkedHashMap<String, Object>) invintory
 					.get(products.split("\n")[0]);
-			PDP.addProductsToCartAndClickCheckOut((String) productDetails.get(PDP.keys.url),
-					(String) productDetails.get(PDP.keys.color), (String) productDetails.get(PDP.keys.size),
-					(String) productDetails.get(PDP.keys.qty));
+			PDP.addProductsToCartAndClickCheckOut((String) productDetails.get(PDP.keys.url),(String) productDetails.get(PDP.keys.qty));
 
 			Cart.clickCheckout();
 			Thread.sleep(1000);

@@ -1,29 +1,21 @@
 package com.generic.selector;
-public class PDPSelectors
-{
-	public static String desc = "test_productDetails_content_label_$";
-	public static String summary = "description";
-	public static String title = "name";
-	public static String color = "color"; 
-	public static String size = "size"; 
-	public static String qty = "pdpAddtoCartInput";
-	public static String addToCartBtn = "addToCartButton";
-	public static String price = "price";
-	public static String cart_popup = "Check Out";
-	public static String id = "code";
-	public static String SL = "stock-wrapper";
-	public static String rating = "css,.product-details.page-title>.rating";
-	public static String showReviews = "Show Reviews";
-	public static String reviewEntry = "tab-review";
-	public static String cartPopupError = "cart_popup_error_msg";
-	public static String cartPopupProductQty = "css,.details>.qty";
-	public static String ratingValue = "rating-stars pull-left js-ratingCalc";
-	public static String activeStars = "css,.product-details.page-title>div>div>div>.glyphicon.glyphicon-star.active";
-	public static String variantList = "css,.variant-list>li>a>img";
-	public static String currentStyleValue = "css,.active>a>img";
-	public static String variantSelectedStyleName = "variant-selected styleName";
-	public static String sizeOptions = "css,#Size>option"; 
-	public static String displayedVariantSizeName = "variant-selected sizeName";
-	public static String variantSelectedSizeName = "css,#Size>option[selected]";
+
+public class PDPSelectors {
+	public static String price = "css,.osh-price-label>h2";
+	public static String cart_popup = "popup-btn-checkout";
+	public static String addToCartBtn = "addtocart btn-primary-green";
+	public static String qty = "input-qty no-spin";
+	public static String id = "col-md-4 col-sm-12 col-xs-12";
+	public static String title = "css,.osh-sticky-price>h1";
+	public static String information = "row osh-tabs";
+	public static String SA = "stock-in-stock";
+	public static String cartPopupProductQty = "quantity";
+	public static String miniCartProductUnitPrice = "unit-price";
+	public static String minicart = "cart-component";
 	
+	//TODO: Delete
+	public static String desc;
+	public static String OverView;
+	public static String size; 
+
 }
