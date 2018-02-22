@@ -27,7 +27,7 @@ import com.generic.util.SelectorUtil;
 import com.generic.util.TestUtilities;
 import com.generic.util.dataProviderUtils;
 
-public class RegistrationFormValidation extends SelTestCase {
+public class RegistrationBase extends SelTestCase {
 	private static  LinkedHashMap<String, Object> users =null ;
 
 	// possible scenarios
@@ -83,37 +83,61 @@ public class RegistrationFormValidation extends SelTestCase {
 		logCaseDetailds(MessageFormat.format(LoggingMsg.REGISTRATIONDESC, testDataSheet + "." + caseId,
 				this.getClass().getCanonicalName(), desc, proprties.replace("\n", "<br>- ")));
 		
+		String thankUMsg = (fieldsValidation.split("ThankyouValidation:").length >2) ? fieldsValidation.split("ThankyouValidation:")[0].split("\n")[0]:"";
+		String emailValidation = (fieldsValidation.split("EmailValidation:").length >2) ? fieldsValidation.split("EmailValidation:")[0].split("\n")[0]:"";
+		String firstNameValidation =(fieldsValidation.split("firstNameValidation:").length >2) ?  fieldsValidation.split("firstNameValidation:")[0].split("\n")[0]:"";
+		String lastNameValidation = (fieldsValidation.split("lastNameValidation:").length >2) ? fieldsValidation.split("lastNameValidation:")[0].split("\n")[0]:"";
+		String passwordValidation =(fieldsValidation.split("PasswordValidation:").length >2) ?  fieldsValidation.split("PasswordValidation:")[0].split("\n")[0]:"";
+		String passwordConfValidation = (fieldsValidation.split("PasswordConfValidation:").length >2) ? fieldsValidation.split("PasswordConfValidation:")[0].split("\n")[0]:"";
+		
 		try {
 			if (proprties.contains(freshUser)) {
-				String title = Registration.getRandomTitle();
 				String firstName = RandomUtilities.getRandomName();
 				String lastName = RandomUtilities.getRandomName();
 				String password = RandomUtilities.getRandomPassword(7);
 				String email = RandomUtilities.getRandomEmail();
 				Registration.fillAndClickRegister(firstName,lastName,email,password,password);
+				String registrationSuccessMsg = Registration.getRegistrationSuccessMessage();
+				sassert().assertTrue(registrationSuccessMsg.contains(thankUMsg), "Regestration Success validation failed Expected: " + thankUMsg +"Actual: " + registrationSuccessMsg);
 			}
 			if (proprties.contains(existingUser)) {
 				// take any user as template
-				
 				LinkedHashMap<String, Object> userdetails = (LinkedHashMap<String, Object>) users.entrySet().iterator()
 						.next().getValue();
-				
-				
-				String title = Registration.getRandomTitle();
 				String firstName = RandomUtilities.getRandomName();
 				String lastName = RandomUtilities.getRandomName();
 				String password = RandomUtilities.getRandomPassword(7);
-				//TODO: move this to sheet
 				String email = (String) userdetails.get(Registration.keys.email);
-						//(String) userdetails.get(Registration.keys.email);
 				logs.debug("Registration mail: "+email);
 				Registration.fillAndClickRegister(firstName,lastName,email,password,password);
+				String validationMsg = Registration.getEmailAddressError();
+				sassert().assertTrue(validationMsg.contains(emailValidation), "Mail validation failed Expected: " + emailValidation +" Actual: " + validationMsg);
 			}
 			if (proprties.contains(emptyData)) {
 				Registration.clickRegisterButton();
+				
+				String validationMsg = Registration.getFirstNameError();
+				sassert().assertTrue(validationMsg.contains(firstNameValidation),
+						"first name validation failed Expected: " + firstNameValidation + " Actual: " + validationMsg);
+
+				validationMsg = Registration.getLastNameError();
+				sassert().assertTrue(validationMsg.contains(lastNameValidation),
+						"last name validation failed Expected: " + lastNameValidation + " Actual: " + validationMsg);
+
+				validationMsg = Registration.getEmailAddressError();
+				sassert().assertTrue(validationMsg.contains(emailValidation),
+						"Mail validation failed Expected: " + emailValidation + " Actual: " + validationMsg);
+
+				validationMsg = Registration.getPasswordError();
+				sassert().assertTrue(validationMsg.contains(passwordValidation),
+						"password validation failed Expected: " + passwordValidation + " Actual: " + validationMsg);
+
+				validationMsg = Registration.getConfirmPasswordError();
+				sassert().assertTrue(validationMsg.contains(passwordConfValidation),
+						"password conf validation failed Expected: " + passwordConfValidation + " Actual: "
+								+ validationMsg);
 			}
 			if (proprties.contains(invalidUserID)) {
-				String title = Registration.getRandomTitle();
 				String firstName = RandomUtilities.getRandomName();
 				String lastName = RandomUtilities.getRandomName();
 				String password = RandomUtilities.getRandomPassword(7);
@@ -121,7 +145,6 @@ public class RegistrationFormValidation extends SelTestCase {
 				Registration.fillAndClickRegister(firstName,lastName,email,password,password);
 			}
 			if (proprties.contains(passwordMismatch)) {
-				String title = Registration.getRandomTitle();
 				String firstName = RandomUtilities.getRandomName();
 				String lastName = RandomUtilities.getRandomName();
 				String password = RandomUtilities.getRandomPassword(7);
@@ -130,7 +153,6 @@ public class RegistrationFormValidation extends SelTestCase {
 				Registration.fillAndClickRegister(firstName,lastName,email,password,confPassword);
 			}
 			if (proprties.contains(invalidPassword)) {
-				String title = Registration.getRandomTitle();
 				String firstName = RandomUtilities.getRandomName();
 				String lastName = RandomUtilities.getRandomName();
 				String password = RandomUtilities.getRandomPassword(5);
@@ -155,41 +177,40 @@ public class RegistrationFormValidation extends SelTestCase {
 					String expectedMessage = messageText;
 					sassert().assertEquals(actualMessage, expectedMessage);
 				}
-				if (key.equalsIgnoreCase(titleError)) {
-					String actualMessage =Registration.getTitleError();
-					String expectedMessage = messageText;
-					sassert().assertEquals(actualMessage, expectedMessage);
-				}
-				if (key.equalsIgnoreCase(firstNameError)) {
-					String actualMessage =Registration.getFirstNameError();
-					String expectedMessage = messageText;
-					sassert().assertEquals(actualMessage, expectedMessage);
-				}
-				if (key.equalsIgnoreCase(lastNameError)) {
-					String actualMessage =Registration.getLastNameError();
-					String expectedMessage = messageText;
-					sassert().assertEquals(actualMessage, expectedMessage);
-				}
-				if (key.equalsIgnoreCase(passwordError)) {
-					String actualMessage =Registration.getPasswordError();
-					String expectedMessage = messageText;
-					sassert().assertEquals(actualMessage, expectedMessage);
-				}
-				if (key.equalsIgnoreCase(confPasswordError)) {
-					String actualMessage =Registration.getConfirmPasswordError();
-					String expectedMessage = messageText;
-					sassert().assertEquals(actualMessage, expectedMessage);
-				}
-				if (key.equalsIgnoreCase(passwordRulesError)) {
-					String actualMessage =Registration.getPasswordRulesError();
-					String expectedMessage = messageText;
-					sassert().assertEquals(actualMessage, expectedMessage);
-				}
-				if (key.equalsIgnoreCase(passwordMisatchError)) {
-					String actualMessage = Registration.getPasswordMatchError();
-					String expectedMessage = messageText;
-					sassert().assertEquals(actualMessage, expectedMessage);
-				}
+//				if (key.equalsIgnoreCase(titleError)) {
+//					String expectedMessage = messageText;
+//					sassert().assertEquals(actualMessage, expectedMessage);
+//				}
+//				if (key.equalsIgnoreCase(firstNameError)) {
+//					String actualMessage =Registration.getFirstNameError();
+//					String expectedMessage = messageText;
+//					sassert().assertEquals(actualMessage, expectedMessage);
+//				}
+//				if (key.equalsIgnoreCase(lastNameError)) {
+//					String actualMessage =Registration.getLastNameError();
+//					String expectedMessage = messageText;
+//					sassert().assertEquals(actualMessage, expectedMessage);
+//				}
+//				if (key.equalsIgnoreCase(passwordError)) {
+//					String actualMessage =Registration.getPasswordError();
+//					String expectedMessage = messageText;
+//					sassert().assertEquals(actualMessage, expectedMessage);
+//				}
+//				if (key.equalsIgnoreCase(confPasswordError)) {
+//					String actualMessage =Registration.getConfirmPasswordError();
+//					String expectedMessage = messageText;
+//					sassert().assertEquals(actualMessage, expectedMessage);
+//				}
+//				if (key.equalsIgnoreCase(passwordRulesError)) {
+//					String actualMessage =Registration.getPasswordRulesError();
+//					String expectedMessage = messageText;
+//					sassert().assertEquals(actualMessage, expectedMessage);
+//				}
+//				if (key.equalsIgnoreCase(passwordMisatchError)) {
+//					String actualMessage = Registration.getPasswordMatchError();
+//					String expectedMessage = messageText;
+//					sassert().assertEquals(actualMessage, expectedMessage);
+//				}
 			}
 			
 			sassert().assertAll();
