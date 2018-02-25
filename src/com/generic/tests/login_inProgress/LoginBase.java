@@ -1,4 +1,4 @@
-package com.generic.tests.login;
+package com.generic.tests.login_inProgress;
 
 import java.text.MessageFormat;
 import java.util.Arrays;
@@ -23,7 +23,7 @@ import com.generic.util.SASLogger;
 import com.generic.util.dataProviderUtils;
 
 
-public class LoginValidation extends SelTestCase {
+public class LoginBase extends SelTestCase {
 
 	private static  LinkedHashMap<String, Object> users =null ;
 	private static ThreadLocal<String> email = new ThreadLocal<String>();
@@ -76,24 +76,42 @@ public class LoginValidation extends SelTestCase {
 			if (proprties.equals("invalidUserEmail")) {
 				SignIn.fillLoginFormAndClickSubmit(this.email.get(), "1234567");
 					String alertMessage = SignIn.getErrorMsg();
+					String emailMessage = SignIn.getEmailErrorMsg();
 					String failureMessage = MessageFormat.format(LoggingMsg.ACTUAL_EXPECTED_ERROR,
-							alertMessage, fieldsValidation);
-					sassert().assertTrue(alertMessage.contains(fieldsValidation), failureMessage);
+							emailMessage, fieldsValidation);
+					sassert().assertTrue(emailMessage.contains(fieldsValidation), failureMessage);
+					sassert().assertTrue(!alertMessage.equals("") , "Error message is not exist" );
 			}
 			if (proprties.equals("invalidUserPassword")) {
 				Testlogs.get().debug(this.email.get());
-				SignIn.fillLoginFormAndClickSubmit(this.email.get(),"1234");
+				SignIn.fillLoginFormAndClickSubmit(this.email.get(),"");
 					String alertMessage = SignIn.getErrorMsg();
+					String passwordMessage = SignIn.getPasswrdErrorMsg();
 					String failureMessage = MessageFormat.format(LoggingMsg.ACTUAL_EXPECTED_ERROR,
-							alertMessage, fieldsValidation);
-					sassert().assertTrue(alertMessage.contains(fieldsValidation), failureMessage);
+							passwordMessage, fieldsValidation);
+					sassert().assertTrue(passwordMessage.contains(fieldsValidation), failureMessage);
+					sassert().assertTrue(!alertMessage.equals("") , "Error message is not exist" );
+			}
+			if (proprties.equals("wrongUserPassword")) {
+				Testlogs.get().debug(this.email.get());
+				SignIn.fillLoginFormAndClickSubmit(this.email.get(),"invalid123");
+					String loginformMessage = SignIn.getErrologinMessage();
+					String failureMessage = MessageFormat.format(LoggingMsg.ACTUAL_EXPECTED_ERROR,
+							loginformMessage, fieldsValidation);
+					sassert().assertTrue(loginformMessage.contains(fieldsValidation), failureMessage);
 			}
 			if (proprties.equals("emptyData")) {
 				SignIn.clickLogin();
 					String alertMessage = SignIn.getErrorMsg();
+					String emailMessage = SignIn.getEmailErrorMsg();
+					String passwordMessage = SignIn.getPasswrdErrorMsg();
+					
 					String failureMessage = MessageFormat.format(LoggingMsg.ACTUAL_EXPECTED_ERROR,
-							alertMessage, fieldsValidation);
-					sassert().assertTrue(alertMessage.contains(fieldsValidation), failureMessage);
+							emailMessage + "<br>" + passwordMessage, fieldsValidation);
+					
+					sassert().assertTrue(fieldsValidation.contains(emailMessage), failureMessage);
+					sassert().assertTrue(fieldsValidation.contains(passwordMessage), failureMessage);
+					sassert().assertTrue(!alertMessage.equals("") , "Error message is not exist" );
 			}
 			
 			if (proprties.equals("Forgot password -Valid Email")) {

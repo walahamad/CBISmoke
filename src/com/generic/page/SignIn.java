@@ -11,6 +11,8 @@ import com.generic.setup.SelTestCase;
 import com.generic.util.SelectorUtil;
 
 public class SignIn extends SelTestCase {
+	
+	//done
 	public static void logIn(String userName, String Password) throws Exception {
 		getCurrentFunctionName(true);
 		fillLoginFormAndClickSubmit(userName,Password);
@@ -20,7 +22,8 @@ public class SignIn extends SelTestCase {
 		}
 		getCurrentFunctionName(false);
 	}
-
+	
+	//done
 	public static void fillLoginFormAndClickSubmit(String userName, String Password) throws Exception {
 		getCurrentFunctionName(true);
 		typeUsername(userName);
@@ -29,6 +32,8 @@ public class SignIn extends SelTestCase {
 		Thread.sleep(1000);
 		getCurrentFunctionName(false);
 	}
+	
+	//Done
 	public static void clickLogin() throws Exception {
 		getCurrentFunctionName(true);
 		List<String> subStrArr = new ArrayList<String>();
@@ -40,6 +45,7 @@ public class SignIn extends SelTestCase {
 
 	}
 
+	//Done
 	public static void typePassword(String password) throws Exception {
 		getCurrentFunctionName(true);
 		List<String> subStrArr = new ArrayList<String>();
@@ -50,6 +56,7 @@ public class SignIn extends SelTestCase {
 		getCurrentFunctionName(false);
 	}
 
+	//Done
 	public static void typeUsername(String userName) throws Exception {
 		getCurrentFunctionName(true);
 		List<String> subStrArr = new ArrayList<String>();
@@ -60,6 +67,7 @@ public class SignIn extends SelTestCase {
 		getCurrentFunctionName(false);
 	}
 	
+	//done
 	public static String getErrorMsg() throws Exception {
 		getCurrentFunctionName(true);
 		try {
@@ -80,6 +88,72 @@ public class SignIn extends SelTestCase {
 		return SelectorUtil.textValue.get();
 	}
 	
+
+	//done
+	public static String getErrologinMessage() throws Exception {
+		getCurrentFunctionName(true);
+		try {
+			Thread.sleep(1000);
+			List<String> subStrArr = new ArrayList<String>();
+			List<String> valuesArr = new ArrayList<String>();
+			subStrArr.add(SignInSelectors.wrongPassword_mail);
+			valuesArr.add("");
+			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
+			logs.debug(MessageFormat.format(LoggingMsg.ERROR_MSG, SelectorUtil.textValue.get()));
+		} catch (Exception e) {
+			// to make sure the application is throwing the correct exception
+			if (ExceptionMsg.noValidSelector.contains(e.getMessage()))
+				throw new Exception(ExceptionMsg.noErrorMsg);
+			else
+				throw new Exception(e);
+		}
+		getCurrentFunctionName(false);
+		return SelectorUtil.textValue.get();
+	}
+	
+	//done
+	public static String getEmailErrorMsg() throws Exception {
+		getCurrentFunctionName(true);
+		try {
+			List<String> subStrArr = new ArrayList<String>();
+			List<String> valuesArr = new ArrayList<String>();
+			subStrArr.add(SignInSelectors.emailError);
+			valuesArr.add("");
+			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
+			logs.debug(MessageFormat.format(LoggingMsg.ERROR_MSG, SelectorUtil.textValue.get()));
+		} catch (Exception e) {
+			// to make sure the application is throwing the correct exception
+			if (ExceptionMsg.noValidSelector.contains(e.getMessage()))
+				throw new Exception(ExceptionMsg.noErrorMsg);
+			else
+				throw new Exception(e);
+		}
+		getCurrentFunctionName(false);
+		return SelectorUtil.textValue.get();
+	}
+	
+	//done
+	public static String getPasswrdErrorMsg() throws Exception {
+		getCurrentFunctionName(true);
+		try {
+			List<String> subStrArr = new ArrayList<String>();
+			List<String> valuesArr = new ArrayList<String>();
+			subStrArr.add(SignInSelectors.passwordError);
+			valuesArr.add("");
+			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
+			logs.debug(MessageFormat.format(LoggingMsg.ERROR_MSG, SelectorUtil.textValue.get()));
+		} catch (Exception e) {
+			// to make sure the application is throwing the correct exception
+			if (ExceptionMsg.noValidSelector.contains(e.getMessage()))
+				throw new Exception(ExceptionMsg.noErrorMsg);
+			else
+				throw new Exception(e);
+		}
+		getCurrentFunctionName(false);
+		return SelectorUtil.textValue.get();
+	}
+				
+	//done
 	public static boolean checkUserAccount() throws Exception {
 		getCurrentFunctionName(true);
 		boolean LoggedUser = true;
@@ -96,16 +170,19 @@ public class SignIn extends SelTestCase {
 		getCurrentFunctionName(false);
 		return LoggedUser;
 	}
-
+	
+	//done
 	public static void clickForgotPasswordBtn() throws Exception {
 		getCurrentFunctionName(true);
 		List<String> subStrArr = new ArrayList<String>();
 		List<String> valuesArr = new ArrayList<String>();
-		subStrArr.add(SignInSelectors.forgotPasswordBtn);
+		subStrArr.add(SignInSelectors.forgotPasswordLnk);
 		valuesArr.add("");
 		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
 		getCurrentFunctionName(false);
 	}
+	
+	//done
 	public static void typeForgottenPwdEmail(String email) throws Exception {
 		getCurrentFunctionName(true);
 		List<String> subStrArr = new ArrayList<String>();
@@ -116,6 +193,7 @@ public class SignIn extends SelTestCase {
 		getCurrentFunctionName(false);
 	}
 	
+	//done
 	public static void clickForgotPasswordSubmitBtn() throws Exception {
 		getCurrentFunctionName(true);
 		List<String> subStrArr = new ArrayList<String>();
@@ -125,6 +203,8 @@ public class SignIn extends SelTestCase {
 		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
 		getCurrentFunctionName(false);
 	}
+	
+	//done
 	public static String getAlertPositiveForgottenPasswordd() throws Exception {
 		getCurrentFunctionName(true);
 		List<String> subStrArr = new ArrayList<String>();
@@ -135,9 +215,9 @@ public class SignIn extends SelTestCase {
 		logs.debug(MessageFormat.format(LoggingMsg.SEL_TEXT, SelectorUtil.textValue.get()));
 		getCurrentFunctionName(false);
 		return SelectorUtil.textValue.get();
-
 	}
 	
+	//done
 	public static String getForgottenPwdEmailError() throws Exception {
 		getCurrentFunctionName(true);
 		List<String> subStrArr = new ArrayList<String>();
