@@ -4,14 +4,14 @@ public class LoggingMsg {
 
 	public static final String CHECKOUTDESC = "<b>Case ID: </b>{0} <br><b>File of execution:</b> {1}<br><b>Decrption: </b>{2}<br><b>case proprties:</b><br>- {3}<br>- {4}<br>- {5}";
 	public static final String REGISTRATIONDESC = "<b>Case ID: </b>{0} <br><b>File of execution:</b> {1}<br><b>Decrption: </b>{2}<br><b>fields to validate:</b><br>- {3}<br>";
-	public static final String CARTDESC = "<b>Case ID: </b>{0} <br><b>File of execution:</b> {1}<br><b>Decrption: </b>{2}<br><b>case proprties:</b><br>- {3}<br>- coupon: {4}<br>- new QTY: {5}";
+	public static final String CARTDESC = "<b>Case ID: </b>{0} <br><b>File of execution:</b> {1}<br><b>Decrption: </b>{2}<br><b>case proprties:</b><br>- {3}<br>- promotion: {4}<br>- total: {5}";
 	public static final String PDPDESC = "<b>Case ID: </b>{0} <br><b>File of execution:</b> {1}<br><b>Decrption: </b>{2}<br><b>case proprties:</b><br>- {3}";
 	public static final String TEST_CASE_DESC = "<b>Case ID: </b>{0} <br><b>File of execution:</b> {1}<br><b>Description: </b>{2}<br>";
 	public static String CLICKING_CART_BUTTON = "clicking on {0} btn from cart";
 	public static String NUMBER_OF_PRODUCTS = "number of products: {0}";
 	public static String NUMBER_OF_ORDERS = "number of orders: {0}";
 	public static String ORDER_TOTAL = "Order Total: {0}";
-	public static String ORDER_SUBTOTAL = "Order subtotal: {0}";
+	public static String totalsMsg = "Order totals: {0}";
 	public static String APPLYING_COUPON = "{0} Coupon {1}" ;
 	public static String SEL_TEXT = "{0}";
 	public static String COUPON_MSG = "The coupon msg is : {0}";

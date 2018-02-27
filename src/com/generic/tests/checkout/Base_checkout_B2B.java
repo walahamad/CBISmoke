@@ -120,14 +120,13 @@ public class Base_checkout_B2B extends SelTestCase {
 
 			// flow to support coupon validation
 			if (!"".equals(coupon)) {
-				Cart.applyCoupon(coupon);
+				Cart.applyPromotion(coupon);
 				if (coupon.contains(Cart.keys.invalidCoupon)) {
 					Cart.validateCoupon();
 				}
 			}
 			//Cart.getNumberOfproducts();
 			this.orderSubtotal = Cart.getOrderSubTotal();
-			this.orderTax = Cart.getOrderTax();
 
 			Cart.clickCheckout();
 

@@ -117,14 +117,13 @@ public class Base_checkout extends SelTestCase {
 
 			// flow to support coupon validation
 			if (!"".equals(coupon)) {
-				Cart.applyCoupon(coupon);
+				Cart.applyPromotion(coupon);
 				if (coupon.contains(Cart.keys.invalidCoupon)) {
 					Cart.validateCoupon();
 				}
 			}
 			//Cart.getNumberOfproducts();
 			orderSubtotal = Cart.getOrderSubTotal();
-			orderTax = Cart.getOrderTax();
 
 			Cart.clickCheckout();
 			
@@ -259,7 +258,7 @@ public class Base_checkout extends SelTestCase {
 				CheckOut.guestCheckout.fillPreRegFormAndClickRegBtn("1234567", false);
 			}
 			
-			Testlogs.get().debug(MessageFormat.format(LoggingMsg.CHECKOUT_RESULT , Pemail,orderId,orderTotal,orderSubtotal, orderTax, orderShipping));
+			Testlogs.get().debug(MessageFormat.format(LoggingMsg.CHECKOUT_RESULT , Pemail,orderId,orderTotal,orderSubtotal, "", orderShipping));
 
 			Common.testPass();
 		} catch (Throwable t) {
