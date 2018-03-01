@@ -15,18 +15,6 @@ public class PaymentDetails extends SelTestCase {
 		public static final String caseId = "caseId";
 	}
 	
-	public static void clickSetAsDefault() throws Exception {
-		getCurrentFunctionName(true);
-		List<String> subStrArr = new ArrayList<String>();
-		List<String> valuesArr = new ArrayList<String>();
-		logs.debug(MessageFormat.format(LoggingMsg.CLICKING_SETASDEFAULT_BUTTON, "Set as default"));
-		subStrArr.add(PaymentDetailsSelectors.setasdefaultBtn);
-		valuesArr.add("");
-		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
-		getCurrentFunctionName(false);
-
-	}
-
 	public static void clickRemovePaymentDetailsBtn() throws Exception {
 		getCurrentFunctionName(true);
 		List<String> subStrArr = new ArrayList<String>();
@@ -51,18 +39,6 @@ public class PaymentDetails extends SelTestCase {
 		return SelectorUtil.textValue.get();
 	}
 
-	public static void getAlertInfo() throws Exception {
-		getCurrentFunctionName(true);
-		List<String> subStrArr = new ArrayList<String>();
-		List<String> valuesArr = new ArrayList<String>();
-		Thread.sleep(500);
-		subStrArr.add(PaymentDetailsSelectors.alertInfo);
-		valuesArr.add("");
-		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
-		logs.debug(MessageFormat.format(LoggingMsg.PAYMENT_CARD_REMOVED_MESSAGE, SelectorUtil.textValue.get()));
-		getCurrentFunctionName(false);
-	}
-
 	public static void clickDeleteBtn() throws Exception {
 		getCurrentFunctionName(true);
 		List<String> subStrArr = new ArrayList<String>();
@@ -73,17 +49,36 @@ public class PaymentDetails extends SelTestCase {
 		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
 		getCurrentFunctionName(false);
 	}
-
-	public static String getNumberOfPayments(String selc) throws Exception {
+	
+	//done
+	public static void clickSavePayment() throws Exception {
 		getCurrentFunctionName(true);
 		List<String> subStrArr = new ArrayList<String>();
 		List<String> valuesArr = new ArrayList<String>();
-		subStrArr.add(selc);
+		subStrArr.add(PaymentDetailsSelectors.savePaymentBtn);
+		valuesArr.add("");
+		logs.debug(MessageFormat.format(LoggingMsg.CLICKING_DELETE_BUTTON, "confirm delete address"));
+		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
+		getCurrentFunctionName(false);
+	}
+	
+	//done
+	public static void fillandClickSave(String cardtype, String cardNumber, String expireDay, String expireYear,
+			String CVC) throws Exception {
+		getCurrentFunctionName(true);
+		CheckOut.paymentInnformation.fill(cardtype, cardNumber, expireDay, expireYear, CVC);
+		clickSavePayment();
+		getCurrentFunctionName(false);
+	}
+	
+	//done
+	public static void clickOnAddBtn() throws Exception {
+		getCurrentFunctionName(true);
+		List<String> subStrArr = new ArrayList<String>();
+		List<String> valuesArr = new ArrayList<String>();
+		subStrArr.add(PaymentDetailsSelectors.addPaymentBtn);
 		valuesArr.add("");
 		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
-		logs.debug(MessageFormat.format(LoggingMsg.ACTUAL_TEXT,SelectorUtil.numberOfFoundElements));
 		getCurrentFunctionName(false);
-		return SelectorUtil.numberOfFoundElements.get();
 	}
-
 }

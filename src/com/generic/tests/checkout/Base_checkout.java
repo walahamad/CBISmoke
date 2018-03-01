@@ -162,7 +162,7 @@ public class Base_checkout extends SelTestCase {
 							(String) addressDetails.get(CheckOut.shippingAddress.keys.lastName),
 							(String) addressDetails.get(CheckOut.shippingAddress.keys.adddressLine),
 							(String) addressDetails.get(CheckOut.shippingAddress.keys.city),
-							(String) addressDetails.get(CheckOut.shippingAddress.keys.postal),
+							(String) addressDetails.get(CheckOut.shippingAddress.keys.zipcode),
 							(String) addressDetails.get(CheckOut.shippingAddress.keys.phone), saveShipping);
 				} else {
 					CheckOut.shippingAddress.fillAndClickNext(
@@ -172,7 +172,7 @@ public class Base_checkout extends SelTestCase {
 							(String) addressDetails.get(CheckOut.shippingAddress.keys.lastName),
 							(String) addressDetails.get(CheckOut.shippingAddress.keys.adddressLine),
 							(String) addressDetails.get(CheckOut.shippingAddress.keys.city),
-							(String) addressDetails.get(CheckOut.shippingAddress.keys.postal),
+							(String) addressDetails.get(CheckOut.shippingAddress.keys.zipcode),
 							(String) addressDetails.get(CheckOut.shippingAddress.keys.phone));
 				}
 			}
@@ -201,23 +201,20 @@ public class Base_checkout extends SelTestCase {
 
 				if (saveBilling) {
 					CheckOut.paymentInnformation.fillAndclickNext(payment,
-							(String) paymentDetails.get(CheckOut.paymentInnformation.keys.name),
 							(String) paymentDetails.get(CheckOut.paymentInnformation.keys.number),
 							(String) paymentDetails.get(CheckOut.paymentInnformation.keys.expireMonth),
 							(String) paymentDetails.get(CheckOut.paymentInnformation.keys.expireYear),
 							(String) paymentDetails.get(CheckOut.paymentInnformation.keys.CVCC), saveBilling,
 							billingAddress.equalsIgnoreCase(shippingAddress),
 							(String) billAddressDetails.get(CheckOut.shippingAddress.keys.countery),
-							(String) billAddressDetails.get(CheckOut.shippingAddress.keys.title),
 							(String) billAddressDetails.get(CheckOut.shippingAddress.keys.firstName),
 							(String) billAddressDetails.get(CheckOut.shippingAddress.keys.lastName),
 							(String) billAddressDetails.get(CheckOut.shippingAddress.keys.adddressLine),
 							(String) billAddressDetails.get(CheckOut.shippingAddress.keys.city),
-							(String) billAddressDetails.get(CheckOut.shippingAddress.keys.postal),
+							(String) billAddressDetails.get(CheckOut.shippingAddress.keys.zipcode),
 							(String) billAddressDetails.get(CheckOut.shippingAddress.keys.phone));
 				} else {
 					CheckOut.paymentInnformation.fillAndclickNext(payment,
-							(String) paymentDetails.get(CheckOut.paymentInnformation.keys.name),
 							(String) paymentDetails.get(CheckOut.paymentInnformation.keys.number),
 							(String) paymentDetails.get(CheckOut.paymentInnformation.keys.expireMonth),
 							(String) paymentDetails.get(CheckOut.paymentInnformation.keys.expireYear),
@@ -229,7 +226,7 @@ public class Base_checkout extends SelTestCase {
 							(String) billAddressDetails.get(CheckOut.shippingAddress.keys.lastName),
 							(String) billAddressDetails.get(CheckOut.shippingAddress.keys.adddressLine),
 							(String) billAddressDetails.get(CheckOut.shippingAddress.keys.city),
-							(String) billAddressDetails.get(CheckOut.shippingAddress.keys.postal),
+							(String) billAddressDetails.get(CheckOut.shippingAddress.keys.zipcode),
 							(String) billAddressDetails.get(CheckOut.shippingAddress.keys.phone));
 				}
 			}

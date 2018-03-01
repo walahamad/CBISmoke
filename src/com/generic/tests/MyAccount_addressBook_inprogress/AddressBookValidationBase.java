@@ -1,4 +1,4 @@
-package com.generic.tests.account;
+package com.generic.tests.MyAccount_addressBook_inprogress;
 
 import static org.testng.Assert.assertNotEquals;
 
@@ -28,21 +28,12 @@ import com.generic.util.ReportUtil;
 import com.generic.util.SASLogger;
 import com.generic.util.SelectorUtil;
 
-public class AddressBookValidation extends SelTestCase {
+public class AddressBookValidationBase extends SelTestCase {
 	private static LinkedHashMap<String, Object> addresses = null;
 	private static LinkedHashMap<String, Object> users = null;
-	boolean defaultAddress = true;
-	private String addressbook;
 	private String numberofaddresses;
 	// used sheet in test
 	public static final String testDataSheet = SheetVariables.AddressBookSheet;
-
-	private String caseId;
-	private String runTest;
-	private String url;
-	private String desc;
-	private String newaddress;
-	private String email;
 
 	private static XmlTest testObject;
 
@@ -75,85 +66,61 @@ public class AddressBookValidation extends SelTestCase {
 		setTestCaseReportName("Address Book Case");
 		logCaseDetailds(MessageFormat.format(LoggingMsg.ADDRESSPOOKDESC, testDataSheet + "." + caseId,
 				this.getClass().getCanonicalName(), desc));
-
-		this.email = getSubMailAccount(email);
+		
+		String caseEmail = getSubMailAccount(email);
 		String url = PagesURLs.getAddressBookPage();
+		boolean defaultAddress = prop.contains("default Address") ;
 		
 		try {
 			LinkedHashMap<String, Object> userdetails = (LinkedHashMap<String, Object>) users.get(email);
-			Testlogs.get().debug(this.email);
+			Testlogs.get().debug(caseEmail);
 			Testlogs.get().debug((String) userdetails.get(Registration.keys.password));
 			
-			if (prop.contains("edit")) {
-				SignIn.logIn(this.email, (String) userdetails.get(Registration.keys.password));
-				getDriver().get(url);
-				addressbook = AddressBook.getFirstAddressDetails();
-				AddressBook.clickEditAddress();
-				LinkedHashMap<String, Object> addressDetails = (LinkedHashMap<String, Object>) addresses
-						.get(newaddress);
-				AddressBook.fillAndClickSave((String) addressDetails.get(CheckOut.shippingAddress.keys.countery),
-						(String) addressDetails.get(CheckOut.shippingAddress.keys.title),
-						"NEW_" + RandomUtils.nextInt(1000, 9000),
-						(String) addressDetails.get(CheckOut.shippingAddress.keys.lastName),
-						(String) addressDetails.get(CheckOut.shippingAddress.keys.adddressLine),
-						(String) addressDetails.get(CheckOut.shippingAddress.keys.city),
-						(String) addressDetails.get(CheckOut.shippingAddress.keys.postal),
-						(String) addressDetails.get(CheckOut.shippingAddress.keys.phone));
-				AddressBook.clickAddressBackBtn();
-				assertNotEquals(addressbook, AddressBook.getFirstAddressDetails());
-			}
-			if (prop.contains("form validation")) {
-				SignIn.logIn(this.email, (String) userdetails.get(Registration.keys.password));
-				getDriver().get(url);
-				addressbook = AddressBook.getFirstAddressDetails();
-				AddressBook.clickEditAddress();
-				AddressBook.clearAddress();
-				AddressBook.verifyAddressFormError();
-			}
+			SignIn.logIn(caseEmail, (String) userdetails.get(Registration.keys.password));
+			
 			if (prop.contains("new") || prop.contains("default") || prop.contains("delete")) {
-				SignIn.logIn(this.email, (String) userdetails.get(Registration.keys.password));
 				getDriver().get(url);
-				addressbook = AddressBook.getFirstAddressDetails();
 				Thread.sleep(1000);
 				AddressBook.clickAddNewAddress();
-				getDriver().get(AddressBookSelectors.addaddressurl);
 				LinkedHashMap<String, Object> addressDetails = (LinkedHashMap<String, Object>) addresses
 						.get(newaddress);
-				AddressBook.fillAndClickSave((String) addressDetails.get(CheckOut.shippingAddress.keys.countery),
-						(String) addressDetails.get(CheckOut.shippingAddress.keys.title),
+				AddressBook.fillAndClickSave(caseEmail,
+						(String) addressDetails.get(CheckOut.shippingAddress.keys.countery),
 						"NEW_" + RandomUtils.nextInt(1000, 9000),
 						(String) addressDetails.get(CheckOut.shippingAddress.keys.lastName),
 						(String) addressDetails.get(CheckOut.shippingAddress.keys.adddressLine),
 						(String) addressDetails.get(CheckOut.shippingAddress.keys.city),
-						(String) addressDetails.get(CheckOut.shippingAddress.keys.postal),
+						(String) addressDetails.get(CheckOut.shippingAddress.keys.zipcode),
 						(String) addressDetails.get(CheckOut.shippingAddress.keys.phone), defaultAddress);
-				AddressBook.clickAddressBackBtn();
 				if (prop.contains("new")) {
-					sassert().assertNotEquals(addressbook, AddressBook.getFirstAddressDetails());
-					//Remove the created address.
-					AddressBook.clickRemoveAddress(0);
-					AddressBook.clickDeleteBtn();
+					String siteAddress = AddressBook.getFirstAddressDetails();
+					Testlogs.get().debug(siteAddress);
+					sassert().assertTrue(siteAddress.contains((String) addressDetails.get(CheckOut.shippingAddress.keys.adddressLine)),
+							"Address doesnt contain line1: " + siteAddress);
 				}
-				if (prop.contains("default")) {
-					getDriver().get(url);
-					addressbook = AddressBook.getFirstAddressDetails();
-					AddressBook.clickSetAsDefault();
-					AddressBook.getAlertInfo();
-					sassert().assertNotEquals(addressbook, AddressBook.getFirstAddressDetails());
-					//Remove the created address.
-					AddressBook.clickRemoveAddress(1);
-					AddressBook.clickDeleteBtn();
-				}
-				if (prop.contains("delete")) {
-					getDriver().get(url);
-					String numberofaddresses = AddressBook.getNumberOfAddresses(AddressBookSelectors.accountAddressbookList);
-					AddressBook.clickRemoveAddress(0);
-					AddressBook.clickDeleteBtn();
-					Thread.sleep(1000);
-					logs.debug("number of Saved addresses before deleting any address: "+numberofaddresses);
-					sassert().assertNotEquals(numberofaddresses,AddressBook.getNumberOfAddresses(AddressBookSelectors.accountAddressbookList));
-				}
+				
 			}
+			
+			if (prop.contains("edit")) {
+				getDriver().get(url);
+				String addressbook = AddressBook.getFirstAddressDetails();
+				AddressBook.clickEditAddress();
+				LinkedHashMap<String, Object> addressDetails = (LinkedHashMap<String, Object>) addresses.get(newaddress);
+				AddressBook.fillAndClickUpdate(caseEmail,
+						(String) addressDetails.get(CheckOut.shippingAddress.keys.countery),
+						"NEW_" + RandomUtils.nextInt(1000, 9000),
+						(String) addressDetails.get(CheckOut.shippingAddress.keys.lastName),
+						(String) addressDetails.get(CheckOut.shippingAddress.keys.adddressLine),
+						(String) addressDetails.get(CheckOut.shippingAddress.keys.city),
+						(String) addressDetails.get(CheckOut.shippingAddress.keys.zipcode),
+						(String) addressDetails.get(CheckOut.shippingAddress.keys.phone), false);
+				assertNotEquals(addressbook, AddressBook.getFirstAddressDetails());
+			}
+			
+			//Remove the created address.
+			if (prop.contains("delete"))
+				AddressBook.clickRemoveAddress();
+			
 			sassert().assertAll();
 			Common.testPass();
 		} catch (Throwable t) {

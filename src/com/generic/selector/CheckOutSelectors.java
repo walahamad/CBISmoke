@@ -11,14 +11,18 @@ public class CheckOutSelectors
 	
 	
 	//Shipping Address
-	public static final String countery = "address.country";
+	//done
+	public static final String emailAddress = "email";
+	public static final String state = "enter-state";
+	public static final String firstName = "firstName";
+	public static final String lastName = "surname";
+	public static final String  address= "line1";
+	public static final String city = "townCity";
+	public static final String zipcode = "postcode";
+	public static final String countery = "select-country";
+	public static final String phone = "phoneNo";
+	
 	public static final String title = "address.title";
-	public static final String firstName = "address.firstName";
-	public static final String lastName = "address.surname";
-	public static final String  address= "address.line1";
-	public static final String city = "address.townCity";
-	public static final String postal = "address.postcode";
-	public static final String phone = "address.phone";
 	public static final String CheckSaveAddress = "saveAddressInMyAddressBook";
 	public static final String submitShippingAddressBtn = "addressSubmit";
 	public static final String addressBookBtn = "btn btn-default btn-block js-address-book";
@@ -41,12 +45,15 @@ public class CheckOutSelectors
 	public static final String orderSubTotalShippingMethod = "test_Order_Totals_Subtotal_$";
 	
 	//Payment info
-	public static final String cardtype = "card_cardType";
-	public static final String cardHolder = "card_nameOnCard";
-	public static final String cardNumber = "card_accountNumber";
+	//done 
+	public static final String cardtype = "radioId";
+	public static final String cardNumber = "cardNumber";
 	public static final String expireDay = "ExpiryMonth";
 	public static final String expireYear = "ExpiryYear";
-	public static final String CVC = "card_cvNumber";
+	public static final String CVC = "cvvNo";
+	
+	//TODO: delete
+	public static final String cardHolder = "card_nameOnCard";
 	public static final String checkSavePayment = "savePaymentMethod";
 	public static final String checkSame = "useDeliveryAddress";
 	public static final String submitPayment = "btn btn-primary btn-block submit_silentOrderPostForm checkout-next";

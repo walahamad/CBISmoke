@@ -234,7 +234,8 @@ public class SelectorUtil extends SelTestCase {
 							e.tagName().equals("a")||
 							e.tagName().equals("li") ||
 							e.tagName().equals("form")||
-							e.tagName().equals("label"))
+							e.tagName().equals("label")||
+							(e.tagName().equals("input") && (e.attr("type").equals("radio")) ))
 					{
 						return "click";
 					} else if (e.tagName().equals("input") && e.attr("type").equals("submit")) {
@@ -243,7 +244,7 @@ public class SelectorUtil extends SelTestCase {
 						return "click";
 					}
 					else if (e.tagName().equals("p")||
-							e.tagName().equals("body") || e.tagName().equals("td") || e.tagName().contains("h")) {
+							e.tagName().equals("body") || e.tagName().equals("td") || e.tagName().contains("h")||e.tagName().contains("ul")) {
 						return "gettext";
 					}else if (e.tagName().equals("div") || e.tagName().equals("span"))
 					{

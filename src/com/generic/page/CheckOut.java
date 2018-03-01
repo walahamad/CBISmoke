@@ -238,10 +238,11 @@ public class CheckOut extends SelTestCase {
 			public static final String firstName = "firstName";
 			public static final String adddressLine = "adddressLine";
 			public static final String city = "city";
-			public static final String postal = "postal";
+			public static final String zipcode = "postal";
 			public static final String phone = "phone";
 		}
 
+		//done
 		public static void selectCountery(String countery) throws Exception {
 			getCurrentFunctionName(true);
 			List<String> subStrArr = new ArrayList<String>();
@@ -265,7 +266,8 @@ public class CheckOut extends SelTestCase {
 			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
 			getCurrentFunctionName(false);
 		}
-
+		
+		//done
 		public static void typeFirstName(String firstName) throws Exception {
 			getCurrentFunctionName(true);
 			List<String> subStrArr = new ArrayList<String>();
@@ -277,7 +279,8 @@ public class CheckOut extends SelTestCase {
 			getCurrentFunctionName(false);
 
 		}
-
+		
+		//done
 		public static void typeAddress(String address) throws Exception {
 			getCurrentFunctionName(true);
 			List<String> subStrArr = new ArrayList<String>();
@@ -290,6 +293,7 @@ public class CheckOut extends SelTestCase {
 
 		}
 
+		//done
 		public static void typeLastName(String lastName) throws Exception {
 			getCurrentFunctionName(true);
 			List<String> subStrArr = new ArrayList<String>();
@@ -302,6 +306,7 @@ public class CheckOut extends SelTestCase {
 
 		}
 
+		//done
 		public static void typeCity(String city) throws Exception {
 			getCurrentFunctionName(true);
 			List<String> subStrArr = new ArrayList<String>();
@@ -314,18 +319,20 @@ public class CheckOut extends SelTestCase {
 
 		}
 
-		public static void typePostalCode(String postal) throws Exception {
+		//done
+		public static void typeZipCode(String zip) throws Exception {
 			getCurrentFunctionName(true);
 			List<String> subStrArr = new ArrayList<String>();
 			List<String> valuesArr = new ArrayList<String>();
-			logs.debug(MessageFormat.format(LoggingMsg.TYPING_ELEMENT_VALUE, "postal", postal));
-			subStrArr.add(CheckOutSelectors.postal);
-			valuesArr.add(postal);
+			logs.debug(MessageFormat.format(LoggingMsg.TYPING_ELEMENT_VALUE, "postal", zip));
+			subStrArr.add(CheckOutSelectors.zipcode);
+			valuesArr.add(zip);
 			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
 			getCurrentFunctionName(false);
 
 		}
 
+		//done
 		public static void typePhone(String phone) throws Exception {
 			getCurrentFunctionName(true);
 			List<String> subStrArr = new ArrayList<String>();
@@ -409,7 +416,7 @@ public class CheckOut extends SelTestCase {
 				typeCity(city);
 
 			if (!"".equals(postal))
-				typePostalCode(postal);
+				typeZipCode(postal);
 
 			if (!"".equals(phone))
 				typePhone(phone);
@@ -443,7 +450,7 @@ public class CheckOut extends SelTestCase {
 				typeCity(city);
 
 			if (!"".equals(postal))
-				typePostalCode(postal);
+				typeZipCode(postal);
 
 			if (!"".equals(phone))
 				typePhone(phone);
@@ -586,6 +593,30 @@ public class CheckOut extends SelTestCase {
 			getCurrentFunctionName(false);
 			return SelectorUtil.textValue.get();
 		}
+		
+		//done
+		public static void typeEmailAddress(String mail) throws Exception {
+			getCurrentFunctionName(true);
+			List<String> subStrArr = new ArrayList<String>();
+			List<String> valuesArr = new ArrayList<String>();
+			subStrArr.add(CheckOutSelectors.emailAddress);
+			valuesArr.add(mail);
+			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
+			getCurrentFunctionName(false);
+			
+		}
+		
+		//done
+		public static void selectState(String state) throws Exception {
+			getCurrentFunctionName(true);
+			List<String> subStrArr = new ArrayList<String>();
+			List<String> valuesArr = new ArrayList<String>();
+			subStrArr.add(CheckOutSelectors.state);
+			valuesArr.add(state);
+			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
+			getCurrentFunctionName(false);
+			
+		}
 
 	}// shipping address
 
@@ -659,16 +690,14 @@ public class CheckOut extends SelTestCase {
 
 		}
 
-		public static void fillAndclickNext(String cardtype, String cardHolder, String cardNumber, String expireDay,
-				String expireYear, String CVC, boolean savePayment, boolean billSameShip, String countery, String title,
+		public static void fillAndclickNext(String cardtype, String cardNumber, String expireDay,
+				String expireYear, String CVC, boolean savePayment, boolean billSameShip, String countery,
 				String firstName, String lastName, String address, String city, String postal, String phone)
 				throws Exception {
 			getCurrentFunctionName(true);
 
 			if (!"".equals(cardtype))
 				selectCardType(cardtype);
-			if (!"".equals(cardHolder))
-				typeCardholder(cardHolder);
 			if (!"".equals(cardNumber))
 				typeCardNumber(cardNumber);
 			if (!"".equals(expireDay))
@@ -683,7 +712,7 @@ public class CheckOut extends SelTestCase {
 			checkBillingAddressSameshipping(billSameShip);
 
 			if (!billSameShip) {
-				fillBillingAddress(countery, title, firstName, lastName, address, city, postal, phone);
+				fillBillingAddress(countery, firstName, lastName, address, city, postal, phone);
 			}
 
 			clickNext();
@@ -691,15 +720,12 @@ public class CheckOut extends SelTestCase {
 			getCurrentFunctionName(false);
 		}
 
-		public static void fillAndclickNext(String cardtype, String cardHolder, String cardNumber, String expireDay,
-				String expireYear, String CVC, boolean billSameShip, String countery, String title, String firstName,
-				String lastName, String address, String city, String postal, String phone) throws Exception {
-			getCurrentFunctionName(true);
 
+		public static void fill(String cardtype, String cardNumber, String expireDay, String expireYear,
+				String CVC) throws Exception {
+			getCurrentFunctionName(true);
 			if (!"".equals(cardtype))
 				selectCardType(cardtype);
-			if (!"".equals(cardHolder))
-				typeCardholder(cardHolder);
 			if (!"".equals(cardNumber))
 				typeCardNumber(cardNumber);
 			if (!"".equals(expireDay))
@@ -708,12 +734,24 @@ public class CheckOut extends SelTestCase {
 				typeExpireYear(expireYear);
 			if (!"".equals(CVC))
 				typeCVC(CVC);
+			getCurrentFunctionName(false);
+		}
+		
+		
+		//done
+		public static void fillAndclickNext(String cardtype, String cardNumber, String expireDay, String expireYear,
+				String CVC, boolean billSameShip, String countery, String title, String firstName, String lastName,
+				String address, String city, String postal, String phone) throws Exception {
+			getCurrentFunctionName(true);
 
-			checkBillingAddressSameshipping(billSameShip);
+			fill(cardtype, cardNumber, expireDay, expireYear, CVC);
+			
 
-			if (!billSameShip) {
-				fillBillingAddress(countery, title, firstName, lastName, address, city, postal, phone);
-			}
+			//checkBillingAddressSameshipping(billSameShip);
+
+//			if (!billSameShip) {
+//				fillBillingAddress(countery, firstName, lastName, address, city, postal, phone);
+//			}
 
 			clickNext();
 			Thread.sleep(1000);
@@ -728,14 +766,12 @@ public class CheckOut extends SelTestCase {
 			getCurrentFunctionName(false);
 		}
 
-		public static void fillBillingAddress(String countery, String title, String firstName, String lastName,
-				String address, String city, String postal, String phone) throws Exception {
+		public static void fillBillingAddress(String countery, String firstName, String lastName, String address,
+				String city, String postal, String phone) throws Exception {
 			getCurrentFunctionName(true);
 
 			if (!"".equals(countery))
 				shippingAddress.selectCountery(countery);
-			if (!"".equals(title))
-				shippingAddress.selectTitle(title);
 			if (!"".equals(firstName))
 				shippingAddress.typeFirstName(firstName);
 			if (!"".equals(lastName))
@@ -745,7 +781,7 @@ public class CheckOut extends SelTestCase {
 			if (!"".equals(city))
 				shippingAddress.typeCity(city);
 			if (!"".equals(postal))
-				shippingAddress.typePostalCode(postal);
+				shippingAddress.typeZipCode(postal);
 			if (!"".equals(phone))
 				shippingAddress.typePhone(phone);
 
@@ -804,6 +840,7 @@ public class CheckOut extends SelTestCase {
 			getCurrentFunctionName(false);
 		}
 
+		//done
 		public static void typeCVC(String CVC) throws Exception {
 			getCurrentFunctionName(true);
 			List<String> subStrArr = new ArrayList<String>();
@@ -812,9 +849,9 @@ public class CheckOut extends SelTestCase {
 			valuesArr.add(CVC);
 			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
 			getCurrentFunctionName(false);
-
 		}
 
+		//done
 		public static void typeExpireYear(String expireYear) throws Exception {
 			getCurrentFunctionName(true);
 			List<String> subStrArr = new ArrayList<String>();
@@ -826,6 +863,7 @@ public class CheckOut extends SelTestCase {
 
 		}
 
+		//done
 		public static void selectExpireDay(String expireDay) throws Exception {
 			getCurrentFunctionName(true);
 			List<String> subStrArr = new ArrayList<String>();
@@ -837,6 +875,7 @@ public class CheckOut extends SelTestCase {
 
 		}
 
+		//done
 		public static void typeCardNumber(String cardNumber) throws Exception {
 			getCurrentFunctionName(true);
 			List<String> subStrArr = new ArrayList<String>();
@@ -858,13 +897,14 @@ public class CheckOut extends SelTestCase {
 			getCurrentFunctionName(false);
 
 		}
-
+		
+		//done
 		public static void selectCardType(String cardtype) throws Exception {
 			getCurrentFunctionName(true);
 			List<String> subStrArr = new ArrayList<String>();
 			List<String> valuesArr = new ArrayList<String>();
-			subStrArr.add(CheckOutSelectors.cardtype);
-			valuesArr.add(cardtype);
+			subStrArr.add(CheckOutSelectors.cardtype+cardtype.toLowerCase());
+			valuesArr.add("");
 			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
 			getCurrentFunctionName(false);
 

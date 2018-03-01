@@ -16,56 +16,7 @@ import com.generic.util.SelectorUtil;
 
 public class AddressBook extends SelTestCase {
 
-	// public static void clickmyaccount() throws Exception {
-	// getCurrentFunctionName(true);
-	// List<String> subStrArr = new ArrayList<String>();
-	// List<String> valuesArr = new ArrayList<String>();
-	// logs.debug(MessageFormat.format(LoggingMsg.CLICKING_MYACCOUNT_BUTTON, "My
-	// Account"));
-	// subStrArr.add(HomePage.myaccountBtn);
-	// valuesArr.add("");
-	// SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
-	// getCurrentFunctionName(false);
-	//
-	// }
-
-	// public static void clickaddressbook() throws Exception {
-	// getCurrentFunctionName(true);
-	// List<String> subStrArr = new ArrayList<String>();
-	// List<String> valuesArr = new ArrayList<String>();
-	// logs.debug(MessageFormat.format(LoggingMsg.CLICKING_ADDRESS_BOOK_BUTTON,
-	// "Address Book"));
-	// subStrArr.add(HomePage.addressbooktBtn);
-	// valuesArr.add("");
-	// SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
-	// getCurrentFunctionName(false);
-	//
-	// }
-
-	public static void clickSetAsDefault() throws Exception {
-		getCurrentFunctionName(true);
-		List<String> subStrArr = new ArrayList<String>();
-		List<String> valuesArr = new ArrayList<String>();
-		logs.debug(MessageFormat.format(LoggingMsg.CLICKING_SETASDEFAULT_BUTTON, "Set as default"));
-		subStrArr.add(AddressBookSelectors.setasdefaultBtn);
-		valuesArr.add("");
-		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
-		getCurrentFunctionName(false);
-
-	}
-
-	public static void clickRemoveAddress(int index) throws Exception {
-		getCurrentFunctionName(true);
-		List<String> subStrArr = new ArrayList<String>();
-		List<String> valuesArr = new ArrayList<String>();
-		logs.debug(MessageFormat.format(LoggingMsg.CLICKING_REMOVE_BUTTON, "remove address"));
-		subStrArr.add(AddressBookSelectors.removeAddress);
-		valuesArr.add("index,"+index);
-		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
-		getCurrentFunctionName(false);
-
-	}
-
+	//done
 	public static void clickEditAddress() throws Exception {
 		getCurrentFunctionName(true);
 		List<String> subStrArr = new ArrayList<String>();
@@ -78,6 +29,20 @@ public class AddressBook extends SelTestCase {
 
 	}
 
+	//done
+	public static void clickSaveEditAddress() throws Exception {
+		getCurrentFunctionName(true);
+		List<String> subStrArr = new ArrayList<String>();
+		List<String> valuesArr = new ArrayList<String>();
+		logs.debug(MessageFormat.format(LoggingMsg.CLICKING_Edit_BUTTON, "edit address"));
+		subStrArr.add(AddressBookSelectors.clickEditAddress);
+		valuesArr.add("");
+		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
+		getCurrentFunctionName(false);
+
+	}
+
+	//done
 	public static String getFirstAddressDetails() throws Exception {
 		getCurrentFunctionName(true);
 		List<String> subStrArr = new ArrayList<String>();
@@ -90,6 +55,7 @@ public class AddressBook extends SelTestCase {
 		return SelectorUtil.textValue.get();
 	}
 
+	
 	public static String getAlertInfo() throws Exception {
 		getCurrentFunctionName(true);
 		List<String> subStrArr = new ArrayList<String>();
@@ -103,6 +69,7 @@ public class AddressBook extends SelTestCase {
 		return SelectorUtil.textValue.get();
 	}
 
+	//done
 	public static void clickAddNewAddress() throws Exception {
 		getCurrentFunctionName(true);
 		List<String> subStrArr = new ArrayList<String>();
@@ -111,62 +78,66 @@ public class AddressBook extends SelTestCase {
 		subStrArr.add(AddressBookSelectors.addNewAddress);
 		valuesArr.add("");
 		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
+		Thread.sleep(1500);
 		getCurrentFunctionName(false);
 	}
 
+	//done
 	public static void updateAddress() throws Exception {
 		getCurrentFunctionName(true);
-		shippingAddress.selectCountery("Ardenham Court");
-		shippingAddress.selectTitle("MR.");
 		shippingAddress.typeFirstName("Accept");
-		shippingAddress.typeLastName("Tester");
-		shippingAddress.typeAddress("Ardenham Court");
-		shippingAddress.typeCity("LONDON");
-		shippingAddress.typePostalCode("HP19 3EQ");
-		shippingAddress.typePhone("12345678900");
 		clickSave();
 		getCurrentFunctionName(false);
 
 	}
-
-	public static void fillAndClickSave(String Countery, String title, String firstName, String lastName,
-			String address, String city, String postal, String phone, boolean defaultAddress) throws Exception {
-		getCurrentFunctionName(true);
-
-		shippingAddress.selectCountery(Countery);
-		shippingAddress.selectTitle(title);
+	
+	public static void fillAddressForm(String mail, String Countery, String firstName,
+			String lastName, String address, String city, String zip, String phone, boolean defaultAddress) throws Exception {
+		shippingAddress.typeEmailAddress(mail);
 		shippingAddress.typeFirstName(firstName);
 		shippingAddress.typeLastName(lastName);
 		shippingAddress.typeAddress(address);
 		shippingAddress.typeCity(city);
-		shippingAddress.typePostalCode(postal);
+		shippingAddress.typeZipCode(zip);
+		shippingAddress.selectCountery(Countery);
+		shippingAddress.selectState(city);
 		shippingAddress.typePhone(phone);
+		
 		if (defaultAddress)
 			checkSetAsDefaultAddress(defaultAddress);
 		Thread.sleep(1000);
-		clickSave();
+	}
 
+	//done
+	public static void fillAndClickSave(String mail, String Countery, String firstName,
+			String lastName, String address, String city, String zip, String phone, boolean defaultAddress) throws Exception {
+		getCurrentFunctionName(true);
+		fillAddressForm(mail, Countery, firstName, lastName, address, city, zip, phone, defaultAddress);
+		clickSave();
+		getCurrentFunctionName(false);
+	}
+	
+	//done
+	public static void fillAndClickUpdate(String mail, String Countery, String firstName,
+			String lastName, String address, String city, String zip, String phone, boolean defaultAddress) throws Exception {
+		getCurrentFunctionName(true);
+		fillAddressForm(mail, Countery, firstName, lastName, address, city, zip, phone, defaultAddress);
+		clickSaveEditAddress();
 		getCurrentFunctionName(false);
 	}
 
-	public static void fillAndClickSave(String Countery, String title, String firstName, String lastName,
+	//done
+	public static void fillAndClickSave(String mail, String Countery, String firstName, String lastName,
 			String address, String city, String postal, String phone) throws Exception {
 		getCurrentFunctionName(true);
 
-		shippingAddress.selectCountery(Countery);
-		shippingAddress.selectTitle(title);
-		shippingAddress.typeFirstName(firstName);
-		shippingAddress.typeLastName(lastName);
-		shippingAddress.typeAddress(address);
-		shippingAddress.typeCity(city);
-		shippingAddress.typePostalCode(postal);
-		shippingAddress.typePhone(phone);
-		Thread.sleep(1000);
-		clickSave();
+		fillAndClickSave(mail, Countery,  firstName,
+				lastName, address, city, postal, phone, false);
 
 		getCurrentFunctionName(false);
 	}
 	
+	//done
 	public static void clickSave() throws Exception {
 		getCurrentFunctionName(true);
 		List<String> subStrArr = new ArrayList<String>();
@@ -177,40 +148,8 @@ public class AddressBook extends SelTestCase {
 		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
 		getCurrentFunctionName(false);
 	}
-
-	public static void clickAddressBackBtn() throws Exception {
-		getCurrentFunctionName(true);
-		List<String> subStrArr = new ArrayList<String>();
-		List<String> valuesArr = new ArrayList<String>();
-		logs.debug(MessageFormat.format(LoggingMsg.CLICKING_BACK_TO_ADDRESSES_BUTTON, "back to addresses"));
-		subStrArr.add(AddressBookSelectors.addressBackBtn);
-		valuesArr.add("");
-		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
-		getCurrentFunctionName(false);
-	}
-
-	public static String getAddressBookList() throws Exception {
-		getCurrentFunctionName(true);
-		List<String> subStrArr = new ArrayList<String>();
-		List<String> valuesArr = new ArrayList<String>();
-		subStrArr.add(AddressBookSelectors.accountAddressbookList);
-		valuesArr.add("");
-		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
-		getCurrentFunctionName(false);
-		return SelectorUtil.textValue.get();
-	}
-
-	public static void clickDeleteBtn() throws Exception {
-		getCurrentFunctionName(true);
-		List<String> subStrArr = new ArrayList<String>();
-		List<String> valuesArr = new ArrayList<String>();
-		logs.debug(MessageFormat.format(LoggingMsg.CLICKING_DELETE_BUTTON, "confirm delete address"));
-		subStrArr.add(AddressBookSelectors.deleteaddress);
-		valuesArr.add("");
-		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
-		getCurrentFunctionName(false);
-	}
-
+	
+	//done
 	public static void checkSetAsDefaultAddress(boolean check) throws Exception {
 		getCurrentFunctionName(true);
 		List<String> subStrArr = new ArrayList<String>();
@@ -224,104 +163,16 @@ public class AddressBook extends SelTestCase {
 
 	}
 
-	public static void clearAddress() throws Exception {
-		getCurrentFunctionName(true);
-		shippingAddress.typeFirstName("");
-		shippingAddress.typeLastName("");
-		shippingAddress.typeAddress("");
-		shippingAddress.typeCity("");
-		shippingAddress.typePostalCode("");
-		shippingAddress.typePhone("");
-		clickSave();
-		getCurrentFunctionName(false);
-
-	}
-
-	public static void verifyAddressFormError() throws Exception {
-		getCurrentFunctionName(true);
-		getFirstNameError();
-		getLastNameError();
-		getAddress1Error();
-		getCityError();
-		getPostCodeEerror();
-		getCurrentFunctionName(false);
-
-	}
-
-	private static String getFirstNameError() throws Exception {
+	//done
+	public static void clickRemoveAddress() throws Exception {
 		getCurrentFunctionName(true);
 		List<String> subStrArr = new ArrayList<String>();
 		List<String> valuesArr = new ArrayList<String>();
-		logs.debug(MessageFormat.format(LoggingMsg.GET_ELEMENT_BY_LOCATOR,AddressBookSelectors.fnameError));
-		subStrArr.add(AddressBookSelectors.fnameError);
+		logs.debug("Removing First Address");
+		subStrArr.add(AddressBookSelectors.removeBtn);
 		valuesArr.add("");
 		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
-		logs.debug(MessageFormat.format(LoggingMsg.ERROR_MSG, SelectorUtil.textValue.get()));
 		getCurrentFunctionName(false);
-		return SelectorUtil.textValue.get();
-	}
-
-	private static String getLastNameError() throws Exception {
-		getCurrentFunctionName(true);
-		List<String> subStrArr = new ArrayList<String>();
-		List<String> valuesArr = new ArrayList<String>();
-		logs.debug(MessageFormat.format(LoggingMsg.GET_ELEMENT_BY_LOCATOR,AddressBookSelectors.lnameError));
-		subStrArr.add(AddressBookSelectors.lnameError);
-		valuesArr.add("");
-		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
-		logs.debug(MessageFormat.format(LoggingMsg.ERROR_MSG, SelectorUtil.textValue.get()));
-		getCurrentFunctionName(false);
-		return SelectorUtil.textValue.get();
-	}
-
-	private static String getAddress1Error() throws Exception {
-		getCurrentFunctionName(true);
-		List<String> subStrArr = new ArrayList<String>();
-		List<String> valuesArr = new ArrayList<String>();
-		logs.debug(MessageFormat.format(LoggingMsg.GET_ELEMENT_BY_LOCATOR,AddressBookSelectors.address1Error));
-		subStrArr.add(AddressBookSelectors.address1Error);
-		valuesArr.add("");
-		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
-		logs.debug(MessageFormat.format(LoggingMsg.ERROR_MSG, SelectorUtil.textValue.get()));
-		getCurrentFunctionName(false);
-		return SelectorUtil.textValue.get();
-	}
-
-	private static String getCityError() throws Exception {
-		getCurrentFunctionName(true);
-		List<String> subStrArr = new ArrayList<String>();
-		List<String> valuesArr = new ArrayList<String>();
-		logs.debug(MessageFormat.format(LoggingMsg.GET_ELEMENT_BY_LOCATOR,AddressBookSelectors.cityError));
-		subStrArr.add(AddressBookSelectors.cityError);
-		valuesArr.add("");
-		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
-		logs.debug(MessageFormat.format(LoggingMsg.ERROR_MSG, SelectorUtil.textValue.get()));
-		getCurrentFunctionName(false);
-		return SelectorUtil.textValue.get();
-	}
-
-	private static String getPostCodeEerror() throws Exception {
-		getCurrentFunctionName(true);
-		List<String> subStrArr = new ArrayList<String>();
-		List<String> valuesArr = new ArrayList<String>();
-		logs.debug(MessageFormat.format(LoggingMsg.GET_ELEMENT_BY_LOCATOR,AddressBookSelectors.postcodeEerror));
-		subStrArr.add(AddressBookSelectors.postcodeEerror);
-		valuesArr.add("");
-		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
-		logs.debug(MessageFormat.format(LoggingMsg.ERROR_MSG, SelectorUtil.textValue.get()));
-		getCurrentFunctionName(false);
-		return SelectorUtil.textValue.get();
-	}
-
-	public static String getNumberOfAddresses(String selc) throws Exception {
-		getCurrentFunctionName(true);
-		List<String> subStrArr = new ArrayList<String>();
-		List<String> valuesArr = new ArrayList<String>();
-		subStrArr.add(selc);
-		valuesArr.add("");
-		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
-		logs.debug(MessageFormat.format(LoggingMsg.ACTUAL_TEXT,SelectorUtil.numberOfFoundElements));
-		getCurrentFunctionName(false);
-		return SelectorUtil.numberOfFoundElements.get();
+		
 	}
 }
