@@ -742,6 +742,32 @@ public class SelectorUtil extends SelTestCase {
 		getCurrentFunctionName(false);
 		return attrValue;
 	}
+	
+	@SuppressWarnings("rawtypes")
+	public static WebElement getNthElement(List<String> subStrArr, int index) throws Exception
+	{
+	  	getCurrentFunctionName(true);
+		List<String> valuesArr = new ArrayList<String>();
+		valuesArr.add("");
+		LinkedHashMap<String, LinkedHashMap> webelementsInfo = initializeSelectorsAndDoActions(new ArrayList<String>(subStrArr), valuesArr, false);
+		List <WebElement> items = getDriver().findElements((By) webelementsInfo.get(subStrArr.get(0)).get("by"));
+		
+		getCurrentFunctionName(false);
+		return items.get(index);
+	}
+	
+	@SuppressWarnings("rawtypes")
+	public static List<WebElement> getAllElements(List<String> subStrArr) throws Exception
+	{
+	  	getCurrentFunctionName(true);
+		List<String> valuesArr = new ArrayList<String>();
+		valuesArr.add("");
+		LinkedHashMap<String, LinkedHashMap> webelementsInfo = initializeSelectorsAndDoActions(new ArrayList<String>(subStrArr), valuesArr, false);
+		List <WebElement> items = getDriver().findElements((By) webelementsInfo.get(subStrArr.get(0)).get("by"));
+		
+		getCurrentFunctionName(false);
+		return items;
+	}
 
 	    @SuppressWarnings("rawtypes")
 		public static LinkedHashMap<String, LinkedHashMap> initializeSelectorsAndDoActions(List<String> subStrArr, List<String> valuesArr ) throws Exception {
