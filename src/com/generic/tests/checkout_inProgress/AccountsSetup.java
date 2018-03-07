@@ -1,4 +1,4 @@
-package com.generic.tests.checkout;
+package com.generic.tests.checkout_inProgress;
 
 import java.text.MessageFormat;
 import java.util.Arrays;
@@ -76,7 +76,7 @@ public class AccountsSetup extends SelTestCase {
 		logCaseDetailds(MessageFormat.format(LoggingMsg.CHECKOUTDESC, testDataSheet + "." + caseId,
 				this.getClass().getCanonicalName(), email, email, payment, shippingMethod));
 
-		String Pemail = getSubMailAccount(email);
+		String Pemail = email;//getSubMailAccount(email);
 		try {
 			LinkedHashMap<String, Object> userdetails = (LinkedHashMap<String, Object>) users.get(email);
 			Testlogs.get().debug(Pemail);
@@ -97,20 +97,20 @@ public class AccountsSetup extends SelTestCase {
 					.get(products.split("\n")[0]);
 			PDP.addProductsToCartAndClickCheckOut((String) productDetails.get(PDP.keys.url),(String) productDetails.get(PDP.keys.qty));
 
-			Cart.clickCheckout();
+			//Cart.clickCheckout();
 			Thread.sleep(1000);
 			// checkout- shipping address
 			LinkedHashMap<String, Object> addressDetails = (LinkedHashMap<String, Object>) addresses
 					.get(shippingAddress);
 			CheckOut.shippingAddress.fillAndClickNext(
+					Pemail,
 					(String) addressDetails.get(CheckOut.shippingAddress.keys.countery),
-					(String) addressDetails.get(CheckOut.shippingAddress.keys.title),
 					(String) addressDetails.get(CheckOut.shippingAddress.keys.firstName),
 					(String) addressDetails.get(CheckOut.shippingAddress.keys.lastName),
 					(String) addressDetails.get(CheckOut.shippingAddress.keys.adddressLine),
 					(String) addressDetails.get(CheckOut.shippingAddress.keys.city),
-					(String) addressDetails.get(CheckOut.shippingAddress.keys.zipcode),
-					(String) addressDetails.get(CheckOut.shippingAddress.keys.phone), true);
+					(String) addressDetails.get(CheckOut.shippingAddress.keys.city),
+					(String) addressDetails.get(CheckOut.shippingAddress.keys.zipcode), (String) addressDetails.get(CheckOut.shippingAddress.keys.phone), true);
 
 			// Shipping method
 			CheckOut.shippingMethod.fillAndclickNext(shippingMethod);
@@ -134,7 +134,6 @@ public class AccountsSetup extends SelTestCase {
 					(String) billAddressDetails.get(CheckOut.shippingAddress.keys.zipcode),
 					(String) billAddressDetails.get(CheckOut.shippingAddress.keys.phone));
 
-			CheckOut.reviewInformation.acceptTerms(true);
 			CheckOut.reviewInformation.placeOrder();
 
 			Common.testPass();

@@ -10,6 +10,21 @@ public class AddressBookSelectors {
 	public static final String removeBtn = "remove-address";
 	public static final String clickEditAddress = "editAddressdetails";
 	
+	public static final String emailAddress = "email";
+	public static final String state = "enter-state";
+	public static final String firstName = "firstName";
+	public static final String lastName = "surname";
+	public static final String  address= "line1";
+	public static final String city = "townCity";
+	public static final String zipcode = "postcode";
+	public static final String countery = "select-country";
+	public static final String phone = "phoneNo";
+	public static final String addressBookBtn = "css,section>div>div>div>div>div>div>button";
+	public static final String selectFirstAddress = "delevery_address_button right pad_left use_address";
+	public static final String submitShippingAddressBtn = "btngreen1 btn-primary-green";
+	public static final String CheckSaveAddress = "SaveAddress";
+	
+	
 	//inprogress
 	public static final String addressbookurl = "https://hybrisdemo.conexus.co.uk:9002/yacceleratorstorefront/en/my-account/address-book";
 	public static final String addaddressurl = "https://hybrisdemo.conexus.co.uk:9002/yacceleratorstorefront/en/my-account/add-address";

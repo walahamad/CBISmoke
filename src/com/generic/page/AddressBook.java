@@ -8,13 +8,160 @@ import java.util.List;
 import org.apache.commons.lang3.RandomUtils;
 
 import com.generic.selector.AddressBookSelectors;
+import com.generic.selector.CheckOutSelectors;
 import com.generic.setup.SelTestCase;
-import com.generic.page.CheckOut.shippingAddress;
 import com.generic.setup.Common;
 import com.generic.setup.LoggingMsg;
 import com.generic.util.SelectorUtil;
 
 public class AddressBook extends SelTestCase {
+
+	public static class shippingAddress {
+	
+		public static class keys {
+	
+			public static final String isSavedShipping = "saved-shipping";
+	
+			public static final String countery = "countery";
+			public static final String title = "title";
+			public static final String lastName = "lastName";
+			public static final String firstName = "firstName";
+			public static final String adddressLine = "adddressLine";
+			public static final String city = "city";
+			public static final String zipcode = "postal";
+			public static final String phone = "phone";
+		}
+	
+		//done
+		public static void selectCountery(String countery) throws Exception {
+			getCurrentFunctionName(true);
+			List<String> subStrArr = new ArrayList<String>();
+			List<String> valuesArr = new ArrayList<String>();
+			logs.debug(MessageFormat.format(LoggingMsg.SELECTING_ELEMENT_VALUE, "Countery ", countery));
+			subStrArr.add(AddressBookSelectors.countery);
+			valuesArr.add(countery);
+			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
+			Thread.sleep(1500);
+			getCurrentFunctionName(false);
+	
+		}
+	
+		//done
+		public static void typeFirstName(String firstName) throws Exception {
+			getCurrentFunctionName(true);
+			List<String> subStrArr = new ArrayList<String>();
+			List<String> valuesArr = new ArrayList<String>();
+			logs.debug(MessageFormat.format(LoggingMsg.TYPING_ELEMENT_VALUE, "firstname ", firstName));
+			subStrArr.add(AddressBookSelectors.firstName);
+			valuesArr.add(firstName);
+			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
+			getCurrentFunctionName(false);
+	
+		}
+		
+		//done
+		public static void typeAddress(String address) throws Exception {
+			getCurrentFunctionName(true);
+			List<String> subStrArr = new ArrayList<String>();
+			List<String> valuesArr = new ArrayList<String>();
+			logs.debug(MessageFormat.format(LoggingMsg.TYPING_ELEMENT_VALUE, "address ", address));
+			subStrArr.add(AddressBookSelectors.address);
+			valuesArr.add(address);
+			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
+			getCurrentFunctionName(false);
+	
+		}
+	
+		//done
+		public static void typeLastName(String lastName) throws Exception {
+			getCurrentFunctionName(true);
+			List<String> subStrArr = new ArrayList<String>();
+			List<String> valuesArr = new ArrayList<String>();
+			logs.debug(MessageFormat.format(LoggingMsg.TYPING_ELEMENT_VALUE, "lastname ", lastName));
+			subStrArr.add(AddressBookSelectors.lastName);
+			valuesArr.add(lastName);
+			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
+			getCurrentFunctionName(false);
+	
+		}
+	
+		//done
+		public static void typeCity(String city) throws Exception {
+			getCurrentFunctionName(true);
+			List<String> subStrArr = new ArrayList<String>();
+			List<String> valuesArr = new ArrayList<String>();
+			logs.debug(MessageFormat.format(LoggingMsg.TYPING_ELEMENT_VALUE, "city ", city));
+			subStrArr.add(AddressBookSelectors.city);
+			valuesArr.add(city);
+			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
+			getCurrentFunctionName(false);
+	
+		}
+	
+		//done
+		public static void typeZipCode(String zip) throws Exception {
+			getCurrentFunctionName(true);
+			List<String> subStrArr = new ArrayList<String>();
+			List<String> valuesArr = new ArrayList<String>();
+			logs.debug(MessageFormat.format(LoggingMsg.TYPING_ELEMENT_VALUE, "postal", zip));
+			subStrArr.add(AddressBookSelectors.zipcode);
+			valuesArr.add(zip);
+			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
+			getCurrentFunctionName(false);
+	
+		}
+	
+		//done
+		public static void typePhone(String phone) throws Exception {
+			getCurrentFunctionName(true);
+			List<String> subStrArr = new ArrayList<String>();
+			List<String> valuesArr = new ArrayList<String>();
+			logs.debug(MessageFormat.format(LoggingMsg.TYPING_ELEMENT_VALUE, "phone", phone));
+			subStrArr.add(AddressBookSelectors.phone);
+			valuesArr.add(phone);
+			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
+			getCurrentFunctionName(false);
+	
+		}
+	
+		//done
+		public static void checkSaveAddress(boolean check) throws Exception {
+			getCurrentFunctionName(true);
+			List<String> subStrArr = new ArrayList<String>();
+			List<String> valuesArr = new ArrayList<String>();
+			logs.debug(LoggingMsg.SAVING_ADDRESS);
+			subStrArr.add(AddressBookSelectors.CheckSaveAddress);
+			valuesArr.add(String.valueOf(check));
+			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
+			getCurrentFunctionName(false);
+	
+		}
+
+		//done
+		public static void typeEmailAddress(String mail) throws Exception {
+			getCurrentFunctionName(true);
+			List<String> subStrArr = new ArrayList<String>();
+			List<String> valuesArr = new ArrayList<String>();
+			subStrArr.add(AddressBookSelectors.emailAddress);
+			valuesArr.add(mail);
+			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
+			getCurrentFunctionName(false);
+			
+		}
+		
+		//done
+		public static void selectState(String state) throws Exception {
+			getCurrentFunctionName(true);
+			List<String> subStrArr = new ArrayList<String>();
+			List<String> valuesArr = new ArrayList<String>();
+			subStrArr.add(AddressBookSelectors.state);
+			valuesArr.add(state);
+			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
+			getCurrentFunctionName(false);
+			
+		}
+	
+	}// shipping address
 
 	//done
 	public static void clickEditAddress() throws Exception {

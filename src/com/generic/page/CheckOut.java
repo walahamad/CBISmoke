@@ -52,10 +52,11 @@ public class CheckOut extends SelTestCase {
 
 		}
 
+		//done
 		public static void fillAndClickGuestCheckout(String email) throws Exception {
 			getCurrentFunctionName(true);
-			typeGuestMail(email);
-			typeGuestConfMail(email);
+			//typeGuestMail(email);
+			//typeGuestConfMail(email);
 			clickCheckoutAsGuest();
 			getCurrentFunctionName(false);
 		}
@@ -126,7 +127,8 @@ public class CheckOut extends SelTestCase {
 			clickRetuRningcustomerLogin();
 			getCurrentFunctionName(false);
 		}
-
+		
+		//done
 		private static void clickRetuRningcustomerLogin() throws Exception {
 			getCurrentFunctionName(true);
 			List<String> subStrArr = new ArrayList<String>();
@@ -256,17 +258,6 @@ public class CheckOut extends SelTestCase {
 
 		}
 
-		public static void selectTitle(String title) throws Exception {
-			getCurrentFunctionName(true);
-			List<String> subStrArr = new ArrayList<String>();
-			List<String> valuesArr = new ArrayList<String>();
-			logs.debug(MessageFormat.format(LoggingMsg.SELECTING_ELEMENT_VALUE, "title ", title));
-			subStrArr.add(CheckOutSelectors.title);
-			valuesArr.add(title);
-			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
-			getCurrentFunctionName(false);
-		}
-		
 		//done
 		public static void typeFirstName(String firstName) throws Exception {
 			getCurrentFunctionName(true);
@@ -345,6 +336,7 @@ public class CheckOut extends SelTestCase {
 
 		}
 
+		//done
 		public static void checkSaveAddress(boolean check) throws Exception {
 			getCurrentFunctionName(true);
 			List<String> subStrArr = new ArrayList<String>();
@@ -381,6 +373,7 @@ public class CheckOut extends SelTestCase {
 			return SelectorUtil.textValue.get();
 		}
 
+		//done
 		public static void clickNext() throws Exception {
 			getCurrentFunctionName(true);
 			List<String> subStrArr = new ArrayList<String>();
@@ -393,73 +386,52 @@ public class CheckOut extends SelTestCase {
 
 		}
 
-		public static void fillAndClickNext(String Countery, String title, String firstName, String lastName,
-				String address, String city, String postal, String phone, boolean saveAdderss) throws Exception {
+		//done
+		public static void fillAndClickNext(String email, String Countery, String firstName, String lastName,
+				String address, String city, String state, String postal, String phone, boolean saveAddr) throws Exception {
 			getCurrentFunctionName(true);
-
-			if (!"".equals(Countery))
-				selectCountery(Countery);
-
-			if (!"".equals(title))
-				selectTitle(title);
-
+			clickOnAddressBook();
+			
+			Thread.sleep(1500);
+			
+			if (!"".equals(email))
+				typeEmailAddress(email);
+			
 			if (!"".equals(firstName))
 				typeFirstName(firstName);
-
+			
 			if (!"".equals(lastName))
 				typeLastName(lastName);
-
+			
 			if (!"".equals(address))
 				typeAddress(address);
-
+			
 			if (!"".equals(city))
 				typeCity(city);
+			
+			if (!"".equals(state))
+				selectState(state);
 
 			if (!"".equals(postal))
 				typeZipCode(postal);
-
-			if (!"".equals(phone))
-				typePhone(phone);
-
-			checkSaveAddress(saveAdderss);
-			clickNext();
-
-			getCurrentFunctionName(false);
-		}
-
-		public static void fillAndClickNext(String Countery, String title, String firstName, String lastName,
-				String address, String city, String postal, String phone) throws Exception {
-			getCurrentFunctionName(true);
-
+			
 			if (!"".equals(Countery))
 				selectCountery(Countery);
-
-			if (!"".equals(title))
-				selectTitle(title);
-
-			if (!"".equals(firstName))
-				typeFirstName(firstName);
-
-			if (!"".equals(lastName))
-				typeLastName(lastName);
-
-			if (!"".equals(address))
-				typeAddress(address);
-
-			if (!"".equals(city))
-				typeCity(city);
-
-			if (!"".equals(postal))
-				typeZipCode(postal);
-
+			
 			if (!"".equals(phone))
 				typePhone(phone);
+			
+			if (saveAddr)
+				checkSaveAddress(saveAddr); 
 
 			clickNext();
-
+			logs.debug("Waiting shipping address verification system");
+			Thread.sleep(2000);
 			getCurrentFunctionName(false);
 		}
 
+
+		//done
 		// in case of using the address book
 		public static void fillAndClickNext(boolean selectFromAddressBook) throws Exception {
 			getCurrentFunctionName(true);
@@ -467,7 +439,8 @@ public class CheckOut extends SelTestCase {
 			selectFirstAddress();
 			getCurrentFunctionName(false);
 		}
-
+		
+		//done
 		private static void selectFirstAddress() throws Exception {
 			List<String> subStrArr = new ArrayList<String>();
 			List<String> valuesArr = new ArrayList<String>();
@@ -479,6 +452,7 @@ public class CheckOut extends SelTestCase {
 
 		}
 
+		//done
 		private static void clickOnAddressBook() throws Exception {
 			List<String> subStrArr = new ArrayList<String>();
 			List<String> valuesArr = new ArrayList<String>();
@@ -621,26 +595,53 @@ public class CheckOut extends SelTestCase {
 	}// shipping address
 
 	public static class shippingMethod {
-
+		
+		//done
 		public static void fillAndclickNext(String shippingMethod) throws Exception {
 			getCurrentFunctionName(true);
-			selectShippingMethod(shippingMethod);
-			clickNext();
+			logs.debug(shippingMethod);
+			if (!shippingMethod.contains("ground"))
+			{
+				clickaddShippingMethod();
+				selectShippingMethod(shippingMethod);
+				clickNext();
+			}
+			else
+			{
+				logs.debug("ignoring reselecting the shipping method");
+			}
 			getCurrentFunctionName(false);
 
 		}
-
-		private static void selectShippingMethod(String shippingMethod) throws Exception {
+		
+		//done
+		private static void clickaddShippingMethod() throws Exception {
 			getCurrentFunctionName(true);
 			List<String> subStrArr = new ArrayList<String>();
 			List<String> valuesArr = new ArrayList<String>();
-			subStrArr.add(CheckOutSelectors.shippingMethod);
-			valuesArr.add(shippingMethod);
+			subStrArr.add(CheckOutSelectors.addshippingMethodBtn);
+			valuesArr.add("");
 			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
 			getCurrentFunctionName(false);
 
 		}
 
+		//done
+		private static void selectShippingMethod(String shippingMethod) throws Exception {
+			getCurrentFunctionName(true);
+			List<String> subStrArr = new ArrayList<String>();
+			List<String> valuesArr = new ArrayList<String>();
+			if (!shippingMethod.contains("ground"))
+			{
+				subStrArr.add(shippingMethod+"-gross");
+				valuesArr.add("");
+				SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
+				Thread.sleep(2000);
+			}
+			getCurrentFunctionName(false);
+
+		}
+		//done
 		private static void clickNext() throws Exception {
 			getCurrentFunctionName(true);
 			List<String> subStrArr = new ArrayList<String>();
@@ -649,30 +650,6 @@ public class CheckOut extends SelTestCase {
 			valuesArr.add("");
 			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
 			getCurrentFunctionName(false);
-		}
-
-		public static String getOrderTotal() throws Exception {
-			getCurrentFunctionName(true);
-			List<String> subStrArr = new ArrayList<String>();
-			List<String> valuesArr = new ArrayList<String>();
-			subStrArr.add(CheckOutSelectors.orderTotalShippingMethod);
-			valuesArr.add("");
-			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
-			logs.debug(SelectorUtil.textValue.get());
-			getCurrentFunctionName(false);
-			return SelectorUtil.textValue.get();
-		}
-
-		public static String getOrderSubTotal() throws Exception {
-			getCurrentFunctionName(true);
-			List<String> subStrArr = new ArrayList<String>();
-			List<String> valuesArr = new ArrayList<String>();
-			subStrArr.add(CheckOutSelectors.orderSubTotalShippingMethod);
-			valuesArr.add("");
-			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
-			logs.debug(SelectorUtil.textValue.get());
-			getCurrentFunctionName(false);
-			return SelectorUtil.textValue.get();
 		}
 
 	}// shipping method
@@ -689,38 +666,8 @@ public class CheckOut extends SelTestCase {
 			public static final String CVCC = "CVCC";
 
 		}
-
-		public static void fillAndclickNext(String cardtype, String cardNumber, String expireDay,
-				String expireYear, String CVC, boolean savePayment, boolean billSameShip, String countery,
-				String firstName, String lastName, String address, String city, String postal, String phone)
-				throws Exception {
-			getCurrentFunctionName(true);
-
-			if (!"".equals(cardtype))
-				selectCardType(cardtype);
-			if (!"".equals(cardNumber))
-				typeCardNumber(cardNumber);
-			if (!"".equals(expireDay))
-				selectExpireDay(expireDay);
-			if (!"".equals(expireDay))
-				typeExpireYear(expireYear);
-			if (!"".equals(CVC))
-				typeCVC(CVC);
-
-			savePaymentMethod(savePayment);
-
-			checkBillingAddressSameshipping(billSameShip);
-
-			if (!billSameShip) {
-				fillBillingAddress(countery, firstName, lastName, address, city, postal, phone);
-			}
-
-			clickNext();
-			Thread.sleep(1000);
-			getCurrentFunctionName(false);
-		}
-
-
+		
+		//done
 		public static void fill(String cardtype, String cardNumber, String expireDay, String expireYear,
 				String CVC) throws Exception {
 			getCurrentFunctionName(true);
@@ -737,13 +684,38 @@ public class CheckOut extends SelTestCase {
 			getCurrentFunctionName(false);
 		}
 		
+
+		//TODO: if bw allow
+		public static void fillAndclickNext(String cardtype, String cardNumber, String expireDay,
+				String expireYear, String CVC, boolean savePayment, boolean billSameShip, String countery,
+				String firstName, String lastName, String address, String city, String postal, String phone)
+				throws Exception {
+			getCurrentFunctionName(true);
+			clickAddPaymentMethod();
+			fill(cardtype, cardNumber, expireDay, expireYear, CVC);
+
+			savePaymentMethod(savePayment);
+
+			checkBillingAddressSameshipping(billSameShip);
+
+			//TODO: wrap this 
+			if (!billSameShip && false) {
+				fillBillingAddress(countery, firstName, lastName, address, city, postal, phone);
+			}
+
+			clickNext();
+			Thread.sleep(1000);
+			getCurrentFunctionName(false);
+		}
+
 		
 		//done
 		public static void fillAndclickNext(String cardtype, String cardNumber, String expireDay, String expireYear,
-				String CVC, boolean billSameShip, String countery, String title, String firstName, String lastName,
-				String address, String city, String postal, String phone) throws Exception {
+				String CVC, boolean billSameShip, String countery, String firstName, String lastName, String address,
+				String city, String postal, String phone) throws Exception {
 			getCurrentFunctionName(true);
-
+			Thread.sleep(1500);
+			clickAddPaymentMethod();
 			fill(cardtype, cardNumber, expireDay, expireYear, CVC);
 			
 
@@ -758,10 +730,25 @@ public class CheckOut extends SelTestCase {
 			getCurrentFunctionName(false);
 		}
 
+		//done
+		private static void clickAddPaymentMethod() throws Exception {
+			getCurrentFunctionName(true);
+			List<String> subStrArr = new ArrayList<String>();
+			List<String> valuesArr = new ArrayList<String>();
+			subStrArr.add(CheckOutSelectors.addPaymentBtn);
+			valuesArr.add("");
+			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
+			getCurrentFunctionName(false);
+			
+		}
+
+
+		//TODO: do it in lowser envs
 		// in case of using wallet
 		public static void fillAndclickNext(boolean useAlreadySavedPayment) throws Exception {
 			getCurrentFunctionName(true);
-			clickOnUseedSavedCard();
+			clickAddPaymentMethod();
+			//clickOnUseedSavedCard();
 			pickFirstpaymentsaved();
 			getCurrentFunctionName(false);
 		}
@@ -788,6 +775,7 @@ public class CheckOut extends SelTestCase {
 			getCurrentFunctionName(false);
 		}
 
+		//done
 		private static void pickFirstpaymentsaved() throws Exception {
 			getCurrentFunctionName(true);
 			List<String> subStrArr = new ArrayList<String>();
@@ -808,7 +796,8 @@ public class CheckOut extends SelTestCase {
 			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
 			getCurrentFunctionName(false);
 		}
-
+		
+		//done
 		public static void clickNext() throws Exception {
 			getCurrentFunctionName(true);
 			List<String> subStrArr = new ArrayList<String>();
@@ -819,17 +808,19 @@ public class CheckOut extends SelTestCase {
 			getCurrentFunctionName(false);
 		}
 
+		//done
 		public static void checkBillingAddressSameshipping(boolean billSameShip) throws Exception {
 			getCurrentFunctionName(true);
 			List<String> subStrArr = new ArrayList<String>();
 			List<String> valuesArr = new ArrayList<String>();
 			subStrArr.add(CheckOutSelectors.checkSame);
-			valuesArr.add(String.valueOf(billSameShip));
+			valuesArr.add(String.valueOf(!billSameShip));
 			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
 			getCurrentFunctionName(false);
 
 		}
 
+		//done
 		private static void savePaymentMethod(boolean savePayment) throws Exception {
 			getCurrentFunctionName(true);
 			List<String> subStrArr = new ArrayList<String>();
@@ -901,11 +892,19 @@ public class CheckOut extends SelTestCase {
 		//done
 		public static void selectCardType(String cardtype) throws Exception {
 			getCurrentFunctionName(true);
+			Thread.sleep(1000);
 			List<String> subStrArr = new ArrayList<String>();
 			List<String> valuesArr = new ArrayList<String>();
-			subStrArr.add(CheckOutSelectors.cardtype+cardtype.toLowerCase());
+			subStrArr.add(CheckOutSelectors.cardtype);
 			valuesArr.add("");
-			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
+			if (cardtype.toLowerCase().contains("visa"))
+				SelectorUtil.getNthElement(subStrArr, 3).click();
+			if (cardtype.toLowerCase().contains("discover"))
+				SelectorUtil.getNthElement(subStrArr, 2).click();
+			if (cardtype.toLowerCase().contains("master"))
+				SelectorUtil.getNthElement(subStrArr, 1).click();
+			if (cardtype.toLowerCase().contains("amex"))
+				SelectorUtil.getNthElement(subStrArr, 0).click();
 			getCurrentFunctionName(false);
 
 		}
@@ -1064,8 +1063,10 @@ public class CheckOut extends SelTestCase {
 
 		}
 
+		//done
 		public static void placeOrder() throws Exception {
 			getCurrentFunctionName(true);
+			Thread.sleep(1500);
 			List<String> subStrArr = new ArrayList<String>();
 			List<String> valuesArr = new ArrayList<String>();
 			subStrArr.add(CheckOutSelectors.placeOrderBtn);
