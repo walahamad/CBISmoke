@@ -221,7 +221,8 @@ public class Cart extends SelTestCase {
 		getCurrentFunctionName(true);
 		List<String> subStrArr = new ArrayList<String>();
 		List<String> valuesArr = new ArrayList<String>();
-		subStrArr.add(CartSelectors.couponErrorMessage);
+		// subStrArr.add(CartSelectors.couponErrorMessage);
+		subStrArr.add(CartSelectors.couponMessage);
 		valuesArr.add("");
 		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
 		getCurrentFunctionName(false);
@@ -229,6 +230,17 @@ public class Cart extends SelTestCase {
 		return SelectorUtil.textValue.get();
 	}
 
+	public static String getCouponGlobalMessage() throws Exception {
+		getCurrentFunctionName(true);
+		List<String> subStrArr = new ArrayList<String>();
+		List<String> valuesArr = new ArrayList<String>();
+		subStrArr.add(CartSelectors.couponGlobalMessage);
+		valuesArr.add("");
+		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
+		getCurrentFunctionName(false);
+		logs.debug(MessageFormat.format(LoggingMsg.COUPON_MSG, SelectorUtil.textValue.get()));
+		return SelectorUtil.textValue.get();
+	}
 	//done 
 	public static void updateQuantityValue(String browser, String lineOrder, String qty) throws Exception {
 		// Limited to edit first product qty

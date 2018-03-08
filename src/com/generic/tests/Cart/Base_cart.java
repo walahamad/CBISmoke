@@ -226,6 +226,15 @@ public class Base_cart extends SelTestCase {
 				sassert().assertTrue(siteOrderTotal == SheetOrderTotal , "FAILED: the discounts should be matched: <br>"+orderTotalMsg);
 			}//verify order total
 			
+			if (proprties.contains("remove Promotion")) {
+				Cart.removeCoupon();
+			double siteOrdersubtotal  = Double.parseDouble(Cart.getOrderSubTotal().replace("$", "").trim());
+			logs.debug("Order subtotal: " + siteOrdersubtotal);
+			double siteOrderTotal = Double.parseDouble(Cart.getOrderTotal().replace("$", "").trim());
+			logs.debug("Order total: " + siteOrderTotal);
+			sassert().assertTrue(siteOrdersubtotal == siteOrderTotal , "FAILED: voucher code is not removed correctly: <br>");
+			}//Remove Promotion.
+			
 			if (proprties.contains("click checkout")) {
 				Cart.clickCheckout();
 			} else {
@@ -237,10 +246,6 @@ public class Base_cart extends SelTestCase {
 				getDriver().get("http://stage.com/oshstorefront/cart");
 				Cart.removeAllItemsFromCart();
 			}
-
-			//TODO: Blocked by adding valid promotion 
-			if (proprties.contains("remove Promotion") && false)
-				Cart.removeCoupon();
 			
 			ReportUtil.takeScreenShot(getDriver());
 
