@@ -79,6 +79,7 @@ public class PaymentDetails extends SelTestCase {
 		subStrArr.add(PaymentDetailsSelectors.addPaymentBtn);
 		valuesArr.add("");
 		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
+		Thread.sleep(1500);
 		getCurrentFunctionName(false);
 	}
 }

@@ -16,11 +16,11 @@ public class CartSelectors
 	public static final String postitiveMsg = "information-message positive";
 	public static final String unitPrice = "css,.unit-price";
 	public static final String productSubtotal = "css,.sub-total";
+	public static final String numberOfProducts = "btn-remove-cart-item";
 	
 	
 	//TODO:Delete
 	public static final String OrderSubTotal = "test_Order_Totals_Subtotal_$1";
-	public static final String numberOfProducts = "cart__top--totals";
 	public static final String removeCoupon = "glyphicon glyphicon-remove js-release-voucher-remove-btn voucher-list__item-remove";
 	public static final String glabalErrorMessage = "alert alert-danger alert-dismissable";
 	public static final String qty = "quantity_0";

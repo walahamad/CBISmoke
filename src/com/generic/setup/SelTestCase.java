@@ -185,10 +185,17 @@ public class SelTestCase {
     public static void getBrowserWait(String BrowserName)
     {
     	try {
+    		int waitBrowser = RandomUtils.nextInt(0,2000); 
+    		logs.debug("waiting test: " + waitBrowser);
+    		Thread.sleep(waitBrowser);
+		} catch (InterruptedException e1) {
+			e1.printStackTrace();
+		}
+    	try {
 			if (BrowserName.equals("firefox"))
 				Thread.sleep(1000);
 			else if (BrowserName.equals("chrome"))
-				Thread.sleep(1500);
+				Thread.sleep(500);
 			else
 				Thread.sleep(RandomUtils.nextInt(900,1200));
 		} catch (InterruptedException e) {

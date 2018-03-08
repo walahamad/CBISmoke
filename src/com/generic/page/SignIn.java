@@ -16,6 +16,7 @@ public class SignIn extends SelTestCase {
 	public static void logIn(String userName, String Password) throws Exception {
 		getCurrentFunctionName(true);
 		fillLoginFormAndClickSubmit(userName,Password);
+		Thread.sleep(1000);
 		if(!checkUserAccount())
 		{
 			throw new Exception("Login failed");

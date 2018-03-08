@@ -4,6 +4,8 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.openqa.selenium.WebElement;
+
 import com.generic.selector.CartSelectors;
 import com.generic.setup.SelTestCase;
 import com.generic.setup.ExceptionMsg;
@@ -42,17 +44,15 @@ public class Cart extends SelTestCase {
 		getCurrentFunctionName(false);
 	}
 
-	//TODO: delete
-	public static String getNumberOfproducts() throws Exception {
+	//done
+	public static int getNumberOfproducts() throws Exception {
 		getCurrentFunctionName(true);
 		List<String> subStrArr = new ArrayList<String>();
-		List<String> valuesArr = new ArrayList<String>();
 		subStrArr.add(CartSelectors.numberOfProducts);
-		valuesArr.add("");
-		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
+		List<WebElement> removeButtons = SelectorUtil.getAllElements(subStrArr);
 		logs.debug(MessageFormat.format(LoggingMsg.NUMBER_OF_PRODUCTS, SelectorUtil.textValue.get()));
 		getCurrentFunctionName(false);
-		return SelectorUtil.textValue.get();
+		return removeButtons.size();
 	}
 	
 	//TODO: delete
@@ -320,17 +320,23 @@ public class Cart extends SelTestCase {
 		return (SelectorUtil.textValue.get().contains("empty") ? true : false);
 	}
 
-	//Execluded
+	//done
 	public static void removeAllItemsFromCart() throws Exception {
 		getCurrentFunctionName(true);
 
-		if (!isCartEmpty()) {
-			int numberOfItems = Integer.parseInt(getNumberOfproducts().split(" ")[0]);
-			logs.debug(LoggingMsg.REMOVE_ALL_ITEMS_FROM_CART);
-			for (int itemIndex = numberOfItems - 1; itemIndex >= 0; itemIndex--)
-				removeItemFromCart(0); // keep always remove the first item
-		} else {
-			logs.debug(LoggingMsg.NO_ITEMS_TO_BE_REMOVED);
+		List<String> subStrArr = new ArrayList<String>();
+		List<String> valuesArr = new ArrayList<String>();
+		
+		subStrArr.add(CartSelectors.numberOfProducts);
+		valuesArr.add("");
+		
+		List<WebElement> removeButtons = SelectorUtil.getAllElements(subStrArr);
+		
+		int numberOfItems = removeButtons.size();
+		logs.debug(LoggingMsg.REMOVE_ALL_ITEMS_FROM_CART);
+		for (int itemIndex = numberOfItems; itemIndex > 0; itemIndex--)
+		{
+			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
 		}
 
 		getCurrentFunctionName(false);

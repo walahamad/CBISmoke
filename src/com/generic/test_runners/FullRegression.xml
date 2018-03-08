@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Full regression" parallel="tests" thread-count="2" data-provider-thread-count="2">
+	
+	<test name="addressBook chrome">
+		<parameter name="browserName" value="chrome"></parameter>
+		<classes>
+			<class name="com.generic.tests.MyAccount_addressBook.AddressBookValidationBase" />
+		</classes>
+	</test><!-- Test -->	
+	
+	
+	<test name="cart Tests _ chrome">
+		<parameter name="browserName" value="chrome"></parameter>
+		<classes>
+			<class name="com.generic.tests.Cart.Base_cart" />
+		</classes>
+	</test><!-- Test -->
+	
+	<test name="checkout chrome">
+		<parameter name="browserName" value="chrome"></parameter>
+		<classes>
+			<class name="com.generic.tests.checkout.Base_checkout" />
+		</classes>
+	</test><!-- Test -->
+	
+
+	<test name="Login chrome">
+		<parameter name="browserName" value="chrome"></parameter>
+		<classes>
+			<class name="com.generic.tests.login.LoginBase" />
+		</classes>
+	</test><!-- Test -->
+	
+	
+	<test name="payment details regression chrome">
+		<parameter name="browserName" value="chrome"></parameter>
+		<classes>
+		   	<class name="com.generic.tests.MyAccount_Payment.PaymentDetailsValidationBase" />
+		</classes>
+	</test><!-- Test -->
+	
+	
+	<test name="PDP Tests _ chrome">
+		<parameter name="browserName" value="chrome"></parameter>
+		<classes>
+			<class name="com.generic.tests.PDP.Base_PDP" />
+		</classes>
+	</test><!-- Test -->
+	
+	
+	<test name="PLP validation chrome">
+		<parameter name="browserName" value="chrome"></parameter>
+		<classes>
+              <class name="com.generic.tests.Search_PLP.PLP_Base" />
+		</classes>
+	</test><!-- Test -->
+	
+	
+	<test name="Registration chrome">
+		<parameter name="browserName" value="chrome"></parameter>
+		<classes>
+			<class name="com.generic.tests.Registration.RegistrationBase" />
+		</classes>
+	</test><!-- Test -->
+	
+</suite> <!-- Suite -->
