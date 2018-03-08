@@ -63,17 +63,24 @@ public class Base_PDP extends SelTestCase {
 	@Test(dataProvider = "PDPs")
 	public void checkOutBaseTest(String caseId, String runTest, String desc, String proprties, String product,
 			String email, String ValidationMsg) throws Exception {
-		String UsedEmail;
 		// Important to add this for logging/reporting
 		Testlogs.set(new SASLogger("PDP_" + getBrowserName()));
 		setTestCaseReportName("PDP Case");
 		logCaseDetailds(MessageFormat.format(LoggingMsg.PDPDESC, testDataSheet + "." + caseId,
 				this.getClass().getCanonicalName(), desc, proprties.replace("\n", "<br>- ")));
-		UsedEmail = getSubMailAccount(email);
+		
+		String UsedEmail = "";
+		LinkedHashMap<String, Object> userdetails = null; 
+		if (!email.equals(""))
+		{
+			userdetails = (LinkedHashMap<String, Object>) users.get(email);
+			UsedEmail = (String) userdetails.get(Registration.keys.email);
+			Testlogs.get().debug("Mail will be used is: " + UsedEmail);
+		}
+		
 		try {
 
 			if (proprties.contains("Loggedin")) {
-				LinkedHashMap<String, Object> userdetails = (LinkedHashMap<String, Object>) users.get(email);
 				Testlogs.get().debug("Used mail to login: "+UsedEmail);
 				Testlogs.get().debug("Used Password to login: "+(String) userdetails.get(Registration.keys.password) );
 				SignIn.logIn(UsedEmail, (String) userdetails.get(Registration.keys.password));

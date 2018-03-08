@@ -84,12 +84,19 @@ public class Base_checkout extends SelTestCase {
 		String orderTax;
 		String orderShipping;
 		
-		Pemail = email;
+		
+		Pemail = "";
+		LinkedHashMap<String, Object> userdetails = null; 
+		if (!email.equals(""))
+		{
+			userdetails = (LinkedHashMap<String, Object>) users.get(email);
+			Pemail = (String) userdetails.get(Registration.keys.email);
+			Testlogs.get().debug("Mail will be used is: " + Pemail);
+		}
 		
 		try {
 			if (proprties.contains(loggedInUser)) {
 				//you need to maintain the concurrency and get the main account information and log in in browser account 
-				LinkedHashMap<String, Object> userdetails = (LinkedHashMap<String, Object>) users.get(email);
 				Testlogs.get().debug(Pemail);
 				Testlogs.get().debug((String) userdetails.get(Registration.keys.password) );
 				SignIn.logIn(Pemail, (String) userdetails.get(Registration.keys.password));
@@ -98,13 +105,13 @@ public class Base_checkout extends SelTestCase {
 				Pemail = RandomUtilities.getRandomEmail();
 
 				// take any user as template
-				LinkedHashMap<String, Object> userdetails = (LinkedHashMap<String, Object>) users.entrySet().iterator()
+				LinkedHashMap<String, Object> RandomUserdetails = (LinkedHashMap<String, Object>) users.entrySet().iterator()
 						.next().getValue();
 
-				Registration.fillAndClickRegister((String) userdetails.get(Registration.keys.firstName),
-						(String) userdetails.get(Registration.keys.lastName),
-						Pemail, (String) userdetails.get(Registration.keys.password),
-						(String) userdetails.get(Registration.keys.password));
+				Registration.fillAndClickRegister((String) RandomUserdetails.get(Registration.keys.firstName),
+						(String) RandomUserdetails.get(Registration.keys.lastName),
+						Pemail, (String) RandomUserdetails.get(Registration.keys.password),
+						(String) RandomUserdetails.get(Registration.keys.password));
 			}
 
 			for (String product : products.split("\n")) {
@@ -124,7 +131,6 @@ public class Base_checkout extends SelTestCase {
 			//Cart.clickCheckout();
 			
 			if (proprties.contains(loggedDuringChcOt)) {
-				LinkedHashMap<String, Object> userdetails = (LinkedHashMap<String, Object>) users.get(email);
 				Testlogs.get().debug("Login during checkout with: "+Pemail);
 				Testlogs.get().debug("Using password: "+(String) userdetails.get(Registration.keys.password) );
 				CheckOut.guestCheckout.returningCustomerLogin(Pemail, (String) userdetails.get(Registration.keys.password));

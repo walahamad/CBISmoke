@@ -541,7 +541,7 @@ public class Common extends SelTestCase {
 			user.put((String) data[header][password], data[row][password]);
 			user.put((String) data[header][mail], data[row][mail]);
 
-			users.put((String) data[row][mail], user);
+			users.put((String) data[row][name], user);
 		}
 		logs.debug(Arrays.asList(users)+"");
 		return users;

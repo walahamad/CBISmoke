@@ -67,16 +67,25 @@ public class AddressBookValidationBase extends SelTestCase {
 		logCaseDetailds(MessageFormat.format(LoggingMsg.ADDRESSPOOKDESC, testDataSheet + "." + caseId,
 				this.getClass().getCanonicalName(), desc));
 		
-		String caseEmail = email;
+		
+		String caseMail = "";
+		LinkedHashMap<String, Object> userdetails = null; 
+		if (!email.equals(""))
+		{
+			userdetails = (LinkedHashMap<String, Object>) users.get(email);
+			caseMail = (String) userdetails.get(Registration.keys.email);
+			Testlogs.get().debug("Mail will be used is: " + caseMail);
+		}
+		
+		
 		String url = PagesURLs.getAddressBookPage();
 		boolean defaultAddress = prop.contains("default Address") ;
 		
 		try {
-			LinkedHashMap<String, Object> userdetails = (LinkedHashMap<String, Object>) users.get(email);
-			Testlogs.get().debug(caseEmail);
+			Testlogs.get().debug(caseMail);
 			Testlogs.get().debug((String) userdetails.get(Registration.keys.password));
 			
-			SignIn.logIn(caseEmail, (String) userdetails.get(Registration.keys.password));
+			SignIn.logIn(caseMail, (String) userdetails.get(Registration.keys.password));
 			
 			if (prop.contains("new") || prop.contains("default") || prop.contains("delete")) {
 				getDriver().get(url);
@@ -84,7 +93,7 @@ public class AddressBookValidationBase extends SelTestCase {
 				AddressBook.clickAddNewAddress();
 				LinkedHashMap<String, Object> addressDetails = (LinkedHashMap<String, Object>) addresses
 						.get(newaddress);
-				AddressBook.fillAndClickSave(caseEmail,
+				AddressBook.fillAndClickSave(caseMail,
 						(String) addressDetails.get(CheckOut.shippingAddress.keys.countery),
 						"NEW_" + RandomUtils.nextInt(1000, 9000),
 						(String) addressDetails.get(CheckOut.shippingAddress.keys.lastName),
@@ -106,7 +115,7 @@ public class AddressBookValidationBase extends SelTestCase {
 				String addressbook = AddressBook.getFirstAddressDetails();
 				AddressBook.clickEditAddress();
 				LinkedHashMap<String, Object> addressDetails = (LinkedHashMap<String, Object>) addresses.get(newaddress);
-				AddressBook.fillAndClickUpdate(caseEmail,
+				AddressBook.fillAndClickUpdate(caseMail,
 						(String) addressDetails.get(CheckOut.shippingAddress.keys.countery),
 						"NEW_" + RandomUtils.nextInt(1000, 9000),
 						(String) addressDetails.get(CheckOut.shippingAddress.keys.lastName),

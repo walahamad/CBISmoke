@@ -26,7 +26,6 @@ import com.generic.util.dataProviderUtils;
 public class LoginBase extends SelTestCase {
 
 	private static  LinkedHashMap<String, Object> users =null ;
-	private static ThreadLocal<String> email = new ThreadLocal<String>();
 	private static int testCaseID;
 	// used sheet in test
 	public static final String testDataSheet = SheetVariables.loginSheet;
@@ -61,20 +60,27 @@ public class LoginBase extends SelTestCase {
 		//Testlogs.get().debug("Case Browser: "  + testObject.getParameter("browserName") );
 		logCaseDetailds(MessageFormat.format(LoggingMsg.TEST_CASE_DESC, testDataSheet + "." + caseId,
 				this.getClass().getCanonicalName(), desc, proprties.replace("\n", "<br>- ")));
-		this.email.set(getSubMailAccount(email));
-		LinkedHashMap<String, Object> userdetails = (LinkedHashMap<String, Object>) users.get(email);
-
+		
+		String caseMail = "";
+		LinkedHashMap<String, Object> userdetails = null; 
+		if (!email.equals(""))
+		{
+			userdetails = (LinkedHashMap<String, Object>) users.get(email);
+			caseMail = (String) userdetails.get(Registration.keys.email);
+			Testlogs.get().debug("Mail will be used is: " + caseMail);
+		}
+		
 
 		try {
 
 			if (proprties.equals("Success login")) {
-				Testlogs.get().debug(this.email.get());
+				Testlogs.get().debug(caseMail);
 				Testlogs.get().debug((String) userdetails.get(Registration.keys.password) );
-				SignIn.logIn(this.email.get(), (String) userdetails.get(Registration.keys.password));
+				SignIn.logIn(caseMail, (String) userdetails.get(Registration.keys.password));
 				sassert().assertTrue(SignIn.checkUserAccount(),LoggingMsg.USER_IS_NOT_LOGGED_IN_SUCCESSFULLY );
 			}
 			if (proprties.equals("invalidUserEmail")) {
-				SignIn.fillLoginFormAndClickSubmit(this.email.get(), "1234567");
+				SignIn.fillLoginFormAndClickSubmit(caseMail, "1234567");
 					String alertMessage = SignIn.getErrorMsg();
 					String emailMessage = SignIn.getEmailErrorMsg();
 					String failureMessage = MessageFormat.format(LoggingMsg.ACTUAL_EXPECTED_ERROR,
@@ -83,8 +89,8 @@ public class LoginBase extends SelTestCase {
 					sassert().assertTrue(!alertMessage.equals("") , "Error message is not exist" );
 			}
 			if (proprties.equals("invalidUserPassword")) {
-				Testlogs.get().debug(this.email.get());
-				SignIn.fillLoginFormAndClickSubmit(this.email.get(),"");
+				Testlogs.get().debug(caseMail);
+				SignIn.fillLoginFormAndClickSubmit(caseMail,"");
 					String alertMessage = SignIn.getErrorMsg();
 					String passwordMessage = SignIn.getPasswrdErrorMsg();
 					String failureMessage = MessageFormat.format(LoggingMsg.ACTUAL_EXPECTED_ERROR,
@@ -93,8 +99,8 @@ public class LoginBase extends SelTestCase {
 					sassert().assertTrue(!alertMessage.equals("") , "Error message is not exist" );
 			}
 			if (proprties.equals("wrongUserPassword")) {
-				Testlogs.get().debug(this.email.get());
-				SignIn.fillLoginFormAndClickSubmit(this.email.get(),"invalid123");
+				Testlogs.get().debug(caseMail);
+				SignIn.fillLoginFormAndClickSubmit(caseMail,"invalid123");
 					String loginformMessage = SignIn.getErrologinMessage();
 					String failureMessage = MessageFormat.format(LoggingMsg.ACTUAL_EXPECTED_ERROR,
 							loginformMessage, fieldsValidation);
@@ -116,7 +122,7 @@ public class LoginBase extends SelTestCase {
 			
 			if (proprties.equals("Forgot password -Valid Email")) {
 				SignIn.clickForgotPasswordBtn();
-				SignIn.typeForgottenPwdEmail(this.email.get());
+				SignIn.typeForgottenPwdEmail(caseMail);
 				SignIn.clickForgotPasswordSubmitBtn();
 				Thread.sleep(1500);
 					String alertMessage = SignIn.getAlertPositiveForgottenPasswordd();
@@ -126,7 +132,7 @@ public class LoginBase extends SelTestCase {
 			}
 			if (proprties.equals("Forgot password -Invalid Email")) {
 				SignIn.clickForgotPasswordBtn();
-				SignIn.typeForgottenPwdEmail(this.email.get());
+				SignIn.typeForgottenPwdEmail(caseMail);
 				SignIn.clickForgotPasswordSubmitBtn();
 				Thread.sleep(1500);
 					String alertMessage = SignIn.getForgottenPwdEmailError();

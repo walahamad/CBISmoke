@@ -42,8 +42,6 @@ public class Base_cart extends SelTestCase {
 
 	private static XmlTest testObject;
 	private static ThreadLocal<SASLogger> Testlogs = new ThreadLocal<SASLogger>();
-	private int caseIndexInDatasheet;
-	private String email;
 	LinkedHashMap<String, Object> productDetails;
 
 	@BeforeClass
@@ -75,13 +73,21 @@ public class Base_cart extends SelTestCase {
 		setTestCaseReportName("cart Case");
 		logCaseDetailds(MessageFormat.format(LoggingMsg.CARTDESC, testDataSheet + "." + caseId,
 				this.getClass().getCanonicalName(), desc, proprties.replace("\n", "<br>- "), promotion, OrderTotal));
-		this.email = email;
-		this.caseIndexInDatasheet = getDatatable().getCellRowNum(testDataSheet, CheckOut.keys.caseId, caseId);
+		
+		String CaseMail = "";
+		LinkedHashMap<String, Object> userdetails = null; 
+		if (!email.equals(""))
+		{
+			userdetails = (LinkedHashMap<String, Object>) users.get(email);
+			CaseMail = (String) userdetails.get(Registration.keys.email);
+			Testlogs.get().debug("Mail will be used is: " + CaseMail);
+		}
+		
 		try {
 
 			if (proprties.contains("Loggedin"))
 				for (String product : products.split("\n"))
-					prepareCartLoggedInUser(this.email, product);
+					prepareCartLoggedInUser(userdetails, product);
 			else
 				for (String product : products.split("\n"))
 					prepareCartNotLoggedInUser(product);
@@ -222,10 +228,8 @@ public class Base_cart extends SelTestCase {
 			
 			if (proprties.contains("click checkout")) {
 				Cart.clickCheckout();
-				// TODO: verify if you are in checkout page
 			} else {
 				Cart.clickContinueShoping();
-				// TODO: verify if you are in home page
 			}
 
 			if (proprties.contains("loggedin")) {
@@ -261,13 +265,12 @@ public class Base_cart extends SelTestCase {
 				(String) productDetails.get(PDP.keys.qty));
 	}
 
-	public void prepareCartLoggedInUser(String user, String product) throws Exception {
-		logs.debug(MessageFormat.format(LoggingMsg.SEL_TEXT, user));
-		LinkedHashMap<String, Object> userDetails = (LinkedHashMap<String, Object>) users.get(user);
-		logs.debug((String) userDetails.get(Registration.keys.email));
-		logs.debug((String) userDetails.get(Registration.keys.password));
-		SignIn.logIn((String) userDetails.get(Registration.keys.email),
-				(String) userDetails.get(Registration.keys.password));
+	public void prepareCartLoggedInUser(LinkedHashMap<String, Object> userdetails, String product) throws Exception {
+		logs.debug(MessageFormat.format(LoggingMsg.SEL_TEXT, userdetails));
+		logs.debug((String) userdetails.get(Registration.keys.email));
+		logs.debug((String) userdetails.get(Registration.keys.password));
+		SignIn.logIn((String) userdetails.get(Registration.keys.email),
+				(String) userdetails.get(Registration.keys.password));
 
 		prepareCartNotLoggedInUser(product);
 

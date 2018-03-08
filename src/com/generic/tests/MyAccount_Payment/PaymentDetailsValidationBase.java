@@ -46,7 +46,6 @@ public class PaymentDetailsValidationBase extends SelTestCase {
 		Testlogs.set(new SASLogger("paymentDetails_setup"));
 		testObject = test;
 		addresses = Common.readAddresses();
-		invintory = Common.readLocalInventory();
 		paymentCards = Common.readPaymentcards();
 		users = Common.readUsers();
 	}
@@ -72,13 +71,20 @@ public class PaymentDetailsValidationBase extends SelTestCase {
 				this.getClass().getCanonicalName(), desc, proprties.replace("\n", "<br>- "), payment, ""));
 		
 		String url =  PagesURLs.getPaymentDetailsPage();
-		String caseMail = email;//getSubMailAccount(email);
-
+		
+		String caseMail = "";
+		LinkedHashMap<String, Object> userdetails = null; 
+		if (!email.equals(""))
+		{
+			userdetails = (LinkedHashMap<String, Object>) users.get(email);
+			caseMail = (String) userdetails.get(Registration.keys.email);
+			Testlogs.get().debug("Mail will be used is: " + caseMail);
+		}
+		
 		try {
 
 			// you need to maintain the concurrency and get the main account
 			// information and log in in browser account
-			LinkedHashMap<String, Object> userdetails = (LinkedHashMap<String, Object>) users.get(email);
 			Testlogs.get().debug(caseMail);
 			Testlogs.get().debug((String) userdetails.get(Registration.keys.password));
 			
@@ -87,10 +93,8 @@ public class PaymentDetailsValidationBase extends SelTestCase {
 			getDriver().get(url);
 
 			// checkout- payment
-			LinkedHashMap<String, Object> paymentDetails = (LinkedHashMap<String, Object>) paymentCards
-					.get(payment);
-			LinkedHashMap<String, Object> billAddressDetails = (LinkedHashMap<String, Object>) addresses
-					.get(billingAddress);
+			LinkedHashMap<String, Object> paymentDetails = (LinkedHashMap<String, Object>) paymentCards.get(payment);
+			LinkedHashMap<String, Object> billAddressDetails = (LinkedHashMap<String, Object>) addresses.get(billingAddress);
 
 			logs.debug(Arrays.asList(paymentDetails)+"");
 			
