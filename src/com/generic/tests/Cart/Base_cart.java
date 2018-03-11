@@ -86,8 +86,10 @@ public class Base_cart extends SelTestCase {
 		try {
 
 			if (proprties.contains("Loggedin"))
+			{
 				for (String product : products.split("\n"))
 					prepareCartLoggedInUser(userdetails, product);
+			}
 			else
 				for (String product : products.split("\n"))
 					prepareCartNotLoggedInUser(product);
@@ -226,6 +228,8 @@ public class Base_cart extends SelTestCase {
 				sassert().assertTrue(siteOrderTotal == SheetOrderTotal , "FAILED: the discounts should be matched: <br>"+orderTotalMsg);
 			}//verify order total
 			
+			ReportUtil.takeScreenShot(getDriver());
+			
 			if (proprties.contains("remove Promotion")) {
 				Cart.removeCoupon();
 			double siteOrdersubtotal  = Double.parseDouble(Cart.getOrderSubTotal().replace("$", "").trim());
@@ -233,6 +237,7 @@ public class Base_cart extends SelTestCase {
 			double siteOrderTotal = Double.parseDouble(Cart.getOrderTotal().replace("$", "").trim());
 			logs.debug("Order total: " + siteOrderTotal);
 			sassert().assertTrue(siteOrdersubtotal == siteOrderTotal , "FAILED: voucher code is not removed correctly: <br>");
+			ReportUtil.takeScreenShot(getDriver());
 			}//Remove Promotion.
 			
 			if (proprties.contains("click checkout")) {
@@ -241,7 +246,9 @@ public class Base_cart extends SelTestCase {
 				Cart.clickContinueShoping();
 			}
 
-			if (proprties.contains("loggedin")) {
+			ReportUtil.takeScreenShot(getDriver());
+			
+			if (proprties.contains("Loggedin")) {
 				// navigate back to cart
 				getDriver().get("http://stage.com/oshstorefront/cart");
 				Cart.removeAllItemsFromCart();

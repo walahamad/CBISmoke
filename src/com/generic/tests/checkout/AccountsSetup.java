@@ -76,9 +76,16 @@ public class AccountsSetup extends SelTestCase {
 		logCaseDetailds(MessageFormat.format(LoggingMsg.CHECKOUTDESC, testDataSheet + "." + caseId,
 				this.getClass().getCanonicalName(), email, email, payment, shippingMethod));
 
-		String Pemail = email;//getSubMailAccount(email);
+		String Pemail = "";
+		LinkedHashMap<String, Object> userdetails = null; 
+		if (!email.equals(""))
+		{
+			userdetails = (LinkedHashMap<String, Object>) users.get(email);
+			Pemail = (String) userdetails.get(Registration.keys.email);
+			Testlogs.get().debug("Mail will be used is: " + Pemail);
+		}
+		
 		try {
-			LinkedHashMap<String, Object> userdetails = (LinkedHashMap<String, Object>) users.get(email);
 			Testlogs.get().debug(Pemail);
 			Testlogs.get().debug((String) userdetails.get(Registration.keys.password));
 
