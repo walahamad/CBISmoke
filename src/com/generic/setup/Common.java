@@ -10,6 +10,7 @@ import java.io.File;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.text.MessageFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -545,6 +546,40 @@ public class Common extends SelTestCase {
 		}
 		logs.debug(Arrays.asList(users)+"");
 		return users;
+	}//read users
+	
+	public static ArrayList readRunners() {
+
+		ArrayList<String> runners = new ArrayList<String>();
+		
+		dataProviderUtils TDP = dataProviderUtils.getInstance();
+		Object[][] data = TDP.getData(SheetVariables.RunnersRegressionSheet);
+		
+		// data map
+		int name = 0;
+
+		logs.debug( data.length+"---------");
+		
+		for (int row = 0; row < data.length; row++) {
+			runners.add((String) data[row][name]);
+		}
+		return runners;
+	}//read users
+	
+	public static ArrayList<String> readBrowsers() {
+
+		ArrayList<String> browsers = new ArrayList<String>();
+		
+		dataProviderUtils TDP = dataProviderUtils.getInstance();
+		Object[][] data = TDP.getData(SheetVariables.BrowsersListingSheet);
+
+		// data map
+		int name = 0;
+
+		for (int row = 0; row < data.length; row++) {
+				browsers.add((String) data[row][name]);
+		}
+		return browsers;
 	}//read users
 
 	public static void takeScreenShot() {

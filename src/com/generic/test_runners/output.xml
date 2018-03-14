@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?><suite allow-return-values="false" configfailurepolicy="skip" data-provider-thread-count="3" group-by-instances="false" guice-stage="DEVELOPMENT" junit="false" name="Suite" parallel="tests" preserve-order="true" skipfailedinvocationcounts="false" thread-count="10">
+	<test allow-return-values="false" group-by-instances="false" junit="false" name="cart Tests _ chrome" preserve-order="true" skipfailedinvocationcounts="false">
+		<parameter name="browserName" value="chrome"/>
+		<classes>
+			<class name="com.generic.tests.Cart.Base_cart"/>
+		</classes>
+	</test><!-- Test -->
+</suite>
