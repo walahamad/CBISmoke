@@ -66,7 +66,7 @@ public class BuildFullRegression extends SelTestCase {
 	}
 
 	@Test
-	public void generateFinalregressionXML() {
+	public void generateFinalRegressionXML() {
 		try {
 			TestUtilities.writeFinalXMLRegression(regressionsPathes, browsers);
 		} catch (SAXException | IOException | ParserConfigurationException | TransformerFactoryConfigurationError
