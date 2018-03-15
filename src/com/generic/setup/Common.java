@@ -377,9 +377,9 @@ public class Common extends SelTestCase {
 		/*
 		 * Output example [ { P1={
 		 * url=/yacceleratorstorefront/en/Categories/Bags%2BBoardbags/Bags/Seizure-
-		 * Satchel/p/300613490, color=black, size=SizeUni,£34.792 1, qty=1 }, P2={
+		 * Satchel/p/300613490, color=black, size=SizeUni,Â£34.792 1, qty=1 }, P2={
 		 * url=/yacceleratorstorefront/en/Categories/Bags%2BBoardbags/Bags/Seizure-Bag/p
-		 * /300441924, color=claycourt, size=SizeUni, £24.26 4, qty=1 } } ]
+		 * /300441924, color=claycourt, size=SizeUni, Â£24.26 4, qty=1 } } ]
 		 */
 		LinkedHashMap<String, Object> products = new LinkedHashMap<>();
 		
@@ -557,14 +557,12 @@ public class Common extends SelTestCase {
 		
 		// data map
 		int name = 0;
-
-		logs.debug( data.length+"---------");
 		
 		for (int row = 0; row < data.length; row++) {
 			runners.add((String) data[row][name]);
 		}
 		return runners;
-	}//read users
+	}//read runners
 	
 	public static ArrayList<String> readBrowsers() {
 
@@ -580,7 +578,7 @@ public class Common extends SelTestCase {
 				browsers.add((String) data[row][name]);
 		}
 		return browsers;
-	}//read users
+	}//read browsers
 
 	public static void takeScreenShot() {
 		// TODO Auto-generated method stub
