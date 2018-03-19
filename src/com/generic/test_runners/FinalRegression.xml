@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?><suite allow-return-values="false" configfailurepolicy="skip" data-provider-thread-count="2" group-by-instances="false" guice-stage="DEVELOPMENT" junit="false" name="Suite" parallel="tests" preserve-order="true" skipfailedinvocationcounts="false" thread-count="10">
+<test name="checkout Chrome ">
+		<parameter name="browserName" value="Chrome"/>
+		<classes>
+			<class name="com.generic.tests.checkout.Base_checkout"/>
+		</classes>
+	</test><test name="checkout Firefox ">
+		<parameter name="browserName" value="Firefox"/>
+		<classes>
+			<class name="com.generic.tests.checkout.Base_checkout"/>
+		</classes>
+	</test><test name="checkout Chrome Grid ">
+		<parameter name="browserName" value="Chrome Grid"/>
+		<classes>
+			<class name="com.generic.tests.checkout.Base_checkout"/>
+		</classes>
+	</test><test name="cart Tests _ Chrome ">
+		<parameter name="browserName" value="Chrome"/>
+		<classes>
+			<class name="com.generic.tests.Cart.Base_cart"/>
+		</classes>
+	</test><test name="cart Tests _ Firefox ">
+		<parameter name="browserName" value="Firefox"/>
+		<classes>
+			<class name="com.generic.tests.Cart.Base_cart"/>
+		</classes>
+	</test><test name="cart Tests _ Chrome Grid ">
+		<parameter name="browserName" value="Chrome Grid"/>
+		<classes>
+			<class name="com.generic.tests.Cart.Base_cart"/>
+		</classes>
+	</test></suite>
