@@ -21,6 +21,8 @@ import java.util.logging.Level;
 import javax.imageio.ImageIO;
 
 import org.openqa.selenium.PageLoadStrategy;
+import org.openqa.selenium.Platform;
+import org.openqa.selenium.UnexpectedAlertBehaviour;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -100,7 +102,23 @@ public class Common extends SelTestCase {
 				// TODO: change it and setup grid server
 				SelTestCase.setDriver(new RemoteWebDriver(new URL("http://10.20.20.54:4444/wd/hub"), capabilities));
 				
-			} else if (browser.contains("mobile")) {
+			} 
+			 else if (browser.equalsIgnoreCase("ChromeG")) {
+				DesiredCapabilities des=DesiredCapabilities.chrome();
+//				des.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);
+//				des.setCapability(CapabilityType.UNEXPECTED_ALERT_BEHAVIOUR, UnexpectedAlertBehaviour.DISMISS);
+//				des.setPlatform(Platform.WIN10);
+				System.setProperty("webdriver.chrome.driver", PagesURLs.getDriversPath(browser));
+				//des.setPlatform(org.openqa.selenium.Platform.WINDOWS);
+				RemoteWebDriver rdriver ;
+				
+				//rdriver = new RemoteWebDriver(new URL("http://cv-autogrid04.crossview.inc:4444/wd/hub"),des);
+				rdriver = new RemoteWebDriver(new URL("http://10.200.254.33:4444/wd/hub"),des);
+				rdriver.manage().timeouts().pageLoadTimeout(60,TimeUnit.SECONDS);
+				rdriver.manage().timeouts().implicitlyWait(10,TimeUnit.SECONDS);
+				return rdriver;
+					
+				}else if (browser.contains("mobile")) {
 				  /*
 				   * https://cs.chromium.org/chromium/src/chrome/test/chromedriver/chrome/mobile_device_list.cc
 				   	  iPad
