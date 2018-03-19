@@ -395,9 +395,9 @@ public class Common extends SelTestCase {
 		/*
 		 * Output example [ { P1={
 		 * url=/yacceleratorstorefront/en/Categories/Bags%2BBoardbags/Bags/Seizure-
-		 * Satchel/p/300613490, color=black, size=SizeUni,Â£34.792 1, qty=1 }, P2={
+		 * Satchel/p/300613490, color=black, size=SizeUni,£34.792 1, qty=1 }, P2={
 		 * url=/yacceleratorstorefront/en/Categories/Bags%2BBoardbags/Bags/Seizure-Bag/p
-		 * /300441924, color=claycourt, size=SizeUni, Â£24.26 4, qty=1 } } ]
+		 * /300441924, color=claycourt, size=SizeUni, £24.26 4, qty=1 } } ]
 		 */
 		LinkedHashMap<String, Object> products = new LinkedHashMap<>();
 		
