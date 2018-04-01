@@ -119,7 +119,7 @@ public class TestUtilities extends SelTestCase {
 		getCurrentFunctionName(false);
 	}
 
-	public static void writeFinalXMLRegression(ArrayList<String> regressionsPathes, ArrayList<String> targetBrowsers)
+	public static void writeFinalXMLRegression(ArrayList<String> regressionsPathes, String[] targetBrowsers)
 			throws SAXException, IOException, ParserConfigurationException, TransformerFactoryConfigurationError,
 			TransformerException {
 		getCurrentFunctionName(true);

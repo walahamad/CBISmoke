@@ -430,6 +430,7 @@ public class Common extends SelTestCase {
 
 			products.put((String) data[row][name], product);
 		}
+		logs.debug(Arrays.asList(products)+"");
 		return products;
 	}// readProducts
 

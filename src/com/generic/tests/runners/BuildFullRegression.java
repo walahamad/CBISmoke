@@ -5,6 +5,7 @@ import java.io.FileFilter;
 import java.io.FilenameFilter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
 
@@ -37,8 +38,8 @@ import com.generic.util.SASLogger;
 import com.generic.util.TestUtilities;
 
 public class BuildFullRegression extends SelTestCase {
-	private static ArrayList<String> runners = null;
-	private static ArrayList<String> browsers = null;
+	private static String[] runners = null;
+	private static String[] browsers = null;
 	private static ArrayList<String> regressionsPathes = new ArrayList<String>();
 	private static int testCaseID;
 	// used sheet in test
@@ -52,9 +53,13 @@ public class BuildFullRegression extends SelTestCase {
 		try {
 			Testlogs.set(new SASLogger(test.getName() + test.getIndex()));
 			testObject = test;
-			runners = Common.readRunners();
+			
+			runners = System.getenv("Runners").split(",");//Common.readRunners();
+			if (runners[0].equals("all") )
+				runners = "checkoutRegression,addressBookRegression,PaymentDetailsRegression,PDPRegression,PLPRegression,RegistrationRegression,LoginRegression,cartRunner".split(",");
+			
 			Testlogs.get().debug("Started in Regression");
-			browsers = Common.readBrowsers();
+			browsers = System.getenv("Browsers").split(",");//Common.readBrowsers();
 			for (String regressionName : runners) {
 				regressionsPathes.add(TestUtilities.searchSpecificFile(
 						new File(System.getProperty("user.dir") + "\\src\\com\\generic\\test_runners"),
@@ -69,6 +74,7 @@ public class BuildFullRegression extends SelTestCase {
 	public void generateFinalRegressionXML() {
 		try {
 			TestUtilities.writeFinalXMLRegression(regressionsPathes, browsers);
+			Common.testPass();
 		} catch (SAXException | IOException | ParserConfigurationException | TransformerFactoryConfigurationError
 				| TransformerException e) {
 			// TODO Auto-generated catch block

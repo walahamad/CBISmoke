@@ -211,7 +211,7 @@ public class Base_cart extends SelTestCase {
 				double SheetClubDiscount = Double.parseDouble(ClubOrchardRewards.replace("$", "").trim());
 				
 				String promoMessage = "<font color=#f442cb>siteClubDiscount: " + siteClubDiscount +
-						"<br>SheetPromotionDiscount: "+ SheetClubDiscount+"</font>" ; 
+						"<br>SheetClubDiscount: "+ SheetClubDiscount+"</font>" ; 
 				
 				logs.debug(promoMessage);
 				sassert().assertTrue(siteClubDiscount == SheetClubDiscount , "FAILED: the discounts should be matched: <br>"+promoMessage);
@@ -222,10 +222,10 @@ public class Base_cart extends SelTestCase {
 				double SheetOrderTotal = Double.parseDouble(OrderTotal.replace("$", "").trim());
 				
 				String orderTotalMsg = "<font color=#f442cb>siteOrderTotal: " + siteOrderTotal +
-						"<br>SheetPromotionDiscount: "+ SheetOrderTotal+"</font>" ; 
+						"<br>SheetorderTotal: "+ SheetOrderTotal+"</font>" ; 
 				
 				logs.debug(orderTotalMsg);
-				sassert().assertTrue(siteOrderTotal == SheetOrderTotal , "FAILED: the discounts should be matched: <br>"+orderTotalMsg);
+				sassert().assertTrue(siteOrderTotal == SheetOrderTotal , "FAILED: the totals should be matched: <br>"+orderTotalMsg);
 			}//verify order total
 			
 			ReportUtil.takeScreenShot(getDriver());
