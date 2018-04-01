@@ -1,31 +1,41 @@
-<?xml version="1.0" encoding="UTF-8"?><suite allow-return-values="false" configfailurepolicy="skip" data-provider-thread-count="2" group-by-instances="false" guice-stage="DEVELOPMENT" junit="false" name="Suite" parallel="tests" preserve-order="true" skipfailedinvocationcounts="false" thread-count="10">
-<test name="checkout Chrome ">
-		<parameter name="browserName" value="Chrome"/>
+<?xml version="1.0" encoding="UTF-8"?><suite data-provider-thread-count="2" name="Full Regression" parallel="tests" thread-count="5">
+<test name="checkout ChromeG ">
+		<parameter name="browserName" value="ChromeG"/>
 		<classes>
 			<class name="com.generic.tests.checkout.Base_checkout"/>
 		</classes>
-	</test><test name="checkout Firefox ">
-		<parameter name="browserName" value="Firefox"/>
+	</test><test name="addressBook ChromeG ">
+		<parameter name="browserName" value="ChromeG"/>
 		<classes>
-			<class name="com.generic.tests.checkout.Base_checkout"/>
+			<class name="com.generic.tests.MyAccount_addressBook.AddressBookValidationBase"/>
 		</classes>
-	</test><test name="checkout Chrome Grid ">
-		<parameter name="browserName" value="Chrome Grid"/>
+	</test><test name="payment details regression ChromeG ">
+		<parameter name="browserName" value="ChromeG"/>
 		<classes>
-			<class name="com.generic.tests.checkout.Base_checkout"/>
+		   	<class name="com.generic.tests.MyAccount_Payment.PaymentDetailsValidationBase"/>
 		</classes>
-	</test><test name="cart Tests _ Chrome ">
-		<parameter name="browserName" value="Chrome"/>
+	</test><test name="PDP Tests _ ChromeG ">
+		<parameter name="browserName" value="ChromeG"/>
 		<classes>
-			<class name="com.generic.tests.Cart.Base_cart"/>
+			<class name="com.generic.tests.PDP.Base_PDP"/>
 		</classes>
-	</test><test name="cart Tests _ Firefox ">
-		<parameter name="browserName" value="Firefox"/>
+	</test><test name="PLP validation ChromeG ">
+		<parameter name="browserName" value="ChromeG"/>
 		<classes>
-			<class name="com.generic.tests.Cart.Base_cart"/>
+              <class name="com.generic.tests.Search_PLP.PLP_Base"/>
 		</classes>
-	</test><test name="cart Tests _ Chrome Grid ">
-		<parameter name="browserName" value="Chrome Grid"/>
+	</test><test name="Registration ChromeG ">
+		<parameter name="browserName" value="ChromeG"/>
+		<classes>
+			<class name="com.generic.tests.Registration.RegistrationBase"/>
+		</classes>
+	</test><test name="Login ChromeG ">
+		<parameter name="browserName" value="ChromeG"/>
+		<classes>
+			<class name="com.generic.tests.login.LoginBase"/>
+		</classes>
+	</test><test name="cart Tests _ ChromeG ">
+		<parameter name="browserName" value="ChromeG"/>
 		<classes>
 			<class name="com.generic.tests.Cart.Base_cart"/>
 		</classes>
