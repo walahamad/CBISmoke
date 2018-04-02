@@ -298,7 +298,7 @@ public class SelTestCase {
     
     
     @AfterSuite
-    public static void reportMaker()
+    public static void reportMaker() throws IOException
     {
     	ArrayList<HashMap<String, String>> casesDetails = null;
     	try {
@@ -344,5 +344,6 @@ public class SelTestCase {
          {
          	SelTestCase.logs.debug(MessageFormat.format(LoggingMsg.DEBUGGING_TEXT, "Ignor sending report"));
          }
+    	 ReportUtil.copyReportToC(SelTestCase.logDir,"C://AutoRepo");
     }
 }
