@@ -111,7 +111,6 @@ public class TestUtilities extends SelTestCase {
 		}
 		catch(Exception e)
 		{
-			e.printStackTrace();
 			logs.debug("Pulling Environment from config file");
 		}
 		
