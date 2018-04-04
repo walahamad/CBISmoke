@@ -235,7 +235,7 @@ public class TestUtilities extends SelTestCase {
 		// loop over subDirs to get fileName
 		for (File folder : subDirs) {
 			String filePath = searchSpecificFile(folder, fileName);
-			if (Strings.isNotNullAndNotEmpty(filePath)) {
+			if (filePath.length()==0) {
 				getCurrentFunctionName(false);
 				return filePath;
 			}
