@@ -104,14 +104,15 @@ public class TestUtilities extends SelTestCase {
 		FileInputStream fn = new FileInputStream(EnvironmentFiles.getConfigFilePath());
 		getCONFIG().load(fn);
 		
-		String env;
 		
 		try {
-			getCONFIG().setProperty("testEnvironment", System.getenv("env"));			
+			logs.debug("System variable enviroenment is "+System.getenv("Environment"));
+			getCONFIG().setProperty("testEnvironment", System.getenv("Environment"));			
 		}
 		catch(Exception e)
 		{
-			logs.debug("Pulling env from config file");
+			e.printStackTrace();
+			logs.debug("Pulling Environment from config file");
 		}
 		
 		logs.debug(MessageFormat.format(LoggingMsg.ADDED_ENVIRONMENT_NAME, getCONFIG().getProperty("testEnvironment")));
