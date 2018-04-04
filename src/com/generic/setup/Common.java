@@ -567,8 +567,7 @@ public class Common extends SelTestCase {
 		return users;
 	}//read users
 	
-	public static ArrayList readRunners() {
-
+	public static String[] readRunners() {
 		ArrayList<String> runners = new ArrayList<String>();
 		
 		dataProviderUtils TDP = dataProviderUtils.getInstance();
@@ -577,13 +576,14 @@ public class Common extends SelTestCase {
 		// data map
 		int name = 0;
 		
+		logs.debug((String) data[0][name]+"");
 		for (int row = 0; row < data.length; row++) {
 			runners.add((String) data[row][name]);
 		}
-		return runners;
+		return runners.toArray(new String[runners.size()]); 
 	}//read runners
 	
-	public static ArrayList<String> readBrowsers() {
+	public static String[] readBrowsers() {
 
 		ArrayList<String> browsers = new ArrayList<String>();
 		
@@ -596,7 +596,7 @@ public class Common extends SelTestCase {
 		for (int row = 0; row < data.length; row++) {
 				browsers.add((String) data[row][name]);
 		}
-		return browsers;
+		return browsers.toArray(new String[browsers.size()]);
 	}//read browsers
 
 	public static void takeScreenShot() {

@@ -54,13 +54,31 @@ public class BuildFullRegression extends SelTestCase {
 			Testlogs.set(new SASLogger(test.getName() + test.getIndex()));
 			testObject = test;
 			
-			runners = System.getenv("Runners").split(",");//Common.readRunners();
+			try {
+			runners = System.getenv("Runners").split(",");
+			}
+			catch(Exception e)
+			{
+				logs.debug("The evn var is not set for runners ... pulling data from sheet");
+				runners=Common.readRunners();
+			}
+			
 			if (runners[0].equals("all") )
-				runners = "checkoutRegression,addressBookRegression,PaymentDetailsRegression,PDPRegression,PLPRegression,RegistrationRegression,LoginRegression,cartRunner".split(",");
+				runners = "checkoutRegression,addressBookRegression,PaymentDetailsRegression,PDPRegression,PLPRegression,RegistrationRegression,LoginRegression,cartRregression".split(",");
 			
 			Testlogs.get().debug("Started in Regression");
-			browsers = System.getenv("Browsers").split(",");//Common.readBrowsers();
+			
+			try
+			{
+				browsers = System.getenv("Browsers").split(",");
+			}catch(Exception e)
+			{
+				logs.debug("The evn var is not set for browsers ... pulling data from sheet");
+				browsers =Common.readBrowsers();
+			}
+			
 			for (String regressionName : runners) {
+				logs.debug("Adding runner path to paths: " + regressionName);
 				regressionsPathes.add(TestUtilities.searchSpecificFile(
 						new File(System.getProperty("user.dir") + "\\src\\com\\generic\\test_runners"),
 						regressionName));
@@ -77,7 +95,6 @@ public class BuildFullRegression extends SelTestCase {
 			Common.testPass();
 		} catch (SAXException | IOException | ParserConfigurationException | TransformerFactoryConfigurationError
 				| TransformerException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

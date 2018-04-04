@@ -45,10 +45,9 @@ public class SelTestCase {
     
     //protected SoftAssert softAssert = new SoftAssert();
     private static ThreadLocal<SoftAssert> softAssert = new ThreadLocal<SoftAssert>();
-    protected static ThreadLocal<XmlTest> testObj = new ThreadLocal<XmlTest>();
+    public static ThreadLocal<XmlTest> testObj = new ThreadLocal<XmlTest>();
     
     //private static ThreadLocal<String> testName= new ThreadLocal<String>(); 
-    
     public static int counter ;
     private static Properties CONFIG = null;
     
@@ -76,6 +75,7 @@ public class SelTestCase {
     public static int caseIndex;
     
     public static String rUNDATE = ReportUtil.now(time_date_format).toString();
+    public static String suiteName;
 
     public static String getBrowserName() {
         //return browserName;
@@ -240,6 +240,8 @@ public class SelTestCase {
     {
     	softAssert.set(new SoftAssert());
     }
+
+
     
     /**setUp function will be invoked by Junit before execution of every test case.
      * It initializes the property files and html report setup
@@ -248,6 +250,7 @@ public class SelTestCase {
     @BeforeMethod
     public void setUp(XmlTest test) throws Exception  {
     	getCurrentFunctionName(true);
+    	suiteName = test.getSuite().getName();
     	testObj.set(test);
     	setAssert();
         try {

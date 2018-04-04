@@ -103,6 +103,17 @@ public class TestUtilities extends SelTestCase {
 		setCONFIG(new Properties());
 		FileInputStream fn = new FileInputStream(EnvironmentFiles.getConfigFilePath());
 		getCONFIG().load(fn);
+		
+		String env;
+		
+		try {
+			getCONFIG().setProperty("testEnvironment", System.getenv("env"));			
+		}
+		catch(Exception e)
+		{
+			logs.debug("Pulling env from config file");
+		}
+		
 		logs.debug(MessageFormat.format(LoggingMsg.ADDED_ENVIRONMENT_NAME, getCONFIG().getProperty("testEnvironment")));
 		// getCONFIG().setProperty("testSiteName",
 		// "https://"+getCONFIG().getProperty("testEnvironment")+"/"+getCONFIG().getProperty("testSiteName"));
