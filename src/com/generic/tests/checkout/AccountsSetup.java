@@ -76,6 +76,9 @@ public class AccountsSetup extends SelTestCase {
 		logCaseDetailds(MessageFormat.format(LoggingMsg.CHECKOUTDESC, testDataSheet + "." + caseId,
 				this.getClass().getCanonicalName(), email, email, payment, shippingMethod));
 
+		LinkedHashMap<String, String> addressDetails = (LinkedHashMap<String, String>) addresses
+				.get(shippingAddress);
+		
 		String Pemail = "";
 		LinkedHashMap<String, Object> userdetails = null; 
 		if (!email.equals(""))
@@ -90,7 +93,7 @@ public class AccountsSetup extends SelTestCase {
 			Testlogs.get().debug((String) userdetails.get(Registration.keys.password));
 
 			Registration.fillAndClickRegister("Accept", "tester", Pemail,
-					(String) userdetails.get(Registration.keys.password), (String) userdetails.get(Registration.keys.password));
+					(String) userdetails.get(Registration.keys.password), (String) userdetails.get(Registration.keys.password), addressDetails);
 			
 			if(!SignIn.checkUserAccount())
 			{
@@ -107,17 +110,16 @@ public class AccountsSetup extends SelTestCase {
 			//Cart.clickCheckout();
 			Thread.sleep(1000);
 			// checkout- shipping address
-			LinkedHashMap<String, Object> addressDetails = (LinkedHashMap<String, Object>) addresses
-					.get(shippingAddress);
 			CheckOut.shippingAddress.fillAndClickNext(
 					Pemail,
-					(String) addressDetails.get(CheckOut.shippingAddress.keys.countery),
-					(String) addressDetails.get(CheckOut.shippingAddress.keys.firstName),
-					(String) addressDetails.get(CheckOut.shippingAddress.keys.lastName),
-					(String) addressDetails.get(CheckOut.shippingAddress.keys.adddressLine),
-					(String) addressDetails.get(CheckOut.shippingAddress.keys.city),
-					(String) addressDetails.get(CheckOut.shippingAddress.keys.city),
-					(String) addressDetails.get(CheckOut.shippingAddress.keys.zipcode), (String) addressDetails.get(CheckOut.shippingAddress.keys.phone), true);
+					addressDetails.get(CheckOut.shippingAddress.keys.countery),
+					addressDetails.get(CheckOut.shippingAddress.keys.firstName),
+					addressDetails.get(CheckOut.shippingAddress.keys.lastName),
+					addressDetails.get(CheckOut.shippingAddress.keys.adddressLine),
+					addressDetails.get(CheckOut.shippingAddress.keys.city),
+					addressDetails.get(CheckOut.shippingAddress.keys.city),
+					addressDetails.get(CheckOut.shippingAddress.keys.zipcode),
+					addressDetails.get(CheckOut.shippingAddress.keys.phone), true);
 
 			// Shipping method
 			CheckOut.shippingMethod.fillAndclickNext(shippingMethod);

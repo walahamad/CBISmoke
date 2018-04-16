@@ -172,7 +172,7 @@ public final class RandomUtilities {
     }
     
     public static String getRandomPassword(int passwordLength) {
-		String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789~`!@#$%^&*()-_=+[{]}\\|;:\'\",<.>/?";
+		String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 		return RandomStringUtils.random( passwordLength, characters );
 	}
 }
