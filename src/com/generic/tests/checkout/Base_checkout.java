@@ -77,6 +77,8 @@ public class Base_checkout extends SelTestCase {
 		logCaseDetailds(MessageFormat.format(LoggingMsg.CHECKOUTDESC, testDataSheet + "." + caseId,
 				this.getClass().getCanonicalName(), desc, proprties.replace("\n", "<br>- "), payment, shippingMethod));
 		
+		LinkedHashMap<String, String> addressDetails = (LinkedHashMap<String, String>) addresses.get(shippingAddress);
+		
 		String Pemail;
 		String orderId;
 		String orderTotal;
@@ -111,7 +113,7 @@ public class Base_checkout extends SelTestCase {
 				Registration.fillAndClickRegister((String) RandomUserdetails.get(Registration.keys.firstName),
 						(String) RandomUserdetails.get(Registration.keys.lastName),
 						Pemail, (String) RandomUserdetails.get(Registration.keys.password),
-						(String) RandomUserdetails.get(Registration.keys.password));
+						(String) RandomUserdetails.get(Registration.keys.password), addressDetails);
 			}
 
 			for (String product : products.split("\n")) {
@@ -150,21 +152,18 @@ public class Base_checkout extends SelTestCase {
 				CheckOut.shippingAddress.fillAndClickNext(true);
 				Thread.sleep(1000);
 			} else {
-				LinkedHashMap<String, Object> addressDetails = (LinkedHashMap<String, Object>) addresses
-						.get(shippingAddress);
-
 
 				// in case guest the save shipping check-box is not exist
 				CheckOut.shippingAddress.fillAndClickNext(
 						Pemail,
-						(String) addressDetails.get(CheckOut.shippingAddress.keys.countery),
-						(String) addressDetails.get(CheckOut.shippingAddress.keys.firstName),
-						(String) addressDetails.get(CheckOut.shippingAddress.keys.lastName),
-						(String) addressDetails.get(CheckOut.shippingAddress.keys.adddressLine),
-						(String) addressDetails.get(CheckOut.shippingAddress.keys.city),
-						(String) addressDetails.get(CheckOut.shippingAddress.keys.city),
-						(String) addressDetails.get(CheckOut.shippingAddress.keys.zipcode),
-						(String) addressDetails.get(CheckOut.shippingAddress.keys.phone), !proprties.contains(guestUser));
+						addressDetails.get(CheckOut.shippingAddress.keys.countery),
+						addressDetails.get(CheckOut.shippingAddress.keys.firstName),
+						addressDetails.get(CheckOut.shippingAddress.keys.lastName),
+						addressDetails.get(CheckOut.shippingAddress.keys.adddressLine),
+						addressDetails.get(CheckOut.shippingAddress.keys.city),
+						addressDetails.get(CheckOut.shippingAddress.keys.city),
+						addressDetails.get(CheckOut.shippingAddress.keys.zipcode),
+						addressDetails.get(CheckOut.shippingAddress.keys.phone), !proprties.contains(guestUser));
 			}
 
 			// Shipping method

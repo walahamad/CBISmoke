@@ -23,12 +23,12 @@ import com.generic.setup.SheetVariables;
 import com.generic.util.RandomUtilities;
 import com.generic.util.ReportUtil;
 import com.generic.util.SASLogger;
-import com.generic.util.SelectorUtil;
 import com.generic.util.TestUtilities;
 import com.generic.util.dataProviderUtils;
 
 public class RegistrationBase extends SelTestCase {
-	private static  LinkedHashMap<String, Object> users =null ;
+	private static LinkedHashMap<String, Object> users =null ;
+	private static LinkedHashMap<String, Object> addresses = null; 
 
 	// possible scenarios
 	public static final String freshUser = "fresh";
@@ -54,13 +54,15 @@ public class RegistrationBase extends SelTestCase {
 
 	private static XmlTest testObject;
 	
-	private static ThreadLocal<SASLogger> Testlogs = new ThreadLocal<SASLogger>() ; 
+	private static ThreadLocal<SASLogger> Testlogs = new ThreadLocal<SASLogger>() ;
+
 	
 	@BeforeTest
 	public static void initialSetUp(XmlTest test) throws Exception {
 		Testlogs.set(new SASLogger(test.getName() + test.getIndex()));
 		testObject = test;
 		users = Common.readUsers();
+		addresses = Common.readAddresses();
 	}
 
 	@DataProvider(name = "Registration", parallel = true)
@@ -90,28 +92,34 @@ public class RegistrationBase extends SelTestCase {
 		String passwordValidation =(fieldsValidation.split("PasswordValidation:").length >2) ?  fieldsValidation.split("PasswordValidation:")[0].split("\n")[0]:"";
 		String passwordConfValidation = (fieldsValidation.split("PasswordConfValidation:").length >2) ? fieldsValidation.split("PasswordConfValidation:")[0].split("\n")[0]:"";
 		
+		//click on register new user button
+		Registration.goToRegistrationForm();
+		
+		//prepare random address details
+		LinkedHashMap<String, String> addressDetails = (LinkedHashMap<String, String>) addresses.get("A3");
+		//Prepare registration data 
+		String firstName = RandomUtilities.getRandomName();
+		String lastName = RandomUtilities.getRandomName();
+		String password = "P11p"+RandomUtilities.getRandomPassword(8);
+		String email = RandomUtilities.getRandomEmail();
+		
 		try {
 			if (proprties.contains(freshUser)) {
-				String firstName = RandomUtilities.getRandomName();
-				String lastName = RandomUtilities.getRandomName();
-				String password = RandomUtilities.getRandomPassword(7);
-				String email = RandomUtilities.getRandomEmail();
-				Registration.fillAndClickRegister(firstName,lastName,email,password,password);
+				//register new user and validate the results
+				Registration.fillAndClickRegister(firstName,lastName,email,password,password,addressDetails);
 				String registrationSuccessMsg = Registration.getRegistrationSuccessMessage();
-				sassert().assertTrue(registrationSuccessMsg.contains(thankUMsg), "Regestration Success validation failed Expected: " + thankUMsg +"Actual: " + registrationSuccessMsg);
+				sassert().assertTrue(registrationSuccessMsg.toLowerCase().contains(firstName.toLowerCase()), 
+						"Regestration Success, validation failed Expected to have in message: " + firstName +" but Actual message is: " + registrationSuccessMsg);
 			}
 			if (proprties.contains(existingUser)) {
 				// take any user as template
 				LinkedHashMap<String, Object> userdetails = (LinkedHashMap<String, Object>) users.entrySet().iterator()
 						.next().getValue();
-				String firstName = RandomUtilities.getRandomName();
-				String lastName = RandomUtilities.getRandomName();
-				String password = RandomUtilities.getRandomPassword(7);
-				String email = (String) userdetails.get(Registration.keys.email);
+				email = "fnsh9109@random.com";//(String) userdetails.get(Registration.keys.email);
 				logs.debug("Registration mail: "+email);
-				Registration.fillAndClickRegister(firstName,lastName,email,password,password);
+				Registration.fillAndClickRegister(firstName,lastName,email,password,password,addressDetails);
 				String validationMsg = Registration.getEmailAddressError();
-				sassert().assertTrue(validationMsg.contains(emailValidation), "Mail validation failed Expected: " + emailValidation +" Actual: " + validationMsg);
+				sassert().assertTrue(validationMsg.contains(emailValidation), "Mail validation failed, Expected: " + emailValidation +" Actual: " + validationMsg);
 			}
 			if (proprties.contains(emptyData)) {
 				Registration.clickRegisterButton();
@@ -124,94 +132,21 @@ public class RegistrationBase extends SelTestCase {
 				sassert().assertTrue(validationMsg.contains(lastNameValidation),
 						"last name validation failed Expected: " + lastNameValidation + " Actual: " + validationMsg);
 
-				validationMsg = Registration.getEmailAddressError();
+				validationMsg = Registration.getEmailAddressErrorInvalid();
 				sassert().assertTrue(validationMsg.contains(emailValidation),
 						"Mail validation failed Expected: " + emailValidation + " Actual: " + validationMsg);
 
-				validationMsg = Registration.getPasswordError();
-				sassert().assertTrue(validationMsg.contains(passwordValidation),
-						"password validation failed Expected: " + passwordValidation + " Actual: " + validationMsg);
-
-				validationMsg = Registration.getConfirmPasswordError();
-				sassert().assertTrue(validationMsg.contains(passwordConfValidation),
-						"password conf validation failed Expected: " + passwordConfValidation + " Actual: "
-								+ validationMsg);
 			}
 			if (proprties.contains(invalidUserID)) {
-				String firstName = RandomUtilities.getRandomName();
-				String lastName = RandomUtilities.getRandomName();
-				String password = RandomUtilities.getRandomPassword(7);
-				String email = "invalid@valid";
-				Registration.fillAndClickRegister(firstName,lastName,email,password,password);
-			}
-			if (proprties.contains(passwordMismatch)) {
-				String firstName = RandomUtilities.getRandomName();
-				String lastName = RandomUtilities.getRandomName();
-				String password = RandomUtilities.getRandomPassword(7);
-				String confPassword = RandomUtilities.getRandomPassword(7);
-				String email = RandomUtilities.getRandomEmail();
-				Registration.fillAndClickRegister(firstName,lastName,email,password,confPassword);
-			}
-			if (proprties.contains(invalidPassword)) {
-				String firstName = RandomUtilities.getRandomName();
-				String lastName = RandomUtilities.getRandomName();
-				String password = RandomUtilities.getRandomPassword(5);
-				String email = RandomUtilities.getRandomEmail();
-				Registration.fillAndClickRegister(firstName,lastName,email,password,password);
+				email = "invalid@valid";
+				Registration.fillAndClickRegister(firstName,lastName,email,password,password,addressDetails);
+				
+				String validationMsg = Registration.getEmailAddressErrorInvalid();
+				sassert().assertTrue(validationMsg.contains(emailValidation),
+						"Mail validation failed Expected: " + emailValidation + " Actual: " + validationMsg);
 			}
 			
 			Thread.sleep(2000);
-			
-			for (String message : fieldsValidation.split("\n")) {
-				String key = message.split(":")[0];
-				String messageText = message.split(":")[1];
-				Testlogs.get().debug(MessageFormat.format(LoggingMsg.REGISTRATION_FIELDS_ERRORS, key));
-				if (key.equalsIgnoreCase(successMessage)) {
-					String actualMessage = Registration.getRegistrationSuccessMessage();
-					String expectedMessage = messageText;
-					boolean isIncluded = actualMessage.contains(expectedMessage);
-					sassert().assertEquals(isIncluded, true);
-				}
-				if (key.equalsIgnoreCase(invalidEmail)) {
-					String actualMessage =Registration.getEmailAddressError();
-					String expectedMessage = messageText;
-					sassert().assertEquals(actualMessage, expectedMessage);
-				}
-//				if (key.equalsIgnoreCase(titleError)) {
-//					String expectedMessage = messageText;
-//					sassert().assertEquals(actualMessage, expectedMessage);
-//				}
-//				if (key.equalsIgnoreCase(firstNameError)) {
-//					String actualMessage =Registration.getFirstNameError();
-//					String expectedMessage = messageText;
-//					sassert().assertEquals(actualMessage, expectedMessage);
-//				}
-//				if (key.equalsIgnoreCase(lastNameError)) {
-//					String actualMessage =Registration.getLastNameError();
-//					String expectedMessage = messageText;
-//					sassert().assertEquals(actualMessage, expectedMessage);
-//				}
-//				if (key.equalsIgnoreCase(passwordError)) {
-//					String actualMessage =Registration.getPasswordError();
-//					String expectedMessage = messageText;
-//					sassert().assertEquals(actualMessage, expectedMessage);
-//				}
-//				if (key.equalsIgnoreCase(confPasswordError)) {
-//					String actualMessage =Registration.getConfirmPasswordError();
-//					String expectedMessage = messageText;
-//					sassert().assertEquals(actualMessage, expectedMessage);
-//				}
-//				if (key.equalsIgnoreCase(passwordRulesError)) {
-//					String actualMessage =Registration.getPasswordRulesError();
-//					String expectedMessage = messageText;
-//					sassert().assertEquals(actualMessage, expectedMessage);
-//				}
-//				if (key.equalsIgnoreCase(passwordMisatchError)) {
-//					String actualMessage = Registration.getPasswordMatchError();
-//					String expectedMessage = messageText;
-//					sassert().assertEquals(actualMessage, expectedMessage);
-//				}
-			}
 			
 			sassert().assertAll();
 			Common.testPass();
