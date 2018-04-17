@@ -42,7 +42,7 @@ public class LoggingMsg {
 	public static String NOT_RUNNING_PROCESS_ERROR_MSG = "{0} process is not running. Starting Scripts execution on {1}";
 	public static String NULL_FILE_PATH_ERROR_MSG = "The {0} file path is null, then generating it";
 	public static String READING_DATA_FROM_SHEET = "reading data from sheet: {0} row: {1}";
-	public static String STARTING_THREAD = "<font color='green'>>>> Starting {0} >>> </font>";
+	public static String STARTING_THREAD = "<font color=#035d6d>>>> <u> Starting {0} </u> >>> </font>";
 	public static String ENDING_THREAD = "<font color='green'><<< Ending {0} <<< </font>";
 	public static String COUNTER_VALUE = "The value of the counter is: {0}";
 	public static String EXECUTE_TEST_CASE = "Execute test case {0}";
