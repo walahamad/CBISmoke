@@ -10,7 +10,6 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.xml.XmlTest;
 
-
 import com.generic.page.Registration;
 import com.generic.page.SignIn;
 import com.generic.setup.Common;
@@ -22,17 +21,16 @@ import com.generic.util.SASLogger;
 
 import com.generic.util.dataProviderUtils;
 
-
 public class LoginBase extends SelTestCase {
 
-	private static  LinkedHashMap<String, Object> users =null ;
+	private static LinkedHashMap<String, Object> users = null;
 	private static int testCaseID;
 	// used sheet in test
 	public static final String testDataSheet = SheetVariables.loginSheet;
 	private static XmlTest testObject;
-	
-	private static ThreadLocal<SASLogger> Testlogs = new ThreadLocal<SASLogger>() ; 
-	
+
+	private static ThreadLocal<SASLogger> Testlogs = new ThreadLocal<SASLogger>();
+
 	@BeforeTest
 	public static void initialSetUp(XmlTest test) throws Exception {
 		Testlogs.set(new SASLogger(test.getName() + test.getIndex()));
@@ -41,7 +39,7 @@ public class LoginBase extends SelTestCase {
 	}
 
 	@DataProvider(name = "Login", parallel = true)
-	//concurrency maintenance on sheet reading 
+	// concurrency maintenance on sheet reading
 	public static Object[][] loadTestData() throws Exception {
 		getBrowserWait(testObject.getParameter("browserName"));
 		dataProviderUtils TDP = dataProviderUtils.getInstance();
@@ -52,94 +50,87 @@ public class LoginBase extends SelTestCase {
 
 	@SuppressWarnings("unchecked") // avoid warning from linked hashmap
 	@Test(dataProvider = "Login")
-	public void LoginValidationTest(String caseId,String runTest, String desc, String proprties,String email, String fieldsValidation) {
+	public void LoginRegressionTest(String caseId, String runTest, String desc, String proprties, String email,
+			String fieldsValidation) {
 
-		Testlogs.set(new SASLogger("Login "+getBrowserName()));
-		//Important to add this for logging/reporting 
+		Testlogs.set(new SASLogger("Login " + getBrowserName()));
+		// Important to add this for logging/reporting
 		setTestCaseReportName("Login Case");
-		//Testlogs.get().debug("Case Browser: "  + testObject.getParameter("browserName") );
+		// Testlogs.get().debug("Case Browser: " +
+		// testObject.getParameter("browserName") );
 		logCaseDetailds(MessageFormat.format(LoggingMsg.TEST_CASE_DESC, testDataSheet + "." + caseId,
 				this.getClass().getCanonicalName(), desc, proprties.replace("\n", "<br>- ")));
-		
+
 		String caseMail = "";
-		LinkedHashMap<String, Object> userdetails = null; 
-		if (!email.equals(""))
-		{
+		LinkedHashMap<String, Object> userdetails = null;
+		if (!email.equals("")) {
 			userdetails = (LinkedHashMap<String, Object>) users.get(email);
 			caseMail = (String) userdetails.get(Registration.keys.email);
 			Testlogs.get().debug("Mail will be used is: " + caseMail);
 		}
-		
 
 		try {
 
 			if (proprties.equals("Success login")) {
-				Testlogs.get().debug(caseMail);
-				Testlogs.get().debug((String) userdetails.get(Registration.keys.password) );
+				Testlogs.get().debug("Login mail is: " + caseMail);
+				Testlogs.get().debug((String) userdetails.get(Registration.keys.password));
 				SignIn.logIn(caseMail, (String) userdetails.get(Registration.keys.password));
-				sassert().assertTrue(SignIn.checkUserAccount(),LoggingMsg.USER_IS_NOT_LOGGED_IN_SUCCESSFULLY );
+				sassert().assertTrue(SignIn.checkUserAccount(), LoggingMsg.USER_IS_NOT_LOGGED_IN_SUCCESSFULLY);
 			}
 			if (proprties.equals("invalidUserEmail")) {
 				SignIn.fillLoginFormAndClickSubmit(caseMail, "1234567");
-					String alertMessage = SignIn.getErrorMsg();
-					String emailMessage = SignIn.getEmailErrorMsg();
-					String failureMessage = MessageFormat.format(LoggingMsg.ACTUAL_EXPECTED_ERROR,
-							emailMessage, fieldsValidation);
-					sassert().assertTrue(emailMessage.contains(fieldsValidation), failureMessage);
-					sassert().assertTrue(!alertMessage.equals("") , "Error message is not exist" );
+				String alertMessage = SignIn.getMailErrorMsg();
+				sassert().assertTrue(alertMessage.contains(fieldsValidation),
+						"Error message is not as expected" + fieldsValidation + " : " + alertMessage);
 			}
 			if (proprties.equals("invalidUserPassword")) {
 				Testlogs.get().debug(caseMail);
-				SignIn.fillLoginFormAndClickSubmit(caseMail,"");
-					String alertMessage = SignIn.getErrorMsg();
-					String passwordMessage = SignIn.getPasswrdErrorMsg();
-					String failureMessage = MessageFormat.format(LoggingMsg.ACTUAL_EXPECTED_ERROR,
-							passwordMessage, fieldsValidation);
-					sassert().assertTrue(passwordMessage.contains(fieldsValidation), failureMessage);
-					sassert().assertTrue(!alertMessage.equals("") , "Error message is not exist" );
+				SignIn.fillLoginFormAndClickSubmit(caseMail, "");
+				String passwordMessage = SignIn.getPasswrdErrorMsg();
+				sassert().assertTrue(passwordMessage.contains(fieldsValidation),
+						"Error message is not as expected" + fieldsValidation + " : " + passwordMessage);
+				
 			}
 			if (proprties.equals("wrongUserPassword")) {
 				Testlogs.get().debug(caseMail);
-				SignIn.fillLoginFormAndClickSubmit(caseMail,"invalid123");
-					String loginformMessage = SignIn.getErrologinMessage();
-					String failureMessage = MessageFormat.format(LoggingMsg.ACTUAL_EXPECTED_ERROR,
-							loginformMessage, fieldsValidation);
-					sassert().assertTrue(loginformMessage.contains(fieldsValidation), failureMessage);
+				SignIn.fillLoginFormAndClickSubmit(caseMail, "invalid123");
+				String loginformMessage = SignIn.getErrologinMessage();
+				String failureMessage = MessageFormat.format(LoggingMsg.ACTUAL_EXPECTED_ERROR, loginformMessage,
+						fieldsValidation);
+				sassert().assertTrue(loginformMessage.contains(fieldsValidation), failureMessage);
 			}
 			if (proprties.equals("emptyData")) {
-				SignIn.clickLogin();
-					String alertMessage = SignIn.getErrorMsg();
-					String emailMessage = SignIn.getEmailErrorMsg();
-					String passwordMessage = SignIn.getPasswrdErrorMsg();
-					
-					String failureMessage = MessageFormat.format(LoggingMsg.ACTUAL_EXPECTED_ERROR,
-							emailMessage + "<br>" + passwordMessage, fieldsValidation);
-					
-					sassert().assertTrue(fieldsValidation.contains(emailMessage), failureMessage);
-					sassert().assertTrue(fieldsValidation.contains(passwordMessage), failureMessage);
-					sassert().assertTrue(!alertMessage.equals("") , "Error message is not exist" );
+				SignIn.fillLoginFormAndClickSubmit("", "");
+				String emailMessage = SignIn.getMailErrorMsg();
+				String passwordMessage = SignIn.getPasswrdErrorMsg();
+
+				String failureMessage = MessageFormat.format(LoggingMsg.ACTUAL_EXPECTED_ERROR,
+						emailMessage + "<br>" + passwordMessage, fieldsValidation);
+
+				sassert().assertTrue(fieldsValidation.contains(emailMessage),"Mail Validation error: "+failureMessage);
+				sassert().assertTrue(fieldsValidation.contains(passwordMessage),"Password Validation error"+ failureMessage);
 			}
-			
+
 			if (proprties.equals("Forgot password -Valid Email")) {
 				SignIn.clickForgotPasswordBtn();
 				SignIn.typeForgottenPwdEmail(caseMail);
 				SignIn.clickForgotPasswordSubmitBtn();
 				Thread.sleep(1500);
-					String alertMessage = SignIn.getAlertPositiveForgottenPasswordd();
-					String failureMessage = MessageFormat.format(LoggingMsg.ACTUAL_EXPECTED_ERROR,
-							alertMessage, fieldsValidation);
-					sassert().assertTrue(alertMessage.contains(fieldsValidation), failureMessage);
-			}
+				String alertMessage = SignIn.getAlertPositiveForgottenPasswordd();
+				String failureMessage = MessageFormat.format(LoggingMsg.ACTUAL_EXPECTED_ERROR, alertMessage,
+						fieldsValidation);
+				sassert().assertTrue(alertMessage.contains(fieldsValidation), failureMessage);
+			}//OOS-CBK
 			if (proprties.equals("Forgot password -Invalid Email")) {
 				SignIn.clickForgotPasswordBtn();
 				SignIn.typeForgottenPwdEmail(caseMail);
 				SignIn.clickForgotPasswordSubmitBtn();
 				Thread.sleep(1500);
-					String alertMessage = SignIn.getForgottenPwdEmailError();
-					String failureMessage = MessageFormat.format(LoggingMsg.ACTUAL_EXPECTED_ERROR,
-							alertMessage, fieldsValidation);
-					sassert().assertTrue(alertMessage.contains(fieldsValidation), failureMessage);
-			}
+				String alertMessage = SignIn.getForgottenPwdEmailError();
+				String failureMessage = MessageFormat.format(LoggingMsg.ACTUAL_EXPECTED_ERROR, alertMessage,
+						fieldsValidation);
+				sassert().assertTrue(alertMessage.contains(fieldsValidation), failureMessage);
+			}//OOS-CBK
 			sassert().assertAll();
 			Common.testPass();
 		} catch (Throwable t) {
