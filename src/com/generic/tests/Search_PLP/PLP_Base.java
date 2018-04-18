@@ -60,14 +60,11 @@ public class PLP_Base extends SelTestCase {
 			
 			if (Proprties.contains("sort"))
 				sassert().assertTrue(PLP.sortAndValidate(Proprties.split("sort")[1].split("\n")[0]),"The sorting is not OK");
-			Thread.sleep(3000);
 			
 			if (Proprties.contains("Pagination"))
 			{
-				String numberOfProducstInPLP = PLP.getNumberOfproductsInSite().split("-")[1].split(" ")[0];
 				String countOfProductsInPLP = String.valueOf(PLP.countProductsInPage());
-				sassert().assertEquals( numberOfProducstInPLP, countOfProductsInPLP,"The pagination is not OK");
-				sassert().assertEquals(numberOfProducstInPLP, numberOfProducts, "The pagination is not OK");
+				sassert().assertEquals( numberOfProducts, countOfProductsInPLP,"The pagination is not OK");
 			}			
 			sassert().assertAll();
 			Common.testPass();
