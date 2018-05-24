@@ -2,17 +2,19 @@ package com.generic.selector;
 
 public class PLPSelectors {
 	//done
-	public static final String sortingDropDown = "custom_select";
-	public static final String sortPHTL = "css,.selection-list > li";
-	public static final String sortPLTH = "css,.selection-list > li";
-	public static final String productsPrices = "Sale Price";
+	public static final String sortingDropDown = "sortOptions1";
+	public static final String sortingDropDownMobile = "sort by";
+	public static final String sortPHTL = "css,div.custom-dropdown-content.sort-dropdown-content>button";
+	public static final String sortPHTLMobile = "Price: High to Low";
+	public static final String sortPLTH = "css,div.custom-dropdown-content.sort-dropdown-content>button";
+	public static final String sortPLTHMobile = "Price: Low to High";
+	public static final String productsPrices = "actual-price";
+	public static final String productNmber = "pagination-bar-results";
+	
+	
+	
+	
 	public static final String productsSalePrices = "product-sales-price";
-		
-	
-	
-	
-	
-	public static final String productNmber = "css,#osh-count-summary-desktop-0 > div > span";
 	public static final String sortOptions1 = "sortOptions1";
 	public static final String sortOptions2 = "sortOptions2";
 	public static final String numberOfProductsFound = "test_searchResults_productsFound_label_$";

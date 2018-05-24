@@ -54,7 +54,7 @@ public class PLP_Base extends SelTestCase {
 				this.getClass().getCanonicalName(), desc));
 
 		try {
-			String url = PagesURLs.getPLP();
+			String url = PagesURLs.getHomePage()+ PagesURLs.getPLP();
 			getDriver().get(url);
 			Thread.sleep(1000);
 			

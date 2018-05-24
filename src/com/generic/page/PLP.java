@@ -17,14 +17,17 @@ public class PLP extends SelTestCase {
 		public static final String caseId = "caseId";
 	}
 
-	// done-cbk
+	//done-ocm
 	public static void clickOnSorting() throws Exception {
 		try {
 			getCurrentFunctionName(true);
 			List<String> subStrArr = new ArrayList<String>();
 			List<String> valuesArr = new ArrayList<String>();
-			subStrArr.add(PLPSelectors.sortingDropDown);
-			valuesArr.add("ForceAction,hover");
+			if (!getBrowserName().contains("mobile"))
+				subStrArr.add(PLPSelectors.sortingDropDown);
+			else
+				subStrArr.add(PLPSelectors.sortingDropDownMobile);
+			valuesArr.add("");
 			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
 			getCurrentFunctionName(false);
 		} catch (NoSuchElementException e) {
@@ -34,13 +37,36 @@ public class PLP extends SelTestCase {
 		}
 	}
 
-	// done-cbk
+	//done-ocm
 	public static void clickOnPriceHighToLow() throws Exception {
 		try {
 			getCurrentFunctionName(true);
 			List<String> subStrArr = new ArrayList<String>();
 			logs.debug("High to low sorting");
-			subStrArr.add(PLPSelectors.sortPHTL);
+			if (!getBrowserName().contains("mobile"))
+				subStrArr.add(PLPSelectors.sortPHTL);
+			else
+				subStrArr.add(PLPSelectors.sortPHTLMobile);
+			SelectorUtil.getNthElement(subStrArr, 2).click();
+			getCurrentFunctionName(false);
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+			}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
+	}
+
+	//done-ocm
+	public static void clickOnPriceLowToHigh() throws Exception {
+		try {
+
+			getCurrentFunctionName(true);
+			List<String> subStrArr = new ArrayList<String>();
+			logs.debug("low to High sorting");
+			if (!getBrowserName().contains("mobile"))
+				subStrArr.add(PLPSelectors.sortPLTH);
+			else
+				subStrArr.add(PLPSelectors.sortPLTHMobile);
 			SelectorUtil.getNthElement(subStrArr, 1).click();
 			getCurrentFunctionName(false);
 		} catch (NoSuchElementException e) {
@@ -50,24 +76,7 @@ public class PLP extends SelTestCase {
 		}
 	}
 
-	// done-cbk
-	public static void clickOnPriceLowToHigh() throws Exception {
-		try {
-
-			getCurrentFunctionName(true);
-			List<String> subStrArr = new ArrayList<String>();
-			logs.debug("low to High sorting");
-			subStrArr.add(PLPSelectors.sortPLTH);
-			SelectorUtil.getNthElement(subStrArr, 0).click();
-			getCurrentFunctionName(false);
-		} catch (NoSuchElementException e) {
-			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
-			}.getClass().getEnclosingMethod().getName()));
-			throw e;
-		}
-	}
-
-	// done-cbk
+	//done-ocm
 	public static boolean validateSorting(String sortType) throws Exception {
 		try {
 			getCurrentFunctionName(true);
@@ -79,9 +88,9 @@ public class PLP extends SelTestCase {
 			String Price3 = SelectorUtil.getNthElement(subStrArr, 2).getText();
 			logs.debug("Prices for first 3 products is " + Price1 + ", " + Price2 + ", " + Price3);
 
-			double valuePrice1 = Double.parseDouble(Price1.trim().replace("$", ""));
-			double valuePrice2 = Double.parseDouble(Price2.trim().replace("$", ""));
-			double valuePrice3 = Double.parseDouble(Price3.trim().replace("$", ""));
+			double valuePrice1 = Double.parseDouble(Price1.trim().replace("$", "").split("-")[0]);
+			double valuePrice2 = Double.parseDouble(Price2.trim().replace("$", "").split("-")[0]);
+			double valuePrice3 = Double.parseDouble(Price3.trim().replace("$", "").split("-")[0]);
 
 			getCurrentFunctionName(false);
 			if (sortType.contains("LTH"))
@@ -97,7 +106,7 @@ public class PLP extends SelTestCase {
 
 	}
 
-	// done-cbk
+	//done-ocm
 	public static boolean sortAndValidate(String sortType) throws Exception {
 		try {
 			getCurrentFunctionName(true);
@@ -122,12 +131,13 @@ public class PLP extends SelTestCase {
 		}
 	}
 
+	//done-ocm
 	public static int countProductsInPage() throws Exception {
 		try {
 			getCurrentFunctionName(true);
 			List<String> subStrArr = new ArrayList<String>();
 			logs.debug("counting the products ");
-			subStrArr.add(PLPSelectors.productsSalePrices);
+			subStrArr.add(PLPSelectors.productsPrices);
 			int itemsNumber = SelectorUtil.getAllElements(subStrArr).size();
 			logs.debug("product count is :" + itemsNumber);
 			getCurrentFunctionName(false);
@@ -139,7 +149,7 @@ public class PLP extends SelTestCase {
 		}
 	}
 
-	// OOS-cbk
+	//done-ocm
 	public static String getNumberOfproductsInSite() throws Exception {
 		try {
 			getCurrentFunctionName(true);
@@ -149,8 +159,8 @@ public class PLP extends SelTestCase {
 			subStrArr.add(PLPSelectors.productNmber);
 			valuesArr.add("");
 			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
-			String count = SelectorUtil.textValue.get();
-			logs.debug("umber of items: " + count);
+			String count = SelectorUtil.textValue.get().split(" ")[4];
+			logs.debug("number of items: " + count);
 			getCurrentFunctionName(false);
 			return count;
 		} catch (NoSuchElementException e) {
