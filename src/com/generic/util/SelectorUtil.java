@@ -784,6 +784,13 @@ public class SelectorUtil extends SelTestCase {
 	    	return initializeSelectorsAndDoActions(subStrArr,valuesArr , true);
 	    }
 	    
+	    @SuppressWarnings("rawtypes")
+		public static LinkedHashMap<String, LinkedHashMap> initializeSelectorsAndDoActions(List<String> subStrArr ) throws Exception {
+	    	List<String> valuesArr = new ArrayList<String>();
+	    	valuesArr.add("");
+	    	return initializeSelectorsAndDoActions(subStrArr,valuesArr , true);
+	    }
+	    
 	    
 	    @SuppressWarnings({ "rawtypes", "unchecked" })
 		public static LinkedHashMap<String, LinkedHashMap> initializeSelectorsAndDoActions(List<String> subStrArr,
