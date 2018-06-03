@@ -39,7 +39,7 @@ public class SheetVariables {
 	public static final String SearchSheet = "SearchRegression";
 	public static final String MailSignupRegressionSheet = "MailSignupRegression";
 	public static final String QuickViewRegressionSheet = "QuickViewRegression";
-	public static final String VisualTestingHPRegressionsheet = "VisualTestingHPRegression";
+	public static final String VisualTestingHPRegressionsheet = "HomePageRegression";
 	public static final String VisualTestingCLPRegressionsheet = "VisualTestingCLPRegression";
 	public static final String RunnersRegressionSheet = "SetupRunners";
 	public static final String BrowsersListingSheet = "SetupBrowsers";
