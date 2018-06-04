@@ -69,7 +69,7 @@ public class HomePageBase extends SelTestCase {
 		logCaseDetailds(MessageFormat.format(LoggingMsg.TEST_CASE_DESC, testDataSheet + "." + caseId,
 				this.getClass().getCanonicalName(), desc));
 		
-		String baseline_browser = baseline+"_"+getBrowserName().replace(" ", "_");
+//		String baseline_browser = baseline+"_"+getBrowserName().replace(" ", "_");
 		
 		try {
 			String url = PagesURLs.getHomePage();
@@ -79,24 +79,24 @@ public class HomePageBase extends SelTestCase {
 			if (proprties.contains(this.update))
 			{
 				if (proprties.contains(this.header))
-					HomePage.updateHeaderBaseline(baseline_browser);
+					HomePage.updateHeaderBaseline(baseline);
 				if (proprties.contains(this.footer))
-					HomePage.updateFooterBaseline(baseline_browser);
+					HomePage.updateFooterBaseline(baseline);
 				if (proprties.contains(this.body))
-					HomePage.updateBodyBaseline(baseline_browser);
+					HomePage.updateBodyBaseline(baseline);
 				
-				HomePage.prepareBaselineforLogs(baseline_browser);
+				HomePage.prepareBaselineforLogs(baseline);
 			}
 			else if (proprties.contains(this.verify))
 			{
 				if (proprties.contains(this.header))
-					sassert().assertTrue(HomePage.verifyHeader(baseline_browser),"headerbase line is not same site header");
+					sassert().assertTrue(HomePage.verifyHeader(baseline),"headerbase line is not same site header");
 				if (proprties.contains(this.footer))
-					sassert().assertTrue(HomePage.verifyFooter(baseline_browser),"headerbase line is not same site footer");
+					sassert().assertTrue(HomePage.verifyFooter(baseline),"headerbase line is not same site footer");
 				if (proprties.contains(this.body))
-					sassert().assertTrue(HomePage.verifyBody(baseline_browser),"headerbase line is not same site body");
+					sassert().assertTrue(HomePage.verifyBody(baseline),"headerbase line is not same site body");
 				
-				HomePage.prepareBaselineforLogs(baseline_browser);
+				HomePage.prepareBaselineforLogs(baseline);
 			}
 			else {
 				Testlogs.get().debug("please check proprties provided in excel sheet");

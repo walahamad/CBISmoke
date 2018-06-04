@@ -7,16 +7,5 @@
 			<class name="com.generic.tests.HomePage.HomePageBase" />
 		</classes>
 	</test><!-- Test -->
-	<test name="HP_SC firefox">
-		<parameter name="browserName" value="firefox"></parameter>
-		<classes>
-			<class name="com.generic.tests.HomePage.HomePageBase" />
-		</classes>
-	</test><!-- Test -->
-	<test name="HP_SC mobile_Nexus 5">
-		<parameter name="browserName" value="mobile_Nexus 5"></parameter>
-		<classes>
-			<class name="com.generic.tests.HomePage.HomePageBase" />
-		</classes>
-	</test><!-- Test -->
+
 </suite> <!-- Suite -->
