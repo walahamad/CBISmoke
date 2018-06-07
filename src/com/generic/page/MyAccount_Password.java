@@ -96,13 +96,17 @@ public class MyAccount_Password extends SelTestCase {
 		getCurrentFunctionName(false);
 	}
 
-	public static String getCurrentPasswordErrorrMsg() throws Exception {
+	public static String getCurrentPasswordErrorrMsg(boolean alert) throws Exception {
 		getCurrentFunctionName(true);
 		List<String> subStrArr = new ArrayList<String>();
 		List<String> valuesArr = new ArrayList<String>();
 		logs.debug(MessageFormat.format(LoggingMsg.GET_ELEMENT_BY_LOCATOR,
 				MyAccount_PasswordSelectors.currentPasswordError));
-		subStrArr.add(MyAccount_PasswordSelectors.currentPasswordError);
+		if (!alert)
+			subStrArr.add(MyAccount_PasswordSelectors.currentPasswordError);
+		else
+			subStrArr.add(MyAccount_PasswordSelectors.currentPasswordError2);
+
 		valuesArr.add("noClick");
 		String currentPasswordErrorMsg = "";
 		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
@@ -111,31 +115,40 @@ public class MyAccount_Password extends SelTestCase {
 		return currentPasswordErrorMsg;
 	}
 
-	public static String getNewPasswordErrorMsg() throws Exception {
+	public static String getNewPasswordErrorMsg(boolean alert) throws Exception {
 		getCurrentFunctionName(true);
 		List<String> subStrArr = new ArrayList<String>();
 		List<String> valuesArr = new ArrayList<String>();
 		logs.debug(
 				MessageFormat.format(LoggingMsg.GET_ELEMENT_BY_LOCATOR, MyAccount_PasswordSelectors.newPasswordError));
-		subStrArr.add(MyAccount_PasswordSelectors.newPasswordError);
+		if (!alert)
+
+			subStrArr.add(MyAccount_PasswordSelectors.newPasswordError);
+		else
+			subStrArr.add(MyAccount_PasswordSelectors.newPasswordError2);
 		valuesArr.add("noClick");
-		String newPasswordErrorMsg = "";
 		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
+
+		String newPasswordErrorMsg = "";
 		newPasswordErrorMsg = SelectorUtil.textValue.get();
 		getCurrentFunctionName(false);
 		return newPasswordErrorMsg;
 	}
 
-	public static String getConfirmNewPasswordErrorMsg() throws Exception {
+	public static String getConfirmNewPasswordErrorMsg(boolean alert) throws Exception {
 		getCurrentFunctionName(true);
 		List<String> subStrArr = new ArrayList<String>();
 		List<String> valuesArr = new ArrayList<String>();
 		logs.debug(MessageFormat.format(LoggingMsg.GET_ELEMENT_BY_LOCATOR,
 				MyAccount_PasswordSelectors.confirmNewPasswordError));
-		subStrArr.add(MyAccount_PasswordSelectors.confirmNewPasswordError);
-		valuesArr.add("noClick");
 		String confirmNewPasswordErrorMsg = "";
-		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
+		if (!alert)
+			subStrArr.add(MyAccount_PasswordSelectors.confirmNewPasswordError);
+		else 
+			subStrArr.add(MyAccount_PasswordSelectors.confirmNewPasswordError2);
+			valuesArr.add("noClick");
+			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
+		
 		confirmNewPasswordErrorMsg = SelectorUtil.textValue.get();
 		getCurrentFunctionName(false);
 		return confirmNewPasswordErrorMsg;
@@ -147,7 +160,7 @@ public class MyAccount_Password extends SelTestCase {
 		List<String> valuesArr = new ArrayList<String>();
 		logs.debug(MessageFormat.format(LoggingMsg.GET_ELEMENT_BY_LOCATOR, MyAccount_PasswordSelectors.globalAlerts));
 		subStrArr.add(MyAccount_PasswordSelectors.globalAlerts);
-		valuesArr.add("");
+		valuesArr.add("noClick");
 		String globalAlertMsg = "";
 		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
 		globalAlertMsg = SelectorUtil.textValue.get();
