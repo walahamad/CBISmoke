@@ -48,7 +48,7 @@ public class PLP extends SelTestCase {
 				subStrArr.add(PLPSelectors.sortPHTL);
 			else
 				subStrArr.add(PLPSelectors.sortPHTLMobile);
-			SelectorUtil.getNthElement(subStrArr, 2).click();
+			SelectorUtil.getNthElement(subStrArr, 1).click();
 			getCurrentFunctionName(false);
 		} catch (NoSuchElementException e) {
 			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
