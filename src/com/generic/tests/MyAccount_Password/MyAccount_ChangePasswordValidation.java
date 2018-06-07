@@ -72,10 +72,10 @@ public class MyAccount_ChangePasswordValidation extends SelTestCase {
 		String emailSubmail = getSubMailAccount((String) userDetails.get(Registration.keys.email));
 		Testlogs.get().debug("Mail will be used is: " + emailSubmail);
 
-		getDatatable().getCellRowNum(testDataSheet, MyAccount_Password.keys.caseId, caseId);
-
 		try {
-
+			
+			if(emailSubmail.isEmpty()) throw new NoSuchFieldException("Email is not valid");
+			
 			SignIn.logIn(emailSubmail, (String) userDetails.get(Registration.keys.password));
 
 			String url = PagesURLs.getPasswordPage();
