@@ -9,5 +9,23 @@
 			<class name="com.generic.tests.checkout.AccountsSetup" />
 		</classes>
 	</test><!-- Test -->
+	<test name="Registration Tests_chrome">
+		<parameter name="browserName" value="chrome"></parameter>
+		<classes>
+			<class name="com.generic.tests.checkout.AccountsSetup" />
+		</classes>
+	</test><!-- Test -->
+	<test name="Registration Tests_firefox">
+		<parameter name="browserName" value="firefox"></parameter>
+		<classes>
+			<class name="com.generic.tests.checkout.AccountsSetup" />
+		</classes>
+	</test><!-- Test -->
+	<test name="Registration Tests_mobile_nexus 5">
+		<parameter name="browserName" value="mobile_nexus 5"></parameter>
+		<classes>
+			<class name="com.generic.tests.checkout.AccountsSetup" />
+		</classes>
+	</test><!-- Test -->
 	
 </suite> <!-- Suite -->
