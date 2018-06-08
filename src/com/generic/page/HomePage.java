@@ -123,6 +123,7 @@ public class HomePage extends SelTestCase {
 		List<String> subStrArr = new ArrayList<String>();
 		List<String> valuesArr = new ArrayList<String>();
 		getCurrentFunctionName(true);
+		baseline = baseline+"_"+getBrowserName().replace(" ", "_");
 		logs.debug(MessageFormat.format(LoggingMsg.TYPING_ELEMENT_VALUE, "guest mail", baseline));
 		subStrArr.add(HomePageSelectors.header);
 		valuesArr.add("VisualTesting");
@@ -158,6 +159,7 @@ public class HomePage extends SelTestCase {
 				subStrArr.add(HomePageSelectors.footerBottomSection);
 			}
 		valuesArr.add("VisualTesting");
+		baseline = baseline+"_"+getBrowserName().replace(" ", "_");
 		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
 		String imagePath = EnvironmentFiles.getLogFilePath() + "/" + baseline+"_actual.png";
 		BufferedImage actualImage = SelectorUtil.screenShot.get().getImage();
@@ -202,6 +204,7 @@ public class HomePage extends SelTestCase {
 				subStrArr.add(HomePageSelectors.body);
 		}
 		valuesArr.add("VisualTesting");
+		baseline = baseline+"_"+getBrowserName().replace(" ", "_");
 		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
 		String imagePath = EnvironmentFiles.getLogFilePath() + "/" + baseline+"_actual.png";
 		BufferedImage actualImage = SelectorUtil.screenShot.get().getImage();
