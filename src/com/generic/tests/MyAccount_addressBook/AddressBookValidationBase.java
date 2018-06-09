@@ -3,7 +3,6 @@ package com.generic.tests.MyAccount_addressBook;
 import java.text.MessageFormat;
 
 import org.apache.commons.lang3.RandomStringUtils;
-import org.apache.commons.lang3.RandomUtils;
 import org.testng.Assert;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.DataProvider;
@@ -27,7 +26,6 @@ import com.generic.util.SASLogger;
 public class AddressBookValidationBase extends SelTestCase {
 	private static LinkedHashMap<String, Object> addresses = null;
 	private static LinkedHashMap<String, Object> users = null;
-	private String numberofaddresses;
 	// used sheet in test
 	public static final String testDataSheet = SheetVariables.AddressBookSheet;
 
@@ -50,83 +48,87 @@ public class AddressBookValidationBase extends SelTestCase {
 		dataProviderUtils TDP = dataProviderUtils.getInstance();
 		Object[][] data = TDP.getData(testDataSheet);
 		return data;
-		
+
 	}
 
 	@SuppressWarnings("unchecked") // avoid warning from linked hashmap
 	@Test(dataProvider = "AddressBook")
-	public void BookAddressTest(String caseId, String runTest,String desc, String prop, String email, String newaddress)
-			throws Exception {
+	public void BookAddressTest(String caseId, String runTest, String desc, String prop, String email,
+			String newaddress, String globalAlerts) throws Exception {
 		// Important to add this for logging/reporting
 		Testlogs.set(new SASLogger("Address_Book " + getBrowserName()));
 		setTestCaseReportName("Address Book Case");
 		logCaseDetailds(MessageFormat.format(LoggingMsg.ADDRESSPOOKDESC, testDataSheet + "." + caseId,
 				this.getClass().getCanonicalName(), desc));
-		
-		
+
 		String caseMail = "";
-		LinkedHashMap<String, Object> userdetails = null; 
-		if (!email.equals(""))
-		{
-			userdetails = (LinkedHashMap<String, Object>) users.get(email);
-			caseMail = (String) userdetails.get(Registration.keys.email);
-			Testlogs.get().debug("Mail will be used is: " + caseMail);
-		}
-		
-		
-		String url = PagesURLs.getAddressBookPage();
-		boolean defaultAddress = prop.contains("default Address") ;
-		
+		LinkedHashMap<String, Object> userdetails = null;
+
 		try {
-			Testlogs.get().debug(caseMail);
-			Testlogs.get().debug((String) userdetails.get(Registration.keys.password));
-			
+
+			if (!email.equals("")) {
+				userdetails = (LinkedHashMap<String, Object>) users.get(email);
+				caseMail = (String) userdetails.get(Registration.keys.email);
+				caseMail = getSubMailAccount(caseMail);
+			} else {
+				throw new Exception("Email is missing");
+			}
+			Testlogs.get().debug("Mail will be used is: " + caseMail);
+			Testlogs.get().debug("Password will be used is: " + (String) userdetails.get(Registration.keys.password));
 			SignIn.logIn(caseMail, (String) userdetails.get(Registration.keys.password));
-			
+			String url = PagesURLs.getHomePage()+PagesURLs.getAddressBookPage();
 			getDriver().get(url);
-			
-			if (prop.contains("new") || prop.contains("default") || prop.contains("delete")) {
-				Thread.sleep(1000);
-				AddressBook.clickAddNewAddress();
-				LinkedHashMap<String, String> addressDetails = (LinkedHashMap<String, String>) addresses
-						.get(newaddress);
-				AddressBook.fillAndClickSave(caseMail,
-						addressDetails.get(CheckOut.shippingAddress.keys.countery),
-						RandomStringUtils.randomAlphabetic(5),
-						addressDetails.get(CheckOut.shippingAddress.keys.lastName),
-						addressDetails.get(CheckOut.shippingAddress.keys.adddressLine),
-						addressDetails.get(CheckOut.shippingAddress.keys.city),
-						addressDetails.get(CheckOut.shippingAddress.keys.zipcode),
-						addressDetails.get(CheckOut.shippingAddress.keys.phone));
-				if (prop.contains("new")) {
-					String siteAddress = AddressBook.getFirstAddressDetails();
-					Testlogs.get().debug(siteAddress);
-					sassert().assertTrue(siteAddress.toLowerCase().contains((String) addressDetails.get(CheckOut.shippingAddress.keys.adddressLine).toLowerCase()),
-							"Address "+ siteAddress+" doesnt contain line1: " + (String) addressDetails.get(CheckOut.shippingAddress.keys.adddressLine));
-				}
-				
+			AddressBook.clickAddNewAddress();
+			LinkedHashMap<String, String> addressDetails = (LinkedHashMap<String, String>) addresses.get(newaddress);
+			AddressBook.fillAndClickSave(addressDetails.get(CheckOut.shippingAddress.keys.firstName),
+					addressDetails.get(CheckOut.shippingAddress.keys.lastName),
+					addressDetails.get(CheckOut.shippingAddress.keys.adddressLine),
+					addressDetails.get(CheckOut.shippingAddress.keys.city),
+					addressDetails.get(CheckOut.shippingAddress.keys.city),
+					addressDetails.get(CheckOut.shippingAddress.keys.zipcode),
+					addressDetails.get(CheckOut.shippingAddress.keys.phone));
+			if (prop.contains("new")) {
+				String siteAddress = AddressBook.getAddressDetails(1);
+				Testlogs.get().debug(siteAddress);
+				sassert().assertTrue(siteAddress.toLowerCase().contains((String) addressDetails.get(CheckOut.shippingAddress.keys.adddressLine).toLowerCase()),
+								"Address " + siteAddress + " doesnt contain line1: " + (String) addressDetails.get(CheckOut.shippingAddress.keys.adddressLine));
 			}
-			
+
 			if (prop.contains("edit")) {
-				String addressbook = AddressBook.getFirstAddressDetails();
+				String addressbook = AddressBook.getAddressDetails(0);
 				AddressBook.clickEditAddress();
-				LinkedHashMap<String, Object> addressDetails = (LinkedHashMap<String, Object>) addresses.get(newaddress);
-				AddressBook.fillAndClickUpdate(caseMail,
-						(String) addressDetails.get(CheckOut.shippingAddress.keys.countery),
-						RandomStringUtils.randomAlphabetic(5),
-						(String) addressDetails.get(CheckOut.shippingAddress.keys.lastName),
-						(String) addressDetails.get(CheckOut.shippingAddress.keys.adddressLine)+"nue",
-						(String) addressDetails.get(CheckOut.shippingAddress.keys.city),
-						(String) addressDetails.get(CheckOut.shippingAddress.keys.zipcode),
-						(String) addressDetails.get(CheckOut.shippingAddress.keys.phone), false);
-				String newAddress = AddressBook.getFirstAddressDetails();
-				sassert().assertNotEquals(addressbook,newAddress , "Address is not updated correctely : new " + newAddress +" <br> old one: "+addressbook);
+				AddressBook.fillAndClickUpdate(RandomStringUtils.randomAlphabetic(5), "", "", "", "", "", "");
+				String newAddress = AddressBook.getAddressDetails(0);
+				sassert().assertNotEquals(addressbook, newAddress, "Address is not updated correctely : new " + newAddress + " <br> old one: " + addressbook);
 			}
-			
-			//Remove the created address.
-			if (prop.contains("delete"))
-				AddressBook.clickRemoveAddress();
-			
+			if (prop.contains("default")) {
+				String oldDefaultAddress = null;
+				String expectedNewDefaultAddress = null;
+				if (AddressBook.getNumberOfAddresses() > AddressBook.getNumberOfNonDefaultAddresses()) {
+					oldDefaultAddress = AddressBook.getAddressDetails(0);
+					expectedNewDefaultAddress = AddressBook.getAddressDetails(1);
+				} else {
+					expectedNewDefaultAddress = AddressBook.getAddressDetails(0);
+				}
+				AddressBook.checkSetAsDefaultAddress(); //
+				String newDefaultAddress = AddressBook.getAddressDetails(0);
+				String alertInfo = AddressBook.getAlertInfo();
+				String expectedAlertInfo = globalAlerts.split("UpdateAddressMsg:")[1].split("\n")[0];
+				sassert().assertEquals(expectedNewDefaultAddress, newDefaultAddress, "Default address is not updated correctely : new " + newDefaultAddress + " <br> old one: "
+								+ oldDefaultAddress);
+				sassert().assertEquals(alertInfo, expectedAlertInfo, "Default address is not updated correctely : Expected message: " + expectedAlertInfo
+								+ " <br> Actual message: " + alertInfo);
+			}
+
+			// Remove the created address.
+			if (prop.contains("delete")) {
+				AddressBook.removeNonDefaultAddress(0);
+	        	String alertInfo = AddressBook.getAlertInfo();
+		    	String expectedAlertInfo = globalAlerts.split("DeleteAddressMsg:")[1].split("\n")[0];
+		    	sassert().assertEquals(alertInfo, expectedAlertInfo, "Default address is not removed correctely : Expected message: " + expectedAlertInfo
+							+ " <br> Actual message: " + alertInfo);	
+			}
+
 			sassert().assertAll();
 			Common.testPass();
 		} catch (Throwable t) {
