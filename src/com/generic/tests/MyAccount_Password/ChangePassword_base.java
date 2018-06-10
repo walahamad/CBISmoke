@@ -25,7 +25,7 @@ import com.google.common.base.Splitter;
 import com.generic.util.ReportUtil;
 import com.generic.util.SASLogger;
 
-public class MyAccount_ChangePasswordValidation extends SelTestCase {
+public class ChangePassword_base extends SelTestCase {
 	// used sheet in test
 	public static final String testDataSheet = SheetVariables.PasswordRegressionSheet;
 	private static XmlTest testObject;
@@ -53,36 +53,37 @@ public class MyAccount_ChangePasswordValidation extends SelTestCase {
 	@SuppressWarnings("unchecked") // avoid warning from linked hashmap
 	@Test(dataProvider = "Password")
 	public void changePasswordRegressionTest(String caseId, String runTest, String desc, String proprties, String email,
-			String currentPassword, String newPassword, String confirmNewPassword, String globalAlerts)
-			throws Exception {
+			String newPassword, String confirmNewPassword, String globalAlerts) throws Exception {
 
 		boolean doClickCancelBtn = proprties.contains("click cancel");
 		boolean doClickUpdateBtn = proprties.contains("click update");
 		boolean revertChanges = proprties.contains("revert changes");
 
-		LinkedHashMap<String, Object> userDetails = (LinkedHashMap<String, Object>) users.get(email);
+		LinkedHashMap<String, String> userDetails = (LinkedHashMap<String, String>) users.get(email);
 
-		Testlogs.set(new SASLogger("Password" + getBrowserName()));
+		Testlogs.set(new SASLogger("Password_" + getBrowserName()));
 		// Important to add this for logging/reporting
 		setTestCaseReportName("Change Password Case");
 
 		logCaseDetailds(MessageFormat.format(LoggingMsg.TEST_CASE_DESC, testDataSheet + "." + caseId,
 				this.getClass().getCanonicalName(), desc));
 
-		String emailSubmail = getSubMailAccount((String) userDetails.get(Registration.keys.email));
+		String emailSubmail = getSubMailAccount(userDetails.get(Registration.keys.email));
 		Testlogs.get().debug("Mail will be used is: " + emailSubmail);
 
 		try {
-			
-			if(emailSubmail.isEmpty()) throw new NoSuchFieldException("Email is not valid");
-			
-			SignIn.logIn(emailSubmail, (String) userDetails.get(Registration.keys.password));
 
-			String url = PagesURLs.getPasswordPage();
+			if (emailSubmail.isEmpty())
+				throw new NoSuchFieldException("Email is not valid");
+
+			SignIn.logIn(emailSubmail, userDetails.get(Registration.keys.password));
+
+			String url = PagesURLs.getHomePage()+PagesURLs.getPasswordPage();
 			getDriver().get(url);
 			CurrentPageTitle = getDriver().getTitle();
 
-			MyAccount_Password.fillInNewValuesAndClickUpdateOrCancel(currentPassword, newPassword, confirmNewPassword,
+			MyAccount_Password.fillInNewValuesAndClickUpdateOrCancel(
+					(String) userDetails.get(Registration.keys.password), newPassword, confirmNewPassword,
 					doClickUpdateBtn, doClickCancelBtn);
 			Thread.sleep(3000);
 

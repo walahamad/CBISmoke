@@ -344,6 +344,7 @@ public final class ReportUtil extends SelTestCase {
         File srcFile;
         srcFile = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
         try {
+        	//TODO: change screenshot name to time stamp + browser+case
         	String screenshotName = "sc_"+ now(time_date_formatScreenshot)+ ".png";
         	String DestFile = EnvironmentFiles.getLogFilePath()+"/"+screenshotName;
             FileUtils.copyFile(srcFile, new File(DestFile));

@@ -1,14 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="Suite" parallel="tests" thread-count="1" data-provider-thread-count="1">
+<suite name="Suite" parallel="tests" thread-count="10" data-provider-thread-count="2">
 
 
-	<test name="Registration Tests_IE">
-		<parameter name="browserName" value="IE"></parameter>
-		<classes>
-			<class name="com.generic.tests.checkout.AccountsSetup" />
-		</classes>
-	</test><!-- Test -->
+	
 	<test name="Registration Tests_chrome">
 		<parameter name="browserName" value="chrome"></parameter>
 		<classes>
@@ -21,8 +16,8 @@
 			<class name="com.generic.tests.checkout.AccountsSetup" />
 		</classes>
 	</test><!-- Test -->
-	<test name="Registration Tests_mobile_nexus 5">
-		<parameter name="browserName" value="mobile_nexus 5"></parameter>
+	<test name="Registration Tests_mobile_Nexus 5">
+		<parameter name="browserName" value="mobile_Nexus 5"></parameter>
 		<classes>
 			<class name="com.generic.tests.checkout.AccountsSetup" />
 		</classes>
