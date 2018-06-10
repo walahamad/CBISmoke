@@ -44,6 +44,7 @@ public class SheetVariables {
 	public static final String RunnersRegressionSheet = "SetupRunners";
 	public static final String BrowsersListingSheet = "SetupBrowsers";
 	public static final String FavoriteSheet = "FavoriteRegression";
+	public static final String MiniCartSheet = "MiniCartRegression";
 	
     //Test Case id
     public static final String registrationTestCaseId = "Registration";
@@ -60,6 +61,7 @@ public class SheetVariables {
 	public static final String VisualTestingHPTestCaseId = "VisualTestingHP case";
 	public static final String VisualTestingCLPTestCaseId = "VisualTestingCLP case";
 	public static final String FavoriteSheetTestCaseId = "Favorite Case";
+
 
 
 

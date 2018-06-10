@@ -98,7 +98,9 @@ public class AccountsSetup extends SelTestCase {
 			Registration.fillAndClickRegister("Accept", "tester", Pemail,"Elmira College", 
 					(String) userdetails.get(Registration.keys.password),
 					(String) userdetails.get(Registration.keys.password),"",  addressDetails);
-
+			
+			ReportUtil.takeScreenShot(getDriver());
+			
 //			getDriver().get(PagesURLs.getPaymentDetailsPage());
 //
 //			PaymentDetails.clickOnAddBtn();
