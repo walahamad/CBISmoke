@@ -8,9 +8,6 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
@@ -22,7 +19,6 @@ import org.openqa.selenium.support.ui.Wait;
 import com.generic.selector.PDPSelectors;
 import com.generic.setup.ExceptionMsg;
 import com.generic.setup.SelTestCase;
-import com.generic.util.ReportUtil;
 import com.generic.util.SelectorUtil;
 
 public class PDP extends SelTestCase {
