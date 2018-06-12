@@ -44,7 +44,7 @@ public class BuildFullRegression extends SelTestCase {
 			}
 			
 			if (runners[0].equals("all") )
-				runners = "checkoutRegression,addressBookRegression,PaymentDetailsRegression,PDPRegression,PLPRegression,RegistrationRegression,LoginRegression,cartRregression".split(",");
+				runners = "addressBookRegression,BuildFullRegression,cartRegression_IE11,cartRegression,checkoutRegression,FavoriteRegression_IE11,FavoriteRegression,FinalRegression,FullRegression,HPRegression,LoginRegression_IE,LoginRegression,MiniCartRegression,OrderHistoryRegression_IE,OrderHistoryRegression,PaymentDetailsRegression,PDPRegression_IE11,PDPRegression,PLPRegression_IE,PLPRegression,RegistrationRegression_IE,RegistrationRegression,restPasswordRegression_IE,restPasswordRegression".split(",");
 			
 			Testlogs.get().debug("Started in Regression");
 			

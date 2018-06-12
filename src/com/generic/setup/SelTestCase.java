@@ -6,6 +6,8 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.Properties;
 
 
@@ -250,6 +252,16 @@ public class SelTestCase {
     @BeforeMethod
     public void setUp(XmlTest test) throws Exception  {
     	getCurrentFunctionName(true);
+    	
+    	if (test.getParameter("browserName")==null)
+		{
+    		logs.debug("#WARNING: Running test from class it self running on defult browser");
+			Map<String, String> parameters = new LinkedHashMap<>();
+			parameters.put("browserName", "chrome");
+			test.setParameters(parameters);
+		}
+		
+    	
     	suiteName = test.getSuite().getName();
     	testObj.set(test);
     	setAssert();
