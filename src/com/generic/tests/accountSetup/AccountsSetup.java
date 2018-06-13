@@ -90,6 +90,10 @@ public class AccountsSetup extends SelTestCase {
 					(String) userdetails.get(Registration.keys.password),
 					(String) userdetails.get(Registration.keys.password),"",  addressDetails);
 			
+			String registrationSuccessMsg = Registration.getRegistrationSuccessMessage();
+			sassert().assertTrue(registrationSuccessMsg.toLowerCase().contains("Thank you for registering."), 
+					"Regestration Success, validation failed Expected to have in message: Thank you for registering. but Actual message is: " + registrationSuccessMsg);
+			
 			ReportUtil.takeScreenShot(getDriver());
 			
 //			getDriver().get(PagesURLs.getPaymentDetailsPage());
