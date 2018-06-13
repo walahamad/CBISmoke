@@ -225,7 +225,8 @@ public class Base_cart extends SelTestCase {
 	public void prepareCartNotLoggedInUser(String product) throws Exception {
 		logs.debug(MessageFormat.format(LoggingMsg.ADDING_PRODUCT, product));
 		productDetails = (LinkedHashMap<String, String>) invintory.get(product);
-		PDP.addProductsToCart(productDetails);
+		
+		PDP.addRandomProductsToCart();
 	}
 
 	public void prepareCartLoggedInUser(LinkedHashMap<String, Object> userdetails, String product) throws Exception {

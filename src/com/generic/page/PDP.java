@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Random;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
 import java.util.regex.Matcher;
@@ -116,6 +117,44 @@ public class PDP extends SelTestCase {
 			throw e;
 		}
 	}// add to cart
+
+	
+	private static void selectRandomLength() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private static void selectRandomSize() throws Exception {
+		// TODO Auto-generated method stub
+		try {
+			getCurrentFunctionName(true);
+			List<String> subStrArr = new ArrayList<String>();
+			
+			subStrArr.add(PDPSelectors.randomSize);
+			List<WebElement> sizes = SelectorUtil.getAllElements(subStrArr);
+			if (sizes.size() != 0) {
+				sizes.get(0).click();
+			} else {
+				logs.debug("ignoring selecting size");
+			}
+			getCurrentFunctionName(false);
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+			}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
+
+	}
+
+	private static void selectRandomFamilySize() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private static void selectRandomColor() {
+		// TODO Auto-generated method stub
+		
+	}
 
 	// Done-ocm
 	public static String getPrice() throws Exception {
@@ -700,4 +739,79 @@ public class PDP extends SelTestCase {
 		}
 	}
 
+	// done -ocm
+	public static void addRandomProductsToCart() throws Exception {
+		try {
+			getCurrentFunctionName(true);
+			//random search in case of multiple calls
+			String[] Items=getCONFIG().getProperty("RandomItems").split(",");
+			Random random=new Random(System.currentTimeMillis());
+			navigateToRandomPDP(Items[random.nextInt(14)]);
+			
+			if (getBrowserName().equals("IE"))
+				Thread.sleep(2000);
+			clickAddToCartBtn();
+			if (getBrowserName().equals("IE"))
+				Thread.sleep(2000);
+			Thread.sleep(1000);
+
+			getCurrentFunctionName(false);
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+			}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
+	}// add to cart randomly
+	// done -ocm
+	public static void navigateToRandomPDP(String keyword) throws Exception {
+		try {
+			getCurrentFunctionName(true);
+			searchOnKeyword(keyword);
+			if (getBrowserName().equals("IE"))
+				Thread.sleep(8000);
+			pickRandomProduct();
+			if (getBrowserName().equals("IE"))
+				Thread.sleep(6000);
+			getCurrentFunctionName(false);
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+			}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
+
+	}
+	// done -ocm
+	private static void searchOnKeyword(String keyword) throws Exception {
+		try {
+			getCurrentFunctionName(true);
+			List<String> subStrArr = new ArrayList<String>();
+			List<String> valuesArr = new ArrayList<String>();
+			subStrArr.add(PDPSelectors.searchBox);
+			valuesArr.add(keyword + ",pressEnter");
+			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
+			getCurrentFunctionName(false);
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+			}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
+
+	}
+	// done -ocm
+	private static void pickRandomProduct() throws Exception {
+		try {
+			getCurrentFunctionName(true);
+			List<String> subStrArr = new ArrayList<String>();
+			List<String> valuesArr = new ArrayList<String>();
+			subStrArr.add(PDPSelectors.RandomPDP);
+			valuesArr.add("");
+			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
+			getCurrentFunctionName(false);
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+			}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
+
+	}
 }

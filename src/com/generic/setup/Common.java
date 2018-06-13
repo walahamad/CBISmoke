@@ -56,40 +56,45 @@ public class Common extends SelTestCase {
 	public static WebDriver initializeBrowser(String browser) throws Exception {
 		getCurrentFunctionName(true);
 		try {
-			logs.debug(MessageFormat.format(LoggingMsg.BROWSER_NAME,browser));
+			logs.debug(MessageFormat.format(LoggingMsg.BROWSER_NAME, browser));
 			DesiredCapabilities capabilities = new DesiredCapabilities();
 			WebDriver driver;
 			if (browser.equalsIgnoreCase("edge")) {
 				System.setProperty("webdriver.edge.driver", PagesURLs.getDriversPath(browser));
 				return new EdgeDriver(new EdgeOptions());
-				
-			}else if (browser.equalsIgnoreCase("Firefox")) {
-				System.setProperty("webdriver.gecko.driver",PagesURLs.getDriversPath(browser));
-				
+
+			} else if (browser.equalsIgnoreCase("Firefox")) {
+				System.setProperty("webdriver.gecko.driver", PagesURLs.getDriversPath(browser));
+
 				FirefoxOptions fo = new FirefoxOptions();
 				driver = new FirefoxDriver(fo);
-				driver.manage().timeouts().pageLoadTimeout(60,TimeUnit.SECONDS);
-				driver.manage().timeouts().implicitlyWait(10,TimeUnit.SECONDS);
+				driver.manage().timeouts().pageLoadTimeout(60, TimeUnit.SECONDS);
+				driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 				return driver;
-								
-			}else if (browser.equalsIgnoreCase("IE")) {
+
+			} else if (browser.equalsIgnoreCase("IE")) {
 				System.setProperty("webdriver.ie.driver", PagesURLs.getDriversPath(browser));
 				capabilities = DesiredCapabilities.internetExplorer();
+				//capabilities.setCapability("requireWindowFocus", true);
+				capabilities.setCapability("nativeEvents", false);
+				//capabilities.setCapability("unexpectedAlertBehaviour", "accept");
 				capabilities.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);
 				capabilities.setCapability(InternetExplorerDriver.INTRODUCE_FLAKINESS_BY_IGNORING_SECURITY_DOMAINS,
 						true);
 				capabilities.setJavascriptEnabled(true);
 				capabilities.setCapability(CapabilityType.ForSeleniumServer.ENSURING_CLEAN_SESSION, true);
 
-				return new InternetExplorerDriver(capabilities);
-
+				driver = new InternetExplorerDriver(capabilities);
+				driver.manage().timeouts().pageLoadTimeout(60, TimeUnit.SECONDS);
+				driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
+				return driver;
 			} else if (browser.equalsIgnoreCase("chrome")) {
 
 				System.setProperty("webdriver.chrome.driver", PagesURLs.getDriversPath(browser));
 				ChromeOptions co = new ChromeOptions();
 				driver = new ChromeDriver(co);
-				driver.manage().timeouts().pageLoadTimeout(60,TimeUnit.SECONDS);
-				driver.manage().timeouts().implicitlyWait(10,TimeUnit.SECONDS);
+				driver.manage().timeouts().pageLoadTimeout(60, TimeUnit.SECONDS);
+				driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 				return driver;
 
 			} else if (browser.equalsIgnoreCase("safari_grid")) {
@@ -102,45 +107,32 @@ public class Common extends SelTestCase {
 				// capabilities.setCapability("ensureCleanSession", true);
 				// TODO: change it and setup grid server
 				SelTestCase.setDriver(new RemoteWebDriver(new URL("http://10.20.20.54:4444/wd/hub"), capabilities));
-				
-			} 
-			 else if (browser.equalsIgnoreCase("ChromeG")) {
-				DesiredCapabilities des=DesiredCapabilities.chrome();
-//				des.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);
-//				des.setCapability(CapabilityType.UNEXPECTED_ALERT_BEHAVIOUR, UnexpectedAlertBehaviour.DISMISS);
-//				des.setPlatform(Platform.WIN10);
+
+			} else if (browser.equalsIgnoreCase("ChromeG")) {
+				DesiredCapabilities des = DesiredCapabilities.chrome();
+				// des.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);
+				// des.setCapability(CapabilityType.UNEXPECTED_ALERT_BEHAVIOUR,
+				// UnexpectedAlertBehaviour.DISMISS);
+				// des.setPlatform(Platform.WIN10);
 				System.setProperty("webdriver.chrome.driver", PagesURLs.getDriversPath(browser));
-				//des.setPlatform(org.openqa.selenium.Platform.WINDOWS);
-				RemoteWebDriver rdriver ;
-				
-				//rdriver = new RemoteWebDriver(new URL("http://cv-autogrid04.crossview.inc:4444/wd/hub"),des);
-				rdriver = new RemoteWebDriver(new URL("http://10.200.254.33:4444/wd/hub"),des);
-				rdriver.manage().timeouts().pageLoadTimeout(60,TimeUnit.SECONDS);
-				rdriver.manage().timeouts().implicitlyWait(10,TimeUnit.SECONDS);
+				// des.setPlatform(org.openqa.selenium.Platform.WINDOWS);
+				RemoteWebDriver rdriver;
+
+				// rdriver = new RemoteWebDriver(new
+				// URL("http://cv-autogrid04.crossview.inc:4444/wd/hub"),des);
+				rdriver = new RemoteWebDriver(new URL("http://10.200.254.33:4444/wd/hub"), des);
+				rdriver.manage().timeouts().pageLoadTimeout(60, TimeUnit.SECONDS);
+				rdriver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 				return rdriver;
-					
-				}else if (browser.contains("mobile")) {
-				  /*
-				   * https://cs.chromium.org/chromium/src/chrome/test/chromedriver/chrome/mobile_device_list.cc
-				   	  iPad
-					  Nexus 6
-					  Nexus 5
-					  Galaxy Note 3
-					  Nexus 6P
-					  iPhone 8 Plus
-					  iPhone 7 Plus
-					  Nexus 7
-					  iPhone 7
-					  Nexus 10
-					  iPhone 8
-					  iPhone 6
-					  Nexus 5X
-					  Galaxy Note II
-					  iPhone 6 Plus
-					  iPhone X
-					  Galaxy S5
-				   */
-				  
+
+			} else if (browser.contains("mobile")) {
+				/*
+				 * https://cs.chromium.org/chromium/src/chrome/test/chromedriver/chrome/
+				 * mobile_device_list.cc iPad Nexus 6 Nexus 5 Galaxy Note 3 Nexus 6P iPhone 8
+				 * Plus iPhone 7 Plus Nexus 7 iPhone 7 Nexus 10 iPhone 8 iPhone 6 Nexus 5X
+				 * Galaxy Note II iPhone 6 Plus iPhone X Galaxy S5
+				 */
+
 				String mobile = browser.split("_")[1];
 				capabilities = DesiredCapabilities.chrome();
 				capabilities.setCapability("platform", "WINDOWS");
@@ -197,9 +189,9 @@ public class Common extends SelTestCase {
 		if (getCONFIG().getProperty("chached_chrome").equalsIgnoreCase("yes")) {
 			// TODO: please enable it later with correct url in case Chrome Cached
 			logs.debug(LoggingMsg.ENABLE_BLOCK_FOR_FUTURE);
-			 logs.debug("signing out from all users");
-			 logs.debug(PagesURLs.getSignOutPage());
-			 getDriver().get(PagesURLs.getSignOutPage());
+			logs.debug("signing out from all users");
+			logs.debug(PagesURLs.getSignOutPage());
+			getDriver().get(PagesURLs.getSignOutPage());
 		}
 		getDriver().get(getCONFIG().getProperty("testEnvironment"));
 		getDriver().manage().window().maximize();
@@ -280,40 +272,45 @@ public class Common extends SelTestCase {
 
 		ActionDriver.refreshBrowser();
 	}
-//	/**
-//	 * It compares the expected text with actual(read from application). If they are
-//	 * not equal then it throws an error and fail the test case.
-//	 *
-//	 * @param expected
-//	 * @param locator
-//	 * @throws Exception
-//	 */
-//	public static void verifyText(String expected, By locator) throws Exception {
-//		logs.debug(MessageFormat.format(LoggingMsg.FUNCTION_NAME, "In verify Text function"));
-//		String actual = "";
-//		int i = 1;
-//		WebDriverWait wait = new WebDriverWait(SelTestCase.getDriver(), SelTestCase.getWaitTime());
-//		try {
-//			logs.debug(MessageFormat.format(LoggingMsg.EXPECTED_TEXT, expected));
-//			while (i <= getWaitTime()) {
-//				actual = wait.until(ExpectedConditions.presenceOfElementLocated(locator)).getText();
-//				logs.debug(MessageFormat.format(LoggingMsg.ACTUAL_TEXT, actual));
-//				if (actual.contains(expected)) {
-//					break;
-//				}
-//				logs.debug(MessageFormat.format(LoggingMsg.WAIT_SECONDS, i));
-//				Thread.sleep(1000);
-//				i = i + 1;
-//			}
-//		} catch (Throwable t) {
-//			throw new Exception(locator + " is missing " + t);
-//		}
-//
-//		if (i > getWaitTime()) {
-//			logs.debug(MessageFormat.format(LoggingMsg.ACTUAL_EXPECTED_ERROR, actual, expected));
-//			throw new Exception("Actual : " + actual + "Expected : " + expected);
-//		}
-//	}
+	// /**
+	// * It compares the expected text with actual(read from application). If they
+	// are
+	// * not equal then it throws an error and fail the test case.
+	// *
+	// * @param expected
+	// * @param locator
+	// * @throws Exception
+	// */
+	// public static void verifyText(String expected, By locator) throws Exception {
+	// logs.debug(MessageFormat.format(LoggingMsg.FUNCTION_NAME, "In verify Text
+	// function"));
+	// String actual = "";
+	// int i = 1;
+	// WebDriverWait wait = new WebDriverWait(SelTestCase.getDriver(),
+	// SelTestCase.getWaitTime());
+	// try {
+	// logs.debug(MessageFormat.format(LoggingMsg.EXPECTED_TEXT, expected));
+	// while (i <= getWaitTime()) {
+	// actual =
+	// wait.until(ExpectedConditions.presenceOfElementLocated(locator)).getText();
+	// logs.debug(MessageFormat.format(LoggingMsg.ACTUAL_TEXT, actual));
+	// if (actual.contains(expected)) {
+	// break;
+	// }
+	// logs.debug(MessageFormat.format(LoggingMsg.WAIT_SECONDS, i));
+	// Thread.sleep(1000);
+	// i = i + 1;
+	// }
+	// } catch (Throwable t) {
+	// throw new Exception(locator + " is missing " + t);
+	// }
+	//
+	// if (i > getWaitTime()) {
+	// logs.debug(MessageFormat.format(LoggingMsg.ACTUAL_EXPECTED_ERROR, actual,
+	// expected));
+	// throw new Exception("Actual : " + actual + "Expected : " + expected);
+	// }
+	// }
 
 	public static void killDriverServerIfRunning() throws Exception {
 		String line;
@@ -387,7 +384,7 @@ public class Common extends SelTestCase {
 
 			addresses.put((String) data[row][addresscode], address);
 		}
-		logs.debug(Arrays.asList(addresses)+"");
+		logs.debug(Arrays.asList(addresses) + "");
 		return addresses;
 	}// readAddresses
 
@@ -400,11 +397,10 @@ public class Common extends SelTestCase {
 		 * /300441924, color=claycourt, size=SizeUni, £24.26 4, qty=1 } } ]
 		 */
 		LinkedHashMap<String, Object> products = new LinkedHashMap<>();
-		
+
 		dataProviderUtils TDP = dataProviderUtils.getInstance();
 		Object[][] data = TDP.getData(SheetVariables.products, 1);
 
-		
 		// data map
 		int header = 0;
 		int name = 0;
@@ -416,10 +412,9 @@ public class Common extends SelTestCase {
 		int fleece = 6;
 		int memory = 7;
 		int size = 8;
-		int bundleProducts = 9; 
+		int bundleProducts = 9;
 		int desc = 10;
-		int price = 11; 
-		
+		int price = 11;
 
 		for (int row = 1; row < data.length; row++) {
 			LinkedHashMap<String, Object> product = new LinkedHashMap<>();
@@ -437,33 +432,18 @@ public class Common extends SelTestCase {
 
 			products.put((String) data[row][name], product);
 		}
-		logs.debug("Products: "+Arrays.asList(products)+"");
+		logs.debug("Products: " + Arrays.asList(products) + "");
 		return products;
 	}// readProducts
 
 	public static LinkedHashMap<String, Object> readPaymentcards() throws Exception {
 		/*
-		 [
-		  {
-		    visa={
-		      number=4111111111111111,
-		      name=AcceptTester,
-		      expireYear=2022,
-		      expireMonth=6,
-		      CVCC=333
-		    },
-		    master={
-		      number=5555555555554444,
-		      name=Accept*Tester,
-		      expireYear=2022,
-		      expireMonth=6,
-		      CVCC=334
-		    }
-		  }
-		]
+		 * [ { visa={ number=4111111111111111, name=AcceptTester, expireYear=2022,
+		 * expireMonth=6, CVCC=333 }, master={ number=5555555555554444,
+		 * name=Accept*Tester, expireYear=2022, expireMonth=6, CVCC=334 } } ]
 		 */
 		LinkedHashMap<String, Object> cards = new LinkedHashMap<>();
-		
+
 		dataProviderUtils TDP = dataProviderUtils.getInstance();
 		Object[][] data = TDP.getData(SheetVariables.cards, 1);
 
@@ -486,30 +466,17 @@ public class Common extends SelTestCase {
 
 			cards.put((String) data[row][card], cardOb);
 		}
-		logs.debug(Arrays.asList(cards)+"");
+		logs.debug(Arrays.asList(cards) + "");
 		return cards;
 	}// read payments
 
 	public static LinkedHashMap<String, Object> readTestparams(String testSheet, int caseIndex) throws Exception {
 		/*
-		 * [
-			  {
-			    desc=loggedinuserwithsavedmaistropaymentandshippingaddress,
-			    proprties=loggedin,
-			    products=P2,
-			    shippingMethod=STANDARDDELIVERY,
-			    payment=maistro,
-			    shippingAddress=A1,
-			    billingAddress=A2,
-			    coupon=,
-			    email=ibatta@dbi.com,
-			    orderId=,
-			    orderTotal=,
-			    orderSubtotal=,
-			    orderTax=,
-			    orderShipping=
-			  }
-			]
+		 * [ { desc=loggedinuserwithsavedmaistropaymentandshippingaddress,
+		 * proprties=loggedin, products=P2, shippingMethod=STANDARDDELIVERY,
+		 * payment=maistro, shippingAddress=A1, billingAddress=A2, coupon=,
+		 * email=ibatta@dbi.com, orderId=, orderTotal=, orderSubtotal=, orderTax=,
+		 * orderShipping= } ]
 		 */
 		LinkedHashMap<String, Object> tests = new LinkedHashMap<>();
 		dataProviderUtils TDP = dataProviderUtils.getInstance();
@@ -529,22 +496,11 @@ public class Common extends SelTestCase {
 
 	public static LinkedHashMap<String, Object> readUsers() throws Exception {
 		/*
-		[
-		  {
-		    ibatta@dbi.com={
-		      name=U1,
-		      title=MR.,
-		      username=ibatta,
-		      firstName=Accept,
-		      lastName=Tester,
-		      password=1234567,
-		      mail=ibatta@dbi.com
-		    }
-		  }
-		]
+		 * [ { ibatta@dbi.com={ name=U1, title=MR., username=ibatta, firstName=Accept,
+		 * lastName=Tester, password=1234567, mail=ibatta@dbi.com } } ]
 		 */
 		LinkedHashMap<String, Object> users = new LinkedHashMap<>();
-		
+
 		dataProviderUtils TDP = dataProviderUtils.getInstance();
 		Object[][] data = TDP.getData(SheetVariables.users, 1);
 
@@ -570,30 +526,30 @@ public class Common extends SelTestCase {
 
 			users.put((String) data[row][name], user);
 		}
-		logs.debug(Arrays.asList(users)+"");
+		logs.debug(Arrays.asList(users) + "");
 		return users;
-	}//read users
-	
+	}// read users
+
 	public static String[] readRunners() throws Exception {
 		ArrayList<String> runners = new ArrayList<String>();
-		
+
 		dataProviderUtils TDP = dataProviderUtils.getInstance();
 		Object[][] data = TDP.getData(SheetVariables.RunnersRegressionSheet);
-		
+
 		// data map
 		int name = 0;
-		
-		logs.debug((String) data[0][name]+"");
+
+		logs.debug((String) data[0][name] + "");
 		for (int row = 0; row < data.length; row++) {
 			runners.add((String) data[row][name]);
 		}
-		return runners.toArray(new String[runners.size()]); 
-	}//read runners
-	
+		return runners.toArray(new String[runners.size()]);
+	}// read runners
+
 	public static String[] readBrowsers() throws Exception {
 
 		ArrayList<String> browsers = new ArrayList<String>();
-		
+
 		dataProviderUtils TDP = dataProviderUtils.getInstance();
 		Object[][] data = TDP.getData(SheetVariables.BrowsersListingSheet);
 
@@ -601,10 +557,10 @@ public class Common extends SelTestCase {
 		int name = 0;
 
 		for (int row = 0; row < data.length; row++) {
-				browsers.add((String) data[row][name]);
+			browsers.add((String) data[row][name]);
 		}
 		return browsers.toArray(new String[browsers.size()]);
-	}//read browsers
+	}// read browsers
 
 	public static void takeScreenShot() {
 		// TODO Auto-generated method stub
