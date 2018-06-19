@@ -20,10 +20,8 @@ public class PDPSelectors {
 	public static String PDPnavs = "css,div.nav-tabs-container>ul>li";
 	public static String PDPnavs_mobile = "css,div.tab-content>div>div>button";
 	public static String favButton = "addToWishlist";
-	public static String searchBox="js-site-search-input";
-	public static String RandomPDP = "product__list--thumb";
-	public static String randomSize="btn btn-option btn-image";
-	public static String randomColor="btn btn-option btn-image";
+
+	
 	
 	public static String colorLable = "css,body>div>div>div>div>div>div>div>div>div>ul>li.attribute.color>div.label";
 	public static String color = "Select color: ";
@@ -37,7 +35,5 @@ public class PDPSelectors {
 	public static String minicart = "cart-component";
 	public static String OverView;
 	public static String size;
-	
-	
 
 }

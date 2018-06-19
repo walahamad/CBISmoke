@@ -114,9 +114,10 @@ public class PDP extends SelTestCase {
 		}
 	}// add to cart
 
+	
 	private static void selectRandomLength() {
 		// TODO Auto-generated method stub
-
+		
 	}
 
 	private static void selectRandomSize() throws Exception {
@@ -124,7 +125,7 @@ public class PDP extends SelTestCase {
 		try {
 			getCurrentFunctionName(true);
 			List<String> subStrArr = new ArrayList<String>();
-
+			
 			subStrArr.add(PDPSelectors.randomSize);
 			List<WebElement> sizes = SelectorUtil.getAllElements(subStrArr);
 			if (sizes.size() != 0) {
@@ -143,12 +144,12 @@ public class PDP extends SelTestCase {
 
 	private static void selectRandomFamilySize() {
 		// TODO Auto-generated method stub
-
+		
 	}
 
 	private static void selectRandomColor() {
 		// TODO Auto-generated method stub
-
+		
 	}
 
 	// Done-ocm
@@ -738,9 +739,9 @@ public class PDP extends SelTestCase {
 	public static void addRandomProductsToCart() throws Exception {
 		try {
 			getCurrentFunctionName(true);
-			// random search in case of multiple calls
-			String[] Items = getCONFIG().getProperty("RandomItems").split(",");
-			Random random = new Random(System.currentTimeMillis());
+			//random search in case of multiple calls
+			String[] Items=getCONFIG().getProperty("RandomItems").split(",");
+			Random random=new Random(System.currentTimeMillis());
 			int range = Items.length - 1;
 			if (range > 0)
 				navigateToRandomPDP(Items[random.nextInt(range)]);
@@ -761,8 +762,7 @@ public class PDP extends SelTestCase {
 			throw e;
 		}
 	}// add to cart randomly
-		// done -ocm
-
+	// done -ocm
 	public static void navigateToRandomPDP(String keyword) throws Exception {
 		try {
 			getCurrentFunctionName(true);
@@ -780,7 +780,6 @@ public class PDP extends SelTestCase {
 		}
 
 	}
-
 	// done -ocm
 	private static void searchOnKeyword(String keyword) throws Exception {
 		try {
@@ -798,7 +797,6 @@ public class PDP extends SelTestCase {
 		}
 
 	}
-
 	// done -ocm
 	private static void pickRandomProduct() throws Exception {
 		try {

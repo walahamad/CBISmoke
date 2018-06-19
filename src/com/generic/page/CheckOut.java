@@ -137,7 +137,7 @@ public class CheckOut extends SelTestCase {
 
 		}
 
-		// done-ocm
+		//done-ocm
 		public static void returningCustomerLogin(String username, String password) throws Exception {
 			try {
 				getCurrentFunctionName(true);
@@ -152,7 +152,7 @@ public class CheckOut extends SelTestCase {
 			}
 		}
 
-		// done-ocm
+		//done-ocm
 		private static void clickRetuRningcustomerLogin() throws Exception {
 			try {
 				getCurrentFunctionName(true);
@@ -171,7 +171,7 @@ public class CheckOut extends SelTestCase {
 
 		}
 
-		// done-ocm
+		//done-ocm
 		private static void typeRetuRningcustomerPassword(String password) throws Exception {
 			try {
 				getCurrentFunctionName(true);
@@ -191,7 +191,7 @@ public class CheckOut extends SelTestCase {
 
 		}
 
-		// done-ocm
+		//done-ocm
 		private static void typeRetuRningcustomerUserName(String username) throws Exception {
 			try {
 				getCurrentFunctionName(true);
@@ -534,9 +534,7 @@ public class CheckOut extends SelTestCase {
 				Thread.sleep(4000);
 				if (getBrowserName().contains("firefox"))
 					Thread.sleep(4000);
-				if (getBrowserName().contains("IE"))
-					Thread.sleep(10000);
-
+				
 				picksuggestedAddress();
 
 				getCurrentFunctionName(false);
@@ -941,24 +939,23 @@ public class CheckOut extends SelTestCase {
 				String expireYear, String CVC, String countery, String firstName, String lastName, String address,
 				String city, String postal, String phone) throws Exception {
 			try {
-
 				getCurrentFunctionName(true);
-				if (getBrowserName().contains("IE"))
-					Thread.sleep(8000);
 				// clickAddPaymentMethod();
-				if (!cardtype.contains("paypal")) {
+				if(!cardtype.contains("paypal"))
+				{
 					fill(cardtype, cardholder, cardNumber, expireMonth, expireYear, CVC);
 					ReportUtil.takeScreenShot(getDriver());
 				}
-
+				
 				fillBillingAddress(countery, firstName, lastName, address, city, postal, phone);
 				ReportUtil.takeScreenShot(getDriver());
 				clickNext();
 				ReportUtil.takeScreenShot(getDriver());
-				if (cardtype.contains("paypal")) {
+				if(cardtype.contains("paypal"))
+				{
 					Thread.sleep(20000);
 					String mainWindow = switchToPayPalWindow();
-					// username and password for paypal is indicated by cardNumber and cvc
+					//username and password for paypal is indicated by cardNumber and cvc
 					PayPal.clickLoginLink();
 					PayPal.signInAndClickContinue(cardNumber, CVC);
 					Thread.sleep(10000);
@@ -985,7 +982,7 @@ public class CheckOut extends SelTestCase {
 				}.getClass().getEnclosingMethod().getName()));
 				throw e;
 			}
-
+			
 		}
 
 		// done-ocm

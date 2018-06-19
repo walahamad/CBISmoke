@@ -421,18 +421,16 @@ public class Cart extends SelTestCase {
 		getCurrentFunctionName(true);
 
 		List<String> subStrArr = new ArrayList<String>();
-		//List<String> valuesArr = new ArrayList<String>();
+		List<String> valuesArr = new ArrayList<String>();
 
-		subStrArr.add(CartSelectors.removeItem);
-	//	valuesArr.add("");
+		subStrArr.add(CartSelectors.numberOfProducts);
+		valuesArr.add("");
 
 		List<WebElement> removeButtons = SelectorUtil.getAllElements(subStrArr);
 
 		int numberOfItems = removeButtons.size();
 		logs.debug(LoggingMsg.REMOVE_ALL_ITEMS_FROM_CART);
-		for (int itemIndex = 0; itemIndex < numberOfItems; itemIndex++) {
-			List<String> valuesArr = new ArrayList<String>();
-			valuesArr.add("index,"+(itemIndex));
+		for (int itemIndex = numberOfItems; itemIndex > 0; itemIndex--) {
 			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
 		}
 
@@ -451,8 +449,8 @@ public class Cart extends SelTestCase {
 		getCurrentFunctionName(true);
 		List<String> subStrArr = new ArrayList<String>();
 		List<String> valuesArr = new ArrayList<String>();
-		subStrArr.add(CartSelectors.removeItem );
-		valuesArr.add("index,"+ itemIndex);
+		subStrArr.add(CartSelectors.removeItem + itemIndex);
+		valuesArr.add("");
 		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
 		getCurrentFunctionName(false);
 	}
