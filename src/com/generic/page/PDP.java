@@ -746,7 +746,11 @@ public class PDP extends SelTestCase {
 			//random search in case of multiple calls
 			String[] Items=getCONFIG().getProperty("RandomItems").split(",");
 			Random random=new Random(System.currentTimeMillis());
-			navigateToRandomPDP(Items[random.nextInt(14)]);
+			int range = Items.length - 1;
+			if (range > 0)
+				navigateToRandomPDP(Items[random.nextInt(range)]);
+			else
+				navigateToRandomPDP(Items[0]);
 			
 			if (getBrowserName().equals("IE"))
 				Thread.sleep(2000);
