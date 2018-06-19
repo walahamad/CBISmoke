@@ -2,7 +2,6 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="PLP regression" parallel="tests" thread-count="10" data-provider-thread-count="2">
 
-	
 	<test name="PLP validation chrome">
 		<parameter name="browserName" value="chrome"></parameter>
 		<classes>

@@ -9,6 +9,9 @@ import java.util.NoSuchElementException;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
@@ -20,6 +23,7 @@ import org.openqa.selenium.support.ui.Wait;
 import com.generic.selector.PDPSelectors;
 import com.generic.setup.ExceptionMsg;
 import com.generic.setup.SelTestCase;
+import com.generic.util.ReportUtil;
 import com.generic.util.SelectorUtil;
 
 public class PDP extends SelTestCase {
@@ -742,12 +746,8 @@ public class PDP extends SelTestCase {
 			//random search in case of multiple calls
 			String[] Items=getCONFIG().getProperty("RandomItems").split(",");
 			Random random=new Random(System.currentTimeMillis());
-			int range = Items.length - 1;
-			if (range > 0)
-				navigateToRandomPDP(Items[random.nextInt(range)]);
-			else
-				navigateToRandomPDP(Items[0]);
-
+			navigateToRandomPDP(Items[random.nextInt(14)]);
+			
 			if (getBrowserName().equals("IE"))
 				Thread.sleep(2000);
 			clickAddToCartBtn();
