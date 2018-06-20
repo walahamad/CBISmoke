@@ -772,7 +772,11 @@ public class PDP extends SelTestCase {
 				}
 				WebElement variant = holder.findElement(By.cssSelector(PDPSelectors.randomVariant));
 				logs.debug("selecting from " + OptionTitle + " variant:" + variant.getText() + "<br>\n");
-				((JavascriptExecutor) SelTestCase.getDriver()).executeScript("arguments[0].click()", variant);
+				if (SelTestCase.getBrowserName().contains("firefox")) {
+					logs.debug("clicking..." + SelTestCase.getBrowserName());
+					variant.click();
+				} else
+					((JavascriptExecutor) SelTestCase.getDriver()).executeScript("arguments[0].click()", variant);
 				noVariants = false;
 
 			}
