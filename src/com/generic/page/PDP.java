@@ -9,9 +9,6 @@ import java.util.NoSuchElementException;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
@@ -19,11 +16,9 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Wait;
-
 import com.generic.selector.PDPSelectors;
 import com.generic.setup.ExceptionMsg;
 import com.generic.setup.SelTestCase;
-import com.generic.util.ReportUtil;
 import com.generic.util.SelectorUtil;
 
 public class PDP extends SelTestCase {
@@ -117,43 +112,6 @@ public class PDP extends SelTestCase {
 			throw e;
 		}
 	}// add to cart
-
-	private static void selectRandomLength() {
-		// TODO Auto-generated method stub
-
-	}
-
-	private static void selectRandomSize() throws Exception {
-		// TODO Auto-generated method stub
-		try {
-			getCurrentFunctionName(true);
-			List<String> subStrArr = new ArrayList<String>();
-
-			subStrArr.add(PDPSelectors.randomSize);
-			List<WebElement> sizes = SelectorUtil.getAllElements(subStrArr);
-			if (sizes.size() != 0) {
-				sizes.get(0).click();
-			} else {
-				logs.debug("ignoring selecting size");
-			}
-			getCurrentFunctionName(false);
-		} catch (NoSuchElementException e) {
-			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
-			}.getClass().getEnclosingMethod().getName()));
-			throw e;
-		}
-
-	}
-
-	private static void selectRandomFamilySize() {
-		// TODO Auto-generated method stub
-
-	}
-
-	private static void selectRandomColor() {
-		// TODO Auto-generated method stub
-
-	}
 
 	// Done-ocm
 	public static String getPrice() throws Exception {
@@ -750,7 +708,11 @@ public class PDP extends SelTestCase {
 				navigateToRandomPDP(Items[random.nextInt(range)]);
 			else
 				navigateToRandomPDP(Items[0]);
-
+			Thread.sleep(3000);
+			if (getBrowserName().equals("IE"))
+				Thread.sleep(2000);
+			selectAllVariants();
+			Thread.sleep(3000);
 			if (getBrowserName().equals("IE"))
 				Thread.sleep(2000);
 			clickAddToCartBtn();
@@ -765,17 +727,18 @@ public class PDP extends SelTestCase {
 			throw e;
 		}
 	}// add to cart randomly
-		// done -ocm
 
 	public static void navigateToRandomPDP(String keyword) throws Exception {
 		try {
 			getCurrentFunctionName(true);
-			searchOnKeyword(keyword);
+			PLP.searchProduct(keyword);
+			Thread.sleep(5000);
 			if (getBrowserName().equals("IE"))
-				Thread.sleep(8000);
-			pickRandomProduct();
+				Thread.sleep(2000);
+			PLP.pickRandomPDP();
+			Thread.sleep(3000);
 			if (getBrowserName().equals("IE"))
-				Thread.sleep(6000);
+				Thread.sleep(2000);
 			getCurrentFunctionName(false);
 		} catch (NoSuchElementException e) {
 			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
@@ -785,15 +748,37 @@ public class PDP extends SelTestCase {
 
 	}
 
-	// done -ocm
-	private static void searchOnKeyword(String keyword) throws Exception {
+	public static void selectAllVariants() throws Exception {
 		try {
 			getCurrentFunctionName(true);
 			List<String> subStrArr = new ArrayList<String>();
-			List<String> valuesArr = new ArrayList<String>();
-			subStrArr.add(PDPSelectors.searchBox);
-			valuesArr.add(keyword + ",pressEnter");
-			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
+			subStrArr.add(PDPSelectors.optionHolder);
+			if (SelectorUtil.isNotDisplayed(subStrArr)) {
+				logs.debug("No variants to select from. <br>\n");
+				return;
+			}
+			List<WebElement> optionHolders = SelectorUtil.getAllElements(subStrArr);
+			int holdersCount = optionHolders.size();
+			boolean noVariants = true;
+			String OptionTitle = "";
+			for (int i = 0; i < holdersCount; i++) {
+				if (!SelectorUtil.isDisplayed(subStrArr, i)) {
+					continue;
+				}
+				WebElement holder = SelectorUtil.getNthElement(subStrArr, i);
+				OptionTitle = holder.findElements(By.cssSelector(PDPSelectors.optionHolderTitle)).get(0).getText();
+				if(OptionTitle.equals("")) {
+					OptionTitle = holder.findElements(By.cssSelector(PDPSelectors.optionHolderTitle)).get(1).getText();
+				}
+				WebElement variant = holder.findElement(By.cssSelector(PDPSelectors.randomVariant));
+				logs.debug("selecting from " + OptionTitle + " variant:" + variant.getText() + "<br>\n");
+				((JavascriptExecutor) SelTestCase.getDriver()).executeScript("arguments[0].click()", variant);
+				noVariants = false;
+
+			}
+			if (noVariants) {
+				logs.debug("No variants to select from. <br>\n");
+			}
 			getCurrentFunctionName(false);
 		} catch (NoSuchElementException e) {
 			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
@@ -803,21 +788,4 @@ public class PDP extends SelTestCase {
 
 	}
 
-	// done -ocm
-	private static void pickRandomProduct() throws Exception {
-		try {
-			getCurrentFunctionName(true);
-			List<String> subStrArr = new ArrayList<String>();
-			List<String> valuesArr = new ArrayList<String>();
-			subStrArr.add(PDPSelectors.RandomPDP);
-			valuesArr.add("");
-			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
-			getCurrentFunctionName(false);
-		} catch (NoSuchElementException e) {
-			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
-			}.getClass().getEnclosingMethod().getName()));
-			throw e;
-		}
-
-	}
 }
