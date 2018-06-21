@@ -76,6 +76,7 @@ public class Base_Favorite extends SelTestCase {
 		if (!email.equals("")) {
 			userdetails = (LinkedHashMap<String, Object>) users.get(email);
 			UsedEmail = (String) userdetails.get(Registration.keys.email);
+			UsedEmail = getSubMailAccount(UsedEmail);
 			Testlogs.get().debug("Mail will be used is: " + UsedEmail);
 		}
 
