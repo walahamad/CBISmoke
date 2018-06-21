@@ -183,8 +183,17 @@ public class Cart extends SelTestCase {
 		try {
 			getCurrentFunctionName(true);
 			String cartTotals = getCartTotals();
-			String totals = cartTotals.split("\n")[5].trim();
-			logs.debug("order subtotal is: " + totals);
+			int index = 0;
+			String totals = "00.00";
+
+			for (String total : cartTotals.split("\n")) {
+				if (total.contains("Order Subtotal")) {
+					totals = cartTotals.split("\n")[index + 1].trim();
+					logs.debug("order subtotal is: " + totals);
+					break;
+				}
+				index++;
+			}
 			getCurrentFunctionName(false);
 			return totals;
 		} catch (NoSuchElementException e) {
@@ -220,8 +229,19 @@ public class Cart extends SelTestCase {
 		try {
 			getCurrentFunctionName(true);
 			String cartTotals = getCartTotals();
-			String totals = cartTotals.split("\n")[1].trim();
-			logs.debug("item subtotal: " + totals);
+
+			int index = 0;
+			String totals = "00.00";
+
+			for (String total : cartTotals.split("\n")) {
+				if (total.contains("Item Subtotal")) {
+					totals = cartTotals.split("\n")[index + 1].trim();
+					logs.debug("item subtotal: " + totals);
+					break;
+				}
+				index++;
+			}
+
 			getCurrentFunctionName(false);
 			return totals;
 		} catch (NoSuchElementException e) {
@@ -245,8 +265,19 @@ public class Cart extends SelTestCase {
 		try {
 			getCurrentFunctionName(true);
 			String cartTotals = getCartTotals();
-			String totals = cartTotals.split("\n")[3].trim();
-			logs.debug("order discounts is: " + totals);
+			int index = 0;
+			String totals = "00.00";
+			
+			for(String total : cartTotals.split("\n"))
+			{
+				if (total.contains("Discounts"))
+				{
+					totals = cartTotals.split("\n")[index+1].trim();
+					logs.debug("order discounts is: " + totals);
+					break;
+				}
+				index++;
+			}
 			getCurrentFunctionName(false);
 			return totals;
 		} catch (NoSuchElementException e) {
