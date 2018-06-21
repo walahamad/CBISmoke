@@ -81,21 +81,17 @@ public class ChangePassword_base extends SelTestCase {
 			String url = PagesURLs.getHomePage() + PagesURLs.getPasswordPage();
 			getDriver().get(url);
 			CurrentPageTitle = getDriver().getTitle();
-			
-			if(proprties.contains("without")) {
-				MyAccount_Password.fillInNewValuesAndClickUpdateOrCancel(
-					"", newPassword, confirmNewPassword,
-					doClickUpdateBtn, doClickCancelBtn);
-			}
-			else if(proprties.contains("incorrect")) {
-				MyAccount_Password.fillInNewValuesAndClickUpdateOrCancel(
-						"wrong123456", newPassword, confirmNewPassword,
+
+			if (proprties.contains("without")) {
+				MyAccount_Password.fillInNewValuesAndClickUpdateOrCancel("", newPassword, confirmNewPassword,
 						doClickUpdateBtn, doClickCancelBtn);
-				}
-			else
-			MyAccount_Password.fillInNewValuesAndClickUpdateOrCancel(
-					(String) userDetails.get(Registration.keys.password), newPassword, confirmNewPassword,
-					doClickUpdateBtn, doClickCancelBtn);
+			} else if (proprties.contains("incorrect")) {
+				MyAccount_Password.fillInNewValuesAndClickUpdateOrCancel("wrong123456", newPassword, confirmNewPassword,
+						doClickUpdateBtn, doClickCancelBtn);
+			} else
+				MyAccount_Password.fillInNewValuesAndClickUpdateOrCancel(
+						(String) userDetails.get(Registration.keys.password), newPassword, confirmNewPassword,
+						doClickUpdateBtn, doClickCancelBtn);
 			Thread.sleep(3000);
 
 			Map<String, String> Alerts = null;
