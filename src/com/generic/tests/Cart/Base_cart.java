@@ -201,7 +201,7 @@ public class Base_cart extends SelTestCase {
 			
 			if (proprties.contains("Loggedin")) {
 				// navigate back to cart
-				getDriver().get(PagesURLs.getHomePage()+PagesURLs.getShoppingCartPage());
+				getDriver().get(cartUrl);
 				Cart.removeAllItemsFromCart();
 			}
 			
