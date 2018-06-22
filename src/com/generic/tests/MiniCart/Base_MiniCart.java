@@ -153,7 +153,7 @@ public class Base_MiniCart extends SelTestCase {
 		logs.debug(MessageFormat.format(LoggingMsg.SEL_TEXT, userdetails));
 		logs.debug((String) userdetails.get(Registration.keys.email));
 		logs.debug((String) userdetails.get(Registration.keys.password));
-		SignIn.logIn((String) userdetails.get(Registration.keys.email),
+		SignIn.logIn(getSubMailAccount((String) userdetails.get(Registration.keys.email)),
 				(String) userdetails.get(Registration.keys.password));
 
 		prepareCartNotLoggedInUser(product);
