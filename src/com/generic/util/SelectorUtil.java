@@ -48,15 +48,15 @@ public class SelectorUtil extends SelTestCase {
 	@SuppressWarnings("rawtypes")
 	public static void initializeElementsSelectorsMaps(LinkedHashMap<String, LinkedHashMap> webElementsInfo , boolean isValidationStep) throws IOException, InterruptedException
 	 {
-		Thread.sleep(1000);
+		Thread.sleep(2000);
 		try {
 		Document doc = Jsoup.parse(SelTestCase.getDriver().getPageSource());
 		Element htmlDoc = doc.select("html").first();
 		initializeElementsSelectorsMaps(webElementsInfo, isValidationStep, htmlDoc);
 		}catch (NoSuchElementException e) {
-			Thread.sleep(2000);
+			Thread.sleep(10000);
 			if (SelTestCase.getBrowserName().contains("firfox"))
-				Thread.sleep(2000);
+				Thread.sleep(5000);
 			logs.debug("Second try for getting element");
 			Document doc = Jsoup.parse(SelTestCase.getDriver().getPageSource());
 			Element htmlDoc = doc.select("html").first();

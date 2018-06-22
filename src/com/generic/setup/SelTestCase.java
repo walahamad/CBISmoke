@@ -342,6 +342,8 @@ public class SelTestCase {
     @AfterSuite
     public static void reportMaker() throws IOException
     {
+    	getCurrentFunctionName(true);
+    	
     	ArrayList<HashMap<String, String>> casesDetails = null;
     	try {
 			TestUtilities.reportSetup();
@@ -387,5 +389,6 @@ public class SelTestCase {
          	SelTestCase.logs.debug(MessageFormat.format(LoggingMsg.DEBUGGING_TEXT, "Ignor sending report"));
          }
     	 ReportUtil.copyReportToC(SelTestCase.logDir,"C://AutoRepo");
+    	 getCurrentFunctionName(false);
     }
 }
