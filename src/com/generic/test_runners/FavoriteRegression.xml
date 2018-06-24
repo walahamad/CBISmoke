@@ -8,4 +8,19 @@
 		</classes>
 	</test><!-- Test -->
 	
+	<test name="fav Tests _ firefox">
+		<parameter name="browserName" value="firefox"></parameter>
+		<classes>
+			<class name="com.generic.tests.Favorite.Base_Favorite" />
+		</classes>
+	</test><!-- Test -->
+	
+	
+	<test name="fav Tests _ mobile_Nexus 5">
+		<parameter name="browserName" value="mobile_Nexus 5"></parameter>
+		<classes>
+			<class name="com.generic.tests.Favorite.Base_Favorite" />
+		</classes>
+	</test><!-- Test -->
+	
 </suite> <!-- Suite -->

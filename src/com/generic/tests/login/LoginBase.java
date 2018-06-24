@@ -122,14 +122,17 @@ public class LoginBase extends SelTestCase {
 				sassert().assertTrue(alertMessage.contains(fieldsValidation), failureMessage);
 			}
 			if (proprties.equals("Forgot password -Invalid Email")) {
-				SignIn.clickForgotPasswordBtn();
-				SignIn.typeForgottenPwdEmail(caseMail.replace("@", ""));
-				SignIn.clickForgotPasswordSubmitBtn();
-				Thread.sleep(1500);
-				String alertMessage = SignIn.getForgottenPwdEmailError();
-				String failureMessage = MessageFormat.format(LoggingMsg.ACTUAL_EXPECTED_ERROR, alertMessage,
-						fieldsValidation);
-				sassert().assertTrue(alertMessage.contains(fieldsValidation), failureMessage);
+				if(!getBrowserName().contains("mobile"))
+				{
+					SignIn.clickForgotPasswordBtn();
+					SignIn.typeForgottenPwdEmail(caseMail.replace("@", ""));
+					SignIn.clickForgotPasswordSubmitBtn();
+					Thread.sleep(1500);
+					String alertMessage = SignIn.getForgottenPwdEmailError();
+					String failureMessage = MessageFormat.format(LoggingMsg.ACTUAL_EXPECTED_ERROR, alertMessage,
+							fieldsValidation);
+					sassert().assertTrue(alertMessage.contains(fieldsValidation), failureMessage);
+				}
 			}
 			sassert().assertAll();
 			Common.testPass();
