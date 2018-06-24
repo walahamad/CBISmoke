@@ -123,8 +123,12 @@ public class RegistrationBase extends SelTestCase {
 			}
 			if (proprties.contains(emptyData)) {
 				Registration.clickRegisterButton();
-				if(getBrowserName().equals("IE"))
+				// switch To Default Content
+				if(getBrowserName().equals("IE")|| getBrowserName().equals("firefox"))
+				{
+					Registration.switchToDefaultContent();
 					Thread.sleep(2000);
+				}
 				
 				String validationMsg = Registration.getFirstNameError();
 				sassert().assertTrue(validationMsg.contains(firstNameValidation),
