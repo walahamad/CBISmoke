@@ -317,7 +317,12 @@ public class AddressBook extends SelTestCase {
 			getCurrentFunctionName(true);
 			fillAddressForm(firstName, lastName, address, city, state, zip, phone);
 			clickSave();
-			useCorrectedAddress();
+			Thread.sleep(4000);
+			try {
+				useCorrectedAddress();
+			}catch (Exception e) {
+				logs.debug("Warning use suggested address is not appearing");
+			}
 			Thread.sleep(4000);
 			getCurrentFunctionName(false);
 		} catch (NoSuchElementException e) {
@@ -333,7 +338,13 @@ public class AddressBook extends SelTestCase {
 		getCurrentFunctionName(true);
 		fillAddressForm(firstName, lastName, address, city, state, zip, phone);
 		clickSaveEditAddress();
-		useCorrectedAddress();
+		Thread.sleep(4000);
+		try {
+			useCorrectedAddress();
+		}catch (Exception e) {
+			logs.debug("Warning use suggested address is not appearing");
+		}
+		Thread.sleep(4000);
 		getCurrentFunctionName(false);
 	}
 

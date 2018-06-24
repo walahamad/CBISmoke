@@ -152,8 +152,8 @@ public class Base_checkout extends SelTestCase {
 				Cart.clickCheckout();
 			}
 
-			Thread.sleep(1000);
-			if (getBrowserName().equals("IE"))
+			Thread.sleep(3000);
+			if (getBrowserName().equals("IE") || getBrowserName().equals("firefox"))
 				Thread.sleep(6000);
 
 			// OCM-custom
@@ -169,7 +169,7 @@ public class Base_checkout extends SelTestCase {
 			LinkedHashMap<String, String> billAddressDetails = (LinkedHashMap<String, String>) addresses
 					.get(billingAddress);
 
-			if (getBrowserName().equals("IE"))
+			if (getBrowserName().equals("IE")|| getBrowserName().equals("firefox"))
 				Thread.sleep(6000);
 			// fill billing form and click checkout
 			CheckOut.paymentInnformation.fillAndclickNext(payment, "Tester",

@@ -537,7 +537,11 @@ public class CheckOut extends SelTestCase {
 				if (getBrowserName().contains("IE"))
 					Thread.sleep(10000);
 
-				picksuggestedAddress();
+				try {
+					picksuggestedAddress();
+				} catch (Exception e) {
+					logs.debug("#Warning: suggested address mdule is not fired ");
+				}
 
 				getCurrentFunctionName(false);
 			} catch (NoSuchElementException e) {
@@ -550,12 +554,19 @@ public class CheckOut extends SelTestCase {
 		// done-ocm
 		private static void picksuggestedAddress() throws Exception {
 			try {
+				getCurrentFunctionName(true);
 				List<String> subStrArr = new ArrayList<String>();
 				List<String> valuesArr = new ArrayList<String>();
-				getCurrentFunctionName(true);
 				subStrArr.add(CheckOutSelectors.pickSuggestedAddrress);
 				valuesArr.add("");
+				int tries = 0;
+				while (SelectorUtil.isNotDisplayed(subStrArr)) {
+					Thread.sleep(3000);
+					if (tries++ > 4)
+						break;
+				}
 				SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
+				
 				getCurrentFunctionName(false);
 			} catch (NoSuchElementException e) {
 				logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {

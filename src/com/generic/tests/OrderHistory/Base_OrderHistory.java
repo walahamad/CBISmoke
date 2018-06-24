@@ -31,7 +31,7 @@ public class Base_OrderHistory extends SelTestCase {
 	// user types
 	public static final String guestUser = "guest";
 	public static final String freshUser = "fresh";
-	public static final String loggedInUser = "loggedin";
+	public static final String loggedInUser = "Loggedin";
 	public static final String loggedDuringChcOt = "logging During Checkout";
 
 	// used sheet in test
