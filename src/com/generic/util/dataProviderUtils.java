@@ -59,6 +59,7 @@ public class dataProviderUtils {
 				if (SelTestCase.getDatatable().getCellData(testName, 1, 1).contains("runTest")
 						&& !SelTestCase.getDatatable().getCellData(testName, 1, rowNum).equals("")) {
 					for (int colNum = 0; colNum < cols; colNum++) {
+						Thread.sleep(100);
 						data[rowNum - startingRow][colNum] = SelTestCase.getDatatable().getCellData(testName, colNum,
 								rowNum);
 					}

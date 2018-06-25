@@ -10,20 +10,14 @@ import org.testng.xml.XmlTest;
 
 import java.util.LinkedHashMap;
 
-import com.generic.page.PDP;
-import com.generic.page.Registration;
-import com.generic.page.Cart;
 import com.generic.page.CheckOut;
 import com.generic.page.OrderHistory;
-import com.generic.page.SignIn;
 import com.generic.setup.Common;
 import com.generic.setup.LoggingMsg;
 import com.generic.setup.SelTestCase;
 import com.generic.setup.SheetVariables;
 import com.generic.tests.checkout.Base_checkout;
-import com.generic.util.TestUtilities;
 import com.generic.util.dataProviderUtils;
-import com.generic.util.RandomUtilities;
 import com.generic.util.ReportUtil;
 import com.generic.util.SASLogger;
 
@@ -37,7 +31,7 @@ public class Base_OrderHistory extends SelTestCase {
 	// user types
 	public static final String guestUser = "guest";
 	public static final String freshUser = "fresh";
-	public static final String loggedInUser = "loggedin";
+	public static final String loggedInUser = "Loggedin";
 	public static final String loggedDuringChcOt = "logging During Checkout";
 
 	// used sheet in test

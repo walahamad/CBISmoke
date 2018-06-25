@@ -76,6 +76,7 @@ public class Base_Favorite extends SelTestCase {
 		if (!email.equals("")) {
 			userdetails = (LinkedHashMap<String, Object>) users.get(email);
 			UsedEmail = (String) userdetails.get(Registration.keys.email);
+			UsedEmail = getSubMailAccount(UsedEmail);
 			Testlogs.get().debug("Mail will be used is: " + UsedEmail);
 		}
 
@@ -86,6 +87,7 @@ public class Base_Favorite extends SelTestCase {
 				Testlogs.get().debug("Used Password to login: " + (String) userdetails.get(Registration.keys.password));
 				SignIn.logIn(UsedEmail, (String) userdetails.get(Registration.keys.password));
 			}
+			ReportUtil.takeScreenShot(getDriver());
 			
 			String ProductTitle = "";
 			if (!product.equals(""))
@@ -101,16 +103,19 @@ public class Base_Favorite extends SelTestCase {
 			else {
 				ProductTitle = PDP.getRandomProduct("dryer");
 			}
-
+			ReportUtil.takeScreenShot(getDriver());
+			
 			if (proprties.contains("PDP") || !proprties.contains("PLP"))
 				PDP.addToFavorite();
 			if (proprties.contains("PLP"))
 				PDP.addToFavorite();
+			ReportUtil.takeScreenShot(getDriver());
 				//TODO: add function to handle 
 			
 			getDriver().get(Favorite.getFavorriteUrl());
+			ReportUtil.takeScreenShot(getDriver());
 			String AllProducts = Favorite.getAllProducts();
-			//sassert().assertTrue(AllProducts.contains(ProductTitle), "Product was not added successfully FAV ");
+			sassert().assertTrue(AllProducts.contains(ProductTitle), "Product was not added successfully FAV ");
 			
 			int NumberOfProducts = Favorite.getNumberOfProducts();
 			

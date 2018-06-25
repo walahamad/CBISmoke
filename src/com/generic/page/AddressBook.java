@@ -287,13 +287,20 @@ public class AddressBook extends SelTestCase {
 	public static void fillAddressForm(String firstName, String lastName, String address, String city, String state,
 			String zip, String phone) throws Exception {
 		try {
-			shippingAddress.typeFirstName(firstName);
-			shippingAddress.typeLastName(lastName);
-			shippingAddress.typeAddress(address);
-			shippingAddress.typeCity(city);
-			shippingAddress.selectState(state);
-			shippingAddress.typeZipCode(zip);
-			shippingAddress.typePhone(phone);
+			if (!firstName.equals(""))
+				shippingAddress.typeFirstName(firstName);
+			if (!lastName.equals(""))
+				shippingAddress.typeLastName(lastName);
+			if (!address.equals(""))
+				shippingAddress.typeAddress(address);
+			if (!city.equals(""))
+				shippingAddress.typeCity(city);
+			if (!state.equals(""))
+				shippingAddress.selectState(state);
+			if (!zip.equals(""))
+				shippingAddress.typeZipCode(zip);
+			if (!phone.equals(""))
+				shippingAddress.typePhone(phone);
 
 			Thread.sleep(1000);
 		} catch (NoSuchElementException e) {
@@ -310,7 +317,12 @@ public class AddressBook extends SelTestCase {
 			getCurrentFunctionName(true);
 			fillAddressForm(firstName, lastName, address, city, state, zip, phone);
 			clickSave();
-			useCorrectedAddress();
+			Thread.sleep(4000);
+			try {
+				useCorrectedAddress();
+			}catch (Exception e) {
+				logs.debug("Warning use suggested address is not appearing");
+			}
 			Thread.sleep(4000);
 			getCurrentFunctionName(false);
 		} catch (NoSuchElementException e) {
@@ -326,7 +338,13 @@ public class AddressBook extends SelTestCase {
 		getCurrentFunctionName(true);
 		fillAddressForm(firstName, lastName, address, city, state, zip, phone);
 		clickSaveEditAddress();
-		useCorrectedAddress();
+		Thread.sleep(4000);
+		try {
+			useCorrectedAddress();
+		}catch (Exception e) {
+			logs.debug("Warning use suggested address is not appearing");
+		}
+		Thread.sleep(4000);
 		getCurrentFunctionName(false);
 	}
 

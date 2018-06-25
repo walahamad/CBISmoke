@@ -5,10 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-import com.generic.selector.PDPSelectors;
 import com.generic.selector.PLPSelectors;
 import com.generic.setup.ExceptionMsg;
-import com.generic.setup.LoggingMsg;
 import com.generic.setup.SelTestCase;
 import com.generic.util.SelectorUtil;
 
@@ -67,11 +65,18 @@ public class PLP extends SelTestCase {
 			getCurrentFunctionName(true);
 			List<String> subStrArr = new ArrayList<String>();
 			logs.debug("low to High sorting");
+			Thread.sleep(3000);
 			if (!getBrowserName().contains("mobile"))
 				subStrArr.add(PLPSelectors.sortPLTH);
 			else
+			{
 				subStrArr.add(PLPSelectors.sortPLTHMobile);
+				SelectorUtil.getNthElement(subStrArr, 0).click();
+				SelectorUtil.getNthElement(subStrArr, 2).click();
+			}
+			Thread.sleep(3000);
 			SelectorUtil.getNthElement(subStrArr, 1).click();
+			Thread.sleep(3000);
 			getCurrentFunctionName(false);
 		} catch (NoSuchElementException e) {
 			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {

@@ -78,7 +78,7 @@ public class LoginBase extends SelTestCase {
 				sassert().assertTrue(SignIn.checkUserAccount(), LoggingMsg.USER_IS_NOT_LOGGED_IN_SUCCESSFULLY);
 			}
 			if (proprties.equals("invalidUserEmail")) {
-				SignIn.fillLoginFormAndClickSubmit(caseMail, "1234567");
+				SignIn.fillLoginFormAndClickSubmit(caseMail.replace("@", ""), "1234567");
 				String alertMessage = SignIn.getMailErrorMsg();
 				sassert().assertTrue(alertMessage.contains(fieldsValidation),
 						"Error message is not as expected" + fieldsValidation + " : " + alertMessage);
@@ -122,14 +122,17 @@ public class LoginBase extends SelTestCase {
 				sassert().assertTrue(alertMessage.contains(fieldsValidation), failureMessage);
 			}
 			if (proprties.equals("Forgot password -Invalid Email")) {
-				SignIn.clickForgotPasswordBtn();
-				SignIn.typeForgottenPwdEmail(caseMail);
-				SignIn.clickForgotPasswordSubmitBtn();
-				Thread.sleep(1500);
-				String alertMessage = SignIn.getForgottenPwdEmailError();
-				String failureMessage = MessageFormat.format(LoggingMsg.ACTUAL_EXPECTED_ERROR, alertMessage,
-						fieldsValidation);
-				sassert().assertTrue(alertMessage.contains(fieldsValidation), failureMessage);
+				if(!getBrowserName().contains("mobile"))
+				{
+					SignIn.clickForgotPasswordBtn();
+					SignIn.typeForgottenPwdEmail(caseMail.replace("@", ""));
+					SignIn.clickForgotPasswordSubmitBtn();
+					Thread.sleep(1500);
+					String alertMessage = SignIn.getForgottenPwdEmailError();
+					String failureMessage = MessageFormat.format(LoggingMsg.ACTUAL_EXPECTED_ERROR, alertMessage,
+							fieldsValidation);
+					sassert().assertTrue(alertMessage.contains(fieldsValidation), failureMessage);
+				}
 			}
 			sassert().assertAll();
 			Common.testPass();
