@@ -18,6 +18,7 @@ import com.generic.page.PDP;
 import com.generic.page.Registration;
 import com.generic.page.SignIn;
 import com.generic.setup.Common;
+import com.generic.setup.GlobalVariables;
 import com.generic.setup.LoggingMsg;
 import com.generic.setup.SelTestCase;
 import com.generic.setup.SheetVariables;
@@ -111,6 +112,9 @@ public class Base_Favorite extends SelTestCase {
 			ReportUtil.takeScreenShot(getDriver(), testDataSheet + "_" + caseId);
 			String AllProducts = Favorite.getAllProducts();
 			sassert().assertTrue(AllProducts.contains(ProductTitle), "Product was not added successfully FAV ");
+			
+			if(getBrowserName().equalsIgnoreCase(GlobalVariables.browsers.firefox))
+				Thread.sleep(3000);
 			
 			int NumberOfProducts = Favorite.getNumberOfProducts();
 			
