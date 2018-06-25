@@ -34,7 +34,7 @@ import com.generic.util.reportBuilder;
 public class SelTestCase {
 	
 	public static String time_date_format = "hh:mm:ss";
-	public static String time_date_formatScreenshot = "hhmmss.SSSaaa";
+	public static String time_date_formatScreenshot = "hhmmss-SSSaaa";
 	public static String reportFolderDateStampFormat = "MM-dd-yyyy";
 	public static String reportFolderTimeStampFormat = "HHmmss";
 	public static String testCaseRunDateStamp = "dd.MMMMM.yyyy";
