@@ -116,10 +116,11 @@ public class Base_Favorite extends SelTestCase {
 			ReportUtil.takeScreenShot(getDriver());
 			String AllProducts = Favorite.getAllProducts();
 			sassert().assertTrue(AllProducts.contains(ProductTitle), "Product was not added successfully FAV ");
-			
+			if(getBrowserName().equalsIgnoreCase("firefox"))
+				Thread.sleep(3000);
 			int NumberOfProducts = Favorite.getNumberOfProducts();
-			
-			for (int index = 0; index <NumberOfProducts; index++) {
+
+			for (int index = 0; index < NumberOfProducts; index++) {
 				Favorite.removeProduct();
 			}
 			

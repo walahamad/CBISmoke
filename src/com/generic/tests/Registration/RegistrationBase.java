@@ -116,6 +116,7 @@ public class RegistrationBase extends SelTestCase {
 				LinkedHashMap<String, String> userdetails = (LinkedHashMap<String, String>) users.entrySet().iterator()
 						.next().getValue();
 				email = userdetails.get(Registration.keys.email);
+				email=getSubMailAccount(email);
 				logs.debug("Registration mail: "+email);
 				Registration.fillAndClickRegister(firstName,lastName,email,"Elmira College",password,password, type, addressDetails);
 				String validationMsg = Registration.getEmailAddressError();
@@ -124,10 +125,10 @@ public class RegistrationBase extends SelTestCase {
 			if (proprties.contains(emptyData)) {
 				Registration.clickRegisterButton();
 				// switch To Default Content
-				if(getBrowserName().equals("IE")|| getBrowserName().equals("firefox"))
+				if(getBrowserName().equals("IE")|| getBrowserName().equalsIgnoreCase("firefox"))
 				{
 					Registration.switchToDefaultContent();
-					Thread.sleep(2000);
+					Thread.sleep(3000);
 				}
 				
 				String validationMsg = Registration.getFirstNameError();

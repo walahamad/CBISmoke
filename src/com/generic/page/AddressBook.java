@@ -388,7 +388,7 @@ public class AddressBook extends SelTestCase {
 			subStrArr.add(AddressBookSelectors.addressDetail);
 			valuesArr.add("");
 			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
-			logs.debug("Number of shipping addresses: " + SelectorUtil.numberOfFoundElements);
+			logs.debug("Number of shipping addresses: " + SelectorUtil.numberOfFoundElements.get());
 			getCurrentFunctionName(false);
 			return Integer.parseInt(SelectorUtil.numberOfFoundElements.get());
 		} catch (NoSuchElementException e) {
@@ -407,7 +407,7 @@ public class AddressBook extends SelTestCase {
 			subStrArr.add(AddressBookSelectors.defaultAddress);
 			valuesArr.add("");
 			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
-			logs.debug("Number of Non-Default shipping addresses: " + SelectorUtil.numberOfFoundElements);
+			logs.debug("Number of Non-Default shipping addresses: " + SelectorUtil.numberOfFoundElements.get());
 			getCurrentFunctionName(false);
 			return Integer.parseInt(SelectorUtil.numberOfFoundElements.get());
 		} catch (NoSuchElementException e) {
@@ -423,8 +423,10 @@ public class AddressBook extends SelTestCase {
 		clickRemoveAddress(index);
 		Thread.sleep(3500);
 		if (getNumberOfAddresses() > getNumberOfNonDefaultAddresses()) {
+			Thread.sleep(2000);
 			clickConfirmRemoveAddress(++index);
 		} else {
+			Thread.sleep(2000);
 			clickConfirmRemoveAddress(index);
 		}
 		getCurrentFunctionName(false);

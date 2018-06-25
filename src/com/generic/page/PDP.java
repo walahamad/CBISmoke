@@ -667,6 +667,7 @@ public class PDP extends SelTestCase {
 		try {
 			getCurrentFunctionName(true);
 			PLP.searchProduct(KeyWord);
+			Thread.sleep(3000);
 			PLP.pickRandomPDP();
 			String ProductTitle = getTitle();
 			getCurrentFunctionName(false);
