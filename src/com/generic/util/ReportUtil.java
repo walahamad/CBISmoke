@@ -333,11 +333,11 @@ public final class ReportUtil extends SelTestCase {
 
     /**
      * Take screen shot.
-     *
+     * @param info TODO
      * @param filePath
      *        the file path
      */
-    public static void takeScreenShot(WebDriver driver) {
+    public static void takeScreenShot(WebDriver driver, String info) {
         File srcFile;
         srcFile = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
         try {

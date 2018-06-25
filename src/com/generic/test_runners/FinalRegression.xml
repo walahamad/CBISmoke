@@ -2,17 +2,17 @@
 <test name="addressBook Chrome ">
 	<parameter name="browserName" value="Chrome"/>
 	<classes>
-		<class name="com.generic.tests.MyAccount_addressBook.AddressBookValidationBase"/>
+		<class name="com.generic.tests.addressBook.AddressBookValidationBase"/>
 	</classes>
 </test><test name="addressBook Firefox ">
 	<parameter name="browserName" value="Firefox"/>
 	<classes>
-		<class name="com.generic.tests.MyAccount_addressBook.AddressBookValidationBase"/>
+		<class name="com.generic.tests.addressBook.AddressBookValidationBase"/>
 	</classes>
 </test><test name="addressBook mobile_Nexus 5 ">
 	<parameter name="browserName" value="mobile_Nexus 5"/>
 	<classes>
-		<class name="com.generic.tests.MyAccount_addressBook.AddressBookValidationBase"/>
+		<class name="com.generic.tests.addressBook.AddressBookValidationBase"/>
 	</classes>
 </test><test name="cart Tests Chrome ">
 		<parameter name="browserName" value="Chrome"/>
@@ -28,6 +28,21 @@
 		<parameter name="browserName" value="mobile_Nexus 5"/>
 		<classes>
 			<class name="com.generic.tests.Cart.Base_cart"/>
+		</classes>
+	</test><test name="checkout Chrome ">
+		<parameter name="browserName" value="Chrome"/>
+		<classes>
+			<class name="com.generic.tests.checkout.Base_checkout"/>
+		</classes>
+	</test><test name="checkout Firefox ">
+		<parameter name="browserName" value="Firefox"/>
+		<classes>
+			<class name="com.generic.tests.checkout.Base_checkout"/>
+		</classes>
+	</test><test name="checkout mobile_Nexus 5 ">
+		<parameter name="browserName" value="mobile_Nexus 5"/>
+		<classes>
+			<class name="com.generic.tests.checkout.Base_checkout"/>
 		</classes>
 	</test><test name="fav Tests _ Chrome ">
 		<parameter name="browserName" value="Chrome"/>
@@ -73,6 +88,21 @@
 		<parameter name="browserName" value="mobile_Nexus 5"/>
 		<classes>
 			<class name="com.generic.tests.MiniCart.Base_MiniCart"/>
+		</classes>
+	</test><test name="OrderHistory Chrome ">
+		<parameter name="browserName" value="Chrome"/>
+		<classes>
+			<class name="com.generic.tests.OrderHistory.Base_OrderHistory"/>
+		</classes>
+	</test><test name="OrderHistory Firefox ">
+		<parameter name="browserName" value="Firefox"/>
+		<classes>
+			<class name="com.generic.tests.OrderHistory.Base_OrderHistory"/>
+		</classes>
+	</test><test name="OrderHistory mobile_Nexus 5 ">
+		<parameter name="browserName" value="mobile_Nexus 5"/>
+		<classes>
+			<class name="com.generic.tests.OrderHistory.Base_OrderHistory"/>
 		</classes>
 	</test><test name="PDP Tests _ Chrome ">
 		<parameter name="browserName" value="Chrome"/>
@@ -122,16 +152,16 @@
 	</test><test name="RestPassword Chrome ">
 		<parameter name="browserName" value="Chrome"/>
 		<classes>
-			<class name="com.generic.tests.MyAccount_Password.ChangePassword_base"/>
+			<class name="com.generic.tests.Password.ChangePassword_base"/>
 		</classes>
 	</test><test name="RestPassword Firefox ">
 		<parameter name="browserName" value="Firefox"/>
 		<classes>
-			<class name="com.generic.tests.MyAccount_Password.ChangePassword_base"/>
+			<class name="com.generic.tests.Password.ChangePassword_base"/>
 		</classes>
 	</test><test name="RestPassword mobile_Nexus 5 ">
 		<parameter name="browserName" value="mobile_Nexus 5"/>
 		<classes>
-			<class name="com.generic.tests.MyAccount_Password.ChangePassword_base"/>
+			<class name="com.generic.tests.Password.ChangePassword_base"/>
 		</classes>
 	</test></suite>

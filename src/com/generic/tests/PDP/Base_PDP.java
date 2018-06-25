@@ -26,9 +26,6 @@ import com.generic.util.dataProviderUtils;
 
 public class Base_PDP extends SelTestCase {
 
-	private static LinkedHashMap<String, Object> invintory;
-	private static LinkedHashMap<String, Object> users;
-
 	// user types
 	public static final String guestUser = "guest";
 	public static final String loggedInUser = "loggedin";
@@ -46,8 +43,6 @@ public class Base_PDP extends SelTestCase {
 		testCaseRepotId = SheetVariables.PDPCaseId;
 		Testlogs.set(new SASLogger(test.getName() + test.getIndex()));
 		testObject = test;
-		invintory = Common.readLocalInventory();
-		users = Common.readUsers();
 	}
 
 	@DataProvider(name = "PDPs", parallel = true)
@@ -97,7 +92,7 @@ public class Base_PDP extends SelTestCase {
 				logs.debug("selecting color: " + (String) productDetails.get(PDP.keys.color));
 				PDP.selectColor((String) productDetails.get(PDP.keys.color));
 				logs.debug("checking PDP selected color");
-				ReportUtil.takeScreenShot(getDriver());
+				ReportUtil.takeScreenShot(getDriver(), testDataSheet + "_" + caseId);
 			} // variant color
 
 			// Apply size
@@ -105,7 +100,7 @@ public class Base_PDP extends SelTestCase {
 
 				logs.debug("selecting size: " + (String) productDetails.get(PDP.keys.size));
 				PDP.selectSize((String) productDetails.get(PDP.keys.size));
-				ReportUtil.takeScreenShot(getDriver());
+				ReportUtil.takeScreenShot(getDriver(), testDataSheet + "_" + caseId);
 			} // size check
 
 			// Apply fleece
@@ -113,7 +108,7 @@ public class Base_PDP extends SelTestCase {
 				logs.debug("selecting fleece: " + (String) productDetails.get(PDP.keys.fleece));
 				PDP.selectFleece((String) productDetails.get(PDP.keys.fleece));
 
-				ReportUtil.takeScreenShot(getDriver());
+				ReportUtil.takeScreenShot(getDriver(), testDataSheet + "_" + caseId);
 			} // fleece check
 
 			// Apply memory
@@ -121,7 +116,7 @@ public class Base_PDP extends SelTestCase {
 				logs.debug("selecting memory: " + (String) productDetails.get(PDP.keys.memory));
 				PDP.selectMemory((String) productDetails.get(PDP.keys.memory));
 
-				ReportUtil.takeScreenShot(getDriver());
+				ReportUtil.takeScreenShot(getDriver(), testDataSheet + "_" + caseId);
 			} // fleece check
 
 			if (proprties.contains("price")) {
@@ -131,7 +126,7 @@ public class Base_PDP extends SelTestCase {
 				sassert().assertTrue(price.contains(productDetails.get(PDP.keys.price).trim()),
 						"<font color=#f442cb>product price is not expected</font>"
 								+ productDetails.get(PDP.keys.price).trim() + " not" + price);
-				ReportUtil.takeScreenShot(getDriver());
+				ReportUtil.takeScreenShot(getDriver(), testDataSheet + "_" + caseId);
 			} // price check
 
 			if (proprties.contains("title")) {
@@ -139,14 +134,14 @@ public class Base_PDP extends SelTestCase {
 				String title = PDP.getTitle();
 				sassert().assertTrue(title.contains(productDetails.get(PDP.keys.title)),
 						"<font color=#f442cb>product title is not expected</font>");
-				ReportUtil.takeScreenShot(getDriver());
+				ReportUtil.takeScreenShot(getDriver(), testDataSheet + "_" + caseId);
 			} // title check
 
 			if (proprties.contains("add to cart button")) {
 				logs.debug("checking PDP add to cart button");
 				sassert().assertTrue(PDP.checkAddToCartButton(),
 						"<font color=#f442cb>product add to button is not expected</font>");
-				ReportUtil.takeScreenShot(getDriver());
+				ReportUtil.takeScreenShot(getDriver(), testDataSheet + "_" + caseId);
 			} // add to cart button check
 
 			if (proprties.contains("id")) {
@@ -155,7 +150,7 @@ public class Base_PDP extends SelTestCase {
 				sassert().assertTrue(Id.toLowerCase().contains(productDetails.get(PDP.keys.id).toLowerCase()),
 						"<font color=#f442cb>product id is not expected site " + Id + " and sheet "
 								+ productDetails.get(PDP.keys.id) + "</font>");
-				ReportUtil.takeScreenShot(getDriver());
+				ReportUtil.takeScreenShot(getDriver(), testDataSheet + "_" + caseId);
 			} // id check
 
 			if (proprties.contains("desc")) {
@@ -165,7 +160,7 @@ public class Base_PDP extends SelTestCase {
 				sassert().assertTrue(description.trim().contains(((String) productDetails.get(PDP.keys.desc)).trim()),
 						"<font color=#f442cb>product desc is not expected found: " + description + " <br>expected: "
 								+ (String) productDetails.get(PDP.keys.desc) + "</font>");
-				ReportUtil.takeScreenShot(getDriver());
+				ReportUtil.takeScreenShot(getDriver(), testDataSheet + "_" + caseId);
 			} // info check
 
 			if (proprties.contains("social")) {
@@ -182,11 +177,11 @@ public class Base_PDP extends SelTestCase {
 				sassert().assertTrue(social.trim().contains((socialButtons).trim()),
 						"<font color=#f442cb>social buttons is not expected found: " + social + " <br>expected: "
 								+ socialButtons + "</font>");
-				ReportUtil.takeScreenShot(getDriver());
+				ReportUtil.takeScreenShot(getDriver(), testDataSheet + "_" + caseId);
 				Thread.sleep(500);
 				PDP.closeSocialShare();
 				Thread.sleep(1000);
-				ReportUtil.takeScreenShot(getDriver());
+				ReportUtil.takeScreenShot(getDriver(), testDataSheet + "_" + caseId);
 			} // info social share
 
 			if (proprties.contains("bundle")) {
@@ -210,7 +205,7 @@ public class Base_PDP extends SelTestCase {
 								+ productDetails.get(PDP.keys.bundleProducts) + "<br>site products: "
 								+ allProductsTitles + "</font>");
 
-				ReportUtil.takeScreenShot(getDriver());
+				ReportUtil.takeScreenShot(getDriver(), testDataSheet + "_" + caseId);
 			} // bundle check
 
 			if (proprties.contains("reviews")) {
@@ -221,7 +216,7 @@ public class Base_PDP extends SelTestCase {
 				sassert().assertTrue(reviews.trim().contains((reviewscount).trim()),
 						"<font color=#f442cb>product reviews is not expected found: " + reviews + " <br>counted: "
 								+ reviewscount + "</font>");
-				ReportUtil.takeScreenShot(getDriver());
+				ReportUtil.takeScreenShot(getDriver(), testDataSheet + "_" + caseId);
 			} // reviews
 
 			if (proprties.contains("ratings")) {
@@ -232,7 +227,7 @@ public class Base_PDP extends SelTestCase {
 				sassert().assertTrue(starsRating.trim().contains((secondaryRating).trim()),
 						"<font color=#f442cb>product rating is not expected <br> stars: " + starsRating
 								+ " <br>secondary: " + secondaryRating + "</font>");
-				ReportUtil.takeScreenShot(getDriver());
+				ReportUtil.takeScreenShot(getDriver(), testDataSheet + "_" + caseId);
 			} // info social share
 
 			sassert().assertAll();
@@ -243,7 +238,7 @@ public class Base_PDP extends SelTestCase {
 			t.printStackTrace();
 			String temp = getTestCaseReportName();
 			Common.testFail(t, temp);
-			ReportUtil.takeScreenShot(getDriver());
+			ReportUtil.takeScreenShot(getDriver(), testDataSheet + "_" + caseId);
 			Assert.assertTrue(false, t.getMessage());
 		} // catch
 

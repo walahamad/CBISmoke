@@ -21,8 +21,6 @@ import com.generic.util.SASLogger;
 import com.generic.util.dataProviderUtils;
 
 public class RegistrationBase extends SelTestCase {
-	private static LinkedHashMap<String, Object> users =null ;
-	private static LinkedHashMap<String, Object> addresses = null; 
 
 	// possible scenarios
 	public static final String freshUser = "fresh";
@@ -55,8 +53,6 @@ public class RegistrationBase extends SelTestCase {
 	public static void initialSetUp(XmlTest test) throws Exception {
 		Testlogs.set(new SASLogger(test.getName() + test.getIndex()));
 		testObject = test;
-		users = Common.readUsers();
-		addresses = Common.readAddresses();
 	}
 
 	@DataProvider(name = "Registration", parallel = true)
@@ -178,7 +174,7 @@ public class RegistrationBase extends SelTestCase {
 			t.printStackTrace();
 			String temp = getTestCaseReportName();
 			Common.testFail(t, temp);
-			ReportUtil.takeScreenShot(getDriver());
+			ReportUtil.takeScreenShot(getDriver(), testDataSheet + "_" + caseId);
 			Assert.assertTrue(false, t.getMessage());
 		} // catch
 	}// test
