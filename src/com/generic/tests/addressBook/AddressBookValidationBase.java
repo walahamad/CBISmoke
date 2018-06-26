@@ -15,6 +15,7 @@ import com.generic.page.AddressBook;
 import com.generic.page.CheckOut;
 import com.generic.page.SignIn;
 import com.generic.setup.Common;
+import com.generic.setup.GlobalVariables;
 import com.generic.setup.LoggingMsg;
 import com.generic.setup.PagesURLs;
 import com.generic.setup.SelTestCase;
@@ -117,7 +118,7 @@ public class AddressBookValidationBase extends SelTestCase {
 			}
 
 			// Remove the created address.
-			if (prop.contains("delete")) {
+			if (prop.contains("delete") && !getBrowserName().contains(GlobalVariables.browsers.firefox)) {
 				AddressBook.removeNonDefaultAddress(0);
 	        	String alertInfo = AddressBook.getAlertInfo();
 		    	String expectedAlertInfo = globalAlerts.split("DeleteAddressMsg:")[1].split("\n")[0];
