@@ -959,13 +959,13 @@ public class CheckOut extends SelTestCase {
 				// clickAddPaymentMethod();
 				if (!cardtype.contains("paypal")) {
 					fill(cardtype, cardholder, cardNumber, expireMonth, expireYear, CVC);
-					ReportUtil.takeScreenShot(getDriver());
+					ReportUtil.takeScreenShot(getDriver(), "payment_debug");
 				}
 
 				fillBillingAddress(countery, firstName, lastName, address, city, postal, phone);
-				ReportUtil.takeScreenShot(getDriver());
+				ReportUtil.takeScreenShot(getDriver(), "payment_debug");
 				clickNext();
-				ReportUtil.takeScreenShot(getDriver());
+				ReportUtil.takeScreenShot(getDriver(), "payment_debug");
 				if (cardtype.contains("paypal")) {
 					Thread.sleep(20000);
 					String mainWindow = switchToPayPalWindow();
@@ -977,7 +977,7 @@ public class CheckOut extends SelTestCase {
 					Thread.sleep(20000);
 				}
 				Thread.sleep(1000);
-				ReportUtil.takeScreenShot(getDriver());
+				ReportUtil.takeScreenShot(getDriver(), "payment_debug");
 				getCurrentFunctionName(false);
 			} catch (NoSuchElementException e) {
 				logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {

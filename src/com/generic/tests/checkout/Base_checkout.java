@@ -26,11 +26,6 @@ import com.generic.util.SASLogger;
 
 public class Base_checkout extends SelTestCase {
 
-	private static LinkedHashMap<String, Object> addresses = null;
-	private static LinkedHashMap<String, Object> invintory = null;
-	private static LinkedHashMap<String, Object> paymentCards = null;
-	private static LinkedHashMap<String, Object> users = null;
-
 	// user types
 	public static final String guestUser = "guest";
 	public static final String freshUser = "fresh";
@@ -50,10 +45,6 @@ public class Base_checkout extends SelTestCase {
 	public static void initialSetUp(XmlTest test) throws Exception {
 		Testlogs.set(new SASLogger("checkout_setup"));
 		testObject = test;
-		addresses = Common.readAddresses();
-		invintory = Common.readLocalInventory();
-		paymentCards = Common.readPaymentcards();
-		users = Common.readUsers();
 	}
 
 	@DataProvider(name = "Orders", parallel = true)
@@ -193,7 +184,7 @@ public class Base_checkout extends SelTestCase {
 			if (!external) { // this logic to avoid passing this block in case you call it from other class
 				if (getBrowserName().equals("IE"))
 					Thread.sleep(10000);
-				ReportUtil.takeScreenShot(getDriver());
+				ReportUtil.takeScreenShot(getDriver(), testDataSheet + "_" + caseId);
 				
 				String billingAddressDetails = CheckOut.orderConfirmation.getBillingAddrerss();
 				sassert()
@@ -235,7 +226,7 @@ public class Base_checkout extends SelTestCase {
 			t.printStackTrace();
 			String temp = getTestCaseReportName();
 			Common.testFail(t, temp);
-			ReportUtil.takeScreenShot(getDriver());
+			ReportUtil.takeScreenShot(getDriver(), testDataSheet + "_" + caseId);
 			Assert.assertTrue(false, t.getMessage());
 		} // catch
 	}// test

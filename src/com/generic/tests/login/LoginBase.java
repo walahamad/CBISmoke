@@ -23,7 +23,6 @@ import com.generic.util.dataProviderUtils;
 
 public class LoginBase extends SelTestCase {
 
-	private static LinkedHashMap<String, Object> users = null;
 	private static int testCaseID;
 	// used sheet in test
 	public static final String testDataSheet = SheetVariables.loginSheet;
@@ -35,7 +34,6 @@ public class LoginBase extends SelTestCase {
 	public static void initialSetUp(XmlTest test) throws Exception {
 		Testlogs.set(new SASLogger(test.getName() + test.getIndex()));
 		testObject = test;
-		users = Common.readUsers();
 	}
 
 	@DataProvider(name = "Login", parallel = true)
@@ -142,7 +140,7 @@ public class LoginBase extends SelTestCase {
 			t.printStackTrace();
 			String temp = getTestCaseReportName();
 			Common.testFail(t, temp);
-			ReportUtil.takeScreenShot(getDriver());
+			ReportUtil.takeScreenShot(getDriver(), testDataSheet + "_" + caseId);
 			Assert.assertTrue(false, t.getMessage());
 		} // catch
 	}// test

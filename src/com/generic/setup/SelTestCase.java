@@ -34,7 +34,7 @@ import com.generic.util.reportBuilder;
 public class SelTestCase {
 	
 	public static String time_date_format = "hh:mm:ss";
-	public static String time_date_formatScreenshot = "hhmmss.SSSaaa";
+	public static String time_date_formatScreenshot = "hhmmss-SSSaaa";
 	public static String reportFolderDateStampFormat = "MM-dd-yyyy";
 	public static String reportFolderTimeStampFormat = "HHmmss";
 	public static String testCaseRunDateStamp = "dd.MMMMM.yyyy";
@@ -78,6 +78,11 @@ public class SelTestCase {
     
     public static String rUNDATE = ReportUtil.now(time_date_format).toString();
     public static String suiteName;
+    
+    public static LinkedHashMap<String, Object> users =null ;
+    public static LinkedHashMap<String, Object> addresses = null; 
+    public static LinkedHashMap<String, Object> invintory = null;
+    public static LinkedHashMap<String, Object> paymentCards = null;
 
     public static String getBrowserName() {
         //return browserName;
@@ -217,7 +222,7 @@ public class SelTestCase {
     	
     }
     
-    public static void failureHandeler(Throwable t)
+    public static void failureHandeler(Throwable t, String info)
     {
     	setTestCaseDescription(getTestCaseDescription());
 		logs.debug(MessageFormat.format(LoggingMsg.DEBUGGING_TEXT, t.getMessage()));
@@ -234,7 +239,7 @@ public class SelTestCase {
 				getDriver().getPageSource()+"\r\n" + 
 				"  </div>\r\n" + 
 				"<br>");			
-		ReportUtil.takeScreenShot(getDriver());
+		ReportUtil.takeScreenShot(getDriver(), info);
 		Assert.assertTrue(false, t.getMessage());
     }
     
@@ -338,6 +343,16 @@ public class SelTestCase {
         getCurrentFunctionName(false);
     }
     
+    @BeforeSuite
+    public static void excelSheetReader() throws Exception
+    {
+    	logs.debug("loading data store");
+    	users = Common.readUsers();
+		addresses = Common.readAddresses();
+		invintory = Common.readLocalInventory();
+		paymentCards = Common.readPaymentcards();
+		
+    }
     
     @AfterSuite
     public static void reportMaker() throws IOException
