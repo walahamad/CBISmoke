@@ -2,45 +2,20 @@
 <test name="addressBook Chrome ">
 	<parameter name="browserName" value="Chrome"/>
 	<classes>
-		<class name="com.generic.tests.MyAccount_addressBook.AddressBookValidationBase"/>
-	</classes>
-</test><test name="addressBook Firefox ">
-	<parameter name="browserName" value="Firefox"/>
-	<classes>
-		<class name="com.generic.tests.MyAccount_addressBook.AddressBookValidationBase"/>
-	</classes>
-</test><test name="addressBook mobile_Nexus 5 ">
-	<parameter name="browserName" value="mobile_Nexus 5"/>
-	<classes>
-		<class name="com.generic.tests.MyAccount_addressBook.AddressBookValidationBase"/>
+		<class name="com.generic.tests.addressBook.AddressBookValidationBase"/>
 	</classes>
 </test><test name="cart Tests Chrome ">
 		<parameter name="browserName" value="Chrome"/>
 		<classes>
 			<class name="com.generic.tests.Cart.Base_cart"/>
 		</classes>
-	</test><test name="cart Tests Firefox ">
-		<parameter name="browserName" value="Firefox"/>
+	</test><test name="checkout Chrome ">
+		<parameter name="browserName" value="Chrome"/>
 		<classes>
-			<class name="com.generic.tests.Cart.Base_cart"/>
-		</classes>
-	</test><test name="cart Tests mobile_Nexus 5 ">
-		<parameter name="browserName" value="mobile_Nexus 5"/>
-		<classes>
-			<class name="com.generic.tests.Cart.Base_cart"/>
+			<class name="com.generic.tests.checkout.Base_checkout"/>
 		</classes>
 	</test><test name="fav Tests _ Chrome ">
 		<parameter name="browserName" value="Chrome"/>
-		<classes>
-			<class name="com.generic.tests.Favorite.Base_Favorite"/>
-		</classes>
-	</test><test name="fav Tests _ Firefox ">
-		<parameter name="browserName" value="Firefox"/>
-		<classes>
-			<class name="com.generic.tests.Favorite.Base_Favorite"/>
-		</classes>
-	</test><test name="fav Tests _ mobile_Nexus 5 ">
-		<parameter name="browserName" value="mobile_Nexus 5"/>
 		<classes>
 			<class name="com.generic.tests.Favorite.Base_Favorite"/>
 		</classes>
@@ -49,43 +24,18 @@
 		<classes>
 			<class name="com.generic.tests.login.LoginBase"/>
 		</classes>
-	</test><test name="Login Regression Firefox ">
-		<parameter name="browserName" value="Firefox"/>
-		<classes>
-			<class name="com.generic.tests.login.LoginBase"/>
-		</classes>
-	</test><test name="Login Regression mobile_Nexus 5 ">
-		<parameter name="browserName" value="mobile_Nexus 5"/>
-		<classes>
-			<class name="com.generic.tests.login.LoginBase"/>
-		</classes>
 	</test><test name="MiniCart Chrome ">
 		<parameter name="browserName" value="Chrome"/>
 		<classes>
 			<class name="com.generic.tests.MiniCart.Base_MiniCart"/>
 		</classes>
-	</test><test name="MiniCart Firefox ">
-		<parameter name="browserName" value="Firefox"/>
+	</test><test name="OrderHistory Chrome ">
+		<parameter name="browserName" value="Chrome"/>
 		<classes>
-			<class name="com.generic.tests.MiniCart.Base_MiniCart"/>
-		</classes>
-	</test><test name="MiniCart mobile_Nexus 5 ">
-		<parameter name="browserName" value="mobile_Nexus 5"/>
-		<classes>
-			<class name="com.generic.tests.MiniCart.Base_MiniCart"/>
+			<class name="com.generic.tests.OrderHistory.Base_OrderHistory"/>
 		</classes>
 	</test><test name="PDP Tests _ Chrome ">
 		<parameter name="browserName" value="Chrome"/>
-		<classes>
-			<class name="com.generic.tests.PDP.Base_PDP"/>
-		</classes>
-	</test><test name="PDP Tests _ Firefox ">
-		<parameter name="browserName" value="Firefox"/>
-		<classes>
-			<class name="com.generic.tests.PDP.Base_PDP"/>
-		</classes>
-	</test><test name="PDP Tests _ mobile_Nexus 5 ">
-		<parameter name="browserName" value="mobile_Nexus 5"/>
 		<classes>
 			<class name="com.generic.tests.PDP.Base_PDP"/>
 		</classes>
@@ -94,44 +44,14 @@
 		<classes>
               <class name="com.generic.tests.Search_PLP.PLP_Base"/>
 		</classes>
-	</test><test name="PLP validation Firefox ">
-		<parameter name="browserName" value="Firefox"/>
-		<classes>
-              <class name="com.generic.tests.Search_PLP.PLP_Base"/>
-		</classes>
-	</test><test name="PLP validation mobile_Nexus 5 ">
-		<parameter name="browserName" value="mobile_Nexus 5"/>
-		<classes>
-              <class name="com.generic.tests.Search_PLP.PLP_Base"/>
-		</classes>
 	</test><test name="Registration Chrome ">
 		<parameter name="browserName" value="Chrome"/>
-		<classes>
-			<class name="com.generic.tests.Registration.RegistrationBase"/>
-		</classes>
-	</test><test name="Registration Firefox ">
-		<parameter name="browserName" value="Firefox"/>
-		<classes>
-			<class name="com.generic.tests.Registration.RegistrationBase"/>
-		</classes>
-	</test><test name="Registration mobile_Nexus 5 ">
-		<parameter name="browserName" value="mobile_Nexus 5"/>
 		<classes>
 			<class name="com.generic.tests.Registration.RegistrationBase"/>
 		</classes>
 	</test><test name="RestPassword Chrome ">
 		<parameter name="browserName" value="Chrome"/>
 		<classes>
-			<class name="com.generic.tests.MyAccount_Password.ChangePassword_base"/>
-		</classes>
-	</test><test name="RestPassword Firefox ">
-		<parameter name="browserName" value="Firefox"/>
-		<classes>
-			<class name="com.generic.tests.MyAccount_Password.ChangePassword_base"/>
-		</classes>
-	</test><test name="RestPassword mobile_Nexus 5 ">
-		<parameter name="browserName" value="mobile_Nexus 5"/>
-		<classes>
-			<class name="com.generic.tests.MyAccount_Password.ChangePassword_base"/>
+			<class name="com.generic.tests.Password.ChangePassword_base"/>
 		</classes>
 	</test></suite>

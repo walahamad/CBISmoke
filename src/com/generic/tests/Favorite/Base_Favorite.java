@@ -18,6 +18,7 @@ import com.generic.page.PDP;
 import com.generic.page.Registration;
 import com.generic.page.SignIn;
 import com.generic.setup.Common;
+import com.generic.setup.GlobalVariables;
 import com.generic.setup.LoggingMsg;
 import com.generic.setup.SelTestCase;
 import com.generic.setup.SheetVariables;
@@ -26,9 +27,6 @@ import com.generic.util.SASLogger;
 import com.generic.util.dataProviderUtils;
 
 public class Base_Favorite extends SelTestCase {
-
-	private static LinkedHashMap<String, Object> invintory;
-	private static LinkedHashMap<String, Object> users;
 
 	// user types
 	public static final String guestUser = "guest";
@@ -47,8 +45,6 @@ public class Base_Favorite extends SelTestCase {
 		testCaseRepotId = SheetVariables.FavoriteSheetTestCaseId;
 		Testlogs.set(new SASLogger(test.getName() + test.getIndex()));
 		testObject = test;
-		invintory = Common.readLocalInventory();
-		users = Common.readUsers();
 	}
 
 	@DataProvider(name = "FAVs", parallel = true)
@@ -87,7 +83,7 @@ public class Base_Favorite extends SelTestCase {
 				Testlogs.get().debug("Used Password to login: " + (String) userdetails.get(Registration.keys.password));
 				SignIn.logIn(UsedEmail, (String) userdetails.get(Registration.keys.password));
 			}
-			ReportUtil.takeScreenShot(getDriver());
+			ReportUtil.takeScreenShot(getDriver(), testDataSheet + "_" + caseId);
 			
 			String ProductTitle = "";
 			if (!product.equals(""))
@@ -103,19 +99,22 @@ public class Base_Favorite extends SelTestCase {
 			else {
 				ProductTitle = PDP.getRandomProduct("dryer");
 			}
-			ReportUtil.takeScreenShot(getDriver());
+			ReportUtil.takeScreenShot(getDriver(), testDataSheet + "_" + caseId);
 			
 			if (proprties.contains("PDP") || !proprties.contains("PLP"))
 				PDP.addToFavorite();
 			if (proprties.contains("PLP"))
 				PDP.addToFavorite();
-			ReportUtil.takeScreenShot(getDriver());
+			ReportUtil.takeScreenShot(getDriver(), testDataSheet + "_" + caseId);
 				//TODO: add function to handle 
 			
 			getDriver().get(Favorite.getFavorriteUrl());
-			ReportUtil.takeScreenShot(getDriver());
+			ReportUtil.takeScreenShot(getDriver(), testDataSheet + "_" + caseId);
 			String AllProducts = Favorite.getAllProducts();
 			sassert().assertTrue(AllProducts.contains(ProductTitle), "Product was not added successfully FAV ");
+			
+			if(getBrowserName().equalsIgnoreCase(GlobalVariables.browsers.firefox))
+				Thread.sleep(3000);
 			
 			int NumberOfProducts = Favorite.getNumberOfProducts();
 			
@@ -131,7 +130,7 @@ public class Base_Favorite extends SelTestCase {
 			t.printStackTrace();
 			String temp = getTestCaseReportName();
 			Common.testFail(t, temp);
-			ReportUtil.takeScreenShot(getDriver());
+			ReportUtil.takeScreenShot(getDriver(), testDataSheet + "_" + caseId);
 			Assert.assertTrue(false, t.getMessage());
 		} // catch
 

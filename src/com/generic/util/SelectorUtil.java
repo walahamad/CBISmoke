@@ -32,6 +32,7 @@ import ru.yandex.qatools.ashot.AShot;
 import ru.yandex.qatools.ashot.Screenshot;
 
 import com.generic.setup.ExceptionMsg;
+import com.generic.setup.GlobalVariables;
 import com.generic.setup.LoggingMsg;
 
 
@@ -55,7 +56,7 @@ public class SelectorUtil extends SelTestCase {
 		initializeElementsSelectorsMaps(webElementsInfo, isValidationStep, htmlDoc);
 		}catch (NoSuchElementException e) {
 			Thread.sleep(10000);
-			if (SelTestCase.getBrowserName().contains("firfox"))
+			if (SelTestCase.getBrowserName().contains(GlobalVariables.browsers.firefox))
 				Thread.sleep(5000);
 			logs.debug("Second try for getting element");
 			Document doc = Jsoup.parse(SelTestCase.getDriver().getPageSource());
@@ -457,7 +458,8 @@ public class SelectorUtil extends SelTestCase {
 						       .pollingEvery(5, TimeUnit.SECONDS)
 						       .ignoring(NoSuchElementException.class);
 							   //TODO: move it to general function
-					   
+					   if(!value.contains("noClick")) {
+					
 						   logs.debug(MessageFormat.format(LoggingMsg.CLICKING_SEL, byAction.toString()));
 						   JavascriptExecutor jse = (JavascriptExecutor)getDriver();
 						   jse.executeScript("arguments[0].scrollIntoView(false)", field); 
@@ -467,7 +469,7 @@ public class SelectorUtil extends SelTestCase {
 								   return driver.findElement(byAction);
 							   }});
 						    logs.debug("browser..."+ browser);
-						   if(browser.contains("firefox") )
+						   if(browser.contains(GlobalVariables.browsers.firefox) )
 						   {
 							   logs.debug("clicking..."+ SelTestCase.getBrowserName());
 							   field2.click();
@@ -475,6 +477,8 @@ public class SelectorUtil extends SelTestCase {
 						   else
 							   ((JavascriptExecutor) SelTestCase.getDriver()).executeScript("arguments[0].click()", field2);
 						   
+					   }else
+						   logs.debug("NO clicking..."+ SelTestCase.getBrowserName());
 					   }
 					   else if (action.equals("check"))
 					   {
@@ -499,7 +503,7 @@ public class SelectorUtil extends SelTestCase {
 											   return driver.findElement(byAction);
 										   }});
 									    logs.debug("browser..."+ browser);
-									   if(browser.contains("firefox") )
+									   if(browser.contains(GlobalVariables.browsers.firefox) )
 									   {
 										   logs.debug("clicking..."+ browser);
 										   field2.click();
@@ -532,7 +536,7 @@ public class SelectorUtil extends SelTestCase {
 											   return driver.findElement(byAction);
 										   }});
 									    logs.debug("browser..."+ browser);
-									   if(browser.contains("firefox")  )
+									   if(browser.contains(GlobalVariables.browsers.firefox)  )
 									   {
 										   logs.debug("clicking..."+ browser);
 										   field2.click();
@@ -589,7 +593,7 @@ public class SelectorUtil extends SelTestCase {
 											   return driver.findElement(byAction);
 										   }});
 									    logs.debug("browser..."+ browser);
-									   if(browser.contains("firefox")  )
+									   if(browser.contains(GlobalVariables.browsers.firefox)  )
 									   {
 										   logs.debug("clicking..."+ browser);
 										   field2.click();

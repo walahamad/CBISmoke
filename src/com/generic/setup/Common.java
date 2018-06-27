@@ -596,9 +596,9 @@ public class Common extends SelTestCase {
 		return browsers.toArray(new String[browsers.size()]);
 	}//read browsers
 
-	public static void takeScreenShot() {
+	public static void takeScreenShot2() {
 		// TODO Auto-generated method stub
-		ReportUtil.takeScreenShot(getDriver());
+		ReportUtil.takeScreenShot(getDriver(), "common");
 	}
 
 }// class

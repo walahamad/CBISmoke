@@ -92,7 +92,7 @@ public class PLP_Base extends SelTestCase {
 			t.printStackTrace();
 			String temp = getTestCaseReportName();
 			Common.testFail(t, temp);
-			ReportUtil.takeScreenShot(getDriver());
+			ReportUtil.takeScreenShot(getDriver(), testDataSheet + "_" + caseId);
 			Assert.assertTrue(false, t.getMessage());
 		}
 

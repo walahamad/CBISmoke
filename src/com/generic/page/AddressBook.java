@@ -5,9 +5,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebElement;
+
 import com.generic.selector.AddressBookSelectors;
 import com.generic.setup.SelTestCase;
 import com.generic.setup.ExceptionMsg;
+import com.generic.setup.GlobalVariables;
 import com.generic.setup.LoggingMsg;
 import com.generic.util.SelectorUtil;
 
@@ -388,7 +393,7 @@ public class AddressBook extends SelTestCase {
 			subStrArr.add(AddressBookSelectors.addressDetail);
 			valuesArr.add("");
 			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
-			logs.debug("Number of shipping addresses: " + SelectorUtil.numberOfFoundElements);
+			logs.debug("Number of shipping addresses: " + SelectorUtil.numberOfFoundElements.get());
 			getCurrentFunctionName(false);
 			return Integer.parseInt(SelectorUtil.numberOfFoundElements.get());
 		} catch (NoSuchElementException e) {
@@ -405,9 +410,9 @@ public class AddressBook extends SelTestCase {
 			List<String> subStrArr = new ArrayList<String>();
 			List<String> valuesArr = new ArrayList<String>();
 			subStrArr.add(AddressBookSelectors.defaultAddress);
-			valuesArr.add("");
+			valuesArr.add("noClick");
 			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
-			logs.debug("Number of Non-Default shipping addresses: " + SelectorUtil.numberOfFoundElements);
+			logs.debug("Number of Non-Default shipping addresses: " + SelectorUtil.numberOfFoundElements.get());
 			getCurrentFunctionName(false);
 			return Integer.parseInt(SelectorUtil.numberOfFoundElements.get());
 		} catch (NoSuchElementException e) {
@@ -420,12 +425,12 @@ public class AddressBook extends SelTestCase {
 	// done-ocm
 	public static void removeNonDefaultAddress(int index) throws Exception {
 		getCurrentFunctionName(true);
-		clickRemoveAddress(index);
+
 		Thread.sleep(3500);
-		if (getNumberOfAddresses() > getNumberOfNonDefaultAddresses()) {
-			clickConfirmRemoveAddress(++index);
-		} else {
-			clickConfirmRemoveAddress(index);
+		if (getNumberOfNonDefaultAddresses() > 0) {
+			clickRemoveAddress(index);
+			Thread.sleep(2000);
+			clickConfirmRemoveAddress();
 		}
 		getCurrentFunctionName(false);
 	}
@@ -437,9 +442,14 @@ public class AddressBook extends SelTestCase {
 			List<String> subStrArr = new ArrayList<String>();
 			List<String> valuesArr = new ArrayList<String>();
 			logs.debug("Removing second Address");
-			subStrArr.add(AddressBookSelectors.removeBtn);
-			valuesArr.add("index," + index);
-			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
+			subStrArr.add(AddressBookSelectors.address_holder);
+			WebElement address_holder = SelectorUtil.getNthElement(subStrArr, index + 1);
+			WebElement delete = address_holder.findElements(By.cssSelector(AddressBookSelectors.removeBtn)).get(1);
+			if (SelTestCase.getBrowserName().contains(GlobalVariables.browsers.firefox)) {
+				logs.debug("clicking..." + SelTestCase.getBrowserName());
+				delete.click();
+			} else
+				((JavascriptExecutor) SelTestCase.getDriver()).executeScript("arguments[0].click()", delete);
 			getCurrentFunctionName(false);
 		} catch (NoSuchElementException e) {
 			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
@@ -449,14 +459,16 @@ public class AddressBook extends SelTestCase {
 	}
 
 	// done-ocm
-	public static void clickConfirmRemoveAddress(int index) throws Exception {
+	public static void clickConfirmRemoveAddress() throws Exception {
 		try {
 			getCurrentFunctionName(true);
 			List<String> subStrArr = new ArrayList<String>();
 			List<String> valuesArr = new ArrayList<String>();
 			subStrArr.add(AddressBookSelectors.deleteBtn);
-			valuesArr.add("index," + index);
+			valuesArr.add("");
+
 			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
+			
 			getCurrentFunctionName(false);
 		} catch (NoSuchElementException e) {
 			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
