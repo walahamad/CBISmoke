@@ -3,6 +3,8 @@ package com.generic.selector;
 
 public class HomePageSelectors
 {
+	public static final String logo = "css,#logo1 a.logo-anchor";
+	
 	public static final String header = "header-container";
 	public static final String body_topNavLinks = "css,#main-navigation-large>.container>.nav-links";
 	public static final String body_categorySlider = "page-section category-slider";
