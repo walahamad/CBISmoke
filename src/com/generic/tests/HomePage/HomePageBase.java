@@ -50,8 +50,26 @@ public class HomePageBase extends SelTestCase {
 		return data;
 	}
 
+	@Test
+	public void HomePageLogoTest() throws Exception {
+		try {
+			String url = PagesURLs.getHomePage();
+			System.out.print("url wala: " + url ); 
+			getDriver().get(url);
+			Thread.sleep(1500);
+			boolean logoExist = HomePage.checkHeaderLogo();
+			Assert.assertTrue(logoExist, "The Logo Exist");
+		} catch (Throwable t) {
+			setTestCaseDescription(getTestCaseDescription());
+			Testlogs.get().debug(MessageFormat.format(LoggingMsg.DEBUGGING_TEXT, t.getMessage()));
+			t.printStackTrace();
+			String temp = getTestCaseReportName();
+			Common.testFail(t, temp);
+			Assert.assertTrue(false, t.getMessage());
+		} // catch
+	}
 
-	@Test(dataProvider = "HP_SC")
+//	@Test(dataProvider = "HP_SC")
 	public void HomePageRegressionTest(String caseId, String runTest, String desc, String proprties, String baseline) throws Exception {
 		Testlogs.set(new SASLogger("HP_SC "+getBrowserName()));
 		//Important to add this for logging/reporting 

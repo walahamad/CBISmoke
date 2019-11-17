@@ -7,10 +7,13 @@ import java.nio.file.Paths;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import javax.imageio.ImageIO;
 
 import org.apache.commons.io.FileUtils;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.By;
 
 import com.generic.selector.HomePageSelectors;
 import com.generic.setup.EnvironmentFiles;
@@ -223,5 +226,20 @@ public class HomePage extends SelTestCase {
 		}
 		return false;
 	}
-    
+	
+	public static boolean checkHeaderLogo() throws Exception {
+
+		boolean present = false;
+		try {
+			List<WebElement> logoImage = getDriver().findElements(By.xpath("//*[@id='logo1']/*[@class='logo-anchor']"));
+			if (logoImage.size() > 0) {
+				present = true;
+			}
+		} catch (NoSuchElementException e) {
+			   present = false;
+		}
+	
+		return present;
+	}
+
 }

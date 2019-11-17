@@ -13,6 +13,6 @@ public class HomePageSelectors
 	public static final String footerTopSection = "footer-top-section";
 	public static final String footerLogo = "footer-ocm-logo";
 	public static final String footerEmailSignUp = "footer-email-sign-up";
-
+	public static final String logo = "//*[@id='logo1']/*[@class='logo-anchor']"; //Logo selector
 	
 }
