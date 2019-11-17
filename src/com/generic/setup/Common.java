@@ -56,16 +56,16 @@ public class Common extends SelTestCase {
 			if (browser.equalsIgnoreCase("edge")) {
 				System.setProperty("webdriver.edge.driver", PagesURLs.getDriversPath(browser));
 				return new EdgeDriver(new EdgeOptions());
-				
+
 			}else if (browser.equalsIgnoreCase("Firefox")) {
 				System.setProperty("webdriver.gecko.driver",PagesURLs.getDriversPath(browser));
-				
+
 				FirefoxOptions fo = new FirefoxOptions();
 				driver = new FirefoxDriver(fo);
 				driver.manage().timeouts().pageLoadTimeout(60,TimeUnit.SECONDS);
 				driver.manage().timeouts().implicitlyWait(10,TimeUnit.SECONDS);
 				return driver;
-								
+
 			}else if (browser.equalsIgnoreCase("IE")) {
 				System.setProperty("webdriver.ie.driver", PagesURLs.getDriversPath(browser));
 				capabilities = DesiredCapabilities.internetExplorer();
@@ -79,7 +79,7 @@ public class Common extends SelTestCase {
 
 			} else if (browser.equalsIgnoreCase("chrome")) {
 
-				System.setProperty("webdriver.chrome.driver", PagesURLs.getDriversPath(browser));
+				System.setProperty("webdriver.chrome.driver", "/Users/shoroqsuwan/SelAssets/Drivers/chromeDriver");
 				ChromeOptions co = new ChromeOptions();
 				driver = new ChromeDriver(co);
 				driver.manage().timeouts().pageLoadTimeout(60,TimeUnit.SECONDS);
@@ -96,8 +96,8 @@ public class Common extends SelTestCase {
 				// capabilities.setCapability("ensureCleanSession", true);
 				// TODO: change it and setup grid server
 				SelTestCase.setDriver(new RemoteWebDriver(new URL("http://10.20.20.54:4444/wd/hub"), capabilities));
-				
-			} 
+
+			}
 			 else if (browser.equalsIgnoreCase("ChromeG")) {
 				DesiredCapabilities des=DesiredCapabilities.chrome();
 //				des.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);
@@ -106,13 +106,13 @@ public class Common extends SelTestCase {
 				System.setProperty("webdriver.chrome.driver", PagesURLs.getDriversPath(browser));
 				//des.setPlatform(org.openqa.selenium.Platform.WINDOWS);
 				RemoteWebDriver rdriver ;
-				
+
 				//rdriver = new RemoteWebDriver(new URL("http://cv-autogrid04.crossview.inc:4444/wd/hub"),des);
 				rdriver = new RemoteWebDriver(new URL("http://10.200.254.33:4444/wd/hub"),des);
 				rdriver.manage().timeouts().pageLoadTimeout(60,TimeUnit.SECONDS);
 				rdriver.manage().timeouts().implicitlyWait(10,TimeUnit.SECONDS);
 				return rdriver;
-					
+
 				}else if (browser.contains("mobile")) {
 				  /*
 				   * https://cs.chromium.org/chromium/src/chrome/test/chromedriver/chrome/mobile_device_list.cc
@@ -134,7 +134,7 @@ public class Common extends SelTestCase {
 					  iPhone X
 					  Galaxy S5
 				   */
-				  
+
 				String mobile = browser.split("_")[1];
 				capabilities = DesiredCapabilities.chrome();
 				capabilities.setCapability("platform", "WINDOWS");
@@ -193,7 +193,7 @@ public class Common extends SelTestCase {
 
 	/**
 	 * Reads URL from config.properties file
-	 * 
+	 *
 	 * @throws Exception
 	 *
 	 *
@@ -338,12 +338,12 @@ public class Common extends SelTestCase {
 		}
 		input.close();
 		if (getCONFIG().getProperty("browser").equalsIgnoreCase("chrome")) {
-			if (pidInfo.contains("chromedriver.exe")) {
-				Runtime.getRuntime().exec("taskkill /F /IM chromedriver.exe");
-				logs.debug(MessageFormat.format(LoggingMsg.KILLING_PROCESS, "chromeDriver.exe"));
+			if (pidInfo.contains("chromedriver")) {
+				Runtime.getRuntime().exec("taskkill /F /IM chromedriver");
+				logs.debug(MessageFormat.format(LoggingMsg.KILLING_PROCESS, "chromeDriver"));
 			} else {
 				logs.debug(
-						MessageFormat.format(LoggingMsg.NOT_RUNNING_PROCESS_ERROR_MSG, "chromeDriver.exe", "chrome"));
+						MessageFormat.format(LoggingMsg.NOT_RUNNING_PROCESS_ERROR_MSG, "chromeDriver", "chrome"));
 			}
 		}
 
@@ -408,16 +408,16 @@ public class Common extends SelTestCase {
 		/*
 		 * Output example [ { P1={
 		 * url=/yacceleratorstorefront/en/Categories/Bags%2BBoardbags/Bags/Seizure-
-		 * Satchel/p/300613490, color=black, size=SizeUni,£34.792 1, qty=1 }, P2={
+		 * Satchel/p/300613490, color=black, size=SizeUni,ï¿½34.792 1, qty=1 }, P2={
 		 * url=/yacceleratorstorefront/en/Categories/Bags%2BBoardbags/Bags/Seizure-Bag/p
-		 * /300441924, color=claycourt, size=SizeUni, £24.26 4, qty=1 } } ]
+		 * /300441924, color=claycourt, size=SizeUni, ï¿½24.26 4, qty=1 } } ]
 		 */
 		LinkedHashMap<String, Object> products = new LinkedHashMap<>();
-		
+
 		dataProviderUtils TDP = dataProviderUtils.getInstance();
 		Object[][] data = TDP.getData(SheetVariables.products, 1);
 
-		
+
 		// data map
 		int header = 0;
 		int name = 0;
@@ -429,10 +429,10 @@ public class Common extends SelTestCase {
 		int fleece = 6;
 		int memory = 7;
 		int size = 8;
-		int bundleProducts = 9; 
+		int bundleProducts = 9;
 		int desc = 10;
-		int price = 11; 
-		
+		int price = 11;
+
 
 		for (int row = 1; row < data.length; row++) {
 			LinkedHashMap<String, Object> product = new LinkedHashMap<>();
@@ -476,7 +476,7 @@ public class Common extends SelTestCase {
 		]
 		 */
 		LinkedHashMap<String, Object> cards = new LinkedHashMap<>();
-		
+
 		dataProviderUtils TDP = dataProviderUtils.getInstance();
 		Object[][] data = TDP.getData(SheetVariables.cards, 1);
 
@@ -557,7 +557,7 @@ public class Common extends SelTestCase {
 		]
 		 */
 		LinkedHashMap<String, Object> users = new LinkedHashMap<>();
-		
+
 		dataProviderUtils TDP = dataProviderUtils.getInstance();
 		Object[][] data = TDP.getData(SheetVariables.users, 1);
 
@@ -586,27 +586,27 @@ public class Common extends SelTestCase {
 		logs.debug(Arrays.asList(users)+"");
 		return users;
 	}//read users
-	
+
 	public static String[] readRunners() throws Exception {
 		ArrayList<String> runners = new ArrayList<String>();
-		
+
 		dataProviderUtils TDP = dataProviderUtils.getInstance();
 		Object[][] data = TDP.getData(SheetVariables.RunnersRegressionSheet);
-		
+
 		// data map
 		int name = 0;
-		
+
 		logs.debug((String) data[0][name]+"");
 		for (int row = 0; row < data.length; row++) {
 			runners.add((String) data[row][name]);
 		}
-		return runners.toArray(new String[runners.size()]); 
+		return runners.toArray(new String[runners.size()]);
 	}//read runners
-	
+
 	public static String[] readBrowsers() throws Exception {
 
 		ArrayList<String> browsers = new ArrayList<String>();
-		
+
 		dataProviderUtils TDP = dataProviderUtils.getInstance();
 		Object[][] data = TDP.getData(SheetVariables.BrowsersListingSheet);
 

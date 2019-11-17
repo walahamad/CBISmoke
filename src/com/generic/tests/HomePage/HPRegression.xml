@@ -7,17 +7,18 @@
 			<class name="com.generic.tests.HomePage.HomePageBase" />
 		</classes>
 	</test><!-- Test -->
-	<test name="HP_SC Firefox">
+<!-- 	<test name="HP_SC Firefox">
 	<parameter name="browserName" value="Firefox"></parameter>
 	<classes>
 		<class name="com.generic.tests.HomePage.HomePageBase" />
 	</classes>
-</test><!-- Test -->
+</test>Test
 
 <test name="HP_SC mobile_Nexus 5">
 	<parameter name="browserName" value="mobile_Nexus 5"></parameter>
 	<classes>
 		<class name="com.generic.tests.HomePage.HomePageBase" />
 	</classes>
-</test><!-- Test -->
+</test> -->
+<!-- Test -->
 </suite> <!-- Suite -->
