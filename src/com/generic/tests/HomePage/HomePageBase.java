@@ -54,11 +54,12 @@ public class HomePageBase extends SelTestCase {
 	public void HomePageLogoTest() throws Exception {
 		try {
 			String url = PagesURLs.getHomePage();
-			System.out.print("url wala: " + url ); 
 			getDriver().get(url);
 			Thread.sleep(1500);
 			boolean logoExist = HomePage.checkHeaderLogo();
-			Assert.assertTrue(logoExist, "The Logo Exist");
+			sassert().assertTrue(logoExist, "The Logo does not Exist");
+			sassert().assertAll();
+			Common.testPass();
 		} catch (Throwable t) {
 			setTestCaseDescription(getTestCaseDescription());
 			Testlogs.get().debug(MessageFormat.format(LoggingMsg.DEBUGGING_TEXT, t.getMessage()));
@@ -67,6 +68,7 @@ public class HomePageBase extends SelTestCase {
 			Common.testFail(t, temp);
 			Assert.assertTrue(false, t.getMessage());
 		} // catch
+		
 	}
 
 //	@Test(dataProvider = "HP_SC")
