@@ -62,18 +62,6 @@ public class HomePage extends SelTestCase {
 		return false;
 	}
 
-	public static boolean validateHomePageLink() throws Exception {
-		getCurrentFunctionName(true);
-		List<String> subStrArr = new ArrayList<String>();
-		List<String> valuesArr = new ArrayList<String>();
-		logs.debug(MessageFormat.format(LoggingMsg.CLICKING_SEL, MyAccount_EmailAddressSelectors.cancelBtn));
-		subStrArr.add(MyAccount_EmailAddressSelectors.cancelBtn);
-		valuesArr.add("");
-		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
-		getCurrentFunctionName(false);
-		return false;
-	}
-
 	public static boolean checkHeaderLogo() throws Exception {
 		getCurrentFunctionName(true);
 		boolean present = false;
@@ -85,6 +73,18 @@ public class HomePage extends SelTestCase {
 		}
 		getCurrentFunctionName(false);
 		return present;
+	}
+
+	public static boolean validateHomePageLink() throws Exception {
+		getCurrentFunctionName(true);
+		List<String> subStrArr = new ArrayList<String>();
+		List<String> valuesArr = new ArrayList<String>();
+		logs.debug(MessageFormat.format(LoggingMsg.CLICKING_SEL, MyAccount_EmailAddressSelectors.cancelBtn));
+		subStrArr.add(MyAccount_EmailAddressSelectors.cancelBtn);
+		valuesArr.add("");
+		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
+		getCurrentFunctionName(false);
+		return false;
 	}
 
 }
