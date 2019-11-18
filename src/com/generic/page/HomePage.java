@@ -62,19 +62,6 @@ public class HomePage extends SelTestCase {
 		return false;
 	}
 
-	public static boolean checkHeaderLogo() throws Exception {
-		getCurrentFunctionName(true);
-		boolean present = false;
-		try {
-			present = getDriver().findElement(By.xpath(HomePageSelectors.logo)).isDisplayed();
-
-		} catch (NoSuchElementException e) {
-			present = false;
-		}
-		getCurrentFunctionName(false);
-		return present;
-	}
-
 	public static boolean validateHomePageLink() throws Exception {
 		getCurrentFunctionName(true);
 		List<String> subStrArr = new ArrayList<String>();
