@@ -15,7 +15,7 @@ import com.generic.util.SelectorUtil;
  */
 public class HomePage extends SelTestCase {
 
-	public static boolean validateLogoExistance() throws Exception {
+	public static boolean validateLogodisplayed() throws Exception {
 		getCurrentFunctionName(true);
 		boolean isDisplayed; 
 		List<String> subStrArr = new ArrayList<String>();
@@ -26,52 +26,28 @@ public class HomePage extends SelTestCase {
 		return isDisplayed;
 	}
 
-	public static boolean validateLogodisplayed() throws Exception {
+	public static void NavigateAwayFromHomePage() throws Exception {
 		getCurrentFunctionName(true);
-		List<String> subStrArr = new ArrayList<String>();
-		List<String> valuesArr = new ArrayList<String>();
-		logs.debug(MessageFormat.format(LoggingMsg.CLICKING_SEL, MyAccount_EmailAddressSelectors.cancelBtn));
-		subStrArr.add(MyAccount_EmailAddressSelectors.cancelBtn);
-		valuesArr.add("");
-		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
+		//TODO: we need to make this dynamic  
+		getDriver().get("https://www.frontgate.com/ProductSearch2?searchTerm=test");
 		getCurrentFunctionName(false);
-		return false;
 	}
 
-	public static boolean NavigateAwayFromHomePage() throws Exception {
+	public static void  clickOnLogo() throws Exception {
 		getCurrentFunctionName(true);
 		List<String> subStrArr = new ArrayList<String>();
-		List<String> valuesArr = new ArrayList<String>();
-		logs.debug(MessageFormat.format(LoggingMsg.CLICKING_SEL, MyAccount_EmailAddressSelectors.cancelBtn));
-		subStrArr.add(MyAccount_EmailAddressSelectors.cancelBtn);
-		valuesArr.add("");
-		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
+		logs.debug("Clicking on Site logo");
+		subStrArr.add(HomePageSelectors.logo);
+		SelectorUtil.initializeSelectorsAndDoActions(subStrArr);
 		getCurrentFunctionName(false);
-		return false;
-	}
-
-	public static boolean clickOnLogo() throws Exception {
-		getCurrentFunctionName(true);
-		List<String> subStrArr = new ArrayList<String>();
-		List<String> valuesArr = new ArrayList<String>();
-		logs.debug(MessageFormat.format(LoggingMsg.CLICKING_SEL, MyAccount_EmailAddressSelectors.cancelBtn));
-		subStrArr.add(MyAccount_EmailAddressSelectors.cancelBtn);
-		valuesArr.add("");
-		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
-		getCurrentFunctionName(false);
-		return false;
 	}
 
 	public static boolean validateHomePageLink() throws Exception {
 		getCurrentFunctionName(true);
-		List<String> subStrArr = new ArrayList<String>();
-		List<String> valuesArr = new ArrayList<String>();
-		logs.debug(MessageFormat.format(LoggingMsg.CLICKING_SEL, MyAccount_EmailAddressSelectors.cancelBtn));
-		subStrArr.add(MyAccount_EmailAddressSelectors.cancelBtn);
-		valuesArr.add("");
-		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
+		//TODO: we need to make this dynamic 
+		boolean results  =getDriver().getCurrentUrl().equals("https://www.frontgate.com");
 		getCurrentFunctionName(false);
-		return false;
+		return results;
 	}
     
 }
