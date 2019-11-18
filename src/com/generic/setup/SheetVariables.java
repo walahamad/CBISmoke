@@ -61,7 +61,6 @@ public class SheetVariables {
 	public static final String VisualTestingHPTestCaseId = "VisualTestingHP case";
 	public static final String VisualTestingCLPTestCaseId = "VisualTestingCLP case";
 	public static final String FavoriteSheetTestCaseId = "Favorite Case";
-	public static final String LogoValidationTestId = "Logo Validation";
 
 
 
