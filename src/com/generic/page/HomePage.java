@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
+import org.openqa.selenium.WebElement;
+
 import com.generic.selector.HomePageSelectors;
 import com.generic.selector.MyAccount_EmailAddressSelectors;
 import com.generic.setup.LoggingMsg;
@@ -85,6 +87,42 @@ public class HomePage extends SelTestCase {
 		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
 		getCurrentFunctionName(false);
 		return false;
+	}
+	
+	public static void getNumberOfFirstLevelMenuItems() throws Exception {
+		getCurrentFunctionName(true);
+		List<String> subStrArr = new ArrayList<String>();
+		List<String> valuesArr = new ArrayList<String>();
+		List<WebElement> menuFirstLevelElements = new ArrayList<WebElement>();
+
+		// Get the menu items list.
+		logs.debug("Validate number of menu items in first level.");
+		subStrArr.add(HomePageSelectors.menuItems);
+		valuesArr.add("");
+		menuFirstLevelElements = SelectorUtil.getAllElements(subStrArr);
+		getCurrentFunctionName(false);
+
+		// Display the number of items in the menu first level.
+		logs.debug("Number of menu items: " + menuFirstLevelElements.size());
+	}
+	
+	public static boolean validateSubMenuLists() throws Exception {
+		getCurrentFunctionName(true);
+		List<String> subStrArr = new ArrayList<String>();
+		List<String> valuesArr = new ArrayList<String>();
+		List<WebElement> menuFirstLevelElements = new ArrayList<WebElement>();
+
+		logs.debug("Validate menu sub menus list.");
+		subStrArr.add(HomePageSelectors.menuItems);
+		valuesArr.add("");
+		menuFirstLevelElements = SelectorUtil.getAllElements(subStrArr);
+		for (WebElement element : menuFirstLevelElements) {
+			element.click();
+			Thread.sleep(3000);
+		}
+		getCurrentFunctionName(false);
+		logs.debug("Number of menu items: " + menuFirstLevelElements.size());
+		return true;
 	}
 
 }

@@ -25,6 +25,7 @@ public class HomePageBase extends SelTestCase {
 	public static final String header = "header";
 	public static final String footer = "footer";
 	public static final String body = "body";
+	public static final String menu = "menu";
 
 	// used sheet in test
 	public static final String testDataSheet = SheetVariables.VisualTestingHPRegressionsheet;
@@ -61,8 +62,15 @@ public class HomePageBase extends SelTestCase {
 
 		try {
 
-			if (proprties.contains(this.Logo)) {
-				sassert().assertTrue(LogoValidation.validate(), "Logo validation has some problems");
+//			if (proprties.contains(this.Logo)) {
+//				sassert().assertTrue(LogoValidation.validate(), "Logo validation has some problems");
+//			} else {
+//				Testlogs.get().debug("please check proprties provided in excel sheet");
+//			}
+			System.out.println("props wala " + proprties);
+			// Check the Navigation menu.
+			if (proprties.contains(this.menu)) {
+				sassert().assertTrue(MenuValidation.validate(), "Menu validation has some problems");
 			} else {
 				Testlogs.get().debug("please check proprties provided in excel sheet");
 			}
