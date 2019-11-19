@@ -1,13 +1,8 @@
 package com.generic.page;
 
-
-import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
-
 import com.generic.selector.HomePageSelectors;
-import com.generic.selector.MyAccount_EmailAddressSelectors;
-import com.generic.setup.LoggingMsg;
 import com.generic.setup.SelTestCase;
 import com.generic.util.SelectorUtil;
 /**
@@ -20,7 +15,7 @@ public class HomePage extends SelTestCase {
 		boolean isDisplayed; 
 		List<String> subStrArr = new ArrayList<String>();
 		logs.debug("Validate if logo exist");
-		subStrArr.add(HomePageSelectors.logo);
+		subStrArr.add(HomePageSelectors.logo.get());
 		isDisplayed = SelectorUtil.isDisplayed(subStrArr);
 		getCurrentFunctionName(false);		
 		return isDisplayed;
@@ -37,7 +32,7 @@ public class HomePage extends SelTestCase {
 		getCurrentFunctionName(true);
 		List<String> subStrArr = new ArrayList<String>();
 		logs.debug("Clicking on Site logo");
-		subStrArr.add(HomePageSelectors.logo);
+		subStrArr.add(HomePageSelectors.logo.get());
 		SelectorUtil.initializeSelectorsAndDoActions(subStrArr);
 		getCurrentFunctionName(false);
 	}
@@ -45,7 +40,8 @@ public class HomePage extends SelTestCase {
 	public static boolean validateHomePageLink() throws Exception {
 		getCurrentFunctionName(true);
 		//TODO: we need to make this dynamic 
-		boolean results  =getDriver().getCurrentUrl().equals("https://www.frontgate.com");
+		String CurrentURL = getDriver().getCurrentUrl();
+		boolean results  =CurrentURL.equals("https://www.frontgate.com/");
 		getCurrentFunctionName(false);
 		return results;
 	}

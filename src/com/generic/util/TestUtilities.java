@@ -49,7 +49,7 @@ public class TestUtilities extends SelTestCase {
 		logs.debug(MessageFormat.format(LoggingMsg.CLEAR_LOGS_MSG, " done"));
 	}
 
-	public static void reportSetup() throws Exception {
+	public static void reportSetup(String Env) throws Exception {
 
 		try {
 			if (runReportSetup) {
@@ -75,7 +75,7 @@ public class TestUtilities extends SelTestCase {
 				}
 
 				ReportUtil.startTesting(reportDirectory + "//index.html", ReportUtil.now(SelTestCase.time_date_format),
-						SelTestCase.getCONFIG().getProperty("testEnvironment"));
+						Env);
 
 				Path PathObj = Paths.get(EnvironmentFiles.getTemplateDir());
 
@@ -121,18 +121,6 @@ public class TestUtilities extends SelTestCase {
 		FileInputStream fn = new FileInputStream(EnvironmentFiles.getConfigFilePath());
 		getCONFIG().load(fn);
 		
-		
-		try {
-			logs.debug("System variable enviroenment is "+System.getenv("Environment"));
-			getCONFIG().setProperty("testEnvironment", System.getenv("Environment"));
-			getCONFIG().setProperty("HomePage", System.getenv("Environment").replace("/OCM/login", ""));
-		}
-		catch(Exception e)
-		{
-			logs.debug("Pulling Environment from config file");
-		}
-		
-		logs.debug(MessageFormat.format(LoggingMsg.ADDED_ENVIRONMENT_NAME, getCONFIG().getProperty("testEnvironment")));
 		// getCONFIG().setProperty("testSiteName",
 		// "https://"+getCONFIG().getProperty("testEnvironment")+"/"+getCONFIG().getProperty("testSiteName"));
 		// getCONFIG().setProperty("logout",

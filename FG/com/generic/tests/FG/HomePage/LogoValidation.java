@@ -11,7 +11,7 @@ public class LogoValidation extends SelTestCase {
 		logoValidation = logoValidation && HomePage.validateLogodisplayed();
 		HomePage.NavigateAwayFromHomePage(); 
 		HomePage.clickOnLogo(); 
-//		logoValidation = logoValidation && HomePage.validateHomePageLink();
+		logoValidation = logoValidation && HomePage.validateHomePageLink();
 		getCurrentFunctionName(false);
 		return logoValidation;
 		
