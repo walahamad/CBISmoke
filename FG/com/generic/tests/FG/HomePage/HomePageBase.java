@@ -10,9 +10,9 @@ import org.testng.xml.XmlTest;
 
 import com.generic.setup.Common;
 import com.generic.setup.LoggingMsg;
-import com.generic.setup.PagesURLs;
 import com.generic.setup.SelTestCase;
 import com.generic.setup.SheetVariables;
+import com.generic.tests.FG.HomePage.LogoValidation;
 import com.generic.util.ReportUtil;
 import com.generic.util.SASLogger;
 import com.generic.util.dataProviderUtils;
@@ -62,7 +62,7 @@ public class HomePageBase extends SelTestCase {
 		try {
 
 			if (proprties.contains(this.Logo)) {
-				sassert().assertTrue(LogoValidation.validate(), "Logo validation has some problems");
+				LogoValidation.validate();
 			} else {
 				Testlogs.get().debug("please check proprties provided in excel sheet");
 			}

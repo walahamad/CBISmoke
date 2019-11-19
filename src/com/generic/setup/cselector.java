@@ -2,7 +2,7 @@ package com.generic.setup;
 
 public class cselector extends SelTestCase{
 	
-	String browserType = getBrowserName();
+	
 
 	public String DesktopSelector = "";
 	public String TabletSelector = "";
@@ -27,10 +27,11 @@ public class cselector extends SelTestCase{
 	}
 
 	public String get() {
-		if (browserType.contains("mobile") || browserType.contains("iPhone")) {
+		String browserType = getBrowserName();
+		if (browserType.contains("iPhone")) {
 			return MobileSelector;
 		}
-		if (browserType.contains("mobile") || browserType.contains("iPad")) {
+		if (browserType.contains("iPad")) {
 			return TabletSelector;
 		}
 		return DesktopSelector;
