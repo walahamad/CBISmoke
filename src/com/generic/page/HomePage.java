@@ -197,7 +197,7 @@ public class HomePage extends SelTestCase {
 
 		return menuFirstLevelElements;
 	}
-	
+
 	/**
 	* Open the navigation menu.
 	*
@@ -213,46 +213,57 @@ public class HomePage extends SelTestCase {
 		((JavascriptExecutor) SelTestCase.getDriver()).executeScript("arguments[0].click()", menuIcon);
 		getCurrentFunctionName(false);
 	}
-	
-	public static boolean validateModalMenuSecondLevel() throws Exception {
+
+	public static boolean validateModalMenuSecondLevelTablet() throws Exception {
 		getCurrentFunctionName(true);
 
 		logs.debug("Validate second level menu list.");
 		int menuItemIndex;
 		boolean validateSubMenuNavigation = true;
+		// Get the first menu modal list.
 		List<WebElement> menuFirstLevelElements = getFirstLevelMenuItems(HomePageSelectors.menuItemsTablet);
 
 		for (menuItemIndex=0; menuItemIndex < menuFirstLevelElements.size(); menuItemIndex++) {
 			boolean currentPageMatchNavigated = true;
+
+			// Open the menu modal.
 			HomePage.openNavigationMenu();
+
 			// The elements should be selected at each iteration because the page will navigate and lose the reference to the elements dom.
 			List<WebElement> elements = getFirstLevelMenuItems(HomePageSelectors.menuItemsTablet);
 			WebElement element = elements.get(menuItemIndex);
 
-			// Save the text and href for the selected menu item.
+			// Save the parent text.
 			String selectedText = element.getAttribute("innerText");
-			
+
 			// Navigate to second level in the menu.
 			((JavascriptExecutor) SelTestCase.getDriver()).executeScript("arguments[0].click()", element);
 
+			// Get the sub menu header text.
 			WebElement selectedMenuHeader = getElementsList(HomePageSelectors.selectedMenuHeader).get(0);
 			String selectedMenuHeaderText = selectedMenuHeader.getAttribute("innerText");
 			// Get the current page URL.
 			String pageUrl = SelectorUtil.getCurrentPageUrl();
-						
+
+			// Check if the sub menu header titleis the same of the selected item text.
 			if (!selectedMenuHeaderText.equals(selectedText)) {
 				currentPageMatchNavigated = false;
 				validateSubMenuNavigation = false;
 			} else {
+				// Select the list of leaf items in the menu.
 				List<WebElement> leafMenuItems = getElementsList(HomePageSelectors.leafMenuItems);
+
+				// Select a random item from the leaf items list.
 				Random rand = new Random();
 				WebElement randomElement = leafMenuItems.get(rand.nextInt(leafMenuItems.size()));
+
+				// Navigate to the selected random page.
 				((JavascriptExecutor) SelTestCase.getDriver()).executeScript("arguments[0].click()", randomElement);
 				String currentPageUrl = SelectorUtil.getCurrentPageUrl();
 				// Get the current page URL.
-				logs.debug("Current page path: " + currentPageUrl);
+				logs.debug("Navigated random page path: " + currentPageUrl);
 
-				// Check if the current page title is the same as selected navigation title.
+				// Check if the current page URL different than the previous page URL.
 				if (pageUrl.equalsIgnoreCase(currentPageUrl)) {
 					currentPageMatchNavigated = false;
 					validateSubMenuNavigation = false;
