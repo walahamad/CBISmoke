@@ -793,4 +793,9 @@ public class SelectorUtil extends SelTestCase {
 		return webElementsInfo;
 
 	}
+
+	@SuppressWarnings("rawtypes")
+	public static String getCurrentPageUrl() throws Exception {
+		return SelTestCase.getDriver().getCurrentUrl();
+	}
 }

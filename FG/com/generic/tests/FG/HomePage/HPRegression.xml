@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="HomePageRegression" parallel="tests" thread-count="1" data-provider-thread-count="1">
-	<test name="HP_SC Chrome">
-		<parameter name="browserName" value="chrome"></parameter>
+	<test name="HP_SC mobile_iPad">
+		<parameter name="browserName" value="mobile_iPad"></parameter>
 		<classes>
 			<class name="com.generic.tests.FG.HomePage.HomePageBase" />
 		</classes>
