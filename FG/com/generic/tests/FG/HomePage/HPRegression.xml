@@ -2,7 +2,9 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="HomePageRegression" parallel="tests" thread-count="1" data-provider-thread-count="1">
 	<test name="HP_SC Chrome">
-		<parameter name="browserName" value="chrome"></parameter>
+		<parameter name="browserName" value="mobile_iPad"></parameter>
+		<parameter name="Env" value="devwcs"></parameter>
+		<parameter name="Brand" value="FG"></parameter>
 		<classes>
 			<class name="com.generic.tests.FG.HomePage.HomePageBase" />
 		</classes>

@@ -284,6 +284,7 @@ public class SelTestCase {
      */
     @BeforeMethod
     public void setUp(XmlTest test) throws Exception  {
+    	
     	getCurrentFunctionName(true);
     	
     	if (test.getParameter("browserName")==null)
@@ -315,7 +316,7 @@ public class SelTestCase {
         setDriver(Common.initializeBrowser(test.getParameter("browserName")));
         
         try {
-        	Common.launchApplication(test.getParameter("browserName"));
+        	Common.launchApplication(test.getParameter("browserName") , test.getParameter("Env") , test.getParameter("Brand"));
 
         } catch(Throwable t) {
             Error = t;
@@ -356,13 +357,13 @@ public class SelTestCase {
     }
     
     @AfterSuite
-    public static void reportMaker() throws IOException
+    public static void reportMaker(XmlTest test) throws IOException
     {
     	getCurrentFunctionName(true);
     	
     	ArrayList<HashMap<String, String>> casesDetails = null;
     	try {
-			TestUtilities.reportSetup();
+			TestUtilities.reportSetup(test.getParameter("Env"));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
