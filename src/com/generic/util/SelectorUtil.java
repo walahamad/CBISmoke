@@ -622,6 +622,16 @@ public class SelectorUtil extends SelTestCase {
 		}
 		getCurrentFunctionName(false);
 	}
+	
+	@SuppressWarnings("rawtypes")
+	public static boolean isDisplayed(String value) throws Exception {
+		getCurrentFunctionName(true);
+		List<String> subStrArr = new ArrayList<String>();
+		subStrArr.add(value);
+		boolean isDisplayed = isDisplayed(subStrArr) ; 
+		getCurrentFunctionName(false);
+		return isDisplayed;
+	}
 
 	@SuppressWarnings("rawtypes")
 	public static boolean isDisplayed(List<String> subStrArr) throws Exception {
@@ -744,6 +754,26 @@ public class SelectorUtil extends SelTestCase {
 			throws Exception {
 		List<String> valuesArr = new ArrayList<String>();
 		valuesArr.add("");
+		return initializeSelectorsAndDoActions(subStrArr, valuesArr, true);
+	}
+	
+	@SuppressWarnings("rawtypes")
+	public static LinkedHashMap<String, LinkedHashMap> initializeSelectorsAndDoActions(String selector)
+			throws Exception {
+		List<String> subStrArr = new ArrayList<String>();
+		subStrArr.add(selector);
+		List<String> valuesArr = new ArrayList<String>();
+		valuesArr.add("");
+		return initializeSelectorsAndDoActions(subStrArr, valuesArr, true);
+	}
+	
+	@SuppressWarnings("rawtypes")
+	public static LinkedHashMap<String, LinkedHashMap> initializeSelectorsAndDoActions(String selector, String value)
+			throws Exception {
+		List<String> subStrArr = new ArrayList<String>();
+		subStrArr.add(selector);
+		List<String> valuesArr = new ArrayList<String>();
+		valuesArr.add(value);
 		return initializeSelectorsAndDoActions(subStrArr, valuesArr, true);
 	}
 
