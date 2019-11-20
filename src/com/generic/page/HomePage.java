@@ -24,7 +24,7 @@ public class HomePage extends SelTestCase {
 	public static void NavigateAwayFromHomePage() throws Exception {
 		getCurrentFunctionName(true);
 		//TODO: we need to make this dynamic  
-		getDriver().get("https://www.frontgate.com/ProductSearch2?searchTerm=test");
+		getDriver().get(getURL() + "/ProductSearch2?searchTerm=test");
 		getCurrentFunctionName(false);
 	}
 
@@ -39,9 +39,10 @@ public class HomePage extends SelTestCase {
 
 	public static boolean validateHomePageLink() throws Exception {
 		getCurrentFunctionName(true);
-		//TODO: we need to make this dynamic 
-		String CurrentURL = getDriver().getCurrentUrl();
-		boolean results  =CurrentURL.equals("https://www.frontgate.com/");
+		String CurrentURL = getDriver().getCurrentUrl().replace("www.", "");
+		logs.debug("Current URL is: " + CurrentURL);
+		logs.debug("Current URL should match: " + getURL().replace("www.", "") +"/" );
+		boolean results  =CurrentURL.equals(getURL().replace("www.", "")  +"/");
 		getCurrentFunctionName(false);
 		return results;
 	}

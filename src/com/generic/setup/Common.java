@@ -202,9 +202,9 @@ public class Common extends SelTestCase {
 		getCurrentFunctionName(true);
 
 		logs.debug(MessageFormat.format(LoggingMsg.TEST_ENVIRONMENT_NAME,
-				SelTestCase.getCONFIG().getProperty("testEnvironment")));
+				Env));
 		
-		logs.debug("brand: "+SelTestCase.getCONFIG().getProperty("brand"));
+		logs.debug("brand: "+brand);
 
 		if (getCONFIG().getProperty("chached_chrome").equalsIgnoreCase("yes")) {
 			// TODO: please enable it later with correct url in case Chrome Cached
@@ -216,6 +216,7 @@ public class Common extends SelTestCase {
 
 		String url = brands.get(Env, brand);
 		logs.debug("Navigating to the following brand/ env :" + url);
+		SelTestCase.setURL(url);
 		getDriver().get(url);
 		if (!Browser.contains(browsers.iOS))
 			getDriver().manage().window().maximize();
