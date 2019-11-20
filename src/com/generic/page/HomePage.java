@@ -3,7 +3,6 @@ package com.generic.page;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Random;
 
 import org.openqa.selenium.JavascriptExecutor;
@@ -11,10 +10,8 @@ import org.openqa.selenium.WebElement;
 
 import com.generic.selector.HomePageSelectors;
 import com.generic.selector.MyAccount_EmailAddressSelectors;
-import com.generic.setup.ActionDriver;
 import com.generic.setup.LoggingMsg;
 import com.generic.setup.SelTestCase;
-import com.generic.tests.FG.HomePage.MenuValidation;
 import com.generic.util.SelectorUtil;
 /**
  * The Class HomePage.
@@ -203,31 +200,37 @@ public class HomePage extends SelTestCase {
 	*
 	* @throws Exception
 	*/
-	public static void openNavigationMenu() throws Exception {
+	public static void openNavigationMenu(String selector) throws Exception {
 		getCurrentFunctionName(true);
 
 		logs.debug("Open navigation menu");
 		// Click on navigation menu icon.
 		// Navigate to an item in the menu.
-		WebElement menuIcon = getElementsList(HomePageSelectors.navigationIcon).get(0);
+		WebElement menuIcon = getElementsList(selector).get(0);
 		((JavascriptExecutor) SelTestCase.getDriver()).executeScript("arguments[0].click()", menuIcon);
 		getCurrentFunctionName(false);
 	}
 
+	/**
+	* Validate the navigation first and second level with navigation menu at tablet.
+	*
+	* @return boolean
+	* @throws Exception
+	*/
 	public static boolean validateModalMenuSecondLevelTablet() throws Exception {
 		getCurrentFunctionName(true);
 
 		logs.debug("Validate second level menu list.");
 		int menuItemIndex;
 		boolean validateSubMenuNavigation = true;
+
+		// Open the menu modal.
+		HomePage.openNavigationMenu(HomePageSelectors.navigationIcon);
 		// Get the first menu modal list.
 		List<WebElement> menuFirstLevelElements = getFirstLevelMenuItems(HomePageSelectors.menuItemsTablet);
 
 		for (menuItemIndex=0; menuItemIndex < menuFirstLevelElements.size(); menuItemIndex++) {
 			boolean currentPageMatchNavigated = true;
-
-			// Open the menu modal.
-			HomePage.openNavigationMenu();
 
 			// The elements should be selected at each iteration because the page will navigate and lose the reference to the elements dom.
 			List<WebElement> elements = getFirstLevelMenuItems(HomePageSelectors.menuItemsTablet);
@@ -245,7 +248,7 @@ public class HomePage extends SelTestCase {
 			// Get the current page URL.
 			String pageUrl = SelectorUtil.getCurrentPageUrl();
 
-			// Check if the sub menu header titleis the same of the selected item text.
+			// Check if the sub menu header title is the same of the selected item text.
 			if (!selectedMenuHeaderText.equals(selectedText)) {
 				currentPageMatchNavigated = false;
 				validateSubMenuNavigation = false;
@@ -268,6 +271,81 @@ public class HomePage extends SelTestCase {
 					currentPageMatchNavigated = false;
 					validateSubMenuNavigation = false;
 				}
+				// Open the menu modal.
+				HomePage.openNavigationMenu(HomePageSelectors.navigationIcon);
+			}
+			sassert().assertTrue(currentPageMatchNavigated, "Menu validation items navigation has some problems");
+		}
+		getCurrentFunctionName(false);
+		return validateSubMenuNavigation;
+	}
+
+	/**
+	* Validate the navigation first and second level with navigation menu at mobile PWA.
+	*
+	* @return boolean
+	* @throws Exception
+	*/
+	public static boolean validateModalMenuSecondLevelMobile() throws Exception {
+		getCurrentFunctionName(true);
+
+		logs.debug("Validate second level menu list.");
+		int menuItemIndex;
+		boolean validateSubMenuNavigation = true;
+
+		// Open the menu modal.
+		HomePage.openNavigationMenu(HomePageSelectors.navigationIconMobile);
+
+		// Get the first menu modal list.
+		List<WebElement> menuFirstLevelElements = getFirstLevelMenuItems(HomePageSelectors.menuItemsTabletMobile);
+
+		for (menuItemIndex=0; menuItemIndex < menuFirstLevelElements.size(); menuItemIndex++) {
+			boolean currentPageMatchNavigated = true;
+
+			// The elements should be selected at each iteration because the page will navigate and lose the reference to the elements dom.
+			List<WebElement> elements = getFirstLevelMenuItems(HomePageSelectors.menuItemsTabletMobile);
+			WebElement element = elements.get(menuItemIndex);
+
+			// Save the parent text.
+			String selectedText = element.getAttribute("innerText").trim();
+
+			// Navigate to second level in the menu.
+			((JavascriptExecutor) SelTestCase.getDriver()).executeScript("arguments[0].click()", element);
+
+			// Get the sub menu header text.
+			WebElement selectedMenuHeader = getElementsList(HomePageSelectors.selectedMenuHeaderMobile).get(0);
+			String selectedMenuHeaderText = selectedMenuHeader.getAttribute("innerText").trim();
+
+			// Check if the sub menu header title is the same of the selected item text.
+			if (!selectedMenuHeaderText.equals(selectedText)) {
+				currentPageMatchNavigated = false;
+				validateSubMenuNavigation = false;
+			} else {
+				// Select the list of leaf items in the menu.
+				List<WebElement> leafMenuItems = getElementsList(HomePageSelectors.leafMenuItemsMobile);
+
+				// Select a random item from the leaf items list.
+				Random rand = new Random();
+				WebElement randomElement = leafMenuItems.get(rand.nextInt(leafMenuItems.size()));
+
+				// Get the current page URL.
+				String href = randomElement.getAttribute("href");
+
+				// Navigate to the selected random page.
+				((JavascriptExecutor) SelTestCase.getDriver()).executeScript("arguments[0].click()", randomElement);
+
+				Thread.sleep(1000);
+				String currentPageUrl = SelectorUtil.getCurrentPageUrl();
+				// Get the current page URL.
+				logs.debug("Navigated random page path: " + currentPageUrl + "    " + href);
+
+				// Check if the current page URL different than the previous page URL.
+				if (!href.equalsIgnoreCase(currentPageUrl)) {
+					currentPageMatchNavigated = false;
+					validateSubMenuNavigation = false;
+				}
+				// Open the menu modal.
+				HomePage.openNavigationMenu(HomePageSelectors.navigationIconMobile);
 			}
 			sassert().assertTrue(currentPageMatchNavigated, "Menu validation items navigation has some problems");
 		}

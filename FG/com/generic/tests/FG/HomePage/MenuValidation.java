@@ -18,9 +18,12 @@ public class MenuValidation extends SelTestCase {
 		if (!getBrowserName().toLowerCase().contains("mobile")) {
 			// Validate the desktop menu.
 			validation = validateDesktop();
-		} else {
+		} else if (getBrowserName().toLowerCase().contains("ipad")) {
 			// Validate the tablet menu.
 			validation = validateTablet();
+		} else {
+			// Validate the mobile menu.
+			validation = validateMobile();
 		}
 		getCurrentFunctionName(false);
 		return validation;
@@ -52,6 +55,15 @@ public class MenuValidation extends SelTestCase {
 		boolean validateNavigateMenu = false;
 		// Validate the tablet modal menu.
 		validateNavigateMenu = HomePage.validateModalMenuSecondLevelTablet();
+		getCurrentFunctionName(false);
+		return validateNavigateMenu;
+	}
+
+	public static boolean validateMobile() throws Exception {
+		getCurrentFunctionName(true);
+		boolean validateNavigateMenu = false;
+		// Validate the mobile modal menu.
+		validateNavigateMenu = HomePage.validateModalMenuSecondLevelMobile();
 		getCurrentFunctionName(false);
 		return validateNavigateMenu;
 	}
