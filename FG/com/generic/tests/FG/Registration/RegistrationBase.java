@@ -95,19 +95,24 @@ public class RegistrationBase extends SelTestCase {
 		//Prepare registration data 
 		String firstName = RandomUtilities.getRandomName();
 		String lastName = RandomUtilities.getRandomName();
+		String companyName = RandomUtilities.getRandomName();
 		//String password = "P11p"+RandomUtilities.getRandomPassword(8);
 		String email = RandomUtilities.getRandomEmail();
 		
 		try {
 			if (proprties.contains(freshUser)) {
 				//register new user and validate the results
-				Registration.fillAndClickRegister(firstName, lastName, email, "Elmira College", password, password,
-						type, addressDetails);
 				
+				Registration.fillRegistrationFirstStep(email,email,password,password);
+				Thread.sleep(1500);
+				Registration.fillRegistrationSecondStep(firstName,lastName,companyName,addressDetails);
+						
+				//Sucess message needs to be updated on excel to (Welcome to your account at )
 				String registrationSuccessMsg = Registration.getRegistrationSuccessMessage();
 				sassert().assertTrue(registrationSuccessMsg.toLowerCase().contains(thankUMsg), 
 						"Regestration Success, validation failed Expected to have in message: " + thankUMsg +" but Actual message is: " + registrationSuccessMsg);
 			}
+			/*
 			if (proprties.contains(existingUser)) {
 				// take any user as template
 				LinkedHashMap<String, String> userdetails = (LinkedHashMap<String, String>) users.entrySet().iterator()
@@ -168,6 +173,7 @@ public class RegistrationBase extends SelTestCase {
 			}
 			
 			Thread.sleep(2000);
+			*/
 			
 			sassert().assertAll();
 			Common.testPass();
