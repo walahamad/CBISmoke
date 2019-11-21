@@ -111,7 +111,7 @@ public class PDP extends SelTestCase {
 			selectSize();
 			Thread.sleep(1000);
 			if (!SelTestCase.getBrowserName().contains(GlobalVariables.browsers.iPhoneX)) {
-				Thread.sleep(2000);
+				Thread.sleep(1000);
 			}
 			clickAddToCartBtn();
 			Thread.sleep(1000);
