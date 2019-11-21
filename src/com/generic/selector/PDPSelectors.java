@@ -1,10 +1,23 @@
 package com.generic.selector;
 
+import com.generic.setup.cselector;
+
 public class PDPSelectors {
+	
+	//CBI SMK
+	public static final cselector allColors = new cselector("css,.gwt-image-picker-option >img");
+	public static final cselector allSizes = new cselector("css,.gwt-product-option-panel-listbox-container>div> .gwt-ListBox");
+	public static final cselector allFabrics = new cselector("css,.gwt-image-picker-option-holder>.gwt-selection-chip-picker-option");
+	public static final cselector allShipLeadTime = new cselector("css,.gwt-image-picker-option-holder>.gwt-selection-chip-picker-option");
+	public static final cselector addToCartBtn = new cselector("gwt-add-to-cart-btn");
+	public static final cselector addToCartCloseBtn = new cselector("gwt-Button ok-cancel-close-btn");
+	
+	
+	
+	
 	// done-OCM
 	public static String price = "price-and-special-messaging";
 	public static String title = "product-name";
-	public static String addToCartBtn = "css,form.add_to_cart_form>button";
 	public static String id = "code";
 	public static String desc = "description";
 	public static String socialMediaButtons = "css,div.st-btns";
@@ -15,7 +28,7 @@ public class PDPSelectors {
 	public static String reviewCountPerEachRate = "bv-inline-histogram-ratings-score";
 	public static String starsRating = "bv-rating-stars-on bv-rating-stars";
 	public static String secondaryRating = "bv-rating-ratio bv-td";
-	public static String allColors = "css,div.each-option-holder.bundle_colors.visible>div";
+
 	public static String closSocialShareBtn = "st-close";
 	public static String PDPnavs = "css,div.nav-tabs-container>ul>li";
 	public static String PDPnavs_mobile = "css,div.tab-content>div>div>button";

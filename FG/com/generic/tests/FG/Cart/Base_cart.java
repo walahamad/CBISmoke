@@ -14,7 +14,7 @@ import org.testng.annotations.Test;
 import org.testng.xml.XmlTest;
 
 import com.generic.page.Cart;
-import com.generic.page.PDP;
+import com.generic.page.PDP_old;
 import com.generic.page.Registration;
 import com.generic.page.SignIn;
 import com.generic.setup.Common;
@@ -111,16 +111,16 @@ public class Base_cart extends SelTestCase {
 
 			if (proprties.contains("Verify unit Price")) {
 				String ProductUnitPrice = Cart.getProductUnitPrice();
-				String ErrorMsg = "<font color=#f442cb>expected unit price is: " + productDetails.get(PDP.keys.price)
+				String ErrorMsg = "<font color=#f442cb>expected unit price is: " + productDetails.get(PDP_old.keys.price)
 						+ "<br>actual unit price: " + ProductUnitPrice + " </font>";
-				sassert().assertTrue(ProductUnitPrice.trim().contains((productDetails.get(PDP.keys.price)).trim()), ErrorMsg);
+				sassert().assertTrue(ProductUnitPrice.trim().contains((productDetails.get(PDP_old.keys.price)).trim()), ErrorMsg);
 			}//verify unit price 
 			
 			if (proprties.contains("Verify items subtotal")) {
 				//the case that to get unit price and multiply it by the qty from product details and,
 				//then compare it with product subtotal and with order subtotal since we have just one product
 				
-				double calculatedProductSubtotal = Double.parseDouble( productDetails.get(PDP.keys.qty))
+				double calculatedProductSubtotal = Double.parseDouble( productDetails.get(PDP_old.keys.qty))
 						* Double.parseDouble(Cart.getProductUnitPrice().replace("$", "").trim());
 				
 				double siteProductSubtotal = Double.parseDouble(Cart.getProductItemSubtotal().replace("$", "").trim());
@@ -221,9 +221,9 @@ public class Base_cart extends SelTestCase {
 		logs.debug(MessageFormat.format(LoggingMsg.ADDING_PRODUCT, product));
 		productDetails = (LinkedHashMap<String, String>) invintory.get(product);
 		if (product.contains("auto") || product.equals(""))
-			PDP.addRandomProductsToCart();
+			PDP_old.addRandomProductsToCart();
 		else 
-			PDP.addProductsToCart(productDetails);
+			PDP_old.addProductsToCart(productDetails);
 		
 	}
 

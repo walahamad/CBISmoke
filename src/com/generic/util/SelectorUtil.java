@@ -376,7 +376,8 @@ public class SelectorUtil extends SelTestCase {
 						});
 
 						Actions HoverAction = new Actions(getDriver());
-						HoverAction.moveToElement(field2).click().build().perform();
+						HoverAction.moveToElement(field2).build().perform();
+						logs.debug("hover_hover_hover");
 					}
 
 					if (action.equals("type")) {

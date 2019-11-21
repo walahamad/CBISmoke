@@ -67,7 +67,7 @@ public class PLP_QuickView extends SelTestCase {
 		getCurrentFunctionName(true);
 		List<String> subStrArr = new ArrayList<String>();
 		List<String> valuesArr = new ArrayList<String>();
-		subStrArr.add(PDPSelectors.addToCartBtn);
+		subStrArr.add(PDPSelectors.addToCartBtn.get());
 		valuesArr.add("");
 		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
 		getCurrentFunctionName(false);
@@ -161,7 +161,7 @@ public class PLP_QuickView extends SelTestCase {
 	public static boolean checkAddToCartButton() throws Exception {
 		getCurrentFunctionName(true);
 		List<String> subStrArr = new ArrayList<String>();
-		subStrArr.add(PDPSelectors.addToCartBtn);
+		subStrArr.add(PDPSelectors.addToCartBtn.get());
 		boolean isDisplayed = SelectorUtil.isDisplayed(subStrArr);
 		logs.debug("existence check result is " + isDisplayed);
 		getCurrentFunctionName(false);
