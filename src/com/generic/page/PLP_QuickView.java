@@ -114,16 +114,16 @@ public class PLP_QuickView extends SelTestCase {
 		return SelectorUtil.textValue.get();
 	}
 
-	public static String getTitle() throws Exception {
-		getCurrentFunctionName(true);
-		List<String> subStrArr = new ArrayList<String>();
-		List<String> valuesArr = new ArrayList<String>();
-		subStrArr.add(PDPSelectors.title);
-		valuesArr.add("");
-		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
-		getCurrentFunctionName(false);
-		return SelectorUtil.textValue.get();
-	}
+//	public static String getTitle() throws Exception {
+//		getCurrentFunctionName(true);
+//		List<String> subStrArr = new ArrayList<String>();
+//		List<String> valuesArr = new ArrayList<String>();
+//		subStrArr.add(PDPSelectors.title);
+//		valuesArr.add("");
+//		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
+//		getCurrentFunctionName(false);
+//		return SelectorUtil.textValue.get();
+//	}
 
 	public static String getSummary() throws Exception {
 		getCurrentFunctionName(true);

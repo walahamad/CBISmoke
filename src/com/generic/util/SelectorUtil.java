@@ -213,11 +213,11 @@ public class SelectorUtil extends SelTestCase {
 		String ActionType = "";
 		// TODO fix multiple elements
 		for (org.jsoup.nodes.Element e : foundElements) {
-			// logs.debug(e.toString());//Debugging purposes
-			// logs.debug("DEBUG POINT ------------->" + e.attr("type") );
+			 //logs.debug(e.toString());//Debugging purposes
+			 //logs.debug("DEBUG POINT ------------->" + e.attr("type") );
 			if (e.tagName().equals("input") && (e.attr("type").equals("number") || e.attr("type").equals("text")
 					|| e.attr("type").equals("password") || e.attr("type").equals("") || e.attr("type").equals("tel")
-					|| e.attr("type").equals("email"))) {
+					|| e.attr("type").equals("email")|| e.attr("type").equals("search"))) {
 				return "type";
 			} else if (e.tagName().equals("select")) {
 				return "selectByText";
@@ -614,6 +614,7 @@ public class SelectorUtil extends SelTestCase {
 						logs.debug(MessageFormat.format(LoggingMsg.ERROR_VERIFICATION_SEL_MSG, selector));
 					}
 				}
+				webElementInfo.put("elemnt" , field);
 			} else {
 				throw new Exception(ExceptionMsg.noValidSelector);
 			}
@@ -776,6 +777,16 @@ public class SelectorUtil extends SelTestCase {
 		valuesArr.add(value);
 		return initializeSelectorsAndDoActions(subStrArr, valuesArr, true);
 	}
+	
+	@SuppressWarnings("rawtypes")
+	public static LinkedHashMap<String, LinkedHashMap> initializeSelectorsAndDoActions(String selector, String value,boolean doAction)
+			throws Exception {
+		List<String> subStrArr = new ArrayList<String>();
+		subStrArr.add(selector);
+		List<String> valuesArr = new ArrayList<String>();
+		valuesArr.add(value);
+		return initializeSelectorsAndDoActions(subStrArr, valuesArr, doAction);
+	}
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public static LinkedHashMap<String, LinkedHashMap> initializeSelectorsAndDoActions(List<String> subStrArr,
@@ -791,6 +802,7 @@ public class SelectorUtil extends SelTestCase {
 			webElementInfo.put("selector", "");
 			webElementInfo.put("action", "");
 			webElementInfo.put("SelType", "");
+			
 			index++;
 
 			webElementsInfo.remove(key);

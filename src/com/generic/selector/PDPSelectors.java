@@ -1,9 +1,16 @@
 package com.generic.selector;
 
+import com.generic.setup.cselector;
+
 public class PDPSelectors {
+	
+	public static final cselector title = new cselector("css,.gwt-product-detail-product-name-label","css,.t-product-details-heading__title.u-margin-bottom");
+	
+	
+	
 	// done-OCM
 	public static String price = "price-and-special-messaging";
-	public static String title = "product-name";
+	//public static String title = "product-name";
 	public static String addToCartBtn = "css,form.add_to_cart_form>button";
 	public static String id = "code";
 	public static String desc = "description";
