@@ -622,6 +622,16 @@ public class SelectorUtil extends SelTestCase {
 		}
 		getCurrentFunctionName(false);
 	}
+	
+	@SuppressWarnings("rawtypes")
+	public static boolean isDisplayed(String value) throws Exception {
+		getCurrentFunctionName(true);
+		List<String> subStrArr = new ArrayList<String>();
+		subStrArr.add(value);
+		boolean isDisplayed = isDisplayed(subStrArr) ; 
+		getCurrentFunctionName(false);
+		return isDisplayed;
+	}
 
 	@SuppressWarnings("rawtypes")
 	public static boolean isDisplayed(List<String> subStrArr) throws Exception {
@@ -746,6 +756,26 @@ public class SelectorUtil extends SelTestCase {
 		valuesArr.add("");
 		return initializeSelectorsAndDoActions(subStrArr, valuesArr, true);
 	}
+	
+	@SuppressWarnings("rawtypes")
+	public static LinkedHashMap<String, LinkedHashMap> initializeSelectorsAndDoActions(String selector)
+			throws Exception {
+		List<String> subStrArr = new ArrayList<String>();
+		subStrArr.add(selector);
+		List<String> valuesArr = new ArrayList<String>();
+		valuesArr.add("");
+		return initializeSelectorsAndDoActions(subStrArr, valuesArr, true);
+	}
+	
+	@SuppressWarnings("rawtypes")
+	public static LinkedHashMap<String, LinkedHashMap> initializeSelectorsAndDoActions(String selector, String value)
+			throws Exception {
+		List<String> subStrArr = new ArrayList<String>();
+		subStrArr.add(selector);
+		List<String> valuesArr = new ArrayList<String>();
+		valuesArr.add(value);
+		return initializeSelectorsAndDoActions(subStrArr, valuesArr, true);
+	}
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public static LinkedHashMap<String, LinkedHashMap> initializeSelectorsAndDoActions(List<String> subStrArr,
@@ -793,4 +823,19 @@ public class SelectorUtil extends SelTestCase {
 		return webElementsInfo;
 
 	}
+
+	@SuppressWarnings("rawtypes")
+	public static String getCurrentPageUrl() throws Exception {
+		return SelTestCase.getDriver().getCurrentUrl();
+	}
+
+    public static void sendKeysByCharacters(WebElement element, String inputString) throws Exception {
+    	logs.debug("Fill a string (" + inputString + ") into an input (" + element + ") each character separately.");
+    	// The string fill into input each character separately to avoid the filling issue at PWA mobile because of gwt form.
+		int index = 0;
+		for (index=0; index < inputString.length(); index++) {
+			String character = String.valueOf(inputString.charAt(index));
+			element.sendKeys(character);
+		}
+    }
 }
