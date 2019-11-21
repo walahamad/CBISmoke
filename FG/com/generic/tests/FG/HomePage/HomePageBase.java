@@ -8,6 +8,7 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.xml.XmlTest;
 
+import com.generic.page.HomePage;
 import com.generic.setup.Common;
 import com.generic.setup.LoggingMsg;
 import com.generic.setup.SelTestCase;
@@ -25,6 +26,8 @@ public class HomePageBase extends SelTestCase {
 	public static final String header = "header";
 	public static final String footer = "footer";
 	public static final String body = "body";
+	public static final String menu = "menu";
+	public static final String signIn = "SignIn validation";
 
 	// used sheet in test
 	public static final String testDataSheet = SheetVariables.VisualTestingHPRegressionsheet;
@@ -63,6 +66,22 @@ public class HomePageBase extends SelTestCase {
 
 			if (proprties.contains(this.Logo)) {
 				LogoValidation.validate();
+			} else {
+				Testlogs.get().debug("please check proprties provided in excel sheet");
+			}
+
+			// Check the Navigation menu.
+			if (proprties.contains(this.menu)) {
+				MenuValidation.setBrowserName(testObject.getParameter("browserName"));
+				sassert().assertTrue(MenuValidation.validate(), "Menu validation has some problems");
+			} else {
+				Testlogs.get().debug("please check proprties provided in excel sheet");
+			}
+
+			// Check the Sign in form functionality.
+			if (proprties.contains(this.signIn)) {
+				MenuValidation.setBrowserName(testObject.getParameter("browserName"));
+				sassert().assertTrue(SignInValidation.validate(), "Sign in functionality validation has some problems");
 			} else {
 				Testlogs.get().debug("please check proprties provided in excel sheet");
 			}
