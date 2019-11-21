@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import com.generic.selector.PDPSelectors;
 import com.generic.setup.ExceptionMsg;
+import com.generic.setup.GlobalVariables;
 import com.generic.setup.SelTestCase;
 import com.generic.util.SelectorUtil;
 
@@ -21,7 +22,7 @@ public class PDP extends SelTestCase {
 			Thread.sleep(1000);
 			List<String> subStrArr = new ArrayList<String>();
 			subStrArr.add(PDPSelectors.allColors.get());
-			if(SelectorUtil.isDisplayed(subStrArr))
+			if(!SelectorUtil.isNotDisplayed(subStrArr))
 			{
 				SelectorUtil.initializeSelectorsAndDoActions(subStrArr);	
 			}
@@ -42,7 +43,7 @@ public class PDP extends SelTestCase {
 			List<String> valuesArr = new ArrayList<String>();
 			subStrArr.add(PDPSelectors.allSizes.get());
 			valuesArr.add("FFF1");
-			if(SelectorUtil.isDisplayed(subStrArr))
+			if(!SelectorUtil.isNotDisplayed(subStrArr))
 			{
 				SelectorUtil.initializeSelectorsAndDoActions(subStrArr,valuesArr);	
 			}
@@ -61,7 +62,7 @@ public class PDP extends SelTestCase {
 			Thread.sleep(1000);
 			List<String> subStrArr = new ArrayList<String>();
 			subStrArr.add(PDPSelectors.allFabrics.get());
-			if(SelectorUtil.isDisplayed(subStrArr))
+			if(!SelectorUtil.isNotDisplayed(subStrArr))
 			{
 				SelectorUtil.initializeSelectorsAndDoActions(subStrArr);	
 			}
@@ -82,11 +83,11 @@ public class PDP extends SelTestCase {
 			subStrArr.add(PDPSelectors.allShipLeadTime.get());
 			List<String> valuesArr = new ArrayList<String>();
 
-			if(SelectorUtil.isDisplayed(subStrArr))
+			if(!SelectorUtil.isNotDisplayed(subStrArr))
 			{
 				int index = SelectorUtil.getAllElements(subStrArr).size() - 1;
 				logs.debug("Selected Index for option is: " + index);
-				valuesArr.add("index,"+index);
+				valuesArr.add("index,"+index + ",ForceAction,click");
 				SelectorUtil.initializeSelectorsAndDoActions(subStrArr,valuesArr);	
 			}
 			getCurrentFunctionName(false);
@@ -102,13 +103,16 @@ public class PDP extends SelTestCase {
 		try {
 			getCurrentFunctionName(true);
 			selectFabric();
-			Thread.sleep(3000);
+			Thread.sleep(1000);
 			selectShipLeadTime();
-			Thread.sleep(2000);
+			Thread.sleep(1000);
 			selectColor();
 			Thread.sleep(1000);
 			selectSize();
 			Thread.sleep(1000);
+			if (!SelTestCase.getBrowserName().contains(GlobalVariables.browsers.iPhoneX)) {
+				Thread.sleep(2000);
+			}
 			clickAddToCartBtn();
 			Thread.sleep(1000);
 			getCurrentFunctionName(false);

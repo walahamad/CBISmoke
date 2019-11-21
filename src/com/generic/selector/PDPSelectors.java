@@ -5,10 +5,12 @@ import com.generic.setup.cselector;
 public class PDPSelectors {
 	
 	//CBI SMK
-	public static final cselector allColors = new cselector("css,.gwt-image-picker-option >img");
-	public static final cselector allSizes = new cselector("css,.gwt-product-option-panel-listbox-container>div> .gwt-ListBox");
-	public static final cselector allFabrics = new cselector("css,.gwt-image-picker-option-holder>.gwt-selection-chip-picker-option");
-	public static final cselector allShipLeadTime = new cselector("css,.gwt-image-picker-option-holder>.gwt-selection-chip-picker-option");
+	
+	public static final cselector avaibleOptions = new cselector("css,.c-product-options>div");
+	public static final cselector allColors = new cselector("css,.gwt-image-picker-option >img","css,.pw-swatch__chip>.pw-swatch__chip-inner>.c-product-option-items__item-content.gwt-image-picker-option");
+	public static final cselector allSizes = new cselector("css,.gwt-product-option-panel-listbox-container>div> .gwt-ListBox","css,c-product-options__content u-border-brand-color u-border-radius");
+	public static final cselector allFabrics = new cselector("css,.gwt-image-picker-option-holder>.gwt-selection-chip-picker-option", "css,.pw-swatch__chip>.pw-swatch__chip-inner");
+	public static final cselector allShipLeadTime = new cselector("css,.gwt-image-picker-option-holder>.gwt-selection-chip-picker-option","css,.pw-swatch__chip>.pw-swatch__chip-inner");
 	public static final cselector addToCartBtn = new cselector("gwt-add-to-cart-btn");
 	public static final cselector addToCartCloseBtn = new cselector("gwt-Button ok-cancel-close-btn");
 	

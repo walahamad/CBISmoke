@@ -344,7 +344,7 @@ public class SelectorUtil extends SelTestCase {
 					// used to get the element at specific index when there are multiple elements of
 					// the same selector
 					if (value.contains("index")) {
-						int elementIndex = Integer.parseInt(value.split(",")[1]);
+						int elementIndex = Integer.parseInt(value.split("index,")[1].split(",")[0]);
 						field = getDriver().findElements(byAction).get(elementIndex);
 					} else {
 						field = getDriver().findElement(byAction);
@@ -354,7 +354,7 @@ public class SelectorUtil extends SelTestCase {
 			if (!selector.equals("")) {
 				if (!SelectorUtil.isAnErrorSelector) {
 					if (value.contains("ForceAction")) {
-						action = value.split(",")[1];
+						action = value.split("ForceAction,")[1].split(",")[0];
 					}
 
 					if (action.equals("hover")) {
@@ -559,7 +559,7 @@ public class SelectorUtil extends SelTestCase {
 								} else
 									((JavascriptExecutor) SelTestCase.getDriver()).executeScript("arguments[0].click()",
 											field2);
-								// field.click();
+							//	 field.click();
 							}
 						} catch (Exception e) {
 							logs.debug(MessageFormat.format(LoggingMsg.FAILED_ACTION_MSG, "click"));
