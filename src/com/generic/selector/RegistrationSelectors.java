@@ -30,6 +30,15 @@ public class RegistrationSelectors {
 	//Registration sucess verfication
 	public static final String welcomeMessage = "css,div.data:nth-child(3)";
 	
+	//Error messages  
+	public static final String emailAddressErrorMobile ="css,.c-custom-input-error";
+	public static final String emailAddressError =  "css,#error-div-logonId";
+	public static final String confEmailAddressErrorMobile = "css,.c-custom-input-error";
+	public static final String confEmailAddressError = "css,#error-div-verifyLogonId";
+	public static final String passwordRulesErrorMobile = "css,.c-custom-input-error";
+	public static final String passwordRulesError = "css,#error-div-logonPassword";
+	public static final String confirmPasswordErrorMobile = "css,.c-custom-input-error"; 
+	public static final String confirmPasswordError = "css,#error-div-logonPasswordVerify"; 
 	
 	//done OCM
 	public static final String school  = "school-search-input";
@@ -43,10 +52,10 @@ public class RegistrationSelectors {
 	public static final String emailError = "email.errors";
 	public static final String firstNameError = "register.firstName-error";
 	public static final String lastNameError = "register.lastName-error";
-	public static final String emailAddressError = "register.email-error";
+
 	public static final String schoolError = "school-search-input-error"; 
-	public static final String passwordRulesError = "password-error";
-	public static final String confirmPasswordError = "register.checkPwd-error"; 
+
+
 	public static final String temsError = "termsAndCondition-error";
 	
 	
