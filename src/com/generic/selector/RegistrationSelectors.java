@@ -8,6 +8,8 @@ public class RegistrationSelectors {
 	public static final String registrationButton = "css, div.spot:nth-child(3) > button:nth-child(1)";
 	public static final String mobileRegistrationButton= "css,button.pw-button:nth-child(2)";
 	public static final String mobileRegistrationTab ="css,#app-main > div > div > div > div.pw-tabs__strip-container > ol > li.pw-tabs__tab.pw--is-active > a";
+	public static final String registerBtn = "css,#continue";
+	public static final String saveButton ="css,#gwt_billshipaddr_btn > button";
 	
 	//Fields of 1st step
 	public static final cselector emailAddress = new cselector("css, #logonId","css,#field-5");
@@ -34,9 +36,7 @@ public class RegistrationSelectors {
 	public static final String terms = "termsAndCondition";
 	public static final String addressSection = "css,h3>button.btn-show-hide";
 	public static String userType = "userType";
-	public static final String phoneType = "cellPhone";
-	public static final String registerBtn = "css,#continue";
-	public static final String saveButton ="css,#gwt_billshipaddr_btn > button";		
+	public static final String phoneType = "cellPhone";		
 	public static final String alerts = "global-alerts";
 	
 	//ErrorMessages Selectors
@@ -53,7 +53,6 @@ public class RegistrationSelectors {
 	//pending OCM
 	public static final String passwordError = "password_minchar";
 	public static final String passwordMatchError = "checkPwd.errors";
-	
 	public static final String title = "register.title";
 	public static final String consentGiven = "consentForm.consentGiven1";
 	public static final String register = "btn btn-default btn-block";
