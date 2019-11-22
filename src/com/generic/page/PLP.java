@@ -218,6 +218,8 @@ public class PLP extends SelTestCase {
 		}
 		
 	}
+	
+	//TODO: clean any function not CBI related after PLP done 
 
 	// CBI
 	public static boolean searchAndVerifyResults(String SearchTerm, boolean recommendedOption) throws Exception {
@@ -290,12 +292,11 @@ public class PLP extends SelTestCase {
 			getCurrentFunctionName(true);
 			
 			String SelectorSS = PLPSelectors.recommendedOption.get();
-			LinkedHashMap<String, LinkedHashMap> webelementsInfo = SelectorUtil.initializeSelectorsAndDoActions(SelectorSS, "", false);
+			WebElement recommendedProduct = SelectorUtil.getelement(SelectorSS);
 			
-			WebElement item = getDriver().findElement((By) webelementsInfo.get(SelectorSS).get("by"));
-			String itemTitle = item.getText();
+			String itemTitle = recommendedProduct.getText();
 			logs.debug("Picked item: "+ itemTitle); 
-			item.click();
+			recommendedProduct.click();
 			
 			getCurrentFunctionName(false);
 			return itemTitle;
