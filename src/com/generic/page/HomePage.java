@@ -13,10 +13,8 @@ public class HomePage extends SelTestCase {
 	public static boolean validateLogodisplayed() throws Exception {
 		getCurrentFunctionName(true);
 		boolean isDisplayed; 
-		List<String> subStrArr = new ArrayList<String>();
 		logs.debug("Validate if logo exist");
-		subStrArr.add(HomePageSelectors.logo.get());
-		isDisplayed = SelectorUtil.isDisplayed(subStrArr);
+		isDisplayed = SelectorUtil.isDisplayed(HomePageSelectors.logo.get());
 		getCurrentFunctionName(false);		
 		return isDisplayed;
 	}
@@ -30,10 +28,8 @@ public class HomePage extends SelTestCase {
 
 	public static void  clickOnLogo() throws Exception {
 		getCurrentFunctionName(true);
-		List<String> subStrArr = new ArrayList<String>();
 		logs.debug("Clicking on Site logo");
-		subStrArr.add(HomePageSelectors.logo.get());
-		SelectorUtil.initializeSelectorsAndDoActions(subStrArr);
+		SelectorUtil.initializeSelectorsAndDoActions(HomePageSelectors.logo.get());
 		getCurrentFunctionName(false);
 	}
 
