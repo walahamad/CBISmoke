@@ -2,35 +2,37 @@ package com.generic.tests.FG.HomePage;
 
 import com.generic.page.HomePage;
 import com.generic.page.PDP;
-import com.generic.page.PDP_old;
 import com.generic.setup.GlobalVariables;
 import com.generic.setup.SelTestCase;
 
 public class MiniCartValidation extends SelTestCase {
 
 	public static void validate() throws Exception {
+		String expectedEmptyCartText="empty";
+		
 		getCurrentFunctionName(true);
 		HomePage.clickOnMiniCart();
 		String emptyCartText = HomePage.getMiniCartText();
-		String expectedEmptyCartText = getCONFIG().getProperty("emptyCartText");
-		sassert().assertTrue(emptyCartText.contains("empty"), "<font color=#f442cb>expected text is: " + expectedEmptyCartText
+		sassert().assertTrue(emptyCartText.contains(expectedEmptyCartText), "<font color=#f442cb>expected text is: " + expectedEmptyCartText
 		+ "<br>actual text is: " + emptyCartText + " </font>");
-		if (SelTestCase.getBrowserName().contains(GlobalVariables.browsers.iPhoneX)) {
+		//The mini cart close button is only available on Mobile. there is no close button of Desktop.
+		if (SelTestCase.getBrowserName().contains(GlobalVariables.browsers.iPhone)) {
 			HomePage.clickOnMiniCartCloseBtn();	
 			sassert().assertTrue(HomePage.validateMiniCartIsClosed(), "Mini cart modal is not closed");
 		}
 		HomePage.NavigateToPDP();
 		PDP.addProductsToCart();
-		if (!SelTestCase.getBrowserName().contains(GlobalVariables.browsers.iPhoneX)) {
+		if (!SelTestCase.getBrowserName().contains(GlobalVariables.browsers.iPhone)) {
 			PDP.clickAddToCartCloseBtn();
 		}
 		
+		//Mini cart in IPAP cannot be validated as it redirects to cart page.
 		if (!SelTestCase.getBrowserName().contains(GlobalVariables.browsers.iPad)) {
 			HomePage.clickOnMiniCart();
 			sassert().assertTrue(HomePage.validateMiniCartProductIsDsiplayed(),"Mini cart items is not displayed");
 			sassert().assertTrue(HomePage.validateMiniCartCheckoutBtnIsDisplayed(),"Mini cart checkout button is not displayed");
 		}
-		if (SelTestCase.getBrowserName().contains(GlobalVariables.browsers.iPhoneX)) {
+		if (SelTestCase.getBrowserName().contains(GlobalVariables.browsers.iPhone)) {
 			HomePage.clickOnMiniCartCloseBtn();	
 			sassert().assertTrue(HomePage.validateMiniCartIsClosed(), "Mini cart modal is not closed");
 		}

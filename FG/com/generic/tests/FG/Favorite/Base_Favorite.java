@@ -14,7 +14,7 @@ import org.testng.annotations.Test;
 import org.testng.xml.XmlTest;
 
 import com.generic.page.Favorite;
-import com.generic.page.PDP_old;
+import com.generic.page.PDP;
 import com.generic.page.Registration;
 import com.generic.page.SignIn;
 import com.generic.setup.Common;
@@ -89,24 +89,24 @@ public class Base_Favorite extends SelTestCase {
 			if (!product.equals(""))
 			{
 				LinkedHashMap<String, String> productDetails = (LinkedHashMap<String, String>) invintory.get(product);
-				String PDPURL = PDP_old.getPDPUrl(productDetails.get(PDP_old.keys.url));
+				String PDPURL = PDP.getPDPUrl(productDetails.get(PDP.keys.url));
 				Testlogs.get().debug("productDetails to be visted: " + Arrays.asList(productDetails));
-				Testlogs.get().debug("url key " + PDP_old.keys.url);
+				Testlogs.get().debug("url key " + PDP.keys.url);
 				Testlogs.get().debug("url key value " + PDPURL);
 				getDriver().get(PDPURL);
-				ProductTitle =PDP_old.getTitle();
+				ProductTitle =PDP.getTitle();
 			}
 			else {
-				ProductTitle = PDP_old.getRandomProduct("dryer");
+				ProductTitle = PDP.getRandomProduct("dryer");
 			}
 			if(getBrowserName().equalsIgnoreCase(GlobalVariables.browsers.firefox)||getBrowserName().equalsIgnoreCase(GlobalVariables.browsers.IE))
 				Thread.sleep(4000);
 			ReportUtil.takeScreenShot(getDriver(), testDataSheet + "_" + caseId);
 			
 			if (proprties.contains("PDP") || !proprties.contains("PLP"))
-				PDP_old.addToFavorite();
+				PDP.addToFavorite();
 			if (proprties.contains("PLP"))
-				PDP_old.addToFavorite();
+				PDP.addToFavorite();
 			ReportUtil.takeScreenShot(getDriver(), testDataSheet + "_" + caseId);
 				//TODO: add function to handle 
 			

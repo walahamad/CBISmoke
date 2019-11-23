@@ -10,7 +10,7 @@ import org.testng.xml.XmlTest;
 
 import java.util.LinkedHashMap;
 
-import com.generic.page.PDP_old;
+import com.generic.page.PDP;
 import com.generic.page.Registration;
 import com.generic.page.Cart;
 import com.generic.page.CheckOut;
@@ -119,7 +119,7 @@ public class Base_checkout extends SelTestCase {
 			for (String product : products.split("\n")) {
 				Testlogs.get().debug(MessageFormat.format(LoggingMsg.ADDING_PRODUCT, product));
 				LinkedHashMap<String, String> productDetails = (LinkedHashMap<String, String>) invintory.get(product);
-				PDP_old.addProductsToCartAndClickCheckOut(productDetails);
+				PDP.addProductsToCartAndClickCheckOut(productDetails);
 			}
 
 			// flow to support coupon validation

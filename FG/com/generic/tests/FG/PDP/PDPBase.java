@@ -1,4 +1,4 @@
-package com.generic.tests.FG.HomePage;
+package com.generic.tests.FG.PDP;
 
 import java.text.MessageFormat;
 import java.util.Arrays;
@@ -17,7 +17,7 @@ import com.generic.util.ReportUtil;
 import com.generic.util.SASLogger;
 import com.generic.util.dataProviderUtils;
 
-public class HomePageBase extends SelTestCase {
+public class PDPBase extends SelTestCase {
 
 	// possible scenarios
 	public static final String Logo = "Logo validation";
@@ -28,7 +28,7 @@ public class HomePageBase extends SelTestCase {
 	public static final String body = "body";
 
 	// used sheet in test
-	public static final String testDataSheet = SheetVariables.HPRegressionsheet;
+	public static final String testDataSheet = SheetVariables.PDPSheet;
 
 	private static XmlTest testObject;
 
@@ -40,7 +40,7 @@ public class HomePageBase extends SelTestCase {
 		testObject = test;
 	}
 
-	@DataProvider(name = "HP_SC", parallel = true)
+	@DataProvider(name = "PDP_SC", parallel = true)
 	// concurrency maintenance on sheet reading
 	public static Object[][] loadTestData() throws Exception {
 		getBrowserWait(testObject.getParameter("browserName"));
@@ -50,28 +50,21 @@ public class HomePageBase extends SelTestCase {
 		return data;
 	}
 
-	@Test(dataProvider = "HP_SC")
-	public void HomePageRegressionTest(String caseId, String runTest, String desc, String proprties)
+	@Test(dataProvider = "PDP_SC")
+	public void PDPTest(String caseId, String runTest, String desc, String proprties)
 			throws Exception {
-		Testlogs.set(new SASLogger("HP_SC " + getBrowserName()));
+		Testlogs.set(new SASLogger("PDP_SC " + getBrowserName()));
 		// Important to add this for logging/reporting
-		setTestCaseReportName(SheetVariables.HPTestCaseId);
+		setTestCaseReportName(SheetVariables.PDPCaseId);
 		Testlogs.get().debug("Case Browser: " + testObject.getParameter("browserName"));
 		logCaseDetailds(MessageFormat.format(LoggingMsg.TEST_CASE_DESC, testDataSheet + "." + caseId,
 				this.getClass().getCanonicalName(), desc));
 
 		try {
 
-			if (proprties.contains(this.Logo)) {
-				LogoValidation.validate();
-			} else
-				if (proprties.contains(this.miniCart)) {
-					MiniCartValidation.validate();
-				}
 			
-					else{
-				Testlogs.get().debug("please check proprties provided in excel sheet");
-			}
+				
+		
 
 			sassert().assertAll();
 			Common.testPass();

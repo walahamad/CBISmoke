@@ -1,6 +1,5 @@
 package com.generic.page;
 
-import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 import com.generic.selector.HomePageSelectors;
@@ -15,27 +14,22 @@ public class HomePage extends SelTestCase {
 	public static boolean validateLogodisplayed() throws Exception {
 		getCurrentFunctionName(true);
 		boolean isDisplayed; 
-		List<String> subStrArr = new ArrayList<String>();
 		logs.debug("Validate if logo exist");
-		subStrArr.add(HomePageSelectors.logo.get());
-		isDisplayed = SelectorUtil.isDisplayed(subStrArr);
+		isDisplayed = SelectorUtil.isDisplayed(HomePageSelectors.logo.get());
 		getCurrentFunctionName(false);		
 		return isDisplayed;
 	}
 
 	public static void NavigateAwayFromHomePage() throws Exception {
 		getCurrentFunctionName(true);
-		//TODO: we need to make this dynamic  
 		getDriver().get(getURL() + getCONFIG().getProperty("searchURL"));
 		getCurrentFunctionName(false);
 	}
 
 	public static void  clickOnLogo() throws Exception {
 		getCurrentFunctionName(true);
-		List<String> subStrArr = new ArrayList<String>();
 		logs.debug("Clicking on Site logo");
-		subStrArr.add(HomePageSelectors.logo.get());
-		SelectorUtil.initializeSelectorsAndDoActions(subStrArr);
+		SelectorUtil.initializeSelectorsAndDoActions(HomePageSelectors.logo.get());
 		getCurrentFunctionName(false);
 	}
 
@@ -51,22 +45,15 @@ public class HomePage extends SelTestCase {
     
 	public static void  clickOnMiniCart() throws Exception {
 		getCurrentFunctionName(true);
-		List<String> subStrArr = new ArrayList<String>();
-		List<String> valuesArr = new ArrayList<String>();
+		String subStrArr = HomePageSelectors.miniCartBtn.get();
+		String valuesArr = "ForceAction,hover";
 		logs.debug("Clicking on Mini Cart");
-		if (SelTestCase.getBrowserName().contains(GlobalVariables.browsers.iPhoneX)) {
-			subStrArr.add(HomePageSelectors.miniCartMob);	
-			SelectorUtil.initializeSelectorsAndDoActions(subStrArr);
-		}
-		else if (SelTestCase.getBrowserName().contains(GlobalVariables.browsers.iPad))
-		{
-			subStrArr.add(HomePageSelectors.miniCartDeskt);	
+		if (!SelTestCase.getBrowserName().contains(GlobalVariables.browsers.chrome)) {
+		
 			SelectorUtil.initializeSelectorsAndDoActions(subStrArr);
 		}
 		else
 		{
-			subStrArr.add(HomePageSelectors.miniCartDeskt);
-			valuesArr.add("ForceAction,hover");
 			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
 		}
 		
@@ -75,8 +62,7 @@ public class HomePage extends SelTestCase {
 	
 	public static String getMiniCartText() throws Exception {
 			getCurrentFunctionName(true);
-			List<String> subStrArr = new ArrayList<String>();
-			subStrArr.add(HomePageSelectors.miniCartText.get());
+			String subStrArr = HomePageSelectors.miniCartText.get();
 			SelectorUtil.initializeSelectorsAndDoActions(subStrArr);
 			logs.debug("The cart text is:" + SelectorUtil.textValue.get());
 			String cartText = SelectorUtil.textValue.get();
@@ -86,9 +72,8 @@ public class HomePage extends SelTestCase {
 	
 	public static void  clickOnMiniCartCloseBtn() throws Exception {
 		getCurrentFunctionName(true);
-		List<String> subStrArr = new ArrayList<String>();
+		String subStrArr = HomePageSelectors.miniCartClose;
 		logs.debug("Clicking on Mini Cart clsoe icon");
-		subStrArr.add(HomePageSelectors.miniCartClose);
 		SelectorUtil.initializeSelectorsAndDoActions(subStrArr);
 		getCurrentFunctionName(false);
 	}
@@ -106,28 +91,7 @@ public class HomePage extends SelTestCase {
 	
 	public static void NavigateToPDP() throws Exception {
 		getCurrentFunctionName(true);
-		//TODO: we need to make this dynamic  
 		getDriver().get(getURL() + getCONFIG().getProperty("FG_PDP"));
-		getCurrentFunctionName(false);
-	}
-
-	public static void  selectPDPSwatches() throws Exception {
-		getCurrentFunctionName(true);
-		List<String> subStrArr = new ArrayList<String>();
-		logs.debug("Clicking on Mini Cart");
-		subStrArr.add(HomePageSelectors.miniCartMob);	
-		SelectorUtil.initializeSelectorsAndDoActions(subStrArr);
-		getCurrentFunctionName(false);
-	}
-	
-	public static void  addProductToCart() throws Exception {
-		getCurrentFunctionName(true);
-		List<String> subStrArr = new ArrayList<String>();
-		logs.debug("Selecting swatches for the product");
-		selectPDPSwatches();
-		logs.debug("Click add to cart");
-		subStrArr.add(HomePageSelectors.miniCartMob);	
-		SelectorUtil.initializeSelectorsAndDoActions(subStrArr);
 		getCurrentFunctionName(false);
 	}
 	

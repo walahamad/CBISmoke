@@ -27,7 +27,7 @@ public class HomePageBase extends SelTestCase {
 	public static final String body = "body";
 
 	// used sheet in test
-	public static final String testDataSheet = SheetVariables.VisualTestingHPRegressionsheet;
+	public static final String testDataSheet = SheetVariables.HPRegressionsheet;
 
 	private static XmlTest testObject;
 
@@ -54,7 +54,7 @@ public class HomePageBase extends SelTestCase {
 			throws Exception {
 		Testlogs.set(new SASLogger("HP_SC " + getBrowserName()));
 		// Important to add this for logging/reporting
-		setTestCaseReportName(SheetVariables.VisualTestingHPTestCaseId);
+		setTestCaseReportName(SheetVariables.HPTestCaseId);
 		Testlogs.get().debug("Case Browser: " + testObject.getParameter("browserName"));
 		logCaseDetailds(MessageFormat.format(LoggingMsg.TEST_CASE_DESC, testDataSheet + "." + caseId,
 				this.getClass().getCanonicalName(), desc));

@@ -5,8 +5,7 @@ import com.generic.setup.cselector;
 public class HomePageSelectors
 {
 	public static final cselector logo = new cselector("css,#logo1 a.logo-anchor","t-header__logo");
-	public static final String miniCartDeskt = "css,#cartAnchor";
-	public static final String miniCartMob = "css,.pw-header-bar__actions.t-header-bar__cart > button";
+	public static final cselector miniCartBtn = new cselector("css,#cartAnchor","css,.pw-header-bar__actions.t-header-bar__cart > button");
 	public static final cselector miniCartText = new cselector("empty-cart-label","css,.empty-cart-sign-in-container > .gwt-HTML.inst-copy","css,.m-mini-cart__empty-content.u-text-align-center>h2");
 	public static final String miniCartClose = "css,.pw-button__inner>#nav-icon";
 	public static final cselector miniCartProductContainer = new cselector("mini-cart-items-container","m-mini-cart__content-products");

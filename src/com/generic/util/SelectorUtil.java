@@ -138,7 +138,6 @@ public class SelectorUtil extends SelTestCase {
 
 			if (foundElements.isEmpty() && subStr.contains(":eq")) { 
 				// TODO: check the if (eq) case
-				// logs.debug(MessageFormat.format(LoggingMsg.IN_SELECTOR_TYPE,"xpath"));
 				foundElements = htmlDoc.select(subStr);
 				// nth-child() is the Selenium equivalent to JSoup eq()
 				String subStrTemp = subStr;

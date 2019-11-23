@@ -13,7 +13,7 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.xml.XmlTest;
 
-import com.generic.page.PDP_old;
+import com.generic.page.PDP;
 import com.generic.page.Registration;
 import com.generic.page.SignIn;
 import com.generic.setup.Common;
@@ -83,45 +83,45 @@ public class Base_PDP extends SelTestCase {
 			LinkedHashMap<String, String> productDetails = (LinkedHashMap<String, String>) invintory.get(product);
 			
 			if (proprties.contains("getRandomProduct")) {
-				PDP_old.getRandomProduct("dryer");
+				PDP.getRandomProduct("dryer");
 				//PDP.selectAllVariants();
 
 			} else {
 
-				String PDPURL = PDP_old.getPDPUrl(productDetails.get(PDP_old.keys.url));
+				String PDPURL = PDP.getPDPUrl(productDetails.get(PDP.keys.url));
 				Testlogs.get().debug("productDetails to be visted: " + Arrays.asList(productDetails));
-				Testlogs.get().debug("url key " + PDP_old.keys.url);
+				Testlogs.get().debug("url key " + PDP.keys.url);
 				Testlogs.get().debug("url key value " + PDPURL);
 				getDriver().get(PDPURL);
 
 				// Apply color and check of the results reflected to PDP
-				if (!((String) productDetails.get(PDP_old.keys.color)).equals("") && proprties.contains("color")) {
-					logs.debug("selecting color: " + (String) productDetails.get(PDP_old.keys.color));
-					PDP_old.selectColor((String) productDetails.get(PDP_old.keys.color));
+				if (!((String) productDetails.get(PDP.keys.color)).equals("") && proprties.contains("color")) {
+					logs.debug("selecting color: " + (String) productDetails.get(PDP.keys.color));
+					PDP.selectColor((String) productDetails.get(PDP.keys.color));
 					logs.debug("checking PDP selected color");
 					ReportUtil.takeScreenShot(getDriver(), testDataSheet + "_" + caseId);
 				} // variant color
 
 				// Apply size
-				if (proprties.contains("size") && !((String) productDetails.get(PDP_old.keys.size)).equals("")) {
+				if (proprties.contains("size") && !((String) productDetails.get(PDP.keys.size)).equals("")) {
 
-					logs.debug("selecting size: " + (String) productDetails.get(PDP_old.keys.size));
-					PDP_old.selectSize((String) productDetails.get(PDP_old.keys.size));
+					logs.debug("selecting size: " + (String) productDetails.get(PDP.keys.size));
+					PDP.selectSize((String) productDetails.get(PDP.keys.size));
 					ReportUtil.takeScreenShot(getDriver(), testDataSheet + "_" + caseId);
 				} // size check
 
 				// Apply fleece
-				if (!((String) productDetails.get(PDP_old.keys.fleece)).equals("") && proprties.contains("fleece")) {
-					logs.debug("selecting fleece: " + (String) productDetails.get(PDP_old.keys.fleece));
-					PDP_old.selectFleece((String) productDetails.get(PDP_old.keys.fleece));
+				if (!((String) productDetails.get(PDP.keys.fleece)).equals("") && proprties.contains("fleece")) {
+					logs.debug("selecting fleece: " + (String) productDetails.get(PDP.keys.fleece));
+					PDP.selectFleece((String) productDetails.get(PDP.keys.fleece));
 
 					ReportUtil.takeScreenShot(getDriver(), testDataSheet + "_" + caseId);
 				} // fleece check
 
 				// Apply memory
-				if (!((String) productDetails.get(PDP_old.keys.memory)).equals("") && proprties.contains("memory")) {
-					logs.debug("selecting memory: " + (String) productDetails.get(PDP_old.keys.memory));
-					PDP_old.selectMemory((String) productDetails.get(PDP_old.keys.memory));
+				if (!((String) productDetails.get(PDP.keys.memory)).equals("") && proprties.contains("memory")) {
+					logs.debug("selecting memory: " + (String) productDetails.get(PDP.keys.memory));
+					PDP.selectMemory((String) productDetails.get(PDP.keys.memory));
 
 					ReportUtil.takeScreenShot(getDriver(), testDataSheet + "_" + caseId);
 				} // fleece check
@@ -133,53 +133,53 @@ public class Base_PDP extends SelTestCase {
 
 			if (proprties.contains("price")) {
 				logs.debug("checking PDP price");
-				String price = PDP_old.getPrice();
-				logs.debug(price.contains(productDetails.get(PDP_old.keys.price).trim()) + "");
-				sassert().assertTrue(price.contains(productDetails.get(PDP_old.keys.price).trim()),
+				String price = PDP.getPrice();
+				logs.debug(price.contains(productDetails.get(PDP.keys.price).trim()) + "");
+				sassert().assertTrue(price.contains(productDetails.get(PDP.keys.price).trim()),
 						"<font color=#f442cb>product price is not expected</font>"
-								+ productDetails.get(PDP_old.keys.price).trim() + " not" + price);
+								+ productDetails.get(PDP.keys.price).trim() + " not" + price);
 				ReportUtil.takeScreenShot(getDriver(), testDataSheet + "_" + caseId);
 			} // price check
 
 			if (proprties.contains("title")) {
 				logs.debug("checking PDP title");
-				String title = PDP_old.getTitle();
-				sassert().assertTrue(title.contains(productDetails.get(PDP_old.keys.title)),
+				String title = PDP.getTitle();
+				sassert().assertTrue(title.contains(productDetails.get(PDP.keys.title)),
 						"<font color=#f442cb>product title is not expected</font>");
 				ReportUtil.takeScreenShot(getDriver(), testDataSheet + "_" + caseId);
 			} // title check
 
 			if (proprties.contains("add to cart button")) {
 				logs.debug("checking PDP add to cart button");
-				sassert().assertTrue(PDP_old.checkAddToCartButton(),
+				sassert().assertTrue(PDP.checkAddToCartButton(),
 						"<font color=#f442cb>product add to button is not expected</font>");
 				ReportUtil.takeScreenShot(getDriver(), testDataSheet + "_" + caseId);
 			} // add to cart button check
 
 			if (proprties.contains("id")) {
 				logs.debug("checking PDP ID");
-				String Id = PDP_old.getId();
-				sassert().assertTrue(Id.toLowerCase().contains(productDetails.get(PDP_old.keys.id).toLowerCase()),
+				String Id = PDP.getId();
+				sassert().assertTrue(Id.toLowerCase().contains(productDetails.get(PDP.keys.id).toLowerCase()),
 						"<font color=#f442cb>product id is not expected site " + Id + " and sheet "
-								+ productDetails.get(PDP_old.keys.id) + "</font>");
+								+ productDetails.get(PDP.keys.id) + "</font>");
 				ReportUtil.takeScreenShot(getDriver(), testDataSheet + "_" + caseId);
 			} // id check
 
 			if (proprties.contains("desc")) {
 				logs.debug("checking PDP desc");
-				PDP_old.clickOnDesc();
-				String description = PDP_old.getProductDesc();
-				sassert().assertTrue(description.trim().contains(((String) productDetails.get(PDP_old.keys.desc)).trim()),
+				PDP.clickOnDesc();
+				String description = PDP.getProductDesc();
+				sassert().assertTrue(description.trim().contains(((String) productDetails.get(PDP.keys.desc)).trim()),
 						"<font color=#f442cb>product desc is not expected found: " + description + " <br>expected: "
-								+ (String) productDetails.get(PDP_old.keys.desc) + "</font>");
+								+ (String) productDetails.get(PDP.keys.desc) + "</font>");
 				ReportUtil.takeScreenShot(getDriver(), testDataSheet + "_" + caseId);
 			} // info check
 
 			if (proprties.contains("social")) {
 				logs.debug("checking PDP social");
 				Thread.sleep(500);
-				PDP_old.clickShareBtn();
-				String social = PDP_old.getAllsocialMediabuttons();
+				PDP.clickShareBtn();
+				String social = PDP.getAllsocialMediabuttons();
 				if (getBrowserName().contains("mobile")) {
 					logs.debug("Detecting mobile site");
 					sassert().assertTrue(social.contains("sms"), "Mobile has no sms share button");
@@ -191,15 +191,15 @@ public class Base_PDP extends SelTestCase {
 								+ socialButtons + "</font>");
 				ReportUtil.takeScreenShot(getDriver(), testDataSheet + "_" + caseId);
 				Thread.sleep(500);
-				PDP_old.closeSocialShare();
+				PDP.closeSocialShare();
 				Thread.sleep(1000);
 				ReportUtil.takeScreenShot(getDriver(), testDataSheet + "_" + caseId);
 			} // info social share
 
 			if (proprties.contains("bundle")) {
 				logs.debug("checking PDP bundle");
-				String numberOfProductsInbundleFromSite = PDP_old.getNumberOfProductsInBundle();
-				String countOfProductsInBundleFromSite = PDP_old.getProductDesc();
+				String numberOfProductsInbundleFromSite = PDP.getNumberOfProductsInBundle();
+				String countOfProductsInBundleFromSite = PDP.getProductDesc();
 
 
 				sassert().assertTrue(
@@ -213,8 +213,8 @@ public class Base_PDP extends SelTestCase {
 
 			if (proprties.contains("reviews")) {
 				logs.debug("checking PDP reviews");
-				String reviews = PDP_old.getNumberofReviews();
-				String reviewscount = PDP_old.countReviews();
+				String reviews = PDP.getNumberofReviews();
+				String reviewscount = PDP.countReviews();
 
 				sassert().assertTrue(reviews.trim().contains((reviewscount).trim()),
 						"<font color=#f442cb>product reviews is not expected found: " + reviews + " <br>counted: "
@@ -224,8 +224,8 @@ public class Base_PDP extends SelTestCase {
 
 			if (proprties.contains("ratings")) {
 				logs.debug("checking PDP rating");
-				String starsRating = PDP_old.getRatingFromStars();
-				String secondaryRating = PDP_old.getSecondaryRating();
+				String starsRating = PDP.getRatingFromStars();
+				String secondaryRating = PDP.getSecondaryRating();
 
 				sassert().assertTrue(starsRating.trim().contains((secondaryRating).trim()),
 						"<font color=#f442cb>product rating is not expected <br> stars: " + starsRating
