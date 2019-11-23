@@ -19,13 +19,7 @@ import com.generic.util.dataProviderUtils;
 
 public class PDPBase extends SelTestCase {
 
-	// possible scenarios
-	public static final String Logo = "Logo validation";
-	public static final String miniCart = "Mini cart validation";
-	public static final String verify = "verify";
-	public static final String header = "header";
-	public static final String footer = "footer";
-	public static final String body = "body";
+
 
 	// used sheet in test
 	public static final String testDataSheet = SheetVariables.PDPSheet;
@@ -62,9 +56,7 @@ public class PDPBase extends SelTestCase {
 
 		try {
 
-			
-				
-		
+			PDPValidation.validate();
 
 			sassert().assertAll();
 			Common.testPass();

@@ -16,6 +16,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Wait;
+
 import com.generic.selector.PDPSelectors;
 import com.generic.setup.ExceptionMsg;
 import com.generic.setup.GlobalVariables;
@@ -46,8 +47,7 @@ public class PDP extends SelTestCase {
 		try {
 			getCurrentFunctionName(true);
 			Thread.sleep(1000);
-			List<String> subStrArr = new ArrayList<String>();
-			subStrArr.add(PDPSelectors.allColors.get());
+			String subStrArr = PDPSelectors.allColors.get();
 			if (!SelectorUtil.isNotDisplayed(subStrArr)) {
 				SelectorUtil.initializeSelectorsAndDoActions(subStrArr);
 			}
@@ -65,10 +65,8 @@ public class PDP extends SelTestCase {
 		try {
 			getCurrentFunctionName(true);
 			Thread.sleep(1000);
-			List<String> subStrArr = new ArrayList<String>();
-			List<String> valuesArr = new ArrayList<String>();
-			subStrArr.add(PDPSelectors.allSizes.get());
-			valuesArr.add("FFF1");
+			String subStrArr = PDPSelectors.allSizes.get();
+			String valuesArr = "FFF1";
 			if (!SelectorUtil.isNotDisplayed(subStrArr)) {
 				SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
 			}
@@ -86,8 +84,7 @@ public class PDP extends SelTestCase {
 		try {
 			getCurrentFunctionName(true);
 			Thread.sleep(1000);
-			List<String> subStrArr = new ArrayList<String>();
-			subStrArr.add(PDPSelectors.allFabrics.get());
+			String subStrArr = PDPSelectors.allFabrics.get();
 			if (!SelectorUtil.isNotDisplayed(subStrArr)) {
 				SelectorUtil.initializeSelectorsAndDoActions(subStrArr);
 			}
@@ -105,14 +102,12 @@ public class PDP extends SelTestCase {
 		try {
 			getCurrentFunctionName(true);
 			Thread.sleep(1000);
-			List<String> subStrArr = new ArrayList<String>();
-			subStrArr.add(PDPSelectors.allShipLeadTime.get());
-			List<String> valuesArr = new ArrayList<String>();
-
+			String subStrArr = PDPSelectors.allShipLeadTime.get();
+			String valuesArr;
 			if (!SelectorUtil.isNotDisplayed(subStrArr)) {
 				int index = SelectorUtil.getAllElements(subStrArr).size() - 1;
 				logs.debug("Selected Index for option is: " + index);
-				valuesArr.add("index," + index + ",ForceAction,click");
+				valuesArr = "index," + index + ",ForceAction,click";
 				SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
 			}
 			getCurrentFunctionName(false);
@@ -125,7 +120,7 @@ public class PDP extends SelTestCase {
 	}
 
 	// done - SMK
-	public static void addProductsToCart() throws Exception {
+	public static void addProductsToCartV1() throws Exception {
 		try {
 			getCurrentFunctionName(true);
 			selectFabric();
@@ -167,9 +162,7 @@ public class PDP extends SelTestCase {
 	public static void clickAddToCartCloseBtn() throws Exception {
 		try {
 			getCurrentFunctionName(true);
-			List<String> subStrArr = new ArrayList<String>();
-			logs.debug(" ");
-			subStrArr.add(PDPSelectors.addToCartCloseBtn.get());
+			String subStrArr = PDPSelectors.addToCartCloseBtn.get();
 			SelectorUtil.initializeSelectorsAndDoActions(subStrArr);
 			getCurrentFunctionName(false);
 		} catch (NoSuchElementException e) {
@@ -180,10 +173,11 @@ public class PDP extends SelTestCase {
 	}
 
 	// done - SMK
+	// This method to return all available options except the sizes dropdown
+	// Size drop-down has a different selector
 	public static int getNumberOfOptions() throws Exception {
 		getCurrentFunctionName(true);
-		List<String> subStrArr = new ArrayList<String>();
-		subStrArr.add(PDPSelectors.avaibleOptions.get());
+		String subStrArr = PDPSelectors.avaibleOptions.get();
 		int numberOfAvaibleOptions = 0;
 		logs.debug(SelectorUtil.numberOfFoundElements.get());
 		if (!SelectorUtil.isNotDisplayed(subStrArr)) {
@@ -195,30 +189,34 @@ public class PDP extends SelTestCase {
 	}
 
 	// done - SMK
-	public static void clickNthOptionFirstSwatch(int index) throws Exception {
+	public static void selectNthOptionFirstSwatch(int index) throws Exception {
 		getCurrentFunctionName(true);
 		String subStrArr;
 		String nthSel = MessageFormat.format(PDPSelectors.firstSwatchInOptions.get(), index);
 		logs.debug(MessageFormat.format(LoggingMsg.CLICKING_SEL, nthSel));
 		subStrArr = nthSel;
 		SelectorUtil.initializeSelectorsAndDoActions(subStrArr);
+		// Clicking on the div on desktop and iPad does not select the options,
+		// you need to click on the img if there is an img tag.
 		if (!SelTestCase.getBrowserName().contains(GlobalVariables.browsers.iPhone)) {
 			String nthSel2 = subStrArr + ">img";
-			// if(!SelectorUtil.isNotDisplayed(subStrArr))
-			SelectorUtil.initializeSelectorsAndDoActions(nthSel2);
+			if (!SelectorUtil.isNotDisplayed(subStrArr))
+				SelectorUtil.initializeSelectorsAndDoActions(nthSel2);
 		}
 		getCurrentFunctionName(false);
 
 	}
-	
+
 	// done - SMK
+	// This method to dynamically select all available options except the sizes dropdown
+	// Size drop-down has different selector, and needs to pass value to select.
 	public static void selectSwatches() throws Exception {
 		try {
 			getCurrentFunctionName(true);
 			int numberOfOptions = getNumberOfOptions();
 			if (numberOfOptions != 0) {
 				for (int i = 1; i <= numberOfOptions; i++) {
-					clickNthOptionFirstSwatch(i);
+					selectNthOptionFirstSwatch(i);
 					Thread.sleep(1500);
 				}
 			}
@@ -232,17 +230,90 @@ public class PDP extends SelTestCase {
 			throw e;
 		}
 	}
-	
+
 	// done - SMK
-	public static void addProductsToCartV2() throws Exception {
-			getCurrentFunctionName(true);
-			selectSwatches();
-			clickAddToCartButton();
-			Thread.sleep(1000);
-			getCurrentFunctionName(false);
+	public static void addProductsToCart() throws Exception {
+		getCurrentFunctionName(true);
+		selectSwatches();
+		clickAddToCartButton();
+		Thread.sleep(1000);
+		getCurrentFunctionName(false);
 
 	}
+
+	public static boolean validatePriceIsDisplayed() throws Exception {
+		getCurrentFunctionName(true);
+		boolean isDisplayed;
+		logs.debug("Validate if top price exist");
+		isDisplayed = SelectorUtil.isDisplayed(PDPSelectors.topPrice.get());
+		getCurrentFunctionName(false);
+		return isDisplayed;
+	}
+
+	public static boolean validateAddToWLGRIsEnabled() throws Exception {
+		getCurrentFunctionName(true);
+		boolean isNotDisplayed;
+		logs.debug("Validate if Add To WL/GR Is Displayed");
+		// here it will pass if the button exist regardless if it is enabled or disabled.
+		// because there is no attribute to verify if it is enabled.
+		SelectorUtil.isDisplayed(PDPSelectors.addToWLGRBtnEnabled.get());
+		logs.debug("Validate if Add To WL/GR Is not disabled");
+		isNotDisplayed = SelectorUtil.isNotDisplayed(PDPSelectors.addToWLGRBtnDisabled.get());
+		getCurrentFunctionName(false);
+		return isNotDisplayed;
+	}
+
+	public static boolean validateAddToCartIsEnabled() throws Exception {
+		getCurrentFunctionName(true);
+		boolean isNotDisplayed;
+		logs.debug("Validate if Add To Cart Is Displayed");
+		// here it will pass if the button exist regardless if it is enabled or disabled.
+		// because there is no attribute to verify if it is enabled.
+		SelectorUtil.isDisplayed(PDPSelectors.addToCartBtnEnabled.get());
+		logs.debug("Validate if Add To Cart Is not disabled");
+		isNotDisplayed = SelectorUtil.isNotDisplayed(PDPSelectors.addToCartBtnDisabled.get());
+		getCurrentFunctionName(false);
+		return isNotDisplayed;
+	}
+
+	public static String getButtomPrice() throws Exception {
+		getCurrentFunctionName(true);
+		logs.debug("Validate if bottom price is updated after seleting options");
+		SelectorUtil.initializeSelectorsAndDoActions(PDPSelectors.buttomPrice.get());
+		String price = SelectorUtil.textValue.get();
+		getCurrentFunctionName(false);
+		return price;
+	}
 	
+	// done - SMK
+	public static boolean validateProductIsAddedToCart() throws Exception {
+		getCurrentFunctionName(true);
+		boolean isDisplayed;
+		//Validate the add to cart modal is displayed for Desktop and iPad.
+		//For Mobile, verify it from mini cart because there is no add to cart modal is mobile.
+		if (!SelTestCase.getBrowserName().contains(GlobalVariables.browsers.iPhone)) {
+			isDisplayed = SelectorUtil.isDisplayed(PDPSelectors.addToCartCloseBtn.get());
+		} else {
+			HomePage.clickOnMiniCart();
+			isDisplayed = HomePage.validateMiniCartProductIsDsiplayed();
+		}
+		return isDisplayed;
+	}
+
+	// done - SMK
+	public static void clickAddToWLGR() throws Exception {
+		try {
+			getCurrentFunctionName(true);
+			String subStrArr = PDPSelectors.addToWLGRBtnEnabled.get();
+			SelectorUtil.initializeSelectorsAndDoActions(subStrArr);
+			getCurrentFunctionName(false);
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+			}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
+	}
+
 	// done -ocm
 	public static String getPDPUrl(String url) {
 		try {

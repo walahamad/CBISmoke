@@ -64,8 +64,8 @@ public class HomePage extends SelTestCase {
 			getCurrentFunctionName(true);
 			String subStrArr = HomePageSelectors.miniCartText.get();
 			SelectorUtil.initializeSelectorsAndDoActions(subStrArr);
-			logs.debug("The cart text is:" + SelectorUtil.textValue.get());
 			String cartText = SelectorUtil.textValue.get();
+			logs.debug("The cart text is:" + cartText);
 			getCurrentFunctionName(false);
 			return cartText;
 	}
@@ -81,9 +81,8 @@ public class HomePage extends SelTestCase {
 	public static boolean validateMiniCartIsClosed() throws Exception {
 		getCurrentFunctionName(true);
 		boolean isNotDisplayed; 
-		List<String> subStrArr = new ArrayList<String>();
+		String subStrArr = HomePageSelectors.miniCartText.get();
 		logs.debug("Validate if mini cart is closed");
-		subStrArr.add(HomePageSelectors.miniCartText.get());
 		isNotDisplayed = SelectorUtil.isNotDisplayed(subStrArr);
 		getCurrentFunctionName(false);		
 		return isNotDisplayed;
@@ -98,9 +97,8 @@ public class HomePage extends SelTestCase {
 	public static boolean validateMiniCartProductIsDsiplayed() throws Exception {
 		getCurrentFunctionName(true);
 		boolean isDisplayed; 
-		List<String> subStrArr = new ArrayList<String>();
+		String subStrArr = HomePageSelectors.miniCartProductContainer.get();
 		logs.debug("Validate if Mini cart products are displayed");
-		subStrArr.add(HomePageSelectors.miniCartProductContainer.get());
 		isDisplayed = SelectorUtil.isDisplayed(subStrArr);
 		getCurrentFunctionName(false);		
 		return isDisplayed;
@@ -109,9 +107,8 @@ public class HomePage extends SelTestCase {
 	public static boolean validateMiniCartCheckoutBtnIsDisplayed() throws Exception {
 		getCurrentFunctionName(true);
 		boolean isDisplayed; 
-		List<String> subStrArr = new ArrayList<String>();
+		String subStrArr = HomePageSelectors.miniCartCheckoutBtn.get();
 		logs.debug("Validate if Mini Cart Checkout Btn Is Displayed");
-		subStrArr.add(HomePageSelectors.miniCartCheckoutBtn.get());
 		isDisplayed = SelectorUtil.isDisplayed(subStrArr);
 		getCurrentFunctionName(false);		
 		return isDisplayed;

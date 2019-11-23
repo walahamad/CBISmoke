@@ -669,7 +669,17 @@ public class SelectorUtil extends SelTestCase {
 		getCurrentFunctionName(false);
 		return isDisplayed;
 	}
-
+	
+	@SuppressWarnings("rawtypes")
+	public static boolean isNotDisplayed(String value) throws Exception {
+		getCurrentFunctionName(true);
+		List<String> subStrArr = new ArrayList<String>();
+		subStrArr.add(value);
+		boolean isNotDisplayed = isNotDisplayed(subStrArr) ; 
+		getCurrentFunctionName(false);
+		return isNotDisplayed;
+	}
+	
 	@SuppressWarnings({ "rawtypes", "unused" })
 	public static boolean isNotDisplayed(List<String> subStrArr) throws Exception {
 		getCurrentFunctionName(true);
@@ -730,6 +740,15 @@ public class SelectorUtil extends SelTestCase {
 		return items.get(index);
 	}
 
+	@SuppressWarnings("rawtypes")
+	public static List<WebElement> getAllElements(String value) throws Exception {
+		getCurrentFunctionName(true);
+		List<String> subStrArr = new ArrayList<String>();
+		subStrArr.add(value);
+		getCurrentFunctionName(false);
+		return	getAllElements(subStrArr); 
+	}
+	
 	@SuppressWarnings("rawtypes")
 	public static List<WebElement> getAllElements(List<String> subStrArr) throws Exception {
 		getCurrentFunctionName(true);
@@ -823,4 +842,5 @@ public class SelectorUtil extends SelTestCase {
 		return webElementsInfo;
 
 	}
+
 }
