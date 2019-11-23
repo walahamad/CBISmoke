@@ -13,10 +13,8 @@ public class HomePage extends SelTestCase {
 	public static boolean validateLogodisplayed() throws Exception {
 		getCurrentFunctionName(true);
 		boolean isDisplayed; 
-		List<String> subStrArr = new ArrayList<String>();
 		logs.debug("Validate if logo exist");
-		subStrArr.add(HomePageSelectors.logo.get());
-		isDisplayed = SelectorUtil.isDisplayed(subStrArr);
+		isDisplayed = SelectorUtil.isDisplayed(HomePageSelectors.logo.get());
 		getCurrentFunctionName(false);		
 		return isDisplayed;
 	}
@@ -24,24 +22,23 @@ public class HomePage extends SelTestCase {
 	public static void NavigateAwayFromHomePage() throws Exception {
 		getCurrentFunctionName(true);
 		//TODO: we need to make this dynamic  
-		getDriver().get("https://www.frontgate.com/ProductSearch2?searchTerm=test");
+		getDriver().get(getURL() + "/ProductSearch2?searchTerm=test");
 		getCurrentFunctionName(false);
 	}
 
 	public static void  clickOnLogo() throws Exception {
 		getCurrentFunctionName(true);
-		List<String> subStrArr = new ArrayList<String>();
 		logs.debug("Clicking on Site logo");
-		subStrArr.add(HomePageSelectors.logo.get());
-		SelectorUtil.initializeSelectorsAndDoActions(subStrArr);
+		SelectorUtil.initializeSelectorsAndDoActions(HomePageSelectors.logo.get());
 		getCurrentFunctionName(false);
 	}
 
 	public static boolean validateHomePageLink() throws Exception {
 		getCurrentFunctionName(true);
-		//TODO: we need to make this dynamic 
-		String CurrentURL = getDriver().getCurrentUrl();
-		boolean results  =CurrentURL.equals("https://www.frontgate.com/");
+		String CurrentURL = getDriver().getCurrentUrl().replace("www.", "");
+		logs.debug("Current URL is: " + CurrentURL);
+		logs.debug("Current URL should match: " + getURL().replace("www.", "") +"/" );
+		boolean results  =CurrentURL.equals(getURL().replace("www.", "")  +"/");
 		getCurrentFunctionName(false);
 		return results;
 	}
