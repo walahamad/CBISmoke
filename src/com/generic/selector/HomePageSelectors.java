@@ -5,7 +5,9 @@ import com.generic.setup.cselector;
 public class HomePageSelectors
 {
 	public static final cselector logo = new cselector("css,#logo1 a.logo-anchor","css,#headerBox > div.u-flexbox.u-width-full.t-header-bar__title > div > a");
-	
+	public static final cselector accountMenu = new cselector ("css,.gwt-MenuItem > a#accountMenu","css,#pwa-my-account-button .pw-button");
+	public static final cselector accountMenuItems = new cselector ("css,.gwt-MenuItem > div > a","css,div.pw-list-tile > a");
+	public static final cselector navIcon = new cselector("","css,.nav-toggle", "css,.t-header__menu-icon .pw-button");
 	//public static final String logo = "css,#logo1 a.logo-anchor";
 	
 	public static final String header = "header-container";

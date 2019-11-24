@@ -25,6 +25,7 @@ public class HomePageBase extends SelTestCase {
 	public static final String header = "header";
 	public static final String footer = "footer";
 	public static final String body = "body";
+	public static final String AccountMenu = "Account menu validation";
 
 	// used sheet in test
 	public static final String testDataSheet = SheetVariables.VisualTestingHPRegressionsheet;
@@ -67,6 +68,12 @@ public class HomePageBase extends SelTestCase {
 				Testlogs.get().debug("please check proprties provided in excel sheet");
 			}
 
+			if (proprties.contains(this.AccountMenu)) {
+				AccountMenuValidation.validate();
+			} else {
+				Testlogs.get().debug("please check proprties provided in excel sheet");
+			}
+			
 			sassert().assertAll();
 			Common.testPass();
 		} catch (Throwable t) {

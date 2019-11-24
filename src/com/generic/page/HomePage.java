@@ -1,8 +1,16 @@
 package com.generic.page;
 
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
+
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.WebElement;
+
 import com.generic.selector.HomePageSelectors;
+import com.generic.setup.ExceptionMsg;
 import com.generic.setup.SelTestCase;
 import com.generic.util.SelectorUtil;
 /**
@@ -42,5 +50,91 @@ public class HomePage extends SelTestCase {
 		getCurrentFunctionName(false);
 		return results;
 	}
+	
+	public static boolean validateAccountMenuDisplayed() throws Exception {
+		getCurrentFunctionName(true);
+		boolean isDisplayed; 
+		logs.debug("Validate if Account menu exist");
+		isDisplayed = SelectorUtil.isDisplayed(HomePageSelectors.accountMenu.get());
+		getCurrentFunctionName(false);		
+		return isDisplayed;
+	}
+
+	
+	public static void clickOnAccountMenu(String accountMenuSelector,Boolean withHover ) throws Exception {
+		try {
+			getCurrentFunctionName(true);
+			List<String> subStrArr = new ArrayList<String>();
+			List<String> valuesArr = new ArrayList<String>();
+			subStrArr.add(accountMenuSelector);
+			logs.debug("Clicking on Account menu");
+			if(withHover) {
+			valuesArr.add("ForceAction,hover");
+			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
+			}else {
+			SelectorUtil.initializeSelectorsAndDoActions(accountMenuSelector);
+			}
+			getCurrentFunctionName(false);
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+			}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
+	}
+	
+	public static void clickOnCloseButton(String closeButtonSelector) throws Exception {
+	
+		getCurrentFunctionName(true);
+		logs.debug("Clicking on Close Button");
+		SelectorUtil.initializeSelectorsAndDoActions(closeButtonSelector);
+		getCurrentFunctionName(false);
+	
+	}
+	
+	
+	public static void clickOnRandomAccountMenuItem(String selector) throws Exception {
+		getCurrentFunctionName(true);
+		List<WebElement> accountMenuElements = getAccountMenuItems(selector);
+		Random random = new Random();
+		int randomIndex = random.nextInt(accountMenuElements.size());
+		WebElement element = accountMenuElements.get(randomIndex);
+		((JavascriptExecutor) SelTestCase.getDriver()).executeScript("arguments[0].click()", element);
+		getCurrentFunctionName(false);
+	}
+	
+	
+	public static List<WebElement> getAccountMenuItems(String selector) throws Exception {
+		getCurrentFunctionName(true);
+		logs.debug("Get the account menu items.");
+		List<WebElement> menuItems = new ArrayList<WebElement>();
+		menuItems = getElementsList(selector);
+		getCurrentFunctionName(false);
+		return menuItems;
+	}
+	
+	public static List<WebElement> getElementsList(String selector) throws Exception {
+		getCurrentFunctionName(true);
+		List<WebElement> elementsList = new ArrayList<WebElement>();
+		List<String> subStrArr = new ArrayList<String>();
+		subStrArr.add(selector);
+		elementsList = SelectorUtil.getAllElements(subStrArr);
+		getCurrentFunctionName(false);
+		return elementsList;
+	}
+	
+	public static boolean validateAccountMenuItemsDisplayed(String selector) throws Exception {
+		getCurrentFunctionName(true);
+		List<WebElement> accountMenuElements = getAccountMenuItems(selector);
+		logs.debug("Validate account menu links." + accountMenuElements);
+		boolean validateAccountMenuItems = true;
+		for (WebElement element:accountMenuElements ) {
+			validateAccountMenuItems = element.isDisplayed();
+			sassert().assertTrue(element.isDisplayed(), "Link is not displayed");
+		}
+		getCurrentFunctionName(false);
+		return validateAccountMenuItems;
+	}
+	
+	
     
 }
