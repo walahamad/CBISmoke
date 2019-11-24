@@ -138,6 +138,7 @@ public class SelectorUtil extends SelTestCase {
 
 			if (foundElements.isEmpty() && subStr.contains(":eq")) { 
 				// TODO: check the if (eq) case
+				// logs.debug(MessageFormat.format(LoggingMsg.IN_SELECTOR_TYPE,"xpath"));
 				foundElements = htmlDoc.select(subStr);
 				// nth-child() is the Selenium equivalent to JSoup eq()
 				String subStrTemp = subStr;
@@ -212,11 +213,11 @@ public class SelectorUtil extends SelTestCase {
 		String ActionType = "";
 		// TODO fix multiple elements
 		for (org.jsoup.nodes.Element e : foundElements) {
-			// logs.debug(e.toString());//Debugging purposes
-			// logs.debug("DEBUG POINT ------------->" + e.attr("type") );
+			 //logs.debug(e.toString());//Debugging purposes
+			 //logs.debug("DEBUG POINT ------------->" + e.attr("type") );
 			if (e.tagName().equals("input") && (e.attr("type").equals("number") || e.attr("type").equals("text")
 					|| e.attr("type").equals("password") || e.attr("type").equals("") || e.attr("type").equals("tel")
-					|| e.attr("type").equals("email"))) {
+					|| e.attr("type").equals("email")|| e.attr("type").equals("search"))) {
 				return "type";
 			} else if (e.tagName().equals("select")) {
 				return "selectByText";
@@ -320,20 +321,29 @@ public class SelectorUtil extends SelTestCase {
 		return selector;
 	}
 
-	public static void doAppropriateAction(Map<String, Object> webElementInfo) throws Exception {
+	
+	
+	public static void doAppropriateAction(Map<String, Object> webElementInfo, boolean doAction) throws Exception {
 		getCurrentFunctionName(true);
 		textValue.set("");
 
 		String browser = SelTestCase.getBrowserName();
 
 		try {
+			WebElement parent = null;
+			WebElement field = null;
+			WebElement field2 = null;
+			
+			Wait<WebDriver> wait = new FluentWait<WebDriver>(SelTestCase.getDriver())
+					.withTimeout(30, TimeUnit.SECONDS).pollingEvery(5, TimeUnit.SECONDS)
+					.ignoring(NoSuchElementException.class);
+			
 			String selector = (String) webElementInfo.get("selector");
 			String action = (String) webElementInfo.get("action");
 			String value = (String) webElementInfo.get("value");
 			By byAction = (By) webElementInfo.get("by");
 			By parentBy = (By) webElementInfo.get("parentBy");
-			WebElement parent = null;
-			WebElement field = null;
+			
 			// get element using parent-child relationship OR DOM-element relationship
 			if (byAction != null) {
 				if (parentBy != null) {
@@ -344,11 +354,27 @@ public class SelectorUtil extends SelTestCase {
 					// the same selector
 					if (value.contains("index")) {
 						int elementIndex = Integer.parseInt(value.split("index,")[1].split(",")[0]);
-						field = getDriver().findElements(byAction).get(elementIndex);
+						
+						field = wait.until(new Function<WebDriver, WebElement>() {
+							public WebElement apply(WebDriver driver) {
+								return driver.findElements(byAction).get(elementIndex);
+							}
+						});
+						
 					} else {
-						field = getDriver().findElement(byAction);
+						field = wait.until(new Function<WebDriver, WebElement>() {
+							public WebElement apply(WebDriver driver) {
+								return driver.findElement(byAction);
+							}
+						});
 					}
 				}
+			}
+			if (!doAction)
+			{
+				webElementInfo.put("elemnt" , field);
+				return;
+				
 			}
 			if (!selector.equals("")) {
 				if (!SelectorUtil.isAnErrorSelector) {
@@ -358,25 +384,19 @@ public class SelectorUtil extends SelTestCase {
 
 					if (action.equals("hover")) {
 
-						Wait<WebDriver> wait = new FluentWait<WebDriver>(SelTestCase.getDriver())
-								.withTimeout(30, TimeUnit.SECONDS).pollingEvery(5, TimeUnit.SECONDS)
-								.ignoring(NoSuchElementException.class);
-						// TODO: move it to general function
-
 						logs.debug("Hovering: " + byAction.toString());
 
 						JavascriptExecutor jse = (JavascriptExecutor) getDriver();
 						jse.executeScript("arguments[0].scrollIntoView(false)", field);
 						Thread.sleep(200);
-						WebElement field2 = wait.until(new Function<WebDriver, WebElement>() {
+						field2 = wait.until(new Function<WebDriver, WebElement>() {
 							public WebElement apply(WebDriver driver) {
 								return driver.findElement(byAction);
 							}
 						});
 
 						Actions HoverAction = new Actions(getDriver());
-						HoverAction.moveToElement(field2).build().perform();
-						logs.debug("hover_hover_hover");
+						HoverAction.moveToElement(field2).click().build().perform();
 					}
 
 					if (action.equals("type")) {
@@ -407,10 +427,6 @@ public class SelectorUtil extends SelTestCase {
 							}
 						}
 					} else if (value.contains("VisualTesting")) {
-						Wait<WebDriver> wait = new FluentWait<WebDriver>(SelTestCase.getDriver())
-								.withTimeout(30, TimeUnit.SECONDS).pollingEvery(5, TimeUnit.SECONDS)
-								.ignoring(NoSuchElementException.class);
-						// TODO: move it to general function
 
 						logs.debug("Visual testing for: " + field.toString());
 						JavascriptExecutor jse = (JavascriptExecutor) getDriver();
@@ -418,7 +434,7 @@ public class SelectorUtil extends SelTestCase {
 
 						Thread.sleep(500);
 
-						WebElement field2 = wait.until(new Function<WebDriver, WebElement>() {
+						field2 = wait.until(new Function<WebDriver, WebElement>() {
 							public WebElement apply(WebDriver driver) {
 								return driver.findElement(byAction);
 							}
@@ -432,17 +448,13 @@ public class SelectorUtil extends SelTestCase {
 							screenShot.set(new AShot().takeScreenshot(SelTestCase.getDriver(), field2));
 						
 					} else if (action.equals("click")) {
-						Wait<WebDriver> wait = new FluentWait<WebDriver>(SelTestCase.getDriver())
-								.withTimeout(30, TimeUnit.SECONDS).pollingEvery(5, TimeUnit.SECONDS)
-								.ignoring(NoSuchElementException.class);
-						// TODO: move it to general function
 						if (!value.contains("noClick")) {
 
 							logs.debug(MessageFormat.format(LoggingMsg.CLICKING_SEL, byAction.toString()));
 							JavascriptExecutor jse = (JavascriptExecutor) getDriver();
 							jse.executeScript("arguments[0].scrollIntoView(false)", field);
 							Thread.sleep(200);
-							WebElement field2 = wait.until(new Function<WebDriver, WebElement>() {
+							field2 = wait.until(new Function<WebDriver, WebElement>() {
 								public WebElement apply(WebDriver driver) {
 									return driver.findElement(byAction);
 								}
@@ -462,16 +474,12 @@ public class SelectorUtil extends SelTestCase {
 						if (value.contains("true")) {
 							if (!field.isSelected()) {
 								logs.debug(MessageFormat.format(LoggingMsg.CHECKING_UNCHECKING_MSG, "", "not "));
-								Wait<WebDriver> wait = new FluentWait<WebDriver>(SelTestCase.getDriver())
-										.withTimeout(30, TimeUnit.SECONDS).pollingEvery(5, TimeUnit.SECONDS)
-										.ignoring(NoSuchElementException.class);
 
-								// TODO: move it to general function
 								logs.debug(MessageFormat.format(LoggingMsg.CLICKING_SEL, byAction.toString()));
 								JavascriptExecutor jse = (JavascriptExecutor) getDriver();
 								jse.executeScript("arguments[0].scrollIntoView(false)", field);
 								Thread.sleep(200);
-								WebElement field2 = wait.until(new Function<WebDriver, WebElement>() {
+								field2 = wait.until(new Function<WebDriver, WebElement>() {
 									public WebElement apply(WebDriver driver) {
 										return driver.findElement(byAction);
 									}
@@ -489,16 +497,12 @@ public class SelectorUtil extends SelTestCase {
 						} else {
 							if (field.isSelected()) {
 								logs.debug(MessageFormat.format(LoggingMsg.CHECKING_UNCHECKING_MSG, "un", ""));
-								Wait<WebDriver> wait = new FluentWait<WebDriver>(SelTestCase.getDriver())
-										.withTimeout(30, TimeUnit.SECONDS).pollingEvery(5, TimeUnit.SECONDS)
-										.ignoring(NoSuchElementException.class);
 
-								// TODO: move this to function
 								logs.debug(MessageFormat.format(LoggingMsg.CLICKING_SEL, byAction.toString()));
 								JavascriptExecutor jse = (JavascriptExecutor) getDriver();
 								jse.executeScript("arguments[0].scrollIntoView(false)", field);
 								Thread.sleep(200);
-								WebElement field2 = wait.until(new Function<WebDriver, WebElement>() {
+								field2 = wait.until(new Function<WebDriver, WebElement>() {
 									public WebElement apply(WebDriver driver) {
 										return driver.findElement(byAction);
 									}
@@ -537,16 +541,12 @@ public class SelectorUtil extends SelTestCase {
 						}
 						try {
 							if (value.isEmpty()) {
-								Wait<WebDriver> wait = new FluentWait<WebDriver>(SelTestCase.getDriver())
-										.withTimeout(30, TimeUnit.SECONDS).pollingEvery(5, TimeUnit.SECONDS)
-										.ignoring(NoSuchElementException.class);
-								// TODO: move this to function
 
 								logs.debug(MessageFormat.format(LoggingMsg.CLICKING_SEL, byAction.toString()));
 								JavascriptExecutor jse1 = (JavascriptExecutor) getDriver();
 								jse1.executeScript("arguments[0].scrollIntoView(false)", field);
 								Thread.sleep(200);
-								WebElement field2 = wait.until(new Function<WebDriver, WebElement>() {
+								field2 = wait.until(new Function<WebDriver, WebElement>() {
 									public WebElement apply(WebDriver driver) {
 										return driver.findElement(byAction);
 									}
@@ -558,7 +558,7 @@ public class SelectorUtil extends SelTestCase {
 								} else
 									((JavascriptExecutor) SelTestCase.getDriver()).executeScript("arguments[0].click()",
 											field2);
-							//	 field.click();
+								// field.click();
 							}
 						} catch (Exception e) {
 							logs.debug(MessageFormat.format(LoggingMsg.FAILED_ACTION_MSG, "click"));
@@ -614,6 +614,7 @@ public class SelectorUtil extends SelTestCase {
 						logs.debug(MessageFormat.format(LoggingMsg.ERROR_VERIFICATION_SEL_MSG, selector));
 					}
 				}
+				webElementInfo.put("elemnt" , field2);
 			} else {
 				throw new Exception(ExceptionMsg.noValidSelector);
 			}
@@ -669,7 +670,7 @@ public class SelectorUtil extends SelTestCase {
 		getCurrentFunctionName(false);
 		return isDisplayed;
 	}
-	
+
 	@SuppressWarnings("rawtypes")
 	public static boolean isNotDisplayed(String value) throws Exception {
 		getCurrentFunctionName(true);
@@ -679,7 +680,6 @@ public class SelectorUtil extends SelTestCase {
 		getCurrentFunctionName(false);
 		return isNotDisplayed;
 	}
-	
 	@SuppressWarnings({ "rawtypes", "unused" })
 	public static boolean isNotDisplayed(List<String> subStrArr) throws Exception {
 		getCurrentFunctionName(true);
@@ -795,6 +795,24 @@ public class SelectorUtil extends SelTestCase {
 		valuesArr.add(value);
 		return initializeSelectorsAndDoActions(subStrArr, valuesArr, true);
 	}
+	
+	@SuppressWarnings("rawtypes")
+	public static LinkedHashMap<String, LinkedHashMap> initializeSelectorsAndDoActions(String selector, String value,boolean doAction)
+			throws Exception {
+		List<String> subStrArr = new ArrayList<String>();
+		subStrArr.add(selector);
+		List<String> valuesArr = new ArrayList<String>();
+		valuesArr.add(value);
+		return initializeSelectorsAndDoActions(subStrArr, valuesArr, doAction);
+	}
+	
+	public static WebElement getelement(String selector) throws Exception {
+		List<String> subStrArr = new ArrayList<String>();
+		subStrArr.add(selector);
+		List<String> valuesArr = new ArrayList<String>();
+		valuesArr.add("");
+		return (WebElement) initializeSelectorsAndDoActions(subStrArr, valuesArr, false).get(selector).get("elemnt");
+	}
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public static LinkedHashMap<String, LinkedHashMap> initializeSelectorsAndDoActions(List<String> subStrArr,
@@ -810,6 +828,8 @@ public class SelectorUtil extends SelTestCase {
 			webElementInfo.put("selector", "");
 			webElementInfo.put("action", "");
 			webElementInfo.put("SelType", "");
+			webElementInfo.put("element", "");
+			
 			index++;
 
 			webElementsInfo.remove(key);
@@ -821,14 +841,12 @@ public class SelectorUtil extends SelTestCase {
 			SelectorUtil.initializeElementsSelectorsMaps(webElementsInfo, isValidationStep);
 			logs.debug(MessageFormat.format(LoggingMsg.DEBUGGING_TEXT, Arrays.asList(webElementsInfo)));
 
-			if (action) {
-				for (String key : webElementsInfo.keySet()) {
-					LinkedHashMap<String, Object> webElementInfo = webElementsInfo.get(key);
-					SelectorUtil.doAppropriateAction(webElementInfo);
-				}
-
-				Thread.sleep(1000);
+			for (String key : webElementsInfo.keySet()) {
+				LinkedHashMap<String, Object> webElementInfo = webElementsInfo.get(key);
+				SelectorUtil.doAppropriateAction(webElementInfo,action);
 			}
+
+			Thread.sleep(1000);
 		} catch (Exception e) {
 			logs.debug(MessageFormat.format(LoggingMsg.FORMATTED_ERROR_MSG, e.getMessage()));
 			throw new NoSuchElementException("No such element: " + Arrays.asList(webElementsInfo));
@@ -842,5 +860,4 @@ public class SelectorUtil extends SelTestCase {
 		return webElementsInfo;
 
 	}
-
 }

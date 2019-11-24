@@ -19,7 +19,7 @@ public class PDPSelectors {
 	public static final cselector addToWLGRBtnDisabled = new cselector("css,.button.secondary.gift-registry.disabled","css,.u-wishlist-gift-disable.u-margin-bottom-md");
 	public static final cselector addToCartBtnEnabled = new cselector("css,.button.primary#gwt-add-to-cart-btn","css,.pw-button.pw--primary.u-width-full.u-text-uppercase.c-add-to-cart.pw--large");
 	public static final cselector addToCartBtnDisabled = new cselector("css,.button.primary.disabled#gwt-add-to-cart-btn","css,.u-bg-disabled-color-add-to-cart");
-	public static final cselector buttomPrice = new cselector("gwt-product-detail-widget-total-price-amount","css,.t-product-details-price>span");
+	public static final cselector bottomPrice = new cselector("gwt-product-detail-widget-total-price-amount","css,.t-product-details-price>span");
 			
 	// done-OCM
 	public static String price = "price-and-special-messaging";

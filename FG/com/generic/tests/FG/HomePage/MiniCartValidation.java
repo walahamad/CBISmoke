@@ -15,7 +15,7 @@ public class MiniCartValidation extends SelTestCase {
 		String emptyCartText = HomePage.getMiniCartText();
 		sassert().assertTrue(emptyCartText.contains(expectedEmptyCartText), "<font color=#f442cb>expected text is: " + expectedEmptyCartText
 		+ "<br>actual text is: " + emptyCartText + " </font>");
-		//The mini cart close button is only available on Mobile. there is no close button of Desktop.
+		//The mini cart close button is only available on Mobile. there is no close button on Desktop.
 		if (SelTestCase.getBrowserName().contains(GlobalVariables.browsers.iPhone)) {
 			HomePage.clickOnMiniCartCloseBtn();	
 			sassert().assertTrue(HomePage.validateMiniCartIsClosed(), "Mini cart modal is not closed");
@@ -26,7 +26,7 @@ public class MiniCartValidation extends SelTestCase {
 			PDP.clickAddToCartCloseBtn();
 		}
 		
-		//Mini cart in IPAP cannot be validated as it redirects to cart page.
+		//Mini cart in iPAd cannot be validated as it redirects to cart page.
 		if (!SelTestCase.getBrowserName().contains(GlobalVariables.browsers.iPad)) {
 			HomePage.clickOnMiniCart();
 			sassert().assertTrue(HomePage.validateMiniCartProductIsDsiplayed(),"Mini cart items is not displayed");

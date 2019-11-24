@@ -140,29 +140,30 @@ public class PDP extends SelTestCase {
 	}
 
 	// done - SMK
-	public static void addProductsToCartV1() throws Exception {
-		try {
-			getCurrentFunctionName(true);
-			selectFabric();
-			Thread.sleep(1000);
-			selectShipLeadTime();
-			Thread.sleep(1000);
-			selectColor();
-			Thread.sleep(1000);
-			selectSize();
-			Thread.sleep(1000);
-			if (!SelTestCase.getBrowserName().contains(GlobalVariables.browsers.iPhone)) {
-				Thread.sleep(1000);
-			}
-			clickAddToCartButton();
-			Thread.sleep(1000);
-			getCurrentFunctionName(false);
-		} catch (NoSuchElementException e) {
-			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
-			}.getClass().getEnclosingMethod().getName()));
-			throw e;
-		}
-	}
+//	No longer needed, will be removed after valdiating the new function is working correctly
+//	public static void addProductsToCartV1() throws Exception {
+//		try {
+//			getCurrentFunctionName(true);
+//			selectFabric();
+//			Thread.sleep(1000);
+//			selectShipLeadTime();
+//			Thread.sleep(1000);
+//			selectColor();
+//			Thread.sleep(1000);
+//			selectSize();
+//			Thread.sleep(1000);
+//			if (!SelTestCase.getBrowserName().contains(GlobalVariables.browsers.iPhone)) {
+//				Thread.sleep(1000);
+//			}
+//			clickAddToCartButton();
+//			Thread.sleep(1000);
+//			getCurrentFunctionName(false);
+//		} catch (NoSuchElementException e) {
+//			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+//			}.getClass().getEnclosingMethod().getName()));
+//			throw e;
+//		}
+//	}
 
 	// done - SMK
 	public static void clickAddToCartButton() throws Exception {
@@ -293,10 +294,10 @@ public class PDP extends SelTestCase {
 		return isNotDisplayed;
 	}
 
-	public static String getButtomPrice() throws Exception {
+	public static String getBottomPrice() throws Exception {
 		getCurrentFunctionName(true);
 		logs.debug("Validate if bottom price is updated after seleting options");
-		SelectorUtil.initializeSelectorsAndDoActions(PDPSelectors.buttomPrice.get());
+		SelectorUtil.initializeSelectorsAndDoActions(PDPSelectors.bottomPrice.get());
 		String price = SelectorUtil.textValue.get();
 		getCurrentFunctionName(false);
 		return price;
