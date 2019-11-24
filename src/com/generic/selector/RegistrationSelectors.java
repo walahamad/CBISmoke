@@ -9,7 +9,7 @@ public class RegistrationSelectors {
 	public static final String mobileRegistrationButton= "css,button.pw-button:nth-child(2)";
 	public static final String mobileRegistrationTab ="css,#app-main > div > div > div > div.pw-tabs__strip-container > ol > li.pw-tabs__tab.pw--is-active > a";
 	public static final String registerBtn = "css,#continue";
-	public static final String saveButton ="css,#gwt_billshipaddr_btn > button";
+	public static final cselector saveButton = new cselector("css,#gwt_billshipaddr_btn > button","css,#register-form > div.pw-field-row.t-registration__continue-button > button");
 	
 	//Fields of 1st step
 	public static final cselector emailAddress = new cselector("css, #logonId","css,#field-5");
@@ -18,17 +18,17 @@ public class RegistrationSelectors {
 	public static final cselector confirmPassword = new cselector ("css,#logonPasswordVerify","css,#field-8");
 	
 	//Fields of 2nd step
-	public static final String firstName = "css,#bill_fnbox";
-	public static final String lastName = "css,#bill_lnbox";
-	public static final String companyName="css,#bill_cnbox";
-	public static final String AddressLine1 = "css,#bill_sa1box";
-	public static final String city = "css,#bill_citybox";
-	public static final String state = "css,#bill_region";
-	public static final String Zipcode = "css,#bill_zipbox";
-	public static final String phone = "css,#bill_phone1box";
+	public static final cselector firstName =new cselector ("css,#bill_fnbox","css,#field-10");
+	public static final cselector lastName =new cselector ( "css,#bill_lnbox","css,#field-12");
+	public static final cselector companyName=new cselector ("css,#bill_cnbox","css,#field-13");
+	public static final cselector AddressLine1 = new cselector ("css,#bill_sa1box", "css,#field-14");
+	public static final cselector city = new cselector ("css,#bill_citybox","css,#field-16");
+	public static final cselector state = new cselector("css,#bill_region","css,#field-17");
+	public static final cselector Zipcode = new cselector("css,#bill_zipbox","css,#field-18");
+	public static final cselector phone = new cselector("css,#bill_phone1box", "css,#field-19");
 	
 	//Registration sucess verfication
-	public static final String welcomeMessage = "css,div.data:nth-child(3)";
+	public static final cselector welcomeMessage = new cselector("css,div.data:nth-child(3)","css,#app-main > div > div.u-padding-md.u-padding-bottom-xsm > p");
 	
 	//Error messages  
 	public static final String emailAddressErrorMobile ="css,.c-custom-input-error";

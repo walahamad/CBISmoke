@@ -93,14 +93,15 @@ public class RegistrationBase extends SelTestCase {
 		
 		//prepare random address details
 		LinkedHashMap<String, String> addressDetails = (LinkedHashMap<String, String>) addresses.get("A3");
+		
 		//Prepare registration data 
 		String firstName = RandomUtilities.getRandomName();
 		String lastName = RandomUtilities.getRandomName();
 		String companyName = RandomUtilities.getRandomName();
-		//String password = "P11p"+RandomUtilities.getRandomPassword(8);
 		String email = RandomUtilities.getRandomEmail();
 		
 		try {
+			// Positive registration case
 			if (proprties.contains(freshUser)) {
 				//register new user and validate the results
 				
@@ -108,24 +109,13 @@ public class RegistrationBase extends SelTestCase {
 				Thread.sleep(1500);
 				Registration.fillRegistrationSecondStep(firstName,lastName,companyName,addressDetails);
 						
-				//Sucess message needs to be updated on excel to (Welcome to your account at )
+				//Success message needs to be updated on excel to (Welcome to your account at )
 				String registrationSuccessMsg = Registration.getRegistrationSuccessMessage();
 				sassert().assertTrue(registrationSuccessMsg.toLowerCase().contains(thankUMsg), 
 						"Regestration Success, validation failed Expected to have in message: " + thankUMsg +" but Actual message is: " + registrationSuccessMsg);
 			}
-			/*
-			if (proprties.contains(existingUser)) {
-				// take any user as template
-				LinkedHashMap<String, String> userdetails = (LinkedHashMap<String, String>) users.entrySet().iterator()
-						.next().getValue();
-				email = userdetails.get(Registration.keys.email);
-				email=getSubMailAccount(email);
-				logs.debug("Registration mail: "+email);
-				Registration.fillAndClickRegister(firstName,lastName,email,"Elmira College",password,password, type, addressDetails);
-				String validationMsg = Registration.getEmailAddressError();
-				sassert().assertTrue(validationMsg.contains(emailValidation), "Mail validation failed, Expected: " + emailValidation +" Actual: " + validationMsg);
-			}
-			*/
+			
+			// Negative registration case
 			if (proprties.contains(emptyData)) {
 				Registration.clickRegisterButton();
 				
@@ -183,22 +173,11 @@ public class RegistrationBase extends SelTestCase {
 						"Mail validation failed Expected: " + termsValidation + " Actual: " + validationMsg);
 				*/
 			}
-			
-			/*
-			if (proprties.contains(invalidUserID)) {
-				email = "invalid@valid";
-				Registration.fillAndClickRegister(firstName,lastName,email,"Elmira College",password,password,type, addressDetails);
-				
-				String validationMsg = Registration.getEmailAddressErrorInvalid();
-				sassert().assertTrue(validationMsg.contains(emailValidation),
-						"Mail validation failed Expected: " + emailValidation + " Actual: " + validationMsg);
-			}*/
-			
-			Thread.sleep(2000);
-			
-			
+						
+			Thread.sleep(2000);						
 			sassert().assertAll();
 			Common.testPass();
+			
 		} catch (Throwable t) {
 			setTestCaseDescription(getTestCaseDescription());
 			Testlogs.get().debug(MessageFormat.format(LoggingMsg.DEBUGGING_TEXT, t.getMessage()));
