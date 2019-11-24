@@ -13,6 +13,7 @@ import com.generic.setup.LoggingMsg;
 import com.generic.setup.SelTestCase;
 import com.generic.setup.SheetVariables;
 import com.generic.tests.FG.HomePage.LogoValidation;
+import com.generic.tests.GR.PDP.PDPValidation;
 import com.generic.util.ReportUtil;
 import com.generic.util.SASLogger;
 import com.generic.util.dataProviderUtils;

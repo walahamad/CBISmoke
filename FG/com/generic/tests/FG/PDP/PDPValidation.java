@@ -1,6 +1,5 @@
 package com.generic.tests.FG.PDP;
 
-import com.generic.page.HomePage;
 import com.generic.page.PDP;
 import com.generic.setup.SelTestCase;
 
@@ -9,7 +8,7 @@ public class PDPValidation extends SelTestCase {
 	public static void validate() throws Exception {
 		getCurrentFunctionName(true);
 
-		HomePage.NavigateToPDP();
+		PDP.NavigateToFGPDP();
 		sassert().assertTrue(PDP.validatePriceIsDisplayed(), "Top price is not dispayed");
 		PDP.selectSwatches();
 		sassert().assertTrue(!PDP.getButtomPrice().equals("$0.00"),"Bottom price is not updated correctly, Current price: " + PDP.getButtomPrice());

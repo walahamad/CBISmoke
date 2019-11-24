@@ -14,7 +14,7 @@ public class PDPSelectors {
 	public static final cselector addToCartBtn = new cselector("gwt-add-to-cart-btn");
 	public static final cselector addToCartCloseBtn = new cselector("gwt-Button ok-cancel-close-btn");
 	public static final cselector firstSwatchInOptions = new cselector("css,div#gwt-option-panel > div:nth-child({0})> .gwt-product-option-panel-widget-panel > div  > div > div:nth-child(1)","css,div.c-product-options> div:nth-child({0})> div.u-margin-top > div > div:nth-child(1) > div > button > div > div > div > div > div");
-	public static final cselector topPrice = new cselector("gwt-pdp-main-was-now-price-holder","css,.t-product-details-heading__price.t-product-details__price>.u-display-inline");
+	public static final cselector topPrice = new cselector("gwt-pdp-main-was-now-price-holder","css,.t-product-details-heading__price.t-product-details__price>div");
 	public static final cselector addToWLGRBtnEnabled = new cselector("css,.button.secondary.gift-registry","css,.pw-button.u-color-neutral-33.u-width-full.u-text-uppercase.u-margin-bottom-md.t-product-details__wishlist-button.u-padding-top.u-padding-bottom.u-padding-end-md.u-padding-start-md.pw--tertiary");
 	public static final cselector addToWLGRBtnDisabled = new cselector("css,.button.secondary.gift-registry.disabled","css,.u-wishlist-gift-disable.u-margin-bottom-md");
 	public static final cselector addToCartBtnEnabled = new cselector("css,.button.primary#gwt-add-to-cart-btn","css,.pw-button.pw--primary.u-width-full.u-text-uppercase.c-add-to-cart.pw--large");

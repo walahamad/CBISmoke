@@ -27,6 +27,10 @@ import com.generic.util.SelectorUtil;
 public class PDP extends SelTestCase {
 
 	public static class keys {
+		//to be replaced with Search
+		public static String FG_PDP = "/cheyne-high-low-area-rug/915951";
+		public static String GR_PDP = "/mason-cocoon-chairs-2c-set-of-two/outdoor-living/seating/1020166";
+		
 		public static final String id = "id";
 		public static final String name = "name";
 		public static final String title = "title";
@@ -40,6 +44,22 @@ public class PDP extends SelTestCase {
 		public static final String desc = "desc";
 		public static final String price = "price";
 
+	}
+
+	// done - SMK
+	// to be replaced with Search
+	public static void NavigateToFGPDP() throws Exception {
+		getCurrentFunctionName(true);
+		getDriver().get(getURL() + keys.FG_PDP);
+		getCurrentFunctionName(false);
+	}
+
+	// done - SMK
+	// to be replaced with Search
+	public static void NavigateToGRPDP() throws Exception {
+		getCurrentFunctionName(true);
+		getDriver().get(getURL() + keys.GR_PDP);
+		getCurrentFunctionName(false);
 	}
 
 	// done - SMK
@@ -191,25 +211,22 @@ public class PDP extends SelTestCase {
 	// done - SMK
 	public static void selectNthOptionFirstSwatch(int index) throws Exception {
 		getCurrentFunctionName(true);
-		String subStrArr;
-		String nthSel = MessageFormat.format(PDPSelectors.firstSwatchInOptions.get(), index);
-		logs.debug(MessageFormat.format(LoggingMsg.CLICKING_SEL, nthSel));
-		subStrArr = nthSel;
+		String subStrArr = MessageFormat.format(PDPSelectors.firstSwatchInOptions.get(), index);
+		logs.debug(MessageFormat.format(LoggingMsg.CLICKING_SEL, subStrArr));
 		SelectorUtil.initializeSelectorsAndDoActions(subStrArr);
 		// Clicking on the div on desktop and iPad does not select the options,
 		// you need to click on the img if there is an img tag.
 		if (!SelTestCase.getBrowserName().contains(GlobalVariables.browsers.iPhone)) {
-			String nthSel2 = subStrArr + ">img";
+			String nthSel = subStrArr + ">img";
 			if (!SelectorUtil.isNotDisplayed(subStrArr))
-				SelectorUtil.initializeSelectorsAndDoActions(nthSel2);
+				SelectorUtil.initializeSelectorsAndDoActions(nthSel);
 		}
 		getCurrentFunctionName(false);
 
 	}
 
 	// done - SMK
-	// This method to dynamically select all available options except the sizes dropdown
-	// Size drop-down has different selector, and needs to pass value to select.
+	// This method to dynamically select all available options
 	public static void selectSwatches() throws Exception {
 		try {
 			getCurrentFunctionName(true);
@@ -290,7 +307,7 @@ public class PDP extends SelTestCase {
 		getCurrentFunctionName(true);
 		boolean isDisplayed;
 		//Validate the add to cart modal is displayed for Desktop and iPad.
-		//For Mobile, verify it from mini cart because there is no add to cart modal is mobile.
+		//For Mobile, verify it from mini cart because there is no add to cart modal in mobile.
 		if (!SelTestCase.getBrowserName().contains(GlobalVariables.browsers.iPhone)) {
 			isDisplayed = SelectorUtil.isDisplayed(PDPSelectors.addToCartCloseBtn.get());
 		} else {

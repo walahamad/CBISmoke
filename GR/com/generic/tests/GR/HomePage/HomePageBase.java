@@ -21,6 +21,7 @@ public class HomePageBase extends SelTestCase {
 
 	// possible scenarios
 	public static final String Logo = "Logo validation";
+	public static final String miniCart = "Mini cart validation";
 	public static final String verify = "verify";
 	public static final String header = "header";
 	public static final String footer = "footer";
@@ -63,7 +64,12 @@ public class HomePageBase extends SelTestCase {
 
 			if (proprties.contains(this.Logo)) {
 				LogoValidation.validate();
-			} else {
+			} else
+				if (proprties.contains(this.miniCart)) {
+					MiniCartValidation.validate();
+				}
+			
+					else{
 				Testlogs.get().debug("please check proprties provided in excel sheet");
 			}
 

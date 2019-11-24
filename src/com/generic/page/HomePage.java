@@ -10,7 +10,6 @@ import com.generic.util.SelectorUtil;
  * The Class HomePage.
  */
 public class HomePage extends SelTestCase {
-
 	public static boolean validateLogodisplayed() throws Exception {
 		getCurrentFunctionName(true);
 		boolean isDisplayed; 
@@ -43,23 +42,21 @@ public class HomePage extends SelTestCase {
 		return results;
 	}
     
-	public static void  clickOnMiniCart() throws Exception {
+	public static void clickOnMiniCart() throws Exception {
 		getCurrentFunctionName(true);
 		String subStrArr = HomePageSelectors.miniCartBtn.get();
 		String valuesArr = "ForceAction,hover";
-		logs.debug("Clicking on Mini Cart");
 		if (!SelTestCase.getBrowserName().contains(GlobalVariables.browsers.chrome)) {
-		
+			logs.debug("Clicking on Mini Cart");
 			SelectorUtil.initializeSelectorsAndDoActions(subStrArr);
-		}
-		else
-		{
+		} else {
+			logs.debug("Hovering on Mini Cart");
 			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
 		}
-		
+
 		getCurrentFunctionName(false);
 	}
-	
+
 	public static String getMiniCartText() throws Exception {
 			getCurrentFunctionName(true);
 			String subStrArr = HomePageSelectors.miniCartText.get();
@@ -86,12 +83,6 @@ public class HomePage extends SelTestCase {
 		isNotDisplayed = SelectorUtil.isNotDisplayed(subStrArr);
 		getCurrentFunctionName(false);		
 		return isNotDisplayed;
-	}
-	
-	public static void NavigateToPDP() throws Exception {
-		getCurrentFunctionName(true);
-		getDriver().get(getURL() + getCONFIG().getProperty("FG_PDP"));
-		getCurrentFunctionName(false);
 	}
 	
 	public static boolean validateMiniCartProductIsDsiplayed() throws Exception {
