@@ -24,6 +24,9 @@ public class brands {
 
 		if (!env.contains(Prod))
 			brandGetter += env + ".";
+		else {
+			brandGetter += "www.";
+		}
 
 		if (brand.contains(FG)) {
 			brandGetter += FGURL;

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="HomePageRegression" parallel="tests" thread-count="2" data-provider-thread-count="1">
+<suite name="HomePageRegression" parallel="tests" thread-count="3" data-provider-thread-count="1">
 	<test name="HP Chrome">
 		<parameter name="browserName" value="Chrome"></parameter>
-		<parameter name="Env" value="prod"></parameter>
+		<parameter name="Env" value="stagewcs"></parameter>
 		<parameter name="Brand" value="FG"></parameter>
 		<classes>
 			<class name="com.generic.tests.FG.HomePage.HomePageBase" />
@@ -11,7 +11,7 @@
 	</test><!-- Test -->
 	<test name="HP iPad">
 		<parameter name="browserName" value="mobile_iPad"></parameter>
-		<parameter name="Env" value="prod"></parameter>
+		<parameter name="Env" value="stagewcs"></parameter>
 		<parameter name="Brand" value="FG"></parameter>
 		<classes>
 			<class name="com.generic.tests.FG.HomePage.HomePageBase" />
@@ -19,7 +19,7 @@
 	</test><!-- Test -->
 	<test name="HP iPhone">
 		<parameter name="browserName" value="mobile_iPhone X"></parameter>
-		<parameter name="Env" value="prod"></parameter>
+		<parameter name="Env" value="stagewcs"></parameter>
 		<parameter name="Brand" value="FG"></parameter>
 		<classes>
 			<class name="com.generic.tests.FG.HomePage.HomePageBase" />

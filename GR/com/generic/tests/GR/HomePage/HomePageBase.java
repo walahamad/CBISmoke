@@ -1,4 +1,4 @@
-package com.generic.tests.FG.HomePage;
+package com.generic.tests.GR.HomePage;
 
 import java.text.MessageFormat;
 import java.util.Arrays;
