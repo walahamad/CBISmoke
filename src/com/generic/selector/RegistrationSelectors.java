@@ -27,18 +27,42 @@ public class RegistrationSelectors {
 	public static final cselector Zipcode = new cselector("css,#bill_zipbox","css,#field-18");
 	public static final cselector phone = new cselector("css,#bill_phone1box", "css,#field-19");
 	
-	//Registration sucess verfication
+	//Registration success verification
 	public static final cselector welcomeMessage = new cselector("css,div.data:nth-child(3)","css,#app-main > div > div.u-padding-md.u-padding-bottom-xsm > p");
 	
 	//Error messages  
+	
+	//Mobile
 	public static final String emailAddressErrorMobile ="css,.c-custom-input-error";
-	public static final String emailAddressError =  "css,#error-div-logonId";
 	public static final String confEmailAddressErrorMobile = "css,.c-custom-input-error";
-	public static final String confEmailAddressError = "css,#error-div-verifyLogonId";
 	public static final String passwordRulesErrorMobile = "css,.c-custom-input-error";
-	public static final String passwordRulesError = "css,#error-div-logonPassword";
 	public static final String confirmPasswordErrorMobile = "css,.c-custom-input-error"; 
+	
+	public static final String firstNameErrorMobile ="css,.c-custom-input-error";
+	public static final String lastNameErrorMobile ="css,.c-custom-input-error";
+	public static final String streetAddreesErrorMobile ="css,.c-custom-input-error";
+	public static final String cityErrorMobile ="css,.c-custom-input-error";
+	public static final String stateErrorMobile ="css,#register-form > div:nth-child(1) > div:nth-child(2) > div > div > div > div:nth-child(7) > div > div.pw-field__error";
+	public static final String ZIPCodeErrorMobile ="css,.c-custom-input-error";
+	public static final String phoneErrorMobile ="css,.c-custom-input-error";
+	
+	//Desktop
+	public static final String emailAddressError =  "css,#error-div-logonId";	
+	public static final String confEmailAddressError = "css,#error-div-verifyLogonId";
+	public static final String passwordRulesError = "css,#error-div-logonPassword";
 	public static final String confirmPasswordError = "css,#error-div-logonPasswordVerify"; 
+	
+	public static final String firstNameError = "css,#error-div-bill_fnbox";
+	public static final String lastNameError = "css,#error-div-bill_lnbox";
+	public static final String streetAddreesError = "css,#error-div-bill_sa1box";
+	public static final String cityError = "css,#error-div-bill_citybox";
+	public static final String stateError ="css,#error-div-bill_region";
+	public static final String ZIPCodeError = "css,#error-div-bill_zipbox";
+	public static final String phoneError = "css,#error-div-bill_phone1box";
+	
+	
+
+	
 	
 	//done OCM
 	public static final String school  = "school-search-input";
@@ -50,12 +74,7 @@ public class RegistrationSelectors {
 	
 	//ErrorMessages Selectors
 	public static final String emailError = "email.errors";
-	public static final String firstNameError = "register.firstName-error";
-	public static final String lastNameError = "register.lastName-error";
-
 	public static final String schoolError = "school-search-input-error"; 
-
-
 	public static final String temsError = "termsAndCondition-error";
 	
 	

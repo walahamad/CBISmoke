@@ -55,14 +55,13 @@ public class Registration extends SelTestCase {
 		}
 
 	}
-	
 
 	// Done CBI Smoke
 	public static void typeEmailAddress(String address) throws Exception {
 		try {
-			getCurrentFunctionName(true);			
+			getCurrentFunctionName(true);
 			logs.debug(MessageFormat.format(LoggingMsg.TYPING_ELEMENT_VALUE, "emailAddress ", address));
-			SelectorUtil.initializeSelectorsAndDoActions(RegistrationSelectors.emailAddress.get(), address);			
+			SelectorUtil.initializeSelectorsAndDoActions(RegistrationSelectors.emailAddress.get(), address);
 			getCurrentFunctionName(false);
 		} catch (NoSuchElementException e) {
 			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
@@ -91,7 +90,7 @@ public class Registration extends SelTestCase {
 		try {
 			getCurrentFunctionName(true);
 			logs.debug(MessageFormat.format(LoggingMsg.TYPING_ELEMENT_VALUE, "confirmPassword", confPassword));
-			SelectorUtil.initializeSelectorsAndDoActions(RegistrationSelectors.confirmPassword.get(), confPassword);		
+			SelectorUtil.initializeSelectorsAndDoActions(RegistrationSelectors.confirmPassword.get(), confPassword);
 			getCurrentFunctionName(false);
 		} catch (NoSuchElementException e) {
 			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
@@ -99,8 +98,7 @@ public class Registration extends SelTestCase {
 			throw e;
 		}
 	}
-	
-	
+
 	// Done CBI Somke
 	public static void typeCompany(String comapnyName) throws Exception {
 		try {
@@ -114,7 +112,6 @@ public class Registration extends SelTestCase {
 			throw e;
 		}
 	}
-	
 
 	// Done CBI Smoke
 	public static void clickRegisterButton() throws Exception {
@@ -130,6 +127,7 @@ public class Registration extends SelTestCase {
 		}
 
 	}
+
 	// done-ocm
 	public static void switchToDefaultContent() {
 		try {
@@ -141,39 +139,41 @@ public class Registration extends SelTestCase {
 			}.getClass().getEnclosingMethod().getName()));
 			throw e;
 		}
-}
+	}
 
 	// Done CBI Smoke
-		public static void fillRegistrationFirstStep(String email,String confEmail, String confPassword, String password) throws Exception {
-			try {
-				getCurrentFunctionName(true);
-				if (!"".equals(email))
-					typeEmailAddress(email);
-				
-				if (!"".equals(confEmail))
-					typeconfEmailAddress(confEmail);				
-				
-				if (!"".equals(password))
-					typePassword(password);
-				
-				if (!"".equals(confPassword))
-					typeConfirmPassword(confPassword);
-				
-				Thread.sleep(1000);
-				
-				clickRegisterButton();
-				
-				getCurrentFunctionName(false);
-			} catch (NoSuchElementException e) {
-				logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
-				}.getClass().getEnclosingMethod().getName()));
-				throw e;
-			}
-			
+	public static void fillRegistrationFirstStep(String email, String confEmail, String confPassword, String password)
+			throws Exception {
+		try {
+			getCurrentFunctionName(true);
+			if (!"".equals(email))
+				typeEmailAddress(email);
+
+			if (!"".equals(confEmail))
+				typeconfEmailAddress(confEmail);
+
+			if (!"".equals(password))
+				typePassword(password);
+
+			if (!"".equals(confPassword))
+				typeConfirmPassword(confPassword);
+
+			Thread.sleep(1000);
+
+			clickRegisterButton();
+
+			getCurrentFunctionName(false);
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+			}.getClass().getEnclosingMethod().getName()));
+			throw e;
 		}
-		
-		// Done CBI Smoke
-		public static void fillRegistrationSecondStep(String fName,String lName, String companyName, LinkedHashMap<String, String> addressDetails ) throws Exception {
+
+	}
+
+	// Done CBI Smoke
+	public static void fillRegistrationSecondStep(String fName, String lName, String companyName,
+			LinkedHashMap<String, String> addressDetails) throws Exception {
 		try {
 			getCurrentFunctionName(true);
 
@@ -182,7 +182,7 @@ public class Registration extends SelTestCase {
 
 			if (!"".equals(lName))
 				typeLastName(lName);
-			
+
 			if (!"".equals(companyName))
 				typeCompany(companyName);
 
@@ -200,8 +200,8 @@ public class Registration extends SelTestCase {
 
 			if (!"".equals(addressDetails.get(AddressBook.shippingAddress.keys.phone))) {
 				typePhone(addressDetails.get(AddressBook.shippingAddress.keys.phone));
-				
-			clickSaveButton();
+
+				clickSaveButton();
 			}
 			getCurrentFunctionName(false);
 		}
@@ -211,24 +211,24 @@ public class Registration extends SelTestCase {
 			}.getClass().getEnclosingMethod().getName()));
 			throw e;
 		}
-			
-		}
-		
-		// Done CBI
-		public static void clickSaveButton() throws Exception {
-			try {
-				getCurrentFunctionName(true);
-				logs.debug(MessageFormat.format(LoggingMsg.CLICKING_SEL, "Register btn"));
-				SelectorUtil.initializeSelectorsAndDoActions(RegistrationSelectors.saveButton.get(), "");
-				getCurrentFunctionName(false);
-			} catch (NoSuchElementException e) {
-				logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
-				}.getClass().getEnclosingMethod().getName()));
-				throw e;
-			}
 
+	}
+
+	// Done CBI
+	public static void clickSaveButton() throws Exception {
+		try {
+			getCurrentFunctionName(true);
+			logs.debug(MessageFormat.format(LoggingMsg.CLICKING_SEL, "Register btn"));
+			SelectorUtil.initializeSelectorsAndDoActions(RegistrationSelectors.saveButton.get(), "");
+			getCurrentFunctionName(false);
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+			}.getClass().getEnclosingMethod().getName()));
+			throw e;
 		}
-	
+
+	}
+
 	// done-OCM
 	public static void fillAndClickRegister(String fName, String lName, String email, String school, String pass,
 			String confPass, String Type, LinkedHashMap<String, String> addressDetails) throws Exception {
@@ -422,13 +422,13 @@ public class Registration extends SelTestCase {
 		}
 
 	}
-	
+
 	// Done CBI Smoke
 	private static void typeconfEmailAddress(String email) throws Exception {
 		try {
 			getCurrentFunctionName(true);
 			SelectorUtil.initializeSelectorsAndDoActions(RegistrationSelectors.confirmEmailAddress.get(), email);
-			logs.debug("Data is"+email);
+			logs.debug("Data is" + email);
 			getCurrentFunctionName(false);
 		} catch (NoSuchElementException e) {
 			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
@@ -552,7 +552,7 @@ public class Registration extends SelTestCase {
 		}
 	}
 
-	// Done CBI 
+	// Done CBI
 	public static String getEmailAddressErrorInvalid() throws Exception {
 		try {
 			getCurrentFunctionName(true);
@@ -573,17 +573,16 @@ public class Registration extends SelTestCase {
 			throw e;
 		}
 	}
-	
 
-	
-	// Done CBI 
+	// Done CBI
 	public static String getConfEmailAddressErrorInvalid() throws Exception {
 		try {
 			getCurrentFunctionName(true);
-					
+
 			if (getBrowserName().contains(GlobalVariables.browsers.iPhone)) {
 				logs.debug(MessageFormat.format(LoggingMsg.GETTING_TEXT, "Email Address Error"));
-				SelectorUtil.initializeSelectorsAndDoActions(RegistrationSelectors.confEmailAddressErrorMobile, "index,1");
+				SelectorUtil.initializeSelectorsAndDoActions(RegistrationSelectors.confEmailAddressErrorMobile,
+						"index,1");
 			} else {
 				logs.debug(MessageFormat.format(LoggingMsg.GETTING_TEXT, "Email Address Error"));
 				SelectorUtil.initializeSelectorsAndDoActions(RegistrationSelectors.confEmailAddressError, "");
@@ -616,13 +615,12 @@ public class Registration extends SelTestCase {
 			throw e;
 		}
 	}
-	
 
 	// Done CBI
 	public static String getPasswordError() throws Exception {
 		try {
 			getCurrentFunctionName(true);
-			
+
 			if (getBrowserName().contains(GlobalVariables.browsers.iPhone)) {
 				logs.debug(MessageFormat.format(LoggingMsg.GETTING_TEXT, "Email Address Error"));
 				SelectorUtil.initializeSelectorsAndDoActions(RegistrationSelectors.passwordRulesErrorMobile, "index,2");
@@ -641,20 +639,20 @@ public class Registration extends SelTestCase {
 		}
 	}
 
-	
 	// Done CBI
 	public static String getConfirmPasswordError() throws Exception {
 		try {
 			getCurrentFunctionName(true);
-			
+
 			if (getBrowserName().contains(GlobalVariables.browsers.iPhone)) {
 				logs.debug(MessageFormat.format(LoggingMsg.GETTING_TEXT, "Confirm Password Error"));
-				SelectorUtil.initializeSelectorsAndDoActions(RegistrationSelectors.confirmPasswordErrorMobile,"index,3");
+				SelectorUtil.initializeSelectorsAndDoActions(RegistrationSelectors.confirmPasswordErrorMobile,
+						"index,3");
 			} else {
 				logs.debug(MessageFormat.format(LoggingMsg.GETTING_TEXT, "Confirm Password Error"));
 				SelectorUtil.initializeSelectorsAndDoActions(RegistrationSelectors.confirmPasswordError, "");
 			}
-			
+
 			getCurrentFunctionName(false);
 			return SelectorUtil.textValue.get();
 		} catch (NoSuchElementException e) {
@@ -683,6 +681,160 @@ public class Registration extends SelTestCase {
 		}
 	}
 
+	// done CBI
+	public static String getFirstNameErrorInvalid() throws Exception {
+		try {
+			getCurrentFunctionName(true);
+
+			if (getBrowserName().contains(GlobalVariables.browsers.iPhone)) {
+				logs.debug(MessageFormat.format(LoggingMsg.GETTING_TEXT, "First name Error"));
+				SelectorUtil.initializeSelectorsAndDoActions(RegistrationSelectors.firstNameErrorMobile, "index,0");
+			} else {
+				logs.debug(MessageFormat.format(LoggingMsg.GETTING_TEXT, "First name Error"));
+				SelectorUtil.initializeSelectorsAndDoActions(RegistrationSelectors.firstNameError, "");
+			}
+
+			getCurrentFunctionName(false);
+			return SelectorUtil.textValue.get();
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+			}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
+	}
+
+	// done CBI
+	public static String getLastNameErrorInvalid() throws Exception {
+		try {
+			getCurrentFunctionName(true);
+
+			if (getBrowserName().contains(GlobalVariables.browsers.iPhone)) {
+				logs.debug(MessageFormat.format(LoggingMsg.GETTING_TEXT, "Last name Error"));
+				SelectorUtil.initializeSelectorsAndDoActions(RegistrationSelectors.lastNameErrorMobile, "index,1");
+			} else {
+				logs.debug(MessageFormat.format(LoggingMsg.GETTING_TEXT, "Last name Error"));
+				SelectorUtil.initializeSelectorsAndDoActions(RegistrationSelectors.lastNameError, "");
+			}
+
+			getCurrentFunctionName(false);
+			return SelectorUtil.textValue.get();
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+			}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
+	}
+
+	// done CBI
+	public static String getStreerAddressErrorInvalid() throws Exception {
+		try {
+			getCurrentFunctionName(true);
+
+			if (getBrowserName().contains(GlobalVariables.browsers.iPhone)) {
+				logs.debug(MessageFormat.format(LoggingMsg.GETTING_TEXT, "Street address Error"));
+				SelectorUtil.initializeSelectorsAndDoActions(RegistrationSelectors.streetAddreesErrorMobile, "index,2");
+			} else {
+				logs.debug(MessageFormat.format(LoggingMsg.GETTING_TEXT, "Street address Error"));
+				SelectorUtil.initializeSelectorsAndDoActions(RegistrationSelectors.streetAddreesError, "");
+			}
+
+			getCurrentFunctionName(false);
+			return SelectorUtil.textValue.get();
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+			}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
+	}
+
+	// done CBI
+	public static String getCityErrorInvalid() throws Exception {
+		try {
+			getCurrentFunctionName(true);
+
+			if (getBrowserName().contains(GlobalVariables.browsers.iPhone)) {
+				logs.debug(MessageFormat.format(LoggingMsg.GETTING_TEXT, "City Error"));
+				SelectorUtil.initializeSelectorsAndDoActions(RegistrationSelectors.cityErrorMobile, "index,3");
+			} else {
+				logs.debug(MessageFormat.format(LoggingMsg.GETTING_TEXT, "City Error"));
+				SelectorUtil.initializeSelectorsAndDoActions(RegistrationSelectors.cityError, "");
+			}
+
+			getCurrentFunctionName(false);
+			return SelectorUtil.textValue.get();
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+			}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
+	}
+
+	// done CBI
+	public static String getStateErrorInvalid() throws Exception {
+		try {
+			getCurrentFunctionName(true);
+
+			if (getBrowserName().contains(GlobalVariables.browsers.iPhone)) {
+				logs.debug(MessageFormat.format(LoggingMsg.GETTING_TEXT, "State Error"));
+				SelectorUtil.initializeSelectorsAndDoActions(RegistrationSelectors.stateErrorMobile, "");
+			} else {
+				logs.debug(MessageFormat.format(LoggingMsg.GETTING_TEXT, "State Error"));
+				SelectorUtil.initializeSelectorsAndDoActions(RegistrationSelectors.stateError, "");
+			}
+
+			getCurrentFunctionName(false);
+			return SelectorUtil.textValue.get();
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+			}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
+	}
+
+	// done CBI
+	public static String getZIPCodeErrorInvalid() throws Exception {
+		try {
+			getCurrentFunctionName(true);
+
+			if (getBrowserName().contains(GlobalVariables.browsers.iPhone)) {
+				logs.debug(MessageFormat.format(LoggingMsg.GETTING_TEXT, "State Error"));
+				SelectorUtil.initializeSelectorsAndDoActions(RegistrationSelectors.ZIPCodeErrorMobile, "index,4");
+			} else {
+				logs.debug(MessageFormat.format(LoggingMsg.GETTING_TEXT, "State Error"));
+				SelectorUtil.initializeSelectorsAndDoActions(RegistrationSelectors.ZIPCodeError, "");
+			}
+
+			getCurrentFunctionName(false);
+			return SelectorUtil.textValue.get();
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+			}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
+	}
+
+	// done CBI
+	public static String getPhoneErrorInvalid() throws Exception {
+		try {
+			getCurrentFunctionName(true);
+
+			if (getBrowserName().contains(GlobalVariables.browsers.iPhone)) {
+				logs.debug(MessageFormat.format(LoggingMsg.GETTING_TEXT, "State Error"));
+				SelectorUtil.initializeSelectorsAndDoActions(RegistrationSelectors.phoneErrorMobile, "index,5");
+			} else {
+				logs.debug(MessageFormat.format(LoggingMsg.GETTING_TEXT, "State Error"));
+				SelectorUtil.initializeSelectorsAndDoActions(RegistrationSelectors.phoneError, "");
+			}
+
+			getCurrentFunctionName(false);
+			return SelectorUtil.textValue.get();
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+			}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
+	}
+
 	public static void verifyRegistrationFormErrors() throws Exception {
 		getCurrentFunctionName(true);
 		getFirstNameError();
@@ -699,7 +851,7 @@ public class Registration extends SelTestCase {
 			logs.debug(MessageFormat.format(LoggingMsg.GETTING_TEXT, "welcome Message check"));
 			SelectorUtil.initializeSelectorsAndDoActions(RegistrationSelectors.welcomeMessage.get(), "");
 			getCurrentFunctionName(false);
-			
+
 			return SelectorUtil.textValue.get();
 		} catch (NoSuchElementException e) {
 			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
