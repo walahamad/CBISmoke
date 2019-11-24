@@ -69,7 +69,7 @@ public class HomePage extends SelTestCase {
 	
 	public static void  clickOnMiniCartCloseBtn() throws Exception {
 		getCurrentFunctionName(true);
-		String subStrArr = HomePageSelectors.miniCartClose;
+		String subStrArr = HomePageSelectors.miniCartClose.get();
 		logs.debug("Clicking on Mini Cart clsoe icon");
 		SelectorUtil.initializeSelectorsAndDoActions(subStrArr);
 		getCurrentFunctionName(false);

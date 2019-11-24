@@ -140,7 +140,7 @@ public class PDP extends SelTestCase {
 	}
 
 	// done - SMK
-//	No longer needed, will be removed after valdiating the new function is working correctly
+//	No longer needed, will be removed after validating the new function is working correctly
 //	public static void addProductsToCartV1() throws Exception {
 //		try {
 //			getCurrentFunctionName(true);
