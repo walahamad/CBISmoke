@@ -16,7 +16,7 @@ public class HomePageSelectors
 
 	//public static final cselector miniCartMobd = new cselector("css,#cartAnchor","css,.pw-header-bar__actions.t-header-bar__cart > button");
 	
-
+	public static final cselector mainHomeCarousels = new cselector("body gray-disabled-arrows","css,#gwt_recommendations_home_1 > div > div > div > div.body","css,#home_rr_PWA > div > div > div");
 	//public static final String logo = "css,#logo1 a.logo-anchor";
 	
 	public static final String header = "header-container";

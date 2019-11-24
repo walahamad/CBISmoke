@@ -26,6 +26,7 @@ public class HomePageBase extends SelTestCase {
 	public static final String header = "header";
 	public static final String footer = "footer";
 	public static final String body = "body";
+	public static final String mainHomeCarousels = "Main Home Carousels Verification";
 
 	// used sheet in test
 	public static final String testDataSheet = SheetVariables.HPRegressionsheet;
@@ -67,6 +68,8 @@ public class HomePageBase extends SelTestCase {
 			} else
 				if (proprties.contains(this.miniCart)) {
 					MiniCartValidation.validate();
+				}else if (proprties.contains(this.Logo)) {
+					LogoValidation.validate();
 				}
 			
 					else{
