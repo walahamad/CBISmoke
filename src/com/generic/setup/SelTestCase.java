@@ -84,6 +84,7 @@ public class SelTestCase {
     public static LinkedHashMap<String, Object> addresses = null; 
     public static LinkedHashMap<String, Object> invintory = null;
     public static LinkedHashMap<String, Object> paymentCards = null;
+	private static String URL;
 
     public static String getBrowserName() {
         //return browserName;
@@ -92,6 +93,14 @@ public class SelTestCase {
 
     public static void setBrowserName(String browserName) {
         //SelTestCase.browserName = browserName;
+    }
+    
+    public static String getURL() {
+        return SelTestCase.URL;
+    }
+
+    public static void setURL(String URL) {
+        SelTestCase.URL = URL;
     }
 
     public static String getScreenShotName() {
@@ -284,6 +293,7 @@ public class SelTestCase {
      */
     @BeforeMethod
     public void setUp(XmlTest test) throws Exception  {
+    	
     	getCurrentFunctionName(true);
     	
     	if (test.getParameter("browserName")==null)
@@ -315,7 +325,7 @@ public class SelTestCase {
         setDriver(Common.initializeBrowser(test.getParameter("browserName")));
         
         try {
-        	Common.launchApplication(test.getParameter("browserName"));
+        	Common.launchApplication(test.getParameter("browserName") , test.getParameter("Env") , test.getParameter("Brand"));
 
         } catch(Throwable t) {
             Error = t;
@@ -356,13 +366,13 @@ public class SelTestCase {
     }
     
     @AfterSuite
-    public static void reportMaker() throws IOException
+    public static void reportMaker(XmlTest test) throws IOException
     {
     	getCurrentFunctionName(true);
     	
     	ArrayList<HashMap<String, String>> casesDetails = null;
     	try {
-			TestUtilities.reportSetup();
+			TestUtilities.reportSetup(test.getParameter("Env"));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
