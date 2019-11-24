@@ -39,7 +39,7 @@ public class SheetVariables {
 	public static final String SearchSheet = "SearchRegression";
 	public static final String MailSignupRegressionSheet = "MailSignupRegression";
 	public static final String QuickViewRegressionSheet = "QuickViewRegression";
-	public static final String VisualTestingHPRegressionsheet = "HomePageRegression";
+	public static final String HPRegressionsheet = "HomePageRegression";
 	public static final String VisualTestingCLPRegressionsheet = "VisualTestingCLPRegression";
 	public static final String RunnersRegressionSheet = "SetupRunners";
 	public static final String BrowsersListingSheet = "SetupBrowsers";
@@ -58,7 +58,7 @@ public class SheetVariables {
 	public static final String PaymentDetailsTestCaseId = "PaymentDetails";
 	public static final String MailSignupTestCaseId = "MailSignup";
 	public static final String QuickViewTestCaseId = "QuickView";
-	public static final String VisualTestingHPTestCaseId = "VisualTestingHP case";
+	public static final String HPTestCaseId = "VisualTestingHP case";
 	public static final String VisualTestingCLPTestCaseId = "VisualTestingCLP case";
 	public static final String FavoriteSheetTestCaseId = "Favorite Case";
 

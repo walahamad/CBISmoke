@@ -1,4 +1,4 @@
-package com.generic.tests.FG.HomePage;
+package com.generic.tests.GR.HomePage;
 
 import java.text.MessageFormat;
 import java.util.Arrays;
@@ -26,7 +26,6 @@ public class HomePageBase extends SelTestCase {
 	public static final String header = "header";
 	public static final String footer = "footer";
 	public static final String body = "body";
-	public static final String YAMALCarousels = "YAMA Carousels Verification";
 
 	// used sheet in test
 	public static final String testDataSheet = SheetVariables.HPRegressionsheet;
@@ -71,11 +70,6 @@ public class HomePageBase extends SelTestCase {
 				}
 			
 					else{
-				Testlogs.get().debug("please check proprties provided in excel sheet");
-			}
-			if (proprties.contains(this.YAMALCarousels)) {
-				YAMALCarouselsVerification.validate();
-			}else {
 				Testlogs.get().debug("please check proprties provided in excel sheet");
 			}
 

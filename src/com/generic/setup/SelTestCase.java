@@ -88,7 +88,9 @@ public class SelTestCase {
 
     public static String getBrowserName() {
         //return browserName;
-        return testObj.get().getParameter("browserName");
+    	String browserName = testObj.get().getParameter("browserName");
+    	logs.debug("browserName "+browserName);
+        return browserName;
     }
 
     public static void setBrowserName(String browserName) {
