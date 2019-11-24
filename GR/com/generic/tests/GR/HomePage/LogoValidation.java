@@ -3,9 +3,9 @@ package com.generic.tests.GR.HomePage;
 import com.generic.page.HomePage;
 import com.generic.setup.SelTestCase;
 
-public class HPValidation extends SelTestCase {
+public class LogoValidation extends SelTestCase {
 
-	public static void logoValidate() throws Exception {
+	public static void validate() throws Exception {
 		getCurrentFunctionName(true);
 		sassert().assertTrue(HomePage.validateLogodisplayed(), "Logo is not displayed");
 		HomePage.NavigateAwayFromHomePage(); 
