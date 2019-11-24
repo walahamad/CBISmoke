@@ -353,7 +353,7 @@ public class SelectorUtil extends SelTestCase {
 					// used to get the element at specific index when there are multiple elements of
 					// the same selector
 					if (value.contains("index")) {
-						int elementIndex = Integer.parseInt(value.split(",")[1]);
+						int elementIndex = Integer.parseInt(value.split("index,")[1].split(",")[0]);
 						
 						field = wait.until(new Function<WebDriver, WebElement>() {
 							public WebElement apply(WebDriver driver) {
@@ -379,7 +379,7 @@ public class SelectorUtil extends SelTestCase {
 			if (!selector.equals("")) {
 				if (!SelectorUtil.isAnErrorSelector) {
 					if (value.contains("ForceAction")) {
-						action = value.split(",")[1];
+						action = value.split("ForceAction,")[1].split(",")[0];
 					}
 
 					if (action.equals("hover")) {
@@ -671,6 +671,15 @@ public class SelectorUtil extends SelTestCase {
 		return isDisplayed;
 	}
 
+	@SuppressWarnings("rawtypes")
+	public static boolean isNotDisplayed(String value) throws Exception {
+		getCurrentFunctionName(true);
+		List<String> subStrArr = new ArrayList<String>();
+		subStrArr.add(value);
+		boolean isNotDisplayed = isNotDisplayed(subStrArr) ; 
+		getCurrentFunctionName(false);
+		return isNotDisplayed;
+	}
 	@SuppressWarnings({ "rawtypes", "unused" })
 	public static boolean isNotDisplayed(List<String> subStrArr) throws Exception {
 		getCurrentFunctionName(true);
@@ -731,6 +740,15 @@ public class SelectorUtil extends SelTestCase {
 		return items.get(index);
 	}
 
+	@SuppressWarnings("rawtypes")
+	public static List<WebElement> getAllElements(String value) throws Exception {
+		getCurrentFunctionName(true);
+		List<String> subStrArr = new ArrayList<String>();
+		subStrArr.add(value);
+		getCurrentFunctionName(false);
+		return	getAllElements(subStrArr); 
+	}
+	
 	@SuppressWarnings("rawtypes")
 	public static List<WebElement> getAllElements(List<String> subStrArr) throws Exception {
 		getCurrentFunctionName(true);
