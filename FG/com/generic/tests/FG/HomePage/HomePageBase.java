@@ -25,6 +25,7 @@ public class HomePageBase extends SelTestCase {
 	public static final String header = "header";
 	public static final String footer = "footer";
 	public static final String body = "body";
+	public static final String YAMALCarousels = "YAMA Carousels Verification";
 
 	// used sheet in test
 	public static final String testDataSheet = SheetVariables.VisualTestingHPRegressionsheet;
@@ -64,6 +65,11 @@ public class HomePageBase extends SelTestCase {
 			if (proprties.contains(this.Logo)) {
 				LogoValidation.validate();
 			} else {
+				Testlogs.get().debug("please check proprties provided in excel sheet");
+			}
+			if (proprties.contains(this.YAMALCarousels)) {
+				YAMALCarouselsVerification.validate();
+			}else {
 				Testlogs.get().debug("please check proprties provided in excel sheet");
 			}
 

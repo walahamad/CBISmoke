@@ -5,7 +5,8 @@ import com.generic.setup.cselector;
 public class HomePageSelectors
 {
 	public static final cselector logo = new cselector("css,#logo1 a.logo-anchor","css,#headerBox > div.u-flexbox.u-width-full.t-header-bar__title > div > a");
-	
+	public static final cselector yamalCarousels = new cselector("body gray-disabled-arrows" ,"css,#gwt_recommendations_home_1 > div > div > div > div.body > div > div","css,#home_rr_PWA > div > div > div > div > div > div");
+ 
 	//public static final String logo = "css,#logo1 a.logo-anchor";
 	
 	public static final String header = "header-container";

@@ -42,5 +42,15 @@ public class HomePage extends SelTestCase {
 		getCurrentFunctionName(false);
 		return results;
 	}
+	public static boolean validateYamalCarouselsDisplayed() throws Exception {
+		getCurrentFunctionName(true);
+		boolean isDisplayed; 
+		List<String> subStrArr = new ArrayList<String>();
+		logs.debug("Validate if yamal carousels exist");
+		subStrArr.add(HomePageSelectors.yamalCarousels.get());
+		isDisplayed = SelectorUtil.isDisplayed(subStrArr);
+		getCurrentFunctionName(false);		
+		return isDisplayed;
+	}
     
 }
