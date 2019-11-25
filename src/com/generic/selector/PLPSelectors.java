@@ -1,7 +1,16 @@
 package com.generic.selector;
 
+import com.generic.setup.cselector;
+
 public class PLPSelectors {
-	//done
+
+	//CBI
+	public static final cselector SearchIcon = new cselector("css,#uNavTop button.searchboxAsButton", "css,.u-margin-end-6.u-margin-start-6");
+	public static final cselector searchBox = new cselector("css,#searchBox input#headerBox","css,form>div>div>input");
+	public static final cselector recommendedOption =new cselector("css,li.unbxd-as-popular-product.unbxd-as-popular-product-grid a.unbxd-as-popular-product-info","css,.c--align-middle a.pw-link.c-arrange.u-flexbox.c--align-middle.u-align-center");
+	public static final cselector SearchButton =new cselector("css,li.unbxd-as-popular-product.unbxd-as-popular-product-grid a.unbxd-as-popular-product-info");
+	
+	//OLD
 	public static final String sortingDropDown = "sortOptions1";
 	public static final String sortingDropDownMobile = "sort by";
 	public static final String sortPHTL = "css,div.custom-dropdown-content.sort-dropdown-content>button";
@@ -12,10 +21,6 @@ public class PLPSelectors {
 	public static final String productNmber = "pagination-bar-results";
 	public static final String SearchBox = "js-site-search-input";
 	public static final String randomProduct = "product__list--name";
-	
-	
-	
-	
 	public static final String productsSalePrices = "product-sales-price";
 	public static final String sortOptions1 = "sortOptions1";
 	public static final String sortOptions2 = "sortOptions2";

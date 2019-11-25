@@ -6,6 +6,7 @@ public class PDPSelectors {
 	
 	//CBI SMK
 	
+	public static final cselector title = new cselector("css,.gwt-product-detail-product-name-label","css,.t-product-details-heading__title.u-margin-bottom");
 	public static final cselector avaibleOptions = new cselector("css,.gwt-product-option-panel-widget-panel>div","css,.c-product-option-items__container");
 	public static final cselector allColors = new cselector("css,.gwt-image-picker-option >img","css,.pw-swatch__chip>.pw-swatch__chip-inner>.c-product-option-items__item-content.gwt-image-picker-option");
 	public static final cselector allSizes = new cselector("css,.gwt-product-option-panel-listbox-container>div> .gwt-ListBox","css,.c-product-options__content.u-border-brand-color.u-border-radius");
@@ -23,7 +24,6 @@ public class PDPSelectors {
 			
 	// done-OCM
 	public static String price = "price-and-special-messaging";
-	public static String title = "product-name";
 	public static String id = "code";
 	public static String desc = "description";
 	public static String socialMediaButtons = "css,div.st-btns";
