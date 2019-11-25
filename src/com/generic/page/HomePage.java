@@ -54,24 +54,19 @@ public class HomePage extends SelTestCase {
 		getCurrentFunctionName(false);
 		return results;
 	}
-
-  public static boolean validateYamalCarouselsDisplayed() throws Exception {
+	public static boolean validateYMALCarouselsDisplayed() throws Exception {
 		getCurrentFunctionName(true);
 		boolean isDisplayed; 
-		List<String> subStrArr = new ArrayList<String>();
-		logs.debug("Validate if yamal carousels exist");
-		subStrArr.add(HomePageSelectors.yamalCarousels.get());
-		isDisplayed = SelectorUtil.isDisplayed(subStrArr);
+		logs.debug("Validate if YMAL carousels exist");
+		isDisplayed = SelectorUtil.isDisplayed(HomePageSelectors.YMALCarousels.get());
 		getCurrentFunctionName(false);		
 		return isDisplayed;
 	}
 	public static boolean validateMainHomeCarouselsDisplayed() throws Exception {
 		getCurrentFunctionName(true);
 		boolean isDisplayed; 
-		List<String> subStrArr = new ArrayList<String>();
 		logs.debug("Validate if main home carousels exist");
-		subStrArr.add(HomePageSelectors.mainHomeCarousels.get());
-		isDisplayed = SelectorUtil.isDisplayed(subStrArr);
+		isDisplayed = SelectorUtil.isDisplayed(HomePageSelectors.mainHomeCarousels.get());
 		getCurrentFunctionName(false);		
 		return isDisplayed;
 	}

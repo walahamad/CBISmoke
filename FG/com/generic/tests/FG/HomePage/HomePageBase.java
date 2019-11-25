@@ -28,7 +28,7 @@ public class HomePageBase extends SelTestCase {
 	public static final String header = "header";
 	public static final String footer = "footer";
 	public static final String body = "body";
-	public static final String YAMALCarousels = "YAMA Carousels Verification";
+	public static final String YMALCarousels = "YMAL Carousels Verification";
 
 	public static final String menu = "menu";
 	public static final String signIn = "SignIn validation";
@@ -95,8 +95,8 @@ public class HomePageBase extends SelTestCase {
         else {
 				Testlogs.get().debug("please check proprties provided in excel sheet");
 			}
-			if (proprties.contains(this.YAMALCarousels)) {
-				YAMALCarouselsVerification.validate();
+			if (proprties.contains(this.YMALCarousels)) {
+				YMALCarouselsVerification.validate();
 			}else {
 				Testlogs.get().debug("please check proprties provided in excel sheet");
 			}

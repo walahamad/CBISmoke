@@ -68,11 +68,14 @@ public class HomePageBase extends SelTestCase {
 			} else
 				if (proprties.contains(this.miniCart)) {
 					MiniCartValidation.validate();
-				}else if (proprties.contains(this.Logo)) {
-					LogoValidation.validate();
 				}
 			
 					else{
+				Testlogs.get().debug("please check proprties provided in excel sheet");
+			}
+			if (proprties.contains(this.mainHomeCarousels)) {
+				MainHomeCarouselsVerification.validate();
+			}else {
 				Testlogs.get().debug("please check proprties provided in excel sheet");
 			}
 
