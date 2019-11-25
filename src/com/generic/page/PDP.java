@@ -380,6 +380,55 @@ public class PDP extends SelTestCase {
 		}
 	}
 	
+	// done - SMK
+	public static int getNumberOfItems() throws Exception {
+		try {
+			getCurrentFunctionName(true);
+			String Str = PDPSelectors.numberOfBundleItems.get();
+			int numberOfItems = SelectorUtil.getAllElements(Str).size();
+			getCurrentFunctionName(false);
+			return numberOfItems;
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+			}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
+	}
+	
+	public static void selectSwatchesV2() throws Exception {
+		try {
+			getCurrentFunctionName(true);
+			int nmberOfItems = getNumberOfItems();
+			if (nmberOfItems > 1) {
+				String productID = getProductID(1);
+				String Str = "#" + productID + ">" + PDPSelectors.numberOfBundleItems.get();
+
+				
+			} else {
+
+				int numberOfPanels = getNumberOfOptions();
+				int numberOfListBoxes = getNumberListBoxes();
+				if (numberOfPanels != 0) {
+					for (int i = 1; i <= numberOfPanels; i++) {
+						selectNthOptionFirstSwatch(i);
+						Thread.sleep(1500);
+					}
+				}
+
+				if (numberOfListBoxes != 0) {
+					for (int i = 0; i < numberOfListBoxes; i++) {
+						selectNthListBoxFirstValue(i);
+						Thread.sleep(1500);
+					}
+				}
+			}
+			getCurrentFunctionName(false);
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+			}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
+	}
 	
 
 	// done -ocm
