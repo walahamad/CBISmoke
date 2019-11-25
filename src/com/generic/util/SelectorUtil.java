@@ -418,7 +418,7 @@ public class SelectorUtil extends SelTestCase {
 							if (value.contains("pressEnter")) {
 								tempVal = value.split(",")[0];
 							}
-							if (browser.contains("mobile"))
+							if (browser.contains(GlobalVariables.browsers.iPhone))
 							{
 								int index = 0;
 								for (index=0; index < tempVal.length(); index++) {

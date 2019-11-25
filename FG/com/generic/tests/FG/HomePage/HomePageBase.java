@@ -66,29 +66,19 @@ public class HomePageBase extends SelTestCase {
 
 			if (proprties.contains(this.Logo)) {
 				LogoValidation.validate();
-			} else
-				if (proprties.contains(this.miniCart)) {
-					MiniCartValidation.validate();
-				}
-			
-					else{
-				Testlogs.get().debug("please check proprties provided in excel sheet");
-			}
-
-			// Check the Navigation menu.
-			if (proprties.contains(this.menu)) {
+			} else if (proprties.contains(this.menu)) {
+				// Check the Navigation menu.
 				sassert().assertTrue(MenuValidation.validate(), "Menu validation has some problems");
-			} else {
-				Testlogs.get().debug("please check proprties provided in excel sheet");
-			}
-
-			// Check the Sign in form functionality.
-			if (proprties.contains(this.signIn)) {
+			}  else if (proprties.contains(this.signIn)) {
+				// Check the Sign in form functionality.
 				sassert().assertTrue(SignInValidation.validate(), "Sign in functionality validation has some problems");
 			} else {
-				Testlogs.get().debug("please check proprties provided in excel sheet");
+				if (proprties.contains(this.miniCart)) {
+					MiniCartValidation.validate();
+				} else{
+					Testlogs.get().debug("please check proprties provided in excel sheet");
+				}
 			}
-
 			sassert().assertAll();
 			Common.testPass();
 		} catch (Throwable t) {

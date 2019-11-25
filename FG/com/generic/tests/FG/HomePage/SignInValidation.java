@@ -10,6 +10,7 @@ import com.generic.selector.HomePageSelectors;
 import com.generic.setup.Common;
 import com.generic.setup.SelTestCase;
 import com.generic.util.SelectorUtil;
+import com.generic.setup.GlobalVariables;
 
 
 public class SignInValidation extends SelTestCase {
@@ -35,7 +36,7 @@ public class SignInValidation extends SelTestCase {
 		logs.debug("The user Password: " + userPassword);
 
 		// Check if the device is mobile(PWA site) or (desktop, tablet).
-		boolean isPWAMobile = getBrowserName().contains("mobile") && !getBrowserName().contains("iPad");
+		boolean isPWAMobile = getBrowserName().contains(GlobalVariables.browsers.iPhone);
 
 		if (isPWAMobile) {
 			// Validate the sign in for Mobile (PWA site).

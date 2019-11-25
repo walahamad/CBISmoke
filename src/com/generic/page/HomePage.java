@@ -178,7 +178,6 @@ public class HomePage extends SelTestCase {
 
 			// Save the text and href for the selected menu item.
 			String href = element.getAttribute("href");
-			boolean currentPageMatchNavigated = true;
 
 			// Navigate to an item in the menu.
 			SelectorUtil.clickOnWebElement(element);
@@ -189,10 +188,8 @@ public class HomePage extends SelTestCase {
 
 			// Check if the current page title is the same as selected navigation title.
 			if (!href.equalsIgnoreCase(currentPageUrl)) {
-				currentPageMatchNavigated = false;
 				validateSubMenuNavigation = false;
 			}
-			sassert().assertTrue(currentPageMatchNavigated, "Menu validation items navigation has some problems");
 		}
 		getCurrentFunctionName(false);
 		return validateSubMenuNavigation;
@@ -372,7 +369,11 @@ public class HomePage extends SelTestCase {
 
 		// Get the welcome message.
 		if (isPWAMobile) {
-			welcomeMessage.add(HomePage.getSignInLinkMobilePWA());
+			WebElement welcomeMessageElement = HomePage.getSignInLinkMobilePWA();
+			String itemHref = welcomeMessageElement.getAttribute("href");
+			if (itemHref.contains("AccountOverView")) {
+				welcomeMessage.add(welcomeMessageElement);
+			}
 		} else {
 			welcomeMessage = HomePage.getElementsList(HomePageSelectors.welcomeMessage.get());
 		}
@@ -409,9 +410,8 @@ public class HomePage extends SelTestCase {
 		for (index=0; index < menuItems.size(); index++) {
 			WebElement item = menuItems.get(index);
 			String itemHref = item.getAttribute("href");
-			String itemText = item.getText().toLowerCase();
 			// Check if the item is sign in/create account (By check create account page link) or welcome message.
-			if (itemHref.contains("UserLogonView") || itemText.contains("welcome")) {
+			if (itemHref.contains("UserLogonView") || itemHref.contains("AccountOverView")) {
 				signInLink = item;
 				break;
 			}
