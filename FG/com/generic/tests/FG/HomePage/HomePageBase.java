@@ -88,9 +88,9 @@ public class HomePageBase extends SelTestCase {
 			}else if (proprties.contains(this.AccountMenu)) {
 		  	   sassert().assertTrue(AccountMenuValidation.validate(), "My Account menu validation has some problems");
 			}
-//			else if (proprties.contains(this.GlobalFooter)) {
-//				sassert().assertTrue(GlobalFooterValidation.validate(), "Global footer validation has some problems");
-//			}   
+			else if (proprties.contains(this.GlobalFooter)) {
+				sassert().assertTrue(GlobalFooterValidation.validate(), "Global footer validation has some problems");
+			}   
         else {
 				Testlogs.get().debug("please check proprties provided in excel sheet");
 			}
