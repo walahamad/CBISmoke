@@ -28,6 +28,8 @@ public class HomePageBase extends SelTestCase {
 	public static final String header = "header";
 	public static final String footer = "footer";
 	public static final String body = "body";
+	public static final String menu = "menu";
+	public static final String signIn = "SignIn validation";
 
 	// used sheet in test
 	public static final String testDataSheet = SheetVariables.HPRegressionsheet;
@@ -65,6 +67,7 @@ public class HomePageBase extends SelTestCase {
 
 			if (proprties.contains(this.Logo)) {
 				LogoValidation.validate();
+
 			} else if (proprties.contains(this.miniCart)) {
 				MiniCartValidation.validate();
 
@@ -73,10 +76,15 @@ public class HomePageBase extends SelTestCase {
 
 			} else if (proprties.contains(this.search)) {
 				HomePageValidation.validateSearch();
+			}  else if (proprties.contains(this.menu)) {
+				// Check the Navigation menu.
+				sassert().assertTrue(MenuValidation.validate(), "Menu validation has some problems");
+			}  else if (proprties.contains(this.signIn)) {
+				// Check the Sign in form functionality.
+				sassert().assertTrue(SignInValidation.validate(), "Sign in functionality validation has some problems");
 			} else {
 				Testlogs.get().debug("please check proprties provided in excel sheet");
 			}
-
 			sassert().assertAll();
 			Common.testPass();
 		} catch (Throwable t) {

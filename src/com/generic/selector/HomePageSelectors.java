@@ -35,4 +35,20 @@ public class HomePageSelectors
 	public static final String footerLogo = "footer-ocm-logo";
 	public static final String footerEmailSignUp = "footer-email-sign-up";
 
+	// Header navigation menu selectors.
+	public static final cselector navigationIcon = new cselector("css,.nav-toggle", "css,.t-header__menu-icon .pw-button");
+	public static final cselector menuItems = new cselector("css,#css-top-navigation #flyout>.menuItem>a","css,#gwt-top-navigation .active>.gwt-nav-item-has-submenu>.gwt-HTML", "css,.navigation-modal_class .pw-link");
+	public static final cselector selectedMenuHeader = new cselector("", "css,#gwt-top-navigation .active>.gwt-nav-item-has-submenu.opened>.gwt-HTML", "css,.m-navigation__fades-in .pw-header-bar .c-sheet__title");
+	public static final cselector leafMenuItems = new cselector("", "css,.active-menu-item>:not(.gwt-nav-item-has-submenu)", "css,.navigation-modal_class .pw-list-tile:not(.pw--has-child) .pw-link");
+	public static final String sideBoxHeader = "css,#sideBoxHeader";
+
+	// Sign in selectors.
+	public static final cselector signInNavigation = new cselector("css,#login a","css,.my-account-controls-modal_class .pw-link");
+	public static final cselector signInEmailInput = new cselector("css,[name=logonId]", "css,[name=logonId].c-custom-input");
+	public static final cselector signInEmailPasswordInput = new cselector("css,[name=logonPassword]", "css,[name=logonPassword].c-custom-input");
+	public static final cselector signInButton = new cselector("css,#logonButton", "css, .t-login__submit-button .pw-button");
+	public static final cselector welcomeMessage = new cselector("css,#welcome");
+	public static final cselector accountMenuIcon = new cselector("css,#gwt_dropdownmenu_my_account", "css,.t-header__my-account");
+	public static final String accountMenuList = "css,.my-account-controls-modal_class .pw-link";
+
 }
