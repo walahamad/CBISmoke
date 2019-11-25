@@ -870,7 +870,23 @@ public class SelectorUtil extends SelTestCase {
 
 	}
 
-	public static String getCurrentPageUrl() throws Exception {
+	
+	public static boolean isImgLoaded(String selector) {
+		WebElement img = getDriver().findElement(By.cssSelector(selector));
+
+		Object  result =  (Boolean) ((JavascriptExecutor) getDriver()).executeScript(
+				   "return arguments[0].complete && "+
+						   "typeof arguments[0].naturalWidth != \"undefined\" && "+
+						   "arguments[0].naturalWidth > 0", img);
+	    boolean loaded = false;
+	    if (result instanceof Boolean) {
+	      loaded = (Boolean) result;
+	    }
+	    return loaded;
+	}
+}
+
+public static String getCurrentPageUrl() throws Exception {
 		return SelTestCase.getDriver().getCurrentUrl();
 	}
 

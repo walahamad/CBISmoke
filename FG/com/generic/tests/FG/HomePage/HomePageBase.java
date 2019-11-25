@@ -22,6 +22,8 @@ public class HomePageBase extends SelTestCase {
 	// possible scenarios
 	public static final String Logo = "Logo validation";
 	public static final String miniCart = "Mini cart validation";
+	public static final String search = "Search validation";
+	public static final String espots = "espots validation";
 	public static final String verify = "verify";
 	public static final String header = "header";
 	public static final String footer = "footer";
@@ -53,8 +55,7 @@ public class HomePageBase extends SelTestCase {
 	}
 
 	@Test(dataProvider = "HP_SC")
-	public void HomePageRegressionTest(String caseId, String runTest, String desc, String proprties)
-			throws Exception {
+	public void HomePageRegressionTest(String caseId, String runTest, String desc, String proprties) throws Exception {
 		Testlogs.set(new SASLogger("HP_SC " + getBrowserName()));
 		// Important to add this for logging/reporting
 		setTestCaseReportName(SheetVariables.HPTestCaseId);
@@ -66,18 +67,23 @@ public class HomePageBase extends SelTestCase {
 
 			if (proprties.contains(this.Logo)) {
 				LogoValidation.validate();
-			} else if (proprties.contains(this.menu)) {
+
+			} else if (proprties.contains(this.miniCart)) {
+				MiniCartValidation.validate();
+
+			} else if (proprties.contains(this.espots)) {
+				HomePageValidation.validateCaroselAndEspot();
+
+			} else if (proprties.contains(this.search)) {
+				HomePageValidation.validateSearch();
+			}  else if (proprties.contains(this.menu)) {
 				// Check the Navigation menu.
 				sassert().assertTrue(MenuValidation.validate(), "Menu validation has some problems");
 			}  else if (proprties.contains(this.signIn)) {
 				// Check the Sign in form functionality.
 				sassert().assertTrue(SignInValidation.validate(), "Sign in functionality validation has some problems");
 			} else {
-				if (proprties.contains(this.miniCart)) {
-					MiniCartValidation.validate();
-				} else{
-					Testlogs.get().debug("please check proprties provided in excel sheet");
-				}
+				Testlogs.get().debug("please check proprties provided in excel sheet");
 			}
 			sassert().assertAll();
 			Common.testPass();
