@@ -884,7 +884,7 @@ public class SelectorUtil extends SelTestCase {
 	    }
 	    return loaded;
 	}
-}
+
 
 public static String getCurrentPageUrl() throws Exception {
 		return SelTestCase.getDriver().getCurrentUrl();
