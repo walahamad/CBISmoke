@@ -61,18 +61,14 @@ public class HomePage extends SelTestCase {
 	}
 
 	
-	public static void clickOnAccountMenu(String accountMenuSelector,Boolean withHover ) throws Exception {
+	public static void clickOnAccountMenu(Boolean withHover) throws Exception {
 		try {
 			getCurrentFunctionName(true);
-			List<String> subStrArr = new ArrayList<String>();
-			List<String> valuesArr = new ArrayList<String>();
-			subStrArr.add(accountMenuSelector);
 			logs.debug("Clicking on Account menu");
 			if(withHover) {
-			valuesArr.add("ForceAction,hover");
-			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
+			SelectorUtil.initializeSelectorsAndDoActions(HomePageSelectors.accountMenu.get(), "ForceAction,hover");
 			}else {
-			SelectorUtil.initializeSelectorsAndDoActions(accountMenuSelector);
+			SelectorUtil.initializeSelectorsAndDoActions(HomePageSelectors.accountMenu.get());
 			}
 			getCurrentFunctionName(false);
 		} catch (NoSuchElementException e) {
@@ -82,19 +78,19 @@ public class HomePage extends SelTestCase {
 		}
 	}
 	
-	public static void clickOnCloseButton(String closeButtonSelector) throws Exception {
+	public static void clickOnCloseButton() throws Exception {
 	
 		getCurrentFunctionName(true);
 		logs.debug("Clicking on Close Button");
-		SelectorUtil.initializeSelectorsAndDoActions(closeButtonSelector);
+		SelectorUtil.initializeSelectorsAndDoActions(HomePageSelectors.navIcon.get());
 		getCurrentFunctionName(false);
 	
 	}
 	
 	
-	public static void clickOnRandomAccountMenuItem(String selector) throws Exception {
+	public static void clickOnRandomAccountMenuItem() throws Exception {
 		getCurrentFunctionName(true);
-		List<WebElement> accountMenuElements = getAccountMenuItems(selector);
+		List<WebElement> accountMenuElements = getAccountMenuItems();
 		Random random = new Random();
 		int randomIndex = random.nextInt(accountMenuElements.size());
 		WebElement element = accountMenuElements.get(randomIndex);
@@ -103,37 +99,64 @@ public class HomePage extends SelTestCase {
 	}
 	
 	
-	public static List<WebElement> getAccountMenuItems(String selector) throws Exception {
+	public static List<WebElement> getAccountMenuItems() throws Exception {
 		getCurrentFunctionName(true);
 		logs.debug("Get the account menu items.");
 		List<WebElement> menuItems = new ArrayList<WebElement>();
-		menuItems = getElementsList(selector);
+		menuItems = getElementsList(HomePageSelectors.accountMenuItems.get());
 		getCurrentFunctionName(false);
 		return menuItems;
 	}
 	
 	public static List<WebElement> getElementsList(String selector) throws Exception {
-		getCurrentFunctionName(true);
-		List<WebElement> elementsList = new ArrayList<WebElement>();
-		List<String> subStrArr = new ArrayList<String>();
-		subStrArr.add(selector);
-		elementsList = SelectorUtil.getAllElements(subStrArr);
+		getCurrentFunctionName(true);		
+		elementsList = SelectorUtil.getAllElements(selector);
 		getCurrentFunctionName(false);
 		return elementsList;
 	}
 	
-	public static boolean validateAccountMenuItemsDisplayed(String selector) throws Exception {
+	public static boolean validateAccountMenuItemsDisplayed() throws Exception {
 		getCurrentFunctionName(true);
-		List<WebElement> accountMenuElements = getAccountMenuItems(selector);
+		List<WebElement> accountMenuElements = getAccountMenuItems();
 		logs.debug("Validate account menu links." + accountMenuElements);
-		boolean validateAccountMenuItems = true;
+		boolean isDisplayed = true;
 		for (WebElement element:accountMenuElements ) {
-			validateAccountMenuItems = element.isDisplayed();
-			sassert().assertTrue(element.isDisplayed(), "Link is not displayed");
+			isDisplayed = element.isDisplayed();
 		}
 		getCurrentFunctionName(false);
-		return validateAccountMenuItems;
+		return isDisplayed;
 	}
+	
+
+	
+	public static boolean validateCountrySelectorDisplayed() throws Exception {
+		getCurrentFunctionName(true);
+		boolean isDisplayed; 
+		logs.debug("Validate if country selector  exist");
+		isDisplayed = SelectorUtil.isDisplayed(HomePageSelectors.countrySelector.get());
+		getCurrentFunctionName(false);		
+		return isDisplayed;
+	}
+	
+	public static boolean validateGlobalFooterItemsDisplayed() throws Exception {
+		getCurrentFunctionName(true);
+		boolean isDisplayed = true;
+		logs.debug("Validate if global footer  exist");
+		isDisplayed = SelectorUtil.isDisplayed(HomePageSelectors.globalFooter.get());		
+		List<WebElement> footerItems = new ArrayList<WebElement>();
+		footerItems = getElementsList(HomePageSelectors.accordionHeader.get());
+		for (WebElement element :footerItems) {
+			isDisplayed = element.isDisplayed();			
+		}
+		getCurrentFunctionName(false);		
+		return isDisplayed;
+	}
+	
+	
+	
+
+	
+	
 	
 	
     

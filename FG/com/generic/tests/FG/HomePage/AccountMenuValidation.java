@@ -9,30 +9,25 @@ import org.openqa.selenium.WebElement;
 import java.util.List;
 
 public class AccountMenuValidation extends SelTestCase {
-	public static void validate() throws Exception {
+	public static boolean validate() throws Exception {
 		getCurrentFunctionName(true);
 		boolean accountMenuValidation = true; 
-		
-		if (getBrowserName().toLowerCase().equals(browsers.iPhone) || getBrowserName().toLowerCase().equals(browsers.Nexus)) {
+		if (getBrowserName().toLowerCase().equals(browsers.iPhone.toLowerCase())) {
 			accountMenuValidation = validateMobile();
 		}else {
 			accountMenuValidation = validateDesktopAndTablet();
 		}		
-		sassert().assertTrue(accountMenuValidation, "My Account menu validation has some problems");
-
 		getCurrentFunctionName(false);
-
-		
+	    return accountMenuValidation;
 	}
 	
 	public static boolean validateDesktopAndTablet() throws Exception{
 		getCurrentFunctionName(true);
 		boolean accountMenuValidation = true; 
-		accountMenuValidation = accountMenuValidation && HomePage.validateAccountMenuDisplayed();
-		sassert().assertTrue(accountMenuValidation, "Menu is not displayed");
-		HomePage.clickOnAccountMenu(HomePageSelectors.accountMenu.get(),true);
-		HomePage.validateAccountMenuItemsDisplayed(HomePageSelectors.accountMenuItems.get());
-		HomePage.clickOnRandomAccountMenuItem(HomePageSelectors.accountMenuItems.get());
+		accountMenuValidation =  HomePage.validateAccountMenuDisplayed();
+		HomePage.clickOnAccountMenu(true);
+		HomePage.validateAccountMenuItemsDisplayed();
+		HomePage.clickOnRandomAccountMenuItem();
 		getCurrentFunctionName(false);
 		return accountMenuValidation;
 	}
@@ -41,11 +36,10 @@ public class AccountMenuValidation extends SelTestCase {
 	public static boolean validateMobile() throws Exception{
 		getCurrentFunctionName(true);
 		boolean accountMenuValidation = true; 
-		accountMenuValidation = accountMenuValidation && HomePage.validateAccountMenuDisplayed();
-		sassert().assertTrue(accountMenuValidation, "Menu is not displayed");
-		HomePage.clickOnAccountMenu(HomePageSelectors.accountMenu.get(),false);
-		HomePage.validateAccountMenuItemsDisplayed(HomePageSelectors.accountMenuItems.get());
-		HomePage.clickOnCloseButton(HomePageSelectors.navIcon.get());
+		accountMenuValidation =  HomePage.validateAccountMenuDisplayed();
+		HomePage.clickOnAccountMenu(false);
+		HomePage.validateAccountMenuItemsDisplayed();
+		HomePage.clickOnCloseButton();
 		getCurrentFunctionName(false);
 		return accountMenuValidation;
 	}

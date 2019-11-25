@@ -26,6 +26,8 @@ public class HomePageBase extends SelTestCase {
 	public static final String footer = "footer";
 	public static final String body = "body";
 	public static final String AccountMenu = "Account menu validation";
+	public static final String GlobalFooter = "Global footer validation";
+
 
 	// used sheet in test
 	public static final String testDataSheet = SheetVariables.VisualTestingHPRegressionsheet;
@@ -69,10 +71,17 @@ public class HomePageBase extends SelTestCase {
 			}
 
 			if (proprties.contains(this.AccountMenu)) {
-				AccountMenuValidation.validate();
+		  	   sassert().assertTrue(AccountMenuValidation.validate(), "My Account menu validation has some problems");
 			} else {
 				Testlogs.get().debug("please check proprties provided in excel sheet");
 			}
+			
+			if (proprties.contains(this.GlobalFooter)) {
+				sassert().assertTrue(GlobalFooterValidation.validate(), "Global footer validation has some problems");
+			} else {
+				Testlogs.get().debug("please check proprties provided in excel sheet");
+			}
+			
 			
 			sassert().assertAll();
 			Common.testPass();
