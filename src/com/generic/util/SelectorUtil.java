@@ -418,7 +418,16 @@ public class SelectorUtil extends SelTestCase {
 							if (value.contains("pressEnter")) {
 								tempVal = value.split(",")[0];
 							}
-							field.sendKeys(tempVal);
+							if (browser.contains(GlobalVariables.browsers.iPhone))
+							{
+								int index = 0;
+								for (index=0; index < tempVal.length(); index++) {
+									String character = String.valueOf(tempVal.charAt(index));
+									field.sendKeys(character);
+								}
+							}else {
+								field.sendKeys(tempVal);
+							}
 							if (!tempVal.equals(value)) {
 								field.sendKeys(Keys.ENTER);
 								if (browser.contains("edge")) {
@@ -859,5 +868,29 @@ public class SelectorUtil extends SelTestCase {
 		logs.debug(MessageFormat.format(LoggingMsg.FINISHED_ACTION_ON_ELEMENTS_MSG, Arrays.asList(webElementsInfo)));
 		return webElementsInfo;
 
+	}
+
+	
+	public static boolean isImgLoaded(String selector) {
+		WebElement img = getDriver().findElement(By.cssSelector(selector));
+
+		Object  result =  (Boolean) ((JavascriptExecutor) getDriver()).executeScript(
+				   "return arguments[0].complete && "+
+						   "typeof arguments[0].naturalWidth != \"undefined\" && "+
+						   "arguments[0].naturalWidth > 0", img);
+	    boolean loaded = false;
+	    if (result instanceof Boolean) {
+	      loaded = (Boolean) result;
+	    }
+	    return loaded;
+	}
+
+
+public static String getCurrentPageUrl() throws Exception {
+		return SelTestCase.getDriver().getCurrentUrl();
+	}
+
+	public static void clickOnWebElement(WebElement element) throws Exception {
+		((JavascriptExecutor) SelTestCase.getDriver()).executeScript("arguments[0].click()", element);
 	}
 }
