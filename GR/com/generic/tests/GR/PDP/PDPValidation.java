@@ -16,7 +16,7 @@ public class PDPValidation extends SelTestCase {
 		sassert().assertTrue(PDP.validateAddToCartIsEnabled(),"Add to Cart button is not enabled");
 		PDP.addProductsToCart();
 		sassert().assertTrue(PDP.validateProductIsAddedToCart(),"Product is not added successfully");
-		
+		getCurrentFunctionName(false);
 	}
 
 }

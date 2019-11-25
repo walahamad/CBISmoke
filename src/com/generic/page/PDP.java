@@ -29,7 +29,9 @@ public class PDP extends SelTestCase {
 	public static class keys {
 		//to be replaced with Search
 		public static String FG_PDP = "/cheyne-high-low-area-rug/915951";
+		public static String FG_BundlePDP = "/resort-cotton-bath-towels/155771";
 		public static String GR_PDP = "/mason-cocoon-chairs-2c-set-of-two/outdoor-living/seating/1020166";
+		public static String GR_BundlePDP = "/cordoba-collection/154964";
 		
 		public static final String id = "id";
 		public static final String name = "name";
@@ -50,7 +52,7 @@ public class PDP extends SelTestCase {
 	// to be replaced with Search
 	public static void NavigateToFGPDP() throws Exception {
 		getCurrentFunctionName(true);
-		getDriver().get(getURL() + keys.FG_PDP);
+		getDriver().get(getURL() + keys.FG_BundlePDP);
 		getCurrentFunctionName(false);
 	}
 
@@ -58,7 +60,7 @@ public class PDP extends SelTestCase {
 	// to be replaced with Search
 	public static void NavigateToGRPDP() throws Exception {
 		getCurrentFunctionName(true);
-		getDriver().get(getURL() + keys.GR_PDP);
+		getDriver().get(getURL() + keys.GR_BundlePDP);
 		getCurrentFunctionName(false);
 	}
 
@@ -210,6 +212,32 @@ public class PDP extends SelTestCase {
 	}
 
 	// done - SMK
+	// This method to return all available List Boxes
+	public static int getNumberListBoxes() throws Exception {
+		getCurrentFunctionName(true);
+		String Str = PDPSelectors.allSizes.get();
+		int numberOfListBoxes = 0;
+		logs.debug(SelectorUtil.numberOfFoundElements.get());
+		if (!SelectorUtil.isNotDisplayed(Str)) {
+			numberOfListBoxes = Integer.parseInt(SelectorUtil.numberOfFoundElements.get());
+		}
+		logs.debug("number Of Avaible List Boxes" + SelectorUtil.numberOfFoundElements.get());
+		getCurrentFunctionName(false);
+		return numberOfListBoxes;
+	}
+
+	// done - SMK
+	public static void selectNthListBoxFirstValue(int index) throws Exception {
+		getCurrentFunctionName(true);
+		String Str = MessageFormat.format(PDPSelectors.allSizes.get(), index);
+		String value = "index," + index + ",FFF1";
+		SelectorUtil.initializeSelectorsAndDoActions(Str, value);
+		SelectorUtil.initializeSelectorsAndDoActions(Str, value);
+		getCurrentFunctionName(false);
+
+	}
+
+	// done - SMK
 	public static void selectNthOptionFirstSwatch(int index) throws Exception {
 		getCurrentFunctionName(true);
 		String subStrArr = MessageFormat.format(PDPSelectors.firstSwatchInOptions.get(), index);
@@ -231,16 +259,21 @@ public class PDP extends SelTestCase {
 	public static void selectSwatches() throws Exception {
 		try {
 			getCurrentFunctionName(true);
-			int numberOfOptions = getNumberOfOptions();
-			if (numberOfOptions != 0) {
-				for (int i = 1; i <= numberOfOptions; i++) {
+			int numberOfPanels = getNumberOfOptions();
+			int numberOfListBoxes = getNumberListBoxes();
+			if (numberOfPanels != 0) {
+				for (int i = 1; i <= numberOfPanels; i++) {
 					selectNthOptionFirstSwatch(i);
 					Thread.sleep(1500);
 				}
 			}
-			Thread.sleep(1500);
-			selectSize();
-			Thread.sleep(1000);
+
+			if (numberOfListBoxes != 0) {
+				for (int i = 0; i < numberOfListBoxes; i++) {
+					selectNthListBoxFirstValue(i);
+					Thread.sleep(1500);
+				}
+			}
 			getCurrentFunctionName(false);
 		} catch (NoSuchElementException e) {
 			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
@@ -331,6 +364,23 @@ public class PDP extends SelTestCase {
 			throw e;
 		}
 	}
+	
+	// done - SMK
+	public static String getProductID(int index) throws Exception {
+		try {
+			getCurrentFunctionName(true);
+			String Str = PDPSelectors.itemsID.get();
+			String ID = SelectorUtil.getAttrString(Str,"id", index);
+			getCurrentFunctionName(false);
+			return ID;
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+			}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
+	}
+	
+	
 
 	// done -ocm
 	public static String getPDPUrl(String url) {
