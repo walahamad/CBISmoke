@@ -12,9 +12,6 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import com.generic.selector.HomePageSelectors;
 import com.generic.setup.GlobalVariables;
-import org.openqa.selenium.NoSuchElementException;
-
-
 import com.generic.setup.SelTestCase;
 import com.generic.tests.FG.HomePage.SignInValidation;
 import com.generic.util.SelectorUtil;
@@ -117,7 +114,7 @@ public class HomePage extends SelTestCase {
 	
 	public static List<WebElement> getElementsList(String selector) throws Exception {
 		getCurrentFunctionName(true);		
-		elementsList = SelectorUtil.getAllElements(selector);
+		List<WebElement> elementsList = SelectorUtil.getAllElements(selector);
 		getCurrentFunctionName(false);
 		return elementsList;
 	}
@@ -478,27 +475,6 @@ public class HomePage extends SelTestCase {
 		}
 		getCurrentFunctionName(false);
 		return validateSubMenuNavigation;
-	}
-
-	/**
-	* Get the elements list by pass the selector as a string.
-	*
-	* @param selector.
-	* @return List<WebElement>
-	* @throws Exception
-	*/
-	@SuppressWarnings("rawtypes")
-	public static List<WebElement> getElementsList(String selector) throws Exception {
-		getCurrentFunctionName(true);
-
-		LinkedHashMap<String, LinkedHashMap> webelementsInfo = SelectorUtil.initializeSelectorsAndDoActions(selector, "", false);			
-		String Byselector = (By) webelementsInfo.get(selector).get("by")+"";
-		logs.debug(Byselector);
-		List<WebElement> menuFirstLevelElements = getDriver().findElements((By) webelementsInfo.get(selector).get("by"));
-
-		getCurrentFunctionName(false);
-
-		return menuFirstLevelElements;
 	}
 
 	/**
