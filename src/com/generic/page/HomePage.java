@@ -180,7 +180,7 @@ public class HomePage extends SelTestCase {
 			SelectorUtil.initializeSelectorsAndDoActions(subStrArr);
 		} else {
 			logs.debug("Hovering on Mini Cart");
-			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
+			PDP.hoverMiniCart();
 		}
 
 		getCurrentFunctionName(false);
