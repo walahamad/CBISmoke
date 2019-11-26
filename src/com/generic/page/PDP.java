@@ -229,9 +229,8 @@ public class PDP extends SelTestCase {
 	// done - SMK
 	public static void selectNthListBoxFirstValue(int index) throws Exception {
 		getCurrentFunctionName(true);
-		String Str = MessageFormat.format(PDPSelectors.allSizes.get(), index);
+		String Str = PDPSelectors.allSizes.get();
 		String value = "index," + index + ",FFF1";
-		SelectorUtil.initializeSelectorsAndDoActions(Str, value);
 		SelectorUtil.initializeSelectorsAndDoActions(Str, value);
 		getCurrentFunctionName(false);
 
@@ -395,32 +394,152 @@ public class PDP extends SelTestCase {
 		}
 	}
 	
-	public static void selectSwatchesV2() throws Exception {
+	public static int getNumberOfListsInProduct(String Str) throws Exception {
 		try {
 			getCurrentFunctionName(true);
-			int nmberOfItems = getNumberOfItems();
-			if (nmberOfItems > 1) {
-				String productID = getProductID(1);
-				String Str = "#" + productID + ">" + PDPSelectors.numberOfBundleItems.get();
+		//	String Str = PDPSelectors.ListBox.get();
+			int numberOfItems = SelectorUtil.getAllElements(Str).size();
+			getCurrentFunctionName(false);
+			return numberOfItems;
+			
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+			}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
+	}
+	
+	public static int getNumberOfActiveListsInProduct(String Str) throws Exception {
+		try {
+			getCurrentFunctionName(true);
+		//	String Str = PDPSelectors.ListBox.get();
+			int numberOfActiveLists = SelectorUtil.getAllElements(Str).size();
+			getCurrentFunctionName(false);
+			return numberOfActiveLists;
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+			}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
+	}
+	
+	
+	// done - SMK
+	public static void selectNthOptionFirstSwatchV2(String Str) throws Exception {
+		getCurrentFunctionName(true);
+		//String StrBundle = MessageFormat.format(Str, index);
+		logs.debug(MessageFormat.format(LoggingMsg.CLICKING_SEL, Str));
+		SelectorUtil.initializeSelectorsAndDoActions(Str);
+		// Clicking on the div on desktop and iPad does not select the options,
+		// you need to click on the img if there is an img tag.
+		if (!SelTestCase.getBrowserName().contains(GlobalVariables.browsers.iPhone)) {
+			String nthSel = Str + ">img";
+			if (!SelectorUtil.isNotDisplayed(Str))
+				SelectorUtil.initializeSelectorsAndDoActions(nthSel);
+		}
+		getCurrentFunctionName(false);
 
+	}
+	
+	// done - SMK
+		public static void selectNthListBoxFirstValueV2(String Str,int index) throws Exception {
+			getCurrentFunctionName(true);
+			String value = "index," + index + ",FFF1";
+			SelectorUtil.initializeSelectorsAndDoActions(Str, value);
+			getCurrentFunctionName(false);
+
+		}
+//		public static int getNumberOfOptions(String Str) throws Exception {
+//			getCurrentFunctionName(true);
+//			int numberOfAvaibleOptions = 0;
+//			logs.debug(SelectorUtil.numberOfFoundElements.get());
+//			if (!SelectorUtil.isNotDisplayed(Str)) {
+//				numberOfAvaibleOptions = Integer.parseInt(SelectorUtil.numberOfFoundElements.get());
+//			}
+//			logs.debug("number Of Avaible Options" + SelectorUtil.numberOfFoundElements.get());
+//			getCurrentFunctionName(false);
+//			return numberOfAvaibleOptions;
+//		}
+		
+		// done - SMK
+		public static int getNumberOfimageOptionsInProduct(String Str) throws Exception {
+			try {
+				getCurrentFunctionName(true);
+				int numberOfAvaibleOptions = 0;
+				logs.debug(SelectorUtil.numberOfFoundElements.get());
+				if (!SelectorUtil.isNotDisplayed(Str)) {
+					numberOfAvaibleOptions = Integer.parseInt(SelectorUtil.numberOfFoundElements.get());
+				}
+				logs.debug("number Of Avaible Options" + SelectorUtil.numberOfFoundElements.get());
+				getCurrentFunctionName(false);
+				return numberOfAvaibleOptions;
+			} catch (NoSuchElementException e) {
+				logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+				}.getClass().getEnclosingMethod().getName()));
+				throw e;
+			}
+		}
+		
+	// done - SMK
+	public static boolean activeLists(String Str) throws Exception {
+		getCurrentFunctionName(true);
+		boolean isNotDisplayed = false;
+		isNotDisplayed = SelectorUtil.isNotDisplayed(PDPSelectors.activeListBox.get());
+		return isNotDisplayed;
+	}
+	
+	public static void selectSwatchesV3() throws Exception {
+		try {
+			getCurrentFunctionName(true);
+			if(getNumberOfItems() > 1) {
+				String ProductID = getProductID(0);
+				String ListSelector = "css,#" + ProductID + ">" + PDPSelectors.ListBox.get().replace("css,", "");
+				String activeLists = "css,#" + ProductID + ">" + PDPSelectors.activeListBox.get().replace("css,", "");
+				String swatchContainerSelector = "css,#" + ProductID + ">" + PDPSelectors.swatchContainer.get().replace("css,", "");
+				String imageOptionSelector = "css,#" + ProductID + ">" + PDPSelectors.imageOption.get().replace("css,", "");
 				
+				int numberOfActiveListBoxes = 0;
+				int i = 0;
+				int listIndex =0;
+				int numberOfListBoxes = 0;
+			if(!activeLists(activeLists)) {
+				numberOfActiveListBoxes = getNumberOfListsInProduct(activeLists);
+				numberOfListBoxes = getNumberOfListsInProduct(ListSelector);	
+				for ( ; i < numberOfListBoxes; i++) {
+					listIndex = i;
+					selectNthListBoxFirstValueV2(ListSelector,i);
+					Thread.sleep(1000);
+					int numberOfNewActiveListBoxes = getNumberOfListsInProduct(activeLists);
+					if(numberOfNewActiveListBoxes > numberOfActiveListBoxes) {
+						numberOfActiveListBoxes = numberOfNewActiveListBoxes;
+					} else {
+						break;
+					}
+				}
+			}
+				int numberOfimageOptions = getNumberOfimageOptionsInProduct(swatchContainerSelector);
+				if (numberOfimageOptions != 0) {
+					for (i++; i <= numberOfimageOptions; i++) {
+						selectNthOptionFirstSwatchV2("css,#" + ProductID + ">" + MessageFormat.format(PDPSelectors.imageOption.get(),i).replace("css,", ""));
+						Thread.sleep(1500);
+					}
+				}
+				if(!activeLists(activeLists)) {
+				int numberOfNewActiveListBoxes = getNumberOfListsInProduct(activeLists);
+				if(numberOfNewActiveListBoxes > numberOfActiveListBoxes) {
+					for (int j = listIndex ; j < numberOfListBoxes; j++) {
+					selectNthListBoxFirstValueV2(ListSelector,listIndex);
+					if(numberOfNewActiveListBoxes > numberOfActiveListBoxes) {
+						numberOfActiveListBoxes = numberOfNewActiveListBoxes;
+					} else {
+						break;
+					}
+					}
+				}
+				}
+			
 			} else {
-
-				int numberOfPanels = getNumberOfOptions();
-				int numberOfListBoxes = getNumberListBoxes();
-				if (numberOfPanels != 0) {
-					for (int i = 1; i <= numberOfPanels; i++) {
-						selectNthOptionFirstSwatch(i);
-						Thread.sleep(1500);
-					}
-				}
-
-				if (numberOfListBoxes != 0) {
-					for (int i = 0; i < numberOfListBoxes; i++) {
-						selectNthListBoxFirstValue(i);
-						Thread.sleep(1500);
-					}
-				}
+				selectSwatches();
 			}
 			getCurrentFunctionName(false);
 		} catch (NoSuchElementException e) {

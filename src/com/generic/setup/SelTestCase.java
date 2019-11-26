@@ -349,10 +349,10 @@ public class SelTestCase {
     public void tearDown() {
     	getCurrentFunctionName(true);
     	
-    	WebDriver driver = SelTestCase.getDriver();
-        if (driver != null && !getBrowserName().contains(browsers.iOS)) {
-            driver.quit();
-        }
+//    	WebDriver driver = SelTestCase.getDriver();
+//        if (driver != null && !getBrowserName().contains(browsers.iOS)) {
+//            driver.quit();
+//        }
         getCurrentFunctionName(false);
     }
     
