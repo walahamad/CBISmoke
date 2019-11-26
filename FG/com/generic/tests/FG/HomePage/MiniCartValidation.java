@@ -27,12 +27,10 @@ public class MiniCartValidation extends SelTestCase {
 		}
 		
 		//Mini cart in iPAd cannot be validated as it redirects to cart page.
-		if (!SelTestCase.getBrowserName().contains(GlobalVariables.browsers.iPad)) {
+		if (SelTestCase.getBrowserName().contains(GlobalVariables.browsers.iPhone)) {
 			HomePage.clickOnMiniCart();
 			sassert().assertTrue(HomePage.validateMiniCartProductIsDsiplayed(),"Mini cart items is not displayed");
 			sassert().assertTrue(HomePage.validateMiniCartCheckoutBtnIsDisplayed(),"Mini cart checkout button is not displayed");
-		}
-		if (SelTestCase.getBrowserName().contains(GlobalVariables.browsers.iPhone)) {
 			HomePage.clickOnMiniCartCloseBtn();	
 			sassert().assertTrue(HomePage.validateMiniCartIsClosed(), "Mini cart modal is not closed");
 		}
