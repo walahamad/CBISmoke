@@ -32,7 +32,7 @@ public class HomePageBase extends SelTestCase {
 
 	public static final String menu = "menu";
 	public static final String signIn = "SignIn validation";
-  public static final String AccountMenu = "Account menu validation";
+	public static final String AccountMenu = "Account menu validation";
 	public static final String GlobalFooter = "Global footer validation";
 
 	// used sheet in test
@@ -80,24 +80,19 @@ public class HomePageBase extends SelTestCase {
 
 			} else if (proprties.contains(this.search)) {
 				HomePageValidation.validateSearch();
-			}  else if (proprties.contains(this.menu)) {
+			} else if (proprties.contains(this.menu)) {
 				// Check the Navigation menu.
 				sassert().assertTrue(MenuValidation.validate(), "Menu validation has some problems");
-			}  else if (proprties.contains(this.signIn)) {
+			} else if (proprties.contains(this.signIn)) {
 				// Check the Sign in form functionality.
 				sassert().assertTrue(SignInValidation.validate(), "Sign in functionality validation has some problems");
-			}else if (proprties.contains(this.AccountMenu)) {
-		  	   sassert().assertTrue(AccountMenuValidation.validate(), "My Account menu validation has some problems");
-			}
-			else if (proprties.contains(this.GlobalFooter)) {
+			} else if (proprties.contains(this.AccountMenu)) {
+				sassert().assertTrue(AccountMenuValidation.validate(), "My Account menu validation has some problems");
+			} else if (proprties.contains(this.GlobalFooter)) {
 				sassert().assertTrue(GlobalFooterValidation.validate(), "Global footer validation has some problems");
-			}   
-        else {
-				Testlogs.get().debug("please check proprties provided in excel sheet");
-			}
-			if (proprties.contains(this.YMALCarousels)) {
+			} else if (proprties.contains(this.YMALCarousels)) {
 				YMALCarouselsVerification.validate();
-			}else {
+			} else {
 				Testlogs.get().debug("please check proprties provided in excel sheet");
 			}
 
