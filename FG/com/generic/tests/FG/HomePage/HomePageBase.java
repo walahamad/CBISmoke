@@ -80,7 +80,7 @@ public class HomePageBase extends SelTestCase {
 
 			} else if (proprties.contains(this.search)) {
 				HomePageValidation.validateSearch();
-			} else if (proprties.contains(this.menu)) {
+			} else if (proprties.equals(this.menu)) {
 				// Check the Navigation menu.
 				sassert().assertTrue(MenuValidation.validate(), "Menu validation has some problems");
 			} else if (proprties.contains(this.signIn)) {
