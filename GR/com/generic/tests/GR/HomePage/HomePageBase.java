@@ -26,6 +26,7 @@ public class HomePageBase extends SelTestCase {
 	public static final String header = "header";
 	public static final String footer = "footer";
 	public static final String body = "body";
+	public static final String mainHomeCarousels = "Main Home Carousels Verification";
 
 	// used sheet in test
 	public static final String testDataSheet = SheetVariables.HPRegressionsheet;
@@ -70,6 +71,11 @@ public class HomePageBase extends SelTestCase {
 				}
 			
 					else{
+				Testlogs.get().debug("please check proprties provided in excel sheet");
+			}
+			if (proprties.contains(this.mainHomeCarousels)) {
+				MainHomeCarouselsVerification.validate();
+			}else {
 				Testlogs.get().debug("please check proprties provided in excel sheet");
 			}
 
