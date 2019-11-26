@@ -54,6 +54,22 @@ public class HomePage extends SelTestCase {
 		getCurrentFunctionName(false);
 		return results;
 	}
+	public static boolean validateYMALCarouselsDisplayed() throws Exception {
+		getCurrentFunctionName(true);
+		boolean isDisplayed; 
+		logs.debug("Validate if YMAL carousels exist");
+		isDisplayed = SelectorUtil.isDisplayed(HomePageSelectors.YMALCarousels.get());
+		getCurrentFunctionName(false);		
+		return isDisplayed;
+	}
+	public static boolean validateMainHomeCarouselsDisplayed() throws Exception {
+		getCurrentFunctionName(true);
+		boolean isDisplayed; 
+		logs.debug("Validate if main home carousels exist");
+		isDisplayed = SelectorUtil.isDisplayed(HomePageSelectors.mainHomeCarousels.get());
+		getCurrentFunctionName(false);		
+		return isDisplayed;
+	}
 	
 	public static boolean validateAccountMenuDisplayed() throws Exception {
 		getCurrentFunctionName(true);
@@ -155,13 +171,6 @@ public class HomePage extends SelTestCase {
 		getCurrentFunctionName(false);		
 		return isDisplayed;
 	}
-	
-	
-	
-
-	
-	
-	
 	
     
 	public static void clickOnMiniCart() throws Exception {
