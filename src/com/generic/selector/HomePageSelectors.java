@@ -4,6 +4,7 @@ import com.generic.setup.cselector;
 
 public class HomePageSelectors
 {
+
   public static final cselector accountMenu = new cselector ("css,.gwt-MenuItem > a#accountMenu","css,#pwa-my-account-button .pw-button");
 	public static final cselector accountMenuItems = new cselector ("css,.gwt-MenuItem > div > a","css,div.pw-list-tile > a");
 	public static final cselector navIcon = new cselector("css,.nav-toggle", "css,.t-header__menu-icon .pw-button");
@@ -11,7 +12,8 @@ public class HomePageSelectors
 	public static final cselector countrySelector = new cselector("css,#gwt_country_changer", "css,div.t-footer-links  > div > div > button");
   public static final cselector accordionHeader =  new cselector("css,div.footerInner > div > div > div > h3","css,div.pw-accordion > div.pw-accordion__item"); 
   public static final cselector globalFooter =  new cselector("css,div.footerInner","css,footer > div.c-custom-accordion"); 
-  
+  public static final cselector YMALCarousels = new cselector("body gray-disabled-arrows" ,"css,#gwt_recommendations_home_1 > div > div > div > div.body > div > div","css,#home_rr_PWA > div > div > div > div > div > div");
+
 	public static final cselector logo = new cselector("css,#logo1 a.logo-anchor","t-header__logo");
 	public static final cselector miniCartBtn = new cselector("css,#gwt_minicart_div>table>tbody>tr>td>div","css,#cartAnchor","css,.pw-header-bar__actions.t-header-bar__cart > button");
 	public static final cselector miniCartText = new cselector("empty-cart-label","css,.empty-cart-sign-in-container > .gwt-HTML.inst-copy","css,.m-mini-cart__empty-content.u-text-align-center>h2");
@@ -29,7 +31,7 @@ public class HomePageSelectors
 
 	//public static final cselector miniCartMobd = new cselector("css,#cartAnchor","css,.pw-header-bar__actions.t-header-bar__cart > button");
 	
-
+	public static final cselector mainHomeCarousels = new cselector("body gray-disabled-arrows","css,#gwt_recommendations_home_1 > div > div > div > div.body","css,#home_rr_PWA > div > div > div");
 	//public static final String logo = "css,#logo1 a.logo-anchor";
 
 	public static final String header = "header-container";
