@@ -85,11 +85,8 @@ public class HomePageBase extends SelTestCase {
 //			else if (proprties.equals(this.menu)) {
 //				// Check the Navigation menu.
 //				sassert().assertTrue(MenuValidation.validate(), "Menu validation has some problems");
-//			} 
-			else if (proprties.contains(this.signIn)) {
-				// Check the Sign in form functionality.
-				sassert().assertTrue(SignInValidation.validate(), "Sign in functionality validation has some problems");
-			} else if (proprties.contains(this.AccountMenu)) {
+//			}
+			else if (proprties.contains(this.AccountMenu)) {
 				sassert().assertTrue(AccountMenuValidation.validate(), "My Account menu validation has some problems");
 			} else if (proprties.contains(this.GlobalFooter)) {
 				sassert().assertTrue(GlobalFooterValidation.validate(), "Global footer validation has some problems");
