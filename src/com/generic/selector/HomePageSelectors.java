@@ -7,7 +7,7 @@ public class HomePageSelectors
 
   public static final cselector accountMenu = new cselector ("css,.gwt-MenuItem > a#accountMenu","css,#pwa-my-account-button .pw-button");
 	public static final cselector accountMenuItems = new cselector ("css,.gwt-MenuItem > div > a","css,div.pw-list-tile > a");
-	public static final cselector navIcon = new cselector("css,.nav-toggle", "css,.t-header__menu-icon .pw-button");
+	public static final cselector navIcon = new cselector("css,.nav-toggle", "css,div#pwa-shop-nav-button .pw-button");
 	
 	public static final cselector countrySelector = new cselector("css,#gwt_country_changer", "css,div.t-footer-links  > div > div > button");
   public static final cselector accordionHeader =  new cselector("css,div.footerInner > div > div > div > h3","css,div.pw-accordion > div.pw-accordion__item"); 
@@ -60,5 +60,7 @@ public class HomePageSelectors
 	public static final cselector welcomeMessage = new cselector("css,#welcome");
 	public static final cselector accountMenuIcon = new cselector("css,#gwt_dropdownmenu_my_account", "css,.t-header__my-account");
 	public static final String accountMenuList = "css,.my-account-controls-modal_class .pw-link";
-
+	
+    public static final cselector product =  new cselector("css,div.unbxd-products-dispaly-container > div > div > div > a","css,footer > div.c-custom-accordion"); 
+    public static final cselector productContainer =  new cselector("css,div.unbxd-products-display-panel","css,footer > div.c-custom-accordion"); 
 }
