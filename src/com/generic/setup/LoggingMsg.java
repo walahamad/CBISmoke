@@ -126,5 +126,6 @@ public class LoggingMsg {
 	public static String USER_IS_NOT_LOGGED_IN_SUCCESSFULLY = "Your username or password was incorrect";
 	public static String CHECKOUT_RESULT = "<b>TestResults:</b><br>- Emailused: {0}<br>- Order ID: {1}<br>- Ordersubtotal: {2}"; 
 	public static String USER_IS_LOGGED_IN = "User is loged in";
-
+	public static String NOT_MY_ACCOUNT_PAGE = "This page is not my account page";
+	public static String MY_ACCOUNT_LINK_NOT_EXIST = "My account page link does not exist";
 }
