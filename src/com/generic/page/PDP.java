@@ -17,6 +17,7 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Wait;
 
+import com.generic.selector.HomePageSelectors;
 import com.generic.selector.PDPSelectors;
 import com.generic.setup.ExceptionMsg;
 import com.generic.setup.GlobalVariables;
@@ -979,14 +980,14 @@ public class PDP extends SelTestCase {
 		Wait<WebDriver> wait = new FluentWait<WebDriver>(SelTestCase.getDriver()).withTimeout(30, TimeUnit.SECONDS)
 				.pollingEvery(5, TimeUnit.SECONDS).ignoring(NoSuchElementException.class);
 
-		WebElement field = getDriver().findElement(By.id(PDPSelectors.minicart));
+		WebElement field = getDriver().findElement(By.cssSelector(HomePageSelectors.miniCartBtn.get().replace("css,", "")));
 
 		JavascriptExecutor jse = (JavascriptExecutor) getDriver();
 		jse.executeScript("arguments[0].scrollIntoView(false)", field);
 		Thread.sleep(200);
 		WebElement field2 = wait.until(new Function<WebDriver, WebElement>() {
 			public WebElement apply(WebDriver driver) {
-				return driver.findElement(By.id(PDPSelectors.minicart));
+				return driver.findElement(By.cssSelector(HomePageSelectors.miniCartBtn.get().replace("css,", "")));
 			}
 		});
 
