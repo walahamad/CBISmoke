@@ -14,7 +14,7 @@ public class PDPValidation extends SelTestCase {
 		sassert().assertTrue(!PDP.getBottomPrice().equals("$0.00"),"Bottom price is not updated correctly, Current price: " + PDP.getBottomPrice());
 		sassert().assertTrue(PDP.validateAddToWLGRIsEnabled(),"Add to WL/GR button is not enabled");
 		sassert().assertTrue(PDP.validateAddToCartIsEnabled(),"Add to Cart button is not enabled");
-		PDP.addProductsToCart();
+		PDP.clickAddToCartButton();
 		sassert().assertTrue(PDP.validateProductIsAddedToCart(),"Product is not added successfully");
 		getCurrentFunctionName(false);
 	}
@@ -23,13 +23,14 @@ public class PDPValidation extends SelTestCase {
 		getCurrentFunctionName(true);
 
 		PDP.NavigateToFGPDP();
-		sassert().assertTrue(PDP.validatePriceIsDisplayed(), "Top price is not dispayed");
-		PDP.selectSwatchesV3();
-//		sassert().assertTrue(!PDP.getBottomPrice().equals("$0.00"),"Bottom price is not updated correctly, Current price: " + PDP.getBottomPrice());
-//		sassert().assertTrue(PDP.validateAddToWLGRIsEnabled(),"Add to WL/GR button is not enabled");
-//		sassert().assertTrue(PDP.validateAddToCartIsEnabled(),"Add to Cart button is not enabled");
-//		PDP.addProductsToCart();
-//		sassert().assertTrue(PDP.validateProductIsAddedToCart(),"Product is not added successfully");
+		sassert().assertTrue(PDP.validateBundlePriceIsDisplayed(), "Bundle Price is not dispayed");
+		sassert().assertTrue(PDP.validatePriceIsDisplayed(), "Top price for the bundle item is not dispayed");
+		PDP.selectSwatches();
+		sassert().assertTrue(!PDP.getBottomPrice().equals("$0.00"),"Bottom price is not updated correctly, Current price: " + PDP.getBottomPrice());
+		sassert().assertTrue(PDP.validateAddToWLGRIsEnabled(),"Add to WL/GR button is not enabled");
+		sassert().assertTrue(PDP.validateAddToCartIsEnabled(),"Add to Cart button is not enabled");
+		PDP.clickAddToCartButton();
+		sassert().assertTrue(PDP.validateProductIsAddedToCart(),"Product is not added successfully");
 	getCurrentFunctionName(false);
 	}
 }

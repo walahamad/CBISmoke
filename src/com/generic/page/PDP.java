@@ -29,7 +29,10 @@ public class PDP extends SelTestCase {
 	public static class keys {
 		//to be replaced with Search
 		public static String FG_PDP = "/cheyne-high-low-area-rug/915951";
+		public static String FG_PDP2 = "/barrow-chesterfield-sofa/691936";
 		public static String FG_BundlePDP = "/resort-cotton-bath-towels/155771";
+		public static String FG_BundlePDP2 = "/premium-monogrammed-disposable-napkins/605617?brReference=BRWidget";
+		public static String FG_BundlePDP3 = "/monogrammed-faux-linen-guest-towels/bath/bath-towels-guest-towels/153131";
 		public static String GR_PDP = "/mason-cocoon-chairs-2c-set-of-two/outdoor-living/seating/1020166";
 		public static String GR_BundlePDP = "/cordoba-collection/154964";
 		
@@ -52,7 +55,7 @@ public class PDP extends SelTestCase {
 	// to be replaced with Search
 	public static void NavigateToFGPDP() throws Exception {
 		getCurrentFunctionName(true);
-		getDriver().get(getURL() + keys.FG_BundlePDP);
+		getDriver().get(getURL() + keys.FG_BundlePDP2);
 		getCurrentFunctionName(false);
 	}
 
@@ -246,7 +249,7 @@ public class PDP extends SelTestCase {
 		// you need to click on the img if there is an img tag.
 		if (!SelTestCase.getBrowserName().contains(GlobalVariables.browsers.iPhone)) {
 			String nthSel = subStrArr + ">img";
-			if (!SelectorUtil.isNotDisplayed(subStrArr))
+			if (!SelectorUtil.isNotDisplayed(nthSel))
 				SelectorUtil.initializeSelectorsAndDoActions(nthSel);
 		}
 		getCurrentFunctionName(false);
@@ -255,7 +258,7 @@ public class PDP extends SelTestCase {
 
 	// done - SMK
 	// This method to dynamically select all available options
-	public static void selectSwatches() throws Exception {
+	public static void selectSwatchesSingle() throws Exception {
 		try {
 			getCurrentFunctionName(true);
 			int numberOfPanels = getNumberOfOptions();
@@ -295,20 +298,47 @@ public class PDP extends SelTestCase {
 		getCurrentFunctionName(true);
 		boolean isDisplayed;
 		logs.debug("Validate if top price exist");
-		isDisplayed = SelectorUtil.isDisplayed(PDPSelectors.topPrice.get());
+		String selector = PDPSelectors.topPriceSingle.get();
+		if(getNumberOfItems() > 1) {
+			String ProductID = getProductID(0);
+			selector = "css,#" + ProductID + ">" + PDPSelectors.topPriceSingle.get().replace("css,", "");
+		}
+		isDisplayed = SelectorUtil.isDisplayed(selector);
+		getCurrentFunctionName(false);
+		return isDisplayed;
+	}
+	public static boolean validateBundlePriceIsDisplayed() throws Exception {
+		getCurrentFunctionName(true);
+		boolean isDisplayed;
+		logs.debug("Validate if top price exist for Bundle PDP");
+		if(getNumberOfItems() > 1) {
+			isDisplayed = SelectorUtil.isDisplayed(PDPSelectors.topPriceBundle.get());
+		}else {
+			logs.debug("This is not a Bundle PDP");	
+			isDisplayed = true;
+		}
+	
 		getCurrentFunctionName(false);
 		return isDisplayed;
 	}
 
+	
 	public static boolean validateAddToWLGRIsEnabled() throws Exception {
 		getCurrentFunctionName(true);
 		boolean isNotDisplayed;
 		logs.debug("Validate if Add To WL/GR Is Displayed");
 		// here it will pass if the button exist regardless if it is enabled or disabled.
 		// because there is no attribute to verify if it is enabled.
-		SelectorUtil.isDisplayed(PDPSelectors.addToWLGRBtnEnabled.get());
+		String selectorEnabled = PDPSelectors.addToWLGRBtnEnabledSingle.get();
+		String selectorDisabled = PDPSelectors.addToCartBtnDisabledSingle.get();
+		if(getNumberOfItems() > 1) {
+			String ProductID = getProductID(0);
+			selectorEnabled = "css,#" + ProductID + ">" + PDPSelectors.addToWLGRBtnEnabledSingle.get().replace("css,", "");
+			selectorDisabled = "css,#" + ProductID + ">" + PDPSelectors.addToCartBtnDisabledSingle.get().replace("css,", "");
+		}
+		SelectorUtil.isDisplayed(selectorEnabled);
 		logs.debug("Validate if Add To WL/GR Is not disabled");
-		isNotDisplayed = SelectorUtil.isNotDisplayed(PDPSelectors.addToWLGRBtnDisabled.get());
+		isNotDisplayed = SelectorUtil.isNotDisplayed(selectorDisabled);
 		getCurrentFunctionName(false);
 		return isNotDisplayed;
 	}
@@ -319,9 +349,16 @@ public class PDP extends SelTestCase {
 		logs.debug("Validate if Add To Cart Is Displayed");
 		// here it will pass if the button exist regardless if it is enabled or disabled.
 		// because there is no attribute to verify if it is enabled.
-		SelectorUtil.isDisplayed(PDPSelectors.addToCartBtnEnabled.get());
+		String selectorEnabled = PDPSelectors.addToCartBtnEnabledSingle.get();
+		String selectorDisabled = PDPSelectors.addToCartBtnDisabledSingle.get();
+		if(getNumberOfItems() > 1) {
+			String ProductID = getProductID(0);
+			selectorEnabled = "css,#" + ProductID + ">" + PDPSelectors.addToCartBtnEnabledSingle.get().replace("css,", "");
+			selectorDisabled = "css,#" + ProductID + ">" + PDPSelectors.addToCartBtnDisabledSingle.get().replace("css,", "");
+		}
+		SelectorUtil.isDisplayed(selectorEnabled);
 		logs.debug("Validate if Add To Cart Is not disabled");
-		isNotDisplayed = SelectorUtil.isNotDisplayed(PDPSelectors.addToCartBtnDisabled.get());
+		isNotDisplayed = SelectorUtil.isNotDisplayed(selectorDisabled);
 		getCurrentFunctionName(false);
 		return isNotDisplayed;
 	}
@@ -329,7 +366,12 @@ public class PDP extends SelTestCase {
 	public static String getBottomPrice() throws Exception {
 		getCurrentFunctionName(true);
 		logs.debug("Validate if bottom price is updated after seleting options");
-		SelectorUtil.initializeSelectorsAndDoActions(PDPSelectors.bottomPrice.get());
+		String selector = PDPSelectors.bottomPriceSingle.get();
+		if(getNumberOfItems() > 1) {
+			String ProductID = getProductID(0);
+			selector = "css,#" + ProductID + ">" + PDPSelectors.bottomPriceSingle.get().replace("css,", "");
+		}
+		SelectorUtil.initializeSelectorsAndDoActions(selector);
 		String price = SelectorUtil.textValue.get();
 		getCurrentFunctionName(false);
 		return price;
@@ -342,7 +384,7 @@ public class PDP extends SelTestCase {
 		//Validate the add to cart modal is displayed for Desktop and iPad.
 		//For Mobile, verify it from mini cart because there is no add to cart modal in mobile.
 		if (!SelTestCase.getBrowserName().contains(GlobalVariables.browsers.iPhone)) {
-			isDisplayed = SelectorUtil.isDisplayed(PDPSelectors.addToCartCloseBtn.get());
+			isDisplayed = SelectorUtil.isDisplayed(PDPSelectors.addToCartModal.get());
 		} else {
 			HomePage.clickOnMiniCart();
 			isDisplayed = HomePage.validateMiniCartProductIsDsiplayed();
@@ -488,7 +530,7 @@ public class PDP extends SelTestCase {
 		return isNotDisplayed;
 	}
 	
-	public static void selectSwatchesV3() throws Exception {
+	public static void selectSwatches() throws Exception {
 		try {
 			getCurrentFunctionName(true);
 			if(getNumberOfItems() > 1) {
@@ -539,7 +581,7 @@ public class PDP extends SelTestCase {
 				}
 			
 			} else {
-				selectSwatches();
+				selectSwatchesSingle();
 			}
 			getCurrentFunctionName(false);
 		} catch (NoSuchElementException e) {
