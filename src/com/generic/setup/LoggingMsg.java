@@ -125,4 +125,6 @@ public class LoggingMsg {
 	public static String APPLIED_FILTER_COUNT ="Number of applied filters count is: {0}";
 	public static String USER_IS_NOT_LOGGED_IN_SUCCESSFULLY = "Your username or password was incorrect";
 	public static String CHECKOUT_RESULT = "<b>TestResults:</b><br>- Emailused: {0}<br>- Order ID: {1}<br>- Ordersubtotal: {2}"; 
+	public static String USER_IS_LOGGED_IN = "User is loged in";
+
 }
