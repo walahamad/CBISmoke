@@ -54,17 +54,34 @@ public class PDP extends SelTestCase {
 
 	// done - SMK
 	// to be replaced with Search
-	public static void NavigateToFGPDP() throws Exception {
+	public static void NavigateToSingleFGPDP() throws Exception {
 		getCurrentFunctionName(true);
-		getDriver().get(getURL() + keys.FG_BundlePDP2);
+		getDriver().get(getURL() + keys.FG_PDP);
 		getCurrentFunctionName(false);
 	}
+	
+	public static void NavigateToBundleFGPDP() throws Exception {
+		getCurrentFunctionName(true);
+		getDriver().get(getURL() + keys.FG_BundlePDP);
+		getCurrentFunctionName(false);
+	}
+
 
 	// done - SMK
 	// to be replaced with Search
 	public static void NavigateToGRPDP() throws Exception {
 		getCurrentFunctionName(true);
 		getDriver().get(getURL() + keys.GR_BundlePDP);
+		getCurrentFunctionName(false);
+	}
+	
+	
+	// done - SMK
+	public static void NavigateToPDP(String SearchTerm) throws Exception {
+		getCurrentFunctionName(true);
+		PLP.clickSearchicon();
+		PLP.typeSearch(SearchTerm);
+		PLP.pickRecommendedOption();
 		getCurrentFunctionName(false);
 	}
 
@@ -300,7 +317,7 @@ public class PDP extends SelTestCase {
 		boolean isDisplayed;
 		logs.debug("Validate if top price exist");
 		String selector = PDPSelectors.topPriceSingle.get();
-		if(getNumberOfItems() > 1) {
+		if(getNumberOfItems() > 1  && !SelTestCase.getBrowserName().contains(GlobalVariables.browsers.iPhone)) {
 			String ProductID = getProductID(0);
 			selector = "css,#" + ProductID + ">" + PDPSelectors.topPriceSingle.get().replace("css,", "");
 		}
@@ -308,17 +325,13 @@ public class PDP extends SelTestCase {
 		getCurrentFunctionName(false);
 		return isDisplayed;
 	}
+	
 	public static boolean validateBundlePriceIsDisplayed() throws Exception {
 		getCurrentFunctionName(true);
 		boolean isDisplayed;
 		logs.debug("Validate if top price exist for Bundle PDP");
-		if(getNumberOfItems() > 1) {
-			isDisplayed = SelectorUtil.isDisplayed(PDPSelectors.topPriceBundle.get());
-		}else {
-			logs.debug("This is not a Bundle PDP");	
-			isDisplayed = true;
-		}
-	
+		isDisplayed = SelectorUtil.isDisplayed(PDPSelectors.topPriceBundle.get());
+
 		getCurrentFunctionName(false);
 		return isDisplayed;
 	}
@@ -332,7 +345,7 @@ public class PDP extends SelTestCase {
 		// because there is no attribute to verify if it is enabled.
 		String selectorEnabled = PDPSelectors.addToWLGRBtnEnabledSingle.get();
 		String selectorDisabled = PDPSelectors.addToCartBtnDisabledSingle.get();
-		if(getNumberOfItems() > 1) {
+		if(getNumberOfItems() > 1 && !SelTestCase.getBrowserName().contains(GlobalVariables.browsers.iPhone)) {
 			String ProductID = getProductID(0);
 			selectorEnabled = "css,#" + ProductID + ">" + PDPSelectors.addToWLGRBtnEnabledSingle.get().replace("css,", "");
 			selectorDisabled = "css,#" + ProductID + ">" + PDPSelectors.addToCartBtnDisabledSingle.get().replace("css,", "");
@@ -352,7 +365,7 @@ public class PDP extends SelTestCase {
 		// because there is no attribute to verify if it is enabled.
 		String selectorEnabled = PDPSelectors.addToCartBtnEnabledSingle.get();
 		String selectorDisabled = PDPSelectors.addToCartBtnDisabledSingle.get();
-		if(getNumberOfItems() > 1) {
+		if(getNumberOfItems() > 1 && !SelTestCase.getBrowserName().contains(GlobalVariables.browsers.iPhone)) {
 			String ProductID = getProductID(0);
 			selectorEnabled = "css,#" + ProductID + ">" + PDPSelectors.addToCartBtnEnabledSingle.get().replace("css,", "");
 			selectorDisabled = "css,#" + ProductID + ">" + PDPSelectors.addToCartBtnDisabledSingle.get().replace("css,", "");
@@ -368,7 +381,7 @@ public class PDP extends SelTestCase {
 		getCurrentFunctionName(true);
 		logs.debug("Validate if bottom price is updated after seleting options");
 		String selector = PDPSelectors.bottomPriceSingle.get();
-		if(getNumberOfItems() > 1) {
+		if(getNumberOfItems() > 1 && !SelTestCase.getBrowserName().contains(GlobalVariables.browsers.iPhone)) {
 			String ProductID = getProductID(0);
 			selector = "css,#" + ProductID + ">" + PDPSelectors.bottomPriceSingle.get().replace("css,", "");
 		}
@@ -534,7 +547,7 @@ public class PDP extends SelTestCase {
 	public static void selectSwatches() throws Exception {
 		try {
 			getCurrentFunctionName(true);
-			if(getNumberOfItems() > 1) {
+			if(getNumberOfItems() > 1 && !SelTestCase.getBrowserName().contains(GlobalVariables.browsers.iPhone)) {
 				String ProductID = getProductID(0);
 				String ListSelector = "css,#" + ProductID + ">" + PDPSelectors.ListBox.get().replace("css,", "");
 				String activeLists = "css,#" + ProductID + ">" + PDPSelectors.activeListBox.get().replace("css,", "");
@@ -590,6 +603,27 @@ public class PDP extends SelTestCase {
 			}.getClass().getEnclosingMethod().getName()));
 			throw e;
 		}
+	}
+	
+	//Done SMK
+	public static void clickBundleItems() throws Exception {
+		getCurrentFunctionName(true);
+		String selector = PDPSelectors.bundleItems.get();
+		logs.debug("Clicking on any bundle item");
+		if(!SelectorUtil.isNotDisplayed(selector)) {
+			SelectorUtil.initializeSelectorsAndDoActions(selector);
+		}
+	}
+	
+	//Done SMK
+	public static boolean validateMobileBundlePriceIsDisplayed() throws Exception {
+		getCurrentFunctionName(true);
+		boolean isDisplayed;
+		logs.debug("Validate if top price exist");
+		String selector = PDPSelectors.miniPDPPrice.get();
+		isDisplayed = SelectorUtil.isDisplayed(selector);
+		getCurrentFunctionName(false);
+		return isDisplayed;
 	}
 	
 

@@ -26,7 +26,7 @@ public class MiniCartValidation extends SelTestCase {
 			HomePage.clickOnMiniCartCloseBtn();
 			sassert().assertTrue(HomePage.validateMiniCartIsClosed(), "Mini cart modal is not closed");
 		}
-		PDP.NavigateToFGPDP();
+		PDP.NavigateToSingleFGPDP();
 		PDP.addProductsToCart();
 		if (!SelTestCase.getBrowserName().contains(GlobalVariables.browsers.iPhone)) {
 			PDP.clickAddToCartCloseBtn();

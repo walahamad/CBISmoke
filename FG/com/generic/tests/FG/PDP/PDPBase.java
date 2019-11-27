@@ -19,7 +19,13 @@ import com.generic.util.dataProviderUtils;
 public class PDPBase extends SelTestCase {
 
 
-
+	// possible scenarios
+	public static final String singlePDP = "Validate PDP Single active elements";
+	public static final String bundlePDP = "Validate PDP Bundle active elements";
+	public static final String singlePDPSearchTerm = "Rugs";
+	public static final String BundlePDPSearchTerm = "Collection";
+	
+	public static final String personalizedPDP = "Mini cart validation";
 	// used sheet in test
 	public static final String testDataSheet = SheetVariables.PDPSheet;
 
@@ -55,7 +61,13 @@ public class PDPBase extends SelTestCase {
 
 		try {
 
-			PDPValidation.validateBundlePDP();
+			if (proprties.contains(this.singlePDP)) {
+				PDPValidation.validateSinglePDP(singlePDPSearchTerm);
+			}
+			if (proprties.contains(this.bundlePDP)) {
+				PDPValidation.validateBundlePDP(BundlePDPSearchTerm);	
+			}
+	
 
 			sassert().assertAll();
 			Common.testPass();
