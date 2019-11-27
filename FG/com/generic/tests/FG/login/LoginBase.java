@@ -54,48 +54,30 @@ public class LoginBase extends SelTestCase {
 		Testlogs.set(new SASLogger("Login " + getBrowserName()));
 		// Important to add this for logging/reporting
 		setTestCaseReportName("Login Case");
-		// Testlogs.get().debug("Case Browser: " +
-		// testObject.getParameter("browserName") );
+		Testlogs.get().debug("Case Browser: " + testObject.getParameter("browserName"));
 		logCaseDetailds(MessageFormat.format(LoggingMsg.TEST_CASE_DESC, testDataSheet + "." + caseId,
 				this.getClass().getCanonicalName(), desc, proprties.replace("\n", "<br>- ")));
 
-		String caseMail = "";
+		String userMail = "";
+		String userPassword = "";
 		LinkedHashMap<String, String> userdetails = null;
+		// Get the user details (User email and password).
 		if (!email.equals("")) {
 			userdetails = (LinkedHashMap<String, String>) users.get(email);
-			caseMail = getSubMailAccount(userdetails.get(Registration.keys.email));
-			Testlogs.get().debug("Mail will be used is: " + caseMail);
+			userMail = getSubMailAccount(userdetails.get(Registration.keys.email));
+			Testlogs.get().debug("Mail will be used is: " + userMail);
+			userPassword = userdetails.get(Registration.keys.password);
 		}
+
+		Testlogs.get().debug("Login mail is: " + userMail);
+		Testlogs.get().debug("Login password is: " + userPassword);
 
 		try {
 
 			if (proprties.equals("Success login")) {
-				Testlogs.get().debug("Login mail is: " + caseMail);
-				Testlogs.get().debug((String) userdetails.get(Registration.keys.password));
-				SignIn.fillLoginFormAndClickSubmit(caseMail, (String) userdetails.get(Registration.keys.password));
+				Testlogs.get().debug("Validate Success login");
+				SignIn.fillLoginFormAndClickSubmit(userMail, (String) userPassword);
 				sassert().assertTrue(SignIn.checkUserAccount(), LoggingMsg.USER_IS_NOT_LOGGED_IN_SUCCESSFULLY);
-			}
-			if (proprties.equals("invalidUserEmail")) {
-				SignIn.fillLoginFormAndClickSubmit(caseMail.replace("@", ""), "1234567");
-				String alertMessage = SignIn.getMailErrorMsg();
-				sassert().assertTrue(alertMessage.contains(fieldsValidation),
-						"Error message is not as expected" + fieldsValidation + " : " + alertMessage);
-			}
-			if (proprties.equals("invalidUserPassword")) {
-				Testlogs.get().debug(caseMail);
-				SignIn.fillLoginFormAndClickSubmit(caseMail, "");
-				String passwordMessage = SignIn.getPasswrdErrorMsg();
-				sassert().assertTrue(passwordMessage.contains(fieldsValidation),
-						"Error message is not as expected" + fieldsValidation + " : " + passwordMessage);
-				
-			}
-			if (proprties.equals("wrongUserPassword")) {
-				Testlogs.get().debug(caseMail);
-				SignIn.fillLoginFormAndClickSubmit(caseMail, "invalid123");
-				String loginformMessage = SignIn.getErrologinMessage();
-				String failureMessage = MessageFormat.format(LoggingMsg.ACTUAL_EXPECTED_ERROR, loginformMessage,
-						fieldsValidation);
-				sassert().assertTrue(loginformMessage.contains(fieldsValidation), failureMessage);
 			}
 			if (proprties.equals("emptyData")) {
 				SignIn.fillLoginFormAndClickSubmit("", "");
@@ -107,11 +89,32 @@ public class LoginBase extends SelTestCase {
 
 				sassert().assertTrue(fieldsValidation.contains(emailMessage),"Mail Validation error: "+failureMessage);
 				sassert().assertTrue(fieldsValidation.contains(passwordMessage),"Password Validation error"+ failureMessage);
+				sassert().assertTrue(!SignIn.checkUserAccount(), LoggingMsg.USER_IS_LOGGED_IN);
+			}
+
+			if (proprties.equals("invalidUserEmail")) {
+				Testlogs.get().debug("Validate invalid User Email login");
+				SignIn.fillLoginFormAndClickSubmit(userMail.replace("@", ""), userPassword);
+				String alertMessage = SignIn.getMailErrorMsg().toLowerCase();
+				sassert().assertTrue(alertMessage.contains(fieldsValidation.toLowerCase()),
+						"Error message is not as expected" + fieldsValidation + " : " + alertMessage);
+				sassert().assertTrue(!SignIn.checkUserAccount(), LoggingMsg.USER_IS_LOGGED_IN);
+			}
+
+			if (proprties.equals("wrongUserPassword")) {
+
+				Testlogs.get().debug("Validate wrong User Password Message");
+				SignIn.fillLoginFormAndClickSubmit(userMail, userPassword + "123");
+				String loginformMessage = SignIn.getErrologinMessage();
+				String failureMessage = MessageFormat.format(LoggingMsg.ACTUAL_EXPECTED_ERROR, loginformMessage,
+						fieldsValidation);
+				sassert().assertTrue(loginformMessage.contains(fieldsValidation), failureMessage);
+				sassert().assertTrue(!SignIn.checkUserAccount(), LoggingMsg.USER_IS_LOGGED_IN);
 			}
 
 			if (proprties.equals("Forgot password -Valid Email")) {
 				SignIn.clickForgotPasswordBtn();
-				SignIn.typeForgottenPwdEmail(caseMail);
+				SignIn.typeForgottenPwdEmail(userMail);
 				SignIn.clickForgotPasswordSubmitBtn();
 				Thread.sleep(1500);
 				String alertMessage = SignIn.getAlertPositiveForgottenPasswordd();
@@ -123,7 +126,7 @@ public class LoginBase extends SelTestCase {
 				if(!getBrowserName().contains("mobile"))
 				{
 					SignIn.clickForgotPasswordBtn();
-					SignIn.typeForgottenPwdEmail(caseMail.replace("@", ""));
+					SignIn.typeForgottenPwdEmail(userMail.replace("@", ""));
 					SignIn.clickForgotPasswordSubmitBtn();
 					Thread.sleep(1500);
 					String alertMessage = SignIn.getForgottenPwdEmailError();
