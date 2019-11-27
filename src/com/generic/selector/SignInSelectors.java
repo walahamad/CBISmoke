@@ -29,6 +29,7 @@ public class SignInSelectors
 	public static final cselector accountMenuIcon = new cselector("css,#gwt_dropdownmenu_my_account", "css,.t-header__my-account");
 	public static final String accountMenuList = "css,.my-account-controls-modal_class .pw-link";
 
+	public static final String myAccountLink = "css,#myAccount a";
 	public static final String wrongPassword_mail = "css,div>div>form>div.error-form";
-
+	public static final String myAccountModal = "css,.m-my-account-controls-modal";
 }
