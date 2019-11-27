@@ -54,7 +54,7 @@ public class LoginBase extends SelTestCase {
 		Testlogs.set(new SASLogger("Login " + getBrowserName()));
 		// Important to add this for logging/reporting
 		setTestCaseReportName("Login Case");
-
+		Testlogs.get().debug("Case Browser: " + testObject.getParameter("browserName"));
 		logCaseDetailds(MessageFormat.format(LoggingMsg.TEST_CASE_DESC, testDataSheet + "." + caseId,
 				this.getClass().getCanonicalName(), desc, proprties.replace("\n", "<br>- ")));
 
