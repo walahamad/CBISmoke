@@ -17,18 +17,20 @@ import com.generic.tests.FG.HomePage.SignInValidation;
 import com.generic.util.SelectorUtil;
 import com.generic.setup.ExceptionMsg;
 import com.generic.setup.LoggingMsg;
+
 /**
  * The Class HomePage.
  */
 public class HomePage extends SelTestCase {
-	public static int homePageMenuLevelTestItems = Integer.parseInt(getCONFIG().getProperty("homePageMenuLevelTestItems"));
+	public static int homePageMenuLevelTestItems = Integer
+			.parseInt(getCONFIG().getProperty("homePageMenuLevelTestItems"));
 
 	public static boolean validateLogodisplayed() throws Exception {
 		getCurrentFunctionName(true);
-		boolean isDisplayed; 
+		boolean isDisplayed;
 		logs.debug("Validate if logo exist");
 		isDisplayed = SelectorUtil.isDisplayed(HomePageSelectors.logo.get());
-		getCurrentFunctionName(false);		
+		getCurrentFunctionName(false);
 		return isDisplayed;
 	}
 
@@ -38,7 +40,7 @@ public class HomePage extends SelTestCase {
 		getCurrentFunctionName(false);
 	}
 
-	public static void  clickOnLogo() throws Exception {
+	public static void clickOnLogo() throws Exception {
 		getCurrentFunctionName(true);
 		logs.debug("Clicking on Site logo");
 		SelectorUtil.initializeSelectorsAndDoActions(HomePageSelectors.logo.get());
@@ -49,46 +51,47 @@ public class HomePage extends SelTestCase {
 		getCurrentFunctionName(true);
 		String CurrentURL = getDriver().getCurrentUrl().replace("www.", "");
 		logs.debug("Current URL is: " + CurrentURL);
-		logs.debug("Current URL should match: " + getURL().replace("www.", "") +"/" );
-		boolean results  =CurrentURL.equals(getURL().replace("www.", "")  +"/");
+		logs.debug("Current URL should match: " + getURL().replace("www.", "") + "/");
+		boolean results = CurrentURL.equals(getURL().replace("www.", "") + "/");
 		getCurrentFunctionName(false);
 		return results;
 	}
+
 	public static boolean validateYMALCarouselsDisplayed() throws Exception {
 		getCurrentFunctionName(true);
-		boolean isDisplayed; 
+		boolean isDisplayed;
 		logs.debug("Validate if YMAL carousels exist");
 		isDisplayed = SelectorUtil.isDisplayed(HomePageSelectors.YMALCarousels.get());
-		getCurrentFunctionName(false);		
-		return isDisplayed;
-	}
-	public static boolean validateMainHomeCarouselsDisplayed() throws Exception {
-		getCurrentFunctionName(true);
-		boolean isDisplayed; 
-		logs.debug("Validate if main home carousels exist");
-		isDisplayed = SelectorUtil.isDisplayed(HomePageSelectors.mainHomeCarousels.get());
-		getCurrentFunctionName(false);		
-		return isDisplayed;
-	}
-	
-	public static boolean validateAccountMenuDisplayed() throws Exception {
-		getCurrentFunctionName(true);
-		boolean isDisplayed; 
-		logs.debug("Validate if Account menu exist");
-		isDisplayed = SelectorUtil.isDisplayed(HomePageSelectors.accountMenu.get());
-		getCurrentFunctionName(false);		
+		getCurrentFunctionName(false);
 		return isDisplayed;
 	}
 
-	
+	public static boolean validateMainHomeCarouselsDisplayed() throws Exception {
+		getCurrentFunctionName(true);
+		boolean isDisplayed;
+		logs.debug("Validate if main home carousels exist");
+		isDisplayed = SelectorUtil.isDisplayed(HomePageSelectors.mainHomeCarousels.get());
+		getCurrentFunctionName(false);
+		return isDisplayed;
+	}
+
+	public static boolean validateAccountMenuDisplayed() throws Exception {
+		getCurrentFunctionName(true);
+		boolean isDisplayed;
+		logs.debug("Validate if Account menu exist");
+		isDisplayed = SelectorUtil.isDisplayed(HomePageSelectors.accountMenu.get());
+		getCurrentFunctionName(false);
+		return isDisplayed;
+	}
+
 	public static void clickOnAccountMenu(Boolean withHover) throws Exception {
 		try {
 			getCurrentFunctionName(true);
 			logs.debug("Clicking on Account menu");
-			if(withHover) {
-			SelectorUtil.initializeSelectorsAndDoActions(HomePageSelectors.accountMenu.get(), "ForceAction,hover");
-			}else {
-			SelectorUtil.initializeSelectorsAndDoActions(HomePageSelectors.accountMenu.get());
+			if (withHover) {
+				SelectorUtil.initializeSelectorsAndDoActions(HomePageSelectors.accountMenu.get(), "ForceAction,hover");
+			} else {
+				SelectorUtil.initializeSelectorsAndDoActions(HomePageSelectors.accountMenu.get());
 			}
 			getCurrentFunctionName(false);
 		} catch (NoSuchElementException e) {
@@ -97,17 +100,16 @@ public class HomePage extends SelTestCase {
 			throw e;
 		}
 	}
-	
+
 	public static void clickOnCloseButton() throws Exception {
-	
+
 		getCurrentFunctionName(true);
 		logs.debug("Clicking on Close Button");
 		SelectorUtil.initializeSelectorsAndDoActions(HomePageSelectors.navIcon.get());
 		getCurrentFunctionName(false);
-	
+
 	}
-	
-	
+
 	public static void clickOnRandomAccountMenuItem() throws Exception {
 		getCurrentFunctionName(true);
 		List<WebElement> accountMenuElements = getAccountMenuItems();
@@ -117,8 +119,7 @@ public class HomePage extends SelTestCase {
 		((JavascriptExecutor) SelTestCase.getDriver()).executeScript("arguments[0].click()", element);
 		getCurrentFunctionName(false);
 	}
-	
-	
+
 	public static List<WebElement> getAccountMenuItems() throws Exception {
 		getCurrentFunctionName(true);
 		logs.debug("Get the account menu items.");
@@ -127,52 +128,49 @@ public class HomePage extends SelTestCase {
 		getCurrentFunctionName(false);
 		return menuItems;
 	}
-	
+
 	public static List<WebElement> getElementsList(String selector) throws Exception {
-		getCurrentFunctionName(true);		
+		getCurrentFunctionName(true);
 		List<WebElement> elementsList = SelectorUtil.getAllElements(selector);
 		getCurrentFunctionName(false);
 		return elementsList;
 	}
-	
+
 	public static boolean validateAccountMenuItemsDisplayed() throws Exception {
 		getCurrentFunctionName(true);
 		List<WebElement> accountMenuElements = getAccountMenuItems();
 		logs.debug("Validate account menu links." + accountMenuElements);
 		boolean isDisplayed = true;
-		for (WebElement element:accountMenuElements ) {
+		for (WebElement element : accountMenuElements) {
 			isDisplayed = element.isDisplayed();
 		}
 		getCurrentFunctionName(false);
 		return isDisplayed;
 	}
-	
 
-	
 	public static boolean validateCountrySelectorDisplayed() throws Exception {
 		getCurrentFunctionName(true);
-		boolean isDisplayed; 
+		boolean isDisplayed;
 		logs.debug("Validate if country selector  exist");
 		isDisplayed = SelectorUtil.isDisplayed(HomePageSelectors.countrySelector.get());
-		getCurrentFunctionName(false);		
+		getCurrentFunctionName(false);
 		return isDisplayed;
 	}
-	
+
 	public static boolean validateGlobalFooterItemsDisplayed() throws Exception {
 		getCurrentFunctionName(true);
 		boolean isDisplayed = true;
 		logs.debug("Validate if global footer  exist");
-		isDisplayed = SelectorUtil.isDisplayed(HomePageSelectors.globalFooter.get());		
+		isDisplayed = SelectorUtil.isDisplayed(HomePageSelectors.globalFooter.get());
 		List<WebElement> footerItems = new ArrayList<WebElement>();
 		footerItems = getElementsList(HomePageSelectors.accordionHeader.get());
-		for (WebElement element :footerItems) {
-			isDisplayed = element.isDisplayed();			
+		for (WebElement element : footerItems) {
+			isDisplayed = element.isDisplayed();
 		}
-		getCurrentFunctionName(false);		
+		getCurrentFunctionName(false);
 		return isDisplayed;
 	}
-	
-    
+
 	public static void clickOnMiniCart() throws Exception {
 		getCurrentFunctionName(true);
 		String subStrArr = HomePageSelectors.miniCartBtn.get();
@@ -182,57 +180,57 @@ public class HomePage extends SelTestCase {
 			SelectorUtil.initializeSelectorsAndDoActions(subStrArr);
 		} else {
 			logs.debug("Hovering on Mini Cart");
-			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
+			PDP.hoverMiniCart();
 		}
 
 		getCurrentFunctionName(false);
 	}
 
 	public static String getMiniCartText() throws Exception {
-			getCurrentFunctionName(true);
-			String subStrArr = HomePageSelectors.miniCartText.get();
-			SelectorUtil.initializeSelectorsAndDoActions(subStrArr);
-			String cartText = SelectorUtil.textValue.get();
-			logs.debug("The cart text is:" + cartText);
-			getCurrentFunctionName(false);
-			return cartText;
+		getCurrentFunctionName(true);
+		String subStrArr = HomePageSelectors.miniCartText.get();
+		SelectorUtil.initializeSelectorsAndDoActions(subStrArr);
+		String cartText = SelectorUtil.textValue.get();
+		logs.debug("The cart text is:" + cartText);
+		getCurrentFunctionName(false);
+		return cartText;
 	}
-	
-	public static void  clickOnMiniCartCloseBtn() throws Exception {
+
+	public static void clickOnMiniCartCloseBtn() throws Exception {
 		getCurrentFunctionName(true);
 		String subStrArr = HomePageSelectors.miniCartClose.get();
 		logs.debug("Clicking on Mini Cart clsoe icon");
 		SelectorUtil.initializeSelectorsAndDoActions(subStrArr);
 		getCurrentFunctionName(false);
 	}
-	
+
 	public static boolean validateMiniCartIsClosed() throws Exception {
 		getCurrentFunctionName(true);
-		boolean isNotDisplayed; 
+		boolean isNotDisplayed;
 		String subStrArr = HomePageSelectors.miniCartText.get();
 		logs.debug("Validate if mini cart is closed");
 		isNotDisplayed = SelectorUtil.isNotDisplayed(subStrArr);
-		getCurrentFunctionName(false);		
+		getCurrentFunctionName(false);
 		return isNotDisplayed;
 	}
-	
+
 	public static boolean validateMiniCartProductIsDsiplayed() throws Exception {
 		getCurrentFunctionName(true);
-		boolean isDisplayed; 
+		boolean isDisplayed;
 		String subStrArr = HomePageSelectors.miniCartProductContainer.get();
 		logs.debug("Validate if Mini cart products are displayed");
 		isDisplayed = SelectorUtil.isDisplayed(subStrArr);
-		getCurrentFunctionName(false);		
+		getCurrentFunctionName(false);
 		return isDisplayed;
 	}
-	
+
 	public static boolean validateMiniCartCheckoutBtnIsDisplayed() throws Exception {
 		getCurrentFunctionName(true);
-		boolean isDisplayed; 
+		boolean isDisplayed;
 		String subStrArr = HomePageSelectors.miniCartCheckoutBtn.get();
 		logs.debug("Validate if Mini Cart Checkout Btn Is Displayed");
 		isDisplayed = SelectorUtil.isDisplayed(subStrArr);
-		getCurrentFunctionName(false);		
+		getCurrentFunctionName(false);
 		return isDisplayed;
 	}
 
@@ -284,9 +282,9 @@ public class HomePage extends SelTestCase {
 		logs.debug("Validate if logo exist");
 		subStrArr.add(HomePageSelectors.searchIconField.get());
 		isNotDisplayed = SelectorUtil.isNotDisplayed(subStrArr);
-		if(isNotDisplayed==false)
-			if(!SelectorUtil.isDisplayed(subStrArr))
-				isNotDisplayed=true;
+		if (isNotDisplayed == false)
+			if (!SelectorUtil.isDisplayed(subStrArr))
+				isNotDisplayed = true;
 		getCurrentFunctionName(false);
 		return isNotDisplayed;
 	}
@@ -405,12 +403,13 @@ public class HomePage extends SelTestCase {
 		getCurrentFunctionName(false);
 		return result;
 	}
-/**
-	* Log the number of items at the menu first level.
-	*
-	* @param menuFirstLevelElements.
-	* @throws Exception
-	*/
+
+	/**
+	 * Log the number of items at the menu first level.
+	 *
+	 * @param menuFirstLevelElements.
+	 * @throws Exception
+	 */
 	public static void logNumberOfFirstLevelMenuItems(List<WebElement> menuFirstLevelElements) throws Exception {
 		getCurrentFunctionName(true);
 
@@ -423,33 +422,35 @@ public class HomePage extends SelTestCase {
 	}
 
 	/**
-	* Validate if there's a menu and it contains an item/s.
-	*
-	* @param menuFirstLevelElements.
-	* @return boolean
-	* @throws Exception
-	*/
+	 * Validate if there's a menu and it contains an item/s.
+	 *
+	 * @param menuFirstLevelElements.
+	 * @return boolean
+	 * @throws Exception
+	 */
 	public static boolean menuValidation(List<WebElement> menuFirstLevelElements) throws Exception {
 		getCurrentFunctionName(true);
 
 		// Get the menu items list.
 		logs.debug("Validate if menu displayed.");
 
-		// Check if there's an item in the menu by check the number of items at first level.
+		// Check if there's an item in the menu by check the number of items at first
+		// level.
 		if (menuFirstLevelElements.size() == 0)
-			return false ;
+			return false;
 		getCurrentFunctionName(false);
 
 		return true;
 	}
 
 	/**
-	* Validate the sub menu and the items in first level navigation and the target page.
-	*
-	* @param menuFirstLevelElements.
-	* @return boolean
-	* @throws Exception
-	*/
+	 * Validate the sub menu and the items in first level navigation and the target
+	 * page.
+	 *
+	 * @param menuFirstLevelElements.
+	 * @return boolean
+	 * @throws Exception
+	 */
 	public static boolean validateSubMenuLists(List<WebElement> menuFirstLevelElements) throws Exception {
 		getCurrentFunctionName(true);
 
@@ -458,12 +459,13 @@ public class HomePage extends SelTestCase {
 		boolean validateSubMenuNavigation = true;
 
 		int numberOfMenuItems = menuFirstLevelElements.size();
-		if (homePageMenuLevelTestItems <=  numberOfMenuItems) {
+		if (homePageMenuLevelTestItems <= numberOfMenuItems) {
 			numberOfMenuItems = homePageMenuLevelTestItems;
 		}
 
-		for (menuItemIndex=0; menuItemIndex < numberOfMenuItems; menuItemIndex++) {
-			// The elements should be selected at each iteration because the page will navigate and lose the reference to the elements dom.
+		for (menuItemIndex = 0; menuItemIndex < numberOfMenuItems; menuItemIndex++) {
+			// The elements should be selected at each iteration because the page will
+			// navigate and lose the reference to the elements dom.
 			List<WebElement> elements = getFirstLevelMenuItems();
 			WebElement element = elements.get(menuItemIndex);
 
@@ -487,11 +489,11 @@ public class HomePage extends SelTestCase {
 	}
 
 	/**
-	* Get the list of first level elements in the menu.
-	*
-	* @return List<WebElement>
-	* @throws Exception
-	*/
+	 * Get the list of first level elements in the menu.
+	 *
+	 * @return List<WebElement>
+	 * @throws Exception
+	 */
 	public static List<WebElement> getFirstLevelMenuItems() throws Exception {
 		getCurrentFunctionName(true);
 
@@ -505,10 +507,10 @@ public class HomePage extends SelTestCase {
 	}
 
 	/**
-	* Open the navigation menu.
-	*
-	* @throws Exception
-	*/
+	 * Open the navigation menu.
+	 *
+	 * @throws Exception
+	 */
 	public static void openNavigationMenu() throws Exception {
 		getCurrentFunctionName(true);
 
@@ -519,11 +521,12 @@ public class HomePage extends SelTestCase {
 	}
 
 	/**
-	* Validate the navigation first and second level with navigation menu at mobile PWA.
-	*
-	* @return boolean
-	* @throws Exception
-	*/
+	 * Validate the navigation first and second level with navigation menu at mobile
+	 * PWA.
+	 *
+	 * @return boolean
+	 * @throws Exception
+	 */
 	public static boolean validateModalMenuSecondLevel() throws Exception {
 		getCurrentFunctionName(true);
 
@@ -540,14 +543,15 @@ public class HomePage extends SelTestCase {
 		String pwaLinkClassNameIdentifier = "pw-link";
 
 		int numberOfMenuItems = menuFirstLevelElements.size();
-		if (homePageMenuLevelTestItems <=  numberOfMenuItems) {
+		if (homePageMenuLevelTestItems <= numberOfMenuItems) {
 			numberOfMenuItems = homePageMenuLevelTestItems;
 		}
 
-		for (menuItemIndex=0; menuItemIndex < numberOfMenuItems; menuItemIndex++) {
+		for (menuItemIndex = 0; menuItemIndex < numberOfMenuItems; menuItemIndex++) {
 			boolean currentPageMatchNavigated = true;
 
-			// The elements should be selected at each iteration because the page will navigate and lose the reference to the elements dom.
+			// The elements should be selected at each iteration because the page will
+			// navigate and lose the reference to the elements dom.
 			List<WebElement> elements = getFirstLevelMenuItems();
 			WebElement element = elements.get(menuItemIndex);
 
@@ -591,13 +595,15 @@ public class HomePage extends SelTestCase {
 				logs.debug("Navigated random page path: " + currentPageUrl + "    " + href);
 
 				if (elementClassName.contains(pwaLinkClassNameIdentifier)) {
-					// Check if the current page URL different than the previous page URL for PWA mobile.
+					// Check if the current page URL different than the previous page URL for PWA
+					// mobile.
 					if (!href.equalsIgnoreCase(currentPageUrl)) {
 						currentPageMatchNavigated = false;
 						validateSubMenuNavigation = false;
 					}
 				} else if (pageUrl.equalsIgnoreCase(currentPageUrl)) {
-					// Check if the current page URL different than the previous page URL for tablet.
+					// Check if the current page URL different than the previous page URL for
+					// tablet.
 					currentPageMatchNavigated = false;
 					validateSubMenuNavigation = false;
 				}
@@ -612,11 +618,11 @@ public class HomePage extends SelTestCase {
 	}
 
 	/**
-	* Validate the sign form in desktop.
-	*
-	* @return boolean
-	* @throws Exception
-	*/
+	 * Validate the sign form in desktop.
+	 *
+	 * @return boolean
+	 * @throws Exception
+	 */
 	public static boolean validateSignInForm(WebElement signInLink, boolean isPWAMobile) throws Exception {
 
 		getCurrentFunctionName(true);
@@ -627,15 +633,17 @@ public class HomePage extends SelTestCase {
 		SelectorUtil.clickOnWebElement(signInLink);
 
 		// Select the email input and Enter the email.
-		SelectorUtil.initializeSelectorsAndDoActions(HomePageSelectors.signInEmailInput.get(), SignInValidation.userEmail);
+		SelectorUtil.initializeSelectorsAndDoActions(HomePageSelectors.signInEmailInput.get(),
+				SignInValidation.userEmail);
 
 		// Select the password input and Enter the password.
-		SelectorUtil.initializeSelectorsAndDoActions(HomePageSelectors.signInEmailPasswordInput.get(), SignInValidation.userPassword);
+		SelectorUtil.initializeSelectorsAndDoActions(HomePageSelectors.signInEmailPasswordInput.get(),
+				SignInValidation.userPassword);
 
 		// Select the sign in button and Navigate to the Sign in/Create account page..
 		SelectorUtil.initializeSelectorsAndDoActions(HomePageSelectors.signInButton.get());
 
-		List <WebElement> welcomeMessage = new ArrayList<WebElement>();
+		List<WebElement> welcomeMessage = new ArrayList<WebElement>();
 
 		// Get the welcome message.
 		if (isPWAMobile) {
@@ -659,11 +667,11 @@ public class HomePage extends SelTestCase {
 	}
 
 	/**
-	* Get the account item (Sign in/create account page or welcome message).
-	*
-	* @param WebElement
-	* @throws Exception
-	*/
+	 * Get the account item (Sign in/create account page or welcome message).
+	 *
+	 * @param WebElement
+	 * @throws Exception
+	 */
 	public static WebElement getSignInLinkMobilePWA() throws Exception {
 		getCurrentFunctionName(true);
 
@@ -673,14 +681,15 @@ public class HomePage extends SelTestCase {
 		SelectorUtil.initializeSelectorsAndDoActions(HomePageSelectors.accountMenuIcon.get());
 
 		// Get an account items list.
-		List <WebElement> menuItems = HomePage.getElementsList(HomePageSelectors.accountMenuList);
+		List<WebElement> menuItems = HomePage.getElementsList(HomePageSelectors.accountMenuList);
 		WebElement signInLink = menuItems.get(0);
 		int index = 0;
 		// Get the Sign in/create account page or welcome message item.
-		for (index=0; index < menuItems.size(); index++) {
+		for (index = 0; index < menuItems.size(); index++) {
 			WebElement item = menuItems.get(index);
 			String itemHref = item.getAttribute("href");
-			// Check if the item is sign in/create account (By check create account page link) or welcome message.
+			// Check if the item is sign in/create account (By check create account page
+			// link) or welcome message.
 			if (itemHref.contains("UserLogonView") || itemHref.contains("AccountOverView")) {
 				signInLink = item;
 				break;
