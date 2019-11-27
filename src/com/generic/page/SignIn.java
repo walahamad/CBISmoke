@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
 import com.generic.selector.SignInSelectors;
@@ -15,6 +16,8 @@ import com.generic.util.SelectorUtil;
 import com.generic.setup.GlobalVariables;
 
 public class SignIn extends SelTestCase {
+
+	public static String myAccountPageLink = "AccountOverView";
 
 	// done-ocm
 	public static void logIn(String userName, String Password) throws Exception {
@@ -45,7 +48,7 @@ public class SignIn extends SelTestCase {
 		logs.debug("Open account menu for PWA mobile");
 
 		// Open the account menu.
-		SelectorUtil.initializeSelectorsAndDoActions(SignInSelectors.accountMenuIcon.get());
+		openMobileAccountMenu();
 
 		// Get an account items list.
 		List <WebElement> menuItems = SelectorUtil.getElementsList(SignInSelectors.accountMenuList);
@@ -56,7 +59,7 @@ public class SignIn extends SelTestCase {
 			WebElement item = menuItems.get(index);
 			String itemHref = item.getAttribute("href");
 			// Check if the item is sign in/create account (By check create account page link) or welcome message.
-			if (itemHref.contains("UserLogonView") || itemHref.contains("AccountOverView")) {
+			if (itemHref.contains("UserLogonView") || itemHref.contains(myAccountPageLink)) {
 				signInLink = item;
 				break;
 			}
@@ -64,6 +67,23 @@ public class SignIn extends SelTestCase {
 		logs.debug("The account item (Sign in/create account page or welcome message): " + signInLink);
 		getCurrentFunctionName(false);
 		return signInLink;
+	}
+
+	/**
+	* Open my account menu for mobile if it was not opened
+	*
+	* @throws Exception
+	*/
+	public static void openMobileAccountMenu() throws Exception {
+		getCurrentFunctionName(true);
+		boolean isPWAMobile = getBrowserName().contains(GlobalVariables.browsers.iPhone);
+		if (isPWAMobile) {
+			boolean isAccountMobileOpened = SelectorUtil.isElementExist(By.cssSelector(SignInSelectors.myAccountModal));
+			if (!isAccountMobileOpened) {
+				SelectorUtil.initializeSelectorsAndDoActions(SignInSelectors.accountMenuIcon.get());
+			}
+		}
+		getCurrentFunctionName(false);
 	}
 
 	/**
@@ -241,7 +261,7 @@ public class SignIn extends SelTestCase {
 			if (isPWAMobile) {
 				WebElement welcomeMessageElement = getSignInLinkMobilePWA();
 				String itemHref = welcomeMessageElement.getAttribute("href");
-				if (itemHref.contains("AccountOverView")) {
+				if (itemHref.contains(myAccountPageLink)) {
 					isUserLogedIn = true;
 				}
 			} else {
@@ -261,6 +281,76 @@ public class SignIn extends SelTestCase {
 			throw e;
 		}
 	}
+
+	/**
+	* Check user account link.
+	* @param boolean
+	* @throws Exception
+	*/
+	public static boolean checkExistenceOfAccountLink() throws Exception {
+		try {
+			getCurrentFunctionName(true);
+			boolean isUserLogedIn = false;
+
+			// Check if the device is mobile(PWA site) or (desktop, tablet).
+			boolean isPWAMobile = getBrowserName().contains(GlobalVariables.browsers.iPhone);
+			WebElement myAccountLink;
+
+			// Get my account link.
+			if (isPWAMobile) {
+				myAccountLink = getSignInLinkMobilePWA();
+			} else {
+				myAccountLink = SelectorUtil.getelement(SignInSelectors.myAccountLink);
+			}
+
+			// Check if link is for my account page.
+			String itemHref = myAccountLink.getAttribute("href");
+			if (itemHref.contains(myAccountPageLink)) {
+				isUserLogedIn = true;
+			}
+
+			// Go to my account page.
+			openMobileAccountMenu();
+			SelectorUtil.clickOnWebElement(myAccountLink);
+
+			getCurrentFunctionName(false);
+
+			return isUserLogedIn;
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+			}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
+	}
+
+	/**
+	* Check current page if it is my account.
+	*
+	* @return boolean
+	* @throws Exception
+	*/
+	public static boolean checkMyAccountPage() throws Exception {
+		try {
+			getCurrentFunctionName(true);
+			boolean isMyAccountPage = false;
+
+			String currentPageUrl = SelectorUtil.getCurrentPageUrl();
+
+			// Validate the current page is my account page by URL.
+			if (currentPageUrl.contains(myAccountPageLink)) {
+				isMyAccountPage = true;
+			}
+
+			getCurrentFunctionName(false);
+
+			return isMyAccountPage;
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+			}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
+	}
+
 
 	/**
 	* Click on main menu.

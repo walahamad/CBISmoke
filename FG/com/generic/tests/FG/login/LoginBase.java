@@ -112,6 +112,15 @@ public class LoginBase extends SelTestCase {
 				sassert().assertTrue(!SignIn.checkUserAccount(), LoggingMsg.USER_IS_LOGGED_IN);
 			}
 
+			if (proprties.equals("myAccountLink")) {
+
+				Testlogs.get().debug("Validate existence of my account link");
+				SignIn.fillLoginFormAndClickSubmit(userMail, userPassword);
+				sassert().assertTrue(SignIn.checkUserAccount(), LoggingMsg.USER_IS_NOT_LOGGED_IN_SUCCESSFULLY);
+				sassert().assertTrue(SignIn.checkExistenceOfAccountLink(), LoggingMsg.MY_ACCOUNT_LINK_NOT_EXIST);
+				sassert().assertTrue(SignIn.checkMyAccountPage(), LoggingMsg.NOT_MY_ACCOUNT_PAGE);
+			}
+
 			if (proprties.equals("Forgot password -Valid Email")) {
 				SignIn.clickForgotPasswordBtn();
 				SignIn.typeForgottenPwdEmail(userMail);

@@ -907,9 +907,28 @@ public class SelectorUtil extends SelTestCase {
 		LinkedHashMap<String, LinkedHashMap> webelementsInfo = SelectorUtil.initializeSelectorsAndDoActions(selector, "", false);			
 		String Byselector = (By) webelementsInfo.get(selector).get("by")+"";
 		logs.debug(Byselector);
-		List<WebElement> menuFirstLevelElements = getDriver().findElements((By) webelementsInfo.get(selector).get("by"));
+		List<WebElement> listElements = getDriver().findElements((By) webelementsInfo.get(selector).get("by"));
 
 		getCurrentFunctionName(false);
-		return menuFirstLevelElements;
+		return listElements;
+	}
+
+	/**
+	* Check if element exist at document.
+	*
+	* @param Byselector.
+	* @return boolean
+	* @throws Exception
+	*/
+	public static boolean isElementExist(By Byselector) throws Exception {
+		getCurrentFunctionName(true);
+		boolean isElementExist = false;
+		List<WebElement> listItems = getDriver().findElements(Byselector);
+
+		if (listItems.size() != 0) {
+			isElementExist = true;
+		}
+		getCurrentFunctionName(false);
+		return isElementExist;
 	}
 }
