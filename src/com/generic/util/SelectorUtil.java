@@ -689,6 +689,21 @@ public class SelectorUtil extends SelTestCase {
 		getCurrentFunctionName(false);
 		return isNotDisplayed;
 	}
+	
+	@SuppressWarnings("rawtypes")
+	public static boolean isNotDisplayed(String value, String index) throws Exception {
+		getCurrentFunctionName(true);
+		boolean isNotDisplayed = false;
+		try {
+			LinkedHashMap<String, LinkedHashMap> webelementsInfo = initializeSelectorsAndDoActions(value, index, false);
+			return isNotDisplayed;
+
+		} catch (NoSuchElementException e) {
+			isNotDisplayed = true;
+			return isNotDisplayed;
+		}
+	}
+	
 	@SuppressWarnings({ "rawtypes", "unused" })
 	public static boolean isNotDisplayed(List<String> subStrArr) throws Exception {
 		getCurrentFunctionName(true);
@@ -720,6 +735,14 @@ public class SelectorUtil extends SelTestCase {
 		return attrValue;
 	}
 
+	@SuppressWarnings("rawtypes")
+	public static String getAttrString (String Str, String attr, int index) throws Exception {
+		getCurrentFunctionName(true);
+		List<String> subStrArr = new ArrayList<String>();
+		subStrArr.add(Str);
+		return getAttr(subStrArr,attr,index);
+	}
+	
 	@SuppressWarnings("rawtypes")
 	public static String getAttr(List<String> subStrArr, String attr, int index) throws Exception {
 		getCurrentFunctionName(true);
@@ -870,7 +893,6 @@ public class SelectorUtil extends SelTestCase {
 
 	}
 
-	
 	public static boolean isImgLoaded(String selector) {
 		WebElement img = getDriver().findElement(By.cssSelector(selector));
 
@@ -886,11 +908,50 @@ public class SelectorUtil extends SelTestCase {
 	}
 
 
-public static String getCurrentPageUrl() throws Exception {
+	public static String getCurrentPageUrl() throws Exception {
 		return SelTestCase.getDriver().getCurrentUrl();
 	}
 
 	public static void clickOnWebElement(WebElement element) throws Exception {
 		((JavascriptExecutor) SelTestCase.getDriver()).executeScript("arguments[0].click()", element);
+	}
+
+	/**
+	* Get the elements list by pass the selector as a string.
+	*
+	* @param selector.
+	* @return List<WebElement>
+	* @throws Exception
+	*/
+	@SuppressWarnings("rawtypes")
+	public static List<WebElement> getElementsList(String selector) throws Exception {
+		getCurrentFunctionName(true);
+
+		LinkedHashMap<String, LinkedHashMap> webelementsInfo = SelectorUtil.initializeSelectorsAndDoActions(selector, "", false);			
+		String Byselector = (By) webelementsInfo.get(selector).get("by")+"";
+		logs.debug(Byselector);
+		List<WebElement> listElements = getDriver().findElements((By) webelementsInfo.get(selector).get("by"));
+
+		getCurrentFunctionName(false);
+		return listElements;
+	}
+
+	/**
+	* Check if element exist at document.
+	*
+	* @param Byselector.
+	* @return boolean
+	* @throws Exception
+	*/
+	public static boolean isElementExist(By Byselector) throws Exception {
+		getCurrentFunctionName(true);
+		boolean isElementExist = false;
+		List<WebElement> listItems = getDriver().findElements(Byselector);
+
+		if (listItems.size() != 0) {
+			isElementExist = true;
+		}
+		getCurrentFunctionName(false);
+		return isElementExist;
 	}
 }
