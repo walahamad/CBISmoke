@@ -128,5 +128,4 @@ public class LoggingMsg {
 	public static String USER_IS_LOGGED_IN = "User is loged in";
 	public static String NOT_MY_ACCOUNT_PAGE = "This page is not my account page";
 	public static String MY_ACCOUNT_LINK_NOT_EXIST = "My account page link does not exist";
-
 }
