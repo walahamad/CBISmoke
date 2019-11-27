@@ -1,8 +1,7 @@
-package com.generic.tests.FG.HomePage;
+package com.generic.tests.GR.HomePage;
 
 import com.generic.setup.SelTestCase;
 import com.generic.page.HomePage;
-import com.generic.setup.GlobalVariables.browsers;
 
 public class GlobalFooterValidation extends SelTestCase {
 	public static boolean validate() throws Exception {
@@ -12,4 +11,5 @@ public class GlobalFooterValidation extends SelTestCase {
 		getCurrentFunctionName(false);
 		return isCountrySelectorDisplayed && isFooterItemsDisplayed;
 	}
+
 }
