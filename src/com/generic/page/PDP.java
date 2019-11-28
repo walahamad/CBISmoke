@@ -59,7 +59,8 @@ public class PDP extends SelTestCase {
 		getDriver().get(getURL() + keys.FG_PDP);
 		getCurrentFunctionName(false);
 	}
-
+	// done - SMK
+	// to be replaced with Search
 	public static void NavigateToBundleFGPDP() throws Exception {
 		getCurrentFunctionName(true);
 		getDriver().get(getURL() + keys.FG_BundlePDP);
@@ -310,6 +311,7 @@ public class PDP extends SelTestCase {
 
 	}
 
+	// done - SMK
 	public static boolean validatePriceIsDisplayed() throws Exception {
 		getCurrentFunctionName(true);
 		boolean isDisplayed;
@@ -324,6 +326,7 @@ public class PDP extends SelTestCase {
 		return isDisplayed;
 	}
 
+	// done - SMK
 	public static boolean validateBundlePriceIsDisplayed() throws Exception {
 		getCurrentFunctionName(true);
 		boolean isDisplayed;
@@ -334,6 +337,7 @@ public class PDP extends SelTestCase {
 		return isDisplayed;
 	}
 
+	// done - SMK
 	public static boolean validateAddToWLGRIsEnabled() throws Exception {
 		getCurrentFunctionName(true);
 		boolean isNotDisplayed;
@@ -357,6 +361,7 @@ public class PDP extends SelTestCase {
 		return isNotDisplayed;
 	}
 
+	// done - SMK
 	public static boolean validateAddToCartIsEnabled() throws Exception {
 		getCurrentFunctionName(true);
 		boolean isNotDisplayed;
@@ -380,6 +385,7 @@ public class PDP extends SelTestCase {
 		return isNotDisplayed;
 	}
 
+	// done - SMK
 	public static String getBottomPrice() throws Exception {
 		getCurrentFunctionName(true);
 		logs.debug("Validate if bottom price is updated after seleting options");
@@ -454,6 +460,7 @@ public class PDP extends SelTestCase {
 		}
 	}
 
+	// done - SMK
 	public static int getNumberOfListsInProduct(String Str) throws Exception {
 		try {
 			getCurrentFunctionName(true);
@@ -469,6 +476,7 @@ public class PDP extends SelTestCase {
 		}
 	}
 
+	// done - SMK
 	public static int getNumberOfActiveListsInProduct(String Str) throws Exception {
 		try {
 			getCurrentFunctionName(true);
@@ -493,7 +501,7 @@ public class PDP extends SelTestCase {
 		// you need to click on the img if there is an img tag.
 		if (!SelTestCase.getBrowserName().contains(GlobalVariables.browsers.iPhone)) {
 			String nthSel = Str + ">img";
-			if (!SelectorUtil.isNotDisplayed(Str))
+			if (!SelectorUtil.isNotDisplayed(nthSel))
 				SelectorUtil.initializeSelectorsAndDoActions(nthSel);
 		}
 		getCurrentFunctionName(false);
@@ -547,6 +555,7 @@ public class PDP extends SelTestCase {
 		return isNotDisplayed;
 	}
 
+	// done - SMK
 	public static void selectSwatches() throws Exception {
 		try {
 			getCurrentFunctionName(true);
