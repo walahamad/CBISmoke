@@ -22,11 +22,18 @@ public class HomePageBase extends SelTestCase {
 	// possible scenarios
 	public static final String Logo = "Logo validation";
 	public static final String miniCart = "Mini cart validation";
+	public static final String search = "Search validation";
+	public static final String espots = "espots validation";
 	public static final String verify = "verify";
 	public static final String header = "header";
 	public static final String footer = "footer";
 	public static final String body = "body";
-	public static final String mainHomeCarousels = "Main Home Carousels Verification";
+	public static final String YMALCarousels = "YMAL Carousels Verification";
+
+	public static final String menu = "menu";
+	public static final String signIn = "SignIn validation";
+	public static final String AccountMenu = "Account menu validation";
+	public static final String GlobalFooter = "Global footer validation";
 
 	// used sheet in test
 	public static final String testDataSheet = SheetVariables.HPRegressionsheet;
@@ -52,30 +59,34 @@ public class HomePageBase extends SelTestCase {
 	}
 
 	@Test(dataProvider = "HP_SC")
-	public void HomePageRegressionTest(String caseId, String runTest, String desc, String proprties)
-			throws Exception {
+	public void HomePageRegressionTest(String caseId, String runTest, String desc, String proprties) throws Exception {
 		Testlogs.set(new SASLogger("HP_SC " + getBrowserName()));
 		// Important to add this for logging/reporting
 		setTestCaseReportName(SheetVariables.HPTestCaseId);
 		Testlogs.get().debug("Case Browser: " + testObject.getParameter("browserName"));
 		logCaseDetailds(MessageFormat.format(LoggingMsg.TEST_CASE_DESC, testDataSheet + "." + caseId,
-				this.getClass().getCanonicalName(), desc));
+				this.getClass().getCanonicalName(), desc.replace("\r", "</br>")));
 
 		try {
 
 			if (proprties.contains(this.Logo)) {
 				LogoValidation.validate();
-			} else
-				if (proprties.contains(this.miniCart)) {
-					MiniCartValidation.validate();
-				}
-			
-					else{
-				Testlogs.get().debug("please check proprties provided in excel sheet");
-			}
-			if (proprties.contains(this.mainHomeCarousels)) {
-				MainHomeCarouselsVerification.validate();
-			}else {
+
+			} else if (proprties.contains(this.miniCart)) {
+				MiniCartValidation.validate();
+
+			} else if (proprties.contains(this.espots)) {
+				HomePageValidation.validateCaroselAndEspot();
+
+			} else if (proprties.contains(this.search)) {
+				HomePageValidation.validateSearch();
+			} else if (proprties.contains(this.AccountMenu)) {
+				sassert().assertTrue(AccountMenuValidation.validate(), "My Account menu validation has some problems");
+			} else if (proprties.contains(this.GlobalFooter)) {
+				sassert().assertTrue(GlobalFooterValidation.validate(), "Global footer validation has some problems");
+			} else if (proprties.contains(this.YMALCarousels)) {
+				YMALCarouselsVerification.validate();
+			} else {
 				Testlogs.get().debug("please check proprties provided in excel sheet");
 			}
 
