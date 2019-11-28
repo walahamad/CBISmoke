@@ -13,7 +13,7 @@ public class brands {
 	static String Prod = "prod";
 
 	// URLS
-	static String FGURL = "frontGate.com";
+	static String FGURL = "frontgate.com";
 	static String GRURL = "grandinroad.com";
 	static String RYURL = "ryllace.com";
 	static String GHURL = "garnethill.com";
@@ -24,6 +24,9 @@ public class brands {
 
 		if (!env.contains(Prod))
 			brandGetter += env + ".";
+		else {
+			brandGetter += "www.";
+		}
 
 		if (brand.contains(FG)) {
 			brandGetter += FGURL;

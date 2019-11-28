@@ -2,23 +2,33 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="Registration Regression" parallel="tests" thread-count="10" data-provider-thread-count="2">
 	
+	
 	<test name="Registration Test_chrome">
 		<parameter name="browserName" value="chrome"></parameter>
+		<parameter name="Env" value="stagewcs"></parameter>
+        <parameter name="Brand" value="FG"></parameter>
+		
 		<classes>
-			<class name="com.generic.tests.Registration.RegistrationBase" />
+			<class name="com.generic.tests.FG.Registration.RegistrationBase" />
 		</classes>
-	</test><!-- Test -->
-	<test name="Registration Tests_ Firefox">
-		<parameter name="browserName" value="Firefox"></parameter>
+	</test> 
+		
+	<test name="Registration Tests_Firefox">
+		<parameter name="browserName" value="mobile_iPad"></parameter>
+		<parameter name="Env" value="stagewcs"></parameter>
+        <parameter name="Brand" value="FG"></parameter>
 		<classes>
-			<class name="com.generic.tests.Registration.RegistrationBase" />
+			<class name="com.generic.tests.FG.Registration.RegistrationBase" />
 		</classes>
-	</test><!-- Test -->
-
-	<test name="Registration Tests_ nexus5">
-		<parameter name="browserName" value="mobile_Nexus 5"></parameter>
+	</test> 
+      
+	
+	<test name="Registration iPhone">
+		<parameter name="browserName" value="mobile_iPhone X"></parameter>
+		<parameter name="Env" value="stagewcs"></parameter>
+        <parameter name="Brand" value="FG"></parameter>
 		<classes>
-			<class name="com.generic.tests.Registration.RegistrationBase" />
+			<class name="com.generic.tests.FG.Registration.RegistrationBase" />
 		</classes>
 	</test><!-- Test -->
 	

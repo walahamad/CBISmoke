@@ -84,14 +84,25 @@ public class SelTestCase {
     public static LinkedHashMap<String, Object> addresses = null; 
     public static LinkedHashMap<String, Object> invintory = null;
     public static LinkedHashMap<String, Object> paymentCards = null;
+	private static String URL;
 
     public static String getBrowserName() {
         //return browserName;
-        return testObj.get().getParameter("browserName");
+    	String browserName = testObj.get().getParameter("browserName");
+    	logs.debug("browserName "+browserName);
+        return browserName;
     }
 
     public static void setBrowserName(String browserName) {
         //SelTestCase.browserName = browserName;
+    }
+    
+    public static String getURL() {
+        return SelTestCase.URL;
+    }
+
+    public static void setURL(String URL) {
+        SelTestCase.URL = URL;
     }
 
     public static String getScreenShotName() {

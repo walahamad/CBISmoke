@@ -7,9 +7,11 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import com.generic.selector.RegistrationSelectors;
 import com.generic.setup.ExceptionMsg;
+import com.generic.setup.GlobalVariables;
 import com.generic.setup.LoggingMsg;
 import com.generic.setup.SelTestCase;
 import com.generic.util.SelectorUtil;
+import java.net.URI;
 
 public class Registration extends SelTestCase {
 	public static class keys {
@@ -24,16 +26,12 @@ public class Registration extends SelTestCase {
 
 	}
 
-	// done-ocm
+	// Done CBI Smoke
 	public static void typeFirstName(String firstName) throws Exception {
 		try {
 			getCurrentFunctionName(true);
-			List<String> subStrArr = new ArrayList<String>();
-			List<String> valuesArr = new ArrayList<String>();
 			logs.debug(MessageFormat.format(LoggingMsg.TYPING_ELEMENT_VALUE, "firstname ", firstName));
-			subStrArr.add(RegistrationSelectors.firstName);
-			valuesArr.add(firstName);
-			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
+			SelectorUtil.initializeSelectorsAndDoActions(RegistrationSelectors.firstName.get(), firstName);
 			getCurrentFunctionName(false);
 		} catch (NoSuchElementException e) {
 			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
@@ -43,16 +41,12 @@ public class Registration extends SelTestCase {
 
 	}
 
-	// done-ocm
+	// Done CBI Smoke
 	public static void typeLastName(String lastName) throws Exception {
 		try {
 			getCurrentFunctionName(true);
-			List<String> subStrArr = new ArrayList<String>();
-			List<String> valuesArr = new ArrayList<String>();
 			logs.debug(MessageFormat.format(LoggingMsg.TYPING_ELEMENT_VALUE, "lastname ", lastName));
-			subStrArr.add(RegistrationSelectors.lastName);
-			valuesArr.add(lastName);
-			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
+			SelectorUtil.initializeSelectorsAndDoActions(RegistrationSelectors.lastName.get(), lastName);
 			getCurrentFunctionName(false);
 		} catch (NoSuchElementException e) {
 			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
@@ -62,16 +56,12 @@ public class Registration extends SelTestCase {
 
 	}
 
-	// done-ocm
+	// Done CBI Smoke
 	public static void typeEmailAddress(String address) throws Exception {
 		try {
 			getCurrentFunctionName(true);
-			List<String> subStrArr = new ArrayList<String>();
-			List<String> valuesArr = new ArrayList<String>();
 			logs.debug(MessageFormat.format(LoggingMsg.TYPING_ELEMENT_VALUE, "emailAddress ", address));
-			subStrArr.add(RegistrationSelectors.emailAddress);
-			valuesArr.add(address);
-			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
+			SelectorUtil.initializeSelectorsAndDoActions(RegistrationSelectors.emailAddress.get(), address);
 			getCurrentFunctionName(false);
 		} catch (NoSuchElementException e) {
 			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
@@ -81,16 +71,12 @@ public class Registration extends SelTestCase {
 
 	}
 
-	// done-ocm
+	// Done CBI Smoke
 	public static void typePassword(String password) throws Exception {
 		try {
 			getCurrentFunctionName(true);
-			List<String> subStrArr = new ArrayList<String>();
-			List<String> valuesArr = new ArrayList<String>();
 			logs.debug(MessageFormat.format(LoggingMsg.TYPING_ELEMENT_VALUE, "password ", password));
-			subStrArr.add(RegistrationSelectors.password);
-			valuesArr.add(password);
-			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
+			SelectorUtil.initializeSelectorsAndDoActions(RegistrationSelectors.password.get(), password);
 			getCurrentFunctionName(false);
 		} catch (NoSuchElementException e) {
 			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
@@ -99,16 +85,12 @@ public class Registration extends SelTestCase {
 		}
 	}
 
-	// done-ocm
+	// Done CBI Smoke
 	public static void typeConfirmPassword(String confPassword) throws Exception {
 		try {
 			getCurrentFunctionName(true);
-			List<String> subStrArr = new ArrayList<String>();
-			List<String> valuesArr = new ArrayList<String>();
 			logs.debug(MessageFormat.format(LoggingMsg.TYPING_ELEMENT_VALUE, "confirmPassword", confPassword));
-			subStrArr.add(RegistrationSelectors.confirmPassword);
-			valuesArr.add(confPassword);
-			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
+			SelectorUtil.initializeSelectorsAndDoActions(RegistrationSelectors.confirmPassword.get(), confPassword);
 			getCurrentFunctionName(false);
 		} catch (NoSuchElementException e) {
 			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
@@ -117,16 +99,26 @@ public class Registration extends SelTestCase {
 		}
 	}
 
-	// done-ocm
+	// Done CBI Somke
+	public static void typeCompany(String comapnyName) throws Exception {
+		try {
+			getCurrentFunctionName(true);
+			logs.debug(MessageFormat.format(LoggingMsg.TYPING_ELEMENT_VALUE, "companyName", comapnyName));
+			SelectorUtil.initializeSelectorsAndDoActions(RegistrationSelectors.companyName.get(), comapnyName);
+			getCurrentFunctionName(false);
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+			}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
+	}
+
+	// Done CBI Smoke
 	public static void clickRegisterButton() throws Exception {
 		try {
 			getCurrentFunctionName(true);
-			List<String> subStrArr = new ArrayList<String>();
-			List<String> valuesArr = new ArrayList<String>();
 			logs.debug(MessageFormat.format(LoggingMsg.CLICKING_SEL, "Register btn"));
-			subStrArr.add(RegistrationSelectors.registerBtn);
-			valuesArr.add("");
-			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
+			SelectorUtil.initializeSelectorsAndDoActions(RegistrationSelectors.registerBtn, "");
 			getCurrentFunctionName(false);
 		} catch (NoSuchElementException e) {
 			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
@@ -135,6 +127,7 @@ public class Registration extends SelTestCase {
 		}
 
 	}
+
 	// done-ocm
 	public static void switchToDefaultContent() {
 		try {
@@ -146,7 +139,95 @@ public class Registration extends SelTestCase {
 			}.getClass().getEnclosingMethod().getName()));
 			throw e;
 		}
-}
+	}
+
+	// Done CBI Smoke
+	public static void fillRegistrationFirstStep(String email, String confEmail, String confPassword, String password)
+			throws Exception {
+		try {
+			getCurrentFunctionName(true);
+			if (!"".equals(email))
+				typeEmailAddress(email);
+
+			if (!"".equals(confEmail))
+				typeconfEmailAddress(confEmail);
+
+			if (!"".equals(password))
+				typePassword(password);
+
+			if (!"".equals(confPassword))
+				typeConfirmPassword(confPassword);
+
+			Thread.sleep(1000);
+
+			clickRegisterButton();
+
+			getCurrentFunctionName(false);
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+			}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
+
+	}
+
+	// Done CBI Smoke
+	public static void fillRegistrationSecondStep(String fName, String lName, String companyName,
+			LinkedHashMap<String, String> addressDetails) throws Exception {
+		try {
+			getCurrentFunctionName(true);
+
+			if (!"".equals(fName))
+				typeFirstName(fName);
+
+			if (!"".equals(lName))
+				typeLastName(lName);
+
+			if (!"".equals(companyName))
+				typeCompany(companyName);
+
+			if (!"".equals(addressDetails.get(AddressBook.shippingAddress.keys.adddressLine)))
+				typeAddressLine1(addressDetails.get(AddressBook.shippingAddress.keys.adddressLine));
+
+			if (!"".equals(addressDetails.get(AddressBook.shippingAddress.keys.city)))
+				typeCity(addressDetails.get(AddressBook.shippingAddress.keys.city));
+
+			if (!"".equals(addressDetails.get(AddressBook.shippingAddress.keys.city)))
+				typeState(addressDetails.get(AddressBook.shippingAddress.keys.city));
+
+			if (!"".equals(addressDetails.get(AddressBook.shippingAddress.keys.zipcode)))
+				typeZipcode(addressDetails.get(AddressBook.shippingAddress.keys.zipcode));
+
+			if (!"".equals(addressDetails.get(AddressBook.shippingAddress.keys.phone))) {
+				typePhone(addressDetails.get(AddressBook.shippingAddress.keys.phone));
+
+				clickSaveButton();
+			}
+			getCurrentFunctionName(false);
+		}
+
+		catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+			}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
+
+	}
+
+	// Done CBI
+	public static void clickSaveButton() throws Exception {
+		try {
+			getCurrentFunctionName(true);
+			logs.debug(MessageFormat.format(LoggingMsg.CLICKING_SEL, "Register btn"));
+			SelectorUtil.initializeSelectorsAndDoActions(RegistrationSelectors.saveButton.get(), "");
+			getCurrentFunctionName(false);
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+			}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
+
+	}
 
 	// done-OCM
 	public static void fillAndClickRegister(String fName, String lName, String email, String school, String pass,
@@ -328,15 +409,11 @@ public class Registration extends SelTestCase {
 
 	}
 
-	// done-ocm
+	// Done CBI Smoke
 	private static void typePhone(String phone) throws Exception {
 		try {
 			getCurrentFunctionName(true);
-			List<String> subStrArr = new ArrayList<String>();
-			List<String> valuesArr = new ArrayList<String>();
-			subStrArr.add(RegistrationSelectors.phone);
-			valuesArr.add(phone);
-			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
+			SelectorUtil.initializeSelectorsAndDoActions(RegistrationSelectors.phone.get(), phone);
 			getCurrentFunctionName(false);
 		} catch (NoSuchElementException e) {
 			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
@@ -346,14 +423,12 @@ public class Registration extends SelTestCase {
 
 	}
 
+	// Done CBI Smoke
 	private static void typeconfEmailAddress(String email) throws Exception {
 		try {
 			getCurrentFunctionName(true);
-			List<String> subStrArr = new ArrayList<String>();
-			List<String> valuesArr = new ArrayList<String>();
-			subStrArr.add(RegistrationSelectors.emailAddressConfirmation);
-			valuesArr.add(email);
-			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
+			SelectorUtil.initializeSelectorsAndDoActions(RegistrationSelectors.confirmEmailAddress.get(), email);
+			logs.debug("Data is" + email);
 			getCurrentFunctionName(false);
 		} catch (NoSuchElementException e) {
 			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
@@ -363,15 +438,11 @@ public class Registration extends SelTestCase {
 
 	}
 
-	// done-ocm
+	// Done CBI Smoke
 	private static void typeAddressLine1(String address) throws Exception {
 		try {
 			getCurrentFunctionName(true);
-			List<String> subStrArr = new ArrayList<String>();
-			List<String> valuesArr = new ArrayList<String>();
-			subStrArr.add(RegistrationSelectors.AddressLine1);
-			valuesArr.add(address);
-			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
+			SelectorUtil.initializeSelectorsAndDoActions(RegistrationSelectors.AddressLine1.get(), address);
 			getCurrentFunctionName(false);
 		} catch (NoSuchElementException e) {
 			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
@@ -381,15 +452,11 @@ public class Registration extends SelTestCase {
 
 	}
 
-	// done-ocm
+	// Done CBI Smoke
 	private static void typeCity(String city) throws Exception {
 		try {
 			getCurrentFunctionName(true);
-			List<String> subStrArr = new ArrayList<String>();
-			List<String> valuesArr = new ArrayList<String>();
-			subStrArr.add(RegistrationSelectors.city);
-			valuesArr.add(city);
-			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
+			SelectorUtil.initializeSelectorsAndDoActions(RegistrationSelectors.city.get(), city);
 			getCurrentFunctionName(false);
 		} catch (NoSuchElementException e) {
 			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
@@ -399,15 +466,11 @@ public class Registration extends SelTestCase {
 
 	}
 
-	// done-ocm
+	// Done CBI Smoke
 	private static void typeState(String state) throws Exception {
 		try {
 			getCurrentFunctionName(true);
-			List<String> subStrArr = new ArrayList<String>();
-			List<String> valuesArr = new ArrayList<String>();
-			subStrArr.add(RegistrationSelectors.state);
-			valuesArr.add(state);
-			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
+			SelectorUtil.initializeSelectorsAndDoActions(RegistrationSelectors.state.get(), state);
 			getCurrentFunctionName(false);
 		} catch (NoSuchElementException e) {
 			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
@@ -417,15 +480,11 @@ public class Registration extends SelTestCase {
 
 	}
 
-	// done-ocm
+	// Done CBI Smoke
 	private static void typeZipcode(String zipcode) throws Exception {
 		try {
 			getCurrentFunctionName(true);
-			List<String> subStrArr = new ArrayList<String>();
-			List<String> valuesArr = new ArrayList<String>();
-			subStrArr.add(RegistrationSelectors.Zipcode);
-			valuesArr.add(zipcode);
-			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
+			SelectorUtil.initializeSelectorsAndDoActions(RegistrationSelectors.Zipcode.get(), zipcode);
 			getCurrentFunctionName(false);
 		} catch (NoSuchElementException e) {
 			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
@@ -493,16 +552,42 @@ public class Registration extends SelTestCase {
 		}
 	}
 
-	// done-ocm
+	// Done CBI
 	public static String getEmailAddressErrorInvalid() throws Exception {
 		try {
 			getCurrentFunctionName(true);
-			List<String> subStrArr = new ArrayList<String>();
-			List<String> valuesArr = new ArrayList<String>();
-			logs.debug(MessageFormat.format(LoggingMsg.GETTING_TEXT, "Email Address Error"));
-			subStrArr.add(RegistrationSelectors.emailAddressError);
-			valuesArr.add("");
-			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
+
+			if (getBrowserName().contains(GlobalVariables.browsers.iPhone)) {
+				logs.debug(MessageFormat.format(LoggingMsg.GETTING_TEXT, "Email Address Error"));
+				SelectorUtil.initializeSelectorsAndDoActions(RegistrationSelectors.emailAddressErrorMobile, "index,0");
+			} else {
+				logs.debug(MessageFormat.format(LoggingMsg.GETTING_TEXT, "Email Address Error"));
+				SelectorUtil.initializeSelectorsAndDoActions(RegistrationSelectors.emailAddressError, "");
+			}
+
+			getCurrentFunctionName(false);
+			return SelectorUtil.textValue.get();
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+			}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
+	}
+
+	// Done CBI
+	public static String getConfEmailAddressErrorInvalid() throws Exception {
+		try {
+			getCurrentFunctionName(true);
+
+			if (getBrowserName().contains(GlobalVariables.browsers.iPhone)) {
+				logs.debug(MessageFormat.format(LoggingMsg.GETTING_TEXT, "Email Address Error"));
+				SelectorUtil.initializeSelectorsAndDoActions(RegistrationSelectors.confEmailAddressErrorMobile,
+						"index,1");
+			} else {
+				logs.debug(MessageFormat.format(LoggingMsg.GETTING_TEXT, "Email Address Error"));
+				SelectorUtil.initializeSelectorsAndDoActions(RegistrationSelectors.confEmailAddressError, "");
+			}
+
 			getCurrentFunctionName(false);
 			return SelectorUtil.textValue.get();
 		} catch (NoSuchElementException e) {
@@ -531,16 +616,20 @@ public class Registration extends SelTestCase {
 		}
 	}
 
-	// done-ocm
+	// Done CBI
 	public static String getPasswordError() throws Exception {
 		try {
 			getCurrentFunctionName(true);
-			List<String> subStrArr = new ArrayList<String>();
-			List<String> valuesArr = new ArrayList<String>();
-			logs.debug(MessageFormat.format(LoggingMsg.GETTING_TEXT, "Email Address Error"));
-			subStrArr.add(RegistrationSelectors.passwordRulesError);
-			valuesArr.add("");
-			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
+
+			if (getBrowserName().contains(GlobalVariables.browsers.iPhone)) {
+				logs.debug(MessageFormat.format(LoggingMsg.GETTING_TEXT, "Email Address Error"));
+				SelectorUtil.initializeSelectorsAndDoActions(RegistrationSelectors.passwordRulesErrorMobile, "index,2");
+
+			} else {
+				logs.debug(MessageFormat.format(LoggingMsg.GETTING_TEXT, "Email Address Error"));
+				SelectorUtil.initializeSelectorsAndDoActions(RegistrationSelectors.passwordRulesError, "");
+			}
+
 			getCurrentFunctionName(false);
 			return SelectorUtil.textValue.get();
 		} catch (NoSuchElementException e) {
@@ -550,16 +639,20 @@ public class Registration extends SelTestCase {
 		}
 	}
 
-	// done-ocm
+	// Done CBI
 	public static String getConfirmPasswordError() throws Exception {
 		try {
 			getCurrentFunctionName(true);
-			List<String> subStrArr = new ArrayList<String>();
-			List<String> valuesArr = new ArrayList<String>();
-			logs.debug(MessageFormat.format(LoggingMsg.GETTING_TEXT, "Confirm Password Error"));
-			subStrArr.add(RegistrationSelectors.confirmPasswordError);
-			valuesArr.add("");
-			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
+
+			if (getBrowserName().contains(GlobalVariables.browsers.iPhone)) {
+				logs.debug(MessageFormat.format(LoggingMsg.GETTING_TEXT, "Confirm Password Error"));
+				SelectorUtil.initializeSelectorsAndDoActions(RegistrationSelectors.confirmPasswordErrorMobile,
+						"index,3");
+			} else {
+				logs.debug(MessageFormat.format(LoggingMsg.GETTING_TEXT, "Confirm Password Error"));
+				SelectorUtil.initializeSelectorsAndDoActions(RegistrationSelectors.confirmPasswordError, "");
+			}
+
 			getCurrentFunctionName(false);
 			return SelectorUtil.textValue.get();
 		} catch (NoSuchElementException e) {
@@ -588,6 +681,160 @@ public class Registration extends SelTestCase {
 		}
 	}
 
+	// done CBI
+	public static String getFirstNameErrorInvalid() throws Exception {
+		try {
+			getCurrentFunctionName(true);
+
+			if (getBrowserName().contains(GlobalVariables.browsers.iPhone)) {
+				logs.debug(MessageFormat.format(LoggingMsg.GETTING_TEXT, "First name Error"));
+				SelectorUtil.initializeSelectorsAndDoActions(RegistrationSelectors.firstNameErrorMobile, "index,0");
+			} else {
+				logs.debug(MessageFormat.format(LoggingMsg.GETTING_TEXT, "First name Error"));
+				SelectorUtil.initializeSelectorsAndDoActions(RegistrationSelectors.firstNameError, "");
+			}
+
+			getCurrentFunctionName(false);
+			return SelectorUtil.textValue.get();
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+			}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
+	}
+
+	// done CBI
+	public static String getLastNameErrorInvalid() throws Exception {
+		try {
+			getCurrentFunctionName(true);
+
+			if (getBrowserName().contains(GlobalVariables.browsers.iPhone)) {
+				logs.debug(MessageFormat.format(LoggingMsg.GETTING_TEXT, "Last name Error"));
+				SelectorUtil.initializeSelectorsAndDoActions(RegistrationSelectors.lastNameErrorMobile, "index,1");
+			} else {
+				logs.debug(MessageFormat.format(LoggingMsg.GETTING_TEXT, "Last name Error"));
+				SelectorUtil.initializeSelectorsAndDoActions(RegistrationSelectors.lastNameError, "");
+			}
+
+			getCurrentFunctionName(false);
+			return SelectorUtil.textValue.get();
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+			}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
+	}
+
+	// done CBI
+	public static String getStreerAddressErrorInvalid() throws Exception {
+		try {
+			getCurrentFunctionName(true);
+
+			if (getBrowserName().contains(GlobalVariables.browsers.iPhone)) {
+				logs.debug(MessageFormat.format(LoggingMsg.GETTING_TEXT, "Street address Error"));
+				SelectorUtil.initializeSelectorsAndDoActions(RegistrationSelectors.streetAddreesErrorMobile, "index,2");
+			} else {
+				logs.debug(MessageFormat.format(LoggingMsg.GETTING_TEXT, "Street address Error"));
+				SelectorUtil.initializeSelectorsAndDoActions(RegistrationSelectors.streetAddreesError, "");
+			}
+
+			getCurrentFunctionName(false);
+			return SelectorUtil.textValue.get();
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+			}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
+	}
+
+	// done CBI
+	public static String getCityErrorInvalid() throws Exception {
+		try {
+			getCurrentFunctionName(true);
+
+			if (getBrowserName().contains(GlobalVariables.browsers.iPhone)) {
+				logs.debug(MessageFormat.format(LoggingMsg.GETTING_TEXT, "City Error"));
+				SelectorUtil.initializeSelectorsAndDoActions(RegistrationSelectors.cityErrorMobile, "index,3");
+			} else {
+				logs.debug(MessageFormat.format(LoggingMsg.GETTING_TEXT, "City Error"));
+				SelectorUtil.initializeSelectorsAndDoActions(RegistrationSelectors.cityError, "");
+			}
+
+			getCurrentFunctionName(false);
+			return SelectorUtil.textValue.get();
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+			}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
+	}
+
+	// done CBI
+	public static String getStateErrorInvalid() throws Exception {
+		try {
+			getCurrentFunctionName(true);
+
+			if (getBrowserName().contains(GlobalVariables.browsers.iPhone)) {
+				logs.debug(MessageFormat.format(LoggingMsg.GETTING_TEXT, "State Error"));
+				SelectorUtil.initializeSelectorsAndDoActions(RegistrationSelectors.stateErrorMobile, "");
+			} else {
+				logs.debug(MessageFormat.format(LoggingMsg.GETTING_TEXT, "State Error"));
+				SelectorUtil.initializeSelectorsAndDoActions(RegistrationSelectors.stateError, "");
+			}
+
+			getCurrentFunctionName(false);
+			return SelectorUtil.textValue.get();
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+			}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
+	}
+
+	// done CBI
+	public static String getZIPCodeErrorInvalid() throws Exception {
+		try {
+			getCurrentFunctionName(true);
+
+			if (getBrowserName().contains(GlobalVariables.browsers.iPhone)) {
+				logs.debug(MessageFormat.format(LoggingMsg.GETTING_TEXT, "State Error"));
+				SelectorUtil.initializeSelectorsAndDoActions(RegistrationSelectors.ZIPCodeErrorMobile, "index,4");
+			} else {
+				logs.debug(MessageFormat.format(LoggingMsg.GETTING_TEXT, "State Error"));
+				SelectorUtil.initializeSelectorsAndDoActions(RegistrationSelectors.ZIPCodeError, "");
+			}
+
+			getCurrentFunctionName(false);
+			return SelectorUtil.textValue.get();
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+			}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
+	}
+
+	// done CBI
+	public static String getPhoneErrorInvalid() throws Exception {
+		try {
+			getCurrentFunctionName(true);
+
+			if (getBrowserName().contains(GlobalVariables.browsers.iPhone)) {
+				logs.debug(MessageFormat.format(LoggingMsg.GETTING_TEXT, "State Error"));
+				SelectorUtil.initializeSelectorsAndDoActions(RegistrationSelectors.phoneErrorMobile, "index,5");
+			} else {
+				logs.debug(MessageFormat.format(LoggingMsg.GETTING_TEXT, "State Error"));
+				SelectorUtil.initializeSelectorsAndDoActions(RegistrationSelectors.phoneError, "");
+			}
+
+			getCurrentFunctionName(false);
+			return SelectorUtil.textValue.get();
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+			}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
+	}
+
 	public static void verifyRegistrationFormErrors() throws Exception {
 		getCurrentFunctionName(true);
 		getFirstNameError();
@@ -597,17 +844,14 @@ public class Registration extends SelTestCase {
 		getCurrentFunctionName(false);
 	}
 
-	// done-ocm
+	// Done CBI Smoke
 	public static String getRegistrationSuccessMessage() throws Exception {
 		try {
 			getCurrentFunctionName(true);
-			List<String> subStrArr = new ArrayList<String>();
-			List<String> valuesArr = new ArrayList<String>();
 			logs.debug(MessageFormat.format(LoggingMsg.GETTING_TEXT, "welcome Message check"));
-			subStrArr.add(RegistrationSelectors.welcomeMessage);
-			valuesArr.add("");
-			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
+			SelectorUtil.initializeSelectorsAndDoActions(RegistrationSelectors.welcomeMessage.get(), "");
 			getCurrentFunctionName(false);
+
 			return SelectorUtil.textValue.get();
 		} catch (NoSuchElementException e) {
 			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
@@ -617,15 +861,29 @@ public class Registration extends SelTestCase {
 
 	}
 
-	// done-ocm
+	// Done CBI Smoke
 	public static void goToRegistrationForm() throws Exception {
 		try {
 			getCurrentFunctionName(true);
-			List<String> subStrArr = new ArrayList<String>();
-			List<String> valuesArr = new ArrayList<String>();
-			subStrArr.add(RegistrationSelectors.RegisterNewUserBtn);
-			valuesArr.add("");
-			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
+			// Needs to update registration link property in the config file to
+			// (/UserLogonView)
+			logs.debug(MessageFormat.format(LoggingMsg.GETTING_TEXT,
+					"Navigating to registration page..." + getCONFIG().getProperty("RegistrationPage")));
+			getDriver().get(new URI(getDriver().getCurrentUrl()).resolve(getCONFIG().getProperty("RegistrationPage"))
+					.toString());
+
+			if (!getBrowserName().contains(GlobalVariables.browsers.iPhone)) {
+				logs.debug(MessageFormat.format(LoggingMsg.GETTING_TEXT, "Clicking Register Button for desktop..."));
+				SelectorUtil.initializeSelectorsAndDoActions(RegistrationSelectors.registrationButton, "");
+			} else {
+				logs.debug(MessageFormat.format(LoggingMsg.GETTING_TEXT, "Clicking Register Tab for mobile..."));
+				SelectorUtil.initializeSelectorsAndDoActions(RegistrationSelectors.mobileRegistrationTab, "");
+
+				logs.debug(MessageFormat.format(LoggingMsg.GETTING_TEXT, "Clicking Register Button for mobile..."));
+				SelectorUtil.initializeSelectorsAndDoActions(RegistrationSelectors.mobileRegistrationButton, "");
+
+			}
+
 			getCurrentFunctionName(false);
 		} catch (NoSuchElementException e) {
 			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
