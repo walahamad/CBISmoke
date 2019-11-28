@@ -65,7 +65,7 @@ public class HomePageBase extends SelTestCase {
 		setTestCaseReportName(SheetVariables.HPTestCaseId);
 		Testlogs.get().debug("Case Browser: " + testObject.getParameter("browserName"));
 		logCaseDetailds(MessageFormat.format(LoggingMsg.TEST_CASE_DESC, testDataSheet + "." + caseId,
-				this.getClass().getCanonicalName(), desc));
+				this.getClass().getCanonicalName(), desc.replace("\r", "</br>")));
 
 		try {
 
@@ -80,13 +80,7 @@ public class HomePageBase extends SelTestCase {
 
 			} else if (proprties.contains(this.search)) {
 				HomePageValidation.validateSearch();
-			}
-			// Ignore this test case at GR because the menu animation very slow for automation.
-//			else if (proprties.equals(this.menu)) {
-//				// Check the Navigation menu.
-//				sassert().assertTrue(MenuValidation.validate(), "Menu validation has some problems");
-//			}
-			else if (proprties.contains(this.AccountMenu)) {
+			} else if (proprties.contains(this.AccountMenu)) {
 				sassert().assertTrue(AccountMenuValidation.validate(), "My Account menu validation has some problems");
 			} else if (proprties.contains(this.GlobalFooter)) {
 				sassert().assertTrue(GlobalFooterValidation.validate(), "Global footer validation has some problems");
