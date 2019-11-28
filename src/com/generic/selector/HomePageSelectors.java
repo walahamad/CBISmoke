@@ -33,7 +33,6 @@ public class HomePageSelectors
 	
 	public static final cselector mainHomeCarousels = new cselector("body gray-disabled-arrows","css,#gwt_recommendations_home_1 > div > div > div > div.body","css,#home_rr_PWA > div > div > div");
 	//public static final String logo = "css,#logo1 a.logo-anchor";
-
 	public static final String header = "header-container";
 	public static final String body_topNavLinks = "css,#main-navigation-large>.container>.nav-links";
 	public static final String body_categorySlider = "page-section category-slider";
@@ -50,8 +49,9 @@ public class HomePageSelectors
 	public static final cselector menuItems = new cselector("css,#css-top-navigation #flyout>.menuItem>a","css,#gwt-top-navigation .active>.gwt-nav-item-has-submenu>.gwt-HTML", "css,.navigation-modal_class .pw-link");
 	public static final cselector selectedMenuHeader = new cselector("", "css,#gwt-top-navigation .active>.gwt-nav-item-has-submenu.opened>.gwt-HTML", "css,.m-navigation__fades-in .pw-header-bar .c-sheet__title");
 	public static final cselector leafMenuItems = new cselector("", "css,.active-menu-item>:not(.gwt-nav-item-has-submenu)", "css,.navigation-modal_class .pw-list-tile:not(.pw--has-child) .pw-link");
-	public static final String sideBoxHeader = "css,#sideBoxHeader";
 
+	public static final String sideBoxHeader = "css,#sideBoxHeader";
+	public static final cselector CLPItems = new cselector("css,div.container.grid-subcategories>div>div>div.wrapper>a" , "css,div.container.grid-subcategories>div>div>div.wrapper>a" , "pw-link u-flexbox u-direction-column");
 	// Sign in selectors.
 	public static final cselector signInNavigation = new cselector("css,#login a","css,.my-account-controls-modal_class .pw-link");
 	public static final cselector signInEmailInput = new cselector("css,[name=logonId]", "css,[name=logonId].c-custom-input");

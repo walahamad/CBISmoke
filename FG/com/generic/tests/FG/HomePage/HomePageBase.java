@@ -29,6 +29,7 @@ public class HomePageBase extends SelTestCase {
 	public static final String footer = "footer";
 	public static final String body = "body";
 	public static final String YMALCarousels = "YMAL Carousels Verification";
+	public static final String CLP = "CLP";
 
 	public static final String menu = "menu";
 	public static final String signIn = "SignIn validation";
@@ -89,10 +90,11 @@ public class HomePageBase extends SelTestCase {
 				sassert().assertTrue(GlobalFooterValidation.validate(), "Global footer validation has some problems");
 			} else if (proprties.contains(this.YMALCarousels)) {
 				YMALCarouselsVerification.validate();
+			}else if (proprties.contains(this.CLP)) {
+				sassert().assertTrue(CLPValidation.validate(), "Global footer validation has some problems");
 			} else {
 				Testlogs.get().debug("please check proprties provided in excel sheet");
 			}
-
 			sassert().assertAll();
 			Common.testPass();
 		} catch (Throwable t) {
