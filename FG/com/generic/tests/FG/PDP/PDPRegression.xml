@@ -11,7 +11,7 @@
 	</test><!-- Test -->
 	<test name="PDP iPad">
 		<parameter name="browserName" value="mobile_iPad"></parameter>
-		<parameter name="Env" value="prod"></parameter>
+		<parameter name="Env" value="stagewcs"></parameter>
 		<parameter name="Brand" value="FG"></parameter>
 		<classes>
 			<class name="com.generic.tests.FG.PDP.PDPBase" />
