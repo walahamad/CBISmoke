@@ -39,6 +39,12 @@ public class HomePage extends SelTestCase {
 		getCurrentFunctionName(false);
 	}
 
+	public static void disableMonetate() throws Exception {
+		getCurrentFunctionName(true);
+		getDriver().get(getURL() + "/?monetate=off");
+		getCurrentFunctionName(false);
+	}
+
 	public static void clickOnLogo() throws Exception {
 		getCurrentFunctionName(true);
 		logs.debug("Clicking on Site logo");

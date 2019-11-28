@@ -13,7 +13,7 @@ public class brands {
 	static String Prod = "prod";
 
 	// URLS
-	static String FGURL = "frontgate.com/?monetate=off";
+	static String FGURL = "frontgate.com";
 	static String GRURL = "grandinroad.com";
 	static String RYURL = "ryllace.com";
 	static String GHURL = "garnethill.com";

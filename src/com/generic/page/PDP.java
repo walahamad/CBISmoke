@@ -52,23 +52,15 @@ public class PDP extends SelTestCase {
 
 	}
 
+//	No longer needed, whenever these functions used please update them to NavigateToPDP("searchTerm")
 //	// done - SMK
-//	// to be replaced with Search
 //	public static void NavigateToSingleFGPDP() throws Exception {
 //		getCurrentFunctionName(true);
 //		getDriver().get(getURL() + keys.FG_PDP);
 //		getCurrentFunctionName(false);
 //	}
-//	// done - SMK
-//	// to be replaced with Search
-//	public static void NavigateToBundleFGPDP() throws Exception {
-//		getCurrentFunctionName(true);
-//		getDriver().get(getURL() + keys.FG_BundlePDP2);
-//		getCurrentFunctionName(false);
-//	}
 
 //	// done - SMK
-//	// to be replaced with Search
 //	public static void NavigateToGRPDP() throws Exception {
 //		getCurrentFunctionName(true);
 //		getDriver().get(getURL() + keys.GR_BundlePDP);
@@ -78,6 +70,8 @@ public class PDP extends SelTestCase {
 	// done - SMK
 	public static void NavigateToPDP(String SearchTerm) throws Exception {
 		getCurrentFunctionName(true);
+		if (SelTestCase.getBrowserName().contains(GlobalVariables.browsers.iPad))
+			HomePage.disableMonetate();
 		PLP.clickSearchicon();
 		PLP.typeSearch(SearchTerm);
 		PLP.pickRecommendedOption();
