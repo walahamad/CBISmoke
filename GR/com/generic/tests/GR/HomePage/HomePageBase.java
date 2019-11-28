@@ -65,7 +65,7 @@ public class HomePageBase extends SelTestCase {
 		setTestCaseReportName(SheetVariables.HPTestCaseId);
 		Testlogs.get().debug("Case Browser: " + testObject.getParameter("browserName"));
 		logCaseDetailds(MessageFormat.format(LoggingMsg.TEST_CASE_DESC, testDataSheet + "." + caseId,
-				this.getClass().getCanonicalName(), desc));
+				this.getClass().getCanonicalName(), desc.replace("\r", "</br>")));
 
 		try {
 
@@ -80,12 +80,6 @@ public class HomePageBase extends SelTestCase {
 
 			} else if (proprties.contains(this.search)) {
 				HomePageValidation.validateSearch();
-			} else if (proprties.equals(this.menu)) {
-				// Check the Navigation menu.
-				sassert().assertTrue(MenuValidation.validate(), "Menu validation has some problems");
-			} else if (proprties.contains(this.signIn)) {
-				// Check the Sign in form functionality.
-				sassert().assertTrue(SignInValidation.validate(), "Sign in functionality validation has some problems");
 			} else if (proprties.contains(this.AccountMenu)) {
 				sassert().assertTrue(AccountMenuValidation.validate(), "My Account menu validation has some problems");
 			} else if (proprties.contains(this.GlobalFooter)) {
