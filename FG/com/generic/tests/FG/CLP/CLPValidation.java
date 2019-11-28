@@ -1,5 +1,5 @@
-package com.generic.tests.FG.HomePage;
-import com.generic.page.HomePage;
+package com.generic.tests.FG.CLP;
+import com.generic.page.CLP;
 import com.generic.setup.GlobalVariables;
 
 import com.generic.setup.SelTestCase;
@@ -10,9 +10,9 @@ public class CLPValidation extends SelTestCase {
 		boolean isValidCLP = false;
 		boolean isMobile = getBrowserName().contains(GlobalVariables.browsers.iPhone) || getBrowserName().contains(GlobalVariables.browsers.iPad) || getBrowserName().contains(GlobalVariables.browsers.Nexus);
         if (isMobile){
-	       isValidCLP = HomePage.validateMobileIpadCLP();
+	       isValidCLP = CLP.validateMobileIpadCLP();
         }else {
- 	       isValidCLP = HomePage.validateDesktopCLP();
+ 	       isValidCLP = CLP.validateDesktopCLP();
         } 
 		logs.debug("validate CLP :: " + isValidCLP);
 		return isValidCLP;
