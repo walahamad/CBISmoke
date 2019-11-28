@@ -5,16 +5,13 @@ import com.generic.setup.SelTestCase;
 
 public class LogoValidation extends SelTestCase {
 
-	public static boolean validate() throws Exception {
+	public static void validate() throws Exception {
 		getCurrentFunctionName(true);
-		boolean logoValidation = true; 
-		logoValidation = logoValidation && HomePage.validateLogoExistance(); 
-//		logoValidation = logoValidation && HomePage.validateLogodisplayed();
-//		logoValidation = logoValidation && HomePage.NavigateAwayFromHomePage(); 
-//		logoValidation = logoValidation && HomePage.clickOnLogo(); 
-//		logoValidation = logoValidation && HomePage.validateHomePageLink();
+		sassert().assertTrue(HomePage.validateLogodisplayed(), "Logo is not displayed");
+		HomePage.NavigateAwayFromHomePage(); 
+		HomePage.clickOnLogo(); 
+		sassert().assertTrue(HomePage.validateHomePageLink(), "Logo doesnt redirect to home page");
 		getCurrentFunctionName(false);
-		return logoValidation;
 		
 	}
 
