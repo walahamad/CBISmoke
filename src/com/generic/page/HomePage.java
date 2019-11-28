@@ -169,6 +169,7 @@ public class HomePage extends SelTestCase {
 		getCurrentFunctionName(false);
 		return isDisplayed;
 	}
+
 	public static void clickOnMiniCart() throws Exception {
 		getCurrentFunctionName(true);
 		String subStrArr = HomePageSelectors.miniCartBtn.get();
@@ -614,86 +615,4 @@ public class HomePage extends SelTestCase {
 		getCurrentFunctionName(false);
 		return validateSubMenuNavigation;
 	}
-
-	/**
-	* Validate the sign form in desktop.
-	*
-	* @return boolean
-	* @throws Exception
-	*/
-	public static boolean validateSignInForm(WebElement signInLink, boolean isPWAMobile) throws Exception {
-
-		getCurrentFunctionName(true);
-		logs.debug("Sign in validateion form");
-
-		boolean isUserLogedIn = false;
-		// Navigate to the Sign in/Create account page.
-		SelectorUtil.clickOnWebElement(signInLink);
-
-		// Select the email input and Enter the email.
-		//SelectorUtil.initializeSelectorsAndDoActions(HomePageSelectors.signInEmailInput.get(), SignInValidation.userEmail);
-
-		// Select the password input and Enter the password.
-		//SelectorUtil.initializeSelectorsAndDoActions(HomePageSelectors.signInEmailPasswordInput.get(), SignInValidation.userPassword);
-
-		// Select the sign in button and Navigate to the Sign in/Create account page..
-		SelectorUtil.initializeSelectorsAndDoActions(HomePageSelectors.signInButton.get());
-
-		List <WebElement> welcomeMessage = new ArrayList<WebElement>();
-
-		// Get the welcome message.
-		if (isPWAMobile) {
-			WebElement welcomeMessageElement = HomePage.getSignInLinkMobilePWA();
-			String itemHref = welcomeMessageElement.getAttribute("href");
-			if (itemHref.contains("AccountOverView")) {
-				welcomeMessage.add(welcomeMessageElement);
-			}
-		} else {
-			welcomeMessage = HomePage.getElementsList(HomePageSelectors.welcomeMessage.get());
-		}
-
-		// Validate the welcome message if it is exist.
-		if (!(welcomeMessage.size() == 0)) {
-			isUserLogedIn = true;
-		}
-
-		sassert().assertTrue(isUserLogedIn, "Login validation has some problems");
-		getCurrentFunctionName(false);
-		return isUserLogedIn;
-	}
-
-	/**
-	* Get the account item (Sign in/create account page or welcome message).
-	*
-	* @param WebElement
-	* @throws Exception
-	*/
-	public static WebElement getSignInLinkMobilePWA() throws Exception {
-		getCurrentFunctionName(true);
-
-		logs.debug("Open account menu for PWA mobile");
-
-		// Open the account menu.
-		SelectorUtil.initializeSelectorsAndDoActions(HomePageSelectors.accountMenuIcon.get());
-
-		// Get an account items list.
-		List <WebElement> menuItems = HomePage.getElementsList(HomePageSelectors.accountMenuList);
-		WebElement signInLink = menuItems.get(0);
-		int index = 0;
-		// Get the Sign in/create account page or welcome message item.
-		for (index=0; index < menuItems.size(); index++) {
-			WebElement item = menuItems.get(index);
-			String itemHref = item.getAttribute("href");
-			// Check if the item is sign in/create account (By check create account page link) or welcome message.
-			if (itemHref.contains("UserLogonView") || itemHref.contains("AccountOverView")) {
-				signInLink = item;
-				break;
-			}
-		}
-		logs.debug("The account item (Sign in/create account page or welcome message): " + signInLink);
-		getCurrentFunctionName(false);
-		return signInLink;
-	}
-
-	
 }
