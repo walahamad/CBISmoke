@@ -45,7 +45,7 @@ public class HomePageBase extends SelTestCase {
 	@BeforeTest
 	public static void initialSetUp(XmlTest test) throws Exception {
 		Testlogs.set(new SASLogger(test.getName() + test.getIndex()));
-		testObject = test; 
+		testObject = test;
 	}
 
 	@DataProvider(name = "HP_SC", parallel = true)
@@ -92,6 +92,7 @@ public class HomePageBase extends SelTestCase {
 			} else {
 				Testlogs.get().debug("please check proprties provided in excel sheet");
 			}
+
 			sassert().assertAll();
 			Common.testPass();
 		} catch (Throwable t) {
