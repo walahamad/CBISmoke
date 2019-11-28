@@ -36,7 +36,7 @@ public class CLPBase extends SelTestCase {
 		testObject = test; 
 	}
 
-	@DataProvider(name = "HP_SC", parallel = true)
+	@DataProvider(name = "CLP_SC", parallel = true)
 	// concurrency maintenance on sheet reading
 	public static Object[][] loadTestData() throws Exception {
 		getBrowserWait(testObject.getParameter("browserName"));
@@ -46,9 +46,9 @@ public class CLPBase extends SelTestCase {
 		return data;
 	}
 
-	@Test(dataProvider = "HP_SC")
+	@Test(dataProvider = "CLP_SC")
 	public void HomePageRegressionTest(String caseId, String runTest, String desc, String proprties) throws Exception {
-		Testlogs.set(new SASLogger("HP_SC " + getBrowserName()));
+		Testlogs.set(new SASLogger("CLP_SC " + getBrowserName()));
 		// Important to add this for logging/reporting
 		setTestCaseReportName(SheetVariables.HPTestCaseId);
 		Testlogs.get().debug("Case Browser: " + testObject.getParameter("browserName"));
