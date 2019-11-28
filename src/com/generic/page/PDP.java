@@ -52,28 +52,28 @@ public class PDP extends SelTestCase {
 
 	}
 
-	// done - SMK
-	// to be replaced with Search
-	public static void NavigateToSingleFGPDP() throws Exception {
-		getCurrentFunctionName(true);
-		getDriver().get(getURL() + keys.FG_PDP);
-		getCurrentFunctionName(false);
-	}
-	// done - SMK
-	// to be replaced with Search
-	public static void NavigateToBundleFGPDP() throws Exception {
-		getCurrentFunctionName(true);
-		getDriver().get(getURL() + keys.FG_BundlePDP);
-		getCurrentFunctionName(false);
-	}
+//	// done - SMK
+//	// to be replaced with Search
+//	public static void NavigateToSingleFGPDP() throws Exception {
+//		getCurrentFunctionName(true);
+//		getDriver().get(getURL() + keys.FG_PDP);
+//		getCurrentFunctionName(false);
+//	}
+//	// done - SMK
+//	// to be replaced with Search
+//	public static void NavigateToBundleFGPDP() throws Exception {
+//		getCurrentFunctionName(true);
+//		getDriver().get(getURL() + keys.FG_BundlePDP2);
+//		getCurrentFunctionName(false);
+//	}
 
-	// done - SMK
-	// to be replaced with Search
-	public static void NavigateToGRPDP() throws Exception {
-		getCurrentFunctionName(true);
-		getDriver().get(getURL() + keys.GR_BundlePDP);
-		getCurrentFunctionName(false);
-	}
+//	// done - SMK
+//	// to be replaced with Search
+//	public static void NavigateToGRPDP() throws Exception {
+//		getCurrentFunctionName(true);
+//		getDriver().get(getURL() + keys.GR_BundlePDP);
+//		getCurrentFunctionName(false);
+//	}
 
 	// done - SMK
 	public static void NavigateToPDP(String SearchTerm) throws Exception {
@@ -222,7 +222,6 @@ public class PDP extends SelTestCase {
 		getCurrentFunctionName(true);
 		String subStrArr = PDPSelectors.avaibleOptions.get();
 		int numberOfAvaibleOptions = 0;
-		logs.debug(SelectorUtil.numberOfFoundElements.get());
 		if (!SelectorUtil.isNotDisplayed(subStrArr)) {
 			numberOfAvaibleOptions = Integer.parseInt(SelectorUtil.numberOfFoundElements.get());
 		}
@@ -237,7 +236,6 @@ public class PDP extends SelTestCase {
 		getCurrentFunctionName(true);
 		String Str = PDPSelectors.allSizes.get();
 		int numberOfListBoxes = 0;
-		logs.debug(SelectorUtil.numberOfFoundElements.get());
 		if (!SelectorUtil.isNotDisplayed(Str)) {
 			numberOfListBoxes = Integer.parseInt(SelectorUtil.numberOfFoundElements.get());
 		}
@@ -451,6 +449,11 @@ public class PDP extends SelTestCase {
 			getCurrentFunctionName(true);
 			String Str = PDPSelectors.numberOfBundleItems.get();
 			int numberOfItems = SelectorUtil.getAllElements(Str).size();
+			logs.debug("Number of Items: " + numberOfItems);
+			if(bundleProduct() && numberOfItems == 1) {
+				logs.debug("This is a bundle product with one item");	
+				numberOfItems = 2;
+			}
 			getCurrentFunctionName(false);
 			return numberOfItems;
 		} catch (NoSuchElementException e) {
@@ -459,6 +462,17 @@ public class PDP extends SelTestCase {
 			throw e;
 		}
 	}
+	
+	// done - SMK
+	public static boolean bundleProduct() throws Exception {
+		getCurrentFunctionName(true);
+		try {	
+		SelectorUtil.isDisplayed(PDPSelectors.bundleItem.get());
+		return true;
+	} catch (NoSuchElementException e) {
+		return false;
+	}
+	}
 
 	// done - SMK
 	public static int getNumberOfListsInProduct(String Str) throws Exception {
@@ -466,6 +480,7 @@ public class PDP extends SelTestCase {
 			getCurrentFunctionName(true);
 			// String Str = PDPSelectors.ListBox.get();
 			int numberOfItems = SelectorUtil.getAllElements(Str).size();
+			logs.debug("Number of Lists In Product: " + numberOfItems);
 			getCurrentFunctionName(false);
 			return numberOfItems;
 
@@ -482,6 +497,7 @@ public class PDP extends SelTestCase {
 			getCurrentFunctionName(true);
 			// String Str = PDPSelectors.ListBox.get();
 			int numberOfActiveLists = SelectorUtil.getAllElements(Str).size();
+			logs.debug("Number of Active Lists: " + numberOfActiveLists);
 			getCurrentFunctionName(false);
 			return numberOfActiveLists;
 		} catch (NoSuchElementException e) {
@@ -533,7 +549,7 @@ public class PDP extends SelTestCase {
 		try {
 			getCurrentFunctionName(true);
 			int numberOfAvaibleOptions = 0;
-			logs.debug(SelectorUtil.numberOfFoundElements.get());
+		//	logs.debug(SelectorUtil.numberOfFoundElements.get());
 			if (!SelectorUtil.isNotDisplayed(Str)) {
 				numberOfAvaibleOptions = Integer.parseInt(SelectorUtil.numberOfFoundElements.get());
 			}
@@ -563,18 +579,19 @@ public class PDP extends SelTestCase {
 				String ProductID = getProductID(0);
 				String ListSelector = "css,#" + ProductID + ">" + PDPSelectors.ListBox.get().replace("css,", "");
 				String activeLists = "css,#" + ProductID + ">" + PDPSelectors.activeListBox.get().replace("css,", "");
-				String swatchContainerSelector = "css,#" + ProductID + ">"
-						+ PDPSelectors.swatchContainer.get().replace("css,", "");
+				String swatchContainerSelector = "css,#" + ProductID + ">" + PDPSelectors.swatchContainer.get().replace("css,", "");
 				String imageOptionSelector = "css,#" + ProductID + ">" + PDPSelectors.imageOption.get().replace("css,", "");
 				int numberOfActiveListBoxes = 0;
 				int i = 0;
 				int listIndex = 0;
 				int numberOfListBoxes = 0;
+				int index = 0;
 				if (!activeLists(activeLists)) {
 					numberOfActiveListBoxes = getNumberOfListsInProduct(activeLists);
 					numberOfListBoxes = getNumberOfListsInProduct(ListSelector);
 					for (; i < numberOfListBoxes; i++) {
-						listIndex = i;
+						listIndex++;
+						index++;
 						selectNthListBoxFirstValueV2(ListSelector, i);
 						Thread.sleep(1000);
 						int numberOfNewActiveListBoxes = getNumberOfListsInProduct(activeLists);
@@ -587,9 +604,9 @@ public class PDP extends SelTestCase {
 				}
 				int numberOfimageOptions = getNumberOfimageOptionsInProduct(swatchContainerSelector);
 				if (numberOfimageOptions != 0) {
-					for (i++; i <= numberOfimageOptions; i++) {
+					for (index ++ ; index <= numberOfimageOptions + listIndex; index++) {
 						selectNthOptionFirstSwatchV2("css,#" + ProductID + ">"
-								+ MessageFormat.format(PDPSelectors.imageOption.get(), i).replace("css,", ""));
+								+ MessageFormat.format(PDPSelectors.imageOption.get(), index).replace("css,", ""));
 						Thread.sleep(1500);
 					}
 				}

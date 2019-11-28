@@ -40,6 +40,8 @@ public class PDPSelectors {
 	public static final cselector addToCartBtnDisabledSingle = new cselector("css,.gwt-product-content-panel>.gwt-product-right-content-panel>.gwt-product-bottom-content-panel>.product-bottom-qty-atc-panel>div>button#gwt-add-to-cart-btn.button.primary.disabled","css,.u-bg-disabled-color-add-to-cart");
 	public static final cselector bottomPriceSingle = new cselector("css,.gwt-product-content-panel>.gwt-product-right-content-panel>.gwt-product-bottom-content-panel>.product-bottom-total-price-panel>div>.gwt-product-detail-widget-total-price-amount","css,.t-product-details-price>span");
 	public static final cselector bundleItems = new cselector("u-widget-product-icon u-position-absolute");
+	public static final cselector bundleItem = new cselector("css,#gwt_bundledetail_json.store", "css,#gwt_bundledetail_json.t-product-details");
+
 	
 	public static final cselector miniPDPPrice = new cselector("css,.t-product-details-heading >div>.t-product-details-heading__price.t-product-details__price");
 	

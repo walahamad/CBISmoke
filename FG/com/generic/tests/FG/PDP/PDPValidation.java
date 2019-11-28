@@ -8,10 +8,7 @@ public class PDPValidation extends SelTestCase {
 
 	public static void validate(String search) throws Exception {
 		getCurrentFunctionName(true);
-
-		// Not working on Prod iPad
 		PDP.NavigateToPDP(search);
-		// PDP.NavigateToBundleFGPDP();
 		int numberOfItems = PDP.getNumberOfItems();
 		String priceErrorMessage;
 		if (PDP.getNumberOfItems() == 1) {
@@ -29,7 +26,6 @@ public class PDPValidation extends SelTestCase {
 			sassert().assertTrue(PDP.validateMobileBundlePriceIsDisplayed(),
 					"Top price for the bundle item (mini PDP) is not dispayed");
 		}
-
 		PDP.selectSwatches();
 		sassert().assertTrue(!PDP.getBottomPrice().equals("$0.00"), "Bottom price is not updated correctly, Current price: " + PDP.getBottomPrice());
 		sassert().assertTrue(PDP.validateAddToWLGRIsEnabled(), "Add to WL/GR button is not enabled");
