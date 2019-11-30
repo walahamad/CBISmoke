@@ -28,15 +28,7 @@ import com.generic.util.SelectorUtil;
 public class PDP extends SelTestCase {
 
 	public static class keys {
-		//to be replaced with Search
-		public static String FG_PDP = "/cheyne-high-low-area-rug/915951";
-		public static String FG_PDP2 = "/barrow-chesterfield-sofa/691936";
-		public static String FG_BundlePDP = "/resort-cotton-bath-towels/155771";
-		public static String FG_BundlePDP2 = "/premium-monogrammed-disposable-napkins/605617?brReference=BRWidget";
-		public static String FG_BundlePDP3 = "/monogrammed-faux-linen-guest-towels/bath/bath-towels-guest-towels/153131";
-		public static String GR_PDP = "/mason-cocoon-chairs-2c-set-of-two/outdoor-living/seating/1020166";
-		public static String GR_BundlePDP = "/cordoba-collection/154964";
-		
+	
 		public static final String id = "id";
 		public static final String name = "name";
 		public static final String title = "title";
@@ -52,48 +44,16 @@ public class PDP extends SelTestCase {
 
 	}
 
-//	No longer needed, whenever these functions used please update them to NavigateToPDP("searchTerm")
-//	// done - SMK
-//	public static void NavigateToSingleFGPDP() throws Exception {
-//		getCurrentFunctionName(true);
-//		getDriver().get(getURL() + keys.FG_PDP);
-//		getCurrentFunctionName(false);
-//	}
-
-//	// done - SMK
-//	public static void NavigateToGRPDP() throws Exception {
-//		getCurrentFunctionName(true);
-//		getDriver().get(getURL() + keys.GR_BundlePDP);
-//		getCurrentFunctionName(false);
-//	}
-
 	// done - SMK
 	public static void NavigateToPDP(String SearchTerm) throws Exception {
 		getCurrentFunctionName(true);
+		//This is to handle production Monetate issue on iPad for search field.
 		if (SelTestCase.getBrowserName().contains(GlobalVariables.browsers.iPad))
 			HomePage.disableMonetate();
 		PLP.clickSearchicon();
 		PLP.typeSearch(SearchTerm);
 		PLP.pickRecommendedOption();
 		getCurrentFunctionName(false);
-	}
-
-	// done - SMK
-	public static void selectColor() throws Exception {
-		try {
-			getCurrentFunctionName(true);
-			Thread.sleep(1000);
-			String subStrArr = PDPSelectors.allColors.get();
-			if (!SelectorUtil.isNotDisplayed(subStrArr)) {
-				SelectorUtil.initializeSelectorsAndDoActions(subStrArr);
-			}
-			getCurrentFunctionName(false);
-		} catch (NoSuchElementException e) {
-			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
-			}.getClass().getEnclosingMethod().getName()));
-			throw e;
-		}
-
 	}
 
 	// done - SMK
@@ -114,72 +74,6 @@ public class PDP extends SelTestCase {
 		}
 
 	}
-
-	// done - SMK
-	public static void selectFabric() throws Exception {
-		try {
-			getCurrentFunctionName(true);
-			Thread.sleep(1000);
-			String subStrArr = PDPSelectors.allFabrics.get();
-			if (!SelectorUtil.isNotDisplayed(subStrArr)) {
-				SelectorUtil.initializeSelectorsAndDoActions(subStrArr);
-			}
-			getCurrentFunctionName(false);
-		} catch (NoSuchElementException e) {
-			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
-			}.getClass().getEnclosingMethod().getName()));
-			throw e;
-		}
-
-	}
-
-	// done - SMK
-	public static void selectShipLeadTime() throws Exception {
-		try {
-			getCurrentFunctionName(true);
-			Thread.sleep(1000);
-			String subStrArr = PDPSelectors.allShipLeadTime.get();
-			String valuesArr;
-			if (!SelectorUtil.isNotDisplayed(subStrArr)) {
-				int index = SelectorUtil.getAllElements(subStrArr).size() - 1;
-				logs.debug("Selected Index for option is: " + index);
-				valuesArr = "index," + index + ",ForceAction,click";
-				SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
-			}
-			getCurrentFunctionName(false);
-		} catch (NoSuchElementException e) {
-			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
-			}.getClass().getEnclosingMethod().getName()));
-			throw e;
-		}
-
-	}
-
-	// done - SMK
-//	No longer needed, will be removed after validating the new function is working correctly
-//	public static void addProductsToCartV1() throws Exception {
-//		try {
-//			getCurrentFunctionName(true);
-//			selectFabric();
-//			Thread.sleep(1000);
-//			selectShipLeadTime();
-//			Thread.sleep(1000);
-//			selectColor();
-//			Thread.sleep(1000);
-//			selectSize();
-//			Thread.sleep(1000);
-//			if (!SelTestCase.getBrowserName().contains(GlobalVariables.browsers.iPhone)) {
-//				Thread.sleep(1000);
-//			}
-//			clickAddToCartButton();
-//			Thread.sleep(1000);
-//			getCurrentFunctionName(false);
-//		} catch (NoSuchElementException e) {
-//			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
-//			}.getClass().getEnclosingMethod().getName()));
-//			throw e;
-//		}
-//	}
 
 	// done - SMK
 	public static void clickAddToCartButton() throws Exception {
@@ -267,6 +161,7 @@ public class PDP extends SelTestCase {
 
 	// done - SMK
 	// This method to dynamically select all available options
+	// to be merged with selectSwatches function
 	public static void selectSwatchesSingle() throws Exception {
 		try {
 			getCurrentFunctionName(true);

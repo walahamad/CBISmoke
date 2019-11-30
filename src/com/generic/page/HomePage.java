@@ -39,6 +39,7 @@ public class HomePage extends SelTestCase {
 		getCurrentFunctionName(false);
 	}
 
+	//This is to disable Monetate if needed.
 	public static void disableMonetate() throws Exception {
 		getCurrentFunctionName(true);
 		getDriver().get(getURL() + "/?monetate=off");
