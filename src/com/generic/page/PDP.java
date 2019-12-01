@@ -55,6 +55,18 @@ public class PDP extends SelTestCase {
 		PLP.pickRecommendedOption();
 		getCurrentFunctionName(false);
 	}
+	
+	public static void NavigateToPDP() throws Exception {
+		getCurrentFunctionName(true);
+		String SearchTerm = "Rugs";
+		//This is to handle production Monetate issue on iPad for search field.
+		if (SelTestCase.getBrowserName().contains(GlobalVariables.browsers.iPad))
+			HomePage.disableMonetate();
+		PLP.clickSearchicon();
+		PLP.typeSearch(SearchTerm);
+		PLP.pickRecommendedOption();
+		getCurrentFunctionName(false);
+	}
 
 	// done - SMK
 	public static void selectSize() throws Exception {
