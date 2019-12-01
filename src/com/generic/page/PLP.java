@@ -2,8 +2,12 @@ package com.generic.page;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.NoSuchElementException;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 
 import com.generic.selector.PLPSelectors;
 import com.generic.setup.ExceptionMsg;
@@ -213,6 +217,123 @@ public class PLP extends SelTestCase {
 			throw e;
 		}
 		
+	}
+	
+	//TODO: clean any function not CBI related after PLP done 
+
+	// CBI
+	public static boolean searchAndVerifyResults(String SearchTerm, boolean recommendedOption) throws Exception {
+		try {
+			getCurrentFunctionName(true);
+			boolean result;
+			clickSearchicon();
+			typeSearch(SearchTerm);
+			if (recommendedOption) {
+				String productName = pickRecommendedOption();
+				result = verifyPickedProduct(productName);
+			} else {
+				clickSearch(SearchTerm);
+				result = verifySeachResultPage();
+			}
+			getCurrentFunctionName(false);
+			return result;
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+			}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
+
+	}
+
+	private static boolean verifySeachResultPage() {
+		try {
+			getCurrentFunctionName(true);
+			boolean result = getDriver().getCurrentUrl().contains("searchTerm");
+			getCurrentFunctionName(false);
+			return result;
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+			}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
+	}
+
+	private static boolean verifyPickedProduct(String productName) throws Exception {
+		try {
+			getCurrentFunctionName(true);
+			boolean result; 
+			String productTitle = PDP.getTitle();
+			result = productTitle.contains(productName);
+			getCurrentFunctionName(false);
+			return result;
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+			}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
+
+	}
+
+	private static void clickSearch(String searchTerm) throws Exception {
+		try {
+			getCurrentFunctionName(true);
+			SelectorUtil.initializeSelectorsAndDoActions(PLPSelectors.searchBox.get() , searchTerm+",pressEnter");
+			getCurrentFunctionName(false);
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+			}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
+	}
+
+	@SuppressWarnings("rawtypes")
+	private static String pickRecommendedOption() throws Exception {
+		try {
+			getCurrentFunctionName(true);
+			
+			String SelectorSS = PLPSelectors.recommendedOption.get();
+			WebElement recommendedProduct = SelectorUtil.getelement(SelectorSS);
+			
+			String itemTitle = recommendedProduct.getText();
+			logs.debug("Picked item: "+ itemTitle); 
+			recommendedProduct.click();
+			
+			getCurrentFunctionName(false);
+			return itemTitle;
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+			}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
+		
+	}
+
+	private static void typeSearch(String searchTerm) throws Exception {
+		try {
+			getCurrentFunctionName(true);
+			SelectorUtil.initializeSelectorsAndDoActions(PLPSelectors.searchBox.get(), searchTerm);
+			getCurrentFunctionName(false);
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+			}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
+
+		
+	}
+
+	//CBI
+	private static void clickSearchicon() throws Exception {
+		try {
+			getCurrentFunctionName(true);
+			SelectorUtil.initializeSelectorsAndDoActions(PLPSelectors.SearchIcon.get());
+			getCurrentFunctionName(false);
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+			}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
+
 	}
 
 }

@@ -213,11 +213,11 @@ public class SelectorUtil extends SelTestCase {
 		String ActionType = "";
 		// TODO fix multiple elements
 		for (org.jsoup.nodes.Element e : foundElements) {
-			// logs.debug(e.toString());//Debugging purposes
-			// logs.debug("DEBUG POINT ------------->" + e.attr("type") );
+			 //logs.debug(e.toString());//Debugging purposes
+			 //logs.debug("DEBUG POINT ------------->" + e.attr("type") );
 			if (e.tagName().equals("input") && (e.attr("type").equals("number") || e.attr("type").equals("text")
 					|| e.attr("type").equals("password") || e.attr("type").equals("") || e.attr("type").equals("tel")
-					|| e.attr("type").equals("email"))) {
+					|| e.attr("type").equals("email")|| e.attr("type").equals("search"))) {
 				return "type";
 			} else if (e.tagName().equals("select")) {
 				return "selectByText";
@@ -321,20 +321,29 @@ public class SelectorUtil extends SelTestCase {
 		return selector;
 	}
 
-	public static void doAppropriateAction(Map<String, Object> webElementInfo) throws Exception {
+	
+	
+	public static void doAppropriateAction(Map<String, Object> webElementInfo, boolean doAction) throws Exception {
 		getCurrentFunctionName(true);
 		textValue.set("");
 
 		String browser = SelTestCase.getBrowserName();
 
 		try {
+			WebElement parent = null;
+			WebElement field = null;
+			WebElement field2 = null;
+			
+			Wait<WebDriver> wait = new FluentWait<WebDriver>(SelTestCase.getDriver())
+					.withTimeout(30, TimeUnit.SECONDS).pollingEvery(5, TimeUnit.SECONDS)
+					.ignoring(NoSuchElementException.class);
+			
 			String selector = (String) webElementInfo.get("selector");
 			String action = (String) webElementInfo.get("action");
 			String value = (String) webElementInfo.get("value");
 			By byAction = (By) webElementInfo.get("by");
 			By parentBy = (By) webElementInfo.get("parentBy");
-			WebElement parent = null;
-			WebElement field = null;
+			
 			// get element using parent-child relationship OR DOM-element relationship
 			if (byAction != null) {
 				if (parentBy != null) {
@@ -344,32 +353,43 @@ public class SelectorUtil extends SelTestCase {
 					// used to get the element at specific index when there are multiple elements of
 					// the same selector
 					if (value.contains("index")) {
-						int elementIndex = Integer.parseInt(value.split(",")[1]);
-						field = getDriver().findElements(byAction).get(elementIndex);
+						int elementIndex = Integer.parseInt(value.split("index,")[1].split(",")[0]);
+						
+						field = wait.until(new Function<WebDriver, WebElement>() {
+							public WebElement apply(WebDriver driver) {
+								return driver.findElements(byAction).get(elementIndex);
+							}
+						});
+						
 					} else {
-						field = getDriver().findElement(byAction);
+						field = wait.until(new Function<WebDriver, WebElement>() {
+							public WebElement apply(WebDriver driver) {
+								return driver.findElement(byAction);
+							}
+						});
 					}
 				}
+			}
+			if (!doAction)
+			{
+				webElementInfo.put("elemnt" , field);
+				return;
+				
 			}
 			if (!selector.equals("")) {
 				if (!SelectorUtil.isAnErrorSelector) {
 					if (value.contains("ForceAction")) {
-						action = value.split(",")[1];
+						action = value.split("ForceAction,")[1].split(",")[0];
 					}
 
 					if (action.equals("hover")) {
-
-						Wait<WebDriver> wait = new FluentWait<WebDriver>(SelTestCase.getDriver())
-								.withTimeout(30, TimeUnit.SECONDS).pollingEvery(5, TimeUnit.SECONDS)
-								.ignoring(NoSuchElementException.class);
-						// TODO: move it to general function
 
 						logs.debug("Hovering: " + byAction.toString());
 
 						JavascriptExecutor jse = (JavascriptExecutor) getDriver();
 						jse.executeScript("arguments[0].scrollIntoView(false)", field);
 						Thread.sleep(200);
-						WebElement field2 = wait.until(new Function<WebDriver, WebElement>() {
+						field2 = wait.until(new Function<WebDriver, WebElement>() {
 							public WebElement apply(WebDriver driver) {
 								return driver.findElement(byAction);
 							}
@@ -398,7 +418,16 @@ public class SelectorUtil extends SelTestCase {
 							if (value.contains("pressEnter")) {
 								tempVal = value.split(",")[0];
 							}
-							field.sendKeys(tempVal);
+							if (browser.contains(GlobalVariables.browsers.iPhone))
+							{
+								int index = 0;
+								for (index=0; index < tempVal.length(); index++) {
+									String character = String.valueOf(tempVal.charAt(index));
+									field.sendKeys(character);
+								}
+							}else {
+								field.sendKeys(tempVal);
+							}
 							if (!tempVal.equals(value)) {
 								field.sendKeys(Keys.ENTER);
 								if (browser.contains("edge")) {
@@ -407,10 +436,6 @@ public class SelectorUtil extends SelTestCase {
 							}
 						}
 					} else if (value.contains("VisualTesting")) {
-						Wait<WebDriver> wait = new FluentWait<WebDriver>(SelTestCase.getDriver())
-								.withTimeout(30, TimeUnit.SECONDS).pollingEvery(5, TimeUnit.SECONDS)
-								.ignoring(NoSuchElementException.class);
-						// TODO: move it to general function
 
 						logs.debug("Visual testing for: " + field.toString());
 						JavascriptExecutor jse = (JavascriptExecutor) getDriver();
@@ -418,7 +443,7 @@ public class SelectorUtil extends SelTestCase {
 
 						Thread.sleep(500);
 
-						WebElement field2 = wait.until(new Function<WebDriver, WebElement>() {
+						field2 = wait.until(new Function<WebDriver, WebElement>() {
 							public WebElement apply(WebDriver driver) {
 								return driver.findElement(byAction);
 							}
@@ -432,17 +457,13 @@ public class SelectorUtil extends SelTestCase {
 							screenShot.set(new AShot().takeScreenshot(SelTestCase.getDriver(), field2));
 						
 					} else if (action.equals("click")) {
-						Wait<WebDriver> wait = new FluentWait<WebDriver>(SelTestCase.getDriver())
-								.withTimeout(30, TimeUnit.SECONDS).pollingEvery(5, TimeUnit.SECONDS)
-								.ignoring(NoSuchElementException.class);
-						// TODO: move it to general function
 						if (!value.contains("noClick")) {
 
 							logs.debug(MessageFormat.format(LoggingMsg.CLICKING_SEL, byAction.toString()));
 							JavascriptExecutor jse = (JavascriptExecutor) getDriver();
 							jse.executeScript("arguments[0].scrollIntoView(false)", field);
 							Thread.sleep(200);
-							WebElement field2 = wait.until(new Function<WebDriver, WebElement>() {
+							field2 = wait.until(new Function<WebDriver, WebElement>() {
 								public WebElement apply(WebDriver driver) {
 									return driver.findElement(byAction);
 								}
@@ -462,16 +483,12 @@ public class SelectorUtil extends SelTestCase {
 						if (value.contains("true")) {
 							if (!field.isSelected()) {
 								logs.debug(MessageFormat.format(LoggingMsg.CHECKING_UNCHECKING_MSG, "", "not "));
-								Wait<WebDriver> wait = new FluentWait<WebDriver>(SelTestCase.getDriver())
-										.withTimeout(30, TimeUnit.SECONDS).pollingEvery(5, TimeUnit.SECONDS)
-										.ignoring(NoSuchElementException.class);
 
-								// TODO: move it to general function
 								logs.debug(MessageFormat.format(LoggingMsg.CLICKING_SEL, byAction.toString()));
 								JavascriptExecutor jse = (JavascriptExecutor) getDriver();
 								jse.executeScript("arguments[0].scrollIntoView(false)", field);
 								Thread.sleep(200);
-								WebElement field2 = wait.until(new Function<WebDriver, WebElement>() {
+								field2 = wait.until(new Function<WebDriver, WebElement>() {
 									public WebElement apply(WebDriver driver) {
 										return driver.findElement(byAction);
 									}
@@ -489,16 +506,12 @@ public class SelectorUtil extends SelTestCase {
 						} else {
 							if (field.isSelected()) {
 								logs.debug(MessageFormat.format(LoggingMsg.CHECKING_UNCHECKING_MSG, "un", ""));
-								Wait<WebDriver> wait = new FluentWait<WebDriver>(SelTestCase.getDriver())
-										.withTimeout(30, TimeUnit.SECONDS).pollingEvery(5, TimeUnit.SECONDS)
-										.ignoring(NoSuchElementException.class);
 
-								// TODO: move this to function
 								logs.debug(MessageFormat.format(LoggingMsg.CLICKING_SEL, byAction.toString()));
 								JavascriptExecutor jse = (JavascriptExecutor) getDriver();
 								jse.executeScript("arguments[0].scrollIntoView(false)", field);
 								Thread.sleep(200);
-								WebElement field2 = wait.until(new Function<WebDriver, WebElement>() {
+								field2 = wait.until(new Function<WebDriver, WebElement>() {
 									public WebElement apply(WebDriver driver) {
 										return driver.findElement(byAction);
 									}
@@ -537,16 +550,12 @@ public class SelectorUtil extends SelTestCase {
 						}
 						try {
 							if (value.isEmpty()) {
-								Wait<WebDriver> wait = new FluentWait<WebDriver>(SelTestCase.getDriver())
-										.withTimeout(30, TimeUnit.SECONDS).pollingEvery(5, TimeUnit.SECONDS)
-										.ignoring(NoSuchElementException.class);
-								// TODO: move this to function
 
 								logs.debug(MessageFormat.format(LoggingMsg.CLICKING_SEL, byAction.toString()));
 								JavascriptExecutor jse1 = (JavascriptExecutor) getDriver();
 								jse1.executeScript("arguments[0].scrollIntoView(false)", field);
 								Thread.sleep(200);
-								WebElement field2 = wait.until(new Function<WebDriver, WebElement>() {
+								field2 = wait.until(new Function<WebDriver, WebElement>() {
 									public WebElement apply(WebDriver driver) {
 										return driver.findElement(byAction);
 									}
@@ -614,6 +623,7 @@ public class SelectorUtil extends SelTestCase {
 						logs.debug(MessageFormat.format(LoggingMsg.ERROR_VERIFICATION_SEL_MSG, selector));
 					}
 				}
+				webElementInfo.put("elemnt" , field2);
 			} else {
 				throw new Exception(ExceptionMsg.noValidSelector);
 			}
@@ -621,6 +631,16 @@ public class SelectorUtil extends SelTestCase {
 			throw e;
 		}
 		getCurrentFunctionName(false);
+	}
+	
+	@SuppressWarnings("rawtypes")
+	public static boolean isDisplayed(String value) throws Exception {
+		getCurrentFunctionName(true);
+		List<String> subStrArr = new ArrayList<String>();
+		subStrArr.add(value);
+		boolean isDisplayed = isDisplayed(subStrArr) ; 
+		getCurrentFunctionName(false);
+		return isDisplayed;
 	}
 
 	@SuppressWarnings("rawtypes")
@@ -660,6 +680,30 @@ public class SelectorUtil extends SelTestCase {
 		return isDisplayed;
 	}
 
+	@SuppressWarnings("rawtypes")
+	public static boolean isNotDisplayed(String value) throws Exception {
+		getCurrentFunctionName(true);
+		List<String> subStrArr = new ArrayList<String>();
+		subStrArr.add(value);
+		boolean isNotDisplayed = isNotDisplayed(subStrArr) ; 
+		getCurrentFunctionName(false);
+		return isNotDisplayed;
+	}
+	
+	@SuppressWarnings("rawtypes")
+	public static boolean isNotDisplayed(String value, String index) throws Exception {
+		getCurrentFunctionName(true);
+		boolean isNotDisplayed = false;
+		try {
+			LinkedHashMap<String, LinkedHashMap> webelementsInfo = initializeSelectorsAndDoActions(value, index, false);
+			return isNotDisplayed;
+
+		} catch (NoSuchElementException e) {
+			isNotDisplayed = true;
+			return isNotDisplayed;
+		}
+	}
+	
 	@SuppressWarnings({ "rawtypes", "unused" })
 	public static boolean isNotDisplayed(List<String> subStrArr) throws Exception {
 		getCurrentFunctionName(true);
@@ -692,6 +736,14 @@ public class SelectorUtil extends SelTestCase {
 	}
 
 	@SuppressWarnings("rawtypes")
+	public static String getAttrString (String Str, String attr, int index) throws Exception {
+		getCurrentFunctionName(true);
+		List<String> subStrArr = new ArrayList<String>();
+		subStrArr.add(Str);
+		return getAttr(subStrArr,attr,index);
+	}
+	
+	@SuppressWarnings("rawtypes")
 	public static String getAttr(List<String> subStrArr, String attr, int index) throws Exception {
 		getCurrentFunctionName(true);
 		List<String> valuesArr = new ArrayList<String>();
@@ -721,6 +773,15 @@ public class SelectorUtil extends SelTestCase {
 	}
 
 	@SuppressWarnings("rawtypes")
+	public static List<WebElement> getAllElements(String value) throws Exception {
+		getCurrentFunctionName(true);
+		List<String> subStrArr = new ArrayList<String>();
+		subStrArr.add(value);
+		getCurrentFunctionName(false);
+		return	getAllElements(subStrArr); 
+	}
+	
+	@SuppressWarnings("rawtypes")
 	public static List<WebElement> getAllElements(List<String> subStrArr) throws Exception {
 		getCurrentFunctionName(true);
 		List<String> valuesArr = new ArrayList<String>();
@@ -746,6 +807,44 @@ public class SelectorUtil extends SelTestCase {
 		valuesArr.add("");
 		return initializeSelectorsAndDoActions(subStrArr, valuesArr, true);
 	}
+	
+	@SuppressWarnings("rawtypes")
+	public static LinkedHashMap<String, LinkedHashMap> initializeSelectorsAndDoActions(String selector)
+			throws Exception {
+		List<String> subStrArr = new ArrayList<String>();
+		subStrArr.add(selector);
+		List<String> valuesArr = new ArrayList<String>();
+		valuesArr.add("");
+		return initializeSelectorsAndDoActions(subStrArr, valuesArr, true);
+	}
+	
+	@SuppressWarnings("rawtypes")
+	public static LinkedHashMap<String, LinkedHashMap> initializeSelectorsAndDoActions(String selector, String value)
+			throws Exception {
+		List<String> subStrArr = new ArrayList<String>();
+		subStrArr.add(selector);
+		List<String> valuesArr = new ArrayList<String>();
+		valuesArr.add(value);
+		return initializeSelectorsAndDoActions(subStrArr, valuesArr, true);
+	}
+	
+	@SuppressWarnings("rawtypes")
+	public static LinkedHashMap<String, LinkedHashMap> initializeSelectorsAndDoActions(String selector, String value,boolean doAction)
+			throws Exception {
+		List<String> subStrArr = new ArrayList<String>();
+		subStrArr.add(selector);
+		List<String> valuesArr = new ArrayList<String>();
+		valuesArr.add(value);
+		return initializeSelectorsAndDoActions(subStrArr, valuesArr, doAction);
+	}
+	
+	public static WebElement getelement(String selector) throws Exception {
+		List<String> subStrArr = new ArrayList<String>();
+		subStrArr.add(selector);
+		List<String> valuesArr = new ArrayList<String>();
+		valuesArr.add("");
+		return (WebElement) initializeSelectorsAndDoActions(subStrArr, valuesArr, false).get(selector).get("elemnt");
+	}
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public static LinkedHashMap<String, LinkedHashMap> initializeSelectorsAndDoActions(List<String> subStrArr,
@@ -761,6 +860,8 @@ public class SelectorUtil extends SelTestCase {
 			webElementInfo.put("selector", "");
 			webElementInfo.put("action", "");
 			webElementInfo.put("SelType", "");
+			webElementInfo.put("element", "");
+			
 			index++;
 
 			webElementsInfo.remove(key);
@@ -772,14 +873,12 @@ public class SelectorUtil extends SelTestCase {
 			SelectorUtil.initializeElementsSelectorsMaps(webElementsInfo, isValidationStep);
 			logs.debug(MessageFormat.format(LoggingMsg.DEBUGGING_TEXT, Arrays.asList(webElementsInfo)));
 
-			if (action) {
-				for (String key : webElementsInfo.keySet()) {
-					LinkedHashMap<String, Object> webElementInfo = webElementsInfo.get(key);
-					SelectorUtil.doAppropriateAction(webElementInfo);
-				}
-
-				Thread.sleep(1000);
+			for (String key : webElementsInfo.keySet()) {
+				LinkedHashMap<String, Object> webElementInfo = webElementsInfo.get(key);
+				SelectorUtil.doAppropriateAction(webElementInfo,action);
 			}
+
+			Thread.sleep(1000);
 		} catch (Exception e) {
 			logs.debug(MessageFormat.format(LoggingMsg.FORMATTED_ERROR_MSG, e.getMessage()));
 			throw new NoSuchElementException("No such element: " + Arrays.asList(webElementsInfo));
@@ -792,5 +891,67 @@ public class SelectorUtil extends SelTestCase {
 		logs.debug(MessageFormat.format(LoggingMsg.FINISHED_ACTION_ON_ELEMENTS_MSG, Arrays.asList(webElementsInfo)));
 		return webElementsInfo;
 
+	}
+
+	public static boolean isImgLoaded(String selector) {
+		WebElement img = getDriver().findElement(By.cssSelector(selector));
+
+		Object  result =  (Boolean) ((JavascriptExecutor) getDriver()).executeScript(
+				   "return arguments[0].complete && "+
+						   "typeof arguments[0].naturalWidth != \"undefined\" && "+
+						   "arguments[0].naturalWidth > 0", img);
+	    boolean loaded = false;
+	    if (result instanceof Boolean) {
+	      loaded = (Boolean) result;
+	    }
+	    return loaded;
+	}
+
+
+	public static String getCurrentPageUrl() throws Exception {
+		return SelTestCase.getDriver().getCurrentUrl();
+	}
+
+	public static void clickOnWebElement(WebElement element) throws Exception {
+		((JavascriptExecutor) SelTestCase.getDriver()).executeScript("arguments[0].click()", element);
+	}
+
+	/**
+	* Get the elements list by pass the selector as a string.
+	*
+	* @param selector.
+	* @return List<WebElement>
+	* @throws Exception
+	*/
+	@SuppressWarnings("rawtypes")
+	public static List<WebElement> getElementsList(String selector) throws Exception {
+		getCurrentFunctionName(true);
+
+		LinkedHashMap<String, LinkedHashMap> webelementsInfo = SelectorUtil.initializeSelectorsAndDoActions(selector, "", false);			
+		String Byselector = (By) webelementsInfo.get(selector).get("by")+"";
+		logs.debug(Byselector);
+		List<WebElement> listElements = getDriver().findElements((By) webelementsInfo.get(selector).get("by"));
+
+		getCurrentFunctionName(false);
+		return listElements;
+	}
+
+	/**
+	* Check if element exist at document.
+	*
+	* @param Byselector.
+	* @return boolean
+	* @throws Exception
+	*/
+	public static boolean isElementExist(By Byselector) throws Exception {
+		getCurrentFunctionName(true);
+		boolean isElementExist = false;
+		List<WebElement> listItems = getDriver().findElements(Byselector);
+
+		if (listItems.size() != 0) {
+			isElementExist = true;
+		}
+		getCurrentFunctionName(false);
+		return isElementExist;
 	}
 }

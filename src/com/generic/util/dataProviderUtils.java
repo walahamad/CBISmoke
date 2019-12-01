@@ -58,6 +58,9 @@ public class dataProviderUtils {
 						&& !dataTable.getCellData(testName, 1, rowNum).equals("")) {
 					for (int colNum = 0; colNum < cols; colNum++) {
 						Thread.sleep(100);
+						String CellValue = dataTable.getCellData(testName, colNum,rowNum);
+						
+						if (!(CellValue==""))
 						data[rowNum - startingRow][colNum] = dataTable.getCellData(testName, colNum,
 								rowNum);
 					}
