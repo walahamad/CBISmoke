@@ -100,7 +100,6 @@ public class SignIn extends SelTestCase {
 			typeEmail(email);
 			typePassword(Password);
 			clickLogin();
-			Thread.sleep(3000);
 			getCurrentFunctionName(false);
 		} catch (NoSuchElementException e) {
 			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
@@ -119,6 +118,7 @@ public class SignIn extends SelTestCase {
 			getCurrentFunctionName(true);
 			// Select the sign in button and Navigate to the Sign in/Create account page..
 			SelectorUtil.initializeSelectorsAndDoActions(SignInSelectors.signInButton.get());
+			SelectorUtil.waitingLoadingButton(SignInSelectors.loadingButton);
 			getCurrentFunctionName(false);
 		} catch (NoSuchElementException e) {
 			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {

@@ -979,4 +979,51 @@ public class SelectorUtil extends SelTestCase {
         return element;
 
 	}
+
+	/**
+	* Check if GWT Loader.
+	*
+	* @return boolean
+	* @throws Exception
+	*/
+	public static boolean CheckGWTLoadedEventPWA() throws Exception {
+		getCurrentFunctionName(true);
+		JavascriptExecutor JS = (JavascriptExecutor) getDriver();
+		boolean gwtLoadedEventPWA = (boolean)JS.executeScript("return window.gwtLoadedEventPWA");
+		getCurrentFunctionName(false);
+		return gwtLoadedEventPWA;
+	}
+
+	/**
+	* Check if GWT Loader.
+	*
+	* @return boolean
+	* @throws Exception
+	*/
+	public static void waitGWTLoadedEventPWA() throws Exception {
+		getCurrentFunctionName(true);
+		boolean gwtLoadedEventPWA = CheckGWTLoadedEventPWA();
+		while (!gwtLoadedEventPWA) {
+			Thread.sleep(500);
+			gwtLoadedEventPWA = CheckGWTLoadedEventPWA();
+		}
+		getCurrentFunctionName(false);
+	}
+
+	/**
+	* Wait the loading button.
+	*
+	* @return boolean
+	* @throws Exception
+	*/
+	public static void waitingLoadingButton(String loadingButtonCssSelector) throws Exception {
+		int loapingCount = 0;
+		getCurrentFunctionName(true);
+		boolean isIphone = SelTestCase.getBrowserName().contains(GlobalVariables.browsers.iPhone);
+		while (isIphone && !isElementExist(By.cssSelector(loadingButtonCssSelector)) && loapingCount < 10) {
+			loapingCount++;
+			Thread.sleep(500);
+		}
+		getCurrentFunctionName(false);
+	}
 }
