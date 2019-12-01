@@ -515,7 +515,7 @@ public class HomePage extends SelTestCase {
 
 		logs.debug("Open navigation menu");
 		// Click on navigation menu icon and Navigate to an item in the menu.
-		SelectorUtil.initializeSelectorsAndDoActions(HomePageSelectors.navigationIcon.get());
+		SelectorUtil.initializeSelectorsAndDoActions(HomePageSelectors.navIcon.get()); 
 		getCurrentFunctionName(false);
 	}
 
