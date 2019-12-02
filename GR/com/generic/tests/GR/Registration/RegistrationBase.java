@@ -17,6 +17,7 @@ import com.generic.util.RandomUtilities;
 import com.generic.util.ReportUtil;
 import com.generic.util.SASLogger;
 import com.generic.util.dataProviderUtils;
+import org.junit.runners.Parameterized.Parameters;
 
 public class RegistrationBase extends SelTestCase {
 
@@ -39,6 +40,13 @@ public class RegistrationBase extends SelTestCase {
 	public static final String passwordRulesError = "passwordRuleError";
 	public static final String passwordMisatchError = "passwordMismatchError";
 
+	public static String userEmail;
+	public static String userPassword;
+	public static String userFirstName;
+	public static String userLastName ;
+	public static String userCompanyName;
+	public static LinkedHashMap<String, String> userAddressDetails;
+
 	// used sheet in test
 	public static final String testDataSheet = SheetVariables.registrationRegressionSheet;
 
@@ -50,6 +58,15 @@ public class RegistrationBase extends SelTestCase {
 	public static void initialSetUp(XmlTest test) throws Exception {
 		Testlogs.set(new SASLogger(test.getName() + test.getIndex()));
 		testObject = test;
+	}
+	
+	public static void setUserRegistrationInfo(String email,String password,String firstName, String lastName,String companyName,LinkedHashMap<String, String> addressDetails) throws Exception {
+		userEmail = email;
+		userPassword = password;
+		userFirstName = firstName;
+		userLastName = lastName;
+		userCompanyName = companyName;
+		userAddressDetails = addressDetails;
 	}
 
 	@DataProvider(name = "Registration", parallel = true)
@@ -134,6 +151,8 @@ public class RegistrationBase extends SelTestCase {
 			// Positive registration case
 			if (proprties.contains(freshUser)) {
 				// register new user and validate the results
+
+				setUserRegistrationInfo(email, password, firstName, lastName, companyName, addressDetails);
 
 				Registration.fillRegistrationFirstStep(email, email, password, password);
 				Thread.sleep(1500);

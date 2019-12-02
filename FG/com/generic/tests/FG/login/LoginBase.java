@@ -16,9 +16,10 @@ import com.generic.setup.Common;
 import com.generic.setup.LoggingMsg;
 import com.generic.setup.SelTestCase;
 import com.generic.setup.SheetVariables;
+import com.generic.tests.FG.Registration.RegistrationBase;
 import com.generic.util.ReportUtil;
 import com.generic.util.SASLogger;
-
+import com.generic.util.SelectorUtil;
 import com.generic.util.dataProviderUtils;
 
 public class LoginBase extends SelTestCase {
@@ -27,7 +28,6 @@ public class LoginBase extends SelTestCase {
 	// used sheet in test
 	public static final String testDataSheet = SheetVariables.loginSheet;
 	private static XmlTest testObject;
-
 	private static ThreadLocal<SASLogger> Testlogs = new ThreadLocal<SASLogger>();
 
 	@BeforeTest
@@ -76,6 +76,19 @@ public class LoginBase extends SelTestCase {
 
 			if (proprties.equals("Success login")) {
 				Testlogs.get().debug("Validate Success login");
+
+				// Run the registration test case before sign in.
+				RegistrationBase registartionBase = new RegistrationBase();
+				Package registrationPack = registartionBase.getClass().getPackage();
+				String packageName = registrationPack.getName();
+
+				SelectorUtil.runTest(
+					packageName + ".RegistrationBase", testObject.getName(), "Registration Regression",
+					testObject.getParameter("browserName"), testObject.getParameter("Env"), testObject.getParameter("Brand")
+				);
+				userMail = RegistrationBase.userEmail;
+				userPassword = RegistrationBase.userPassword;
+
 				SignIn.fillLoginFormAndClickSubmit(userMail, (String) userPassword);
 				sassert().assertTrue(SignIn.checkUserAccount(), LoggingMsg.USER_IS_NOT_LOGGED_IN_SUCCESSFULLY);
 			}

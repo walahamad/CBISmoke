@@ -4,6 +4,7 @@ import java.text.MessageFormat;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
 
+import org.junit.runners.Parameterized.Parameters;
 import org.testng.Assert;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.DataProvider;
@@ -48,7 +49,12 @@ public class RegistrationBase extends SelTestCase {
 	private static XmlTest testObject;
 	
 	private static ThreadLocal<SASLogger> Testlogs = new ThreadLocal<SASLogger>() ;
-
+	public static String userEmail;
+	public static String userPassword;
+	public static String userFirstName;
+	public static String userLastName ;
+	public static String userCompanyName;
+	public static LinkedHashMap<String, String> userAddressDetails;
 	
 	@BeforeTest
 	public static void initialSetUp(XmlTest test) throws Exception {
@@ -64,6 +70,15 @@ public class RegistrationBase extends SelTestCase {
 		Object[][] data = TDP.getData(testDataSheet);
 		Testlogs.get().debug(Arrays.deepToString(data).replace("\n", "--"));
 		return data;
+	}
+	
+	public static void setUserRegistrationInfo(String email,String password,String firstName, String lastName,String companyName,LinkedHashMap<String, String> addressDetails) throws Exception {
+		userEmail = email;
+		userPassword = password;
+		userFirstName = firstName;
+		userLastName = lastName;
+		userCompanyName = companyName;
+		userAddressDetails = addressDetails;
 	}
 
 	@SuppressWarnings("unchecked") // avoid warning from linked hashmap
@@ -104,12 +119,12 @@ public class RegistrationBase extends SelTestCase {
 		String lastName = RandomUtilities.getRandomName();
 		String companyName = RandomUtilities.getRandomName();
 		String email = RandomUtilities.getRandomEmail();
-		
+
 		try {
 			// Positive registration case
 			if (proprties.contains(freshUser)) {
 				//register new user and validate the results
-				
+				setUserRegistrationInfo(email, password, firstName, lastName, companyName, addressDetails);
 				Registration.fillRegistrationFirstStep(email,email,password,password);
 				Thread.sleep(1500);
 				Registration.fillRegistrationSecondStep(firstName,lastName,companyName,addressDetails);

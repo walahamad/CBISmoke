@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,6 +27,10 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.Wait;
+import org.testng.TestNG;
+import org.testng.xml.XmlClass;
+import org.testng.xml.XmlSuite;
+import org.testng.xml.XmlTest;
 
 import com.generic.setup.SelTestCase;
 
@@ -33,6 +38,7 @@ import ru.yandex.qatools.ashot.AShot;
 import ru.yandex.qatools.ashot.Screenshot;
 import ru.yandex.qatools.ashot.shooting.ShootingStrategies;
 
+import com.beust.jcommander.internal.Lists;
 import com.generic.setup.ExceptionMsg;
 import com.generic.setup.GlobalVariables;
 import com.generic.setup.LoggingMsg;
@@ -1003,9 +1009,14 @@ public class SelectorUtil extends SelTestCase {
 	public static void waitGWTLoadedEventPWA() throws Exception {
 		getCurrentFunctionName(true);
 		boolean gwtLoadedEventPWA = CheckGWTLoadedEventPWA();
+		int tries = 0;
 		while (!gwtLoadedEventPWA) {
 			Thread.sleep(500);
 			gwtLoadedEventPWA = CheckGWTLoadedEventPWA();
+			if(tries == 9) {
+				throw new NoSuchElementException("Error in Loading GWT.");
+			}
+			tries ++;
 		}
 		getCurrentFunctionName(false);
 	}
@@ -1025,5 +1036,49 @@ public class SelectorUtil extends SelTestCase {
 			Thread.sleep(500);
 		}
 		getCurrentFunctionName(false);
+	}
+
+	/**
+	* Run XML test file.
+	*
+	* @param String testFilePath
+	* @param String testName
+	* @param String suiteName
+	* @param String Env
+	* @param String Brand
+	* @return void
+	* @throws Exception
+	*/
+	public static void runTest(String className, String testName, String suiteName, String browserName, String Env, String Brand) {
+
+		// Create TestNG object.
+		TestNG testng = new TestNG();
+
+		// Create te list of parameters.
+        Map<String, String> testClassParameters = new HashMap<>();
+        testClassParameters.put("browserName", browserName);
+        testClassParameters.put("Env", Env);
+        testClassParameters.put("Brand", Brand);
+
+        XmlSuite suite = new XmlSuite();
+        suite.setName(suiteName);
+
+		// Create the test.
+        XmlTest test = new XmlTest(suite);
+        test.setName(testName);
+        test.setParameters(testClassParameters);
+
+		// Create the classes.
+        List<XmlClass> classes = new ArrayList<XmlClass>();
+        XmlClass clss1 = new XmlClass(className);
+        classes.add(clss1);
+        test.setXmlClasses(classes);
+
+		// Create the suites.
+        List <XmlSuite> suites = new ArrayList<XmlSuite>();
+        suites.add(suite);
+        testng.setXmlSuites(suites);
+        // Run the test files.
+        testng.run();
 	}
 }
