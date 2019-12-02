@@ -80,10 +80,16 @@ public class RegistrationBase extends SelTestCase {
 		
 		String thankUMsg = (fieldsValidation.split("ThankyouValidation:").length >2) ? fieldsValidation.split("ThankyouValidation:")[0].split("\n")[0]:"";
 		String emailValidation = (fieldsValidation.split("EmailValidation:").length >2) ? fieldsValidation.split("EmailValidation:")[0].split("\n")[0]:"";
+		String emailConfValidation = (fieldsValidation.split("EmailConfValidation:").length >2) ? fieldsValidation.split("EmailConfValidation:")[0].split("\n")[0]:"";
 		String firstNameValidation =(fieldsValidation.split("firstNameValidation:").length >2) ?  fieldsValidation.split("firstNameValidation:")[0].split("\n")[0]:"";
 		String lastNameValidation = (fieldsValidation.split("lastNameValidation:").length >2) ? fieldsValidation.split("lastNameValidation:")[0].split("\n")[0]:"";
 		String passwordValidation =(fieldsValidation.split("PasswordValidation:").length >2) ?  fieldsValidation.split("PasswordValidation:")[0].split("\n")[0]:"";
 		String passwordConfValidation = (fieldsValidation.split("PasswordConfValidation:").length >2) ? fieldsValidation.split("PasswordConfValidation:")[0].split("\n")[0]:"";
+		String streetAddress1Validation = (fieldsValidation.split("StreetAddress1Validation:").length >2) ? fieldsValidation.split("StreetAddress1Validation:")[0].split("\n")[0]:"";
+		String cityValidation = (fieldsValidation.split("CityValidation:").length >2) ? fieldsValidation.split("CityValidation:")[0].split("\n")[0]:"";
+		String stateValidation = (fieldsValidation.split("StateValidation:").length >2) ? fieldsValidation.split("StateValidation:")[0].split("\n")[0]:"";
+		String ZIPCodeValidation = (fieldsValidation.split("ZIPCodeValidation:").length >2) ? fieldsValidation.split("ZIPCodeValidation:")[0].split("\n")[0]:"";
+		String PhoneValidation = (fieldsValidation.split("PhoneValidation:").length >2) ? fieldsValidation.split("PhoneValidation:")[0].split("\n")[0]:"";
 		String schoolValidation = (fieldsValidation.split("schoolValidation:").length >2) ? fieldsValidation.split("schoolValidation:")[0].split("\n")[0]:"";
 		String termsValidation = (fieldsValidation.split("AcceptTermsValidation:").length >2) ? fieldsValidation.split("AcceptTermsValidation:")[0].split("\n")[0]:"";
 		
@@ -92,85 +98,117 @@ public class RegistrationBase extends SelTestCase {
 		
 		//prepare random address details
 		LinkedHashMap<String, String> addressDetails = (LinkedHashMap<String, String>) addresses.get("A3");
+		
 		//Prepare registration data 
 		String firstName = RandomUtilities.getRandomName();
 		String lastName = RandomUtilities.getRandomName();
-		//String password = "P11p"+RandomUtilities.getRandomPassword(8);
+		String companyName = RandomUtilities.getRandomName();
 		String email = RandomUtilities.getRandomEmail();
 		
 		try {
+			// Positive registration case
 			if (proprties.contains(freshUser)) {
 				//register new user and validate the results
-				Registration.fillAndClickRegister(firstName, lastName, email, "Elmira College", password, password,
-						type, addressDetails);
 				
+				Registration.fillRegistrationFirstStep(email,email,password,password);
+				Thread.sleep(1500);
+				Registration.fillRegistrationSecondStep(firstName,lastName,companyName,addressDetails);
+						
+				//Success message needs to be updated on excel to (Welcome to your account at )
 				String registrationSuccessMsg = Registration.getRegistrationSuccessMessage();
 				sassert().assertTrue(registrationSuccessMsg.toLowerCase().contains(thankUMsg), 
 						"Regestration Success, validation failed Expected to have in message: " + thankUMsg +" but Actual message is: " + registrationSuccessMsg);
 			}
-			if (proprties.contains(existingUser)) {
-				// take any user as template
-				LinkedHashMap<String, String> userdetails = (LinkedHashMap<String, String>) users.entrySet().iterator()
-						.next().getValue();
-				email = userdetails.get(Registration.keys.email);
-				email=getSubMailAccount(email);
-				logs.debug("Registration mail: "+email);
-				Registration.fillAndClickRegister(firstName,lastName,email,"Elmira College",password,password, type, addressDetails);
-				String validationMsg = Registration.getEmailAddressError();
-				sassert().assertTrue(validationMsg.contains(emailValidation), "Mail validation failed, Expected: " + emailValidation +" Actual: " + validationMsg);
-			}
+			
+			// Negative registration case
 			if (proprties.contains(emptyData)) {
 				Registration.clickRegisterButton();
-				// switch To Default Content
-				if (getBrowserName().equals(GlobalVariables.browsers.IE)
-						|| getBrowserName().equals(GlobalVariables.browsers.firefox))
-				{
-					Registration.switchToDefaultContent();
-					Thread.sleep(3000);
-				}
 				
-				String validationMsg = Registration.getFirstNameError();
-				sassert().assertTrue(validationMsg.contains(firstNameValidation),
-						"first name validation failed Expected: " + firstNameValidation + " Actual: " + validationMsg);
-
-				validationMsg = Registration.getLastNameError();
-				sassert().assertTrue(validationMsg.contains(lastNameValidation),
-						"last name validation failed Expected: " + lastNameValidation + " Actual: " + validationMsg);
-
+				//>>>>>>>>>>>>>>>>Error messages to be updated in the excel sheet<<<<<<<<<<<<<<<<<<<<<<<<<<<
+				/*
+				 * firstNameValidation:Please enter First Name. 
+				 * lastNameValidation:Please enter Last Name. 
+				 * EmailValidation:Please enter Email Address.
+				 * EmailConfValidation:Please Re-Enter Email Address. 
+				 * PasswordValidation:Please Enter Password. PasswordConfValidation:Please Re-Enter Password.
+				 * StreetAddress1Validation:Please enter Street Address 1. 
+				 * CityValidation:Please enter City. 
+				 * StateValidation:Please select a State/Province.
+				 * ZIPCodeValidation:Please enter ZIP/Postal Code. 
+				 * PhoneValidation:Please enter a Daytime phone number, including area code (US Only).
+				 */
+				
+				String validationMsg = "";
+				
+				//Validating Errors of the first step								
 				validationMsg = Registration.getEmailAddressErrorInvalid();
 				sassert().assertTrue(validationMsg.contains(emailValidation),
 						"Mail validation failed Expected: " + emailValidation + " Actual: " + validationMsg);
 				
-				validationMsg = Registration.getSchoolError();
-				sassert().assertTrue(validationMsg.contains(schoolValidation),
-						"Mail validation failed Expected: " + schoolValidation + " Actual: " + validationMsg);
+				validationMsg = Registration.getConfEmailAddressErrorInvalid();
+				sassert().assertTrue(validationMsg.contains(emailConfValidation),
+						"Mail confirmation validation failed Expected: " + emailConfValidation + " Actual: " + validationMsg);
+				
 				
 				validationMsg = Registration.getPasswordError();
 				sassert().assertTrue(validationMsg.contains(passwordValidation),
-						"Mail validation failed Expected: " + passwordValidation + " Actual: " + validationMsg);
+						"Password validation failed Expected: " + passwordValidation + " Actual: " + validationMsg);
 				
 				validationMsg = Registration.getConfirmPasswordError();
 				sassert().assertTrue(validationMsg.contains(passwordConfValidation),
-						"Mail validation failed Expected: " + passwordConfValidation + " Actual: " + validationMsg);
+						"Password confirmation validation failed Expected: " + passwordConfValidation + " Actual: "
+								+ validationMsg);
 				
-				validationMsg = Registration.getTermsError();
-				sassert().assertTrue(validationMsg.contains(termsValidation),
-						"Mail validation failed Expected: " + termsValidation + " Actual: " + validationMsg);
+				//Sleeping for 1 Second
+				Thread.sleep(1000);
+				
+				//>>>>>>>>>>>>>>Password field needs to be filled in the excel sheet with P@ssword1<<<<<<<<<<<<<<<<<
+				
+				//Filling 1st step with valid Data to check 2nd step
+				Registration.fillRegistrationFirstStep(email,email,password,password);
+				
+				//Sleeping for 1 Second
+				Thread.sleep(1000);
+				
+				//Click save button with empty fields to trigger error messages
+				Registration.clickSaveButton();
+				
+				//Validating Errors of the second step
+				validationMsg = Registration.getFirstNameErrorInvalid();
+				sassert().assertTrue(validationMsg.contains(firstNameValidation),
+						"First name validation failed Expected: " + firstNameValidation + " Actual: " + firstNameValidation);
+				
+				validationMsg = Registration.getLastNameErrorInvalid();
+				sassert().assertTrue(validationMsg.contains(lastNameValidation),
+						"Last name validation failed Expected: " + lastNameValidation + " Actual: " + lastNameValidation);
+				
 
-			}
-			if (proprties.contains(invalidUserID)) {
-				email = "invalid@valid";
-				Registration.fillAndClickRegister(firstName,lastName,email,"Elmira College",password,password,type, addressDetails);
+				validationMsg = Registration.getStreerAddressErrorInvalid();
+				sassert().assertTrue(validationMsg.contains(streetAddress1Validation),
+						"Street address 1 validation failed Expected: " + streetAddress1Validation + " Actual: " + streetAddress1Validation);
 				
-				String validationMsg = Registration.getEmailAddressErrorInvalid();
-				sassert().assertTrue(validationMsg.contains(emailValidation),
-						"Mail validation failed Expected: " + emailValidation + " Actual: " + validationMsg);
+				validationMsg = Registration.getCityErrorInvalid();
+				sassert().assertTrue(validationMsg.contains(cityValidation),
+						"City validation failed Expected: " + cityValidation + " Actual: " + cityValidation);
+				
+				validationMsg = Registration.getStateErrorInvalid();
+				sassert().assertTrue(validationMsg.contains(stateValidation),
+						"State validation failed Expected: " + stateValidation + " Actual: " + stateValidation);
+				
+				validationMsg = Registration.getZIPCodeErrorInvalid();
+				sassert().assertTrue(validationMsg.contains(ZIPCodeValidation),
+						"ZIP Code validation failed Expected: " + ZIPCodeValidation + " Actual: " + ZIPCodeValidation);
+				
+				validationMsg = Registration.getPhoneErrorInvalid();
+				sassert().assertTrue(validationMsg.contains(PhoneValidation),
+						"Phone validation failed Expected: " + PhoneValidation + " Actual: " + PhoneValidation);		
+					
 			}
-			
-			Thread.sleep(2000);
-			
+						
+			Thread.sleep(2000);						
 			sassert().assertAll();
 			Common.testPass();
+			
 		} catch (Throwable t) {
 			setTestCaseDescription(getTestCaseDescription());
 			Testlogs.get().debug(MessageFormat.format(LoggingMsg.DEBUGGING_TEXT, t.getMessage()));
