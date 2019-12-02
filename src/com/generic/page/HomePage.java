@@ -39,6 +39,13 @@ public class HomePage extends SelTestCase {
 		getCurrentFunctionName(false);
 	}
 
+	//This is to disable Monetate if needed.
+	public static void disableMonetate() throws Exception {
+		getCurrentFunctionName(true);
+		getDriver().get(getURL() + "/?monetate=off");
+		getCurrentFunctionName(false);
+	}
+
 	public static void clickOnLogo() throws Exception {
 		getCurrentFunctionName(true);
 		logs.debug("Clicking on Site logo");
