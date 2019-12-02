@@ -5,7 +5,7 @@ import com.generic.setup.cselector;
 public class PLPSelectors {
 
 	//CBI
-	public static final cselector SearchIcon = new cselector("css,#uNavTop button.searchboxAsButton", "css,.u-margin-end-6.u-margin-start-6");
+	public static final cselector SearchIcon = new cselector("css,#uNavTop button.searchboxAsButton", "css,.t-header__fades-in>button");
 	public static final cselector searchBox = new cselector("css,#searchBox input#headerBox","css,form>div>div>input");
 	public static final cselector recommendedOption =new cselector("css,li.unbxd-as-popular-product.unbxd-as-popular-product-grid a.unbxd-as-popular-product-info","css,.c--align-middle a.pw-link.c-arrange.u-flexbox.c--align-middle.u-align-center");
 	public static final cselector SearchButton =new cselector("css,li.unbxd-as-popular-product.unbxd-as-popular-product-grid a.unbxd-as-popular-product-info");
