@@ -26,7 +26,8 @@ public class PDPBase extends SelTestCase {
 	public static final String singlePDPSearchTerm = "lights";
 	public static final String BundlePDPSearchTerm = "Rugs";
 	public static final String personalizedPDPSearchTerm = "personalized";
-	
+	public static final String wishListGuestValidation = "Wish List Guest Validation";
+
 	// used sheet in test
 	public static final String testDataSheet = SheetVariables.PDPSheet;
 
@@ -68,6 +69,9 @@ public class PDPBase extends SelTestCase {
 			if (proprties.contains(this.bundlePDP)) {
 				PDPValidation.validate(BundlePDPSearchTerm);	
 			}
+			if (proprties.contains(this.wishListGuestValidation)) {
+                WistListGuestValidation.validate(); 
+            }
 
 			sassert().assertAll();
 			Common.testPass();

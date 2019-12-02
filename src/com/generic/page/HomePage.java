@@ -622,4 +622,11 @@ public class HomePage extends SelTestCase {
 		getCurrentFunctionName(false);
 		return validateSubMenuNavigation;
 	}
+	
+	public static void searchByTerm() throws Exception{
+		getCurrentFunctionName(true);
+		String[] Items = getCONFIG().getProperty("RandomItems").split(",");
+		getDriver().get(getURL() + "/ProductSearch2?searchTerm=" + Items[0]);
+		getCurrentFunctionName(false);	
+	}
 }
