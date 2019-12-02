@@ -287,7 +287,7 @@ public class PLP extends SelTestCase {
 	}
 
 	@SuppressWarnings("rawtypes")
-	private static String pickRecommendedOption() throws Exception {
+	public static String pickRecommendedOption() throws Exception {
 		try {
 			getCurrentFunctionName(true);
 			
@@ -308,7 +308,7 @@ public class PLP extends SelTestCase {
 		
 	}
 
-	private static void typeSearch(String searchTerm) throws Exception {
+	public static void typeSearch(String searchTerm) throws Exception {
 		try {
 			getCurrentFunctionName(true);
 			SelectorUtil.initializeSelectorsAndDoActions(PLPSelectors.searchBox.get(), searchTerm);
@@ -323,7 +323,7 @@ public class PLP extends SelTestCase {
 	}
 
 	//CBI
-	private static void clickSearchicon() throws Exception {
+	public static void clickSearchicon() throws Exception {
 		try {
 			getCurrentFunctionName(true);
 			SelectorUtil.initializeSelectorsAndDoActions(PLPSelectors.SearchIcon.get());
