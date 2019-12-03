@@ -4,6 +4,7 @@ import java.text.MessageFormat;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
 
+import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.DataProvider;
@@ -12,14 +13,15 @@ import org.testng.xml.XmlTest;
 
 import com.generic.page.Registration;
 import com.generic.page.SignIn;
+import com.generic.selector.SignInSelectors;
 import com.generic.setup.Common;
+import com.generic.setup.GlobalVariables;
 import com.generic.setup.LoggingMsg;
 import com.generic.setup.SelTestCase;
 import com.generic.setup.SheetVariables;
-import com.generic.tests.FG.Registration.RegistrationBase;
+import com.generic.util.RandomUtilities;
 import com.generic.util.ReportUtil;
 import com.generic.util.SASLogger;
-import com.generic.util.SelectorUtil;
 import com.generic.util.dataProviderUtils;
 
 public class LoginBase extends SelTestCase {
@@ -73,22 +75,17 @@ public class LoginBase extends SelTestCase {
 		Testlogs.get().debug("Login password is: " + userPassword);
 
 		try {
+			
+			if ((proprties.equals("Success login") || proprties.equals("myAccountLink")) && email.equals("")) {
+				Testlogs.get().debug("Run the registration test case before sign in.");
+				//Prepare registration data.
+				userMail = RandomUtilities.getRandomEmail();
+				userPassword = "P@ssword11";
+				SignIn.registerNewUser(userMail, userPassword);
+			}
 
 			if (proprties.equals("Success login")) {
 				Testlogs.get().debug("Validate Success login");
-
-				// Run the registration test case before sign in.
-				RegistrationBase registartionBase = new RegistrationBase();
-				Package registrationPack = registartionBase.getClass().getPackage();
-				String packageName = registrationPack.getName();
-
-				SelectorUtil.runTest(
-					packageName + ".RegistrationBase", testObject.getName(), "Registration Regression",
-					testObject.getParameter("browserName"), testObject.getParameter("Env"), testObject.getParameter("Brand")
-				);
-				userMail = RegistrationBase.userEmail;
-				userPassword = RegistrationBase.userPassword;
-
 				SignIn.fillLoginFormAndClickSubmit(userMail, (String) userPassword);
 				sassert().assertTrue(SignIn.checkUserAccount(), LoggingMsg.USER_IS_NOT_LOGGED_IN_SUCCESSFULLY);
 			}

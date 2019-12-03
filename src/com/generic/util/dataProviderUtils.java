@@ -61,8 +61,9 @@ public class dataProviderUtils {
 						String CellValue = dataTable.getCellData(testName, colNum,rowNum);
 						
 						if (!(CellValue==""))
-						data[rowNum - startingRow][colNum] = dataTable.getCellData(testName, colNum,
-								rowNum);
+							data[rowNum - startingRow][colNum] = CellValue;
+						else
+							data[rowNum - startingRow][colNum]  = "";  
 					}
 				} else {
 					for (int colNum = 0; colNum < cols; colNum++) {

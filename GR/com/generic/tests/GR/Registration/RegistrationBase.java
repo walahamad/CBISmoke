@@ -40,13 +40,6 @@ public class RegistrationBase extends SelTestCase {
 	public static final String passwordRulesError = "passwordRuleError";
 	public static final String passwordMisatchError = "passwordMismatchError";
 
-	public static String userEmail;
-	public static String userPassword;
-	public static String userFirstName;
-	public static String userLastName ;
-	public static String userCompanyName;
-	public static LinkedHashMap<String, String> userAddressDetails;
-
 	// used sheet in test
 	public static final String testDataSheet = SheetVariables.registrationRegressionSheet;
 
@@ -58,15 +51,6 @@ public class RegistrationBase extends SelTestCase {
 	public static void initialSetUp(XmlTest test) throws Exception {
 		Testlogs.set(new SASLogger(test.getName() + test.getIndex()));
 		testObject = test;
-	}
-	
-	public static void setUserRegistrationInfo(String email,String password,String firstName, String lastName,String companyName,LinkedHashMap<String, String> addressDetails) throws Exception {
-		userEmail = email;
-		userPassword = password;
-		userFirstName = firstName;
-		userLastName = lastName;
-		userCompanyName = companyName;
-		userAddressDetails = addressDetails;
 	}
 
 	@DataProvider(name = "Registration", parallel = true)
@@ -135,35 +119,19 @@ public class RegistrationBase extends SelTestCase {
 				? fieldsValidation.split("AcceptTermsValidation:")[0].split("\n")[0]
 				: "";
 
-		// click on register new user button
-		Registration.goToRegistrationForm();
-
-		// prepare random address details
-		LinkedHashMap<String, String> addressDetails = (LinkedHashMap<String, String>) addresses.get("A3");
 
 		// Prepare registration data
-		String firstName = RandomUtilities.getRandomName();
-		String lastName = RandomUtilities.getRandomName();
-		String companyName = RandomUtilities.getRandomName();
 		String email = RandomUtilities.getRandomEmail();
 
 		try {
 			// Positive registration case
 			if (proprties.contains(freshUser)) {
-				// register new user and validate the results
-
-				setUserRegistrationInfo(email, password, firstName, lastName, companyName, addressDetails);
-
-				Registration.fillRegistrationFirstStep(email, email, password, password);
-				Thread.sleep(1500);
-				Registration.fillRegistrationSecondStep(firstName, lastName, companyName, addressDetails);
-
-				// Success message needs to be updated on excel to (Welcome to your account at )
-				String registrationSuccessMsg = Registration.getRegistrationSuccessMessage();
-				sassert().assertTrue(registrationSuccessMsg.toLowerCase().contains(thankUMsg),
-						"Regestration Success, validation failed Expected to have in message: " + thankUMsg
-								+ " but Actual message is: " + registrationSuccessMsg);
+				String registrationSuccessMsg = Registration.freshUserValidate(email, password);
+				sassert().assertTrue(registrationSuccessMsg.toLowerCase().contains(thankUMsg), "Regestration Success, validation failed Expected to have in message: " + thankUMsg +" but Actual message is: " + registrationSuccessMsg);
 			}
+
+			//click on register new user button
+			Registration.goToRegistrationForm();
 
 			// Negative registration case
 			if (proprties.contains(emptyData)) {

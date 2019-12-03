@@ -39,6 +39,7 @@ import ru.yandex.qatools.ashot.Screenshot;
 import ru.yandex.qatools.ashot.shooting.ShootingStrategies;
 
 import com.beust.jcommander.internal.Lists;
+import com.generic.selector.SignInSelectors;
 import com.generic.setup.ExceptionMsg;
 import com.generic.setup.GlobalVariables;
 import com.generic.setup.LoggingMsg;
@@ -1037,48 +1038,54 @@ public class SelectorUtil extends SelTestCase {
 		}
 		getCurrentFunctionName(false);
 	}
-
+	
 	/**
-	* Run XML test file.
+	* Open my account menu for mobile if it was not opened
 	*
-	* @param String testFilePath
-	* @param String testName
-	* @param String suiteName
-	* @param String Env
-	* @param String Brand
-	* @return void
 	* @throws Exception
 	*/
-	public static void runTest(String className, String testName, String suiteName, String browserName, String Env, String Brand) {
+	public static void openMobileAccountMenu() throws Exception {
+		getCurrentFunctionName(true);
+		boolean isPWAMobile = getBrowserName().contains(GlobalVariables.browsers.iPhone);
+		if (isPWAMobile) {
+			boolean isAccountMobileOpened = SelectorUtil.isElementExist(By.cssSelector(SignInSelectors.myAccountModal));
+			if (!isAccountMobileOpened) {
+				SelectorUtil.initializeSelectorsAndDoActions(SignInSelectors.accountMenuIcon.get());
+			}
+		}
+		getCurrentFunctionName(false);
+	}
 
-		// Create TestNG object.
-		TestNG testng = new TestNG();
+	/**
+	* Get the account item (Sign in/create account page or welcome message).
+	*
+	* @param WebElement
+	* @throws Exception
+	*/
+	public static WebElement getMenuLinkMobilePWA(String linkUrl) throws Exception {
+		getCurrentFunctionName(true);
 
-		// Create te list of parameters.
-        Map<String, String> testClassParameters = new HashMap<>();
-        testClassParameters.put("browserName", browserName);
-        testClassParameters.put("Env", Env);
-        testClassParameters.put("Brand", Brand);
+		logs.debug("Open account menu for PWA mobile");
 
-        XmlSuite suite = new XmlSuite();
-        suite.setName(suiteName);
+		// Open the account menu.
+		openMobileAccountMenu();
 
-		// Create the test.
-        XmlTest test = new XmlTest(suite);
-        test.setName(testName);
-        test.setParameters(testClassParameters);
-
-		// Create the classes.
-        List<XmlClass> classes = new ArrayList<XmlClass>();
-        XmlClass clss1 = new XmlClass(className);
-        classes.add(clss1);
-        test.setXmlClasses(classes);
-
-		// Create the suites.
-        List <XmlSuite> suites = new ArrayList<XmlSuite>();
-        suites.add(suite);
-        testng.setXmlSuites(suites);
-        // Run the test files.
-        testng.run();
+		// Get an account items list.
+		List <WebElement> menuItems = SelectorUtil.getElementsList(SignInSelectors.accountMenuList);
+		WebElement linkElement = menuItems.get(0);
+		int index = 0;
+		// Get the Sign in/create account page or welcome message item.
+		for (index=0; index < menuItems.size(); index++) {
+			WebElement item = menuItems.get(index);
+			String itemHref = item.getAttribute("href");
+			// Check if the item is sign in/create account (By check create account page link) or welcome message.
+			if (itemHref.contains(linkUrl)) {
+				linkElement = item;
+				break;
+			}
+		}
+		logs.debug("The account item (Sign in/create account page or welcome message): " + linkElement);
+		getCurrentFunctionName(false);
+		return linkElement;
 	}
 }
