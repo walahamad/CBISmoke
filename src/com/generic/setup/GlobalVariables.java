@@ -21,6 +21,8 @@ public class GlobalVariables extends SelTestCase {
 		public static final String iOS = "IOS_grid";
 	}
 	
+	//Iframe ID for CVV Filed in chekout
+	public static final String CVV_Iframe_ID ="cvv_Tokenizer";
 	
 	/*public String firstName;
     public String lastName;

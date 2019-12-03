@@ -205,9 +205,23 @@ public class PDP extends SelTestCase {
 		getCurrentFunctionName(true);
 		selectSwatches();
 		clickAddToCartButton();
+		
+		if (PDP.bundleProduct() &&  getBrowserName().contains(GlobalVariables.browsers.iPhone)) {
+			closeModalforBundleItem(PDPSelectors.closeBundleProductModal.get());
+		}
+
 		Thread.sleep(1000);
 		getCurrentFunctionName(false);
 
+	}
+	
+	
+	// Done CBI
+	public static void closeModalforBundleItem(String selector) throws Exception {
+		getCurrentFunctionName(true);	
+		SelectorUtil.initializeSelectorsAndDoActions(selector);	
+		getCurrentFunctionName(false);
+		
 	}
 
 	// done - SMK
