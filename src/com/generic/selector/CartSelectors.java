@@ -1,9 +1,40 @@
 package com.generic.selector;
 
+import com.generic.setup.cselector;
 
 public class CartSelectors
 {
-	//done
+	public static final cselector paypalCheckoutBtn=new cselector("css,#checkout-with-paypal-button","css,button > div > div > img");
+	public static final cselector shipping = new cselector("css,div:nth-child(4) > div:nth-child(1) > div:nth-child(2) > span");
+	public static final cselector tax = new cselector("css,div:nth-child(5) > div:nth-child(1) > div:nth-child(2) > span");
+
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	public static final cselector addToCartBtn=new cselector("css,#gwt-add-to-cart-btn","css,#gwt-add-to-cart-btn");
+	public static final cselector addedItemsInCart=new cselector("css,.order-item-display-wrapper","css, div> div > div > div.pw-list.items-container.u-bg-color-neutral-00.u-border-light-bottom > div > div.c-cart-product-item.u-flexbox.u-padding-md"); 
+	public static final cselector addedItemsImage=new cselector("css,div.order-item-image-holder > img","css, div > div > div > div > div > div > div > div.c-cart-product-item.u-flexbox.u-padding-md > a > div > img"); 
+	public static final cselector addedItemsPrice=new cselector("css, div.left-main-panel > div.items-container > div > div > div.order-item-total-price-panel > div > div","css,#app-main > div.t-cart.t--loaded > div > div:nth-child(1) > div > div > div.pw-list.items-container.u-bg-color-neutral-00.u-border-light-bottom > div:nth-child(1) > div.c-cart-product-item.u-flexbox.u-padding-md > div > div.c-cart-product__quantity-and-price.order-item-quantity-panel > div.order-item-price-panel > div > div > div > span:nth-child(1)");
+	public static final cselector addedItemsTotalPrice=new cselector("css,h4.subtotal-value.right","css,#app-footer > footer > div > div > div > div > div > div > table > tbody > tr > td.pw-ledger__value");
+	public static final cselector firstAddedItemsOption=new cselector("css, div.left-main-panel > div> div:nth-child(1) > div> div > div > div > div> div > div>div","css,div:nth-child(1) > div > div > div.pw-list.items-container.u-bg-color-neutral-00.u-border-light-bottom > div:nth-child(1) > div.c-cart-product-item.u-flexbox.u-padding-md > div > div.c-cart-product-item__product-attributes.u-margin-bottom-sm.u-position-relative > div > div");
+	public static final cselector lastAddedItemsOption=new cselector("div.order-item-info-panel > div.order-item-details-panel > div.attribute-panel > div.oios > div > div> div","div > div.c-cart-product-item__product-attributes > div > div");
+
+	public static final cselector firstAddedItemsEdit=new cselector("css,#shopping-cart-v2-root > div > div > div > div > div:nth-child(1) > div > div> div > div > a.edit-link","css,#app-main > div > div > div:nth-child(1) > div > div > div> div:nth-child(1) > div > button.c-cart-product__actions-edit.qa-cart__remove-item");
+	public static final cselector firstAddedItemsRemove=new cselector("css,#shopping-cart-v2-root > div > div > div > div > div:nth-child(1) > div > div> div > div > a.remove-link","css,#app-main > div > div > div:nth-child(1) > div > div > div> div:nth-child(1) > div > button.pw-button.c-cart-product__actions-remove");
+	public static final cselector firstAddedItemsMoveToLater=new cselector("css,#shopping-cart-v2-root > div > div > div > div > div:nth-child(1) > div > div> div > div > a.move-to-wishlist-link","css,#app-main > div > div > div:nth-child(1) > div > div > div > div:nth-child(1) > div > button.u-padding-end-0");
+	public static final cselector editItemSavedAndCloseBtn=new cselector("css,td > div > div > div > button.button.primary","css,div.c-personalization-accordion__preview-save>div > div > div > div > button.pw--primary");
+	public static final cselector editItemOpions=new cselector("css,#personalization-modal-options-scroll>div","css, .pw-sheet>div>div>div>div>div>div>div>div");
+	public static final cselector editItemColorOptions=new cselector("css,div.gwt-accordion-tab.first > div.gwt-accordion-tab-content.tabopen > div > div > div > div> div > div> div","css,.m-product-options-no-padding>div>div>div>button");
+	public static final cselector editItemSizeSelect=new cselector("css, div> div.gwt-accordion-tab-content.tabopen > div > div > div.gwt-personalization-modal-accordions-content-option > div.gwt-product-option-panel-listbox-container > div > select","css, div.u-margin-top.m-product-options-no-padding > div > div > select");
+	public static final cselector editItemColorOpen=new cselector("div > button.gwt-tab-header-edit-button.third","div>button:nth-child(1)","");
+	public static final String editItemSizeOptions="css,div.gwt-personalization-modal-accordions-content-option > div> div > select>option";
+//	public static final String editElementBtn="css,#personalization-modal-options-scroll>div>div > button.gwt-tab-header-edit-button.third";
+	public static final cselector savedListFirstItem=new cselector("css,#saveForLater > tbody > tr:nth-child(2) > td > div > div > div:nth-child(1)","css,.pw-accordion--is-open>div > div > div > div:nth-child(1)");
+	public static final cselector editItemOptionsText=new cselector("div > div.gwt-tab-header-title","button>div>div>div>div>div:nth-child(1)");
+	public static final cselector returnFromWishListBtn=new cselector("> div > div> div.order-item-bottom-links-panel > a.move-to-wishlist-link",">div > button.c-cart-product__actions-move-to-wishlist");
+	
+	public static final cselector editSwatchOptions=new cselector("css,#personalization-modal-options-scroll > div > div> div > div > div > div > div > div > div:nth-child({0})","css,div:nth-child(1)  > div > div > div > div > div > div > div > div > div.m-product-options-no-padding > div > div:nth-child({0}) > div > button > div > div > div > div > div");
+	public static final cselector editSwatchOptionsNumber=new cselector("css,#personalization-modal-options-scroll > div:nth-child(1) > div> div > div > div > div > div > div > div","css, div:nth-child(1)  > div > div > div > div > div > div > div > div > div.m-product-options-no-padding > div > div > div > button > div > div > div > div > div");
+	//////////////////////////////////////////////////////////////////////////////
+	//don
 	public static final String numberOfProducts = "css,div.cart-heading>h2";
 	public static final String unitPrice = "price-value";
 	public static final String productSubtotal = "css,div.total-section.each-item-section>span.js-item-total";
