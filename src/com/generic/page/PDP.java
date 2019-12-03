@@ -49,7 +49,7 @@ public class PDP extends SelTestCase {
 		getCurrentFunctionName(true);
 		//This is to handle production Monetate issue on iPad for search field.
 		if (SelTestCase.getBrowserName().contains(GlobalVariables.browsers.iPad))
-			HomePage.disableMonetate();
+			HomePage.updateMmonetate();
 		PLP.clickSearchicon();
 		PLP.typeSearch(SearchTerm);
 		PLP.pickRecommendedOption();
@@ -61,7 +61,7 @@ public class PDP extends SelTestCase {
 		String SearchTerm = "Rugs";
 		//This is to handle production Monetate issue on iPad for search field.
 		if (SelTestCase.getBrowserName().contains(GlobalVariables.browsers.iPad))
-			HomePage.disableMonetate();
+			HomePage.updateMmonetate();
 		PLP.clickSearchicon();
 		PLP.typeSearch(SearchTerm);
 		PLP.pickRecommendedOption();
@@ -227,16 +227,24 @@ public class PDP extends SelTestCase {
 	// done - SMK
 	public static boolean validatePriceIsDisplayed() throws Exception {
 		getCurrentFunctionName(true);
-		boolean isDisplayed;
-		logs.debug("Validate if top price exist");
-		String selector = PDPSelectors.topPriceSingle.get();
-		if (getNumberOfItems() > 1 && !SelTestCase.getBrowserName().contains(GlobalVariables.browsers.iPhone)) {
-			String ProductID = getProductID(0);
-			selector = "css,#" + ProductID + ">" + PDPSelectors.topPriceSingle.get().replace("css,", "");
+		try {
+			boolean isDisplayed;
+			logs.debug("Validate if top price exist");
+			String selector = PDPSelectors.topPriceSingle.get();
+			if (getNumberOfItems() > 1 && !SelTestCase.getBrowserName().contains(GlobalVariables.browsers.iPhone)) {
+				String ProductID = getProductID(0);
+				logs.debug(PDPSelectors.topPriceBundle);
+				selector = MessageFormat.format(PDPSelectors.topPriceBundle, ProductID);
+
+			}
+			isDisplayed = SelectorUtil.isDisplayed(selector);
+			getCurrentFunctionName(false);
+			return isDisplayed;
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+			}.getClass().getEnclosingMethod().getName()));
+			throw e;
 		}
-		isDisplayed = SelectorUtil.isDisplayed(selector);
-		getCurrentFunctionName(false);
-		return isDisplayed;
 	}
 
 	// done - SMK
@@ -244,7 +252,7 @@ public class PDP extends SelTestCase {
 		getCurrentFunctionName(true);
 		boolean isDisplayed;
 		logs.debug("Validate if top price exist for Bundle PDP");
-		isDisplayed = SelectorUtil.isDisplayed(PDPSelectors.topPriceBundle.get());
+		isDisplayed = SelectorUtil.isDisplayed(PDPSelectors.topPriceBundleDesktop.get());
 
 		getCurrentFunctionName(false);
 		return isDisplayed;
@@ -262,10 +270,10 @@ public class PDP extends SelTestCase {
 		String selectorDisabled = PDPSelectors.addToCartBtnDisabledSingle.get();
 		if (getNumberOfItems() > 1 && !SelTestCase.getBrowserName().contains(GlobalVariables.browsers.iPhone)) {
 			String ProductID = getProductID(0);
-			selectorEnabled = "css,#" + ProductID + ">"
-					+ PDPSelectors.addToWLGRBtnEnabledSingle.get().replace("css,", "");
-			selectorDisabled = "css,#" + ProductID + ">"
-					+ PDPSelectors.addToCartBtnDisabledSingle.get().replace("css,", "");
+			logs.debug(PDPSelectors.addToWLGRBtnEnabledBundle);
+			selectorEnabled= MessageFormat.format(PDPSelectors.addToWLGRBtnEnabledBundle, ProductID);
+			logs.debug(PDPSelectors.addToCartBtnDisabledBundle);
+			selectorDisabled= MessageFormat.format(PDPSelectors.addToCartBtnDisabledBundle, ProductID);
 		}
 		SelectorUtil.isDisplayed(selectorEnabled);
 		logs.debug("Validate if Add To WL/GR Is not disabled");
@@ -286,10 +294,10 @@ public class PDP extends SelTestCase {
 		String selectorDisabled = PDPSelectors.addToCartBtnDisabledSingle.get();
 		if (getNumberOfItems() > 1 && !SelTestCase.getBrowserName().contains(GlobalVariables.browsers.iPhone)) {
 			String ProductID = getProductID(0);
-			selectorEnabled = "css,#" + ProductID + ">"
-					+ PDPSelectors.addToCartBtnEnabledSingle.get().replace("css,", "");
-			selectorDisabled = "css,#" + ProductID + ">"
-					+ PDPSelectors.addToCartBtnDisabledSingle.get().replace("css,", "");
+			logs.debug(PDPSelectors.addToCartBtnEnabledBundle);
+			selectorEnabled= MessageFormat.format(PDPSelectors.addToCartBtnEnabledBundle, ProductID);	
+			logs.debug(PDPSelectors.addToCartBtnDisabledBundle);
+			selectorDisabled= MessageFormat.format(PDPSelectors.addToCartBtnDisabledBundle, ProductID);
 		}
 		SelectorUtil.isDisplayed(selectorEnabled);
 		logs.debug("Validate if Add To Cart Is not disabled");
@@ -305,7 +313,7 @@ public class PDP extends SelTestCase {
 		String selector = PDPSelectors.bottomPriceSingle.get();
 		if (getNumberOfItems() > 1 && !SelTestCase.getBrowserName().contains(GlobalVariables.browsers.iPhone)) {
 			String ProductID = getProductID(0);
-			selector = "css,#" + ProductID + ">" + PDPSelectors.bottomPriceSingle.get().replace("css,", "");
+			selector= MessageFormat.format(PDPSelectors.bottomPriceBundle, ProductID);
 		}
 		SelectorUtil.initializeSelectorsAndDoActions(selector);
 		String price = SelectorUtil.textValue.get();
@@ -492,10 +500,10 @@ public class PDP extends SelTestCase {
 			getCurrentFunctionName(true);
 			if (getNumberOfItems() > 1 && !SelTestCase.getBrowserName().contains(GlobalVariables.browsers.iPhone)) {
 				String ProductID = getProductID(0);
-				String ListSelector = "css,#" + ProductID + ">" + PDPSelectors.ListBox.get().replace("css,", "");
-				String activeLists = "css,#" + ProductID + ">" + PDPSelectors.activeListBox.get().replace("css,", "");
-				String swatchContainerSelector = "css,#" + ProductID + ">" + PDPSelectors.swatchContainer.get().replace("css,", "");
-				String imageOptionSelector = "css,#" + ProductID + ">" + PDPSelectors.imageOption.get().replace("css,", "");
+				String ListSelector = MessageFormat.format(PDPSelectors.ListBoxBundle, ProductID);
+				String activeLists = MessageFormat.format(PDPSelectors.activeListBoxBundle, ProductID);
+				String swatchContainerSelector = MessageFormat.format(PDPSelectors.swatchContainerBundle, ProductID);
+				String imageOptionSelector = MessageFormat.format(PDPSelectors.imageOptionBundle, ProductID);
 				int numberOfActiveListBoxes = 0;
 				int i = 0;
 				int listIndex = 0;
