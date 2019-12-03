@@ -43,6 +43,47 @@ public class PDP extends SelTestCase {
 		public static final String price = "price";
 
 	}
+	
+	public static boolean verifyAddToCartConfirmationDisplayed() throws Exception
+	{
+		getCurrentFunctionName(true);
+		boolean isConfirmationDisplayed=SelectorUtil.isDisplayed(PDPSelectors.continueShowppingBtn.get());
+		getCurrentFunctionName(false);
+		return isConfirmationDisplayed;
+	}
+	
+	public static void clickCheckOutBtn() throws Exception {
+			try {
+				getCurrentFunctionName(true);
+				String subStrArr = PDPSelectors.checkOutBtn.get();
+				SelectorUtil.initializeSelectorsAndDoActions(subStrArr);
+				getCurrentFunctionName(false);
+			} catch (NoSuchElementException e) {
+				logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+				}.getClass().getEnclosingMethod().getName()));
+				throw e;
+			}
+		}
+	
+	public static void clickContinueBtn() throws Exception {
+		try {
+			getCurrentFunctionName(true);
+			String subStrArr = PDPSelectors.continueShowppingBtn.get();
+			SelectorUtil.initializeSelectorsAndDoActions(subStrArr);
+			getCurrentFunctionName(false);
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+			}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
+	}
+	
+	public static boolean isDisplayedAddToCardBtn() throws Exception {
+		getCurrentFunctionName(true);
+		boolean isDiplayedBtn=SelectorUtil.isDisplayed(PDPSelectors.addToCartBtn.get());
+		getCurrentFunctionName(false);
+		return isDiplayedBtn;
+	}
 
 	// done - SMK
 	public static void NavigateToPDP(String SearchTerm) throws Exception {
@@ -212,7 +253,6 @@ public class PDP extends SelTestCase {
 
 		Thread.sleep(1000);
 		getCurrentFunctionName(false);
-
 	}
 	
 	
