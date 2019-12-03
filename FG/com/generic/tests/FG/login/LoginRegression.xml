@@ -1,7 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="Login Regression" parallel="tests" thread-count="1" data-provider-thread-count="3">
-
+	<test name="Login Regression Chrome">
+		<parameter name="browserName" value="Chrome"></parameter>
+		<parameter name="Env" value="stagewcs"></parameter>
+		<parameter name="Brand" value="FG"></parameter>
+		<classes>
+			<class name="com.generic.tests.FG.login.LoginBase" />
+		</classes>
+	</test><!-- Test -->
 	<test name="Login Regression iPad">
 		<parameter name="browserName" value="mobile_iPad"></parameter>
 		<parameter name="Env" value="stagewcs"></parameter>
@@ -18,13 +25,4 @@
 			<class name="com.generic.tests.FG.login.LoginBase" />
 		</classes>
 	</test><!-- Test -->
-	<test name="Login Regression Chrome">
-		<parameter name="browserName" value="Chrome"></parameter>
-		<parameter name="Env" value="stagewcs"></parameter>
-		<parameter name="Brand" value="FG"></parameter>
-		<classes>
-			<class name="com.generic.tests.FG.login.LoginBase" />
-		</classes>
-	</test><!-- Test -->
-
 </suite> <!-- Suite -->
