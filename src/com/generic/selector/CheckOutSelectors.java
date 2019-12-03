@@ -1,8 +1,52 @@
 package com.generic.selector;
 
+import com.generic.setup.cselector;
 
 public class CheckOutSelectors
 {
+	//Done CBI
+	//Navigation
+	public static final cselector beginSecureCheckoutButton = new cselector("css,.secure-checkout-button","css,.c-checkout-buttons__checkout .pw--primary");
+	public static final cselector guestCheckoutButton = new cselector("css,.guest-checkout-button-panel > button:nth-child(1)","css,#single-page-checkout-container > div > div.t-checkout-step0.customer-information-panel > div.guest-checkout-form > button");
+	
+	//Step 1
+	public static final cselector multipleAddressesTab = new cselector( "css,.shipping-address .gwt-TabBarItem .gwt-HTML","css,.t-checkout-step1__tabs .pw-tabs__tab a");
+	public static final cselector addAddressButton = new cselector( "css,.order-item-shipping-panel .button","css,.t-cart__product-list .add-address-button:nth-child(odd)");
+	public static final cselector saveAddressButton = new cselector("css,.okCancelPanel .button.primary","css,.m-address_widget_modal button.pw--primary");
+	public static final cselector firstStepNextButton = new cselector( "css,.next-botton-panel .primary-button","css,.c-checkout-accordion__next-cancel-panel .pw--primary");
+	public static final cselector firstName =new cselector( "css,.add-address-dialog .AddrFNameSpot input","css,.m-address_widget_modal .c-custom-input-fname input");
+	public static final cselector lastName= new cselector("css,.add-address-dialog .AddrLNameSpot input","css,.m-address_widget_modal .c-custom-input-lname input"); 
+	public static final cselector streetAddress =new cselector( "css,.add-address-dialog .addrStreet1Spot input","css,.m-address_widget_modal .c-custom-input-street1 input");
+	public static final cselector city =new cselector( "css,.add-address-dialog .addrCitySpot input"); 
+	public static final cselector state= new cselector("css,.add-address-dialog .addrStateSpot input");
+	public static final cselector zipCode = new cselector( "css,.add-address-dialog .addrZipSpot input","css,.m-address_widget_modal .c-custom-input-addrzip input"); 
+	public static final cselector phone =new cselector("css,.add-address-dialog .addrPhone1Spot input","css,.m-address_widget_modal .c-custom-input-addphone1 input");
+	
+	//Step 2
+	public static final cselector secondStepNextButton = new cselector("css,.next-botton-panel .ship-method-and-gift-next-button","css,.c-checkout-accordion__next-cancel-panel .pw--primary");
+	public static final cselector productContainerInStepTwo =new cselector("css,.shipping-method-and-gift-main-container .address-related-items-panel","css,.c-cart-product__link");
+
+	//Step 3
+	public static final cselector thirdStepNextButton = new cselector("css,.billing-address .next-botton-panel .primary-button","css,.c-checkout-accordion__next-cancel-panel .pw--primary");
+	public static final cselector emailBillingAddress =new cselector("css,#guest_email_field","css,#guest_email_field");
+	
+	//Step 4
+	public static final cselector shippingAndTaxCost = new cselector("css,.costs-holder .gwt-InlineLabel", "css,.pw-ledger__value");
+	public static final cselector subTotalValue = new cselector("css,.costs-holder .subtotal-value"); 
+	public static final cselector creditCardField = new cselector("css,#accountcc", "css,#accountcc"); 
+	public static final cselector monthField = new cselector("css,#exp-month", "css,.c-custom-select");  
+	public static final cselector yearField = new cselector("css,#exp-year", "css,.t-checkout-payment__card-year .c-custom-select"); 
+	public static final cselector cvv = new cselector("css,#cvv", "css,#cvv","css,html body.cvv-provider-body div.animated-label-textbox-panel input#cvv"); 
+	public static final cselector placeSecureOrderButton = new cselector("css,.place-order-panel .primary-button","css,.t-checkout-footer .pw--primary");
+	
+	//Confirmation Page
+	public static final cselector closeRegisterButton = new cselector("css,.okCancelPanel .button.secondary");
+	public static final cselector itemID= new cselector("css,.gwt-oid-number", "css,.order-item-part-number");
+	public static final cselector closePoromotionalModal= new cselector("css,.extole-js-widget-wrapper.extole-widget-wrapper > a","css,.extole-js-widget-wrapper.extole-widget-wrapper > a");
+	
+	////////End of CBI Cjeckout Selectors
+	
+	
 	
 	// Payment Type
 	public static final String PaymentTypeSelection_CARD = "PaymentTypeSelection_CARD";
@@ -14,17 +58,12 @@ public class CheckOutSelectors
 	
 	//Shipping Address
 	//done
-	public static final String firstName = "contactfirstName";
-	public static final String lastName = "contactlstName";
-	public static final String phone = "contactPhoneNumber";
+	
+
 	public static final String emailAddress = "contactEmailId";
 	public static final String  address= "shipLine1";
-	public static final String city = "shipCity";
-	public static final String state = "shipState";
-	public static final String zipcode = "shipZipcode";
 	public static final String submitShippingAddressBtn = "addressSubmit";
 	public static final String pickSuggestedAddrress = "use_suggested_address_button";
-
 	public static final String addresses = "dwfrm_singleshipping_addressList";
 	public static final String addAddressChekbx = "Add New Address";
 	public static final String addressBookBtn = "css,section>div>div>div>div>div>div>button";
@@ -96,7 +135,6 @@ public class CheckOutSelectors
 
 	public static final String summaryTotal = "order-subtotal";
 	public static final String placeOrderBtn = "submit";
-	public static final String shippingCost = "test_Order_Totals_Delivery_$";
 	public static final String acceptTerm = "Terms1";
 	public static final String orderTotalOrderSumary = "test_cart_totalPrice_label_$";
 	
@@ -124,7 +162,6 @@ public class CheckOutSelectors
 	public static final String returningcustomerloginBtn = "css,#loginForm button";
 	
 	public static final String ShippingMethodType = "is-test";
-	public static final String guestCheckoutButton = "dwfrm_login_unregistered";
 	public static final String guestMail = "guest.email";
 	public static final String guestConfirmationMail = "confirmGuestEmail form-control";
 	public static final String guestCreateAccButton = "test_guest_Register_button_$";
