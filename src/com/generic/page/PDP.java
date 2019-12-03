@@ -219,10 +219,9 @@ public class PDP extends SelTestCase {
 			String selector = PDPSelectors.topPriceSingle.get();
 			if (getNumberOfItems() > 1 && !SelTestCase.getBrowserName().contains(GlobalVariables.browsers.iPhone)) {
 				String ProductID = getProductID(0);
-				logs.debug("kkkkkkkkkkkk" + PDPSelectors.topPriceBundle);
-				 selector= MessageFormat.format(PDPSelectors.topPriceBundle, ProductID);
-				logs.debug("selector is " + selector);
-				
+				logs.debug(PDPSelectors.topPriceBundle);
+				selector = MessageFormat.format(PDPSelectors.topPriceBundle, ProductID);
+
 			}
 			isDisplayed = SelectorUtil.isDisplayed(selector);
 			getCurrentFunctionName(false);
