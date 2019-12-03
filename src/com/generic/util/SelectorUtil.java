@@ -774,6 +774,16 @@ public class SelectorUtil extends SelTestCase {
 	}
 
 	@SuppressWarnings("rawtypes")
+	public static WebElement getNthElement(String selector, int index) throws Exception {
+		getCurrentFunctionName(true);
+		List<String> valuesArr = new ArrayList<String>();
+		valuesArr.add(selector);
+		getCurrentFunctionName(false);
+		return SelectorUtil.getNthElement(valuesArr, index);
+		
+	}
+	
+	@SuppressWarnings("rawtypes")
 	public static List<WebElement> getAllElements(String value) throws Exception {
 		getCurrentFunctionName(true);
 		List<String> subStrArr = new ArrayList<String>();
