@@ -132,24 +132,19 @@ public class CLP extends SelTestCase {
 	}
 	public static boolean validatePLP() throws Exception {
 		getCurrentFunctionName(true);
-		boolean isValid = true;
 		List<WebElement> items = new ArrayList<WebElement>();
 		items = getElementsList(CLPSelectors.CLPItems.get());
 		WebElement PLPElement =  SelectorUtil.getRandomWebElement(items);
 		// Get the current page URL.		
 		boolean isValidClickableElement = SelectorUtil.isValidClickableItem(PLPElement);
-		if (isValidClickableElement) { 
-			isValid = true;
-		}else {
-			isValid = false;
-		}
 		getCurrentFunctionName(false);
-		return isValid;
+		return isValidClickableElement;
 	}
 	public static List<WebElement> menueWithoutWhatsNew() throws Exception {
 		List<WebElement> items = new ArrayList<WebElement>();
 		items = getElementsList(HomePageSelectors.menuItems.get());
 		items.remove(0);//remove what's New item : First item
+		items.remove(items.size()-1);
 		return items;
 	}
 	
