@@ -20,8 +20,8 @@ public class Base_checkout extends SelTestCase {
 
 	// user types
 	public static final String guestUser = "guest";
-	public static final String freshUser = "fresh-multiple"; //Needs to be updated in the excel sheet to fresh-multiple-2 where 2 is the number of  products
-	public static final String loggedInUser = "Loggedin";
+	public static final String freshUserMultipleAddresses = "fresh-multiple"; //Needs to be updated in the excel sheet to fresh-multiple-2 where 2 is the number of  products
+	public static final String freshUserSingleAddress = "fresh-single"; 
 	public static final String loggedDuringChcOt = "logging During Checkout";
 	
 	public static boolean external = false; // change this value will pass through logging
@@ -71,12 +71,15 @@ public class Base_checkout extends SelTestCase {
 
 		try {
 
-			if (proprties.contains(freshUser)) {	
-				
-				GuestCheckout.startTest(productsCount,addressDetails,paymentDetails);
-				
+			if (proprties.contains(freshUserMultipleAddresses)) {
+				GuestCheckoutMultipleAddress.startTest(productsCount, addressDetails, paymentDetails);
 			}
 
+			if (proprties.contains(freshUserSingleAddress)) {
+				GuestCheckoutSingleAddress.startTest(productsCount, addressDetails, paymentDetails);
+			}
+
+			
 			sassert().assertAll();
 			Common.testPass();
 			

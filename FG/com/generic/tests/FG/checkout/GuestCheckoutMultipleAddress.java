@@ -1,14 +1,15 @@
-package com.generic.tests.GR.checkout;
+package com.generic.tests.FG.checkout;
 
 import java.text.MessageFormat;
 import java.util.LinkedHashMap;
 import java.util.NoSuchElementException;
+
 import com.generic.page.CheckOut;
 import com.generic.setup.ExceptionMsg;
 import com.generic.setup.LoggingMsg;
 import com.generic.setup.SelTestCase;
 
-public class GuestCheckout extends SelTestCase {
+public class GuestCheckoutMultipleAddress extends SelTestCase {
 
 	public static void startTest(int productsCount, LinkedHashMap<String, String> addressDetails,
 			LinkedHashMap<String, String> paymentDetails) throws Exception {
@@ -58,7 +59,7 @@ public class GuestCheckout extends SelTestCase {
 
 			// Saving tax and shipping costs to compare them in the confirmation page
 			orderShipping = CheckOut.getShippingCosts();
-			orderTax = CheckOut.getTaxCosts(1);
+			orderTax = CheckOut.getTaxCosts(0);
 			orderSubTotal = CheckOut.getSubTotal();
 
 			logs.debug(MessageFormat.format(LoggingMsg.SEL_TEXT, "Shippping cost is: " + orderShipping + " ---- Tax cost is:" + orderTax + " ---- Subtotal is:" + orderSubTotal));
@@ -71,6 +72,10 @@ public class GuestCheckout extends SelTestCase {
 
 			Thread.sleep(2000);
 
+			CheckOut.closePromotionalModal();
+
+			Thread.sleep(2000);
+
 			CheckOut.closeRegisterButton();
 
 			// Check number of products in confirmation page
@@ -80,7 +85,7 @@ public class GuestCheckout extends SelTestCase {
 			sassert().assertTrue(CheckOut.getShippingCosts().equals(orderShipping), "Shipping cost value issue ");
 
 			// Check if tax cost match
-			sassert().assertTrue(CheckOut.getTaxCosts(1).equals(orderTax), "Tax value issue ");
+			sassert().assertTrue(CheckOut.getTaxCosts(0).equals(orderTax), "Tax value issue ");
 
 			// Check if subtotal value match
 			sassert().assertTrue(CheckOut.getSubTotal().equals(orderSubTotal), "Subtotal value issue ");
@@ -95,4 +100,5 @@ public class GuestCheckout extends SelTestCase {
 
 	}
 
+	
 }

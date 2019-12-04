@@ -3,13 +3,13 @@ package com.generic.tests.FG.checkout;
 import java.text.MessageFormat;
 import java.util.LinkedHashMap;
 import java.util.NoSuchElementException;
-
 import com.generic.page.CheckOut;
 import com.generic.setup.ExceptionMsg;
 import com.generic.setup.LoggingMsg;
 import com.generic.setup.SelTestCase;
 
-public class GuestCheckout extends SelTestCase {
+public class GuestCheckoutSingleAddress extends SelTestCase {
+
 
 	public static void startTest(int productsCount, LinkedHashMap<String, String> addressDetails,
 			LinkedHashMap<String, String> paymentDetails) throws Exception {
@@ -32,15 +32,10 @@ public class GuestCheckout extends SelTestCase {
 			// Clicking begin secure checkout
 			CheckOut.clickGuestCheckoutButton();
 
-			Thread.sleep(1500);
-
-			// Clicking multiple addresses tab
-			CheckOut.clickMultipleAddressesTab();
-
 			Thread.sleep(1000);
 
 			// Add addresses for each product and save them
-			CheckOut.fillCheckoutFirstStepAndSave(productsCount, addressDetails);
+			CheckOut.fillCheckoutFirstStepAndSave(addressDetails);
 
 			// Proceed to step 2
 			CheckOut.proceedToStepTwo();
@@ -99,5 +94,5 @@ public class GuestCheckout extends SelTestCase {
 		}
 
 	}
-
+	
 }
