@@ -47,15 +47,16 @@ public class PDP extends SelTestCase {
 	}
 
 	// done - SMK
-	public static void NavigateToPDP(String SearchTerm) throws Exception {
+	public static String NavigateToPDP(String SearchTerm) throws Exception {
 		getCurrentFunctionName(true);
 		//This is to handle production Monetate issue on iPad for search field.
 		if (SelTestCase.getBrowserName().contains(GlobalVariables.browsers.iPad))
 			HomePage.disableMonetate();
 		PLP.clickSearchicon();
 		PLP.typeSearch(SearchTerm);
-		PLP.pickRecommendedOption();
+		String itemName = PLP.pickRecommendedOption();
 		getCurrentFunctionName(false);
+		return itemName;
 	}
 	
 	public static void NavigateToPDP() throws Exception {

@@ -9,11 +9,9 @@ import com.generic.setup.GlobalVariables.browsers;
 public class WistListGuestValidation extends SelTestCase {
 	public static void validate() throws Exception {
 		getCurrentFunctionName(true);
-	
-		HomePage.searchByTerm();
-		String selectedProductName = PLP.selectFirstProduct();
+		String selectedProductName = PDP.NavigateToPDP("mirror");
 		PDP.selectSwatches();
-		PDP.clickAddToWLGR();
+		PDP.clickAddToWLGR();	
 		sassert().assertTrue(PDP.validateSelectRegistryOrWishListModalIsDisplayed(), " Select A Registry Or Wish list modal is not dispayed");
 		PDP.clickOnCreateNewWL();
 		sassert().assertTrue(PDP.validateNameYourNewWLModalIsDisplayed(), "Name your new wish list modal is not dispayed");
@@ -23,7 +21,7 @@ public class WistListGuestValidation extends SelTestCase {
 		sassert().assertTrue(PDP.validateCreatedWLisSelectedByDefault(WLName), "created wish list is not selected by default");
 		PDP.clickOnCreateNewWLConfirmationBtn();
 		sassert().assertTrue(PDP.validateConfirmationModalWithCorrectProductIsDisplayed(selectedProductName), " Confirmation Modal is not dispayed");
-        logs.debug("selectedProductName"+selectedProductName+"sss");
+        logs.debug("selectedProductName"+selectedProductName);
 		//validate if selected product displayed in the WL and click on add to cart button
 		sassert().assertTrue(PDP.addedProductIsDisplayedInTheWL(selectedProductName), "Added product is not displayed in the Wish list");
 		if (!getBrowserName().toLowerCase().equals(browsers.iPhone.toLowerCase())) {
