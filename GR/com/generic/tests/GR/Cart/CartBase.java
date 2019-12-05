@@ -1,48 +1,44 @@
-package com.generic.tests.FG.PDP;
+package com.generic.tests.GR.Cart;
 
 import java.text.MessageFormat;
 import java.util.Arrays;
+import java.util.LinkedHashMap;
+
 import org.testng.Assert;
-import org.testng.annotations.BeforeTest;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.xml.XmlTest;
 
+import com.generic.page.Cart;
 import com.generic.setup.Common;
 import com.generic.setup.LoggingMsg;
 import com.generic.setup.SelTestCase;
 import com.generic.setup.SheetVariables;
+import com.generic.tests.FG.Cart.CartValidation;
 import com.generic.util.ReportUtil;
 import com.generic.util.SASLogger;
 import com.generic.util.dataProviderUtils;
 
-public class PDPBase extends SelTestCase {
+public class CartBase extends SelTestCase {
 
-
-	// possible scenarios
-	public static final String singlePDP = "Validate PDP Single active elements";
-	public static final String bundlePDP = "Validate PDP Bundle active elements";
-	public static final String personalizedPDP = "Validate PDP Personalized active elements";
-	public static final String singlePDPSearchTerm = "Rugs";
-	public static final String BundlePDPSearchTerm = "Collection";
-	public static final String personalizedPDPSearchTerm = "Resort Cotton";
-	
 	// used sheet in test
-	public static final String testDataSheet = SheetVariables.PDPSheet;
+	public static final String testDataSheet = SheetVariables.cartSheet;
 
 	private static XmlTest testObject;
-
 	private static ThreadLocal<SASLogger> Testlogs = new ThreadLocal<SASLogger>();
+	LinkedHashMap<String, String> productDetails;
 
-	@BeforeTest
+	@BeforeClass
 	public static void initialSetUp(XmlTest test) throws Exception {
+		testCaseRepotId = SheetVariables.cartCaseId;
 		Testlogs.set(new SASLogger(test.getName() + test.getIndex()));
 		testObject = test;
 	}
 
-	@DataProvider(name = "PDP_SC", parallel = true)
-	// concurrency maintenance on sheet reading
+	@DataProvider(name = "Carts", parallel = true)
 	public static Object[][] loadTestData() throws Exception {
+		// concurrency maintenance on sheet reading
 		getBrowserWait(testObject.getParameter("browserName"));
 		dataProviderUtils TDP = dataProviderUtils.getInstance();
 		Object[][] data = TDP.getData(testDataSheet);
@@ -50,28 +46,21 @@ public class PDPBase extends SelTestCase {
 		return data;
 	}
 
-	@Test(dataProvider = "PDP_SC")
-	public void PDPTest(String caseId, String runTest, String desc, String proprties)
-			throws Exception {
-		Testlogs.set(new SASLogger("PDP_SC " + getBrowserName()));
+	@SuppressWarnings("unchecked")
+	@Test(dataProvider = "Carts")
+	public void CartBaseTest(String caseId, String runTest, String desc, String proprties, String products,
+			String email, String promotion, String ItemSubtotal, String Discounts, String OrderSubTotal,
+			String ValidationMSG) throws Exception {
+		
+		Testlogs.set(new SASLogger("HP_SC " + getBrowserName()));
 		// Important to add this for logging/reporting
-		setTestCaseReportName(SheetVariables.PDPCaseId);
+		setTestCaseReportName(SheetVariables.cartTestCaseId);
 		Testlogs.get().debug("Case Browser: " + testObject.getParameter("browserName"));
 		logCaseDetailds(MessageFormat.format(LoggingMsg.TEST_CASE_DESC, testDataSheet + "." + caseId,
 				this.getClass().getCanonicalName(), desc));
-
+		
 		try {
-
-			if (proprties.contains(this.singlePDP)) {
-				PDPValidation.validate(singlePDPSearchTerm);
-			}
-			if (proprties.contains(this.bundlePDP)) {
-				PDPValidation.validate(BundlePDPSearchTerm);	
-			}
-			if (proprties.contains(this.personalizedPDP)) {
-				PDPValidation.validate(personalizedPDPSearchTerm);	
-			}
-	
+			CartValidation.cartValidatin();
 			sassert().assertAll();
 			Common.testPass();
 		} catch (Throwable t) {
@@ -83,5 +72,7 @@ public class PDPBase extends SelTestCase {
 			ReportUtil.takeScreenShot(getDriver(), testDataSheet + "_" + caseId);
 			Assert.assertTrue(false, t.getMessage());
 		} // catch
-	}// test
+
+	}
+
 }
