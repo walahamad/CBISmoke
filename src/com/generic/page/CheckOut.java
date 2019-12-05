@@ -1955,11 +1955,8 @@ public class CheckOut extends SelTestCase {
 			Thread.sleep(1000);
 			boolean avillability =SelectorUtil.isDisplayed(CheckOutSelectors.stepTwoIdentifier.get());
 			getCurrentFunctionName(false);
-
-			if (avillability) 
-				return true;
-			else	
-				return false;		
+	
+			return avillability;		
 			
 		} catch (NoSuchElementException e) {
 			try {
