@@ -8,6 +8,7 @@ import com.generic.page.CheckOut;
 import com.generic.page.Registration;
 import com.generic.page.SignIn;
 import com.generic.setup.ExceptionMsg;
+import com.generic.setup.GlobalVariables;
 import com.generic.setup.LoggingMsg;
 import com.generic.setup.SelTestCase;
 
@@ -31,24 +32,24 @@ public class RegisteredCheckoutMultipleAddress extends SelTestCase {
 			SignIn.fillLoginFormAndClickSubmit(userMail, userPassword);		
 
 			// Add products to cart
-			//CheckOut.searchForProductsandAddToCart(productsCount);
-			Thread.sleep(50000);
+			CheckOut.searchForProductsandAddToCart(productsCount);
 
 			// Navigating to Cart by URL
 			CheckOut.navigatetoCart();
 
 			// Clicking begin secure checkout
 			CheckOut.clickBeginSecureCheckoutButton();
-
-			// Clicking multiple addresses tab
-			CheckOut.clickMultipleAddressesTab();
-
-			Thread.sleep(1000);
-
-			// Add addresses for each product and save them
-			CheckOut.fillCheckoutFirstStepAndSave(productsCount, addressDetails);
 		
 			if (!CheckOut.checkIfInStepTwo()) {
+				
+				// Clicking multiple addresses tab
+				CheckOut.clickMultipleAddressesTab();
+
+				Thread.sleep(1000);
+
+				// Add addresses for each product and save them
+				CheckOut.fillCheckoutFirstStepAndSave(productsCount, addressDetails);
+				
 				// Proceed to step 2
 				CheckOut.proceedToStepTwo();
 			}
@@ -65,7 +66,7 @@ public class RegisteredCheckoutMultipleAddress extends SelTestCase {
 
 			// Saving tax and shipping costs to compare them in the confirmation page
 			orderShipping = CheckOut.getShippingCosts();
-			orderTax = CheckOut.getTaxCosts(1);
+			orderTax = CheckOut.getTaxCosts(GlobalVariables.GR_TAX_CART);
 			orderSubTotal = CheckOut.getSubTotal();
 
 			logs.debug(MessageFormat.format(LoggingMsg.SEL_TEXT, "Shippping cost is: " + orderShipping + " ---- Tax cost is:" + orderTax + " ---- Subtotal is:" + orderSubTotal));
@@ -87,7 +88,7 @@ public class RegisteredCheckoutMultipleAddress extends SelTestCase {
 			sassert().assertTrue(CheckOut.getShippingCosts().equals(orderShipping), "Shipping cost value issue " +CheckOut.getShippingCosts()+ "vs" + orderShipping);
 
 			// Check if tax cost match
-			sassert().assertTrue(CheckOut.getTaxCosts(0).equals(orderTax), "Tax value issue "+ CheckOut.getTaxCosts(0)+ "vs" + orderTax);
+			sassert().assertTrue(CheckOut.getTaxCosts(GlobalVariables.GR_TAX_CONFIRMATION).equals(orderTax), "Tax value issue "+ CheckOut.getTaxCosts(0)+ "vs" + orderTax);
 
 			// Check if subtotal value match
 			sassert().assertTrue(CheckOut.getSubTotal().equals(orderSubTotal), "Subtotal value issue " +CheckOut.getSubTotal()+ "vs" + orderSubTotal);

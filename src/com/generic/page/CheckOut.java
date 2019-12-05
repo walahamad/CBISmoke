@@ -1953,22 +1953,21 @@ public class CheckOut extends SelTestCase {
 		try {
 			getCurrentFunctionName(true);
 			Thread.sleep(1000);
+			boolean avillability =SelectorUtil.isDisplayed(CheckOutSelectors.stepTwoIdentifier.get());
+			getCurrentFunctionName(false);
 
-			if (SelectorUtil.isDisplayed(CheckOutSelectors.stepTwoIdentifier.get())) {
-				getCurrentFunctionName(false);
+			if (avillability) 
 				return true;
-			} else {
-				getCurrentFunctionName(false);
-				return false;
-			}
+			else	
+				return false;		
+			
 		} catch (NoSuchElementException e) {
 			try {
 			return SelectorUtil.isDisplayed(CheckOutSelectors.stepTwoIdentifier2.get());
 			}
 			catch (NoSuchElementException e2) {
-				logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
-				}.getClass().getEnclosingMethod().getName()));
-				throw e2;
+				return false;
+
 			}
 
 		}
