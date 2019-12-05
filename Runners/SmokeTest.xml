@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="Smkoe Testing" parallel="tests" thread-count="3" data-provider-thread-count="1">
+<suite name="Smkoe Testing" parallel="tests" thread-count="3" data-provider-thread-count="2">
 	<parameter name="Env" value="prod"></parameter>
 	<parameter name="Brand" value="FG"></parameter>
 
@@ -41,8 +41,6 @@
 	</test><!-- Test -->
 	<test name="HP iPhone FG">
 		<parameter name="browserName" value="mobile_iPhone X"></parameter>
-
-
 		<classes>
 			<class name="com.generic.tests.FG.HomePage.HomePageBase" />
 		</classes>
@@ -99,7 +97,7 @@
 	</test><!-- Test -->
 	
 	
-	<test name="Registration Test_chrome">
+	<test name="Registration Test_chrome FG">
 		<parameter name="browserName" value="chrome"></parameter>
 		
 		<classes>
@@ -107,7 +105,7 @@
 		</classes>
 	</test> 
 		
-	<test name="Registration mobile_iPad">
+	<test name="Registration mobile_iPad  FG">
 		<parameter name="browserName" value="mobile_iPad"></parameter>
 		<classes>
 			<class name="com.generic.tests.FG.Registration.RegistrationBase" />
@@ -115,14 +113,14 @@
 	</test> 
       
 	
-	<test name="Registration iPhone">
+	<test name="Registration iPhone  FG">
 		<parameter name="browserName" value="mobile_iPhone X"></parameter>
 		<classes>
 			<class name="com.generic.tests.FG.Registration.RegistrationBase" />
 		</classes>
 	</test><!-- Test -->
 	
-		<test name="Registration Test_chrome">
+		<test name="Registration Test_chrome  GR">
 		<parameter name="browserName" value="chrome"></parameter>
 		
 		<classes>
@@ -130,7 +128,7 @@
 		</classes>
 	</test> 
 		
-	<test name="Registration Tests_Firefox">
+	<test name="Registration mobile_iPad  GR">
 		<parameter name="browserName" value="mobile_iPad"></parameter>
 		<classes>
 			<class name="com.generic.tests.GR.Registration.RegistrationBase" />
@@ -138,7 +136,7 @@
 	</test> 
       
 	
-	<test name="Registration iPhone">
+	<test name="Registration iPhone  GR">
 		<parameter name="browserName" value="mobile_iPhone X"></parameter>
 		<classes>
 			<class name="com.generic.tests.GR.Registration.RegistrationBase" />
