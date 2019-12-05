@@ -1,24 +1,35 @@
-package com.generic.tests.FG.checkout;
+package com.generic.tests.GR.checkout;
 
 import java.text.MessageFormat;
 import java.util.LinkedHashMap;
 import java.util.NoSuchElementException;
 
 import com.generic.page.CheckOut;
+import com.generic.page.Registration;
+import com.generic.page.SignIn;
 import com.generic.setup.ExceptionMsg;
+import com.generic.setup.GlobalVariables;
 import com.generic.setup.LoggingMsg;
 import com.generic.setup.SelTestCase;
 
-public class GuestCheckout extends SelTestCase {
-
+public class RegisteredCheckoutMultipleAddress extends SelTestCase {
+	
 	public static void startTest(int productsCount, LinkedHashMap<String, String> addressDetails,
-			LinkedHashMap<String, String> paymentDetails) throws Exception {
+			LinkedHashMap<String, String> paymentDetails, LinkedHashMap<String, String> userDetalis) throws Exception {
 		getCurrentFunctionName(true);
 
 		try {
 			String orderSubTotal;
 			String orderTax;
 			String orderShipping;
+			
+			String userMail = getSubMailAccount(userDetalis.get(Registration.keys.email));
+			String userPassword = userDetalis.get(Registration.keys.password);
+			
+			int productsCountStepTWO=0;
+		
+			//Perform login
+			SignIn.fillLoginFormAndClickSubmit(userMail, userPassword);		
 
 			// Add products to cart
 			CheckOut.searchForProductsandAddToCart(productsCount);
@@ -28,67 +39,59 @@ public class GuestCheckout extends SelTestCase {
 
 			// Clicking begin secure checkout
 			CheckOut.clickBeginSecureCheckoutButton();
+		
+			if (!CheckOut.checkIfInStepTwo()) {
+				
+				// Clicking multiple addresses tab
+				CheckOut.clickMultipleAddressesTab();
 
-			// Clicking begin secure checkout
-			CheckOut.clickGuestCheckoutButton();
+				Thread.sleep(1000);
 
-			Thread.sleep(1500);
-
-			// Clicking multiple addresses tab
-			CheckOut.clickMultipleAddressesTab();
-
-			Thread.sleep(1000);
-
-			// Add addresses for each product and save them
-			CheckOut.fillCheckoutFirstStepAndSave(productsCount, addressDetails);
-
-			// Proceed to step 2
-			CheckOut.proceedToStepTwo();
-
+				// Add addresses for each product and save them
+				CheckOut.fillCheckoutFirstStepAndSave(productsCount, addressDetails);
+				
+				// Proceed to step 2
+				CheckOut.proceedToStepTwo();
+			}
+			
 			// Check number of products in step 2
 			sassert().assertTrue(CheckOut.checkProductsinStepTwo() == productsCount, "Some products are missing in step 2 ");
+			productsCountStepTWO =CheckOut.checkProductsinStepTwo();
 
 			// Proceed to step 3
 			CheckOut.proceedToStepThree();
-
-			// Fill email field and proceed to step 4
-			CheckOut.fillEmailBillingAddress();
 
 			// Proceed to step 4
 			CheckOut.proceedToStepFour();
 
 			// Saving tax and shipping costs to compare them in the confirmation page
 			orderShipping = CheckOut.getShippingCosts();
-			orderTax = CheckOut.getTaxCosts(0);
+			orderTax = CheckOut.getTaxCosts(GlobalVariables.GR_TAX_CART);
 			orderSubTotal = CheckOut.getSubTotal();
 
 			logs.debug(MessageFormat.format(LoggingMsg.SEL_TEXT, "Shippping cost is: " + orderShipping + " ---- Tax cost is:" + orderTax + " ---- Subtotal is:" + orderSubTotal));
-
+					
+			Thread.sleep(2000);
+		
 			// Fill payment details in the last step
 			CheckOut.fillPayment(paymentDetails);
 
 			// Click place order button
 			CheckOut.placeOrder();
 
-			Thread.sleep(2000);
-
-			CheckOut.closePromotionalModal();
-
-			Thread.sleep(2000);
-
-			CheckOut.closeRegisterButton();
+			Thread.sleep(1500);
 
 			// Check number of products in confirmation page
-			sassert().assertTrue(CheckOut.checkProductsinConfirmationPage() == productsCount,"Some products are missing in confirmation page ");
+			sassert().assertTrue(CheckOut.checkProductsinConfirmationPage() == productsCountStepTWO,"Some products are missing in confirmation page ");
 
 			// Check if shipping costs match
-			sassert().assertTrue(CheckOut.getShippingCosts().equals(orderShipping), "Shipping cost value issue ");
+			sassert().assertTrue(CheckOut.getShippingCosts().equals(orderShipping), "Shipping cost value issue " +CheckOut.getShippingCosts()+ "vs" + orderShipping);
 
 			// Check if tax cost match
-			sassert().assertTrue(CheckOut.getTaxCosts(0).equals(orderTax), "Tax value issue ");
+			sassert().assertTrue(CheckOut.getTaxCosts(GlobalVariables.GR_TAX_CONFIRMATION).equals(orderTax), "Tax value issue "+ CheckOut.getTaxCosts(0)+ "vs" + orderTax);
 
 			// Check if subtotal value match
-			sassert().assertTrue(CheckOut.getSubTotal().equals(orderSubTotal), "Subtotal value issue ");
+			sassert().assertTrue(CheckOut.getSubTotal().equals(orderSubTotal), "Subtotal value issue " +CheckOut.getSubTotal()+ "vs" + orderSubTotal);
 
 			getCurrentFunctionName(false);
 
@@ -99,5 +102,6 @@ public class GuestCheckout extends SelTestCase {
 		}
 
 	}
+
 
 }
