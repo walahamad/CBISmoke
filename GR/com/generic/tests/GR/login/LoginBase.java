@@ -16,9 +16,11 @@ import com.generic.setup.Common;
 import com.generic.setup.LoggingMsg;
 import com.generic.setup.SelTestCase;
 import com.generic.setup.SheetVariables;
+import com.generic.tests.GR.Registration.RegistrationBase;
+import com.generic.util.RandomUtilities;
 import com.generic.util.ReportUtil;
 import com.generic.util.SASLogger;
-
+import com.generic.util.SelectorUtil;
 import com.generic.util.dataProviderUtils;
 
 public class LoginBase extends SelTestCase {
@@ -69,16 +71,28 @@ public class LoginBase extends SelTestCase {
 			userPassword = userdetails.get(Registration.keys.password);
 		}
 
-		Testlogs.get().debug("Login mail is: " + userMail);
-		Testlogs.get().debug("Login password is: " + userPassword);
-
+		if (!proprties.equals("Success login")) {
+			Testlogs.get().debug("Login mail is: " + userMail);
+			Testlogs.get().debug("Login password is: " + userPassword);
+		}
 		try {
+
+			if ((proprties.equals("Success login") || proprties.equals("myAccountLink")) && email.equals("")) {
+				Testlogs.get().debug("Run the registration test case before sign in.");
+				//Prepare registration data.
+				userMail = RandomUtilities.getRandomEmail();
+				userPassword = "P@ssword11";
+				SignIn.registerNewUser(userMail, userPassword);
+			}
 
 			if (proprties.equals("Success login")) {
 				Testlogs.get().debug("Validate Success login");
+				Testlogs.get().debug("Login mail is: " + userMail);
+				Testlogs.get().debug("Login password is: " + userPassword);
 				SignIn.fillLoginFormAndClickSubmit(userMail, (String) userPassword);
 				sassert().assertTrue(SignIn.checkUserAccount(), LoggingMsg.USER_IS_NOT_LOGGED_IN_SUCCESSFULLY);
 			}
+
 			if (proprties.equals("emptyData")) {
 				SignIn.fillLoginFormAndClickSubmit("", "");
 				String emailMessage = SignIn.getMailErrorMsg();

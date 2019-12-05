@@ -25,5 +25,4 @@
 			<class name="com.generic.tests.FG.login.LoginBase" />
 		</classes>
 	</test><!-- Test -->
-
 </suite> <!-- Suite -->
