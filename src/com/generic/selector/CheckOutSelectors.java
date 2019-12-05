@@ -34,7 +34,11 @@ public class CheckOutSelectors
 	//Step 2
 	public static final cselector secondStepNextButton = new cselector("css,.next-botton-panel .ship-method-and-gift-next-button","css,.c-checkout-accordion__next-cancel-panel .pw--primary");
 	public static final cselector productContainerInStepTwo =new cselector("css,.shipping-method-and-gift-main-container .address-related-items-panel","css,.c-cart-product__link");
+	public static final cselector stepTwoIdentifier =new cselector("css,.csb-panels-list-box","css,.t-checkout-shipping-and-gift__help-btn");
+	public static final cselector stepTwoIdentifier2 =new cselector("css,.csb-panels-list-box","css,.t-checkout-step2__truck-delivery-panel");
 
+
+	
 	//Step 3
 	public static final cselector thirdStepNextButton = new cselector("css,.billing-address .next-botton-panel .primary-button","css,.c-checkout-accordion__next-cancel-panel .pw--primary");
 	public static final cselector emailBillingAddress =new cselector("css,#guest_email_field","css,#guest_email_field");

@@ -1122,8 +1122,8 @@ public class CheckOut extends SelTestCase {
 		private static boolean checkCvvIframe() throws Exception {
 			try {
 				
-				//if (getDriver().findElements(By.id(GlobalVariables.CVV_Iframe_ID)).size() != 0)
-				if ( SelectorUtil.getAllElements((GlobalVariables.CVV_Iframe_ID)).size()!= 0)
+				if (getDriver().findElements(By.id(GlobalVariables.CVV_Iframe_ID)).size() != 0)
+				//if ( SelectorUtil.getAllElements((GlobalVariables.CVV_Iframe_ID)).size()!= 0)
 					return true;
 				else
 					return false;
@@ -1949,6 +1949,33 @@ public class CheckOut extends SelTestCase {
 	}
 	
 	// Done CBI
+	public static boolean checkIfInStepTwo() throws Exception {
+		try {
+			getCurrentFunctionName(true);
+			Thread.sleep(1000);
+
+			if (SelectorUtil.isDisplayed(CheckOutSelectors.stepTwoIdentifier.get())) {
+				getCurrentFunctionName(false);
+				return true;
+			} else {
+				getCurrentFunctionName(false);
+				return false;
+			}
+		} catch (NoSuchElementException e) {
+			try {
+			return SelectorUtil.isDisplayed(CheckOutSelectors.stepTwoIdentifier2.get());
+			}
+			catch (NoSuchElementException e2) {
+				logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+				}.getClass().getEnclosingMethod().getName()));
+				throw e2;
+			}
+
+		}
+	}
+	
+	
+	// Done CBI
 	public static void proceedToStepFour() throws Exception {
 		try {
 			getCurrentFunctionName(true);
@@ -2070,6 +2097,7 @@ public class CheckOut extends SelTestCase {
 			throw e;
 		}
 	}
+	
 	
 	// Done CBI
 	public static void placeOrder() throws Exception {
