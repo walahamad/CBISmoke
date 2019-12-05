@@ -62,7 +62,7 @@ public class RegistrationBase extends SelTestCase {
 		getBrowserWait(testObject.getParameter("browserName"));
 		dataProviderUtils TDP = dataProviderUtils.getInstance();
 		Object[][] data = TDP.getData(testDataSheet);
-		Testlogs.get().debug(Arrays.deepToString(data).replace("\n", "--"));
+		Testlogs.get().debug(Arrays.deepToString(data).replace("\n", "<br>--"));
 		return data;
 	}
 
