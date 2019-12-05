@@ -248,7 +248,7 @@ public class PDP extends SelTestCase {
 		clickAddToCartButton();
 		
 		if (PDP.bundleProduct() &&  getBrowserName().contains(GlobalVariables.browsers.iPhone)) {
-			closeModalforBundleItem(PDPSelectors.closeBundleProductModal.get());
+			closeModalforBundleItem();
 		}
 
 		Thread.sleep(1000);
@@ -257,9 +257,9 @@ public class PDP extends SelTestCase {
 	
 	
 	// Done CBI
-	public static void closeModalforBundleItem(String selector) throws Exception {
+	public static void closeModalforBundleItem() throws Exception {
 		getCurrentFunctionName(true);	
-		SelectorUtil.initializeSelectorsAndDoActions(selector);	
+		SelectorUtil.initializeSelectorsAndDoActions(PDPSelectors.closeBundleProductModal.get());	
 		getCurrentFunctionName(false);
 		
 	}

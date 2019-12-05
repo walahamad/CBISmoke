@@ -8,11 +8,9 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.xml.XmlTest;
 import java.util.LinkedHashMap;
-import com.generic.page.PDP;
+
 import com.generic.page.Registration;
-import com.generic.page.CheckOut;
 import com.generic.setup.Common;
-import com.generic.setup.GlobalVariables;
 import com.generic.setup.LoggingMsg;
 import com.generic.setup.SelTestCase;
 import com.generic.setup.SheetVariables;
@@ -24,8 +22,11 @@ public class Base_checkout extends SelTestCase {
 
 	// user types
 	public static final String guestUser = "guest";
-	public static final String freshUser = "fresh-multiple"; //Needs to be updated in the excel sheet to fresh-multiple-2 where 2 is the number of  products
-	public static final String loggedInUser = "Loggedin";
+	public static final String freshUserMultipleAddresses = "fresh-multiple"; //Needs to be updated in the excel sheet to fresh-multiple-2 where 2 is the number of  products
+	public static final String freshUserSingleAddress = "fresh-single"; 
+	public static final String registeredUserMultipleAddresses = "registered-multiple"; 
+	public static final String registeredUserSingleAddress = "registered-single"; 
+
 	public static final String loggedDuringChcOt = "logging During Checkout";
 	
 	public static boolean external = false; // change this value will pass through logging
@@ -71,19 +72,35 @@ public class Base_checkout extends SelTestCase {
 
 		LinkedHashMap<String, String> addressDetails = (LinkedHashMap<String, String>) addresses.get(shippingAddress);
 		LinkedHashMap<String, String> paymentDetails = (LinkedHashMap<String, String>) paymentCards.get(payment);
+		LinkedHashMap<String, String> userdetails = (LinkedHashMap<String, String>) users.get(email);
+
 		int productsCount =Integer.parseInt(productsNumber);
 
 		try {
 
-			if (proprties.contains(freshUser)) {	
-				
-				GuestCheckout.startTest(productsCount,addressDetails,paymentDetails);
-				
+			//Guest user with multiple addresses
+			if (proprties.contains(freshUserMultipleAddresses)) {
+				GuestCheckoutMultipleAddress.startTest(productsCount, addressDetails, paymentDetails);
 			}
 
+			//Guest user with single address
+			if (proprties.contains(freshUserSingleAddress)) {
+				GuestCheckoutSingleAddress.startTest(productsCount, addressDetails, paymentDetails);
+			}
+
+			//Registered user with multiple addresses
+			if (proprties.contains(registeredUserMultipleAddresses)) {
+				RegisteredCheckoutMultipleAddress.startTest(productsCount, addressDetails, paymentDetails, userdetails);
+			}
+
+			//Guest user with multiple addresses
+			if (proprties.contains(registeredUserSingleAddress)) {
+				RegisteredCheckoutSingleAddress.startTest(productsCount, addressDetails, paymentDetails, userdetails);
+			}
+			
 			sassert().assertAll();
 			Common.testPass();
-			
+
 		} catch (Throwable t) {
 			setTestCaseDescription(getTestCaseDescription());
 			Testlogs.get().debug(MessageFormat.format(LoggingMsg.DEBUGGING_TEXT, t.getMessage()));

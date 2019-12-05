@@ -24,6 +24,16 @@ public class GlobalVariables extends SelTestCase {
 	//Iframe ID for CVV Filed in chekout
 	public static final String CVV_Iframe_ID ="cvv_Tokenizer";
 	
+	//Indexes for tax value
+	public static final int GR_TAX_CART =1;
+	public static final int GR_TAX_CONFIRMATION =0;
+
+	public static final int FG_TAX_CART =0;
+	public static final int FG_TAX_CONFIRMATION =0;
+
+	
+
+	
 	/*public String firstName;
     public String lastName;
     public String emailAddress;
