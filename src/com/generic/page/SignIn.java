@@ -434,19 +434,23 @@ public class SignIn extends SelTestCase {
 
 	}
 
-	public static void registerNewUser(String userMail, String userPassword) throws Exception {
+	public static void registerNewUser(String userMail, String userPassword, boolean logOut) throws Exception {
 		try {
 			getCurrentFunctionName(true);
 			// Run the registration test case before sign in.
 			Registration.freshUserValidate(userMail, userPassword);
-			boolean isPWAMobile = getBrowserName().contains(GlobalVariables.browsers.iPhone);
-			if (isPWAMobile) {
-				WebElement logoffLink = SelectorUtil.getMenuLinkMobilePWA(logoffhref);
-				SelectorUtil.clickOnWebElement(logoffLink);
-				Thread.sleep(1500);
-			} else {
-				SelectorUtil.initializeSelectorsAndDoActions(SignInSelectors.logoffLink);
+
+			if (logOut) {
+				boolean isPWAMobile = getBrowserName().contains(GlobalVariables.browsers.iPhone);
+				if (isPWAMobile) {
+					WebElement logoffLink = SelectorUtil.getMenuLinkMobilePWA(logoffhref);
+					SelectorUtil.clickOnWebElement(logoffLink);
+					Thread.sleep(1500);
+				} else {
+					SelectorUtil.initializeSelectorsAndDoActions(SignInSelectors.logoffLink);
+				}
 			}
+
 			getCurrentFunctionName(false);
 		} catch (NoSuchElementException e) {
 			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {

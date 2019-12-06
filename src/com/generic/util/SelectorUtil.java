@@ -1021,15 +1021,18 @@ public class SelectorUtil extends SelTestCase {
 	*/
 	public static void waitGWTLoadedEventPWA() throws Exception {
 		getCurrentFunctionName(true);
-		boolean gwtLoadedEventPWA = CheckGWTLoadedEventPWA();
-		int tries = 0;
-		while (!gwtLoadedEventPWA) {
-			Thread.sleep(500);
-			gwtLoadedEventPWA = CheckGWTLoadedEventPWA();
-			if(tries == 9) {
-				throw new NoSuchElementException("Error in Loading GWT.");
+		boolean isPWAMobile = getBrowserName().contains(GlobalVariables.browsers.iPhone);
+		if (isPWAMobile) {
+			boolean gwtLoadedEventPWA = CheckGWTLoadedEventPWA();
+			int tries = 0;
+			while (!gwtLoadedEventPWA) {
+				Thread.sleep(500);
+				gwtLoadedEventPWA = CheckGWTLoadedEventPWA();
+				if(tries == 15) {
+					throw new NoSuchElementException("Error in Loading GWT.");
+				}
+				tries ++;
 			}
-			tries ++;
 		}
 		getCurrentFunctionName(false);
 	}
@@ -1099,5 +1102,9 @@ public class SelectorUtil extends SelTestCase {
 		logs.debug("The account item (Sign in/create account page or welcome message): " + linkElement);
 		getCurrentFunctionName(false);
 		return linkElement;
+	}
+	public static void setSelectText(WebElement element, String selectText) throws Exception {
+		Select selectItem = new Select(element);
+		selectItem.selectByVisibleText(selectText);
 	}
 }

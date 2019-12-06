@@ -27,6 +27,13 @@ public class Registration extends SelTestCase {
 
 	}
 
+	public static String userEmail;
+	public static String userPassword;
+	public static LinkedHashMap<String, String> userAddress;
+	public static String userFirstName;
+	public static String userLastName;
+	public static String userCompanyName;
+
 	// Done CBI Smoke
 	public static void typeFirstName(String firstName) throws Exception {
 		try {
@@ -907,6 +914,13 @@ public class Registration extends SelTestCase {
 		String firstName = RandomUtilities.getRandomName();
 		String lastName = RandomUtilities.getRandomName();
 		String companyName = RandomUtilities.getRandomName();
+
+		userEmail = email;
+		userPassword = password;
+		userAddress = addressDetails;
+		userFirstName = firstName;
+		userLastName = lastName;
+		userCompanyName = companyName;
 
 		//register new user and validate the results
 		Registration.fillRegistrationFirstStep(email,email,password,password);
