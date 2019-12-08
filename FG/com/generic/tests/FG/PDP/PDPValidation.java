@@ -36,25 +36,30 @@ public class PDPValidation extends SelTestCase {
 					"Top price for the bundle item (mini PDP) is not dispayed");
 		}
 		PDP.selectSwatches(); 
+	
 		sassert().assertTrue(!PDP.getBottomPrice().equals("$0.00"), "Bottom price is not updated correctly, Current price: " + PDP.getBottomPrice());
-		// click add personalized button  
+		// click add personalized button
+		if (PDP.PersonalizedItem()) {
 			String initialPrice = PDP.getBottomPrice();
 			boolean isFreePersonalization = PDP.isFreePersonalization();
 			PDP.clickAddPersonalizationButton();
-			sassert().assertTrue(PDP.validatePersonalizedModal(),"Personalization Modal is not dispayed");
+			sassert().assertTrue(PDP.validatePersonalizedModal(), "Personalization Modal is not dispayed");
 			if (SelTestCase.getBrowserName().contains(GlobalVariables.browsers.iPhone)) {
 				PDP.selectPersonalizationModalSwatchesForiPhone();
 				PDP.clickPersonalizationSaveAndCloseButtonForiPhone();
-			}else {
+			} else {
 				PDP.selectPersonalizationModalSwatches();
 				PDP.clickPersonalizationSaveAndCloseButton();
 			}
-			sassert().assertTrue(PDP.validateAddedPersonalizedDetails(),"Added personalization details is not dispayed");
+			sassert().assertTrue(PDP.validateAddedPersonalizedDetails(),
+					"Added personalization details is not dispayed");
 			if (!isFreePersonalization) {
-			    String finalPrice = PDP.getBottomPrice(); // take final price after added personalization
-				logs.debug("compare price" + initialPrice + finalPrice); 
-				sassert().assertTrue(PDP.validateTotalPriceAfterAddedPersonalized(initialPrice,finalPrice),"Bottom price is not updated correctly, Current price: " + PDP.getBottomPrice());
-			}	
+				String finalPrice = PDP.getBottomPrice(); // take final price after added personalization
+				logs.debug("compare price" + initialPrice + finalPrice);
+				sassert().assertTrue(PDP.validateTotalPriceAfterAddedPersonalized(initialPrice, finalPrice),
+						"Bottom price is not updated correctly, Current price: " + PDP.getBottomPrice());
+			}
+		}
 		sassert().assertTrue(PDP.validateAddToWLGRIsEnabled(), "Add to WL/GR button is not enabled");
 		sassert().assertTrue(PDP.validateAddToCartIsEnabled(), "Add to Cart button is not enabled");
 		PDP.clickAddToCartButton();

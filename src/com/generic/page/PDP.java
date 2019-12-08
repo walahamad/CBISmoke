@@ -1633,6 +1633,26 @@ public static boolean validateSelectRegistryOrWishListModalIsDisplayed() throws 
 
 	}
 	
+	//Done SMK
+	public static boolean PersonalizedItem() throws Exception {
+		try {
+			getCurrentFunctionName(true);
+			boolean isDisplayed = false;
+			String addPersonalizedButtonSelector = PDPSelectors.addPersonalizedButton.get();
+			if (getNumberOfItems() > 1 && !SelTestCase.getBrowserName().contains(GlobalVariables.browsers.iPhone)) {
+				String ProductID = getProductID(0);
+				addPersonalizedButtonSelector = "css,#" + ProductID + ">"
+						+ PDPSelectors.addPersonalizedButton.get().replace("css,", "");
+				logs.debug("addPersonalizedButtonSelector:  " + addPersonalizedButtonSelector);
+			}
+			SelectorUtil.isDisplayed(addPersonalizedButtonSelector);
+			getCurrentFunctionName(false);
+			return isDisplayed;
+		} catch (NoSuchElementException e) {
+			return false;
+		}
+	}
+	
 	public static void clickAddPersonalizationButton() throws Exception {
 		try {
 			getCurrentFunctionName(true);
@@ -1651,6 +1671,7 @@ public static boolean validateSelectRegistryOrWishListModalIsDisplayed() throws 
 			throw e;
 		}
 	}
+	
 	public static boolean isFreePersonalization() throws Exception {// check if add personalization free or not 
 		getCurrentFunctionName(true);
 		boolean isFree = true;
