@@ -16,6 +16,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.FluentWait;
+import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.Wait;
 
 import com.generic.selector.HomePageSelectors;
@@ -43,6 +44,7 @@ public class PDP extends SelTestCase {
 		public static final String bundleProducts = "bundleProducts";
 		public static final String desc = "desc";
 		public static final String price = "price";
+		public static final String WLRandomName = "Wish list";
 
 	}
 	
@@ -88,15 +90,16 @@ public class PDP extends SelTestCase {
 	}
 
 	// done - SMK
-	public static void NavigateToPDP(String SearchTerm) throws Exception {
+	public static String NavigateToPDP(String SearchTerm) throws Exception {
 		getCurrentFunctionName(true);
 		//This is to handle production Monetate issue on iPad for search field.
 		if (SelTestCase.getBrowserName().contains(GlobalVariables.browsers.iPad))
 			HomePage.updateMmonetate();
 		PLP.clickSearchicon();
 		PLP.typeSearch(SearchTerm);
-		PLP.pickRecommendedOption();
+		String itemName = PLP.pickRecommendedOption();
 		getCurrentFunctionName(false);
+		return itemName;
 	}
 	
 	public static void NavigateToPDP() throws Exception {
@@ -250,7 +253,7 @@ public class PDP extends SelTestCase {
 		clickAddToCartButton();
 		
 		if (PDP.bundleProduct() &&  getBrowserName().contains(GlobalVariables.browsers.iPhone)) {
-			closeModalforBundleItem(PDPSelectors.closeBundleProductModal.get());
+			closeModalforBundleItem();
 		}
 
 		Thread.sleep(1000);
@@ -259,9 +262,9 @@ public class PDP extends SelTestCase {
 	
 	
 	// Done CBI
-	public static void closeModalforBundleItem(String selector) throws Exception {
+	public static void closeModalforBundleItem() throws Exception {
 		getCurrentFunctionName(true);	
-		SelectorUtil.initializeSelectorsAndDoActions(selector);	
+		SelectorUtil.initializeSelectorsAndDoActions(PDPSelectors.closeBundleProductModal.get());	
 		getCurrentFunctionName(false);
 		
 	}
@@ -620,6 +623,139 @@ public class PDP extends SelTestCase {
 		getCurrentFunctionName(false);
 		return isDisplayed;
 	}
+	
+public static boolean validateSelectRegistryOrWishListModalIsDisplayed() throws Exception {
+        getCurrentFunctionName(true);
+        boolean isDisplayed;
+        logs.debug("Validate select a registry or wish list modal exist");
+        isDisplayed = SelectorUtil.isDisplayed(PDPSelectors.SelectRegistryOrWishListModal.get());
+        getCurrentFunctionName(false);
+        return isDisplayed;
+    }
+    
+    public static void clickOnCreateNewWL() throws Exception{
+        getCurrentFunctionName(true);
+        logs.debug("Click on create new wish list");
+        WebElement element = SelectorUtil.getelement(PDPSelectors.giftRegistryListBox.get());
+        WebElement option =  element.findElement(By.cssSelector(PDPSelectors.createNewWL.get()));
+        option.click();
+        clickOnCreateNewWLConfirmationBtn();
+        getCurrentFunctionName(false);
+    }
+    
+    public static boolean validateNameYourNewWLModalIsDisplayed() throws Exception {
+        getCurrentFunctionName(true);
+        boolean isDisplayed = true;
+        logs.debug("Validate Name your new wish list modal exist");
+        isDisplayed = SelectorUtil.isDisplayed(PDPSelectors.nameYourNewWL.get());
+        getCurrentFunctionName(false);
+        return isDisplayed;
+    }
+    
+    public static void createNewWL(String WLName) throws Exception {
+        getCurrentFunctionName(true);       
+            SelectorUtil.initializeSelectorsAndDoActions(PDPSelectors.WLName.get(), WLName);
+            SelectorUtil.initializeSelectorsAndDoActions(PDPSelectors.nameYourNewWLconfirmationBtn.get());
+            getCurrentFunctionName(false);      
+    }
+    
+    public static String getWishListName() {
+            int random = (int )(Math.random() * 1000000 + 1);
+            String WLName = keys.WLRandomName + random;
+            return WLName;
+    }
+   
+    public static boolean validateCreatedWLisSelectedByDefault(String createdWL) throws Exception {
+        getCurrentFunctionName(true);
+        boolean isSelected = true;
+        Select element = new Select(SelectorUtil.getelement(PDPSelectors.giftRegistryListBox.get()));
+        WebElement option = element.getFirstSelectedOption();
+        String defaultWL = option.getText();
+        String selectedWL =  defaultWL;
+        selectedWL = selectedWL.replaceAll("\"", "");
+        if(selectedWL.equals(createdWL)) {
+            isSelected = true;
+        }else {
+            isSelected = false;
+        }
+        getCurrentFunctionName(false);
+        return isSelected;
+    }
+    
+    public static void clickOnCreateNewWLConfirmationBtn() throws Exception{
+        getCurrentFunctionName(true);
+        logs.debug("Click on create new wish list");
+        SelectorUtil.initializeSelectorsAndDoActions(PDPSelectors.createNewWLConfirmationBtn.get());
+        getCurrentFunctionName(false);
+    }
+    
+    public static boolean validateConfirmationModalWithCorrectProductIsDisplayed(String selectedProductName) throws Exception {
+        getCurrentFunctionName(true);
+        boolean isDisplayed;
+        logs.debug("Validate confirmation modal exist");
+        isDisplayed = SelectorUtil.isDisplayed(PDPSelectors.confirmationModal.get());
+        logs.debug("Validate confirmation modal exist menu" +isDisplayed +"   " +selectedProductName);
+
+        WebElement addToCardProductElement = SelectorUtil.getelement(PDPSelectors.addToCardProductName.get());
+        if(addToCardProductElement.getText().equals(selectedProductName) &&
+                SelectorUtil.isDisplayed(PDPSelectors.viewListBtn.get()) 
+                && isDisplayed) {
+        SelectorUtil.initializeSelectorsAndDoActions(PDPSelectors.viewListBtn.get());
+
+        isDisplayed = true;
+        }else {
+            isDisplayed = false;
+        }
+        logs.debug("Validate confirmation modal exist" +isDisplayed );
+        getCurrentFunctionName(false);
+        return isDisplayed;
+    }
+    
+    
+    public static boolean addedProductIsDisplayedInTheWL(String addedProductName) throws Exception {
+        getCurrentFunctionName(true);
+        boolean isDisplayed = true;
+        List<WebElement> products = SelectorUtil.getElementsList(PDPSelectors.addedProductName.get());
+        List<WebElement> addToCartBtns = SelectorUtil.getElementsList(PDPSelectors.myWLAddToCartBtn.get());
+        for(int i = 0;i< products.size() ; i++) {
+            if(products.get(i).getText().contains(addedProductName)) {
+                addToCartBtns.get(i).click();
+                return true;
+            }
+        }
+        getCurrentFunctionName(false);
+        return isDisplayed;
+    }
+    
+	public static void clickOnCheckout() throws Exception {
+		getCurrentFunctionName(true);
+		logs.debug("Clicking on Checkout");
+		SelectorUtil.initializeSelectorsAndDoActions(PDPSelectors.addToCartConfirmationModalCheckoutBtn.get());
+		getCurrentFunctionName(false);
+	}
+	
+	public static boolean validateAddToCartModalIsDisplayed() throws Exception {
+		getCurrentFunctionName(true);
+		boolean isDisplayed;
+		logs.debug("Validate add to cart confirmation modal displayed");
+		isDisplayed = SelectorUtil.isDisplayed(PDPSelectors.addToCartConfirmationModal.get());
+		getCurrentFunctionName(false);
+		return isDisplayed;
+	}
+	
+	public static boolean addedProductIsDisplayedInShoppingCart(String addedProductName) throws Exception {
+		getCurrentFunctionName(true);
+		boolean isDisplayed = true;
+		List<WebElement> products = SelectorUtil.getElementsList(PDPSelectors.shoppingCartProductsName.get());
+
+        for(int i = 0;i< products.size() ; i++) {
+        	if(products.get(i).getText().contains(addedProductName)) {
+        		return true;
+        	}  	
+        }
+		getCurrentFunctionName(false);
+		return isDisplayed;
+	} 
 
 	// done -ocm
 	public static String getPDPUrl(String url) {

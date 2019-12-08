@@ -9,7 +9,7 @@ public class CheckOutSelectors
 	public static final cselector beginSecureCheckoutButton = new cselector("css,.secure-checkout-button","css,.c-checkout-buttons__checkout .pw--primary");
 	public static final cselector guestCheckoutButton = new cselector("css,.guest-checkout-button-panel > button:nth-child(1)","css,#single-page-checkout-container > div > div.t-checkout-step0.customer-information-panel > div.guest-checkout-form > button");
 	
-	//Step 1
+	//Step 1 Multiple Addresses
 	public static final cselector multipleAddressesTab = new cselector( "css,.shipping-address .gwt-TabBarItem .gwt-HTML","css,.t-checkout-step1__tabs .pw-tabs__tab a");
 	public static final cselector addAddressButton = new cselector( "css,.order-item-shipping-panel .button","css,.t-cart__product-list .add-address-button:nth-child(odd)");
 	public static final cselector saveAddressButton = new cselector("css,.okCancelPanel .button.primary","css,.m-address_widget_modal button.pw--primary");
@@ -22,10 +22,23 @@ public class CheckOutSelectors
 	public static final cselector zipCode = new cselector( "css,.add-address-dialog .addrZipSpot input","css,.m-address_widget_modal .c-custom-input-addrzip input"); 
 	public static final cselector phone =new cselector("css,.add-address-dialog .addrPhone1Spot input","css,.m-address_widget_modal .c-custom-input-addphone1 input");
 	
+	//Step 1 Single Addresses
+	public static final cselector firstNameSingle =new cselector( "css,#ship_fnbox","css,#ship_fnbox");
+	public static final cselector lastNameSingle= new cselector("css,#ship_lnbox","css,#ship_lnbox"); 
+	public static final cselector streetAddressSingle =new cselector( "css,#ship_sa1box","css,#ship_sa1box");
+	public static final cselector citySingle =new cselector( "css,#ship_citybox"); 
+	public static final cselector stateSingle= new cselector("css,#ship_region");
+	public static final cselector zipCodeSingle = new cselector( "css,#ship_zipbox","css,#ship_zipbox"); 
+	public static final cselector phoneSingle =new cselector("css,#ship_phone1box","css,#ship_phone1box");
+	
 	//Step 2
 	public static final cselector secondStepNextButton = new cselector("css,.next-botton-panel .ship-method-and-gift-next-button","css,.c-checkout-accordion__next-cancel-panel .pw--primary");
 	public static final cselector productContainerInStepTwo =new cselector("css,.shipping-method-and-gift-main-container .address-related-items-panel","css,.c-cart-product__link");
+	public static final cselector stepTwoIdentifier =new cselector("css,.csb-panels-list-box","css,.t-checkout-shipping-and-gift__help-btn");
+	public static final cselector stepTwoIdentifier2 =new cselector("css,.csb-panels-list-box","css,.t-checkout-step2__truck-delivery-panel");
 
+
+	
 	//Step 3
 	public static final cselector thirdStepNextButton = new cselector("css,.billing-address .next-botton-panel .primary-button","css,.c-checkout-accordion__next-cancel-panel .pw--primary");
 	public static final cselector emailBillingAddress =new cselector("css,#guest_email_field","css,#guest_email_field");

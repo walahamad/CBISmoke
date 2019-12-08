@@ -65,7 +65,7 @@ public class HomePageBase extends SelTestCase {
 		setTestCaseReportName(SheetVariables.HPTestCaseId);
 		Testlogs.get().debug("Case Browser: " + testObject.getParameter("browserName"));
 		logCaseDetailds(MessageFormat.format(LoggingMsg.TEST_CASE_DESC, testDataSheet + "." + caseId,
-				this.getClass().getCanonicalName(), desc.replace("\r", "</br>")));
+				this.getClass().getCanonicalName(), desc.replace("\n", "</br>")));
 
 		try {
 
