@@ -83,10 +83,6 @@ public class PaymentDetails extends SelTestCase {
 				savePaymentMethod(savePayment);
 	
 	
-				//TODO: wrap this 
-				if (!billSameShip && false) {
-					fillBillingAddress(countery, firstName, lastName, address, city, postal, phone);
-				}
 	
 				clickNext();
 				Thread.sleep(1000);
@@ -138,27 +134,6 @@ public class PaymentDetails extends SelTestCase {
 				getCurrentFunctionName(false);
 			}
 	
-			public static void fillBillingAddress(String countery, String firstName, String lastName, String address,
-					String city, String postal, String phone) throws Exception {
-				getCurrentFunctionName(true);
-	
-				if (!"".equals(countery))
-					shippingAddress.selectCountery(countery);
-				if (!"".equals(firstName))
-					shippingAddress.typeFirstName(firstName);
-				if (!"".equals(lastName))
-					shippingAddress.typeLastName(lastName);
-				if (!"".equals(address))
-					shippingAddress.typeAddress(address);
-				if (!"".equals(city))
-					shippingAddress.typeCity(city);
-				if (!"".equals(postal))
-					shippingAddress.typeZipCode(postal);
-				if (!"".equals(phone))
-					shippingAddress.typePhone(phone);
-	
-				getCurrentFunctionName(false);
-			}
 	
 			
 			private static void pickFirstpaymentsaved() throws Exception {

@@ -54,7 +54,7 @@ public class HomePageBase extends SelTestCase {
 		getBrowserWait(testObject.getParameter("browserName"));
 		dataProviderUtils TDP = dataProviderUtils.getInstance();
 		Object[][] data = TDP.getData(testDataSheet);
-		Testlogs.get().debug(Arrays.deepToString(data).replace("\n", "--"));
+		Testlogs.get().debug(Arrays.deepToString(data).replace("\n", "<br>--"));
 		return data;
 	}
 
@@ -65,7 +65,7 @@ public class HomePageBase extends SelTestCase {
 		setTestCaseReportName(SheetVariables.HPTestCaseId);
 		Testlogs.get().debug("Case Browser: " + testObject.getParameter("browserName"));
 		logCaseDetailds(MessageFormat.format(LoggingMsg.TEST_CASE_DESC, testDataSheet + "." + caseId,
-				this.getClass().getCanonicalName(), desc));
+				this.getClass().getCanonicalName(), desc.replace("\n", "<br>")));
 
 		try {
 
