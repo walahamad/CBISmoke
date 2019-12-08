@@ -1,4 +1,4 @@
-package com.generic.tests.FG.PDP;
+package com.generic.tests.GR.PDP;
 
 import java.text.MessageFormat;
 import java.util.Arrays;
@@ -77,7 +77,7 @@ public class GRBase extends SelTestCase {
 				userMail = getSubMailAccount(userdetails.get(Registration.keys.email));
 			}
 
-			GiftRegistry.validate(userMail, GiftRegistrySelectors.createRegistryButtonFG.get());
+			GiftRegistry.validate(userMail, GiftRegistrySelectors.createRegistryButtonGR.get());
 			sassert().assertAll();
 			Common.testPass();
 		} catch (Throwable t) {

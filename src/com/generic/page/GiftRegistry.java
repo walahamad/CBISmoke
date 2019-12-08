@@ -48,13 +48,13 @@ public class GiftRegistry extends SelTestCase {
 		return validateContactInformation;
 	}
 
-	public static void validate(String email) throws Exception {
+	public static void validate(String email, String createRegistryButtonSelector) throws Exception {
 		getCurrentFunctionName(true);
 		logs.debug("Validate gift registry.");
 		navigateToGiftRegistry();
 		Thread.sleep(1500);
 
-		SelectorUtil.initializeSelectorsAndDoActions(GiftRegistrySelectors.createRegistryButton);
+		SelectorUtil.initializeSelectorsAndDoActions(createRegistryButtonSelector);
 		SelectorUtil.waitGWTLoadedEventPWA();
 
 		// Gift registry step one.
