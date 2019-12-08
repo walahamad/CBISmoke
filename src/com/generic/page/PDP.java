@@ -7,6 +7,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Random;
+import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
 import org.openqa.selenium.By;
@@ -24,6 +25,7 @@ import com.generic.setup.ExceptionMsg;
 import com.generic.setup.GlobalVariables;
 import com.generic.setup.LoggingMsg;
 import com.generic.setup.SelTestCase;
+import com.generic.util.RandomUtilities;
 import com.generic.util.SelectorUtil;
 
 public class PDP extends SelTestCase {
@@ -142,7 +144,7 @@ public class PDP extends SelTestCase {
 			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
 			}.getClass().getEnclosingMethod().getName()));
 			throw e;
-		}
+		} 
 	}
 
 	// done - SMK
@@ -291,7 +293,7 @@ public class PDP extends SelTestCase {
 	}
 
 	// done - SMK
-	public static boolean validateBundlePriceIsDisplayed() throws Exception {
+	public static boolean validateBundlePriceIsDisplayed() throws Exception { 
 		getCurrentFunctionName(true);
 		boolean isDisplayed;
 		logs.debug("Validate if top price exist for Bundle PDP");
@@ -549,7 +551,7 @@ public class PDP extends SelTestCase {
 				String imageOptionSelector = MessageFormat.format(PDPSelectors.imageOptionBundle, ProductID);
 				int numberOfActiveListBoxes = 0;
 				int i = 0;
-				int listIndex = 0;
+				int listIndex = 0; 
 				int numberOfListBoxes = 0;
 				int index = 0;
 				if (!activeLists(activeLists)) {
@@ -1506,5 +1508,194 @@ public static boolean validateSelectRegistryOrWishListModalIsDisplayed() throws 
 		}
 
 	}
+	
+	public static void clickAddPersonalizationButton() throws Exception {
+		try {
+			getCurrentFunctionName(true);
+			String addPersonalizedButtonSelector = PDPSelectors.addPersonalizedButton.get(); 
+			if (getNumberOfItems() > 1 && !SelTestCase.getBrowserName().contains(GlobalVariables.browsers.iPhone)) {
+				String ProductID = getProductID(0);
+		    addPersonalizedButtonSelector = "css,#" + ProductID + ">" + PDPSelectors.addPersonalizedButton.get().replace("css,", "");
+			logs.debug("addPersonalizedButtonSelector:  " + addPersonalizedButtonSelector); 
+			}
+
+			SelectorUtil.initializeSelectorsAndDoActions(addPersonalizedButtonSelector);
+			getCurrentFunctionName(false);
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+			}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
+	}
+	public static boolean isFreePersonalization() throws Exception {// check if add personalization free or not 
+		getCurrentFunctionName(true);
+		boolean isFree = true;
+		String addPersonalizedButtonSelector = PDPSelectors.personlizedTitle.get();
+		if (!SelTestCase.getBrowserName().contains(GlobalVariables.browsers.iPhone)) {
+		String ProductID = getProductID(0);
+	    addPersonalizedButtonSelector = "css,#" + ProductID + ">" + PDPSelectors.addPersonalizedButton.get().replace("css,", "");
+		}
+		WebElement element = SelectorUtil.getelement(addPersonalizedButtonSelector);
+		String personalizationText = element.getText().toLowerCase();
+		logs.debug("personalizationText:  " + personalizationText);
+
+		if (!personalizationText.contains("free")) {
+			isFree = false; 
+		}
+		logs.debug("isFreePersonalization: " + isFree);
+		getCurrentFunctionName(false);
+		return isFree;
+
+	}
+	
+	public static void clickPersonalizationSaveAndCloseButton() throws Exception {
+		try {
+			getCurrentFunctionName(true);
+			String subStrArr = PDPSelectors.personalizationSaveAndCloseButton.get();
+			SelectorUtil.initializeSelectorsAndDoActions(subStrArr);
+			getCurrentFunctionName(false);
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+			}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
+	}
+	public static void clickPersonalizationSaveAndCloseButtonForiPhone() throws Exception {
+		List<WebElement> elementsList = SelectorUtil.getAllElements(PDPSelectors.personalizedItems.get());
+		WebElement element = elementsList.get(elementsList.size() - 1);
+		SelectorUtil.clickOnWebElement(element);
+		clickPersonalizationSaveAndCloseButton();
+	}
+
+		
+	public static boolean isPersonalizedStyle() throws Exception {
+		try {
+			getCurrentFunctionName(true);
+			boolean isDisplayed = SelectorUtil.isDisplayed(PDPSelectors.personlizedStyleItem.get());
+			getCurrentFunctionName(false);
+			return isDisplayed;
+		} catch (NoSuchElementException e) {
+			return false;
+		}
+	}
+
+	public static boolean isPersonalizedInputSwatchesDisplayed(String value) throws Exception {
+		try {
+			getCurrentFunctionName(true);
+			boolean isDisplayed = SelectorUtil.isDisplayed(value);
+			getCurrentFunctionName(false);
+			return isDisplayed;
+		} catch (NoSuchElementException e) {
+			return false;
+		}
+	}
+	
+	public static void selectPersonalizationModalSwatchesForiPhone() throws Exception {
+		getCurrentFunctionName(true);
+	    closeOpendItem();
+		List<WebElement> elementsList = SelectorUtil.getAllElements(PDPSelectors.personalizedItems.get());
+		for (int i = 0; i < elementsList.size()-1; i++) {
+			WebElement element = elementsList.get(i);
+			SelectorUtil.clickOnWebElement(element);
+			if (isPersonalizedInputSwatchesDisplayed(PDPSelectors.personalizedInputValue.get())) {// input container like MONOGRAM or any value
+				WebElement input = SelectorUtil.getelement(PDPSelectors.personalizedInputValue.get());
+				input.sendKeys(RandomUtilities.getRandomStringWithLength(3));
+			}else if (isPersonalizedInputSwatchesDisplayed(PDPSelectors.personalizedItemColors1.get())) { // like item color 
+				List<WebElement> itemColors = SelectorUtil.getAllElements(PDPSelectors.personalizedItemColors1.get());
+				if (itemColors.size() > 0) {
+					WebElement firstItemColor = itemColors.get(0);
+					SelectorUtil.clickOnWebElement(firstItemColor);			
+				}
+			}else if (isPersonalizedInputSwatchesDisplayed(PDPSelectors.personalizedItemMenu.get())) {// like item size 
+				WebElement menu = SelectorUtil.getelement(PDPSelectors.personalizedItemMenu.get());
+				List<WebElement> options =  menu.findElements(By.cssSelector(PDPSelectors.personalizedMenuOptions.get()));
+				options.get(1).click();// the first item is selected size 
+			}
+		}
+		getCurrentFunctionName(false);
+	}
+
+	
+	public static void selectPersonalizationModalSwatches() throws Exception {
+		getCurrentFunctionName(true);
+		List<WebElement> elementsList = SelectorUtil.getAllElements(PDPSelectors.personalizedItems.get());
+		for (int i = 0; i < elementsList.size(); i++) {
+			WebElement element = elementsList.get(i);
+			SelectorUtil.clickOnWebElement(element);
+			if (isPersonalizedInputSwatchesDisplayed(PDPSelectors.personalizedInputValue.get())) {// input container like MONOGRAM or any value
+				WebElement input = SelectorUtil.getelement(PDPSelectors.personalizedInputValue.get());
+				input.sendKeys(RandomUtilities.getRandomStringWithLength(3));
+			}else if (isPersonalizedInputSwatchesDisplayed(PDPSelectors.personalizedItemColors1.get())) { // like item color 
+				List<WebElement> itemColors = SelectorUtil.getAllElements(PDPSelectors.personalizedItemColors1.get());
+				if (itemColors.size() > 0) {
+					WebElement firstItemColor = itemColors.get(0);
+					SelectorUtil.clickOnWebElement(firstItemColor);			
+				}
+			}else if (isPersonalizedInputSwatchesDisplayed(PDPSelectors.personalizedItemColors2.get())){ // like thread color 
+				List<WebElement> itemColors = SelectorUtil.getAllElements(PDPSelectors.personalizedItemColors2.get());
+				if (itemColors.size() > 0) { 
+					WebElement firstItemColor = itemColors.get(0);
+					SelectorUtil.clickOnWebElement(firstItemColor);	
+				}
+				
+			}else if (isPersonalizedInputSwatchesDisplayed(PDPSelectors.personalizedTypeFaces.get())) {// like TypeFace , English style , etching style (Roman
+				List<WebElement> items = SelectorUtil.getAllElements(PDPSelectors.personalizedTypeFaces.get());
+				if (items.size() > 0) {
+					WebElement firstItemColor = items.get(0);
+					SelectorUtil.clickOnWebElement(firstItemColor);	
+				}
+			}else if (isPersonalizedInputSwatchesDisplayed(PDPSelectors.personalizedItemMenu.get())) {// like item size 
+				WebElement menu = SelectorUtil.getelement(PDPSelectors.personalizedItemMenu.get());
+				List<WebElement> options =  menu.findElements(By.cssSelector(PDPSelectors.personalizedMenuOptions.get()));
+				options.get(1).click();// the first item is selected size 
+			}
+			//Thread.sleep(1000);
+		}
+		getCurrentFunctionName(false);
+	}
+	
+	public static void closeOpendItem( )throws Exception {
+		try {
+			WebElement e = SelectorUtil.getelement(PDPSelectors.personalizedOpenItem.get());
+			SelectorUtil.clickOnWebElement(e);
+		} catch (NoSuchElementException e) {
+		}
+		
+	}
+	
+	public static boolean validateTotalPriceAfterAddedPersonalized(String intialPrice , String finalPrice) throws Exception {
+		boolean isChanged = true;
+		if (intialPrice.equals(finalPrice)) {
+			isChanged = false;
+		}
+		return isChanged;
+
+	}
+
+	public static boolean validateAddedPersonalizedDetails() throws Exception {
+		getCurrentFunctionName(true);
+		boolean isAdded = true;
+		String addedPersonlizedDetailsSelector  =  PDPSelectors.addedPersonlizedDetails.get();
+		if (!SelTestCase.getBrowserName().contains(GlobalVariables.browsers.iPhone) ) {
+		String ProductID = getProductID(0);
+	    addedPersonlizedDetailsSelector = "css,#" + ProductID + ">" + PDPSelectors.addedPersonlizedDetails.get().replace("css,", "");
+		}
+	    List<WebElement> addedPersonlizedDetailsItems = SelectorUtil.getAllElements(addedPersonlizedDetailsSelector);
+        if (addedPersonlizedDetailsItems.size() <= 0) {
+        	isAdded = false;
+         }
+		getCurrentFunctionName(false);
+
+        return isAdded;
+	}
+	
+	public static boolean validatePersonalizedModal() throws Exception {
+		boolean isDisplayed = true;
+		isDisplayed = SelectorUtil.isDisplayed(PDPSelectors.personlizedModal.get());
+		return isDisplayed;
+
+	}
+
+
 
 }

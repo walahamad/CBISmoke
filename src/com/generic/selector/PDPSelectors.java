@@ -43,7 +43,7 @@ public class PDPSelectors {
 
 	public static final cselector bundleItem = new cselector("css,#gwt_bundledetail_json.store", "css,#bundle-detail");
 
-	
+	 
 	public static final cselector miniPDPPrice = new cselector("css,.t-product-details-heading >div>.t-product-details-heading__price.t-product-details__price");
 	public static final cselector closeBundleProductModal = new cselector("css,.c-icon-label-button");
 	
@@ -75,6 +75,22 @@ public class PDPSelectors {
     public static final cselector addToCartConfirmationModalCheckoutBtn = new cselector("css,div.gwt-DialogBox.ok-cancel-dlog.gwt_addtocart_div button.button.primary");
     public static final cselector shoppingCartProductsName = new cselector("css,div.order-item-name > div");
 	
+	public static final cselector addPersonalizedButton = new cselector("css,.gwt-product-content-panel>div.gwt-product-right-content-panel>div.gwt-product-detail-widget-personalization-panel> div.gwt-personalize-link-style" , "pw-button c-add-personalization-button" );
+	public static final cselector personalizedItems = new cselector("button third gwt-tab-header-sign-button","css,div.pw-accordion--is-prerender > button");
+	public static final cselector personalizedOpenItem = new cselector ("css,div.pw-accordion--is-open > button");
+	public static final cselector personalizedItemColors1 = new cselector("css,div.gwt-accordion-tab-content.tabopen > div > div > div.gwt-personalization-modal-accordions-content-option >div >div>div>div.gwt-image-picker-option>img","css,div.pw-accordion--is-open>div > div > div > div > div > div > div > div>div>div>div.u-margin-top.m-product-options-no-padding>div>div>div>button");
+	public static final cselector personalizedTypeFaces = new cselector ("css,div.gwt-accordion-tab-content.tabopen > div > div > div.gwt-personalization-modal-accordions-content-option>div>div.gwt-personalization-image-picker-option>img");
+	public static final cselector personalizedItemColors2 = new cselector("css,div.gwt-accordion-tab-content.tabopen > div > div > div.gwt-personalization-modal-accordions-content-option > div>div.gwt-personalization-swatch-picker-option>img");
+	public static final cselector tabHeaderTitle = new cselector("css,div.gwt-accordion-tab-header>div.gwt-tab-header-title");
+	public static final cselector personalizedInputValue = new cselector("css,div.gwt-accordion-tab-content.tabopen > div > div > div.gwt-personalization-modal-accordions-content-option>input","css,div.pw-accordion--is-open>div>div>div>div>div>div>div>div>div>div>div>div>div>input");
+	public static final cselector itemSizeMenu = new cselector("css,div.gwt-accordion-tab-content.tabopen > div > div > div.gwt-personalization-modal-accordions-content-option>div.gwt-product-option-panel-listbox-container");
+	public static final cselector personalizationSaveAndCloseButton = new cselector ("css,div.gwt-submit-cancel-dialog-button-panel > button.button.primary" , "css,div.pw-accordion--is-open>div>div>div>div>button.c-personalization-modal__save");
+	public static final cselector addedPersonlizedDetails = new cselector("css,.gwt-product-content-panel>div.gwt-product-right-content-panel>div.gwt-product-detail-widget-personalization-panel> div.gwt-product-detail-widget-personalization-chosen-values>div.gwt-HTML","css,div.c-personalization-chosen-values>div>div.c-personalization-chosen-value");
+	public static final cselector personlizedModal = new cselector ("gwt-DialogBox","pw-lockup pw--is-locked");
+	public static final cselector personalizedItemMenu = new cselector("css,div.gwt-accordion-tab-content.tabopen > div > div > div.gwt-personalization-modal-accordions-content-option>div.gwt-product-option-panel-listbox-container>div>select","css,div.pw-accordion--is-open>div>div>div>div>div>div>div>div>div>div>div>div>div>select");
+	public static final cselector personalizedMenuOptions = new cselector("css,div.gwt-accordion-tab-content.tabopen > div > div > div.gwt-personalization-modal-accordions-content-option>div.gwt-product-option-panel-listbox-container>div>select>option","css,div.pw-accordion--is-open>div>div>div>div>div>div>div>div>div>div>div>div>div>select>option");
+	public static final cselector personlizedStyleItem = new cselector ("css,div.gwt-accordion-tab-content.tabopen > div > div > div.gwt-personalization-modal-accordions-content-option>div.gwt-option-picker-image-picker>div.gwt-personalization-image-picker-option>img");
+	public static final cselector personlizedTitle = new cselector ("css,div.c-add-personalization-panel>span");
 	// done-OCM
 	public static String price = "price-and-special-messaging";
 	public static String id = "code";
