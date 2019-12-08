@@ -338,7 +338,7 @@ public class PDP extends SelTestCase {
 		String selectorEnabled = PDPSelectors.addToCartBtnEnabledSingle.get();
 		String selectorDisabled = PDPSelectors.addToCartBtnDisabledSingle.get();
 		if (getNumberOfItems() > 1 && !SelTestCase.getBrowserName().contains(GlobalVariables.browsers.iPhone)) {
-			String ProductID = getProductID(0);
+			String ProductID = getProductID(0); 
 			logs.debug(PDPSelectors.addToCartBtnEnabledBundle);
 			selectorEnabled= MessageFormat.format(PDPSelectors.addToCartBtnEnabledBundle, ProductID);	
 			logs.debug(PDPSelectors.addToCartBtnDisabledBundle);
@@ -1530,10 +1530,14 @@ public static boolean validateSelectRegistryOrWishListModalIsDisplayed() throws 
 	public static boolean isFreePersonalization() throws Exception {// check if add personalization free or not 
 		getCurrentFunctionName(true);
 		boolean isFree = true;
-		String addPersonalizedButtonSelector = PDPSelectors.personlizedTitle.get();
+		String addPersonalizedButtonSelector = PDPSelectors.personlizedTitle.get();// for iPhone
 		if (!SelTestCase.getBrowserName().contains(GlobalVariables.browsers.iPhone)) {
-		String ProductID = getProductID(0);
-	    addPersonalizedButtonSelector = "css,#" + ProductID + ">" + PDPSelectors.addPersonalizedButton.get().replace("css,", "");
+			addPersonalizedButtonSelector = PDPSelectors.addPersonalizedButton.get();// for single PDP
+			if (getNumberOfItems() > 1) {// for bundle PDP
+	     	String ProductID = getProductID(0);
+	        addPersonalizedButtonSelector = "css,#" + ProductID + ">" + PDPSelectors.addPersonalizedButton.get().replace("css,", "");
+			
+			}
 		}
 		WebElement element = SelectorUtil.getelement(addPersonalizedButtonSelector);
 		String personalizationText = element.getText().toLowerCase();
@@ -1618,7 +1622,9 @@ public static boolean validateSelectRegistryOrWishListModalIsDisplayed() throws 
 	
 	public static void selectPersonalizationModalSwatches() throws Exception {
 		getCurrentFunctionName(true);
+		closeOpendItem();
 		List<WebElement> elementsList = SelectorUtil.getAllElements(PDPSelectors.personalizedItems.get());
+
 		for (int i = 0; i < elementsList.size(); i++) {
 			WebElement element = elementsList.get(i);
 			SelectorUtil.clickOnWebElement(element);
@@ -1676,7 +1682,7 @@ public static boolean validateSelectRegistryOrWishListModalIsDisplayed() throws 
 		getCurrentFunctionName(true);
 		boolean isAdded = true;
 		String addedPersonlizedDetailsSelector  =  PDPSelectors.addedPersonlizedDetails.get();
-		if (!SelTestCase.getBrowserName().contains(GlobalVariables.browsers.iPhone) ) {
+		if (getNumberOfItems() > 1 && !SelTestCase.getBrowserName().contains(GlobalVariables.browsers.iPhone) ) {
 		String ProductID = getProductID(0);
 	    addedPersonlizedDetailsSelector = "css,#" + ProductID + ">" + PDPSelectors.addedPersonlizedDetails.get().replace("css,", "");
 		}
@@ -1694,6 +1700,23 @@ public static boolean validateSelectRegistryOrWishListModalIsDisplayed() throws 
 		isDisplayed = SelectorUtil.isDisplayed(PDPSelectors.personlizedModal.get());
 		return isDisplayed;
 
+	}
+	
+	public static String getTotalPriceAfterAddedPersonalized() throws Exception {// in GR : total bottom price doesn't change after added personalized .based on the discussion with Emad , I compare the total price in personalized details with bottom price to make sure the price is changed 
+		getCurrentFunctionName(true);
+		String addedPersonlizedDetailsSelector  =  PDPSelectors.addedPersonlizedDetails.get();
+		if (getNumberOfItems() > 1 && !SelTestCase.getBrowserName().contains(GlobalVariables.browsers.iPhone) ) {
+		String ProductID = getProductID(0);
+	    addedPersonlizedDetailsSelector = "css,#" + ProductID + ">" + PDPSelectors.addedPersonlizedDetails.get().replace("css,", "");
+		}
+	    List<WebElement> addedPersonlizedDetailsItems = SelectorUtil.getAllElements(addedPersonlizedDetailsSelector);
+        WebElement totalPriceElement = addedPersonlizedDetailsItems.get(addedPersonlizedDetailsItems.size() - 1);
+        String totalPrice = totalPriceElement.getText();
+		logs.debug("totalPriceElement:  " + totalPrice);
+
+        
+		getCurrentFunctionName(false);
+		return totalPrice;
 	}
 
 
