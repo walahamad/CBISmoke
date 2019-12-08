@@ -1,6 +1,7 @@
 package com.generic.tests.GR.PDP;
 
 import com.generic.page.PDP;
+import com.generic.setup.Common;
 import com.generic.setup.GlobalVariables;
 import com.generic.setup.SelTestCase;
 
@@ -8,6 +9,9 @@ public class PDPValidation extends SelTestCase {
 
 	public static void validate(String searchTerm) throws Exception {
 		getCurrentFunctionName(true);
+		// To be removed after R1 build, this is to handle blank page in mobile for new session.
+		if (SelTestCase.getBrowserName().contains(GlobalVariables.browsers.iPhone))
+			Common.refreshBrowser();
 		PDP.NavigateToPDP(searchTerm);
 		int numberOfItems = PDP.getNumberOfItems();
 		String priceErrorMessage;
