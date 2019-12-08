@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.NoSuchElementException;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 
 import com.generic.selector.PLPSelectors;
@@ -335,5 +336,27 @@ public class PLP extends SelTestCase {
 		}
 
 	}
-
+	
+	public static String selectFirstProduct() throws Exception{
+		String selectedProductName ="";
+	try {
+		getCurrentFunctionName(true);
+		List<WebElement> productList = new ArrayList<WebElement>();
+		List<WebElement> productNameList = new ArrayList<WebElement>();
+		SelectorUtil.isDisplayed(PLPSelectors.productContainer.get());		
+		productList = SelectorUtil.getAllElements(PLPSelectors.product.get());
+		productNameList = SelectorUtil.getAllElements(PLPSelectors.productName.get());
+		WebElement element = productList.get(0);
+		selectedProductName = productNameList.get(0).getText();
+		logs.debug("Clicking on first product");
+		((JavascriptExecutor) SelTestCase.getDriver()).executeScript("arguments[0].click()", element);
+		getCurrentFunctionName(false);	
+	}catch  (NoSuchElementException e) {
+		logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+		}.getClass().getEnclosingMethod().getName()));
+		throw e;
+	}	
+	return selectedProductName;
+	}
+	
 }
