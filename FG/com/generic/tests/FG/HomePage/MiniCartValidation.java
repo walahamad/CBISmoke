@@ -7,6 +7,8 @@ import com.generic.setup.SelTestCase;
 
 public class MiniCartValidation extends SelTestCase {
 
+	public static final String PDPSearchTerm = "Rugs";
+	
 	public static void validate() throws Exception {
 		String expectedEmptyCartText="empty";
 		
@@ -20,7 +22,7 @@ public class MiniCartValidation extends SelTestCase {
 			HomePage.clickOnMiniCartCloseBtn();	
 			sassert().assertTrue(HomePage.validateMiniCartIsClosed(), "Mini cart modal is not closed");
 		}
-		PDP.NavigateToFGPDP();
+		PDP.NavigateToPDP(PDPSearchTerm);
 		PDP.addProductsToCart();
 		if (!SelTestCase.getBrowserName().contains(GlobalVariables.browsers.iPhone)) {
 			PDP.clickAddToCartCloseBtn();

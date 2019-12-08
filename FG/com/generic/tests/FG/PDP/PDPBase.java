@@ -12,8 +12,6 @@ import com.generic.setup.Common;
 import com.generic.setup.LoggingMsg;
 import com.generic.setup.SelTestCase;
 import com.generic.setup.SheetVariables;
-import com.generic.tests.FG.HomePage.LogoValidation;
-import com.generic.tests.GR.PDP.PDPValidation;
 import com.generic.util.ReportUtil;
 import com.generic.util.SASLogger;
 import com.generic.util.dataProviderUtils;
@@ -21,7 +19,14 @@ import com.generic.util.dataProviderUtils;
 public class PDPBase extends SelTestCase {
 
 
-
+	// possible scenarios
+	public static final String singlePDP = "Validate PDP Single active elements";
+	public static final String bundlePDP = "Validate PDP Bundle active elements";
+	public static final String personalizedPDP = "Validate PDP Personalized active elements";
+	public static final String singlePDPSearchTerm = "Rugs";
+	public static final String BundlePDPSearchTerm = "Collection";
+	public static final String personalizedPDPSearchTerm = "Resort Cotton";
+	
 	// used sheet in test
 	public static final String testDataSheet = SheetVariables.PDPSheet;
 
@@ -57,8 +62,16 @@ public class PDPBase extends SelTestCase {
 
 		try {
 
-			PDPValidation.validate();
-
+			if (proprties.contains(this.singlePDP)) {
+				PDPValidation.validate(singlePDPSearchTerm);
+			}
+			if (proprties.contains(this.bundlePDP)) {
+				PDPValidation.validate(BundlePDPSearchTerm);	
+			}
+			if (proprties.contains(this.personalizedPDP)) {
+				PDPValidation.validate(personalizedPDPSearchTerm);	
+			}
+	
 			sassert().assertAll();
 			Common.testPass();
 		} catch (Throwable t) {

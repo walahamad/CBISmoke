@@ -8,6 +8,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
+import java.util.Random;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
 
@@ -773,6 +774,16 @@ public class SelectorUtil extends SelTestCase {
 	}
 
 	@SuppressWarnings("rawtypes")
+	public static WebElement getNthElement(String selector, int index) throws Exception {
+		getCurrentFunctionName(true);
+		List<String> valuesArr = new ArrayList<String>();
+		valuesArr.add(selector);
+		getCurrentFunctionName(false);
+		return SelectorUtil.getNthElement(valuesArr, index);
+		
+	}
+	
+	@SuppressWarnings("rawtypes")
 	public static List<WebElement> getAllElements(String value) throws Exception {
 		getCurrentFunctionName(true);
 		List<String> subStrArr = new ArrayList<String>();
@@ -953,5 +964,31 @@ public class SelectorUtil extends SelTestCase {
 		}
 		getCurrentFunctionName(false);
 		return isElementExist;
+	}
+	public static boolean isValidClickableItem(WebElement element) throws Exception {
+		getCurrentFunctionName(true);
+		 String elementHref = element.getAttribute("href");
+		    //click on the element 
+		     clickOnWebElement(element);
+		     Thread.sleep(1000);
+		    //check if the current page is the correct page
+		    logs.debug("elementHref: "+elementHref);
+		    getCurrentFunctionName(false);
+		    if (elementHref == "")
+		    {
+		    	return false; 
+		    }
+		    else
+		    {
+		    	return true; 
+		    }
+	}
+	public static WebElement getRandomWebElement(List<WebElement> items) throws Exception {
+		logs.debug("WebElement List Size = " + items.size());
+		Random random = new Random();
+		int index = random.nextInt(items.size());
+		WebElement element = items.get(index);
+        return element;
+
 	}
 }
