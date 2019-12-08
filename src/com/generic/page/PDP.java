@@ -297,14 +297,29 @@ public class PDP extends SelTestCase {
 	}
 
 	// done - SMK
-	public static void addProductsToCart() throws Exception {
-		getCurrentFunctionName(true);
-		selectSwatches();
-		clickAddToCartButton();
-		Thread.sleep(1000);
-		getCurrentFunctionName(false);
+		public static void addProductsToCart() throws Exception {
+			getCurrentFunctionName(true);
+			selectSwatches();
+			clickAddToCartButton();
 
-	}
+			if (PDP.bundleProduct() &&  getBrowserName().contains(GlobalVariables.browsers.iPhone)) {
+				closeModalforBundleItem();
+			}
+
+			Thread.sleep(1000);
+			getCurrentFunctionName(false);
+		}
+
+
+		// Done CBI
+		public static void closeModalforBundleItem() throws Exception {
+			getCurrentFunctionName(true);	
+			SelectorUtil.initializeSelectorsAndDoActions(PDPSelectors.closeBundleProductModal.get());	
+			getCurrentFunctionName(false);
+
+
+		}
+
 
 	// done - SMK
 	public static boolean validatePriceIsDisplayed() throws Exception {
