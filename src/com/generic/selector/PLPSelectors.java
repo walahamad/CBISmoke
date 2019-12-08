@@ -9,7 +9,10 @@ public class PLPSelectors {
 	public static final cselector searchBox = new cselector("css,#searchBox input#headerBox","css,form>div>div>input");
 	public static final cselector recommendedOption =new cselector("css,li.unbxd-as-popular-product.unbxd-as-popular-product-grid a.unbxd-as-popular-product-info","css,.c--align-middle a.pw-link.c-arrange.u-flexbox.c--align-middle.u-align-center");
 	public static final cselector SearchButton =new cselector("css,li.unbxd-as-popular-product.unbxd-as-popular-product-grid a.unbxd-as-popular-product-info");
-	
+    public static final cselector product =  new cselector("css,div.gwt-product-info-panel-details-panel-html > h2 > a","css,div.pw-list-tile__content  a.c-product-item__main-image"); 
+    public static final cselector productName =  new cselector("css,div.gwt-product-info-panel-details-panel-html > h2 > a","css,a.pw-link.c-product-item-title-link > div > div > h2 > div"); 
+    public static final cselector productContainer =  new cselector("css,div.unbxd-products-display-panel","css,footer > div.c-custom-accordion"); 
+
 	//OLD
 	public static final String sortingDropDown = "sortOptions1";
 	public static final String sortingDropDownMobile = "sort by";
