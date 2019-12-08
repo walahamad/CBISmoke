@@ -12,7 +12,7 @@ import com.generic.setup.Common;
 import com.generic.setup.LoggingMsg;
 import com.generic.setup.SelTestCase;
 import com.generic.setup.SheetVariables;
-import com.generic.tests.GR.PDP.PDPValidation;
+import com.generic.tests.FG.PDP.PDPValidation;
 import com.generic.util.ReportUtil;
 import com.generic.util.SASLogger;
 import com.generic.util.dataProviderUtils;
@@ -34,7 +34,7 @@ public class PDPBase extends SelTestCase {
 
 	private static XmlTest testObject;
 
-	private static ThreadLocal<SASLogger> Testlogs = new ThreadLocal<SASLogger>();
+	private static ThreadLocal<SASLogger> Testlogs = new ThreadLocal<SASLogger>(); 
 
 	@BeforeTest
 	public static void initialSetUp(XmlTest test) throws Exception {
@@ -64,19 +64,20 @@ public class PDPBase extends SelTestCase {
 
 		try {
 
-			if (proprties.contains(this.singlePDP)) {
+			if (proprties.contains(this.singlePDP)) { 
 				PDPValidation.validate(singlePDPSearchTerm);
 			}
 			if (proprties.contains(this.bundlePDP)) {
 				PDPValidation.validate(BundlePDPSearchTerm);	
 			}
-			if (proprties.contains(this.personalizedPDP)) {
+			if (proprties.contains(this.personalizedPDP)) { 
 				PDPValidation.validate(personalizedPDPSearchTerm);	
 			}
-			if (proprties.contains(this.wishListGuestValidation)) {
+
+      if (proprties.contains(this.wishListGuestValidation)) {
                 WistListGuestValidation.validate(); 
             }
-	
+      
 			sassert().assertAll();
 			Common.testPass();
 		} catch (Throwable t) {

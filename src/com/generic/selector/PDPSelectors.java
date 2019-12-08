@@ -4,8 +4,9 @@ import com.generic.setup.cselector;
 
 public class PDPSelectors {
 	
+	public static final cselector continueShowppingBtn=new cselector("css,#cbiBody > div.gwt-DialogBox.ok-cancel-dlog.gwt_addtocart_div > div > table > tbody > tr.dialogMiddle > td.dialogMiddleCenter > div > table > tbody > tr:nth-child(3) > td > div > button.button.secondary");
+	public static final cselector checkOutBtn=new cselector("css,#cbiBody > div.gwt-DialogBox.ok-cancel-dlog.gwt_addtocart_div > div > table > tbody > tr.dialogMiddle > td.dialogMiddleCenter > div > table > tbody > tr:nth-child(3) > td > div > button.button.primary","css,#gwt-add-to-cart-btn");
 	//CBI SMK
-	
 	public static final cselector title = new cselector("css,.gwt-product-detail-product-name-label","css,.t-product-details-heading__title.u-margin-bottom");
 	public static final cselector avaibleOptions = new cselector("css,.gwt-product-option-panel-widget-panel>div","css,.c-product-option-items__container");
 	public static final cselector allColors = new cselector("css,.gwt-image-picker-option >img","css,.pw-swatch__chip>.pw-swatch__chip-inner>.c-product-option-items__item-content.gwt-image-picker-option");
@@ -29,10 +30,9 @@ public class PDPSelectors {
 	public static final cselector chooseYourItems = new cselector("gwt-choose-your-item-btn");
 	public static final cselector numberOfBundleItems = new cselector("css,.gwt-product-detail-products-container>.gwt-product-detail-widget","css,.t-product-details-heading__price.t-product-details__price>div");	
 	public static final cselector itemsID = new cselector("css,.gwt-product-detail-products-container>.gwt-product-detail-widget");	
-	
 	public static final cselector addToCartModal = new cselector("css,.gwt-DialogBox.ok-cancel-dlog.gwt_addtocart_div");
-	public static final cselector topPriceBundle = new cselector("css,.gwt-product-detail-right-panel.gwt-product-right-content-panel>.gwt-pdp-main-was-now-price-holder");
-	public static final cselector topPriceSingle = new cselector("css,.gwt-product-content-panel>.gwt-product-right-content-panel>.gwt-product-right-center-content-panel>.gwt-product-price-container","css,.t-product-details-heading__price.t-product-details__price>div");
+	public static final cselector topPriceBundleDesktop = new cselector("css,.gwt-product-detail-right-panel.gwt-product-right-content-panel>.gwt-pdp-main-was-now-price-holder");
+	public  final static cselector topPriceSingle = new cselector("css,.gwt-product-content-panel>.gwt-product-right-content-panel>.gwt-product-right-center-content-panel>.gwt-product-price-container","css,.t-product-details-heading__price.t-product-details__price>div");
 	public static final cselector addPersonalizationSingle = new cselector("css,.gwt-product-content-panel>.gwt-product-right-content-panel>.gwt-product-detail-widget-personalization-panel>.gwt-personalize-link-style");
 	public static final cselector addToWLGRBtnEnabledSingle = new cselector("css,.gwt-product-content-panel>.gwt-product-right-content-panel>.gwt-product-bottom-content-panel>.product-bottom-gift-regestry-panel","css,.t-product-details>div>.pw-button.u-width-full.u-text-uppercase");
 	public static final cselector addToWLGRBtnDisabledSingle = new cselector("css,.gwt-product-content-panel>.gwt-product-right-content-panel>.gwt-product-bottom-content-panel.disabled>.product-bottom-gift-regestry-panel","css,.u-wishlist-gift-disable");
@@ -40,11 +40,23 @@ public class PDPSelectors {
 	public static final cselector addToCartBtnDisabledSingle = new cselector("css,.gwt-product-content-panel>.gwt-product-right-content-panel>.gwt-product-bottom-content-panel>.product-bottom-qty-atc-panel>div>button#gwt-add-to-cart-btn.button.primary.disabled","css,.u-bg-disabled-color-add-to-cart");
 	public static final cselector bottomPriceSingle = new cselector("css,.gwt-product-content-panel>.gwt-product-right-content-panel>.gwt-product-bottom-content-panel>.product-bottom-total-price-panel>div>.gwt-product-detail-widget-total-price-amount","css,.t-product-details-price>span");
 	public static final cselector bundleItems = new cselector("u-widget-product-icon u-position-absolute");
-	public static final cselector bundleItem = new cselector("css,#gwt_bundledetail_json.store", "css,#gwt_bundledetail_json.t-product-details");
 
-	
+	public static final cselector bundleItem = new cselector("css,#gwt_bundledetail_json.store", "css,#bundle-detail");
+
+	 
 	public static final cselector miniPDPPrice = new cselector("css,.t-product-details-heading >div>.t-product-details-heading__price.t-product-details__price");
+	public static final cselector closeBundleProductModal = new cselector("css,.c-icon-label-button");
 	
+	public static final String bottomPriceBundle = "css,#{0}>" + bottomPriceSingle.DesktopSelector.replace("css,", "");
+	public static final String addToCartBtnDisabledBundle = "css,#{0}>" + addToCartBtnDisabledSingle.DesktopSelector.replace("css,", "");
+	public static final String addToCartBtnEnabledBundle = "css,#{0}>" + addToWLGRBtnEnabledSingle.DesktopSelector.replace("css,", "");
+	public static final String addToWLGRBtnEnabledBundle = "css,#{0}>" + addToWLGRBtnEnabledSingle.DesktopSelector.replace("css,", "");
+	public static final String addToWLGRBtnDisabledBundle = "css,#{0}>" + addToWLGRBtnDisabledSingle.DesktopSelector.replace("css,", "");
+	public final static String topPriceBundle = "css,#{0}>" + topPriceSingle.DesktopSelector.replace("css,", "");
+	public static final String ListBoxBundle = "css,#{0}>" + ListBox.DesktopSelector.replace("css,", "");
+	public static final String activeListBoxBundle = "css,#{0}>" + activeListBox.DesktopSelector.replace("css,", "");
+	public static final String swatchContainerBundle = "css,#{0}>" + swatchContainer.DesktopSelector.replace("css,", "");
+	public static final String imageOptionBundle = "css,#{0}>" + imageOption.DesktopSelector.replace("css,", "");
 	
 	public static final cselector SelectRegistryOrWishListModal = new cselector("css,#gwt-add-to-gift-registry-modal","css,div.c-pdp-modal.m-wishlist-registery");
     public static final cselector giftRegistryListBox = new cselector("css,select.gift-registry-list-bx","css,div.pw-sheet__content > div > div > select");
@@ -63,6 +75,22 @@ public class PDPSelectors {
     public static final cselector addToCartConfirmationModalCheckoutBtn = new cselector("css,div.gwt-DialogBox.ok-cancel-dlog.gwt_addtocart_div button.button.primary");
     public static final cselector shoppingCartProductsName = new cselector("css,div.order-item-name > div");
 	
+	public static final cselector addPersonalizedButton = new cselector("css,.gwt-product-content-panel>div.gwt-product-right-content-panel>div.gwt-product-detail-widget-personalization-panel> div.gwt-personalize-link-style" , "pw-button c-add-personalization-button" );
+	public static final cselector personalizedItems = new cselector("button third gwt-tab-header-sign-button","css,div.pw-accordion--is-prerender > button");
+	public static final cselector personalizedOpenItem = new cselector ("button third gwt-tab-header-sign-button","css,div.pw-accordion--is-open > button");
+	public static final cselector personalizedItemColors1 = new cselector("css,div.gwt-accordion-tab-content.tabopen > div > div > div.gwt-personalization-modal-accordions-content-option >div >div>div>div.gwt-image-picker-option>img","css,div.pw-accordion--is-open>div > div > div > div > div > div > div > div>div>div>div.u-margin-top.m-product-options-no-padding>div>div>div>button");
+	public static final cselector personalizedTypeFaces = new cselector ("css,div.gwt-accordion-tab-content.tabopen > div > div > div.gwt-personalization-modal-accordions-content-option>div>div.gwt-personalization-image-picker-option>img");
+	public static final cselector personalizedItemColors2 = new cselector("css,div.gwt-accordion-tab-content.tabopen > div > div > div.gwt-personalization-modal-accordions-content-option > div>div.gwt-personalization-swatch-picker-option>img");
+	public static final cselector tabHeaderTitle = new cselector("css,div.gwt-accordion-tab-header>div.gwt-tab-header-title");
+	public static final cselector personalizedInputValue = new cselector("css,div.gwt-accordion-tab-content.tabopen > div > div > div.gwt-personalization-modal-accordions-content-option>input","css,div.pw-accordion--is-open>div>div>div>div>div>div>div>div>div>div>div>div>div>input");
+	public static final cselector itemSizeMenu = new cselector("css,div.gwt-accordion-tab-content.tabopen > div > div > div.gwt-personalization-modal-accordions-content-option>div.gwt-product-option-panel-listbox-container");
+	public static final cselector personalizationSaveAndCloseButton = new cselector ("css,div.gwt-submit-cancel-dialog-button-panel > button.button.primary" , "css,div.pw-accordion--is-open>div>div>div>div>button.pw--primary");
+	public static final cselector addedPersonlizedDetails = new cselector("css,.gwt-product-content-panel>div.gwt-product-right-content-panel>div.gwt-product-detail-widget-personalization-panel> div.gwt-product-detail-widget-personalization-chosen-values>div.gwt-HTML","css,div.c-personalization-chosen-values>div>div.c-personalization-chosen-value");
+	public static final cselector personlizedModal = new cselector ("gwt-DialogBox","pw-lockup pw--is-locked");
+	public static final cselector personalizedItemMenu = new cselector("css,div.gwt-accordion-tab-content.tabopen > div > div > div.gwt-personalization-modal-accordions-content-option>div.gwt-product-option-panel-listbox-container>div>select","css,div.pw-accordion--is-open>div>div>div>div>div>div>div>div>div>div>div>div>div>select");
+	public static final cselector personalizedMenuOptions = new cselector("css,div.gwt-accordion-tab-content.tabopen > div > div > div.gwt-personalization-modal-accordions-content-option>div.gwt-product-option-panel-listbox-container>div>select>option","css,div.pw-accordion--is-open>div>div>div>div>div>div>div>div>div>div>div>div>div>select>option");
+	public static final cselector personlizedStyleItem = new cselector ("css,div.gwt-accordion-tab-content.tabopen > div > div > div.gwt-personalization-modal-accordions-content-option>div.gwt-option-picker-image-picker>div.gwt-personalization-image-picker-option>img");
+	public static final cselector personlizedTitle = new cselector ("css,div.c-add-personalization-panel>span");
 	// done-OCM
 	public static String price = "price-and-special-messaging";
 	public static String id = "code";

@@ -1,18 +1,25 @@
 package com.generic.page;
 
+import java.awt.Color;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
+import org.jsoup.select.Elements;
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 
 import com.generic.selector.CartSelectors;
+import com.generic.selector.PDPSelectors;
 import com.generic.setup.SelTestCase;
 import com.generic.setup.ExceptionMsg;
+import com.generic.setup.GlobalVariables;
 import com.generic.setup.LoggingMsg;
 import com.generic.setup.PagesURLs;
 import com.generic.util.SelectorUtil;
+import com.sun.corba.se.pept.transport.Selector;
 
 public class Cart extends SelTestCase {
 
@@ -20,6 +27,352 @@ public class Cart extends SelTestCase {
 
 		public static final String invalidCoupon = "invalid";
 
+	}
+	public static String getTaxValue() throws Exception {
+		getCurrentFunctionName(true);
+		WebElement price = SelectorUtil.getelement(CartSelectors.tax.get());
+		getCurrentFunctionName(false);
+		return price.getText().replace("$","").trim();
+	}
+	
+	public static String getShippingValue() throws Exception {
+		getCurrentFunctionName(true);
+		WebElement price = SelectorUtil.getelement(CartSelectors.shipping.get());
+		getCurrentFunctionName(false);
+		return price.getText().replace("$","").trim();
+	}
+///////////////////////////////////////////////////////////////////////////////////////////////////	
+	public static void paypalBtnClick() throws Exception {
+		try {
+			getCurrentFunctionName(true);
+			String subStrArr =CartSelectors.paypalCheckoutBtn.get();
+			SelectorUtil.initializeSelectorsAndDoActions(subStrArr);
+			getCurrentFunctionName(false);
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+			}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
+	}
+
+	public static void moveItemsToCartFromWishlist() throws Exception {
+		try {
+			getCurrentFunctionName(true);
+			String subStrArr = CartSelectors.savedListFirstItem.get() + CartSelectors.returnFromWishListBtn.get();
+			SelectorUtil.initializeSelectorsAndDoActions(subStrArr);
+			getCurrentFunctionName(false);
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+			}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
+	}
+
+	public static void clickBtnToViewSavedBtn() throws Exception {
+		try {
+			getCurrentFunctionName(true);
+			String subStrArr = "css,.c-personalization-accordion__preview-save>button";
+			SelectorUtil.initializeSelectorsAndDoActions(subStrArr);
+			getCurrentFunctionName(false);
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+			}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
+	}
+
+	public static boolean verifySavedList() throws Exception {
+		getCurrentFunctionName(true);
+		boolean inPDPPage = SelectorUtil.isDisplayed(CartSelectors.savedListFirstItem.get());
+		getCurrentFunctionName(false);
+		return inPDPPage;
+	}
+
+	public static void clickRemoveBtnForSavedItem() throws Exception {
+		try {
+			getCurrentFunctionName(true);
+			String subStrArr = CartSelectors.firstAddedItemsRemove.get();
+			SelectorUtil.initializeSelectorsAndDoActions(subStrArr);
+			getCurrentFunctionName(false);
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+			}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
+	}
+
+	public static void clickMoveToWishListBtnForSavedItem() throws Exception {
+		try {
+			getCurrentFunctionName(true);
+			String subStrArr = CartSelectors.firstAddedItemsMoveToLater.get();
+			SelectorUtil.initializeSelectorsAndDoActions(subStrArr);
+			getCurrentFunctionName(false);
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+			}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
+	}
+
+	public static String getTotalPrice() throws Exception {
+		getCurrentFunctionName(true);
+		WebElement price = SelectorUtil.getelement(CartSelectors.addedItemsTotalPrice.get());
+		getCurrentFunctionName(false);
+		return price.getText().trim();
+	}
+
+	public static boolean isListDisplayed(List<WebElement> elements) {
+		boolean loaded = true;
+		for (int i = 0; i < elements.size(); i++) {
+			if (!elements.get(i).isDisplayed())
+				loaded = false;
+		}
+		return loaded;
+	}
+
+	public static boolean isListLoaded(List<WebElement> elements) {
+		boolean result = true;
+		for (int i = 0; i < elements.size(); i++) {
+
+			Object resultForOneCarusal = (Boolean) ((JavascriptExecutor) getDriver()).executeScript(
+					"return arguments[0].complete && " + "typeof arguments[0].naturalWidth != \"undefined\" && "
+							+ "arguments[0].naturalWidth > 0",
+					elements.get(i));
+
+			boolean loaded = false;
+			if (resultForOneCarusal instanceof Boolean) {
+				loaded = (Boolean) result;
+				if (loaded == false)
+					result = false;
+			}
+		}
+		return result;
+	}
+
+	public static List<WebElement> getAllSavedItemsInCart() throws Exception {
+		getCurrentFunctionName(true);
+		List<String> subStrArr = new ArrayList<String>();
+		subStrArr.add(CartSelectors.addedItemsInCart.get());
+		List<WebElement> savedElements = SelectorUtil.getAllElements(subStrArr);
+		getCurrentFunctionName(false);
+		return savedElements;
+	}
+
+	public static boolean isItemAdded() throws Exception {
+		getCurrentFunctionName(true);
+		boolean isSaved;
+		List<WebElement> savedElements = getAllSavedItemsInCart();
+		if (savedElements.size() > 1)
+			isSaved = true;
+		else
+			isSaved = false;
+		getCurrentFunctionName(false);
+		return isSaved;
+	}
+
+	public static boolean isListEmpty() throws Exception {
+		getCurrentFunctionName(true);
+		boolean result;
+		List<String> subStrArr = new ArrayList<String>();
+		subStrArr.add(CartSelectors.firstAddedItemsEdit.get());
+		if (SelectorUtil.isNotDisplayed(subStrArr))
+			result = true;
+		else
+			result = false;
+		getCurrentFunctionName(false);
+		return result;
+	}
+
+	public static boolean addedItemImageValidation() throws Exception {
+		getCurrentFunctionName(true);
+		List<String> subStrArr = new ArrayList<String>();
+		subStrArr.add(CartSelectors.addedItemsImage.get());
+		List<WebElement> savedElements = SelectorUtil.getAllElements(subStrArr);
+		boolean displayed = isListDisplayed(savedElements);
+		boolean loaded = isListLoaded(savedElements);
+		getCurrentFunctionName(false);
+		return displayed & loaded;
+	}
+
+	public static boolean VerifyPDPPage() throws Exception {
+		getCurrentFunctionName(true);
+		boolean inPDPPage = SelectorUtil.isDisplayed(CartSelectors.addToCartBtn.get());
+		getCurrentFunctionName(false);
+		return inPDPPage;
+	}
+
+	public static boolean VerifyEditItemPage() throws Exception {
+		getCurrentFunctionName(true);
+		boolean inEditItemPage = SelectorUtil.isNotDisplayed(CartSelectors.editItemOpions.get());
+		getCurrentFunctionName(false);
+		return !inEditItemPage;
+	}
+
+	public static boolean checkAddedItemPriceDisplay() throws Exception {
+		getCurrentFunctionName(true);
+		List<String> subStrArr = new ArrayList<String>();
+		subStrArr.add(CartSelectors.addedItemsPrice.get());
+		List<WebElement> savedItems = SelectorUtil.getAllElements(subStrArr);
+		boolean inDisplayed = isListDisplayed(savedItems);
+		getCurrentFunctionName(false);
+		return inDisplayed;
+	}
+
+	public static boolean checkAddedItemTotalPriceDisplay() throws Exception {
+		getCurrentFunctionName(true);
+		List<String> subStrArr = new ArrayList<String>();
+		subStrArr.add(CartSelectors.addedItemsTotalPrice.get());
+		List<WebElement> savedItems = SelectorUtil.getAllElements(subStrArr);
+		boolean inDisplayed = isListDisplayed(savedItems);
+		getCurrentFunctionName(false);
+		return inDisplayed;
+	}
+
+	public static List<String> getFirstSavedItemsOptions() throws Exception {
+		getCurrentFunctionName(true);
+		List<String> subStrArr = new ArrayList<String>();
+		subStrArr.add(CartSelectors.firstAddedItemsOption.get());
+		List<WebElement> options = SelectorUtil.getAllElements(subStrArr);
+		List<String> optionSelector = new ArrayList<String>();
+		for (int i = 0; i < options.size(); i++) {
+
+			optionSelector.add(options.get(i).getText().trim());
+
+		}
+		getCurrentFunctionName(false);
+		return optionSelector;
+	}
+
+	public static List<String> getlastAddedItemsOptions() throws Exception {
+		getCurrentFunctionName(true);
+		List<String> subStrArr = new ArrayList<String>();
+		subStrArr.add(CartSelectors.addedItemsInCart.get());
+		List<WebElement> items = SelectorUtil.getAllElements(subStrArr);
+		WebElement lastItem = items.get(items.size() - 1);
+		List<WebElement> options = lastItem.findElements(By.cssSelector(CartSelectors.lastAddedItemsOption.get()));
+		List<String> optionSelector = new ArrayList<String>();
+		for (int i = 0; i < options.size(); i++) {
+
+			optionSelector.add(options.get(i).getText().trim());
+		}
+		getCurrentFunctionName(false);
+		return optionSelector;
+	}
+
+	public static void clickEditBtnForAddedItem() throws Exception {
+		try {
+			getCurrentFunctionName(true);
+			String subStrArr = CartSelectors.firstAddedItemsEdit.get();
+			SelectorUtil.initializeSelectorsAndDoActions(subStrArr);
+			getCurrentFunctionName(false);
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+			}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
+	}
+
+	public static void selectNthOptionLastSwatch(int index) throws Exception {
+		getCurrentFunctionName(true);
+		String subStrArr = MessageFormat.format(CartSelectors.editSwatchOptions.get(), index);
+		logs.debug(MessageFormat.format(LoggingMsg.CLICKING_SEL, subStrArr));
+		SelectorUtil.initializeSelectorsAndDoActions(subStrArr);
+		// Clicking on the div on desktop and iPad does not select the options,
+		// you need to click on the img if there is an img tag.
+		if (!SelTestCase.getBrowserName().contains(GlobalVariables.browsers.iPhone)) {
+			String nthSel = subStrArr + ">img";
+			if (!SelectorUtil.isNotDisplayed(nthSel))
+				SelectorUtil.initializeSelectorsAndDoActions(nthSel);
+		}
+		getCurrentFunctionName(false);
+
+	}
+
+	public static void editOptions() throws Exception {
+		getCurrentFunctionName(true);
+		List<String> subStrArr2 = new ArrayList<String>();
+		subStrArr2.add("css,.granify-show");
+		/*
+		 * if (!SelectorUtil.isNotDisplayed(subStrArr2)) { JavascriptExecutor js = null;
+		 * if (getDriver() instanceof JavascriptExecutor) { js = (JavascriptExecutor)
+		 * getDriver(); } js.
+		 * executeScript("return document.getElementsByClassName('granify-show')[0].remove();"
+		 * ); }
+		 */
+
+		List<String> subStrArr = new ArrayList<String>();
+		subStrArr.add(CartSelectors.editItemOpions.get());
+		List<WebElement> options = SelectorUtil.getAllElements(subStrArr);
+
+		List<String> subStrArr1 = new ArrayList<String>();
+		subStrArr1.add(CartSelectors.editItemOpions.get() + ">" + CartSelectors.editItemOptionsText.get());
+		List<WebElement> textsElement = SelectorUtil.getAllElements(subStrArr1);
+
+		List<String> texts = new ArrayList<String>();
+		for (int i = 0; i < textsElement.size(); i++) {
+			WebElement txt = textsElement.get(i);
+			String text = txt.getText().trim();
+			texts.add(text);
+		}
+
+		WebElement option = options.get(0);
+		if (!SelTestCase.getBrowserName().contains(GlobalVariables.browsers.iPhone))
+			option.findElement(By.cssSelector(CartSelectors.editItemColorOpen.get())).click();
+		List<String> optionsStrArr = new ArrayList<String>();
+		optionsStrArr.add(CartSelectors.editSwatchOptionsNumber.get());
+		List<WebElement> op = SelectorUtil.getAllElements(optionsStrArr);
+		selectNthOptionLastSwatch(op.size());
+		if(op.size()<1)
+		selectSize();
+	}
+
+
+	public static void selectSize() throws Exception {
+		try {
+			getCurrentFunctionName(true);
+			Thread.sleep(1000);
+			String subStrArr = PDPSelectors.allSizes.get();
+			String valuesArr = "FFF2";
+			if (!SelectorUtil.isNotDisplayed(subStrArr)) {
+				SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
+			}
+			getCurrentFunctionName(false);
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+			}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
+
+	}
+
+	public static void clickSaveAndColseForEdit() throws Exception {
+		try {
+			getCurrentFunctionName(true);
+			String subStrArr = CartSelectors.editItemSavedAndCloseBtn.get();
+			SelectorUtil.initializeSelectorsAndDoActions(subStrArr);
+			getCurrentFunctionName(false);
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+			}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
+	}
+
+	public static boolean verifyEditModelColsed() throws Exception {
+		boolean closed;
+		try {
+			getCurrentFunctionName(true);
+			List<String> subStrArr = new ArrayList<String>();
+			subStrArr.add(CartSelectors.editItemSavedAndCloseBtn.get());
+			closed = SelectorUtil.isNotDisplayed(subStrArr);
+			getCurrentFunctionName(false);
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+			}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
+
+		return closed;
 	}
 
 	// done -ocm
@@ -267,12 +620,10 @@ public class Cart extends SelTestCase {
 			String cartTotals = getCartTotals();
 			int index = 0;
 			String totals = "00.00";
-			
-			for(String total : cartTotals.split("\n"))
-			{
-				if (total.contains("Discounts"))
-				{
-					totals = cartTotals.split("\n")[index+1].trim();
+
+			for (String total : cartTotals.split("\n")) {
+				if (total.contains("Discounts")) {
+					totals = cartTotals.split("\n")[index + 1].trim();
 					logs.debug("order discounts is: " + totals);
 					break;
 				}
@@ -452,10 +803,10 @@ public class Cart extends SelTestCase {
 		getCurrentFunctionName(true);
 
 		List<String> subStrArr = new ArrayList<String>();
-		//List<String> valuesArr = new ArrayList<String>();
+		// List<String> valuesArr = new ArrayList<String>();
 
 		subStrArr.add(CartSelectors.removeItem);
-	//	valuesArr.add("");
+		// valuesArr.add("");
 
 		List<WebElement> removeButtons = SelectorUtil.getAllElements(subStrArr);
 
@@ -463,7 +814,7 @@ public class Cart extends SelTestCase {
 		logs.debug(LoggingMsg.REMOVE_ALL_ITEMS_FROM_CART);
 		for (int itemIndex = 0; itemIndex < numberOfItems; itemIndex++) {
 			List<String> valuesArr = new ArrayList<String>();
-			valuesArr.add("index,"+(itemIndex));
+			valuesArr.add("index," + (itemIndex));
 			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
 		}
 
@@ -482,8 +833,8 @@ public class Cart extends SelTestCase {
 		getCurrentFunctionName(true);
 		List<String> subStrArr = new ArrayList<String>();
 		List<String> valuesArr = new ArrayList<String>();
-		subStrArr.add(CartSelectors.removeItem );
-		valuesArr.add("index,"+ itemIndex);
+		subStrArr.add(CartSelectors.removeItem);
+		valuesArr.add("index," + itemIndex);
 		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
 		getCurrentFunctionName(false);
 	}
