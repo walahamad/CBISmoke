@@ -35,11 +35,9 @@ public class PDPValidation extends SelTestCase {
 			sassert().assertTrue(PDP.validateMobileBundlePriceIsDisplayed(),
 					"Top price for the bundle item (mini PDP) is not dispayed");
 		}
-		PDP.selectSwatches();
+		PDP.selectSwatches(); 
 		sassert().assertTrue(!PDP.getBottomPrice().equals("$0.00"), "Bottom price is not updated correctly, Current price: " + PDP.getBottomPrice());
-
 		// click add personalized button  
-		if (numberOfItems > 1) {
 			String initialPrice = PDP.getBottomPrice();
 			boolean isFreePersonalization = PDP.isFreePersonalization();
 			PDP.clickAddPersonalizationButton();
@@ -57,7 +55,6 @@ public class PDPValidation extends SelTestCase {
 				logs.debug("compare price" + initialPrice + finalPrice); 
 				sassert().assertTrue(PDP.validateTotalPriceAfterAddedPersonalized(initialPrice,finalPrice),"Bottom price is not updated correctly, Current price: " + PDP.getBottomPrice());
 			}	
-		}
 		sassert().assertTrue(PDP.validateAddToWLGRIsEnabled(), "Add to WL/GR button is not enabled");
 		sassert().assertTrue(PDP.validateAddToCartIsEnabled(), "Add to Cart button is not enabled");
 		PDP.clickAddToCartButton();
