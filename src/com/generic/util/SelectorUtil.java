@@ -57,7 +57,7 @@ public class SelectorUtil extends SelTestCase {
 	@SuppressWarnings("rawtypes")
 	public static void initializeElementsSelectorsMaps(LinkedHashMap<String, LinkedHashMap> webElementsInfo,
 			boolean isValidationStep) throws IOException, InterruptedException {
-		Thread.sleep(2000);
+		Thread.sleep(500);
 		try {
 			Document doc = Jsoup.parse(SelTestCase.getDriver().getPageSource());
 			Element htmlDoc = doc.select("html").first();
@@ -896,7 +896,7 @@ public class SelectorUtil extends SelTestCase {
 				SelectorUtil.doAppropriateAction(webElementInfo,action);
 			}
 
-			Thread.sleep(1000);
+			Thread.sleep(500);
 		} catch (Exception e) {
 			logs.debug(MessageFormat.format(LoggingMsg.FORMATTED_ERROR_MSG, e.getMessage()));
 			throw new NoSuchElementException("No such element: " + Arrays.asList(webElementsInfo));
@@ -913,16 +913,32 @@ public class SelectorUtil extends SelTestCase {
 
 	public static boolean isImgLoaded(String selector) {
 		WebElement img = getDriver().findElement(By.cssSelector(selector));
+		return ImageLoaded(img);
+	}
+	
+	public static boolean isImgsLoaded(String selector, int NumberOfVerifiedImages) {
+		List<WebElement> imgs = getDriver().findElements(By.cssSelector(selector));
+		boolean loaded = false;
 
-		Object  result =  (Boolean) ((JavascriptExecutor) getDriver()).executeScript(
-				   "return arguments[0].complete && "+
-						   "typeof arguments[0].naturalWidth != \"undefined\" && "+
-						   "arguments[0].naturalWidth > 0", img);
-	    boolean loaded = false;
-	    if (result instanceof Boolean) {
-	      loaded = (Boolean) result;
-	    }
-	    return loaded;
+		for (int elementIndex = 0; elementIndex < imgs.size()
+				&& elementIndex < NumberOfVerifiedImages; elementIndex++) {
+			WebElement img = imgs.get(elementIndex);
+			loaded = loaded && ImageLoaded(img);
+		}
+
+		return loaded;
+
+	}
+
+	public static boolean ImageLoaded(WebElement img) {
+		Object result = (Boolean) ((JavascriptExecutor) getDriver()).executeScript(
+				"return arguments[0].complete && " + "typeof arguments[0].naturalWidth != \"undefined\" && "
+						+ "arguments[0].naturalWidth > 0",img);
+		if (result instanceof Boolean) {
+			return (Boolean) result;
+		} else {
+			return false;
+		}
 	}
 
 
