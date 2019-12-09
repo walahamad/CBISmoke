@@ -194,8 +194,7 @@ public class Registration extends SelTestCase {
 			if (!"".equals(companyName))
 				typeCompany(companyName);
 
-			if (!"".equals(addressDetails.get(AddressBook.shippingAddress.keys.adddressLine)))
-				typeAddressLine1(addressDetails.get(AddressBook.shippingAddress.keys.adddressLine));
+			typeAddressLine1(RandomUtilities.getRandomName());
 
 			if (!"".equals(addressDetails.get(AddressBook.shippingAddress.keys.city)))
 				typeCity(addressDetails.get(AddressBook.shippingAddress.keys.city));
@@ -206,11 +205,10 @@ public class Registration extends SelTestCase {
 			if (!"".equals(addressDetails.get(AddressBook.shippingAddress.keys.zipcode)))
 				typeZipcode(addressDetails.get(AddressBook.shippingAddress.keys.zipcode));
 
-			if (!"".equals(addressDetails.get(AddressBook.shippingAddress.keys.phone))) {
-				typePhone(addressDetails.get(AddressBook.shippingAddress.keys.phone));
+			typePhone(RandomUtilities.getRandomPhone());
 
-				clickSaveButton();
-			}
+			clickSaveButton();
+
 			getCurrentFunctionName(false);
 		}
 

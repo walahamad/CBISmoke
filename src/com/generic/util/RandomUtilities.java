@@ -5,6 +5,7 @@ import java.text.MessageFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Random;
+import java.util.UUID;
 
 import org.apache.commons.lang3.RandomStringUtils;
 import com.generic.setup.LoggingMsg;
@@ -172,5 +173,10 @@ public final class RandomUtilities {
     public static String getRandomPassword(int passwordLength) {
 		String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 		return RandomStringUtils.random( passwordLength, characters );
+	}
+	public static String getRandomStringWithLength(int length) throws Exception {
+		String uuid = UUID.randomUUID().toString();
+        uuid = uuid.substring(0, Math.min(uuid.length(), 3));
+		return uuid;
 	}
 }
