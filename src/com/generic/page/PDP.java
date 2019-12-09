@@ -1376,25 +1376,7 @@ public static boolean validateSelectRegistryOrWishListModalIsDisplayed() throws 
 
 	}
 
-	// done-OCM
-	public static String getRandomProduct(String KeyWord) throws Exception {
-		try {
-			getCurrentFunctionName(true);
-			PLP.searchProduct(KeyWord);
-			Thread.sleep(3000);
-			if(getBrowserName().equalsIgnoreCase(GlobalVariables.browsers.firefox)||getBrowserName().equalsIgnoreCase(GlobalVariables.browsers.IE))
-				Thread.sleep(4000);
-			PLP.pickRandomPDP();
-			String ProductTitle = getTitle();
-			getCurrentFunctionName(false);
-			return ProductTitle;
-		} catch (NoSuchElementException e) {
-			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
-			}.getClass().getEnclosingMethod().getName()));
-			throw e;
-		}
-
-	}
+	
 
 	// done-OCM
 	public static void addToFavorite() throws Exception {
@@ -1413,57 +1395,6 @@ public static boolean validateSelectRegistryOrWishListModalIsDisplayed() throws 
 		}
 	}
 
-	// done -ocm
-	public static void addRandomProductsToCart() throws Exception {
-		try {
-			getCurrentFunctionName(true);
-			// random search in case of multiple calls
-			String[] Items = getCONFIG().getProperty("RandomItems").split(",");
-			Random random = new Random(System.currentTimeMillis());
-			int range = Items.length - 1;
-			if (range > 0)
-				navigateToRandomPDP(Items[random.nextInt(range)]);
-			else
-				navigateToRandomPDP(Items[0]);
-			Thread.sleep(3000);
-			if (getBrowserName().equals("IE"))
-				Thread.sleep(2000);
-			selectAllVariants();
-			Thread.sleep(3000);
-			if (getBrowserName().equals("IE"))
-				Thread.sleep(2000);
-			clickAddToCartBtn();
-			if (getBrowserName().equals("IE"))
-				Thread.sleep(2000);
-			Thread.sleep(1000);
-
-			getCurrentFunctionName(false);
-		} catch (NoSuchElementException e) {
-			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
-			}.getClass().getEnclosingMethod().getName()));
-			throw e;
-		}
-	}// add to cart randomly
-
-	public static void navigateToRandomPDP(String keyword) throws Exception {
-		try {
-			getCurrentFunctionName(true);
-			PLP.searchProduct(keyword);
-			Thread.sleep(5000);
-			if (getBrowserName().equals("IE"))
-				Thread.sleep(2000);
-			PLP.pickRandomPDP();
-			Thread.sleep(3000);
-			if (getBrowserName().equals("IE"))
-				Thread.sleep(2000);
-			getCurrentFunctionName(false);
-		} catch (NoSuchElementException e) {
-			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
-			}.getClass().getEnclosingMethod().getName()));
-			throw e;
-		}
-
-	}
 
 	public static void selectAllVariants() throws Exception {
 		try {
