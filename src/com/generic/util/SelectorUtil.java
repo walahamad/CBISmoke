@@ -607,6 +607,12 @@ public class SelectorUtil extends SelTestCase {
 										break;
 									}
 								}
+							} else if (value.contains("FFFS")) {
+								// Select an option using the displayed text.
+								String selectText = value.split("FFFS")[1];
+								logs.debug(
+										"Direct selection by text: " + selectText);
+								select.selectByVisibleText(selectText);
 							} else if (value.contains("FFF")) {
 								String index = value.split("FFF")[1];
 								logs.debug(

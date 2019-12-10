@@ -38,5 +38,22 @@ public class GiftRegistrySelectors {
 	public static final cselector emptyRegistryMsg = new cselector("css,.gift_registry_manage_WWCM","css,.t-registry-no-products-list__description");
 	public static final cselector giftCardContainer = new cselector("css,.gr_custom_add_to_cart","css,.t-personalized-gift-card");
 	public static final cselector beginAddingItemsButton = new cselector("css,.gift_registry_manage_WWCM + .spot.actions .primary", "css,.t-registry-no-products-list__add-btn");
+	public static final cselector addGRProductToCart = new cselector("css,.gr_add_to_cart_btn", "css,.t-registry-list-product-list__product-add-to-cart .pw-button");
+	public static final cselector addCartFromGRModal = new cselector("css,.gwt_addtocart_div", "css,.t-registry-list-product-list__product-add-to-cart .pw-button");
+	public static final cselector checkoutFromGRModal = new cselector("css,.gwt_addtocart_div .primary", "css,.t-registry-list-product-list__product-add-to-cart .pw-button");
+	public static final cselector productListGR = new cselector("css,[id*=gwt_giftregistry_item_display]", "css,.t-registry-list-product-list");
 
+	// Gift registry at PDP
+	public static final cselector selectGRModal = new cselector("css,#gwt-add-to-gift-registry-modal", "css,.m-select_wl_gr_modal");
+	public static final cselector saveToGR = new cselector("css,#gift-registry-btn", "css,.t-product-details #gift-registry-btn");
+	public static final cselector GRListBox = new cselector("css,.gift-registry-list-bx", "css,.m-select_wl_gr_modal.m-select_wl_gr_modal .c-custom-select");
+	public static final cselector addToGiftRegistySelectButton = new cselector("css,#gwt-add-to-gift-registry-modal .primary", "css,.m-select_wl_gr_modal .pw-sheet__content .pw-button");
+	public static final cselector addToGiftRegistyModal = new cselector("css,.gwt-added-to-gift-registry-modal", "css,.m-add-to-registry");
+	public static final cselector viewRegistryButton = new cselector("css,.gwt-added-to-gift-registry-modal .primary", "css,.m-add-to-registry .pw--secondar");
+	public static final cselector productAddedToGRContainer = new cselector("css,.addToCartProductsList", "css,.m-registry-confirmation__image");
+
+	// Gift registry in shopping.
+	public static final cselector addedFromGR = new cselector("css,.from-registry-link", "css,.t-cart__messages-from-customer-registry");
+	public static final cselector miniCartText = new cselector("css,.cartText", "css,.qa-header__cart .pw-badge span>span");
+	public static final cselector cartProductContainer = new cselector("css,.order-item-display-widget-v2", "css,.c-cart-product");
 }

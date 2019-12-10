@@ -102,7 +102,8 @@ public class RegistrationBase extends SelTestCase {
 		try {
 			// Positive registration case
 			if (proprties.contains(freshUser)) {
-				String registrationSuccessMsg = Registration.freshUserValidate(email, password);
+				Registration registraion = new Registration();
+				String registrationSuccessMsg = registraion.freshUserValidate(email, password);
 				sassert().assertTrue(registrationSuccessMsg.toLowerCase().contains(thankUMsg), "Regestration Success, validation failed Expected to have in message: " + thankUMsg +" but Actual message is: " + registrationSuccessMsg);
 			}
 			

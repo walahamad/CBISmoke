@@ -33,6 +33,7 @@ public class GRBase extends SelTestCase {
 	LoginBase loginBase = new LoginBase();
 
 	private static ThreadLocal<SASLogger> Testlogs = new ThreadLocal<SASLogger>();
+	GiftRegistry giftRegistry = new GiftRegistry();
 
 	public String userMail;
 	public String userPassword;
@@ -40,6 +41,10 @@ public class GRBase extends SelTestCase {
 	public String firstName;
 	public String lastName;
 	public String companyName;
+
+	// Test cases.
+	public static final String createRegistry = "create registry";
+	public static final String manageRegistry = "manage registry";
 
 	@BeforeTest
 	public static void initialSetUp(XmlTest test) throws Exception {
@@ -77,7 +82,18 @@ public class GRBase extends SelTestCase {
 				userMail = getSubMailAccount(userdetails.get(Registration.keys.email));
 			}
 
-			GiftRegistry.validate(userMail, GiftRegistrySelectors.createRegistryButtonGR.get());
+			if (proprties.contains(createRegistry)) {
+				giftRegistry.validate(userMail);
+			} else {
+				// Clear the initial value for gift registry name.
+				GiftRegistry.setRegistryName("");
+			}
+
+			if (proprties.contains(manageRegistry)) {
+				// Add item to GR then add the item to cart from GR.
+				giftRegistry.manageRegistryValidate(userMail);
+			}
+
 			sassert().assertAll();
 			Common.testPass();
 		} catch (Throwable t) {
@@ -93,14 +109,7 @@ public class GRBase extends SelTestCase {
 
 	public void accessValidAccount(String email,String caseId,String runTest,String desc) throws Exception {
 		if (email.equals("")) {
-			//Prepare registration data.
-			userMail = RandomUtilities.getRandomEmail();
-			userPassword = "P@ssword11";
-			SignIn.registerNewUser(userMail, userPassword, false);
-			addressDetails = Registration.userAddress;
-			firstName = Registration.userFirstName;
-			lastName = Registration.userLastName;
-			companyName = Registration.userCompanyName;
+			giftRegistry.accessValidAccount(email, caseId, runTest, desc);
 		} else {
 			loginBase.LoginRegressionTest(caseId, runTest, desc, "Success login", email, "");
 		}

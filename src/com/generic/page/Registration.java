@@ -27,12 +27,14 @@ public class Registration extends SelTestCase {
 
 	}
 
-	public static String userEmail;
-	public static String userPassword;
-	public static LinkedHashMap<String, String> userAddress;
-	public static String userFirstName;
-	public static String userLastName;
-	public static String userCompanyName;
+	public String userEmail;
+	public String userPassword;
+	public LinkedHashMap<String, String> userAddress;
+	public String userFirstName;
+	public String userLastName;
+	public String userCompanyName;
+	public String addressLine1;
+	public String phone;
 
 	// Done CBI Smoke
 	public static void typeFirstName(String firstName) throws Exception {
@@ -181,7 +183,7 @@ public class Registration extends SelTestCase {
 
 	// Done CBI Smoke
 	public static void fillRegistrationSecondStep(String fName, String lName, String companyName,
-			LinkedHashMap<String, String> addressDetails) throws Exception {
+			LinkedHashMap<String, String> addressDetails, String addressLine1, String phone) throws Exception {
 		try {
 			getCurrentFunctionName(true);
 
@@ -194,7 +196,7 @@ public class Registration extends SelTestCase {
 			if (!"".equals(companyName))
 				typeCompany(companyName);
 
-			typeAddressLine1(RandomUtilities.getRandomName());
+			typeAddressLine1(addressLine1);
 
 			if (!"".equals(addressDetails.get(AddressBook.shippingAddress.keys.city)))
 				typeCity(addressDetails.get(AddressBook.shippingAddress.keys.city));
@@ -205,7 +207,7 @@ public class Registration extends SelTestCase {
 			if (!"".equals(addressDetails.get(AddressBook.shippingAddress.keys.zipcode)))
 				typeZipcode(addressDetails.get(AddressBook.shippingAddress.keys.zipcode));
 
-			typePhone(RandomUtilities.getRandomPhone());
+			typePhone(phone);
 
 			clickSaveButton();
 
@@ -900,7 +902,7 @@ public class Registration extends SelTestCase {
 	}
 
 	@SuppressWarnings("unchecked")
-	public static String freshUserValidate(String email, String password) throws Exception {
+	public String freshUserValidate(String email, String password) throws Exception {
 
 		//click on register new user button
 		Registration.goToRegistrationForm();
@@ -919,12 +921,14 @@ public class Registration extends SelTestCase {
 		userFirstName = firstName;
 		userLastName = lastName;
 		userCompanyName = companyName;
+		addressLine1 = RandomUtilities.getRandomName();
+		phone = RandomUtilities.getRandomPhone();
 
 		//register new user and validate the results
 		Registration.fillRegistrationFirstStep(email,email,password,password);
 
 		Thread.sleep(1500);
-		Registration.fillRegistrationSecondStep(firstName,lastName,companyName,addressDetails);
+		Registration.fillRegistrationSecondStep(firstName,lastName,companyName,addressDetails, addressLine1, phone);
 
 		//Success message needs to be updated on excel to (Welcome to your account at )
 		String registrationSuccessMsg = Registration.getRegistrationSuccessMessage();
