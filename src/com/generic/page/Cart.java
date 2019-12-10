@@ -287,43 +287,65 @@ public class Cart extends SelTestCase {
 		getCurrentFunctionName(false);
 
 	}
-
+	
+	//Done CBI
 	public static void editOptions() throws Exception {
-		getCurrentFunctionName(true);
-		List<String> subStrArr2 = new ArrayList<String>();
-		subStrArr2.add("css,.granify-show");
-		/*
-		 * if (!SelectorUtil.isNotDisplayed(subStrArr2)) { JavascriptExecutor js = null;
-		 * if (getDriver() instanceof JavascriptExecutor) { js = (JavascriptExecutor)
-		 * getDriver(); } js.
-		 * executeScript("return document.getElementsByClassName('granify-show')[0].remove();"
-		 * ); }
-		 */
+		try {
+			getCurrentFunctionName(true);
 
-		List<String> subStrArr = new ArrayList<String>();
-		subStrArr.add(CartSelectors.editItemOpions.get());
-		List<WebElement> options = SelectorUtil.getAllElements(subStrArr);
+			// Click Edit for the first product in cart
+			SelectorUtil.initializeSelectorsAndDoActions(CartSelectors.editFromCartLink.get());
 
-		List<String> subStrArr1 = new ArrayList<String>();
-		subStrArr1.add(CartSelectors.editItemOpions.get() + ">" + CartSelectors.editItemOptionsText.get());
-		List<WebElement> textsElement = SelectorUtil.getAllElements(subStrArr1);
+			// Expand options accordion for desktop version
+			if (!SelTestCase.getBrowserName().contains(GlobalVariables.browsers.iPhone)) {
+				SelectorUtil.initializeSelectorsAndDoActions(CartSelectors.expandOptionsModal.get());
+			}
 
-		List<String> texts = new ArrayList<String>();
-		for (int i = 0; i < textsElement.size(); i++) {
-			WebElement txt = textsElement.get(i);
-			String text = txt.getText().trim();
-			texts.add(text);
+			// Editing the product
+			try {
+				// Check if the product has drop-down and edit it
+				SelectorUtil.initializeSelectorsAndDoActions(CartSelectors.optionsDropDown.get(), "FFF2");
+
+			} catch (Exception e) {
+
+				try {
+
+					// Check if the product has swatches and select one
+					SelectorUtil.initializeSelectorsAndDoActions(CartSelectors.optionsImage.get(), "index,1");
+
+				} catch (Exception e2) {
+					Thread.holdsLock(2500);
+
+					// Check if the product has buttons and select one
+					List<WebElement> swatches = getDriver()
+							.findElements(By.cssSelector(CartSelectors.optionsButton.get()));
+					swatches.get(2).click();
+				}
+
+			}
+
+			// Click finish and preview button for edit modal on mobile version
+			if (SelTestCase.getBrowserName().contains(GlobalVariables.browsers.iPhone)) {
+
+				if (SelTestCase.getBrand().contains("GR"))
+					SelectorUtil.initializeSelectorsAndDoActions(CartSelectors.finishAndPreviewButtonGR.get());
+				else
+					SelectorUtil.initializeSelectorsAndDoActions(CartSelectors.finishAndPreviewButton.get());
+			}
+
+			// Save the edits
+			if (SelTestCase.getBrand().contains("GR"))
+				SelectorUtil.initializeSelectorsAndDoActions(CartSelectors.saveEditsButtonGR.get());
+			else
+				SelectorUtil.initializeSelectorsAndDoActions(CartSelectors.saveEditsButton.get());
+			getCurrentFunctionName(false);
+
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+			}.getClass().getEnclosingMethod().getName()));
+			throw e;
 		}
 
-		WebElement option = options.get(0);
-		if (!SelTestCase.getBrowserName().contains(GlobalVariables.browsers.iPhone))
-			option.findElement(By.cssSelector(CartSelectors.editItemColorOpen.get())).click();
-		List<String> optionsStrArr = new ArrayList<String>();
-		optionsStrArr.add(CartSelectors.editSwatchOptionsNumber.get());
-		List<WebElement> op = SelectorUtil.getAllElements(optionsStrArr);
-		selectNthOptionLastSwatch(op.size());
-		if(op.size()<1)
-		selectSize();
 	}
 
 

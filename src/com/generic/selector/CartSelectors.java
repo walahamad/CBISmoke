@@ -35,6 +35,20 @@ public class CartSelectors
 	public static final cselector editSwatchOptionsNumber=new cselector("css,#personalization-modal-options-scroll > div:nth-child(1) > div> div > div > div > div > div > div > div","css, div:nth-child(1)  > div > div > div > div > div > div > div > div > div.m-product-options-no-padding > div > div > div > button > div > div > div > div > div");
 	//////////////////////////////////////////////////////////////////////////////
 	//don
+	
+	//New Selectors
+	public static final cselector editFromCartLink=new cselector("css,.edit-link", "css,.c-cart-product__actions-edit");
+	public static final cselector expandOptionsModal=new cselector("css,.gwt-tab-header-sign-button");
+	public static final cselector optionsImage =new cselector( "css,.gwt-image-picker-option-image","css,.pw-swatch__item img");
+	public static final cselector optionsButton =new cselector("css,.gwt-selection-chip", "css,.c-product-option-items__item .pw-swatch__button");
+	//public static final cselector optionsButton =new cselector("css,.gwt-product-option-panel-widget-panel > div  > div > div", "css,div> div > button > div > div > div > div > div.c-product-option-items__item-normal");
+	public static final cselector optionsDropDown =new cselector( "css,.gwt-ListBox","css,.c-product-options__content");
+	public static final cselector finishAndPreviewButton =new cselector("css,.c-personalization-modal__finish.pw--primary");
+	public static final cselector finishAndPreviewButtonGR =new cselector("css,.pw-accordion__content .pw--primary");
+	public static final cselector saveEditsButton =new cselector("css,div.gwt-submit-cancel-dialog-button-panel > button.primary","css,.c-personalization-modal__save.pw--primary"); 
+	public static final cselector saveEditsButtonGR =new cselector("css,div.gwt-submit-cancel-dialog-button-panel > button.primary","css,.pw-accordion--is-open .pw-accordion__content-wrapper .pw--primary");
+	
+	
 	public static final String numberOfProducts = "css,div.cart-heading>h2";
 	public static final String unitPrice = "price-value";
 	public static final String productSubtotal = "css,div.total-section.each-item-section>span.js-item-total";
