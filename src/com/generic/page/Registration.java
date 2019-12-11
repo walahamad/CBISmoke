@@ -10,6 +10,7 @@ import com.generic.setup.ExceptionMsg;
 import com.generic.setup.GlobalVariables;
 import com.generic.setup.LoggingMsg;
 import com.generic.setup.SelTestCase;
+import com.generic.util.RandomUtilities;
 import com.generic.util.SelectorUtil;
 import java.net.URI;
 
@@ -186,8 +187,7 @@ public class Registration extends SelTestCase {
 			if (!"".equals(companyName))
 				typeCompany(companyName);
 
-			if (!"".equals(addressDetails.get(AddressBook.shippingAddress.keys.adddressLine)))
-				typeAddressLine1(addressDetails.get(AddressBook.shippingAddress.keys.adddressLine));
+			typeAddressLine1(RandomUtilities.getRandomName());
 
 			if (!"".equals(addressDetails.get(AddressBook.shippingAddress.keys.city)))
 				typeCity(addressDetails.get(AddressBook.shippingAddress.keys.city));
@@ -198,11 +198,10 @@ public class Registration extends SelTestCase {
 			if (!"".equals(addressDetails.get(AddressBook.shippingAddress.keys.zipcode)))
 				typeZipcode(addressDetails.get(AddressBook.shippingAddress.keys.zipcode));
 
-			if (!"".equals(addressDetails.get(AddressBook.shippingAddress.keys.phone))) {
-				typePhone(addressDetails.get(AddressBook.shippingAddress.keys.phone));
+			typePhone(RandomUtilities.getRandomPhone());
 
-				clickSaveButton();
-			}
+			clickSaveButton();
+
 			getCurrentFunctionName(false);
 		}
 
@@ -891,5 +890,30 @@ public class Registration extends SelTestCase {
 			throw e;
 		}
 
+	}
+
+	@SuppressWarnings("unchecked")
+	public static String freshUserValidate(String email, String password) throws Exception {
+
+		//click on register new user button
+		Registration.goToRegistrationForm();
+
+		//prepare random address details
+		LinkedHashMap<String, String> addressDetails = (LinkedHashMap<String, String>) addresses.get("A3");
+
+		//Prepare registration data
+		String firstName = RandomUtilities.getRandomName();
+		String lastName = RandomUtilities.getRandomName();
+		String companyName = RandomUtilities.getRandomName();
+
+		//register new user and validate the results
+		Registration.fillRegistrationFirstStep(email,email,password,password);
+
+		Thread.sleep(1500);
+		Registration.fillRegistrationSecondStep(firstName,lastName,companyName,addressDetails);
+
+		//Success message needs to be updated on excel to (Welcome to your account at )
+		String registrationSuccessMsg = Registration.getRegistrationSuccessMessage();
+		return registrationSuccessMsg;
 	}
 }

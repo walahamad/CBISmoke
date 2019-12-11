@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Smkoe Testing" parallel="tests" thread-count="3" data-provider-thread-count="2">
+	<parameter name="Env" value="prod"></parameter>
+	<parameter name="Brand" value="FG"></parameter>
+
+	<test name="CLP Chrome FG">
+		<parameter name="browserName" value="Chrome"></parameter>
+		<classes>
+			<class name="com.generic.tests.FG.CLP.CLPBase" />
+		</classes>
+	</test><!-- Test -->
+	<test name="CLP iPad FG">
+		<parameter name="browserName" value="mobile_iPad"></parameter>
+		<classes>
+			<class name="com.generic.tests.FG.CLP.CLPBase" />
+		</classes>
+	</test> <!-- Test -->
+	<test name="CLP iPhone FG">
+		<parameter name="browserName" value="mobile_iPhone X"></parameter>
+		<classes>
+			<class name="com.generic.tests.FG.CLP.CLPBase" />
+		</classes>
+	</test> <!-- Test -->
+
+	<test name="HP Chrome FG">
+		<parameter name="browserName" value="Chrome"></parameter>
+
+
+		<classes>
+			<class name="com.generic.tests.FG.HomePage.HomePageBase" />
+		</classes>
+	</test><!-- Test -->
+	<test name="HP iPad FG">
+		<parameter name="browserName" value="mobile_iPad"></parameter>
+
+
+		<classes>
+			<class name="com.generic.tests.FG.HomePage.HomePageBase" />
+		</classes>
+	</test><!-- Test -->
+	<test name="HP iPhone FG">
+		<parameter name="browserName" value="mobile_iPhone X"></parameter>
+		<classes>
+			<class name="com.generic.tests.FG.HomePage.HomePageBase" />
+		</classes>
+	</test><!-- Test -->
+
+	<test name="CLP Chrome GR">
+		<parameter name="browserName" value="Chrome"></parameter>
+
+		<parameter name="Brand" value="GR"></parameter>
+		<classes>
+			<class name="com.generic.tests.GR.CLP.CLPBase" />
+		</classes>
+	</test><!-- Test -->
+	<test name="CLP iPad GR">
+		<parameter name="browserName" value="mobile_iPad"></parameter>
+
+		<parameter name="Brand" value="GR"></parameter>
+		<classes>
+			<class name="com.generic.tests.GR.CLP.CLPBase" />
+		</classes>
+	</test> <!-- Test -->
+	<test name="CLP iPhone GR">
+		<parameter name="browserName" value="mobile_iPhone X"></parameter>
+
+		<parameter name="Brand" value="GR"></parameter>
+		<classes>
+			<class name="com.generic.tests.GR.CLP.CLPBase" />
+		</classes>
+	</test> <!-- Test -->
+
+	<test name="HP Chrome GR">
+		<parameter name="browserName" value="Chrome"></parameter>
+
+		<parameter name="Brand" value="GR"></parameter>
+		<classes>
+			<class name="com.generic.tests.GR.HomePage.HomePageBase" />
+		</classes>
+	</test><!-- Test -->
+	<test name="HP iPad GR">
+		<parameter name="browserName" value="mobile_iPad"></parameter>
+
+		<parameter name="Brand" value="GR"></parameter>
+		<classes>
+			<class name="com.generic.tests.GR.HomePage.HomePageBase" />
+		</classes>
+	</test><!-- Test -->
+	<test name="HP iPhone GR">
+		<parameter name="browserName" value="mobile_iPhone X"></parameter>
+
+		<parameter name="Brand" value="GR"></parameter>
+		<classes>
+			<class name="com.generic.tests.GR.HomePage.HomePageBase" />
+		</classes>
+	</test><!-- Test -->
+	
+	
+	<test name="Registration Test_chrome FG">
+		<parameter name="browserName" value="chrome"></parameter>
+		
+		<classes>
+			<class name="com.generic.tests.FG.Registration.RegistrationBase" />
+		</classes>
+	</test> 
+		
+	<test name="Registration mobile_iPad  FG">
+		<parameter name="browserName" value="mobile_iPad"></parameter>
+		<classes>
+			<class name="com.generic.tests.FG.Registration.RegistrationBase" />
+		</classes>
+	</test> 
+      
+	
+	<test name="Registration iPhone  FG">
+		<parameter name="browserName" value="mobile_iPhone X"></parameter>
+		<classes>
+			<class name="com.generic.tests.FG.Registration.RegistrationBase" />
+		</classes>
+	</test><!-- Test -->
+	
+		<test name="Registration Test_chrome  GR">
+		<parameter name="browserName" value="chrome"></parameter>
+		
+		<classes>
+			<class name="com.generic.tests.GR.Registration.RegistrationBase" />
+		</classes>
+	</test> 
+		
+	<test name="Registration mobile_iPad  GR">
+		<parameter name="browserName" value="mobile_iPad"></parameter>
+		<classes>
+			<class name="com.generic.tests.GR.Registration.RegistrationBase" />
+		</classes>
+	</test> 
+      
+	
+	<test name="Registration iPhone  GR">
+		<parameter name="browserName" value="mobile_iPhone X"></parameter>
+		<classes>
+			<class name="com.generic.tests.GR.Registration.RegistrationBase" />
+		</classes>
+	</test><!-- Test -->
+
+</suite> <!-- Suite -->
