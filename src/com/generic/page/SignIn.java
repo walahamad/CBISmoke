@@ -1,5 +1,6 @@
 package com.generic.page;
 
+import java.net.URI;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,11 +13,13 @@ import com.generic.selector.SignInSelectors;
 import com.generic.setup.ExceptionMsg;
 import com.generic.setup.LoggingMsg;
 import com.generic.setup.SelTestCase;
+import com.generic.util.RandomUtilities;
 import com.generic.util.SelectorUtil;
 import com.generic.setup.GlobalVariables;
 
 public class SignIn extends SelTestCase {
 
+	public static String logoffhref = "/Logoff";
 	public static String myAccountPageLink = "AccountOverView";
 
 	// done-ocm
@@ -37,56 +40,6 @@ public class SignIn extends SelTestCase {
 	}
 
 	/**
-	* Get the account item (Sign in/create account page or welcome message).
-	*
-	* @param WebElement
-	* @throws Exception
-	*/
-	public static WebElement getSignInLinkMobilePWA() throws Exception {
-		getCurrentFunctionName(true);
-
-		logs.debug("Open account menu for PWA mobile");
-
-		// Open the account menu.
-		openMobileAccountMenu();
-
-		// Get an account items list.
-		List <WebElement> menuItems = SelectorUtil.getElementsList(SignInSelectors.accountMenuList);
-		WebElement signInLink = menuItems.get(0);
-		int index = 0;
-		// Get the Sign in/create account page or welcome message item.
-		for (index=0; index < menuItems.size(); index++) {
-			WebElement item = menuItems.get(index);
-			String itemHref = item.getAttribute("href");
-			// Check if the item is sign in/create account (By check create account page link) or welcome message.
-			if (itemHref.contains("UserLogonView") || itemHref.contains(myAccountPageLink)) {
-				signInLink = item;
-				break;
-			}
-		}
-		logs.debug("The account item (Sign in/create account page or welcome message): " + signInLink);
-		getCurrentFunctionName(false);
-		return signInLink;
-	}
-
-	/**
-	* Open my account menu for mobile if it was not opened
-	*
-	* @throws Exception
-	*/
-	public static void openMobileAccountMenu() throws Exception {
-		getCurrentFunctionName(true);
-		boolean isPWAMobile = getBrowserName().contains(GlobalVariables.browsers.iPhone);
-		if (isPWAMobile) {
-			boolean isAccountMobileOpened = SelectorUtil.isElementExist(By.cssSelector(SignInSelectors.myAccountModal));
-			if (!isAccountMobileOpened) {
-				SelectorUtil.initializeSelectorsAndDoActions(SignInSelectors.accountMenuIcon.get());
-			}
-		}
-		getCurrentFunctionName(false);
-	}
-
-	/**
 	* Fill the login form and click submit button.
 	*
 	* @param email
@@ -96,11 +49,14 @@ public class SignIn extends SelTestCase {
 	public static void fillLoginFormAndClickSubmit(String email, String Password) throws Exception {
 		try {
 			getCurrentFunctionName(true);
-			clickOnMainMenue();
+			logs.debug(MessageFormat.format(LoggingMsg.GETTING_TEXT,
+					"Navigating to registration page..." + getCONFIG().getProperty("RegistrationPage")));
+			getDriver().get(new URI(getDriver().getCurrentUrl()).resolve(getCONFIG().getProperty("RegistrationPage"))
+					.toString());
+			// clickOnMainMenue();
 			typeEmail(email);
 			typePassword(Password);
 			clickLogin();
-			Thread.sleep(3000);
 			getCurrentFunctionName(false);
 		} catch (NoSuchElementException e) {
 			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
@@ -119,6 +75,7 @@ public class SignIn extends SelTestCase {
 			getCurrentFunctionName(true);
 			// Select the sign in button and Navigate to the Sign in/Create account page..
 			SelectorUtil.initializeSelectorsAndDoActions(SignInSelectors.signInButton.get());
+			SelectorUtil.waitingLoadingButton(SignInSelectors.loadingButton);
 			getCurrentFunctionName(false);
 		} catch (NoSuchElementException e) {
 			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
@@ -259,9 +216,9 @@ public class SignIn extends SelTestCase {
 
 			// Validate the welcome message if it is exist.
 			if (isPWAMobile) {
-				WebElement welcomeMessageElement = getSignInLinkMobilePWA();
+				WebElement welcomeMessageElement = SelectorUtil.getMenuLinkMobilePWA(logoffhref);
 				String itemHref = welcomeMessageElement.getAttribute("href");
-				if (itemHref.contains(myAccountPageLink)) {
+				if (itemHref.contains(logoffhref)) {
 					isUserLogedIn = true;
 				}
 			} else {
@@ -298,7 +255,7 @@ public class SignIn extends SelTestCase {
 
 			// Get my account link.
 			if (isPWAMobile) {
-				myAccountLink = getSignInLinkMobilePWA();
+				myAccountLink = SelectorUtil.getMenuLinkMobilePWA(myAccountPageLink);
 			} else {
 				myAccountLink = SelectorUtil.getelement(SignInSelectors.myAccountLink);
 			}
@@ -310,7 +267,7 @@ public class SignIn extends SelTestCase {
 			}
 
 			// Go to my account page.
-			openMobileAccountMenu();
+			SelectorUtil.openMobileAccountMenu();
 			SelectorUtil.clickOnWebElement(myAccountLink);
 
 			getCurrentFunctionName(false);
@@ -369,7 +326,7 @@ public class SignIn extends SelTestCase {
 				logs.debug("Validate Sign in for Mobile (PWA site)");
 
 				// Get the sign in link or welcome message from the account menu.
-				signInLink = getSignInLinkMobilePWA();
+				signInLink = SelectorUtil.getMenuLinkMobilePWA("UserLogonView");
 			} else {
 				// Validate the desktop and tablet sign in form.
 				logs.debug("Validate Sign in desktop or tablet");
@@ -475,5 +432,26 @@ public class SignIn extends SelTestCase {
 			throw e;
 		}
 
+	}
+
+	public static void registerNewUser(String userMail, String userPassword) throws Exception {
+		try {
+			getCurrentFunctionName(true);
+			// Run the registration test case before sign in.
+			Registration.freshUserValidate(userMail, userPassword);
+			boolean isPWAMobile = getBrowserName().contains(GlobalVariables.browsers.iPhone);
+			if (isPWAMobile) {
+				WebElement logoffLink = SelectorUtil.getMenuLinkMobilePWA(logoffhref);
+				SelectorUtil.clickOnWebElement(logoffLink);
+				Thread.sleep(1500);
+			} else {
+				SelectorUtil.initializeSelectorsAndDoActions(SignInSelectors.logoffLink);
+			}
+			getCurrentFunctionName(false);
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+			}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
 	}
 }

@@ -12,7 +12,7 @@ import com.generic.setup.Common;
 import com.generic.setup.LoggingMsg;
 import com.generic.setup.SelTestCase;
 import com.generic.setup.SheetVariables;
-import com.generic.tests.FG.HomePage.LogoValidation;
+import com.generic.tests.GR.PDP.WistListGuestValidation;
 import com.generic.tests.GR.PDP.PDPValidation;
 import com.generic.util.ReportUtil;
 import com.generic.util.SASLogger;
@@ -21,6 +21,14 @@ import com.generic.util.dataProviderUtils;
 public class PDPBase extends SelTestCase {
 
 
+	// possible scenarios
+	public static final String singlePDP = "Validate PDP Single active elements";
+	public static final String bundlePDP = "Validate PDP Bundle active elements";
+	public static final String personalizedPDP = "Validate PDP Personalized active elements";
+	public static final String singlePDPSearchTerm = "lights";
+	public static final String BundlePDPSearchTerm = "Rugs";
+	public static final String personalizedPDPSearchTerm = "personalized";
+	public static final String wishListGuestValidation = "Wish List Guest Validation";
 
 	// used sheet in test
 	public static final String testDataSheet = SheetVariables.PDPSheet;
@@ -55,9 +63,27 @@ public class PDPBase extends SelTestCase {
 		logCaseDetailds(MessageFormat.format(LoggingMsg.TEST_CASE_DESC, testDataSheet + "." + caseId,
 				this.getClass().getCanonicalName(), desc));
 
-		try {
+		try { 
 
-			PDPValidation.validate();
+			if (proprties.contains(this.singlePDP)) {
+				PDPValidation.validate(singlePDPSearchTerm);
+			}
+			if (proprties.contains(this.bundlePDP)) {
+				PDPValidation.validate(BundlePDPSearchTerm);	
+			}
+
+     if (proprties.contains(this.personalizedPDP)) {
+				PDPValidation.validate(personalizedPDPSearchTerm);	
+			}
+		
+      if (proprties.contains(this.wishListGuestValidation)) {
+                WistListGuestValidation.validate(); 
+            }
+			if (proprties.contains(this.personalizedPDP)) { 
+				PDPValidation.validate(personalizedPDPSearchTerm);	
+			} 
+	 
+
 
 			sassert().assertAll();
 			Common.testPass();

@@ -26,8 +26,10 @@ public class SignInSelectors
 	public static final cselector signInEmailPasswordInput = new cselector("css,[name=logonPassword]", "css,[name=logonPassword].c-custom-input");
 	public static final cselector signInButton = new cselector("css,#logonButton", "css, .t-login__submit-button .pw-button");
 	public static final cselector welcomeMessage = new cselector("css,#welcome");
-	public static final cselector accountMenuIcon = new cselector("css,#gwt_dropdownmenu_my_account", "css,.t-header__my-account");
+	public static final cselector accountMenuIcon = new cselector("css,#gwt_dropdownmenu_my_account", "css,#pwa-my-account-button .pw-button");
 	public static final String accountMenuList = "css,.my-account-controls-modal_class .pw-link";
+	public static final String loadingButton = "css,.loading-button";
+	public static final String logoffLink = "css,[href*=Logoff]";
 
 	public static final String myAccountLink = "css,#myAccount a";
 	public static final String wrongPassword_mail = "css,div>div>form>div.error-form";
