@@ -49,11 +49,12 @@ public class GiftRegistrySelectors {
 	public static final cselector GRListBox = new cselector("css,.gift-registry-list-bx", "css,.m-select_wl_gr_modal.m-select_wl_gr_modal .c-custom-select");
 	public static final cselector addToGiftRegistySelectButton = new cselector("css,#gwt-add-to-gift-registry-modal .primary", "css,.m-select_wl_gr_modal .pw-sheet__content .pw-button");
 	public static final cselector addToGiftRegistyModal = new cselector("css,.gwt-added-to-gift-registry-modal", "css,.m-add-to-registry");
-	public static final cselector viewRegistryButton = new cselector("css,.gwt-added-to-gift-registry-modal .primary", "css,.m-add-to-registry .pw--secondar");
+	public static final cselector viewRegistryButton = new cselector("css,.gwt-added-to-gift-registry-modal .primary", "css,.m-add-to-registry .pw--secondary");
 	public static final cselector productAddedToGRContainer = new cselector("css,.addToCartProductsList", "css,.m-registry-confirmation__image");
 
 	// Gift registry in shopping.
 	public static final cselector addedFromGR = new cselector("css,.from-registry-link", "css,.t-cart__messages-from-customer-registry");
 	public static final cselector miniCartText = new cselector("css,.cartText", "css,.qa-header__cart .pw-badge span>span");
 	public static final cselector cartProductContainer = new cselector("css,.order-item-display-widget-v2", "css,.c-cart-product");
+	public static final String itemInCart = "css,.c-cart-product-item";
 }

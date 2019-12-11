@@ -1050,7 +1050,7 @@ public class SelectorUtil extends SelTestCase {
 			while (!gwtLoadedEventPWA) {
 				Thread.sleep(500);
 				gwtLoadedEventPWA = CheckGWTLoadedEventPWA();
-				if(tries == 15) {
+				if(tries == 30) {
 					throw new NoSuchElementException("Error in Loading GWT.");
 				}
 				tries ++;

@@ -216,6 +216,8 @@ public class SignIn extends SelTestCase {
 
 			// Validate the welcome message if it is exist.
 			if (isPWAMobile) {
+				Thread.sleep(1000);
+				SelectorUtil.waitGWTLoadedEventPWA();
 				WebElement welcomeMessageElement = SelectorUtil.getMenuLinkMobilePWA(logoffhref);
 				String itemHref = welcomeMessageElement.getAttribute("href");
 				if (itemHref.contains(logoffhref)) {

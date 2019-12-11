@@ -5,6 +5,7 @@ import java.text.MessageFormat;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -22,6 +23,7 @@ import com.generic.util.SelectorUtil;
 public class GiftRegistry extends SelTestCase {
 
 	public static String GRPageLink = "GiftRegistryHomeView";
+	public static final String CartPageLink = "/OrderCalculate";
 	public static String type;
 	public static String eventDateMonth;
 	public static String eventDateDay;
@@ -103,9 +105,12 @@ public class GiftRegistry extends SelTestCase {
 	public void validate(String email) throws Exception {
 		getCurrentFunctionName(true);
 		logs.debug("Validate gift registry.");
+		Thread.sleep(1000);
+		SelectorUtil.waitGWTLoadedEventPWA();
 		navigateToGiftRegistry();
 		Thread.sleep(1500);
-		
+		SelectorUtil.waitGWTLoadedEventPWA();
+
 		String createRegistryButtonSelector = GiftRegistrySelectors.createRegistryButtonFG.get();
 		if (isGR()) {
 			createRegistryButtonSelector = GiftRegistrySelectors.createRegistryButtonGR.get();
@@ -343,9 +348,8 @@ public class GiftRegistry extends SelTestCase {
 	*/
 	public static void validateConfirmationModal() throws Exception {
 		getCurrentFunctionName(true);
-		if (isMobile()) {
-			SelectorUtil.waitGWTLoadedEventPWA();
-		}
+		SelectorUtil.waitGWTLoadedEventPWA();
+		Thread.sleep(1000);
 		WebElement confirmationModal = SelectorUtil.getelement(GiftRegistrySelectors.confirmationModalGR.get());
 		sassert().assertTrue(confirmationModal != null,
 				"Error Confirmation gift registry created modal not displayed");
@@ -510,6 +514,7 @@ public class GiftRegistry extends SelTestCase {
 			SelectorUtil.initializeSelectorsAndDoActions(GiftRegistrySelectors.addToGiftRegistySelectButton.get());
 		}
 
+		Thread.sleep(1500);
 		SelectorUtil.waitGWTLoadedEventPWA();
 
 		// Validate product added to gift registry modal.
@@ -524,6 +529,7 @@ public class GiftRegistry extends SelTestCase {
 		// Verify the gift registry contains products.
 		validateAddProductGR();
 
+		SelectorUtil.waitGWTLoadedEventPWA();
 		// Click on add to cart.
 		SelectorUtil.initializeSelectorsAndDoActions(GiftRegistrySelectors.addGRProductToCart.get());
 
@@ -534,8 +540,15 @@ public class GiftRegistry extends SelTestCase {
 		validateAddToCartFromGRModal(numberOfItemAddedToCart);
 
 		// Click "Checkout".
-		SelectorUtil.initializeSelectorsAndDoActions(GiftRegistrySelectors.checkoutFromGRModal.get());
+		if (isMobile()) {
+			WebElement ShoppingCartLink = SelectorUtil.getMenuLinkMobilePWA(CartPageLink);
+			// Navigate to the cart page.
+			SelectorUtil.clickOnWebElement(ShoppingCartLink);
+		} else {
+			SelectorUtil.initializeSelectorsAndDoActions(GiftRegistrySelectors.checkoutFromGRModal.get());
+		}
 
+		Thread.sleep(500);
 		SelectorUtil.waitGWTLoadedEventPWA();
 
 		// Verify that the product is added from Gift registry.
@@ -607,8 +620,15 @@ public class GiftRegistry extends SelTestCase {
 			sassert().assertTrue(addToGRModal != null,
 					"Error: Product added to cart from gift registry modal displayed.");
 		} else {
+			Thread.sleep(500);
 			// No add to cart modal displayed at mobile.
 			int numberOfItemAddedToCart = Integer.parseInt(SelectorUtil.getelement(GiftRegistrySelectors.miniCartText.get()).getText());
+			int tries = 0;
+			while (numberOfItemAddedToCart == oldNumberOfItemAddedToCart && tries < 20) {
+				Thread.sleep(1000);
+				numberOfItemAddedToCart = Integer.parseInt(SelectorUtil.getelement(GiftRegistrySelectors.miniCartText.get()).getText());
+				tries ++;
+			}
 			logs.debug("Number of items after add to cart in mini cart: " + numberOfItemAddedToCart);
 			sassert().assertTrue(oldNumberOfItemAddedToCart < numberOfItemAddedToCart,
 					"Error: Product added corectlly to cart from Gift registry");
@@ -638,6 +658,21 @@ public class GiftRegistry extends SelTestCase {
 	*/
 	public static void validateProductAddedFromGR(int oldNumberOfItemAddedToCart) throws Exception {
 		getCurrentFunctionName(true);
+		if (isMobile()) {
+			if (!SelectorUtil.isElementExist(By.cssSelector(GiftRegistrySelectors.itemInCart))) {
+				boolean gwtValue = SelectorUtil.CheckGWTLoadedEventPWA();
+				int tries = 0;
+				while (gwtValue) {
+					Thread.sleep(1000);
+					gwtValue = SelectorUtil.CheckGWTLoadedEventPWA();
+					if(tries == 50) {
+						throw new NoSuchElementException("Error in Loading GWT.");
+					}
+					logs.debug("Waiting GWT");
+					tries ++;
+				}
+			}
+		}
 		logs.debug("Validate product added to cart from gift registry.");
 		int numberOfItemAddedToCart = SelectorUtil.getAllElements(GiftRegistrySelectors.cartProductContainer.get()).size();
 		logs.debug("Number of items at cart: " + numberOfItemAddedToCart);

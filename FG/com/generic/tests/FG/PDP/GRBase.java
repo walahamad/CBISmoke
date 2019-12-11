@@ -14,6 +14,7 @@ import com.generic.page.GiftRegistry;
 import com.generic.page.Registration;
 import com.generic.page.SignIn;
 import com.generic.selector.GiftRegistrySelectors;
+import com.generic.selector.SignInSelectors;
 import com.generic.setup.Common;
 import com.generic.setup.LoggingMsg;
 import com.generic.setup.SelTestCase;
@@ -22,6 +23,7 @@ import com.generic.tests.FG.login.LoginBase;
 import com.generic.util.RandomUtilities;
 import com.generic.util.ReportUtil;
 import com.generic.util.SASLogger;
+import com.generic.util.SelectorUtil;
 import com.generic.util.dataProviderUtils;
 
 public class GRBase extends SelTestCase {
@@ -114,6 +116,7 @@ public class GRBase extends SelTestCase {
 			giftRegistry.accessValidAccount(email, caseId, runTest, desc);
 		} else {
 			loginBase.LoginRegressionTest(caseId, runTest, desc, "Success login", email, "");
+			SelectorUtil.waitingLoadingButton(SignInSelectors.loadingButton);
 		}
 	}
 }
