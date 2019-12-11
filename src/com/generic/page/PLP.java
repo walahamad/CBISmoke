@@ -80,7 +80,7 @@ public class PLP extends SelTestCase {
 			if (isGR()) {
 				
 				if (!isMobile()) {
-					getDriver().findElements(By.cssSelector(PLPSelectors.GRFilterContainer.get())).get(1).click();
+					SelectorUtil.initializeSelectorsAndDoActions(PLPSelectors.GRFilterContainer.get());
 				}
 				else
 					SelectorUtil.initializeSelectorsAndDoActions(PLPSelectors.GRFilterContainer.get());
@@ -102,7 +102,7 @@ public class PLP extends SelTestCase {
 				SelectorUtil.initializeSelectorsAndDoActions(PLPSelectors.FilterContainerContents.get() , "ForceAction,click");
 			if (isGR()) {
 				if(!isMobile())
-					getDriver().findElements(By.cssSelector(PLPSelectors.GRFilterContainerContents.get())).get(0).click();
+					SelectorUtil.initializeSelectorsAndDoActions(PLPSelectors.GRFilterContainerContents.get(), "ForceAction,click");
 				else
 					SelectorUtil.initializeSelectorsAndDoActions(PLPSelectors.GRFilterContainerContents.get(), "ForceAction,click");
 
@@ -192,7 +192,7 @@ public class PLP extends SelTestCase {
 				}
 				else {
 					SelectorUtil.initializeSelectorsAndDoActions(PLPSelectors.GRDeskTopSorting.get());
-					getDriver().findElements(By.cssSelector(PLPSelectors.GRDeskTopSortingLowtoHIgh.get())).get(1).click();
+					SelectorUtil.initializeSelectorsAndDoActions(PLPSelectors.GRDeskTopSortingLowtoHIgh.get());
 
 				}
 				
@@ -246,7 +246,7 @@ public class PLP extends SelTestCase {
 			boolean result;
 			Thread.sleep(1000);
 
-			if (SelectorUtil.getBrand().contains("GR"))
+			if (isGR())
 				result = SelectorUtil.isImgLoaded(PLPSelectors.productsImagesGR.get());
 			else
 				result = SelectorUtil.isImgLoaded(PLPSelectors.productsImages.get());

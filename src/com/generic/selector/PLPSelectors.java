@@ -22,10 +22,10 @@ public class PLPSelectors {
 	public static final cselector allCatigories = new cselector("","css,div.c-custom-accordion__list-of-items-item>div>div>div>input");
 	public static final cselector GRMobileSorting = new cselector("css,#app-main > div > div:nth-child(2) > div > div > div.u-flexbox.u-direction-column-reverse > div > div.c-product-list__container-sort-option.u-flex-1 > div > div > div > select");
 	public static final cselector GRDeskTopSorting = new cselector("css,.unbxd-all-sort-options .selected-option-span");
-	public static final cselector GRDeskTopSortingLowtoHIgh = new cselector("css,.unbxd-sort-options-anchors .unbxd-sort-by-option-anchor");
+	public static final cselector GRDeskTopSortingLowtoHIgh = new cselector("css,#unbxd-sort-options-container > div > div > a:nth-child(2)");
 
-	public static final cselector GRFilterContainer = new cselector(".selected-option-span","css,div.pw-accordion__close-icon");
-	public static final cselector GRFilterContainerContents = new cselector(".unbxd-facet-option-checkbox input","css,.u-text-letter-spacing-0 > div");
+	public static final cselector GRFilterContainer = new cselector("css,#text-facets-container-panel > div:nth-child(1) > span","css,div.pw-accordion__close-icon");
+	public static final cselector GRFilterContainerContents = new cselector("css,.unbxd-facet-option-checkbox input","css,.u-text-letter-spacing-0 > div");
 	public static final cselector GRallCatigories = new cselector("","css,.pw-field__label-wrap.pw--end > label > div > div > div");
 
 }
