@@ -4,8 +4,8 @@ import com.generic.setup.cselector;
 
 public class GiftRegistrySelectors {
 	public static final String GRLink = "css,#giftregistry a";
-	public static final cselector createRegistryButtonFG = new cselector("css,.create-registry","css,.responsive-content .create-registry");
-	public static final cselector createRegistryButtonGR = new cselector("css,[onclick*=submitCreateRegisty]","css,.responsive-content [onclick*=submitCreateRegisty]");
+	public static final cselector FGCreateRegistryButton = new cselector("css,.create-registry","css,.responsive-content .create-registry");
+	public static final cselector GRCreateRegistryButton = new cselector("css,[onclick*=submitCreateRegisty]","css,.responsive-content [onclick*=submitCreateRegisty]");
 
 	// Gift registry step one.
 	public static final cselector eventType = new cselector("css,#event_type_id","css,.t-gift-registry-information #event_type_id");

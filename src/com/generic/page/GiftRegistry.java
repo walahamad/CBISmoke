@@ -46,6 +46,16 @@ public class GiftRegistry extends SelTestCase {
 	public String userCompanyName;
 	public String userAddressLine1;
 	public String userPhone;
+	
+	// Contact input text values
+	public String firstNameInput;
+	public String lastNameInput;
+	public String emailAddressInput;
+	public String streetAddressInput;
+	public String cityAddressInput;
+	public String regionAddressInput;
+	public String zipCodeInput;
+	public String phoneInput;
 
 	/**
 	* Set initial values for Gift registry.
@@ -111,9 +121,9 @@ public class GiftRegistry extends SelTestCase {
 		Thread.sleep(1500);
 		SelectorUtil.waitGWTLoadedEventPWA();
 
-		String createRegistryButtonSelector = GiftRegistrySelectors.createRegistryButtonFG.get();
+		String createRegistryButtonSelector = GiftRegistrySelectors.FGCreateRegistryButton.get();
 		if (isGR()) {
-			createRegistryButtonSelector = GiftRegistrySelectors.createRegistryButtonGR.get();
+			createRegistryButtonSelector = GiftRegistrySelectors.GRCreateRegistryButton.get();
 		}
 
 		SelectorUtil.initializeSelectorsAndDoActions(createRegistryButtonSelector);
@@ -272,23 +282,23 @@ public class GiftRegistry extends SelTestCase {
 		LinkedHashMap<String, String> addressDetails = userAddressDetails;
 		setValidateContactInformation(false);
 		// Select the addresses from the form.
-		final String firstName = getElementText(GiftRegistrySelectors.firstNameGR.get());
-		final String lastName = getElementText(GiftRegistrySelectors.lastNameGR.get());
-		final String emailAddress = getElementText(GiftRegistrySelectors.emailAddressGR.get());
-		final String streetAddress = getElementText(GiftRegistrySelectors.streetAddressGR.get());
-		final String cityAddress = getElementText(GiftRegistrySelectors.cityAddressGR.get());
+		firstNameInput = getElementText(GiftRegistrySelectors.firstNameGR.get());
+		lastNameInput = getElementText(GiftRegistrySelectors.lastNameGR.get());
+		emailAddressInput = getElementText(GiftRegistrySelectors.emailAddressGR.get());
+		streetAddressInput = getElementText(GiftRegistrySelectors.streetAddressGR.get());
+		cityAddressInput = getElementText(GiftRegistrySelectors.cityAddressGR.get());
 		SelectorUtil.initializeSelectorsAndDoActions(GiftRegistrySelectors.regionAddressGR.get());
-		final String regionAddress = SelectorUtil.textValue.get();
-		final String zipCode = getElementText(GiftRegistrySelectors.zipCodeGR.get());
-		final String phone = getElementText(GiftRegistrySelectors.phoneGR.get()).replace("-", "");
+		regionAddressInput = SelectorUtil.textValue.get();
+		zipCodeInput = getElementText(GiftRegistrySelectors.zipCodeGR.get());
+		phoneInput = getElementText(GiftRegistrySelectors.phoneGR.get()).replace("-", "");
 		logs.debug("User information: ");
-		logs.debug("First name: " + firstName);
-		logs.debug("Last name: " + lastName);
-		logs.debug("Email address: " + emailAddress);
-		logs.debug("City: " + cityAddress);
-		logs.debug("Region: " + regionAddress);
-		logs.debug("Zip code: " + zipCode);
-		logs.debug("Phone: " + phone);
+		logs.debug("First name: " + firstNameInput);
+		logs.debug("Last name: " + lastNameInput);
+		logs.debug("Email address: " + emailAddressInput);
+		logs.debug("City: " + cityAddressInput);
+		logs.debug("Region: " + regionAddressInput);
+		logs.debug("Zip code: " + zipCodeInput);
+		logs.debug("Phone: " + phoneInput);
 
 		if (!createdAccount) {
 			// Sign in user.
@@ -300,14 +310,14 @@ public class GiftRegistry extends SelTestCase {
 				String zipCodeValue = (String)((LinkedHashMap<String, Object>) address).get(AddressBook.shippingAddress.keys.zipcode);
 				String phoneValue = (String)((LinkedHashMap<String, Object>) address).get(AddressBook.shippingAddress.keys.phone);
 
-				boolean validateFirstName = firstName.equals(firstNameValue);
-				boolean validateLastName = lastName.equals(lastNameValue);
-				boolean validateEmail= emailAddress.equals(email);
-				boolean validateStreetAddress = streetAddress.equals(streetAddressValue);
-				boolean validateCity= cityAddress.equals(cityValue);
-				boolean validateRegion = regionAddress.equalsIgnoreCase(cityValue);
-				boolean validateZipCode = zipCode.equals(zipCodeValue);
-				boolean validatePhone = phone.equals(phoneValue);
+				boolean validateFirstName = firstNameInput.equals(firstNameValue);
+				boolean validateLastName = lastNameInput.equals(lastNameValue);
+				boolean validateEmail= emailAddressInput.equals(email);
+				boolean validateStreetAddress = streetAddressInput.equals(streetAddressValue);
+				boolean validateCity= cityAddressInput.equals(cityValue);
+				boolean validateRegion = regionAddressInput.equalsIgnoreCase(cityValue);
+				boolean validateZipCode = zipCodeInput.equals(zipCodeValue);
+				boolean validatePhone = phoneInput.equals(phoneValue);
 
 				if (validateFirstName && validateLastName && validateEmail && validateStreetAddress && validateCity &&
 						validateRegion && validateZipCode && validatePhone) {
@@ -403,48 +413,37 @@ public class GiftRegistry extends SelTestCase {
 	*
 	* @throws Exception
 	*/
-	public static boolean validateContactInfo(String firstName,String lastName,String emailAddress,String streetAddress,String cityAddress,String regionAddress,String zipCode,String phone) throws Exception {
+	public boolean validateContactInfo(String firstName,String lastName,String emailAddress,String streetAddress,String cityAddress,String regionAddress,String zipCode,String phone) throws Exception {
 
 		getCurrentFunctionName(true);
 		boolean validateContactInformation = true;
 
-		// Select the addresses from the form.
-		String firstNameValue = getElementText(GiftRegistrySelectors.firstNameGR.get());
-		String lastNameValue = getElementText(GiftRegistrySelectors.lastNameGR.get());
-		String emailAddressValue = getElementText(GiftRegistrySelectors.emailAddressGR.get());
-		String streetAddressValue = getElementText(GiftRegistrySelectors.streetAddressGR.get());
-		String cityAddressValue = getElementText(GiftRegistrySelectors.cityAddressGR.get());
-		SelectorUtil.initializeSelectorsAndDoActions(GiftRegistrySelectors.regionAddressGR.get());
-		String regionAddressValue = SelectorUtil.textValue.get();
-		String zipCodeValue = getElementText(GiftRegistrySelectors.zipCodeGR.get());
-		String phoneValue = getElementText(GiftRegistrySelectors.phoneGR.get()).replace("-", "");
-
 		// Validate the contact information.
-		boolean validateFirstName = firstNameValue.equals(firstName);
-		boolean validateLastName = lastNameValue.equals(lastName);
-		boolean validateEmail= emailAddressValue.equals(emailAddress);
-		boolean validateStreetAddress = streetAddressValue.equals(streetAddress);
-		boolean validateCity= cityAddressValue.equals(cityAddress);
-		boolean validateRegion = regionAddressValue.toLowerCase().equals(regionAddress.toLowerCase());
-		boolean validateZipCode = zipCodeValue.equals(zipCode);
-		boolean validatePhone = phoneValue.equals(phone);
+		boolean validateFirstName = firstNameInput.equals(firstName);
+		boolean validateLastName = lastNameInput.equals(lastName);
+		boolean validateEmail= emailAddressInput.equals(emailAddress);
+		boolean validateStreetAddress = streetAddressInput.equals(streetAddress);
+		boolean validateCity= cityAddressInput.equals(cityAddress);
+		boolean validateRegion = regionAddressInput.toLowerCase().equals(regionAddress.toLowerCase());
+		boolean validateZipCode = zipCodeInput.equals(zipCode);
+		boolean validatePhone = phoneInput.equals(phone);
 
 		sassert().assertTrue(validateFirstName,
-				"Error first name is not as expected" + firstName + " : " + firstNameValue);
+				"Error first name is not as expected" + firstName + " : " + firstNameInput);
 		sassert().assertTrue(validateLastName,
-				"Error last name is not as expected" + lastName + " : " + lastNameValue);
+				"Error last name is not as expected" + lastName + " : " + lastNameInput);
 		sassert().assertTrue(validateEmail,
-				"Error email address is not as expected" + emailAddress + " : " + emailAddressValue);
+				"Error email address is not as expected" + emailAddress + " : " + emailAddressInput);
 		sassert().assertTrue(validateStreetAddress,
-				"Error street address not as expected" + streetAddress + " : " + streetAddressValue);
+				"Error street address not as expected" + streetAddress + " : " + streetAddressInput);
 		sassert().assertTrue(validateCity,
-				"Error city address is not as expected" + cityAddress + " : " + cityAddressValue);
+				"Error city address is not as expected" + cityAddress + " : " + cityAddressInput);
 		sassert().assertTrue(validateRegion,
-				"Error region address is not as expected" + regionAddress + " : " + regionAddressValue);
+				"Error region address is not as expected" + regionAddress + " : " + regionAddressInput);
 		sassert().assertTrue(validateZipCode,
-				"Error zip code is not as expected" + zipCode + " : " + zipCodeValue);
+				"Error zip code is not as expected" + zipCode + " : " + zipCodeInput);
 		sassert().assertTrue(validatePhone,
-				"Error phone is not as expected" + phone + " : " + phoneValue);
+				"Error phone is not as expected" + phone + " : " + phoneInput);
 
 		if (!validateFirstName || !validateLastName ||
 				!validateEmail ||
