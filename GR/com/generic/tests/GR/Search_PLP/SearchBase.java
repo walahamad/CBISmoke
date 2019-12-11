@@ -1,4 +1,4 @@
-package com.generic.tests.FG.Search_PLP;
+package com.generic.tests.GR.Search_PLP;
 
 import java.text.MessageFormat;
 import java.util.Arrays;
