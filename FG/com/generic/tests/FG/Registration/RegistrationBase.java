@@ -2,18 +2,13 @@ package com.generic.tests.FG.Registration;
 
 import java.text.MessageFormat;
 import java.util.Arrays;
-import java.util.LinkedHashMap;
-
-import org.junit.runners.Parameterized.Parameters;
 import org.testng.Assert;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.xml.XmlTest;
-
 import com.generic.page.Registration;
 import com.generic.setup.Common;
-import com.generic.setup.GlobalVariables;
 import com.generic.setup.LoggingMsg;
 import com.generic.setup.SelTestCase;
 import com.generic.setup.SheetVariables;
@@ -90,8 +85,6 @@ public class RegistrationBase extends SelTestCase {
 		String stateValidation = (fieldsValidation.split("StateValidation:").length >2) ? fieldsValidation.split("StateValidation:")[0].split("\n")[0]:"";
 		String ZIPCodeValidation = (fieldsValidation.split("ZIPCodeValidation:").length >2) ? fieldsValidation.split("ZIPCodeValidation:")[0].split("\n")[0]:"";
 		String PhoneValidation = (fieldsValidation.split("PhoneValidation:").length >2) ? fieldsValidation.split("PhoneValidation:")[0].split("\n")[0]:"";
-		String schoolValidation = (fieldsValidation.split("schoolValidation:").length >2) ? fieldsValidation.split("schoolValidation:")[0].split("\n")[0]:"";
-		String termsValidation = (fieldsValidation.split("AcceptTermsValidation:").length >2) ? fieldsValidation.split("AcceptTermsValidation:")[0].split("\n")[0]:"";
 		
 		
 		
@@ -106,26 +99,12 @@ public class RegistrationBase extends SelTestCase {
 				sassert().assertTrue(registrationSuccessMsg.toLowerCase().contains(thankUMsg), "Regestration Success, validation failed Expected to have in message: " + thankUMsg +" but Actual message is: " + registrationSuccessMsg);
 			}
 			
-			//click on register new user button
-			Registration.goToRegistrationForm();
-
 			// Negative registration case
 			if (proprties.contains(emptyData)) {
-				Registration.clickRegisterButton();
 				
-				//>>>>>>>>>>>>>>>>Error messages to be updated in the excel sheet<<<<<<<<<<<<<<<<<<<<<<<<<<<
-				/*
-				 * firstNameValidation:Please enter First Name. 
-				 * lastNameValidation:Please enter Last Name. 
-				 * EmailValidation:Please enter Email Address.
-				 * EmailConfValidation:Please Re-Enter Email Address. 
-				 * PasswordValidation:Please Enter Password. PasswordConfValidation:Please Re-Enter Password.
-				 * StreetAddress1Validation:Please enter Street Address 1. 
-				 * CityValidation:Please enter City. 
-				 * StateValidation:Please select a State/Province.
-				 * ZIPCodeValidation:Please enter ZIP/Postal Code. 
-				 * PhoneValidation:Please enter a Daytime phone number, including area code (US Only).
-				 */
+				Registration.goToRegistrationForm();
+				
+				Registration.clickRegisterButton();
 				
 				String validationMsg = "";
 				
@@ -150,8 +129,6 @@ public class RegistrationBase extends SelTestCase {
 				
 				//Sleeping for 1 Second
 				Thread.sleep(1000);
-				
-				//>>>>>>>>>>>>>>Password field needs to be filled in the excel sheet with P@ssword1<<<<<<<<<<<<<<<<<
 				
 				//Filling 1st step with valid Data to check 2nd step
 				Registration.fillRegistrationFirstStep(email,email,password,password);
