@@ -1,9 +1,11 @@
 package com.generic.tests.FG.Cart;
 
+import java.text.MessageFormat;
 import java.util.List;
 import com.generic.page.Cart;
 import com.generic.page.CheckOut;
 import com.generic.setup.GlobalVariables;
+import com.generic.setup.LoggingMsg;
 import com.generic.setup.SelTestCase;
 import com.generic.page.PDP;
 
@@ -17,7 +19,7 @@ public class CartValidation extends SelTestCase {
 
 		PDP.addProductsToCart();
 		
-		if (!getBrowserName().contains(GlobalVariables.browsers.iPhone))
+		if (!isMobile())
 			PDP.clickAddToCartCloseBtn();
 		
 	}
@@ -41,19 +43,19 @@ public class CartValidation extends SelTestCase {
 		sassert().assertTrue(Cart.checkAddedItemTotalPriceDisplay(),
 				"Added item total price displayed validation has some problems");
 
-		List<String> firstAddedElementsOptions = Cart.getFirstSavedItemsOptions();
+		String optionsBefore = Cart.getFirstSavedItemsOptions();
 		
+		Thread.sleep(2000);
+
 		//Perform edit on first product in cart
 		Cart.editOptions();
-	
-		List<String> lastAddElementsOptions = Cart.getlastAddedItemsOptions();
-		boolean edited = false;
-		for (int i = 0; i < firstAddedElementsOptions.size(); i++) {
-			edited = edited || !firstAddedElementsOptions.get(i).equals(lastAddElementsOptions.get(i));
-		}
-
+		
+		Thread.sleep(3000);
+		
+		String optionsAfter = Cart.getlastAddedItemsOptions();
+				
 		//Check if the edit is saved correctly
-		sassert().assertTrue(edited, "Edit item validation has some problems");
+		sassert().assertTrue(!optionsBefore.equals(optionsAfter), "Edit item validation has some problems");
 		
 		//Save total before moving item
 		String totalPriceBeforeMove = Cart.getTotalPrice();
@@ -61,25 +63,29 @@ public class CartValidation extends SelTestCase {
 		//Moving item
 		Cart.clickMoveToWishListBtnForSavedItem();
 
+		Thread.sleep(3000);
+
 		//Save total again 
 		String totalPriceAfterMove = Cart.getTotalPrice();
 		
 		//Compare total values
-		boolean move = false;
-		move = !totalPriceBeforeMove.equals(totalPriceAfterMove);
+		sassert().assertTrue(!totalPriceBeforeMove.equals(totalPriceAfterMove), "Move item to wish list validation has some problems");
 
-		sassert().assertTrue(move, "Move item to wish list validation has some problems");
-
+		Thread.sleep(2000);
 		sassert().assertTrue(Cart.verifySavedList(), "Saved list validation has some problems");
+		
+		Thread.sleep(2000);
 		Cart.moveItemsToCartFromWishlist();
 		
 		//Deletion and total before and after
 		String totalPriceBeforeDelete = Cart.getTotalPrice();
+		
 		Cart.clickRemoveBtnForSavedItem();
+		
+		Thread.sleep(2000);
+		
 		String totalPriceAfterDelete = Cart.getTotalPrice();
-		boolean remove = false;
-		remove = !totalPriceBeforeDelete.equals(totalPriceAfterDelete);
-		sassert().assertTrue(remove, "Remove item validation has some problems");
+		sassert().assertTrue(!totalPriceBeforeDelete.equals(totalPriceAfterDelete), "Remove item validation has some problems");
 
 	}
 
