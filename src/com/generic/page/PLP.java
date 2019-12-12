@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
 import com.generic.selector.PLPSelectors;
@@ -76,9 +77,16 @@ public class PLP extends SelTestCase {
 			getCurrentFunctionName(true);
 			if(isFG())
 				SelectorUtil.initializeSelectorsAndDoActions(PLPSelectors.FilterContainer.get());
-			if(isGR())
-				SelectorUtil.initializeSelectorsAndDoActions(PLPSelectors.GRFilterContainer.get());
-			getCurrentFunctionName(false);
+			if (isGR()) {
+				
+				if (!isMobile()) {
+					SelectorUtil.initializeSelectorsAndDoActions(PLPSelectors.GRFilterContainer.get());
+				}
+				else
+					SelectorUtil.initializeSelectorsAndDoActions(PLPSelectors.GRFilterContainer.get());
+
+			}
+				getCurrentFunctionName(false);
 		} catch (NoSuchElementException e) {
 			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
 			}.getClass().getEnclosingMethod().getName()));
@@ -92,8 +100,13 @@ public class PLP extends SelTestCase {
 			getCurrentFunctionName(true);
 			if(isFG())
 				SelectorUtil.initializeSelectorsAndDoActions(PLPSelectors.FilterContainerContents.get() , "ForceAction,click");
-			if (isGR())
-				SelectorUtil.initializeSelectorsAndDoActions(PLPSelectors.GRFilterContainerContents.get(), "ForceAction,click");
+			if (isGR()) {
+				if(!isMobile())
+					SelectorUtil.initializeSelectorsAndDoActions(PLPSelectors.GRFilterContainerContents.get(), "ForceAction,click");
+				else
+					SelectorUtil.initializeSelectorsAndDoActions(PLPSelectors.GRFilterContainerContents.get(), "ForceAction,click");
+
+			}
 			
 			if(isMobile())
 			{
@@ -177,6 +190,12 @@ public class PLP extends SelTestCase {
 				{
 					SelectorUtil.initializeSelectorsAndDoActions(PLPSelectors.GRMobileSorting.get(),"FFF2");
 				}
+				else {
+					SelectorUtil.initializeSelectorsAndDoActions(PLPSelectors.GRDeskTopSorting.get());
+					SelectorUtil.initializeSelectorsAndDoActions(PLPSelectors.GRDeskTopSortingLowtoHIgh.get());
+
+				}
+				
 			}
 			getCurrentFunctionName(false);
 
@@ -224,8 +243,14 @@ public class PLP extends SelTestCase {
 	public static boolean verifyProductImagesDisplayed() throws InterruptedException {
 		try {
 			getCurrentFunctionName(true);
+			boolean result;
 			Thread.sleep(1000);
-			boolean result =  SelectorUtil.isImgLoaded(PLPSelectors.productsImages.get());
+
+			if (isGR())
+				result = SelectorUtil.isImgLoaded(PLPSelectors.productsImagesGR.get());
+			else
+				result = SelectorUtil.isImgLoaded(PLPSelectors.productsImages.get());
+
 			getCurrentFunctionName(false);
 			return result ; 
 		} catch (NoSuchElementException e) {
