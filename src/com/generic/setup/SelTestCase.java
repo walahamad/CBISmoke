@@ -362,7 +362,6 @@ public class SelTestCase {
     	logs.debug("loading data store");
     	users = Common.readUsers();
 		addresses = Common.readAddresses();
-		invintory = Common.readLocalInventory();
 		paymentCards = Common.readPaymentcards();
 		
     }

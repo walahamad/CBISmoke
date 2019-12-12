@@ -62,13 +62,13 @@ public class RegistrationBase extends SelTestCase {
 		getBrowserWait(testObject.getParameter("browserName"));
 		dataProviderUtils TDP = dataProviderUtils.getInstance();
 		Object[][] data = TDP.getData(testDataSheet);
-		Testlogs.get().debug(Arrays.deepToString(data).replace("\n", "--"));
+		Testlogs.get().debug(Arrays.deepToString(data).replace("\n", "<br>--"));
 		return data;
 	}
 
 	@SuppressWarnings("unchecked") // avoid warning from linked hashmap
 	@Test(dataProvider = "Registration")
-	public void registrationRegressionTest(String caseId, String runTest, String desc, String proprties, String type,
+	public void registrationRegressionTest(String caseId, String runTest, String desc, String proprties,
 			String password, String fieldsValidation) throws Exception {
 		
 		Testlogs.set(new SASLogger("registration "+getBrowserName()));
