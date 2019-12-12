@@ -46,11 +46,16 @@ public class GiftRegistrySelectors {
 	// Gift registry at PDP
 	public static final cselector selectGRModal = new cselector("css,#gwt-add-to-gift-registry-modal", "css,.m-select_wl_gr_modal");
 	public static final cselector saveToGR = new cselector("css,#gift-registry-btn", "css,.t-product-details #gift-registry-btn");
-	public static final cselector GRListBox = new cselector("css,.gift-registry-list-bx", "css,.m-select_wl_gr_modal.m-select_wl_gr_modal .c-custom-select");
-	public static final cselector addToGiftRegistySelectButton = new cselector("css,#gwt-add-to-gift-registry-modal .primary", "css,.m-select_wl_gr_modal .pw-sheet__content .pw-button");
+	public static final cselector FGListBoxGR = new cselector("css,.gift-registry-list-bx", "css,.m-select_wl_gr_modal.m-select_wl_gr_modal .c-custom-select");
+	public static final cselector GRListBoxGR = new cselector("css,.gift-registry-list-bx", "css,.m-select_wl_gr_modal.m-select_wl_gr_modal select");
+
+	public static final cselector FGAddToGiftRegistySelectButton = new cselector("css,#gwt-add-to-gift-registry-modal .primary", "css,.m-select_wl_gr_modal .pw-sheet__content .pw-button");
+	public static final cselector GRAddToGiftRegistySelectButton = new cselector("css,#gwt-add-to-gift-registry-modal .primary", "css,.m-select_wl_gr_modal .pw--primary");
+
 	public static final cselector addToGiftRegistyModal = new cselector("css,.gwt-added-to-gift-registry-modal", "css,.m-add-to-registry");
 	public static final cselector viewRegistryButton = new cselector("css,.gwt-added-to-gift-registry-modal .primary", "css,.m-add-to-registry .pw--secondary");
 	public static final cselector productAddedToGRContainer = new cselector("css,.addToCartProductsList", "css,.m-registry-confirmation__image");
+	public static final String movableMiniCart = "css,.c-movable-cart-item-counter-badge";
 
 	// Gift registry in shopping.
 	public static final cselector addedFromGR = new cselector("css,.from-registry-link", "css,.t-cart__messages-from-customer-registry");

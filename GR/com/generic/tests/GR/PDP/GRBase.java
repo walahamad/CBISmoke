@@ -35,6 +35,8 @@ public class GRBase extends SelTestCase {
 	private static ThreadLocal<SASLogger> Testlogs = new ThreadLocal<SASLogger>();
 	GiftRegistry giftRegistry = new GiftRegistry();
 
+	public static final String singlePDPSearchTerm = "lights";
+
 	public String userMail;
 	public String userPassword;
 	public LinkedHashMap<String, String> addressDetails;
@@ -76,7 +78,7 @@ public class GRBase extends SelTestCase {
 
 		try {
 			accessValidAccount(email, caseId, runTest, desc);
-			GiftRegistry.setRegistryInformtion(registryType, eventDateMonth, eventDateDay, eventDateYear, emptyMessage);
+			GiftRegistry.setRegistryInformtion(registryType, eventDateMonth, eventDateDay, eventDateYear, emptyMessage, singlePDPSearchTerm);
 			if (!email.equals("")) {
 				LinkedHashMap<String, String> userdetails = (LinkedHashMap<String, String>) users.get(email);
 				userMail = getSubMailAccount(userdetails.get(Registration.keys.email));
