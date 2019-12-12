@@ -5,14 +5,14 @@ import com.generic.setup.cselector;
 public class RegistrationSelectors {
 	//Done CBI Smoke
 	//Navigation
-	public static final String closeOfferButtonGH = "css,#Close1-Item4 .offer-control";
-	public static final String registrationButton = "css, div.spot:nth-child(3) > button:nth-child(1)";
+	public static final cselector closeOfferButtonGH = new cselector("css,#Close1-Item4 .offer-control");
+	public static final cselector registrationButton = new cselector("css, div.spot:nth-child(3) > button:nth-child(1)");
 	public static final cselector registrationButtonRY = new cselector("css,.registration a","css,.t-registration-panel__action .pw-button__inner");
-	public static final String mobileRegistrationButton= "css,button.pw-button:nth-child(2)";
-	public static final String mobileRegistrationButtonGH= "css,.t-registration-panel__button";
-	public static final String mobileRegistrationTab ="css,#app-main > div > div > div > div.pw-tabs__strip-container > ol > li.pw-tabs__tab.pw--is-active > a";
-	public static final String mobileRegistrationTabGH ="css,.pw-tabs__link";				
-	public static final String registerBtn = "css,#continue";
+	public static final cselector mobileRegistrationButton= new cselector("css,button.pw-button:nth-child(2)");
+	public static final cselector mobileRegistrationButtonGH= new cselector("css,.t-registration-panel__button");
+	public static final cselector mobileRegistrationTab =new cselector("css,#app-main > div > div > div > div.pw-tabs__strip-container > ol > li.pw-tabs__tab.pw--is-active > a");
+	public static final cselector mobileRegistrationTabGH =new cselector("css,.pw-tabs__link");				
+	public static final cselector registerBtn = new cselector("css,#continue");
 	public static final cselector saveButton = new cselector("css,#gwt_billshipaddr_btn > button","css,#register-form > div.pw-field-row.t-registration__continue-button > button");
 	
 	//Fields of 1st step
@@ -40,32 +40,32 @@ public class RegistrationSelectors {
 	//Error messages  
 	
 	//Mobile
-	public static final String emailAddressErrorMobile ="css,.c-custom-input-error";
-	public static final String confEmailAddressErrorMobile = "css,.c-custom-input-error";
-	public static final String passwordRulesErrorMobile = "css,.c-custom-input-error";
-	public static final String confirmPasswordErrorMobile = "css,.c-custom-input-error"; 
+	public static final cselector emailAddressErrorMobile =new cselector("css,.c-custom-input-error");
+	public static final cselector confEmailAddressErrorMobile = new cselector("css,.c-custom-input-error");
+	public static final cselector passwordRulesErrorMobile = new cselector("css,.c-custom-input-error");
+	public static final cselector confirmPasswordErrorMobile = new cselector("css,.c-custom-input-error"); 
 	
-	public static final String firstNameErrorMobile ="css,.c-custom-input-error";
-	public static final String lastNameErrorMobile ="css,.c-custom-input-error";
-	public static final String streetAddreesErrorMobile ="css,.c-custom-input-error";
-	public static final String cityErrorMobile ="css,.c-custom-input-error";
-	public static final String stateErrorMobile ="css,#register-form > div:nth-child(1) > div:nth-child(2) > div > div > div > div:nth-child(7) > div > div.pw-field__error";
-	public static final String ZIPCodeErrorMobile ="css,.c-custom-input-error";
-	public static final String phoneErrorMobile ="css,.c-custom-input-error";
+	public static final cselector firstNameErrorMobile =new cselector("css,.c-custom-input-error");
+	public static final cselector lastNameErrorMobile =new cselector("css,.c-custom-input-error");
+	public static final cselector streetAddreesErrorMobile =new cselector("css,.c-custom-input-error");
+	public static final cselector cityErrorMobile =new cselector("css,.c-custom-input-error");
+	public static final cselector stateErrorMobile =new cselector("css,#register-form > div:nth-child(1) > div:nth-child(2) > div > div > div > div:nth-child(7) > div > div.pw-field__error");
+	public static final cselector ZIPCodeErrorMobile =new cselector("css,.c-custom-input-error");
+	public static final cselector phoneErrorMobile =new cselector("css,.c-custom-input-error");
 	
 	//Desktop
-	public static final String emailAddressError =  "css,#error-div-logonId";	
-	public static final String confEmailAddressError = "css,#error-div-verifyLogonId";
-	public static final String passwordRulesError = "css,#error-div-logonPassword";
-	public static final String confirmPasswordError = "css,#error-div-logonPasswordVerify"; 
+	public static final cselector emailAddressError = new cselector( "css,#error-div-logonId");	
+	public static final cselector confEmailAddressError = new cselector("css,#error-div-verifyLogonId");
+	public static final cselector passwordRulesError = new cselector("css,#error-div-logonPassword");
+	public static final cselector confirmPasswordError = new cselector("css,#error-div-logonPasswordVerify"); 
 	
-	public static final String firstNameError = "css,#error-div-bill_fnbox";
-	public static final String lastNameError = "css,#error-div-bill_lnbox";
-	public static final String streetAddreesError = "css,#error-div-bill_sa1box";
-	public static final String cityError = "css,#error-div-bill_citybox";
-	public static final String stateError ="css,#error-div-bill_region";
-	public static final String ZIPCodeError = "css,#error-div-bill_zipbox";
-	public static final String phoneError = "css,#error-div-bill_phone1box";
+	public static final cselector firstNameError = new cselector("css,#error-div-bill_fnbox");
+	public static final cselector lastNameError = new cselector("css,#error-div-bill_lnbox");
+	public static final cselector streetAddreesError =new cselector( "css,#error-div-bill_sa1box");
+	public static final cselector cityError = new cselector("css,#error-div-bill_citybox");
+	public static final cselector stateError =new cselector("css,#error-div-bill_region");
+	public static final cselector ZIPCodeError = new cselector("css,#error-div-bill_zipbox");
+	public static final cselector phoneError = new cselector("css,#error-div-bill_phone1box");
 	
 
 	
