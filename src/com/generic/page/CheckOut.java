@@ -1650,9 +1650,9 @@ public class CheckOut extends SelTestCase {
 		public static String getItemsSubTotal() throws Exception {
 			try {
 				getCurrentFunctionName(true);
-				String itemstotal = Cart.getItemSubTotal();
+				//String itemstotal = Cart.getItemSubTotal();
 				getCurrentFunctionName(false);
-				return itemstotal;
+				return "";
 			} catch (NoSuchElementException e) {
 				logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
 				}.getClass().getEnclosingMethod().getName()));
