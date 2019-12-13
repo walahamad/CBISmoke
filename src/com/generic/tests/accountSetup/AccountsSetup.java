@@ -77,9 +77,9 @@ public class AccountsSetup extends SelTestCase {
 			Testlogs.get().debug((String) userdetails.get(Registration.keys.password));
 
 			Registration.goToRegistrationForm();
-			Registration.fillAndClickRegister("Accept", "tester", Pemail,"Elmira College", 
-					(String) userdetails.get(Registration.keys.password),
-					(String) userdetails.get(Registration.keys.password),"",  addressDetails);
+			//Registration.fillAndClickRegister("Accept", "tester", Pemail,"Elmira College", 
+			//		(String) userdetails.get(Registration.keys.password),
+			//		(String) userdetails.get(Registration.keys.password),"",  addressDetails);
 			
 			String registrationSuccessMsg = Registration.getRegistrationSuccessMessage();
 			sassert().assertTrue(registrationSuccessMsg.toLowerCase().contains("Thank you for registering."), 
