@@ -928,7 +928,7 @@ public static boolean validateSelectRegistryOrWishListModalIsDisplayed() throws 
 						+ PDPSelectors.addPersonalizedButton.get().replace("css,", "");
 				logs.debug("addPersonalizedButtonSelector:  " + addPersonalizedButtonSelector);
 			}
-			SelectorUtil.isDisplayed(addPersonalizedButtonSelector);
+			isDisplayed = SelectorUtil.isDisplayed(addPersonalizedButtonSelector);
 			getCurrentFunctionName(false);
 			return isDisplayed;
 		} catch (NoSuchElementException e) {
@@ -993,10 +993,12 @@ public static boolean validateSelectRegistryOrWishListModalIsDisplayed() throws 
 		}
 	}
 	public static void clickPersonalizationSaveAndCloseButtonForiPhone() throws Exception {
+		getCurrentFunctionName(true);
 		List<WebElement> elementsList = SelectorUtil.getAllElements(PDPSelectors.personalizedItems.get());
 		WebElement element = elementsList.get(elementsList.size() - 1);
 		SelectorUtil.clickOnWebElement(element);
 		clickPersonalizationSaveAndCloseButton();
+		getCurrentFunctionName(false);
 	}
 
 		
@@ -1090,18 +1092,22 @@ public static boolean validateSelectRegistryOrWishListModalIsDisplayed() throws 
 	
 	public static void closeOpendItem( )throws Exception {
 		try {
+			getCurrentFunctionName(true);
 			WebElement e = SelectorUtil.getelement(PDPSelectors.personalizedOpenItem.get());
 			SelectorUtil.clickOnWebElement(e);
+			getCurrentFunctionName(false);
 		} catch (NoSuchElementException e) {
 		}
 		
 	}
 	
 	public static boolean validateTotalPriceAfterAddedPersonalized(String intialPrice , String finalPrice) throws Exception {
+		getCurrentFunctionName(true);
 		boolean isChanged = true;
 		if (intialPrice.equals(finalPrice)) {
 			isChanged = false;
 		}
+		getCurrentFunctionName(false);
 		return isChanged;
 
 	}
@@ -1124,8 +1130,10 @@ public static boolean validateSelectRegistryOrWishListModalIsDisplayed() throws 
 	}
 	
 	public static boolean validatePersonalizedModal() throws Exception {
+		getCurrentFunctionName(true);
 		boolean isDisplayed = true;
 		isDisplayed = SelectorUtil.isDisplayed(PDPSelectors.personlizedModal.get());
+		getCurrentFunctionName(false);
 		return isDisplayed;
 
 	}
