@@ -30,7 +30,7 @@ public class PDPSelectors {
 	public static final cselector chooseYourItems = new cselector("gwt-choose-your-item-btn");
 	public static final cselector numberOfBundleItems = new cselector("css,.gwt-product-detail-products-container>.gwt-product-detail-widget","css,.t-product-details-heading__price.t-product-details__price>div");	
 	public static final cselector itemsID = new cselector("css,.gwt-product-detail-products-container>.gwt-product-detail-widget");	
-	public static final cselector addToCartModal = new cselector("css,.gwt-DialogBox.ok-cancel-dlog.gwt_addtocart_div");
+	public static final cselector addToCartModal = new cselector("css,.gwt-DialogBox.ok-cancel-dlog.gwt_addtocart_div","pw-sheet__inner pw--shrink-to-content");
 	public static final cselector topPriceBundleDesktop = new cselector("css,.gwt-product-detail-right-panel.gwt-product-right-content-panel>.gwt-pdp-main-was-now-price-holder");
 	public  final static cselector topPriceSingle = new cselector("css,.gwt-product-content-panel>.gwt-product-right-content-panel>.gwt-product-right-center-content-panel>.gwt-product-price-container","css,.t-product-details-heading__price.t-product-details__price>div");
 	public static final cselector addPersonalizationSingle = new cselector("css,.gwt-product-content-panel>.gwt-product-right-content-panel>.gwt-product-detail-widget-personalization-panel>.gwt-personalize-link-style");
@@ -96,38 +96,11 @@ public class PDPSelectors {
 	public static final cselector personlizedStyleItem = new cselector ("css,div.gwt-accordion-tab-content.tabopen > div > div > div.gwt-personalization-modal-accordions-content-option>div.gwt-option-picker-image-picker>div.gwt-personalization-image-picker-option>img");
 	public static final cselector personlizedTitle = new cselector ("css,div.c-add-personalization-panel>span");
 
-	// done-OCM
-	public static String price = "price-and-special-messaging";
-	public static String id = "code";
-	public static String desc = "description";
-	public static String socialMediaButtons = "css,div.st-btns";
-	public static String shareBtn = "st-label";
-	public static String numberOfProductsInBundle = "included-items-shipping";
-	public static String productsInBundle = "css,div.each-included-item .information";
-	public static String reviewsCount = "css,a.bv-rating-label.bv-text-link.bv-focusable>span";
-	public static String reviewCountPerEachRate = "bv-inline-histogram-ratings-score";
-	public static String starsRating = "bv-rating-stars-on bv-rating-stars";
-	public static String secondaryRating = "bv-rating-ratio bv-td";
-
-	public static String closSocialShareBtn = "st-close";
-	public static String PDPnavs = "css,div.nav-tabs-container>ul>li";
-	public static String PDPnavs_mobile = "css,div.tab-content>div>div>button";
-	public static String favButton = "addToWishlist";
-	public static String randomVariant = "css,.each-option-holder>div>.btn";
-	public static String optionHolder = "each-option-holder";
-	public static String optionHolderTitle="css,p>span.variant-text";
-
-	public static String colorLable = "css,body>div>div>div>div>div>div>div>div>div>ul>li.attribute.color>div.label";
-	public static String color = "Select color: ";
-	public static String sizeAndFamilyLable = "css,div.product-variations > ul > div > ul > li > div.label";
-	public static String lengthLable = "css,div>div>div.product-sister-styles>ul>li>div.label";
-	public static String cart_popup = "popup-btn-checkout";
-	public static String qty = "input-qty no-spin";
-	public static String SA = "stock-in-stock";
-	public static String cartPopupProductQty = "quantity";
-	public static String miniCartProductUnitPrice = "unit-price";
-	public static String minicart = "cart-component";
-	public static String OverView;
-	public static String size;
-
+	public static final cselector GHRYaddToCartBtn = new cselector("css,.gwt-product-detail-buttons-container>button.button.primary","c-add-to-cart");
+	public static final cselector GHfirstSwatchInOptions = new cselector("css,div> .gwt-product-option-panel-widget-panel > div  > div > div:nth-child(1)","css,div.c-product-options> div:nth-child({0})> div.u-margin-top > div > div:nth-child(1) > div > button > div > div > div > div > div");
+	public  final static cselector GHtopPriceSingle = new cselector("css,.gwt-product-detail-quantity-price-column>.gwt-product-detail-widget-price-holder", ".t-product-details-heading__price-and-tag>.t-product-details-heading__price.t-product-details__price>div");
+	public static final cselector GHRYColorOptions = new cselector("css,.gwt-product-detail-widget-options-column>div>div>.gwt-product-option-panel-swatchbox>.gwt-product-option-panel-widget-panel>.gwt-image-picker>.gwt-image-picker-option-holder>.gwt-image-picker-option","css,.gwt-image-picker-option>div");
+	public static final cselector GHRYSizeOptions = new cselector("css,.gwt-product-detail-widget-options-column>div>div>div>div>.gwt-product-option-panel-widget-panel>.gwt-selection-chip-picker>div>.gwt-selection-chip-picker-option","css,.pw-swatch__chip-inner>div>.c-product-option-items__item-normal");
+	public static final cselector offerControlClose = new cselector("css,body>form>div>.offer-control.close");
+	
 }

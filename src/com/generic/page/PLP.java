@@ -343,5 +343,25 @@ public class PLP extends SelTestCase {
 		}
 
 	}
+	
+	// CBI
+		public static String pickPLPFirstProduct() throws Exception {
+			try {
+				getCurrentFunctionName(true);
+				String SelectorSS = null;
+				SelectorSS = PLPSelectors.product.get();
+				WebElement PLPFirstProduct = SelectorUtil.getelement(SelectorSS);
+				String itemTitle = PLPFirstProduct.getText();
+				logs.debug("Picked item: " + itemTitle);
+				PLPFirstProduct.click();
+				getCurrentFunctionName(false);
+				return itemTitle;
+			} catch (NoSuchElementException e) {
+				logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+				}.getClass().getEnclosingMethod().getName()));
+				throw e;
+			}
+
+		}
 
 }
