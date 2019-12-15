@@ -57,7 +57,7 @@ public class SelectorUtil extends SelTestCase {
 	@SuppressWarnings("rawtypes")
 	public static void initializeElementsSelectorsMaps(LinkedHashMap<String, LinkedHashMap> webElementsInfo,
 			boolean isValidationStep) throws IOException, InterruptedException {
-		Thread.sleep(500);
+		Thread.sleep(1000);
 		try {
 			Document doc = Jsoup.parse(SelTestCase.getDriver().getPageSource());
 			Element htmlDoc = doc.select("html").first();
