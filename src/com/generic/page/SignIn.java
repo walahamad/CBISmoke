@@ -435,6 +435,19 @@ public class SignIn extends SelTestCase {
 		}
 
 	}
+	
+	//CBI 
+	public static void registerNewUser(String userMail, String userPassword) throws Exception {
+		try {
+			getCurrentFunctionName(true);
+			registerNewUser(userMail, userPassword, true);
+			getCurrentFunctionName(false);
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+			}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
+	}
 
 	public static void registerNewUser(String userMail, String userPassword, boolean logOut) throws Exception {
 		try {
