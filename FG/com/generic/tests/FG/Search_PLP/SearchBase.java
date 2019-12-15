@@ -61,12 +61,12 @@ public class SearchBase extends SelTestCase {
 				this.getClass().getCanonicalName(), desc));
 		try {
 			
-			if (proprties.contains(RecommendedProductsCase)) 
 			//validate the suggested items
-			//sassert().assertTrue(PLP.searchAndVerifyResults("glass" , true), "Serach validation failed");
+			if (proprties.contains(RecommendedProductsCase)) 
+			sassert().assertTrue(PLP.searchAndVerifyResults("glass" , true), "Serach validation failed");
 			
-			if (proprties.contains(fullSearchCase)) 
 			//Validate the direct search
+			if (proprties.contains(fullSearchCase)) 
 			sassert().assertTrue(PLP.searchAndVerifyResults("mat" , false), "Serach validation failed");
 			
 			sassert().assertAll();
