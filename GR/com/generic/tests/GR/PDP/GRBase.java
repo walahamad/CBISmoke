@@ -27,7 +27,6 @@ public class GRBase extends SelTestCase {
 	public static final String testDataSheet = SheetVariables.GRSheet;
 
 	private static XmlTest testObject;
-	LoginBase loginBase = new LoginBase();
 
 	private static ThreadLocal<SASLogger> Testlogs = new ThreadLocal<SASLogger>();
 
