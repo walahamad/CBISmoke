@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,6 +27,10 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.Wait;
+import org.testng.TestNG;
+import org.testng.xml.XmlClass;
+import org.testng.xml.XmlSuite;
+import org.testng.xml.XmlTest;
 
 import com.generic.setup.SelTestCase;
 
@@ -33,6 +38,8 @@ import ru.yandex.qatools.ashot.AShot;
 import ru.yandex.qatools.ashot.Screenshot;
 import ru.yandex.qatools.ashot.shooting.ShootingStrategies;
 
+import com.beust.jcommander.internal.Lists;
+import com.generic.selector.SignInSelectors;
 import com.generic.setup.ExceptionMsg;
 import com.generic.setup.GlobalVariables;
 import com.generic.setup.LoggingMsg;
@@ -50,7 +57,7 @@ public class SelectorUtil extends SelTestCase {
 	@SuppressWarnings("rawtypes")
 	public static void initializeElementsSelectorsMaps(LinkedHashMap<String, LinkedHashMap> webElementsInfo,
 			boolean isValidationStep) throws IOException, InterruptedException {
-		Thread.sleep(2000);
+		Thread.sleep(1000);
 		try {
 			Document doc = Jsoup.parse(SelTestCase.getDriver().getPageSource());
 			Element htmlDoc = doc.select("html").first();
@@ -774,6 +781,16 @@ public class SelectorUtil extends SelTestCase {
 	}
 
 	@SuppressWarnings("rawtypes")
+	public static WebElement getNthElement(String selector, int index) throws Exception {
+		getCurrentFunctionName(true);
+		List<String> valuesArr = new ArrayList<String>();
+		valuesArr.add(selector);
+		getCurrentFunctionName(false);
+		return SelectorUtil.getNthElement(valuesArr, index);
+		
+	}
+	
+	@SuppressWarnings("rawtypes")
 	public static List<WebElement> getAllElements(String value) throws Exception {
 		getCurrentFunctionName(true);
 		List<String> subStrArr = new ArrayList<String>();
@@ -879,7 +896,7 @@ public class SelectorUtil extends SelTestCase {
 				SelectorUtil.doAppropriateAction(webElementInfo,action);
 			}
 
-			Thread.sleep(1000);
+			Thread.sleep(500);
 		} catch (Exception e) {
 			logs.debug(MessageFormat.format(LoggingMsg.FORMATTED_ERROR_MSG, e.getMessage()));
 			throw new NoSuchElementException("No such element: " + Arrays.asList(webElementsInfo));
@@ -896,16 +913,32 @@ public class SelectorUtil extends SelTestCase {
 
 	public static boolean isImgLoaded(String selector) {
 		WebElement img = getDriver().findElement(By.cssSelector(selector));
+		return ImageLoaded(img);
+	}
+	
+	public static boolean isImgsLoaded(String selector, int NumberOfVerifiedImages) {
+		List<WebElement> imgs = getDriver().findElements(By.cssSelector(selector));
+		boolean loaded = false;
 
-		Object  result =  (Boolean) ((JavascriptExecutor) getDriver()).executeScript(
-				   "return arguments[0].complete && "+
-						   "typeof arguments[0].naturalWidth != \"undefined\" && "+
-						   "arguments[0].naturalWidth > 0", img);
-	    boolean loaded = false;
-	    if (result instanceof Boolean) {
-	      loaded = (Boolean) result;
-	    }
-	    return loaded;
+		for (int elementIndex = 0; elementIndex < imgs.size()
+				&& elementIndex < NumberOfVerifiedImages; elementIndex++) {
+			WebElement img = imgs.get(elementIndex);
+			loaded = loaded && ImageLoaded(img);
+		}
+
+		return loaded;
+
+	}
+
+	public static boolean ImageLoaded(WebElement img) {
+		Object result = (Boolean) ((JavascriptExecutor) getDriver()).executeScript(
+				"return arguments[0].complete && " + "typeof arguments[0].naturalWidth != \"undefined\" && "
+						+ "arguments[0].naturalWidth > 0",img);
+		if (result instanceof Boolean) {
+			return (Boolean) result;
+		} else {
+			return false;
+		}
 	}
 
 
@@ -956,20 +989,22 @@ public class SelectorUtil extends SelTestCase {
 		return isElementExist;
 	}
 	public static boolean isValidClickableItem(WebElement element) throws Exception {
-		boolean isValid = false;
+		getCurrentFunctionName(true);
 		 String elementHref = element.getAttribute("href");
 		    //click on the element 
 		     clickOnWebElement(element);
 		     Thread.sleep(1000);
 		    //check if the current page is the correct page
-		    String actualURL = getDriver().getCurrentUrl();
-		    if (elementHref.equalsIgnoreCase(actualURL)){
-		    	// we are in the correct page 
-		    	isValid = true;
-		    }else {
-		    	isValid = false;
+		    logs.debug("elementHref: "+elementHref);
+		    getCurrentFunctionName(false);
+		    if (elementHref == "")
+		    {
+		    	return false; 
 		    }
-		    return isValid;
+		    else
+		    {
+		    	return true; 
+		    }
 	}
 	public static WebElement getRandomWebElement(List<WebElement> items) throws Exception {
 		logs.debug("WebElement List Size = " + items.size());
@@ -979,4 +1014,124 @@ public class SelectorUtil extends SelTestCase {
         return element;
 
 	}
+
+	/**
+	* Check if GWT Loader.
+	*
+	* @return boolean
+	* @throws Exception
+	*/
+	public static boolean CheckGWTLoadedEventPWA() throws Exception {
+		getCurrentFunctionName(true);
+		JavascriptExecutor JS = (JavascriptExecutor) getDriver();
+		boolean gwtLoadedEventPWA = (boolean)JS.executeScript("return window.gwtLoadedEventPWA");
+		getCurrentFunctionName(false);
+		return gwtLoadedEventPWA;
+	}
+
+	/**
+	* Check if GWT Loader.
+	*
+	* @return boolean
+	* @throws Exception
+	*/
+	public static void waitGWTLoadedEventPWA() throws Exception {
+		getCurrentFunctionName(true);
+		boolean gwtLoadedEventPWA = CheckGWTLoadedEventPWA();
+		int tries = 0;
+		while (!gwtLoadedEventPWA) {
+			Thread.sleep(500);
+			gwtLoadedEventPWA = CheckGWTLoadedEventPWA();
+			if(tries == 9) {
+				throw new NoSuchElementException("Error in Loading GWT.");
+			}
+			tries ++;
+		}
+		getCurrentFunctionName(false);
+	}
+
+	/**
+	* Wait the loading button.
+	*
+	* @return boolean
+	* @throws Exception
+	*/
+	public static void waitingLoadingButton(String loadingButtonCssSelector) throws Exception {
+		int loapingCount = 0;
+		getCurrentFunctionName(true);
+		boolean isIphone = SelTestCase.getBrowserName().contains(GlobalVariables.browsers.iPhone);
+		while (isIphone && !isElementExist(By.cssSelector(loadingButtonCssSelector)) && loapingCount < 10) {
+			loapingCount++;
+			Thread.sleep(500);
+		}
+		getCurrentFunctionName(false);
+	}
+	
+	/**
+	* Open my account menu for mobile if it was not opened
+	*
+	* @throws Exception
+	*/
+	public static void openMobileAccountMenu() throws Exception {
+		getCurrentFunctionName(true);
+		boolean isPWAMobile = getBrowserName().contains(GlobalVariables.browsers.iPhone);
+		if (isPWAMobile) {
+			boolean isAccountMobileOpened = SelectorUtil.isElementExist(By.cssSelector(SignInSelectors.myAccountModal));
+			if (!isAccountMobileOpened) {
+				SelectorUtil.initializeSelectorsAndDoActions(SignInSelectors.accountMenuIcon.get());
+			}
+		}
+		getCurrentFunctionName(false);
+	}
+
+	/**
+	* Get the account item (Sign in/create account page or welcome message).
+	*
+	* @param WebElement
+	* @throws Exception
+	*/
+	public static WebElement getMenuLinkMobilePWA(String linkUrl) throws Exception {
+		getCurrentFunctionName(true);
+
+		logs.debug("Open account menu for PWA mobile");
+
+		// Open the account menu.
+		openMobileAccountMenu();
+
+		// Get an account items list.
+		List <WebElement> menuItems = SelectorUtil.getElementsList(SignInSelectors.accountMenuList);
+		WebElement linkElement = menuItems.get(0);
+		int index = 0;
+		// Get the Sign in/create account page or welcome message item.
+		for (index=0; index < menuItems.size(); index++) {
+			WebElement item = menuItems.get(index);
+			String itemHref = item.getAttribute("href");
+			// Check if the item is sign in/create account (By check create account page link) or welcome message.
+			if (itemHref.contains(linkUrl)) {
+				linkElement = item;
+				break;
+			}
+		}
+		logs.debug("The account item (Sign in/create account page or welcome message): " + linkElement);
+		getCurrentFunctionName(false);
+		return linkElement;
+	}
+	
+	@SuppressWarnings("rawtypes")
+	public static void selectActiveOption(String Str, String value) throws Exception {		
+		LinkedHashMap<String, LinkedHashMap> webelementsInfo = initializeSelectorsAndDoActions(Str, value, false);
+		WebElement items = getDriver().findElement((By) webelementsInfo.get(Str).get("by"));
+		Select select = new Select(items);
+			List<WebElement> options = select.getOptions();
+			for (int i = 1; i < options.size(); i++) {
+				// logs.debug(options.get(i).getText().trim());
+				logs.debug("khara" + options.get(i).getText());
+				if (!options.get(i).getText().toLowerCase().trim().contains("no longer")) {
+					logs.debug(MessageFormat.format(LoggingMsg.SELECTED_INDEX, i));
+					select.selectByIndex(i);
+					break;
+				}
+				
+			}
+		}
 }
