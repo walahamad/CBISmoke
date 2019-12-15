@@ -607,6 +607,12 @@ public class SelectorUtil extends SelTestCase {
 										break;
 									}
 								}
+							} else if (value.contains("FFFS")) {
+								// Select an option using the displayed text.
+								String selectText = value.split("FFFS")[1];
+								logs.debug(
+										"Direct selection by text: " + selectText);
+								select.selectByVisibleText(selectText);
 							} else if (value.contains("FFF")) {
 								String index = value.split("FFF")[1];
 								logs.debug(
@@ -1037,15 +1043,18 @@ public class SelectorUtil extends SelTestCase {
 	*/
 	public static void waitGWTLoadedEventPWA() throws Exception {
 		getCurrentFunctionName(true);
-		boolean gwtLoadedEventPWA = CheckGWTLoadedEventPWA();
-		int tries = 0;
-		while (!gwtLoadedEventPWA) {
-			Thread.sleep(500);
-			gwtLoadedEventPWA = CheckGWTLoadedEventPWA();
-			if(tries == 9) {
-				throw new NoSuchElementException("Error in Loading GWT.");
+		boolean isPWAMobile = getBrowserName().contains(GlobalVariables.browsers.iPhone);
+		if (isPWAMobile) {
+			boolean gwtLoadedEventPWA = CheckGWTLoadedEventPWA();
+			int tries = 0;
+			while (!gwtLoadedEventPWA) {
+				Thread.sleep(500);
+				gwtLoadedEventPWA = CheckGWTLoadedEventPWA();
+				if(tries == 30) {
+					throw new NoSuchElementException("Error in Loading GWT.");
+				}
+				tries ++;
 			}
-			tries ++;
 		}
 		getCurrentFunctionName(false);
 	}
@@ -1116,6 +1125,10 @@ public class SelectorUtil extends SelTestCase {
 		getCurrentFunctionName(false);
 		return linkElement;
 	}
+	public static void setSelectText(WebElement element, String selectText) throws Exception {
+		Select selectItem = new Select(element);
+		selectItem.selectByVisibleText(selectText);
+	}
 	
 	@SuppressWarnings("rawtypes")
 	public static void selectActiveOption(String Str, String value) throws Exception {		
@@ -1133,5 +1146,18 @@ public class SelectorUtil extends SelTestCase {
 				}
 				
 			}
+	}
+	public static void waitElementLoading(By selector) throws Exception {
+		int tries = 0;
+		getCurrentFunctionName(true);
+		while (!isElementExist(selector)) {
+			Thread.sleep(1000);
+			logs.debug("Waiting load element: " + selector);
+			if(tries == 30) {
+				throw new NoSuchElementException("Error in Loading GWT.");
+			}
+			tries ++;
 		}
+		getCurrentFunctionName(false);
+	}
 }
