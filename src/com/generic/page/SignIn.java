@@ -440,9 +440,8 @@ public class SignIn extends SelTestCase {
 		try {
 			getCurrentFunctionName(true);
 
-			Registration registraion = new Registration();
 			// Run the registration test case before sign in.
-			registraion.freshUserValidate(userMail, userPassword);
+			Registration.registerFreshUser(userMail, userPassword);
 
 			if (logOut) {
 				boolean isPWAMobile = getBrowserName().contains(GlobalVariables.browsers.iPhone);

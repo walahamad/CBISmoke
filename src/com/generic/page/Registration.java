@@ -28,15 +28,6 @@ public class Registration extends SelTestCase {
 
 	}
 
-	public String userEmail;
-	public String userPassword;
-	public LinkedHashMap<String, String> userAddress;
-	public String userFirstName;
-	public String userLastName;
-	public String userCompanyName;
-	public String addressLine1;
-	public String phone;
-
 	// Done CBI Smoke
 	public static void typeFirstName(String firstName) throws Exception {
 		try {
@@ -173,7 +164,7 @@ public class Registration extends SelTestCase {
 
 	// Done CBI Smoke
 	public static void fillRegistrationSecondStep(String fName, String lName, String companyName,
-			LinkedHashMap<String, String> addressDetails, String addressLine1, String phone) throws Exception {
+			LinkedHashMap<String, String> addressDetails) throws Exception {
 		try {
 			getCurrentFunctionName(true);
 
@@ -186,7 +177,7 @@ public class Registration extends SelTestCase {
 			if (!"".equals(companyName))
 				typeCompany(companyName);
 
-			typeAddressLine1(addressLine1);
+			typeAddressLine1(RandomUtilities.getRandomName());
 
 			if (!"".equals(addressDetails.get(AddressBook.shippingAddress.keys.city)))
 				typeCity(addressDetails.get(AddressBook.shippingAddress.keys.city));
@@ -197,7 +188,7 @@ public class Registration extends SelTestCase {
 			if (!"".equals(addressDetails.get(AddressBook.shippingAddress.keys.zipcode)))
 				typeZipcode(addressDetails.get(AddressBook.shippingAddress.keys.zipcode));
 
-			typePhone(phone);
+			typePhone(RandomUtilities.getRandomPhone());
 
 			clickSaveButton();
 
@@ -687,7 +678,7 @@ public class Registration extends SelTestCase {
 	}
 
 	@SuppressWarnings("unchecked")
-	public String freshUserValidate(String email, String password) throws Exception {
+	public static String registerFreshUser(String email, String password) throws Exception {
 
 		//click on register new user button
 		Registration.goToRegistrationForm();
@@ -700,20 +691,12 @@ public class Registration extends SelTestCase {
 		String lastName = RandomUtilities.getRandomName();
 		String companyName = RandomUtilities.getRandomName();
 
-		userEmail = email;
-		userPassword = password;
-		userAddress = addressDetails;
-		userFirstName = firstName;
-		userLastName = lastName;
-		userCompanyName = companyName;
-		addressLine1 = RandomUtilities.getRandomName();
-		phone = RandomUtilities.getRandomPhone();
 
 		//register new user and validate the results
 		Registration.fillRegistrationFirstStep(email,email,password,password);
 
 		Thread.sleep(1500);
-		Registration.fillRegistrationSecondStep(firstName,lastName,companyName,addressDetails, addressLine1, phone);
+		Registration.fillRegistrationSecondStep(firstName,lastName,companyName,addressDetails);
 
 		//Success message needs to be updated on excel to (Welcome to your account at )
 		String registrationSuccessMsg = Registration.getRegistrationSuccessMessage();

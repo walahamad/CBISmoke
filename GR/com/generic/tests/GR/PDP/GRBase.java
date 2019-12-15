@@ -2,7 +2,7 @@ package com.generic.tests.GR.PDP;
 
 import java.text.MessageFormat;
 import java.util.Arrays;
-import java.util.LinkedHashMap;
+
 
 import org.testng.Assert;
 import org.testng.annotations.BeforeTest;
@@ -11,9 +11,6 @@ import org.testng.annotations.Test;
 import org.testng.xml.XmlTest;
 
 import com.generic.page.GiftRegistry;
-import com.generic.page.Registration;
-import com.generic.page.SignIn;
-import com.generic.selector.GiftRegistrySelectors;
 import com.generic.setup.Common;
 import com.generic.setup.LoggingMsg;
 import com.generic.setup.SelTestCase;
@@ -33,16 +30,8 @@ public class GRBase extends SelTestCase {
 	LoginBase loginBase = new LoginBase();
 
 	private static ThreadLocal<SASLogger> Testlogs = new ThreadLocal<SASLogger>();
-	GiftRegistry giftRegistry = new GiftRegistry();
 
 	public static final String singlePDPSearchTerm = "lights";
-
-	public String userMail;
-	public String userPassword;
-	public LinkedHashMap<String, String> addressDetails;
-	public String firstName;
-	public String lastName;
-	public String companyName;
 
 	// Test cases.
 	public static final String createRegistry = "create registry";
@@ -65,9 +54,8 @@ public class GRBase extends SelTestCase {
 		return data;
 	}
 
-	@SuppressWarnings("unchecked")
 	@Test(dataProvider = "GR_SC")
-	public void GRTest(String caseId, String runTest, String desc, String proprties, String email, String registryType, String eventDateMonth, String eventDateDay, String eventDateYear, String emptyMessage)
+	public void GRTest(String caseId, String runTest, String desc, String proprties, String registryType, String eventDateMonth, String eventDateDay, String eventDateYear, String emptyMessage)
 			throws Exception {
 		Testlogs.set(new SASLogger("GR_SC " + getBrowserName()));
 		// Important to add this for logging/reporting
@@ -77,15 +65,15 @@ public class GRBase extends SelTestCase {
 				this.getClass().getCanonicalName(), desc));
 
 		try {
-			accessValidAccount(email, caseId, runTest, desc);
+			//Prepare registration data.
+			String userMail = RandomUtilities.getRandomEmail();
+			String userPassword = "P@ssword11";
+			GiftRegistry.accessValidAccount(userMail, userPassword);
+
 			GiftRegistry.setRegistryInformtion(registryType, eventDateMonth, eventDateDay, eventDateYear, emptyMessage, singlePDPSearchTerm);
-			if (!email.equals("")) {
-				LinkedHashMap<String, String> userdetails = (LinkedHashMap<String, String>) users.get(email);
-				userMail = getSubMailAccount(userdetails.get(Registration.keys.email));
-			}
 
 			if (proprties.contains(createRegistry)) {
-				giftRegistry.validate(userMail);
+				GiftRegistry.validate(userMail);
 			} else {
 				// Clear the initial value for gift registry name.
 				GiftRegistry.setRegistryName("");
@@ -93,7 +81,7 @@ public class GRBase extends SelTestCase {
 
 			if (proprties.contains(manageRegistry)) {
 				// Add item to GR then add the item to cart from GR.
-				giftRegistry.manageRegistryValidate(userMail);
+				GiftRegistry.manageRegistryValidate(userMail);
 			}
 
 			sassert().assertAll();
@@ -108,12 +96,4 @@ public class GRBase extends SelTestCase {
 			Assert.assertTrue(false, t.getMessage());
 		} // catch
 	}// test
-
-	public void accessValidAccount(String email,String caseId,String runTest,String desc) throws Exception {
-		if (email.equals("")) {
-			giftRegistry.accessValidAccount(email, caseId, runTest, desc);
-		} else {
-			loginBase.LoginRegressionTest(caseId, runTest, desc, "Success login", email, "");
-		}
-	}
 }

@@ -3,7 +3,7 @@ package com.generic.selector;
 import com.generic.setup.cselector;
 
 public class GiftRegistrySelectors {
-	public static final String GRLink = "css,#giftregistry a";
+	public static final cselector GRLink = new cselector("css,#giftregistry a");
 	public static final cselector FGCreateRegistryButton = new cselector("css,.create-registry","css,.responsive-content .create-registry");
 	public static final cselector GRCreateRegistryButton = new cselector("css,[onclick*=submitCreateRegisty]","css,.responsive-content [onclick*=submitCreateRegisty]");
 
@@ -55,11 +55,11 @@ public class GiftRegistrySelectors {
 	public static final cselector addToGiftRegistyModal = new cselector("css,.gwt-added-to-gift-registry-modal", "css,.m-add-to-registry");
 	public static final cselector viewRegistryButton = new cselector("css,.gwt-added-to-gift-registry-modal .primary", "css,.m-add-to-registry .pw--secondary");
 	public static final cselector productAddedToGRContainer = new cselector("css,.addToCartProductsList", "css,.m-registry-confirmation__image");
-	public static final String movableMiniCart = "css,.c-movable-cart-item-counter-badge";
+	public static final cselector movableMiniCart = new cselector("css,.c-movable-cart-item-counter-badge");
 
 	// Gift registry in shopping.
 	public static final cselector addedFromGR = new cselector("css,.from-registry-link", "css,.t-cart__messages-from-customer-registry");
 	public static final cselector miniCartText = new cselector("css,.cartText", "css,.qa-header__cart .pw-badge span>span");
 	public static final cselector cartProductContainer = new cselector("css,.order-item-display-widget-v2", "css,.c-cart-product");
-	public static final String itemInCart = "css,.c-cart-product-item";
+	public static final cselector itemInCart = new cselector("css,.c-cart-product-item");
 }
