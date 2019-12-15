@@ -1,4 +1,4 @@
-package com.generic.tests.FG.Cart;
+package com.generic.tests.GH.Cart;
 
 import java.text.MessageFormat;
 import java.util.Arrays;

@@ -1,4 +1,4 @@
-package com.generic.tests.FG.Registration;
+package com.generic.tests.RY.Registration;
 
 import java.text.MessageFormat;
 import java.util.Arrays;
@@ -84,10 +84,7 @@ public class RegistrationBase extends SelTestCase {
 		String cityValidation = (fieldsValidation.split("CityValidation:").length >2) ? fieldsValidation.split("CityValidation:")[0].split("\n")[0]:"";
 		String stateValidation = (fieldsValidation.split("StateValidation:").length >2) ? fieldsValidation.split("StateValidation:")[0].split("\n")[0]:"";
 		String ZIPCodeValidation = (fieldsValidation.split("ZIPCodeValidation:").length >2) ? fieldsValidation.split("ZIPCodeValidation:")[0].split("\n")[0]:"";
-		String PhoneValidation = (fieldsValidation.split("PhoneValidation:").length >2) ? fieldsValidation.split("PhoneValidation:")[0].split("\n")[0]:"";
-		
-		
-		
+		String PhoneValidation = (fieldsValidation.split("PhoneValidation:").length >2) ? fieldsValidation.split("PhoneValidation:")[0].split("\n")[0]:"";					
 		
 		//Prepare registration data 
 		String email = RandomUtilities.getRandomEmail();
@@ -95,14 +92,14 @@ public class RegistrationBase extends SelTestCase {
 		try {
 			// Positive registration case
 			if (proprties.contains(freshUser)) {
-				Registration registraion = new Registration();
-				String registrationSuccessMsg = registraion.freshUserValidate(email, password);
+				String registrationSuccessMsg = Registration.freshUserValidate(email, password);
 				sassert().assertTrue(registrationSuccessMsg.toLowerCase().contains(thankUMsg), "Regestration Success, validation failed Expected to have in message: " + thankUMsg +" but Actual message is: " + registrationSuccessMsg);
 			}
-			
+		
+
 			// Negative registration case
 			if (proprties.contains(emptyData)) {
-				
+		
 				Registration.goToRegistrationForm();
 				
 				Registration.clickRegisterButton();
@@ -130,7 +127,7 @@ public class RegistrationBase extends SelTestCase {
 				
 				//Sleeping for 1 Second
 				Thread.sleep(1000);
-				
+								
 				//Filling 1st step with valid Data to check 2nd step
 				Registration.fillRegistrationFirstStep(email,email,password,password);
 				
