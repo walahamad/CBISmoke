@@ -7,6 +7,8 @@ import java.util.NoSuchElementException;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.Select;
+
 import com.generic.selector.CartSelectors;
 import com.generic.setup.SelTestCase;
 import com.generic.setup.ExceptionMsg;
@@ -20,9 +22,8 @@ public class Cart extends SelTestCase {
 		public static final String invalidCoupon = "invalid";
 
 	}
-	
-	
-	//Done CBI
+
+	// Done CBI
 	public static void moveItemsToCartFromWishlist() throws Exception {
 		try {
 			getCurrentFunctionName(true);
@@ -36,7 +37,7 @@ public class Cart extends SelTestCase {
 		}
 	}
 
-	//Done CBI
+	// Done CBI
 	public static boolean verifySavedList() throws Exception {
 		getCurrentFunctionName(true);
 		boolean inPDPPage = SelectorUtil.isDisplayed(CartSelectors.savedListFirstItem.get());
@@ -44,7 +45,7 @@ public class Cart extends SelTestCase {
 		return inPDPPage;
 	}
 
-	//Done CBI
+	// Done CBI
 	public static void clickRemoveBtnForSavedItem() throws Exception {
 		try {
 			getCurrentFunctionName(true);
@@ -58,7 +59,7 @@ public class Cart extends SelTestCase {
 		}
 	}
 
-	//Done CBI
+	// Done CBI
 	public static void clickMoveToWishListBtnForSavedItem() throws Exception {
 		try {
 			getCurrentFunctionName(true);
@@ -72,7 +73,7 @@ public class Cart extends SelTestCase {
 		}
 	}
 
-	//Done CBI
+	// Done CBI
 	public static String getTotalPrice() throws Exception {
 		getCurrentFunctionName(true);
 		WebElement price = SelectorUtil.getelement(CartSelectors.addedItemsTotalPrice.get());
@@ -80,7 +81,7 @@ public class Cart extends SelTestCase {
 		return price.getText().trim();
 	}
 
-	//Done CBI
+	// Done CBI
 	public static boolean isListDisplayed(List<WebElement> elements) {
 		boolean loaded = true;
 		for (int i = 0; i < elements.size(); i++) {
@@ -90,7 +91,7 @@ public class Cart extends SelTestCase {
 		return loaded;
 	}
 
-	//Done CBI
+	// Done CBI
 	public static boolean isListLoaded(List<WebElement> elements) {
 		boolean result = true;
 		for (int i = 0; i < elements.size(); i++) {
@@ -110,7 +111,7 @@ public class Cart extends SelTestCase {
 		return result;
 	}
 
-	//Done CBI
+	// Done CBI
 	public static List<WebElement> getAllSavedItemsInCart() throws Exception {
 		getCurrentFunctionName(true);
 		List<String> subStrArr = new ArrayList<String>();
@@ -120,7 +121,7 @@ public class Cart extends SelTestCase {
 		return savedElements;
 	}
 
-	//Done CBI
+	// Done CBI
 	public static boolean isItemAdded() throws Exception {
 		getCurrentFunctionName(true);
 		boolean isSaved;
@@ -133,7 +134,7 @@ public class Cart extends SelTestCase {
 		return isSaved;
 	}
 
-	//Done CBI
+	// Done CBI
 	public static boolean addedItemImageValidation() throws Exception {
 		getCurrentFunctionName(true);
 		List<String> subStrArr = new ArrayList<String>();
@@ -145,7 +146,7 @@ public class Cart extends SelTestCase {
 		return displayed & loaded;
 	}
 
-	//Done CBI
+	// Done CBI
 	public static boolean checkAddedItemPriceDisplay() throws Exception {
 		getCurrentFunctionName(true);
 		List<String> subStrArr = new ArrayList<String>();
@@ -156,7 +157,7 @@ public class Cart extends SelTestCase {
 		return inDisplayed;
 	}
 
-	//Done CBI
+	// Done CBI
 	public static boolean checkAddedItemTotalPriceDisplay() throws Exception {
 		getCurrentFunctionName(true);
 		List<String> subStrArr = new ArrayList<String>();
@@ -167,7 +168,7 @@ public class Cart extends SelTestCase {
 		return inDisplayed;
 	}
 
-	//Done CBI
+	// Done CBI
 	public static String getFirstSavedItemsOptions() throws Exception {
 
 		getCurrentFunctionName(true);
@@ -176,15 +177,15 @@ public class Cart extends SelTestCase {
 		return SelectorUtil.textValue.get();
 	}
 
-	//Done CBI
+	// Done CBI
 	public static String getlastAddedItemsOptions() throws Exception {
 		getCurrentFunctionName(true);
 		SelectorUtil.initializeSelectorsAndDoActions(CartSelectors.lastAddedItemsOption.get());
 		getCurrentFunctionName(false);
 		return SelectorUtil.textValue.get();
 	}
-	
-	//Done CBI
+
+	// Done CBI
 	public static void editOptions() throws Exception {
 		try {
 			getCurrentFunctionName(true);
@@ -200,22 +201,45 @@ public class Cart extends SelTestCase {
 			// Editing the product
 			try {
 				// Check if the product has drop-down and edit it
-				SelectorUtil.initializeSelectorsAndDoActions(CartSelectors.optionsDropDown.get(), "FFF2");
+				if (isMobile()) {
+					SelectorUtil.initializeSelectorsAndDoActions(CartSelectors.optionsDropDown.get(), "FFF2");
+				} else {
+					List<WebElement> selects = SelectorUtil.getElementsList(CartSelectors.optionsDropDown.get());
+					for (int i = 0; i < selects.size(); i++) {
+						WebElement ele = selects.get(i);
+						Select fruits = new Select(ele);
+						fruits.selectByIndex(2);
+					}
+				}
 
 			} catch (Exception e) {
 
 				try {
-
 					// Check if the product has swatches and select one
-					SelectorUtil.initializeSelectorsAndDoActions(CartSelectors.optionsImage.get(), "index,1");
+					// SelectorUtil.initializeSelectorsAndDoActions(CartSelectors.optionsImage.get(),
+					// "index,1");
+					List<WebElement> imgs = getDriver().findElements(By.cssSelector(CartSelectors.optionsImage.get()));
+					int x;
+					if (imgs.size() < 3)
+						x = 1 / 0;
+					WebElement ele = imgs.get(imgs.size() - 1);
+					JavascriptExecutor executor = (JavascriptExecutor) getDriver();
+					executor.executeScript("arguments[0].click();", ele);
 
 				} catch (Exception e2) {
-					Thread.holdsLock(2500);
+					try {
+						Thread.holdsLock(2500);
 
-					// Check if the product has buttons and select one
-					List<WebElement> swatches = getDriver()
-							.findElements(By.cssSelector(CartSelectors.optionsButton.get()));
-					swatches.get(2).click();
+						// Check if the product has buttons and select one
+						List<WebElement> swatches = getDriver()
+								.findElements(By.cssSelector(CartSelectors.optionsButton.get()));
+						// swatches.get(2).click();
+						WebElement ele = swatches.get(swatches.size() - 1);
+						JavascriptExecutor executor = (JavascriptExecutor) getDriver();
+						executor.executeScript("arguments[0].click();", ele);
+					} catch (Exception exception) {
+						// if there no options to change
+					}
 				}
 
 			}
@@ -240,10 +264,8 @@ public class Cart extends SelTestCase {
 			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
 			}.getClass().getEnclosingMethod().getName()));
 			throw e;
-		}// CATCH
+		} // CATCH
 
 	}// EDIT METHOD
-
-
 
 }// MAIN CLASS
