@@ -96,7 +96,9 @@ public class PDP extends SelTestCase {
 		// This is to handle production Monetate issue on iPad for search field.
 		if (SelTestCase.getBrowserName().contains(GlobalVariables.browsers.iPad))
 			HomePage.updateMmonetate();
+		if(!isGH() && !isRY()) {
 		PLP.clickSearchicon();
+		}
 		PLP.typeSearch(SearchTerm);
 		String itemName = PLP.pickRecommendedOption();
 		getCurrentFunctionName(false);
@@ -133,8 +135,11 @@ public class PDP extends SelTestCase {
 	public static void clickAddToCartButton() throws Exception {
 		try {
 			getCurrentFunctionName(true);
-			String subStrArr = PDPSelectors.addToCartBtn.get();
-			SelectorUtil.initializeSelectorsAndDoActions(subStrArr);
+		if(isGH() || isRY()) {
+   			   SelectorUtil.initializeSelectorsAndDoActions(PDPSelectors.addToCartBtnGH.get());
+		}else {
+				SelectorUtil.initializeSelectorsAndDoActions(PDPSelectors.addToCartBtn.get());
+			}
 			getCurrentFunctionName(false);
 		} catch (NoSuchElementException e) {
 			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {

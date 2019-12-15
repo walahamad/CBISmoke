@@ -1,4 +1,4 @@
-package com.generic.tests.GH.HomePage;
+package com.generic.tests.RY.HomePage;
 
 import java.text.MessageFormat;
 import java.util.Arrays;
@@ -12,11 +12,7 @@ import com.generic.setup.Common;
 import com.generic.setup.LoggingMsg;
 import com.generic.setup.SelTestCase;
 import com.generic.setup.SheetVariables;
-import com.generic.tests.GH.HomePage.GlobalFooterValidation;
-import com.generic.tests.GH.HomePage.HomePageValidation;
-import com.generic.tests.GH.HomePage.LogoValidation;
-import com.generic.tests.GH.HomePage.MenuValidation;
-import com.generic.tests.GH.HomePage.MiniCartValidation;
+import com.generic.tests.RY.HomePage.LogoValidation;
 import com.generic.util.ReportUtil;
 import com.generic.util.SASLogger;
 import com.generic.util.dataProviderUtils;
@@ -58,7 +54,7 @@ public class HomePageBase extends SelTestCase {
 		getBrowserWait(testObject.getParameter("browserName"));
 		dataProviderUtils TDP = dataProviderUtils.getInstance();
 		Object[][] data = TDP.getData(testDataSheet);
-		Testlogs.get().debug(Arrays.deepToString(data).replace("\n", "<br>--"));
+		Testlogs.get().debug(Arrays.deepToString(data).replace("\n", "--"));
 		return data;
 	}
 
@@ -69,13 +65,13 @@ public class HomePageBase extends SelTestCase {
 		setTestCaseReportName(SheetVariables.HPTestCaseId);
 		Testlogs.get().debug("Case Browser: " + testObject.getParameter("browserName"));
 		logCaseDetailds(MessageFormat.format(LoggingMsg.TEST_CASE_DESC, testDataSheet + "." + caseId,
-				this.getClass().getCanonicalName(), desc.replace("\n", "<br>")));
+				this.getClass().getCanonicalName(), desc));
 
 		try {
 
-			if (proprties.contains(this.AccountMenu)) {
+			if (proprties.contains(this.Logo)) {
 				LogoValidation.validate();
-
+				
 			} else if (proprties.contains(this.miniCart)) {
 				MiniCartValidation.validate();
 
@@ -87,6 +83,8 @@ public class HomePageBase extends SelTestCase {
 			} else if (proprties.equals(this.menu)) {
 				// Check the Navigation menu.
 				sassert().assertTrue(MenuValidation.validate(), "Menu validation has some problems");
+			} else if (proprties.contains(this.AccountMenu)) {
+	            sassert().assertTrue(AccountMenuValidation.validate(), "My Account menu validation has some problems");
 			} else if (proprties.contains(this.GlobalFooter)) {
 				sassert().assertTrue(GlobalFooterValidation.validate(), "Global footer validation has some problems");
 			} else {

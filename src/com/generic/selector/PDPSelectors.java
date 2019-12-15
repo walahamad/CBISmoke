@@ -14,8 +14,9 @@ public class PDPSelectors {
 	public static final cselector allFabrics = new cselector("css,.gwt-image-picker-option-holder>.gwt-selection-chip-picker-option", "css,.pw-swatch__chip>.pw-swatch__chip-inner");
 	public static final cselector allShipLeadTime = new cselector("css,.gwt-image-picker-option-holder>.gwt-selection-chip-picker-option","css,.pw-swatch__chip>.pw-swatch__chip-inner");
 	public static final cselector addToCartBtn = new cselector("gwt-add-to-cart-btn");
+	public static final cselector addToCartBtnGH = new cselector("css,div.gwt-product-detail-buttons-panel > div> button.button.primary","css,button.c-add-to-cart");
 	public static final cselector addToCartCloseBtn = new cselector("gwt-Button ok-cancel-close-btn");
-	public static final cselector firstSwatchInOptions = new cselector("css,div#gwt-option-panel > div:nth-child({0})> .gwt-product-option-panel-widget-panel > div  > div > div:nth-child(1)","css,div.c-product-options> div:nth-child({0})> div.u-margin-top > div > div:nth-child(1) > div > button > div > div > div > div > div");
+	public static final cselector firstSwatchInOptions = new cselector("css,.gwt-product-option-panel-widget-panel > div  > div > div:nth-child(1)","css,div.c-product-options> div:nth-child({0})> div.u-margin-top > div > div:nth-child(1) > div > button > div > div > div > div > div");
 	public static final cselector topPrice = new cselector("gwt-pdp-main-was-now-price-holder","css,.t-product-details-heading__price.t-product-details__price>div");
 	public static final cselector addToWLGRBtnEnabled = new cselector("css,.button.secondary.gift-registry","css,.t-product-details>div>.pw-button.u-width-full.u-text-uppercase");
 	public static final cselector addToWLGRBtnDisabled = new cselector("css,.button.secondary.gift-registry.disabled","css,.u-wishlist-gift-disable");

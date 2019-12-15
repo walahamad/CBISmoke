@@ -1,4 +1,4 @@
-package com.generic.tests.GH.HomePage;
+package com.generic.tests.RY.HomePage;
 
 import java.util.List;
 
