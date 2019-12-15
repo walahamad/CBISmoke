@@ -678,7 +678,7 @@ public class Registration extends SelTestCase {
 	}
 
 	@SuppressWarnings("unchecked")
-	public static String freshUserValidate(String email, String password) throws Exception {
+	public static String registerFreshUser(String email, String password) throws Exception {
 
 		//click on register new user button
 		Registration.goToRegistrationForm();
@@ -690,6 +690,7 @@ public class Registration extends SelTestCase {
 		String firstName = RandomUtilities.getRandomName();
 		String lastName = RandomUtilities.getRandomName();
 		String companyName = RandomUtilities.getRandomName();
+
 
 		//register new user and validate the results
 		Registration.fillRegistrationFirstStep(email,email,password,password);

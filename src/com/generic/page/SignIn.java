@@ -216,6 +216,8 @@ public class SignIn extends SelTestCase {
 
 			// Validate the welcome message if it is exist.
 			if (isPWAMobile) {
+				Thread.sleep(1000);
+				SelectorUtil.waitGWTLoadedEventPWA();
 				WebElement welcomeMessageElement = SelectorUtil.getMenuLinkMobilePWA(logoffhref);
 				String itemHref = welcomeMessageElement.getAttribute("href");
 				if (itemHref.contains(logoffhref)) {
@@ -433,20 +435,38 @@ public class SignIn extends SelTestCase {
 		}
 
 	}
-
+	
+	//CBI 
 	public static void registerNewUser(String userMail, String userPassword) throws Exception {
 		try {
 			getCurrentFunctionName(true);
+			registerNewUser(userMail, userPassword, true);
+			getCurrentFunctionName(false);
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+			}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
+	}
+
+	public static void registerNewUser(String userMail, String userPassword, boolean logOut) throws Exception {
+		try {
+			getCurrentFunctionName(true);
+
 			// Run the registration test case before sign in.
-			Registration.freshUserValidate(userMail, userPassword);
-			boolean isPWAMobile = getBrowserName().contains(GlobalVariables.browsers.iPhone);
-			if (isPWAMobile) {
-				WebElement logoffLink = SelectorUtil.getMenuLinkMobilePWA(logoffhref);
-				SelectorUtil.clickOnWebElement(logoffLink);
-				Thread.sleep(1500);
-			} else {
-				SelectorUtil.initializeSelectorsAndDoActions(SignInSelectors.logoffLink);
+			Registration.registerFreshUser(userMail, userPassword);
+
+			if (logOut) {
+				boolean isPWAMobile = getBrowserName().contains(GlobalVariables.browsers.iPhone);
+				if (isPWAMobile) {
+					WebElement logoffLink = SelectorUtil.getMenuLinkMobilePWA(logoffhref);
+					SelectorUtil.clickOnWebElement(logoffLink);
+					Thread.sleep(1500);
+				} else {
+					SelectorUtil.initializeSelectorsAndDoActions(SignInSelectors.logoffLink);
+				}
 			}
+
 			getCurrentFunctionName(false);
 		} catch (NoSuchElementException e) {
 			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
