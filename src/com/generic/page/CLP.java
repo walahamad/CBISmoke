@@ -7,6 +7,7 @@ import java.nio.file.Paths;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import javax.imageio.ImageIO;
 
@@ -19,6 +20,7 @@ import com.generic.setup.EnvironmentFiles;
 import com.generic.setup.GlobalVariables;
 import com.generic.setup.LoggingMsg;
 import com.generic.setup.SelTestCase;
+import com.generic.setup.cselector;
 import com.generic.util.SelectorUtil;
 
 import ru.yandex.qatools.ashot.comparison.ImageDiff;
@@ -79,16 +81,27 @@ public class CLP extends SelTestCase {
 	public static boolean validateMobileIpadCLP() throws Exception {
 		getCurrentFunctionName(true);
 		boolean isValid = true;
-		HomePage.openNavigationMenu();
+		//HomePage.openNavigationMenu();
+		if(!isGH() || (isGH() && isMobile())) HomePage.openNavigationMenu();
 		String pageUrl = SelectorUtil.getCurrentPageUrl();// to validate iPad
 		List<WebElement> menueItems = new ArrayList<WebElement>();
 		menueItems =  menueWithoutWhatsNew();
-		WebElement randomMenuElement =  SelectorUtil.getRandomWebElement(menueItems);
-		SelectorUtil.clickOnWebElement(randomMenuElement);
-		// Navigate to leafMenuItems  items.
+		WebElement randomMenuElement;
 		List<WebElement> leafMenuItems = new ArrayList<WebElement>();
-		leafMenuItems = getElementsList(HomePageSelectors.leafMenuItems.get());
-	
+		
+		if(isGH() && isiPad()) {
+			Random random = new Random();
+			int index = random.nextInt(menueItems.size() -1);
+			 randomMenuElement = menueItems.get(index);	
+				SelectorUtil.clickOnWebElement(randomMenuElement);
+			   final cselector leafItem = new cselector("css,li:nth-child("+index+")  li > a");
+				leafMenuItems = getElementsList(leafItem.get());
+		}else {
+			 randomMenuElement =  SelectorUtil.getRandomWebElement(menueItems);
+				SelectorUtil.clickOnWebElement(randomMenuElement);
+			   leafMenuItems = getElementsList(HomePageSelectors.leafMenuItems.get());
+		}
+		// Navigate to leafMenuItems  items.
 		WebElement viewAllElement =  leafMenuItems.get(0);//get first index "view all" 
 	
 		boolean isIphone = getBrowserName().contains(GlobalVariables.browsers.iPhone) || getBrowserName().contains(GlobalVariables.browsers.Nexus);
@@ -118,6 +131,7 @@ public class CLP extends SelTestCase {
 		menutems = menueWithoutWhatsNew();
 		WebElement menuElement =  SelectorUtil.getRandomWebElement(menutems);
 		boolean isValidClickableElement = SelectorUtil.isValidClickableItem(menuElement);
+		if(isGH()) {menuElement.click();}
 		if (isValidClickableElement) {
 			if (validatePLP()) { 
 				isValid = true;
@@ -133,7 +147,11 @@ public class CLP extends SelTestCase {
 	public static boolean validatePLP() throws Exception {
 		getCurrentFunctionName(true);
 		List<WebElement> items = new ArrayList<WebElement>();
-		items = getElementsList(CLPSelectors.CLPItems.get());
+		if(isGH()) {
+			items = getElementsList(CLPSelectors.GHCLPItems.get());
+		}else {
+			items = getElementsList(CLPSelectors.CLPItems.get());
+		}
 		WebElement PLPElement =  SelectorUtil.getRandomWebElement(items);
 		// Get the current page URL.		
 		boolean isValidClickableElement = SelectorUtil.isValidClickableItem(PLPElement);
@@ -142,9 +160,13 @@ public class CLP extends SelTestCase {
 	}
 	public static List<WebElement> menueWithoutWhatsNew() throws Exception {
 		List<WebElement> items = new ArrayList<WebElement>();
-		items = getElementsList(HomePageSelectors.menuItems.get());
-		items.remove(0);//remove what's New item : First item
-		items.remove(items.size()-1);
+   	    if(isGH()) {
+			items = getElementsList(HomePageSelectors.GHmenuItems.get());
+	     }else {
+			items = getElementsList(HomePageSelectors.menuItems.get());
+	 	}
+   			items.remove(0);//remove what's New item : First item
+   			items.remove(items.size()-1);
 		return items;
 	}
 	
