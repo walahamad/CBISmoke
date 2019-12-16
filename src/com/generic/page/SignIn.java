@@ -218,8 +218,11 @@ public class SignIn extends SelTestCase {
 			if (isPWAMobile) {
 				Thread.sleep(1000);
 				SelectorUtil.waitGWTLoadedEventPWA();
+				if (isRY()) {
+					SelectorUtil.initializeSelectorsAndDoActions(SignInSelectors.GHRYMobileMenuBuuton.get());
+				}
 				if (isGH()) {
-					SelectorUtil.initializeSelectorsAndDoActions(SignInSelectors.GHMobileMenuBuuton.get());
+					SelectorUtil.initializeSelectorsAndDoActions(SignInSelectors.GHRYMobileMenuBuuton.get());
 					if (SelectorUtil.isElementExist(By.cssSelector(SignInSelectors.GHMobileMenuSignout.get()))) {
 						isUserLogedIn = true;
 					}
@@ -229,6 +232,12 @@ public class SignIn extends SelTestCase {
 					if (itemHref.contains(logoffhref)) {
 						isUserLogedIn = true;
 					}
+				}
+			} else if(isRY()) {
+				WebElement welcomeMessage = SelectorUtil.getelement(SignInSelectors.RYWelcomeMessage.get());
+				logs.debug("welcomeMessage: " + welcomeMessage.getAttribute("innerText").trim());
+				if (welcomeMessage.getAttribute("innerText").trim().toLowerCase().contains("hi")) {
+					isUserLogedIn = true;
 				}
 			} else {
 				WebElement welcomeMessage = SelectorUtil.getelement(SignInSelectors.welcomeMessage.get());
@@ -264,8 +273,12 @@ public class SignIn extends SelTestCase {
 
 			// Get my account link.
 			if (isPWAMobile) {
+				if (isRY()) {
+					SelectorUtil.initializeSelectorsAndDoActions(SignInSelectors.GHRYMobileMenuBuuton.get());
+				}
+
 				if(isGH()) {
-					SelectorUtil.initializeSelectorsAndDoActions(SignInSelectors.GHMobileMenuBuuton.get());
+					SelectorUtil.initializeSelectorsAndDoActions(SignInSelectors.GHRYMobileMenuBuuton.get());
 					myAccountLink = SelectorUtil.getelement(SignInSelectors.GHMobileSignoutLink.get());
 				} else {
 					myAccountLink = SelectorUtil.getMenuLinkMobilePWA(myAccountPageLink);
@@ -282,8 +295,10 @@ public class SignIn extends SelTestCase {
 			if(isGH() && isMobile()) {
 				myAccountLink = SelectorUtil.getelement(SignInSelectors.GHMobileSignoutLink.get());
 			} else {
-				// Go to my account page.
-				SelectorUtil.openMobileAccountMenu();
+				if (!isRY()) {
+					// Go to my account page.
+					SelectorUtil.openMobileAccountMenu();
+				}
 				SelectorUtil.clickOnWebElement(myAccountLink);
 			}
 
