@@ -218,10 +218,17 @@ public class SignIn extends SelTestCase {
 			if (isPWAMobile) {
 				Thread.sleep(1000);
 				SelectorUtil.waitGWTLoadedEventPWA();
-				WebElement welcomeMessageElement = SelectorUtil.getMenuLinkMobilePWA(logoffhref);
-				String itemHref = welcomeMessageElement.getAttribute("href");
-				if (itemHref.contains(logoffhref)) {
-					isUserLogedIn = true;
+				if (isGH()) {
+					SelectorUtil.initializeSelectorsAndDoActions(SignInSelectors.GHMobileMenuBuuton.get());
+					if (SelectorUtil.isElementExist(By.cssSelector(SignInSelectors.GHMobileMenuSignout.get()))) {
+						isUserLogedIn = true;
+					}
+				} else {
+					WebElement welcomeMessageElement = SelectorUtil.getMenuLinkMobilePWA(logoffhref);
+					String itemHref = welcomeMessageElement.getAttribute("href");
+					if (itemHref.contains(logoffhref)) {
+						isUserLogedIn = true;
+					}
 				}
 			} else {
 				WebElement welcomeMessage = SelectorUtil.getelement(SignInSelectors.welcomeMessage.get());
@@ -257,7 +264,12 @@ public class SignIn extends SelTestCase {
 
 			// Get my account link.
 			if (isPWAMobile) {
-				myAccountLink = SelectorUtil.getMenuLinkMobilePWA(myAccountPageLink);
+				if(isGH()) {
+					SelectorUtil.initializeSelectorsAndDoActions(SignInSelectors.GHMobileMenuBuuton.get());
+					myAccountLink = SelectorUtil.getelement(SignInSelectors.GHMobileSignoutLink.get());
+				} else {
+					myAccountLink = SelectorUtil.getMenuLinkMobilePWA(myAccountPageLink);
+				}
 			} else {
 				myAccountLink = SelectorUtil.getelement(SignInSelectors.myAccountLink);
 			}
@@ -267,10 +279,14 @@ public class SignIn extends SelTestCase {
 			if (itemHref.contains(myAccountPageLink)) {
 				isUserLogedIn = true;
 			}
+			if(isGH() && isMobile()) {
+				myAccountLink = SelectorUtil.getelement(SignInSelectors.GHMobileSignoutLink.get());
+			} else {
+				// Go to my account page.
+				SelectorUtil.openMobileAccountMenu();
+				SelectorUtil.clickOnWebElement(myAccountLink);
+			}
 
-			// Go to my account page.
-			SelectorUtil.openMobileAccountMenu();
-			SelectorUtil.clickOnWebElement(myAccountLink);
 
 			getCurrentFunctionName(false);
 
