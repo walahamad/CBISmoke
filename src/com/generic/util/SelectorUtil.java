@@ -1106,7 +1106,7 @@ public class SelectorUtil extends SelTestCase {
 
 		// Open the account menu.
 		openMobileAccountMenu();
-
+		SelectorUtil.waitElementLoading(By.cssSelector(SignInSelectors.accountMenuList));
 		// Get an account items list.
 		List <WebElement> menuItems = SelectorUtil.getElementsList(SignInSelectors.accountMenuList);
 		WebElement linkElement = menuItems.get(0);
