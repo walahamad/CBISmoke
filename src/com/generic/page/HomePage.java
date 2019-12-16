@@ -133,7 +133,7 @@ public class HomePage extends SelTestCase {
 		getCurrentFunctionName(true);
 		List<WebElement> accountMenuElements = getAccountMenuItems();
 		Random random = new Random();
-		int randomIndex = random.nextInt(accountMenuElements.size());
+		int randomIndex = random.nextInt(accountMenuElements.size()-1);
 		WebElement element = accountMenuElements.get(randomIndex);
 		((JavascriptExecutor) SelTestCase.getDriver()).executeScript("arguments[0].click()", element);
 		getCurrentFunctionName(false);
@@ -649,7 +649,7 @@ public class HomePage extends SelTestCase {
 
 				// Select a random item from the leaf items list.
 				Random rand = new Random();
-				int randomIndex = rand.nextInt(leafMenuItems.size());
+				int randomIndex = rand.nextInt(leafMenuItems.size()-1);
 				WebElement randomElement = leafMenuItems.get(randomIndex);
 
 				logs.debug("Random selected item from: " + randomIndex);
