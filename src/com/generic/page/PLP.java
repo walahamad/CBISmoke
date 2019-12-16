@@ -4,10 +4,12 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Random;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
+import com.generic.selector.HomePageSelectors;
 import com.generic.selector.PLPSelectors;
 import com.generic.setup.ExceptionMsg;
 import com.generic.setup.GlobalVariables;
@@ -61,6 +63,32 @@ public class PLP extends SelTestCase {
 			List<String> productsNamesAfterFilter = getfirst3ProductsNames();
 			result = result && compareOperationResults(productsNamesBeforeFilter, productsNamesAfterFilter);
 
+			getCurrentFunctionName(false);
+			return result;
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+			}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
+	}
+
+	
+	public static boolean VerifyPLP() throws Exception {
+		try {
+			getCurrentFunctionName(true);
+			boolean result = true; 
+			result = result && verifyProductImagesDisplayed();
+			List<String> productsNames = getfirst3ProductsNames();
+			sortByPriceLowToHighPLP();
+			List<String> sortedProductsNames = getfirst3ProductsNames();
+			result = result && compareOperationResults(productsNames, sortedProductsNames);
+
+			List<String> productsNamesBeforeFilter = getfirst3ProductsNames();
+			if (checkFiltersAvillability()) {
+				SelectFilter();
+				List<String> productsNamesAfterFilter = getfirst3ProductsNames();
+				result = result && compareOperationResults(productsNamesBeforeFilter, productsNamesAfterFilter);
+			}
 			getCurrentFunctionName(false);
 			return result;
 		} catch (NoSuchElementException e) {
@@ -140,6 +168,38 @@ public class PLP extends SelTestCase {
 			throw e;
 		}
 	}
+	
+	// CBI
+	private static boolean checkFiltersAvillability() throws Exception {
+		try {
+			getCurrentFunctionName(true);
+			boolean state=false;
+			
+			if (isGR()) {
+				try {
+					state = SelectorUtil.isDisplayed(PLPSelectors.GRFilterContainer.get());
+				} catch (Exception e) {
+					return false;
+				}
+
+			} else if(isFG()) {
+				try {
+					state = SelectorUtil.isDisplayed(PLPSelectors.FilterContainer.get());
+				} catch (Exception e) {
+					return false;
+				}
+			}	
+			
+			getCurrentFunctionName(false);
+			return state;
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+			}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
+	}
+	
+	
 
 	// CBI
 	private static int getNumberOfProducts() throws Exception {
@@ -205,6 +265,42 @@ public class PLP extends SelTestCase {
 			throw e;
 		}
 	}
+	
+	// CBI
+	private static void sortByPriceLowToHighPLP() throws Exception {
+
+		try {
+			getCurrentFunctionName(true);
+			
+			if(isFG()) {
+				if (isMobile())
+				{
+					clickOnSortMenu();
+				}
+				SelectorUtil.initializeSelectorsAndDoActions(PLPSelectors.PriceLowToHighPLP.get());
+			}
+			if(isGR())
+			{
+				if(isMobile())
+				{
+					SelectorUtil.initializeSelectorsAndDoActions(PLPSelectors.GRMobileSorting.get(),"FFF2");
+				}
+				else {
+					SelectorUtil.initializeSelectorsAndDoActions(PLPSelectors.GRDeskTopSorting.get());
+					SelectorUtil.initializeSelectorsAndDoActions(PLPSelectors.GRDeskTopSortingLowtoHIgh.get());
+
+				}
+				
+			}
+			getCurrentFunctionName(false);
+
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+			}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
+	}
+	
 
 	//CBI
 	private static void clickOnSortMenu() throws Exception {
@@ -344,7 +440,7 @@ public class PLP extends SelTestCase {
 
 	}
 	
-	// CBI
+  	// CBI
 		public static String pickPLPFirstProduct() throws Exception {
 			try {
 				getCurrentFunctionName(true);
@@ -363,5 +459,88 @@ public class PLP extends SelTestCase {
 			}
 
 		}
+  
+  // CBI
+	public static void navigateToRandomPLPMobileIpad() throws Exception {
+		try {
+			getCurrentFunctionName(true);
+
+			// Open menu
+			HomePage.openNavigationMenu();
+
+			List<WebElement> menueItems = new ArrayList<WebElement>();
+			menueItems = CLP.menueWithoutWhatsNew();
+			WebElement randomMenuElement = SelectorUtil.getRandomWebElement(menueItems);
+			// Click on random menu element
+			SelectorUtil.clickOnWebElement(randomMenuElement);
+
+			List<WebElement> leafMenuItems = HomePage.getElementsList(HomePageSelectors.leafMenuItems.get());
+
+			// Select a random item from the leaf items list.
+			Random rand = new Random();
+			WebElement randomElement = leafMenuItems.get(rand.nextInt(leafMenuItems.size()));
+
+			// Navigate to the selected random page.
+			SelectorUtil.clickOnWebElement(randomElement);
+
+			// Check if the target is CLP
+			if (isCLP()) {
+				// Navigate to a PLP
+				SelectorUtil.initializeSelectorsAndDoActions(PLPSelectors.navigatetoPLP.get());
+			}
+
+			getCurrentFunctionName(false);
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+			}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
+
+	}
+	
+	
+	// CBI
+	public static void navigateToRandomPLPDesktop() throws Exception {
+		try {
+			getCurrentFunctionName(true);
+			// Get the menu items list in first level.
+			List<WebElement> menuFirstLevelElements = HomePage.getFirstLevelMenuItems();
+			Random randomGenerator = new Random();
+			WebElement randomElement = menuFirstLevelElements
+					.get(randomGenerator.nextInt(menuFirstLevelElements.size()));
+			SelectorUtil.clickOnWebElement(randomElement);
+
+			if (isCLP()) {
+				// Navigate to a PLP
+				SelectorUtil.initializeSelectorsAndDoActions(PLPSelectors.navigatetoPLP.get());
+			}
+
+			Thread.sleep(15000);
+
+			getCurrentFunctionName(false);
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+			}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
+
+	}
+	
+	
+		// CBI
+
+	public static boolean isCLP() throws Exception {
+		getCurrentFunctionName(true);
+		try{
+			return !SelectorUtil.isDisplayed(PLPSelectors.PLPIdentifier.get());
+		}
+		catch(Exception e) {
+			getCurrentFunctionName(false);
+
+			return true;
+		}
+	}
+	
+
 
 }
