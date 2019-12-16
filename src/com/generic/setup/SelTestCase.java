@@ -86,7 +86,19 @@ public class SelTestCase {
     public static LinkedHashMap<String, Object> paymentCards = null;
 	private static String URL;
 
-    
+	public static  boolean isFGGR() {
+		getCurrentFunctionName(true);
+		boolean result  = isFG() || isGR(); 
+		getCurrentFunctionName(false);
+		return result;
+		}
+	
+	public static  boolean isGHRY() {
+		getCurrentFunctionName(true);
+		boolean result  = isGH() || isRY(); 
+		getCurrentFunctionName(false);
+		return result;
+		}
 	public static  boolean isGR() {
 		getCurrentFunctionName(true);
 		boolean result  = getBrand().equals(brands.GR); 

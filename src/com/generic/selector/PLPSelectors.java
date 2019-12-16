@@ -7,7 +7,7 @@ public class PLPSelectors {
 	//CBI
 	public static final cselector SearchIcon = new cselector("css,#uNavTop button.searchboxAsButton", "css,.t-header__fades-in>button");
 	public static final cselector searchBox = new cselector("css,#searchBox input#headerBox","css,form>div>div>input");
-	public static final cselector recommendedOption =new cselector("css,li.unbxd-as-popular-product.unbxd-as-popular-product-grid a.unbxd-as-popular-product-info","css,.c--align-middle a.pw-link.c-arrange.u-flexbox.c--align-middle.u-align-center");
+	public static final cselector recommendedOption =new cselector("css,li.unbxd-as-popular-product.unbxd-as-popular-product-grid .unbxd-as-popular-product-info","css,.c-arrange.u-flexbox.c--align-middle.u-align-center");
 	public static final cselector SearchButton =new cselector("css,li.unbxd-as-popular-product.unbxd-as-popular-product-grid a.unbxd-as-popular-product-info");
     public static final cselector product =  new cselector("css,div.gwt-product-info-panel-details-panel-html > h2 > a","css,div.pw-list-tile__content  a.c-product-item__main-image"); 
     public static final cselector productName =  new cselector("css,div.gwt-product-info-panel-details-panel-html > h2 > a","css,a.pw-link.c-product-item-title-link > div > div > h2 > div"); 
