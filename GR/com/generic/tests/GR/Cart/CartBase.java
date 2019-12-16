@@ -9,13 +9,11 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.xml.XmlTest;
-
-import com.generic.page.Cart;
 import com.generic.setup.Common;
 import com.generic.setup.LoggingMsg;
 import com.generic.setup.SelTestCase;
 import com.generic.setup.SheetVariables;
-import com.generic.tests.FG.Cart.CartValidation;
+import com.generic.tests.GR.Cart.CartValidation;
 import com.generic.util.ReportUtil;
 import com.generic.util.SASLogger;
 import com.generic.util.dataProviderUtils;
@@ -48,9 +46,7 @@ public class CartBase extends SelTestCase {
 
 	@SuppressWarnings("unchecked")
 	@Test(dataProvider = "Carts")
-	public void CartBaseTest(String caseId, String runTest, String desc, String proprties, String products,
-			String email, String promotion, String ItemSubtotal, String Discounts, String OrderSubTotal,
-			String ValidationMSG) throws Exception {
+	public void CartBaseTest(String caseId, String runTest, String desc, String proprties) throws Exception {
 		
 		Testlogs.set(new SASLogger("HP_SC " + getBrowserName()));
 		// Important to add this for logging/reporting
@@ -60,7 +56,7 @@ public class CartBase extends SelTestCase {
 				this.getClass().getCanonicalName(), desc));
 		
 		try {
-			CartValidation.cartValidatin();
+			CartValidation.cartValidation();
 			sassert().assertAll();
 			Common.testPass();
 		} catch (Throwable t) {

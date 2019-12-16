@@ -2,7 +2,6 @@ package com.generic.tests.GR.Registration;
 
 import java.text.MessageFormat;
 import java.util.Arrays;
-import java.util.LinkedHashMap;
 import org.testng.Assert;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.DataProvider;
@@ -111,57 +110,27 @@ public class RegistrationBase extends SelTestCase {
 		String PhoneValidation = (fieldsValidation.split("PhoneValidation:").length > 2)
 				? fieldsValidation.split("PhoneValidation:")[0].split("\n")[0]
 				: "";
-		String schoolValidation = (fieldsValidation.split("schoolValidation:").length > 2)
-				? fieldsValidation.split("schoolValidation:")[0].split("\n")[0]
-				: "";
-		String termsValidation = (fieldsValidation.split("AcceptTermsValidation:").length > 2)
-				? fieldsValidation.split("AcceptTermsValidation:")[0].split("\n")[0]
-				: "";
 
-		// click on register new user button
-		Registration.goToRegistrationForm();
 
-		// prepare random address details
-		LinkedHashMap<String, String> addressDetails = (LinkedHashMap<String, String>) addresses.get("A3");
 
 		// Prepare registration data
-		String firstName = RandomUtilities.getRandomName();
-		String lastName = RandomUtilities.getRandomName();
-		String companyName = RandomUtilities.getRandomName();
 		String email = RandomUtilities.getRandomEmail();
 
 		try {
 			// Positive registration case
 			if (proprties.contains(freshUser)) {
-				// register new user and validate the results
-
-				Registration.fillRegistrationFirstStep(email, email, password, password);
-				Thread.sleep(1500);
-				Registration.fillRegistrationSecondStep(firstName, lastName, companyName, addressDetails);
-
-				// Success message needs to be updated on excel to (Welcome to your account at )
-				String registrationSuccessMsg = Registration.getRegistrationSuccessMessage();
-				sassert().assertTrue(registrationSuccessMsg.toLowerCase().contains(thankUMsg),
-						"Regestration Success, validation failed Expected to have in message: " + thankUMsg
-								+ " but Actual message is: " + registrationSuccessMsg);
+				String registrationSuccessMsg = Registration.registerFreshUser(email, password);
+				sassert().assertTrue(registrationSuccessMsg.toLowerCase().contains(thankUMsg), "Regestration Success, validation failed Expected to have in message: " + thankUMsg +" but Actual message is: " + registrationSuccessMsg);
 			}
+
+
 
 			// Negative registration case
 			if (proprties.contains(emptyData)) {
-				Registration.clickRegisterButton();
 
-				// >>>>>>>>>>>>>>>>Error messages to be updated in the excel
-				// sheet<<<<<<<<<<<<<<<<<<<<<<<<<<<
-				/*
-				 * firstNameValidation:Please enter First Name. lastNameValidation:Please enter
-				 * Last Name. EmailValidation:Please enter Email Address.
-				 * EmailConfValidation:Please Re-Enter Email Address. PasswordValidation:Please
-				 * Enter Password. PasswordConfValidation:Please Re-Enter Password.
-				 * StreetAddress1Validation:Please enter Street Address 1. CityValidation:Please
-				 * enter City. StateValidation:Please select a State/Province.
-				 * ZIPCodeValidation:Please enter ZIP/Postal Code. PhoneValidation:Please enter
-				 * a Daytime phone number, including area code (US Only).
-				 */
+				Registration.goToRegistrationForm();
+				
+				Registration.clickRegisterButton();
 
 				String validationMsg = "";
 
@@ -186,9 +155,6 @@ public class RegistrationBase extends SelTestCase {
 
 				// Sleeping for 1 Second
 				Thread.sleep(1000);
-
-				// >>>>>>>>>>>>>>Password field needs to be filled in the excel sheet with
-				// P@ssword1<<<<<<<<<<<<<<<<<
 
 				// Filling 1st step with valid Data to check 2nd step
 				Registration.fillRegistrationFirstStep(email, email, password, password);
