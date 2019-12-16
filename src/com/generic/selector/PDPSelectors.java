@@ -40,7 +40,7 @@ public class PDPSelectors {
 	public static final cselector addToCartBtnDisabledSingle = new cselector("css,.gwt-product-content-panel>.gwt-product-right-content-panel>.gwt-product-bottom-content-panel>.product-bottom-qty-atc-panel>div>button#gwt-add-to-cart-btn.button.primary.disabled","css,.u-bg-disabled-color-add-to-cart");
 	public static final cselector bottomPriceSingle = new cselector("css,.gwt-product-content-panel>.gwt-product-right-content-panel>.gwt-product-bottom-content-panel>.product-bottom-total-price-panel>div>.gwt-product-detail-widget-total-price-amount","css,.t-product-details-price>span");
 	public static final cselector bundleItems = new cselector("u-widget-product-icon u-position-absolute");
-	public static final cselector bundleItem = new cselector("css,#gwt_bundledetail_json.store", "css,#bundle-detail");
+	public static final cselector bundleItem = new cselector("css,#container");
 
 	public static final cselector miniPDPPrice = new cselector("css,.t-product-details-heading >div>.t-product-details-heading__price.t-product-details__price");
 	public static final cselector ListBoxOption = new cselector("css,.gwt-product-content-panel>.gwt-product-right-content-panel>.gwt-product-option-panel>.gwt-product-option-panel-listbox>.gwt-product-option-panel-listbox-container>div>select>option", "css,.c-product-options__content.u-border-brand-color.u-border-radius>option");
@@ -102,5 +102,9 @@ public class PDPSelectors {
 	public static final cselector GHRYColorOptions = new cselector("css,.gwt-product-detail-widget-options-column>div>div>.gwt-product-option-panel-swatchbox>.gwt-product-option-panel-widget-panel>.gwt-image-picker>.gwt-image-picker-option-holder>.gwt-image-picker-option","css,.gwt-image-picker-option>div");
 	public static final cselector GHRYSizeOptions = new cselector("css,.gwt-product-detail-widget-options-column>div>div>div>div>.gwt-product-option-panel-widget-panel>.gwt-selection-chip-picker>div>.gwt-selection-chip-picker-option","css,.pw-swatch__chip-inner>div>.c-product-option-items__item-normal");
 	public static final cselector offerControlClose = new cselector("css,body>form>div>.offer-control.close");
+	
+	public static final cselector FGGRSwatchesOptions = new cselector("css,.gwt-product-content-panel>.gwt-product-right-content-panel>#gwt-option-panel>div","css,.c-product-options>div>div>div" );
+	public static final cselector FGGRSwatchesOptionsList = new cselector("css,.gwt-product-content-panel>.gwt-product-right-content-panel>#gwt-option-panel>div>.gwt-product-option-panel-listbox-container>div>select", "css,.c-product-options__container>select");
+	public static final cselector FGGRSwatchesOptionsSwatchBox = new cselector("css,.gwt-product-content-panel>.gwt-product-right-content-panel>#gwt-option-panel>div>div>div.gwt-selection-chip-picker>img", "css,.c-product-option-items__item-normal");
 	
 }

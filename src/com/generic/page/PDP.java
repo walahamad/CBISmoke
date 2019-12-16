@@ -222,20 +222,24 @@ public class PDP extends SelTestCase {
 	}
 	
 	// done - SMK
-		public static void selectNthOptionFirstSwatch(int index) throws Exception {
+	public static void selectNthOptionFirstSwatch(int index) throws Exception {
+		try {
 		getCurrentFunctionName(true);
 		String subStrArr = MessageFormat.format(PDPSelectors.firstSwatchInOptions.get(), index);
 		logs.debug(MessageFormat.format(LoggingMsg.CLICKING_SEL, subStrArr));
-		SelectorUtil.initializeSelectorsAndDoActions(subStrArr);
+		String nthSel = subStrArr;
 		// Clicking on the div on desktop and iPad does not select the options,
 		// you need to click on the img if there is an img tag.
-		if (!SelTestCase.getBrowserName().contains(GlobalVariables.browsers.iPhone)) {
-			String nthSel = subStrArr + ">img";
-			if (!SelectorUtil.isNotDisplayed(nthSel))
-				SelectorUtil.initializeSelectorsAndDoActions(nthSel);
-		}
-		getCurrentFunctionName(false);
+		if (!SelTestCase.isMobile())
+			nthSel = subStrArr + ">img";
+		SelectorUtil.initializeSelectorsAndDoActions(nthSel);
 
+		getCurrentFunctionName(false);
+	} catch (NoSuchElementException e) {
+		logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+		}.getClass().getEnclosingMethod().getName()));
+		throw e;
+	}
 	}
 
 	// done - SMK
@@ -253,38 +257,6 @@ public class PDP extends SelTestCase {
 		}
 		getCurrentFunctionName(false);
 
-	}
-
-	// done - SMK
-	// This method to dynamically select all available options
-	// to be merged with selectSwatches function
-	public static void selectSwatchesSingle() throws Exception {
-		try {
-			getCurrentFunctionName(true);
-			int numberOfPanels = getNumberOfOptions();
-			int numberOfListBoxes = getNumberListBoxes();
-			if (!validateAddToCartIsNotDisabled()) {
-				if (numberOfPanels != 0) {
-					for (int i = 1; i <= numberOfPanels; i++) {
-						selectNthOptionFirstSwatch(i);
-						Thread.sleep(1500);
-					}
-				}
-
-				if (numberOfListBoxes != 0) {
-					for (int i = 0; i < numberOfListBoxes; i++) {
-						selectNthListBoxFirstValue(i);
-						Thread.sleep(1500);
-					}
-				}
-			}
-			getCurrentFunctionName(false);
-
-		} catch (NoSuchElementException e) {
-			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
-			}.getClass().getEnclosingMethod().getName()));
-			throw e;
-		}
 	}
 
 	// done - SMK
@@ -577,14 +549,22 @@ public class PDP extends SelTestCase {
 	// done - SMK
 	public static boolean bundleProduct() throws Exception {
 		getCurrentFunctionName(true);
-		try {	
-		SelectorUtil.isDisplayed(PDPSelectors.bundleItem.get());
-		return true;
-	} catch (NoSuchElementException e) {
-		return false;
+		try {
+			Boolean bundle = false;
+			String Str = PDPSelectors.bundleItem.get();
+			  JavascriptExecutor jse = (JavascriptExecutor) getDriver();    
+			  jse.executeScript("gwtDynamic.coremetrics.isSingleProduct;");
+				logs.debug("isSingleProduct: " + jse.toString());
+			  if (jse.toString().equals("N"))
+				  bundle = true;
+			return bundle;
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+			}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
 	}
-	}
-
+	
 	// done - SMK
 	public static int getNumberOfListsInProduct(String Str) throws Exception {
 		try {
@@ -691,12 +671,12 @@ public class PDP extends SelTestCase {
 		try {
 			getCurrentFunctionName(true);
 			if (SelTestCase.isFG() || SelTestCase.isGR()) {
-				if (!validateAddToCartIsNotDisabled()) {
-					if (getNumberOfItems() > 1 && !SelTestCase.isMobile()) {
-						FGGRselectSwatchesBundle();
-					} else {
-						selectSwatchesSingle();
-					}
+				int numberOfItems = getNumberOfItems();
+				if (numberOfItems> 1 && !SelTestCase.isMobile()) {
+					FGGRselectSwatchesBundle();
+					
+				} else {
+					FGGRselectSwatchesSingle();
 				}
 
 			} else if (SelTestCase.isGHRY())
@@ -709,66 +689,6 @@ public class PDP extends SelTestCase {
 		}
 	}
 	
-	// Done SMK
-	public static void FGGRselectSwatchesBundle() throws Exception {
-		try {
-			getCurrentFunctionName(true);
-			String ProductID = getProductID(0);
-			String ListSelector = MessageFormat.format(PDPSelectors.ListBoxBundle, ProductID);
-			String activeLists = MessageFormat.format(PDPSelectors.activeListBoxBundle, ProductID);
-			String swatchContainerSelector = MessageFormat.format(PDPSelectors.swatchContainerBundle, ProductID);
-			// String imageOptionSelector =
-			// MessageFormat.format(PDPSelectors.imageOptionBundle, ProductID);
-			int numberOfActiveListBoxes = 0;
-			int i = 0;
-			int listIndex = 0;
-			int numberOfListBoxes = 0;
-			int index = 0;
-			if (!activeLists(activeLists)) {
-				numberOfActiveListBoxes = getNumberOfListsInProduct(activeLists);
-				numberOfListBoxes = getNumberOfListsInProduct(ListSelector);
-				for (; i < numberOfListBoxes; i++) {
-					listIndex++;
-					index++;
-					selectNthListBoxFirstValueBundle(ListSelector, i);
-					Thread.sleep(500);
-					int numberOfNewActiveListBoxes = getNumberOfListsInProduct(activeLists);
-					if (numberOfNewActiveListBoxes > numberOfActiveListBoxes) {
-						numberOfActiveListBoxes = numberOfNewActiveListBoxes;
-					} else {
-						break;
-					}
-				}
-			}
-			int numberOfimageOptions = getNumberOfimageOptionsInProduct(swatchContainerSelector);
-			if (numberOfimageOptions != 0) {
-				for (index++; index <= numberOfimageOptions + listIndex; index++) {
-					selectNthOptionFirstSwatchBundle("css,#" + ProductID + ">"
-							+ MessageFormat.format(PDPSelectors.imageOption.get(), index, 1).replace("css,", ""));
-					Thread.sleep(500);
-				}
-			}
-			if (!activeLists(activeLists)) {
-				int numberOfNewActiveListBoxes = getNumberOfListsInProduct(activeLists);
-				if (numberOfNewActiveListBoxes > numberOfActiveListBoxes) {
-					for (int j = listIndex; j < numberOfListBoxes; j++) {
-						selectNthListBoxFirstActiveValueBundlePDP(ListSelector, j);
-						if (numberOfNewActiveListBoxes > numberOfActiveListBoxes) {
-							numberOfActiveListBoxes = numberOfNewActiveListBoxes;
-						} else {
-							break;
-						}
-					}
-				}
-			}
-			getCurrentFunctionName(false);
-		} catch (NoSuchElementException e) {
-			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
-			}.getClass().getEnclosingMethod().getName()));
-			throw e;
-		}
-	}
-
 	// Done SMK
 	public static void clickBundleItems() throws Exception {
 		getCurrentFunctionName(true);
@@ -1313,4 +1233,151 @@ public static boolean validateSelectRegistryOrWishListModalIsDisplayed() throws 
 			logs.debug("Sign up modal is not displayed");
 		}
 	}
+	
+	// done - SMK
+		public static int getNumberofSwatchContainers() throws Exception {
+			try {
+				getCurrentFunctionName(true);
+				String Str = PDPSelectors.FGGRSwatchesOptions.get();
+				int numberOfSwatchContainers = SelectorUtil.getAllElements(Str).size();
+				logs.debug("Number of Swatch Containers: " + numberOfSwatchContainers);
+				getCurrentFunctionName(false);
+				return numberOfSwatchContainers;
+			} catch (NoSuchElementException e) {
+				logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+				}.getClass().getEnclosingMethod().getName()));
+				throw e;
+			}
+		}
+		
+		// done - SMK
+		public static int getNumberofSwatchContainersBundle() throws Exception {
+			try {
+				getCurrentFunctionName(true);
+				String Str = "css,#" + getProductID(0) + ">" + PDPSelectors.FGGRSwatchesOptions.get().replace("css,", "");
+				int numberOfSwatchContainers = SelectorUtil.getAllElements(Str).size();
+				logs.debug("Number of Swatch Containers: " + numberOfSwatchContainers);
+				getCurrentFunctionName(false);
+				return numberOfSwatchContainers;
+			} catch (NoSuchElementException e) {
+				logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+				}.getClass().getEnclosingMethod().getName()));
+				throw e;
+			}
+		}
+		// done - SMK
+		public static String getSwatchContainersdivClass(int index) throws Exception {
+			try {
+				getCurrentFunctionName(true);
+				String Str = PDPSelectors.FGGRSwatchesOptions.get();
+				String SwatchContainerClass = SelectorUtil.getAttrString(Str, "class", index);
+				logs.debug("SwatchContainerClass: " + SwatchContainerClass);
+				getCurrentFunctionName(false);
+				return SwatchContainerClass;
+			} catch (NoSuchElementException e) {
+				logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+				}.getClass().getEnclosingMethod().getName()));
+				throw e;
+			}
+		}
+		
+		public static String getSwatchContainersdivClassBundle(int index) throws Exception {
+			try {
+				getCurrentFunctionName(true);
+				String Str = "css,#" + getProductID(0) + ">" + PDPSelectors.FGGRSwatchesOptions.get().replace("css,", "");
+				String SwatchContainerClass = SelectorUtil.getAttrString(Str, "class", index);
+				logs.debug("SwatchContainerClass: " + SwatchContainerClass);
+				getCurrentFunctionName(false);
+				return SwatchContainerClass;
+			} catch (NoSuchElementException e) {
+				logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+				}.getClass().getEnclosingMethod().getName()));
+				throw e;
+			}
+		}
+		
+		public static String getAddToCartClass() throws Exception {
+			try {
+				getCurrentFunctionName(true);
+				String Str = PDPSelectors.addToCartBtn.get();
+				String addToCartBtnClass = SelectorUtil.getAttrString(Str, "class");
+				logs.debug("addToCartBtnClass: " + addToCartBtnClass);
+				getCurrentFunctionName(false);
+				return addToCartBtnClass;
+			} catch (NoSuchElementException e) {
+				logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+				}.getClass().getEnclosingMethod().getName()));
+				throw e;
+			}
+		}
+	public static void FGGRselectSwatchesSingle() throws Exception {
+		try {
+			getCurrentFunctionName(true);
+			Boolean noOptions = true;
+			if (SelTestCase.isMobile())
+				noOptions = !getAddToCartClass().contains("disabled");
+			else 
+				noOptions =	getSwatchContainersdivClass(0).contains("no-options");
+			
+			if (noOptions) {
+				logs.debug("No options to select");
+			} else if (!SelTestCase.isMobile()){
+				int numberOfSwatchContainers = getNumberofSwatchContainers();
+				for (int i = 0; i < numberOfSwatchContainers; i++) {
+					if (getSwatchContainersdivClass(i).contains("listbox")) {
+						selectNthListBoxFirstValue(i);
+					} else {
+						selectNthOptionFirstSwatch(i + 1);
+					}
+				}
+			}
+			else
+			{
+				int numberOfSwatchContainers = getNumberofSwatchContainers();
+				for (int i = 1; i < numberOfSwatchContainers; i+=2) {
+					if (getSwatchContainersdivClass(i).contains("u-product-options")) {
+						selectNthListBoxFirstValue((i-1)/2);
+					} else {
+						selectNthOptionFirstSwatch((i+1)/2);
+					}
+				}
+			}
+				getCurrentFunctionName(false);
+			
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+			}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
+	}
+
+	// Done SMK
+	public static void FGGRselectSwatchesBundle() throws Exception {
+		try {
+			getCurrentFunctionName(true);
+			String ProductID = getProductID(0);
+			int numberOfSwatchContainers = getNumberofSwatchContainersBundle();
+			if (getSwatchContainersdivClassBundle(0).contains("no-options")) {
+				logs.debug("No options to select");
+			} else {
+				String ListSelector = MessageFormat.format(PDPSelectors.ListBoxBundle, ProductID);
+				for (int i = 0; i < numberOfSwatchContainers; i++) {
+					if (getSwatchContainersdivClassBundle(i).contains("listbox")) {
+						selectNthListBoxFirstValueBundle(ListSelector, i);
+
+					} else {
+						selectNthOptionFirstSwatchBundle("css,#" + ProductID + ">"
+								+ MessageFormat.format(PDPSelectors.imageOption.get(), i + 1, 1).replace("css,", ""));
+					}
+				}
+
+			}
+			getCurrentFunctionName(false);
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+			}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
+	}	
+	
 }
