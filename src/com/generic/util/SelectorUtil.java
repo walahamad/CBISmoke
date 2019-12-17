@@ -771,6 +771,15 @@ public class SelectorUtil extends SelTestCase {
 	}
 
 	@SuppressWarnings("rawtypes")
+	public static String getAttrString(String subStrArr, String attr) throws Exception {
+		getCurrentFunctionName(true);
+		LinkedHashMap<String, LinkedHashMap> webelementsInfo = initializeSelectorsAndDoActions(subStrArr, "", false);
+		WebElement items = getDriver().findElement((By) webelementsInfo.get(subStrArr).get("by"));
+		String attrValue = items.getAttribute(attr);
+		getCurrentFunctionName(false);
+		return attrValue;
+	}
+	@SuppressWarnings("rawtypes")
 	public static WebElement getNthElement(List<String> subStrArr, int index) throws Exception {
 		getCurrentFunctionName(true);
 		List<String> valuesArr = new ArrayList<String>();
