@@ -18,7 +18,7 @@ public class CartSelectors{
 	public static final cselector editFromCartLink=new cselector("css,.edit-link", "css,.c-cart-product__actions-edit");
 	public static final cselector expandOptionsModal=new cselector("css,.gwt-tab-header-sign-button");
 	public static final cselector optionsImage =new cselector( "css,.gwt-image-picker-option-image","css,.pw-swatch__item img");
-	public static final cselector optionsButton =new cselector("css,.gwt-selection-chip", "css,.c-product-option-items__item .pw-swatch__button");
+	public static final cselector optionsButton =new cselector("css,#personalization-modal-options-scroll > div > div.gwt-accordion-tab-content.tabopen > div > div > div.gwt-personalization-modal-accordions-content-option > div.gwt-product-option-panel-widget-panel > div > div > div:nth-child(2)", "css,#accordion__content-68a42c84-a0c3-4a20-9f10-927e965211dc > div > div > div > div > div > div > div > div > div > div.u-margin-top-0.m-product-options-no-padding > div > div:nth-child(2) > div > button");
 	public static final cselector optionsDropDown =new cselector( "css,.gwt-ListBox","css,.c-product-options__content");
 	public static final cselector finishAndPreviewButton =new cselector("css,.c-personalization-modal__finish.pw--primary");
 	public static final cselector finishAndPreviewButtonGR =new cselector("css,.pw-accordion__content .pw--primary");

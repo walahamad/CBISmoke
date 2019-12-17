@@ -1,5 +1,6 @@
 package com.generic.tests.GR.Cart;
 
+import java.net.URI;
 import java.text.MessageFormat;
 import com.generic.page.Cart;
 import com.generic.page.CheckOut;
@@ -24,7 +25,11 @@ public class CartValidation extends SelTestCase {
 
 	public static void cartValidation() throws Exception {
 		//Search for products and add them to cart
-		addProductToCart();		
+		addProductToCart();	
+		
+		URI url = new URI(getURL());
+		getDriver().get("https://"+url.getHost());
+		
 		addProductToCart();
 		
 		//Navigate to cart by URL
@@ -61,7 +66,7 @@ public class CartValidation extends SelTestCase {
 		//Moving item
 		Cart.clickMoveToWishListBtnForSavedItem();
 
-		Thread.sleep(3000);
+		Thread.sleep(4000);
 
 		//Save total again 
 		String totalPriceAfterMove = Cart.getTotalPrice();
@@ -83,6 +88,9 @@ public class CartValidation extends SelTestCase {
 		Thread.sleep(2000);
 		
 		String totalPriceAfterDelete = Cart.getTotalPrice();
+		
+		Thread.sleep(2000);
+
 		sassert().assertTrue(!totalPriceBeforeDelete.equals(totalPriceAfterDelete), "Remove item validation has some problems");
 
 	}
