@@ -550,7 +550,7 @@ public class PDP extends SelTestCase {
 	public static boolean bundleProduct() throws Exception {
 		getCurrentFunctionName(true);
 		try {
-			Thread.sleep(2000);
+			Thread.sleep(4500);
 			Boolean bundle = false;
 			String Str = PDPSelectors.bundleItem.get();
 			  JavascriptExecutor jse = (JavascriptExecutor) getDriver();    
