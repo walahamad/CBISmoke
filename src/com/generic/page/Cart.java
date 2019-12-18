@@ -221,7 +221,7 @@ public class Cart extends SelTestCase {
 					List<WebElement> imgs = getDriver().findElements(By.cssSelector(CartSelectors.optionsImage.get()));
 					int x;
 					if (imgs.size() < 3)
-						x = 1 / 0;
+						throw new Exception();
 					WebElement ele = imgs.get(imgs.size() - 1);
 					JavascriptExecutor executor = (JavascriptExecutor) getDriver();
 					executor.executeScript("arguments[0].click();", ele);
