@@ -66,6 +66,10 @@ public class Base_PayPalCheckout extends SelTestCase {
 		int productsCount =Integer.parseInt(productsNumber);
 		try {
 
+			// this is to handle the blank page issue occurred in the new session
+			if(SelTestCase.isMobile())
+				Common.refreshBrowser();
+			
 			if (proprties.contains(freshdUserPayPal)) {
 				PayPalValidation.validate(freshdUserPayPal, productsCount, userdetails,paymentDetails);
 			}
