@@ -1,4 +1,4 @@
-package com.generic.tests.GH.PDP;
+package com.generic.tests.RY.PDP;
 
 import java.text.MessageFormat;
 import java.util.Arrays;
@@ -12,8 +12,6 @@ import com.generic.setup.Common;
 import com.generic.setup.LoggingMsg;
 import com.generic.setup.SelTestCase;
 import com.generic.setup.SheetVariables;
-import com.generic.tests.GH.PDP.PDPValidation;
-import com.generic.tests.GH.PDP.WistListGuestValidation;
 import com.generic.util.ReportUtil;
 import com.generic.util.SASLogger;
 import com.generic.util.dataProviderUtils;
@@ -64,17 +62,6 @@ public class PDPBase extends SelTestCase {
 				this.getClass().getCanonicalName(), desc));
 
 		try {
-
-			if (proprties.contains(this.singlePDP)) {
-				PDPValidation.validate(singlePDPSearchTerm);
-			}
-			if (proprties.contains(this.bundlePDP)) {
-				PDPValidation.validate(BundlePDPSearchTerm);
-			}
-			if (proprties.contains(this.personalizedPDP)) {
-				PDPValidation.validate(personalizedPDPSearchTerm);
-			}
-
 			if (proprties.contains(this.wishListGuestValidation)) {
 				WistListGuestValidation.validate();
 			}

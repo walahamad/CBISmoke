@@ -501,8 +501,13 @@ public class PDP extends SelTestCase {
 	public static void clickAddToWLGR() throws Exception {
 		try {
 			getCurrentFunctionName(true);
-			String subStrArr = PDPSelectors.addToWLGRBtnEnabled.get();
-			SelectorUtil.initializeSelectorsAndDoActions(subStrArr);
+			if(isGH()) {
+				SelectorUtil.initializeSelectorsAndDoActions(PDPSelectors.GHaddToWLGRBtnEnabled.get());
+			}else if(isRY()){
+				SelectorUtil.initializeSelectorsAndDoActions(PDPSelectors.RYaddToWLGRBtnEnabled.get());
+			}else {
+				SelectorUtil.initializeSelectorsAndDoActions(PDPSelectors.addToWLGRBtnEnabled.get());
+			}
 			getCurrentFunctionName(false);
 		} catch (NoSuchElementException e) {
 			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
@@ -762,10 +767,18 @@ public static boolean validateSelectRegistryOrWishListModalIsDisplayed() throws 
     public static void clickOnCreateNewWL() throws Exception{
         getCurrentFunctionName(true);
         logs.debug("Click on create new wish list");
-        WebElement element = SelectorUtil.getelement(PDPSelectors.giftRegistryListBox.get());
-        WebElement option =  element.findElement(By.cssSelector(PDPSelectors.createNewWL.get()));
-        option.click();
-        clickOnCreateNewWLConfirmationBtn();
+        if(isRY()) {
+            logs.debug("Click on create new wish list rrrr");
+           List <WebElement> elements = SelectorUtil.getAllElements(PDPSelectors.RYcreateNewWL.get());
+   		   SelectorUtil.clickOnWebElement( elements.get(elements.size() - 1));
+
+        }else {
+            WebElement element = SelectorUtil.getelement(PDPSelectors.giftRegistryListBox.get());
+            WebElement option =  element.findElement(By.cssSelector(PDPSelectors.createNewWL.get()));
+            option.click();
+            clickOnCreateNewWLConfirmationBtn();	
+        }
+
         getCurrentFunctionName(false);
     }
     
@@ -791,6 +804,22 @@ public static boolean validateSelectRegistryOrWishListModalIsDisplayed() throws 
             return WLName;
     }
    
+    
+    public static boolean selectWLByName(String createdWL) throws Exception {
+        getCurrentFunctionName(true);
+        boolean isSelected = false;
+        List<WebElement> elements = SelectorUtil.getAllElements(PDPSelectors.RYcreateNewWLName.get());
+        for(int index=0;index<elements.size();index++) {
+        	if(elements.get(index).getText().toLowerCase().equalsIgnoreCase(createdWL)) {
+        		isSelected = true;
+                List<WebElement> WLElements = SelectorUtil.getAllElements(PDPSelectors.RYcreateNewWL.get());
+                SelectorUtil.clickOnWebElement(WLElements.get(index));
+                 break;
+        	}
+        }
+        getCurrentFunctionName(false);
+        return isSelected;
+    }
     public static boolean validateCreatedWLisSelectedByDefault(String createdWL) throws Exception {
         getCurrentFunctionName(true);
         boolean isSelected = true;
@@ -821,12 +850,18 @@ public static boolean validateSelectRegistryOrWishListModalIsDisplayed() throws 
         logs.debug("Validate confirmation modal exist");
         isDisplayed = SelectorUtil.isDisplayed(PDPSelectors.confirmationModal.get());
         logs.debug("Validate confirmation modal exist menu" +isDisplayed +"   " +selectedProductName);
-
+        String viewListBtnSelector;
+        if(isGH() || isRY()){
+        	viewListBtnSelector = PDPSelectors.GHRYviewListBtn.get();
+        }else {
+        	viewListBtnSelector = PDPSelectors.viewListBtn.get();
+        }
+        
         WebElement addToCardProductElement = SelectorUtil.getelement(PDPSelectors.addToCardProductName.get());
         if(addToCardProductElement.getText().equals(selectedProductName) &&
-                SelectorUtil.isDisplayed(PDPSelectors.viewListBtn.get()) 
+                SelectorUtil.isDisplayed(viewListBtnSelector) 
                 && isDisplayed) {
-        SelectorUtil.initializeSelectorsAndDoActions(PDPSelectors.viewListBtn.get());
+	 SelectorUtil.initializeSelectorsAndDoActions(viewListBtnSelector);
 
         isDisplayed = true;
         }else {
@@ -841,11 +876,19 @@ public static boolean validateSelectRegistryOrWishListModalIsDisplayed() throws 
     public static boolean addedProductIsDisplayedInTheWL(String addedProductName) throws Exception {
         getCurrentFunctionName(true);
         boolean isDisplayed = true;
+        List<WebElement> addToCartBtns = new ArrayList<WebElement>();
         List<WebElement> products = SelectorUtil.getElementsList(PDPSelectors.addedProductName.get());
-        List<WebElement> addToCartBtns = SelectorUtil.getElementsList(PDPSelectors.myWLAddToCartBtn.get());
+        if(isGH()) {
+          addToCartBtns = SelectorUtil.getElementsList(PDPSelectors.GHmyWLAddToCartBtn.get());
+        }else if(isRY()){
+          addToCartBtns = SelectorUtil.getElementsList(PDPSelectors.RYmyWLAddToCartBtn.get());
+        }else {
+           addToCartBtns = SelectorUtil.getElementsList(PDPSelectors.myWLAddToCartBtn.get());
+		}
+		
         for(int i = 0;i< products.size() ; i++) {
             if(products.get(i).getText().contains(addedProductName)) {
-                addToCartBtns.get(i).click();
+        		SelectorUtil.clickOnWebElement( addToCartBtns.get(i));
                 return true;
             }
         }
