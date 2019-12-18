@@ -207,8 +207,8 @@ public class Cart extends SelTestCase {
 					List<WebElement> selects = SelectorUtil.getElementsList(CartSelectors.optionsDropDown.get());
 					for (int i = 0; i < selects.size(); i++) {
 						WebElement ele = selects.get(i);
-						Select fruits = new Select(ele);
-						fruits.selectByIndex(2);
+						Select dropDownList = new Select(ele);
+						dropDownList.selectByIndex(2);
 					}
 				}
 
