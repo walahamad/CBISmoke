@@ -182,4 +182,22 @@ public class CheckOutSelectors
 	public static final String guestCreateAccCPwd = "guest.checkPwd";
 	public static final String guestCreateAccPwd = "password";
 	
+	
+	// PayPal
+	public static final cselector paymentPagePayPalTitle=new cselector("css,tbody:nth-child(1) > tr:nth-child(2) > td:nth-child(1) > div:nth-child(1) > div:nth-child(3) > div:nth-child(1) > div:nth-child(2)","css, div > div.pw-accordion__title > a > h1 > span");
+    public static final cselector paymentPagePayPalSubmitBtn=new cselector("css,.place-order-panel > button:nth-child(1)","css,div.c-checkout-buttons__checkout > button");
+    public static final cselector paymentSubmitPopUpClose=new cselector("css,#extole-6763275864515365558 > div > div.extole-js-widget-wrapper.extole-widget-wrapper > a","css,#extole-6763275864515365558 > div > div.extole-js-widget-wrapper.extole-widget-wrapper > a");
+    public static final cselector paymentPayPalSubmitRegistrationCloseBtn=new cselector("css,td > div > button.secondary");
+    public static final cselector paypalSubmitConfermationMessage=new cselector("css,div.header-panel > div.brand-confirm-message-panel > div","css, p.t-checkout-confirmation__header-confirm-message");
+    public static final cselector paypalConfermationPageAllProduct=new cselector("css,div.ship-method-and-gift-container-panel","css,div.t-checkout-order-details-and-shipping > div > div > div:nth-child(2) > div> div > div");
+    public static final cselector orderNumber=new cselector("css,div.header-panel > div.order-number-panel > div:nth-child(2)","css,div.order-number");
+    public static final cselector email=new cselector("css,div.header-panel > div.email-address-panel > div:nth-child(2)","css,div.email-address"); 
+    public static final cselector shippingAddress=new cselector("css,div.shipping-address-title-holder > div","css,div.city-state-address-panel");
+    public static final cselector confirmationPageProductImg=new cselector("css,div.order-item-image-holder > img","css,div.c-cart-product-item__image-container > img");
+    public static final cselector confirmationPageAccountType=new cselector("css,div.paypal-account-header-panel > div","css,div.paypal-account-header-panel > div");
+    public static final cselector confirmationPageSubtotal=new cselector("css,h4.subtotal-value","css,.t-cart__summary-subtotal > td.pw-ledger__value");
+    public static final cselector confirmationShipping=new cselector("css,div.additional-charges-value.shipping > span","css,.t-cart__summary-shipping-charges > td.pw-ledger__value");
+    public static final cselector confirmationPageTax=new cselector("css,div.additional-charges-value.tax> span","css,div:nth-child(3) > div > div > table > tbody > tr:nth-child(2) > td.pw-ledger__value");
+    public static final cselector confirmationTotal=new cselector("css,div.estimated-total-value.right","css,.estimated-total > span:nth-child(2)");
+
 }

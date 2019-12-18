@@ -12,7 +12,10 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import static org.openqa.selenium.support.ui.ExpectedConditions.*;
+
+import com.generic.selector.CartSelectors;
 import com.generic.selector.CheckOutSelectors;
+import com.generic.selector.PayPalSelectors;
 import com.generic.setup.ExceptionMsg;
 import com.generic.setup.GlobalVariables;
 import com.generic.setup.LoggingMsg;
@@ -831,64 +834,8 @@ public class CheckOut extends SelTestCase {
 			}
 		}
 
-		// done-ocm
-		/**
-		 * new payment with new address
-		 * 
-		 * @param cardtype
-		 * @param cardholder
-		 * @param cardNumber
-		 * @param expireMonth
-		 * @param expireYear
-		 * @param CVC
-		 * @param countery
-		 * @param firstName
-		 * @param lastName
-		 * @param address
-		 * @param city
-		 * @param postal
-		 * @param phone
-		 * @throws Exception
-		 */
-		public static void fillAndclickNext(String cardtype, String cardholder, String cardNumber, String expireMonth,
-				String expireYear, String CVC, String countery, String firstName, String lastName, String address,
-				String city, String postal, String phone) throws Exception {
-			try {
-
-				getCurrentFunctionName(true);
-				if (getBrowserName().contains("IE"))
-					Thread.sleep(8000);
-				// clickAddPaymentMethod();
-				if (!cardtype.contains("paypal")) {
-					fill(cardtype, cardholder, cardNumber, expireMonth, expireYear, CVC);
-					ReportUtil.takeScreenShot(getDriver(), "payment_debug");
-				}
-
-				fillBillingAddress(countery, firstName, lastName, address, city, postal, phone);
-				ReportUtil.takeScreenShot(getDriver(), "payment_debug");
-				clickNext();
-				ReportUtil.takeScreenShot(getDriver(), "payment_debug");
-				if (cardtype.contains("paypal")) {
-					Thread.sleep(20000);
-					String mainWindow = switchToPayPalWindow();
-					// username and password for paypal is indicated by cardNumber and cvc
-					PayPal.clickLoginLink();
-					PayPal.signInAndClickContinue(cardNumber, CVC);
-					Thread.sleep(10000);
-					switchBackToMainWindow(mainWindow);
-					Thread.sleep(20000);
-				}
-				Thread.sleep(1000);
-				ReportUtil.takeScreenShot(getDriver(), "payment_debug");
-				getCurrentFunctionName(false);
-			} catch (NoSuchElementException e) {
-				logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
-				}.getClass().getEnclosingMethod().getName()));
-				throw e;
-			}
-		}
-
-		private static void switchBackToMainWindow(String mainWindow) {
+		// Done CBI
+		public static void switchBackToMainWindow(String mainWindow) {
 			try {
 				getCurrentFunctionName(true);
 				getDriver().switchTo().window(mainWindow);
@@ -901,8 +848,8 @@ public class CheckOut extends SelTestCase {
 
 		}
 
-		// done-ocm
-		private static String switchToPayPalWindow() throws InterruptedException {
+		// Done CBI
+		public static String switchToPayPalWindow() throws InterruptedException {
 			try {
 				getCurrentFunctionName(true);
 				Thread.sleep(1000);
@@ -2160,7 +2107,260 @@ public class CheckOut extends SelTestCase {
 
 	}
 	
+	// Done CBI
+	public static class PayPal {
+
+		public static void clickOnContinue() throws Exception {
+			try {
+				getCurrentFunctionName(true);
+				List<String> subStrArr = new ArrayList<String>();
+				List<String> valuesArr = new ArrayList<String>();
+				logs.debug("clicking on Agree and continue btn");
+				subStrArr.add(PayPalSelectors.confirmButtonTop);
+				valuesArr.add("");
+				SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
+				getCurrentFunctionName(false);
+			} catch (NoSuchElementException e) {
+				logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+				}.getClass().getEnclosingMethod().getName()));
+				throw e;
+			}
+
+		}
 		
-	
-	
+		public static void paymentPageClickContinue() throws Exception {
+			try {
+				getCurrentFunctionName(true);
+				if (!SelectorUtil.isNotDisplayed(CartSelectors.paymentPageCheckNextBtn.get()))
+					SelectorUtil.initializeSelectorsAndDoActions(CartSelectors.paymentPageCheckNextBtn.get());
+				getCurrentFunctionName(false);
+			} catch (NoSuchElementException e) {
+				logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+				}.getClass().getEnclosingMethod().getName()));
+				throw e;
+			}
+		}
+
+		public static String getConfirmationTotalValue() throws Exception {
+			try {
+				getCurrentFunctionName(true);
+				WebElement price = SelectorUtil.getelement(CheckOutSelectors.confirmationTotal.get());
+				getCurrentFunctionName(false);
+				return price.getText().replace("$", "").replace(",", "").trim();
+			} catch (NoSuchElementException e) {
+				logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+				}.getClass().getEnclosingMethod().getName()));
+				throw e;
+			}
+		}
+
+		public static String getConfirmationPageTaxValue() throws Exception {
+			try {
+				getCurrentFunctionName(true);
+				WebElement price = SelectorUtil.getelement(CheckOutSelectors.confirmationPageTax.get());
+				getCurrentFunctionName(false);
+				return price.getText().replace("$", "").replace(",", "").trim();
+			} catch (NoSuchElementException e) {
+				logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+				}.getClass().getEnclosingMethod().getName()));
+				throw e;
+			}
+		}
+
+		public static String getConfirmationPageShippingValue() throws Exception {
+			try {
+				getCurrentFunctionName(true);
+				WebElement price = SelectorUtil.getelement(CheckOutSelectors.confirmationShipping.get());
+				getCurrentFunctionName(false);
+				return price.getText().replace("$", "").replace(",", "").trim();
+			} catch (NoSuchElementException e) {
+				logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+				}.getClass().getEnclosingMethod().getName()));
+				throw e;
+			}
+		}
+
+		public static String getConfirmationPageSubtotalValue() throws Exception {
+			try {
+				getCurrentFunctionName(true);
+				WebElement price = SelectorUtil.getelement(CheckOutSelectors.confirmationPageSubtotal.get());
+				getCurrentFunctionName(false);
+				return price.getText().replace("$", "").replace(",", "").trim();
+			} catch (NoSuchElementException e) {
+				logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+				}.getClass().getEnclosingMethod().getName()));
+				throw e;
+			}
+		}
+
+		public static boolean isPayPalPayment() throws Exception {
+
+			try {
+				getCurrentFunctionName(true);
+				WebElement price = SelectorUtil.getelement(CheckOutSelectors.confirmationPageAccountType.get());
+				boolean result = false;
+				if (price.getText().trim().equals("PayPal Account"))
+					result = true;
+				getCurrentFunctionName(false);
+				return result;
+			} catch (NoSuchElementException e) {
+				logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+				}.getClass().getEnclosingMethod().getName()));
+				throw e;
+			}
+		}
+
+		public static boolean checkConfirmationPageImg() throws Exception {
+			try {
+				getCurrentFunctionName(true);
+				boolean isDisplayed = SelectorUtil.isDisplayed(CheckOutSelectors.confirmationPageProductImg.get())
+						&& SelectorUtil.isImgLoaded(CheckOutSelectors.confirmationPageProductImg.get());
+				getCurrentFunctionName(false);
+				return isDisplayed;
+			} catch (NoSuchElementException e) {
+				logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+				}.getClass().getEnclosingMethod().getName()));
+				throw e;
+			}
+		}
+
+		public static boolean checkOrderNumberAndEmailAndShippingAddress() throws Exception {
+			try {
+				getCurrentFunctionName(true);
+				boolean isDisplayed = SelectorUtil.isDisplayed(CheckOutSelectors.orderNumber.get())
+						&& SelectorUtil.isDisplayed(CheckOutSelectors.email.get())
+						&& SelectorUtil.isDisplayed(CheckOutSelectors.shippingAddress.get());
+				getCurrentFunctionName(false);
+				return isDisplayed;
+			} catch (NoSuchElementException e) {
+				logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+				}.getClass().getEnclosingMethod().getName()));
+				throw e;
+			}
+		}
+
+		public static int getCountOFProductForConfPage() throws Exception {
+			try {
+				getCurrentFunctionName(true);
+
+				List<String> subStrArr = new ArrayList<String>();
+				subStrArr.add(CheckOutSelectors.paypalConfermationPageAllProduct.get());
+				List<WebElement> elements = SelectorUtil.getAllElements(subStrArr);
+				getCurrentFunctionName(false);
+				return elements.size();
+			} catch (NoSuchElementException e) {
+				logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+				}.getClass().getEnclosingMethod().getName()));
+				throw e;
+			}
+		}
+
+		public static boolean isSubmitConfermationMessageDisplayed() throws Exception {
+			try {
+				getCurrentFunctionName(true);
+				boolean isDisplayed = SelectorUtil.isDisplayed(CheckOutSelectors.paypalSubmitConfermationMessage.get());
+				getCurrentFunctionName(false);
+				return isDisplayed;
+			} catch (NoSuchElementException e) {
+				logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+				}.getClass().getEnclosingMethod().getName()));
+				throw e;
+			}
+		}
+
+		public static void closePayPalSubmitPopup() throws Exception {
+			try {
+				getCurrentFunctionName(true);
+				if (!SelectorUtil.isNotDisplayed(CheckOutSelectors.paymentSubmitPopUpClose.get()))
+					SelectorUtil.initializeSelectorsAndDoActions(CheckOutSelectors.paymentSubmitPopUpClose.get());
+				getCurrentFunctionName(false);
+			} catch (NoSuchElementException e) {
+				logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+				}.getClass().getEnclosingMethod().getName()));
+				throw e;
+			}
+		}
+
+		public static void closePayPalSubmitRegestration() throws Exception {
+			try {
+				getCurrentFunctionName(true);
+				closePayPalSubmitPopup();
+				if (!SelectorUtil.isNotDisplayed(CheckOutSelectors.paymentPayPalSubmitRegistrationCloseBtn.get()))
+					SelectorUtil.initializeSelectorsAndDoActions(
+							CheckOutSelectors.paymentPayPalSubmitRegistrationCloseBtn.get());
+				closePayPalSubmitPopup();
+
+				getCurrentFunctionName(false);
+			} catch (NoSuchElementException e) {
+				logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+				}.getClass().getEnclosingMethod().getName()));
+				throw e;
+			}
+		}
+
+		public static void clickPayPalOrderSubmit() throws Exception {
+			try {
+				getCurrentFunctionName(true);
+				SelectorUtil.initializeSelectorsAndDoActions(CheckOutSelectors.paymentPagePayPalSubmitBtn.get());
+				getCurrentFunctionName(false);
+			} catch (NoSuchElementException e) {
+				logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+				}.getClass().getEnclosingMethod().getName()));
+				throw e;
+			}
+		}
+
+		public static boolean isOrderSummaryDisplayed() throws Exception {
+			try {
+				getCurrentFunctionName(true);
+				boolean isDisplayed = SelectorUtil.isDisplayed(CartSelectors.addedItemsTotalPrice.get());
+				getCurrentFunctionName(false);
+				return isDisplayed;
+			} catch (NoSuchElementException e) {
+				logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+				}.getClass().getEnclosingMethod().getName()));
+				throw e;
+			}
+		}
+
+		public static boolean isPaymentPageSelectedAndPayPalSelected() throws Exception {
+			try {
+				getCurrentFunctionName(true);
+				boolean isDisplayed = SelectorUtil.isDisplayed(CheckOutSelectors.paymentPagePayPalTitle.get());
+				getCurrentFunctionName(false);
+				return isDisplayed;
+			} catch (NoSuchElementException e) {
+				logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+				}.getClass().getEnclosingMethod().getName()));
+				throw e;
+			}
+		}
+
+		public static boolean isPayPalModelDisplayed() throws Exception {
+			try {
+				getCurrentFunctionName(true);
+				boolean isDisplayed = SelectorUtil.isDisplayed(PayPalSelectors.userName);
+				getCurrentFunctionName(false);
+				return isDisplayed;
+			} catch (NoSuchElementException e) {
+				logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+				}.getClass().getEnclosingMethod().getName()));
+				throw e;
+			}
+		}
+
+		public static boolean isPayPalShipToPageDisplayed() throws Exception {
+			try {
+				getCurrentFunctionName(true);
+				boolean isDisplayed = SelectorUtil.isDisplayed(PayPalSelectors.continueBtn);
+				getCurrentFunctionName(false);
+				return isDisplayed;
+			} catch (NoSuchElementException e) {
+				logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+				}.getClass().getEnclosingMethod().getName()));
+				throw e;
+			}
+		}
+	}
+		
 }
