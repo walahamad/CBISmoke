@@ -81,7 +81,7 @@ public class LoginBase extends SelTestCase {
 				//Prepare registration data.
 				userMail = RandomUtilities.getRandomEmail();
 				userPassword = "P@ssword11";
-				SignIn.registerNewUser(userMail, userPassword);
+				SignIn.registerNewUser(userMail, userPassword, true);
 			}
 
 			if (proprties.equals("Success login")) {
