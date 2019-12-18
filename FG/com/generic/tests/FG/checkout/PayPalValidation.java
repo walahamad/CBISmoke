@@ -4,6 +4,7 @@ import java.util.LinkedHashMap;
 
 import com.generic.page.Cart;
 import com.generic.page.CheckOut;
+import com.generic.page.HomePage;
 import com.generic.page.PayPal;
 import com.generic.page.Registration;
 import com.generic.page.SignIn;
@@ -22,6 +23,8 @@ public class PayPalValidation extends SelTestCase {
 			String userPassword = userDetalis.get(Registration.keys.password);
 			SignIn.fillLoginFormAndClickSubmit(userMail, userPassword);
 			sassert().assertTrue(SignIn.checkUserAccount(), LoggingMsg.USER_IS_NOT_LOGGED_IN_SUCCESSFULLY);
+			if(SelTestCase.isMobile())
+			HomePage.clickOnCloseButton();
 		}
 
 		// Add products to cart
