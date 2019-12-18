@@ -768,7 +768,6 @@ public static boolean validateSelectRegistryOrWishListModalIsDisplayed() throws 
         getCurrentFunctionName(true);
         logs.debug("Click on create new wish list");
         if(isRY()) {
-            logs.debug("Click on create new wish list rrrr");
            List <WebElement> elements = SelectorUtil.getAllElements(PDPSelectors.RYcreateNewWL.get());
    		   SelectorUtil.clickOnWebElement( elements.get(elements.size() - 1));
 
