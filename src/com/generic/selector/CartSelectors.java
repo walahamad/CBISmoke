@@ -4,8 +4,15 @@ import com.generic.setup.cselector;
 
 public class CartSelectors{
 	
+	public static final cselector paypalCheckoutBtn=new cselector("css,#checkout-with-paypal-button","css,button > div > div > img");
+	public static final cselector shipping = new cselector("css,div:nth-child(3) > div:nth-child(1) > div:nth-child(2) > span","css, tr.t-cart__summary-shipping-charges > td.pw-ledger__value");
+	public static final cselector tax = new cselector("css,div:nth-child(4) > div:nth-child(1) > div:nth-child(2) > span","css, table > tbody > tr:nth-child(2) > td.pw-ledger__value");
+	public static final cselector paymentPageCheckNextBtn=new cselector("css,div.gwt-accordion.checkout-steps.tabopen > div:nth-child(2) > div.gwt-accordion-tab-content.tabopen > div > div > div > div > div.next-botton-panel > button","css, div.c-checkout-accordion__next-cancel-panel > button");  
+	public static final String taxGR="css, table > tbody > tr:nth-child(3) > td.pw-ledger__value";
+	public static final cselector addToCartBtn=new cselector("css,#gwt-add-to-cart-btn","css,#gwt-add-to-cart-btn");
+	
 	//In cart
-	public static final cselector addedItemsInCart=new cselector("css,.order-item-display-wrapper","css, div> div > div > div.pw-list.items-container.u-bg-color-neutral-00.u-border-light-bottom > div > div.c-cart-product-item.u-flexbox.u-padding-md"); 	
+	public static final cselector addedItemsInCart=new cselector("css,.order-item-display-wrapper","css, div> div > div > div.pw-list.items-container.u-bg-color-neutral-00.u-border-light-bottom > div > div.c-cart-product-item.u-flexbox.u-padding-md");
 	public static final cselector addedItemsImage=new cselector("css,div.order-item-image-holder > img","css, div > div > div > div > div > div > div > div.c-cart-product-item.u-flexbox.u-padding-md > a > div > img"); 
 	public static final cselector addedItemsPrice=new cselector("css, div.left-main-panel > div.items-container > div > div > div.order-item-total-price-panel > div > div","css,#app-main > div.t-cart.t--loaded > div > div:nth-child(1) > div > div > div.pw-list.items-container.u-bg-color-neutral-00.u-border-light-bottom > div:nth-child(1) > div.c-cart-product-item.u-flexbox.u-padding-md > div > div.c-cart-product__quantity-and-price.order-item-quantity-panel > div.order-item-price-panel > div > div > div > span:nth-child(1)");
 	public static final cselector addedItemsTotalPrice=new cselector("css,h4.subtotal-value.right","css,#app-footer > footer > div > div > div > div > div > div > table > tbody > tr > td.pw-ledger__value");
@@ -18,7 +25,7 @@ public class CartSelectors{
 	public static final cselector editFromCartLink=new cselector("css,.edit-link", "css,.c-cart-product__actions-edit");
 	public static final cselector expandOptionsModal=new cselector("css,.gwt-tab-header-sign-button");
 	public static final cselector optionsImage =new cselector( "css,.gwt-image-picker-option-image","css,.pw-swatch__item img");
-	public static final cselector optionsButton =new cselector("css,.gwt-selection-chip", "css,.c-product-option-items__item .pw-swatch__button");
+	public static final cselector optionsButton =new cselector("css,#personalization-modal-options-scroll > div > div.gwt-accordion-tab-content.tabopen > div > div > div.gwt-personalization-modal-accordions-content-option > div.gwt-product-option-panel-widget-panel > div > div > div:nth-child(2)", "css,.m-product-options-no-padding > div > div:nth-child(2) > div > button");
 	public static final cselector optionsDropDown =new cselector( "css,.gwt-ListBox","css,.c-product-options__content");
 	public static final cselector finishAndPreviewButton =new cselector("css,.c-personalization-modal__finish.pw--primary");
 	public static final cselector finishAndPreviewButtonGR =new cselector("css,.pw-accordion__content .pw--primary");
