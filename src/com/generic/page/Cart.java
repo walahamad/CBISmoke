@@ -210,12 +210,10 @@ public class Cart extends SelTestCase {
 					SelectorUtil.initializeSelectorsAndDoActions(CartSelectors.optionsImage.get(), "index,1");
 
 				} catch (Exception e2) {
-					Thread.holdsLock(2500);
+					Thread.sleep(2500);
 
 					// Check if the product has buttons and select one
-					List<WebElement> swatches = getDriver()
-							.findElements(By.cssSelector(CartSelectors.optionsButton.get()));
-					swatches.get(2).click();
+					SelectorUtil.initializeSelectorsAndDoActions(CartSelectors.optionsButton.get());
 				}
 
 			}
