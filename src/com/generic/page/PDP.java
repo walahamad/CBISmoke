@@ -1,33 +1,22 @@
 package com.generic.page;
 
 import java.text.MessageFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.Random;
-import java.util.Set;
-import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
 import org.openqa.selenium.By;
-import org.openqa.selenium.ElementClickInterceptedException;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoSuchFrameException;
-import org.openqa.selenium.NoSuchWindowException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.Wait;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.generic.selector.HomePageSelectors;
 import com.generic.selector.PDPSelectors;
-import com.generic.setup.Common;
 import com.generic.setup.ExceptionMsg;
 import com.generic.setup.GlobalVariables;
 import com.generic.setup.LoggingMsg;
@@ -224,22 +213,26 @@ public class PDP extends SelTestCase {
 	// done - SMK
 	public static void selectNthOptionFirstSwatch(int index) throws Exception {
 		try {
-		getCurrentFunctionName(true);
-		String subStrArr = MessageFormat.format(PDPSelectors.firstSwatchInOptions.get(), index);
-		logs.debug(MessageFormat.format(LoggingMsg.CLICKING_SEL, subStrArr));
-		String nthSel = subStrArr;
-		// Clicking on the div on desktop and iPad does not select the options,
-		// you need to click on the img if there is an img tag.
-		if (!SelTestCase.isMobile())
-			nthSel = subStrArr + ">img";
-		SelectorUtil.initializeSelectorsAndDoActions(nthSel);
+			getCurrentFunctionName(true);
+			String subStrArr = MessageFormat.format(PDPSelectors.firstSwatchInOptions.get(), index);
+			logs.debug(MessageFormat.format(LoggingMsg.CLICKING_SEL, subStrArr));
+			String nthSel = subStrArr;
+			// Clicking on the div on desktop and iPad does not select the options,
+			// you need to click on the img if there is an img tag.
+			if (!SelTestCase.isMobile()) {
+				String nthSel2 = subStrArr + ">img";
+				if (!SelectorUtil.isNotDisplayed(nthSel2))
+					nthSel = subStrArr + ">img";
+			}
 
-		getCurrentFunctionName(false);
-	} catch (NoSuchElementException e) {
-		logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
-		}.getClass().getEnclosingMethod().getName()));
-		throw e;
-	}
+			SelectorUtil.initializeSelectorsAndDoActions(nthSel);
+
+			getCurrentFunctionName(false);
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+			}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
 	}
 
 	// done - SMK
@@ -550,13 +543,15 @@ public class PDP extends SelTestCase {
 	public static boolean bundleProduct() throws Exception {
 		getCurrentFunctionName(true);
 		try {
+			Thread.sleep(4500);
 			Boolean bundle = false;
 			String Str = PDPSelectors.bundleItem.get();
 			  JavascriptExecutor jse = (JavascriptExecutor) getDriver();    
-			  jse.executeScript("gwtDynamic.coremetrics.isSingleProduct;");
-				logs.debug("isSingleProduct: " + jse.toString());
-			  if (jse.toString().equals("N"))
+			  String value = (String) jse.executeScript("return gwtDynamic.coremetrics.isSingleProduct;");
+				logs.debug("isSingleProduct: " + value);
+			  if (value.equals("N"))
 				  bundle = true;
+			  
 			return bundle;
 		} catch (NoSuchElementException e) {
 			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
