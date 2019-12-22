@@ -392,17 +392,28 @@ public class PLP extends SelTestCase {
 
 	// CBI
 	public static String pickRecommendedOption() throws Exception {
+		String itemTitle = "";
 		try {
 			getCurrentFunctionName(true);
 
 			String SelectorSS = PLPSelectors.recommendedOption.get();
-			WebElement recommendedProduct = SelectorUtil.getelement(SelectorSS);
+			if (isGH()) {
+				SelectorSS = PLPSelectors.GHRecommendedOption.get();
+			}
 
-			String itemTitle = recommendedProduct.getText();
-			logs.debug("Picked item: " + itemTitle);
-			recommendedProduct.click();
+			if (isGH() && isiPad()) {
+				// The GH option didn't contains suggestion product so submit search.
+				// (The unbxd redirect the site to PDP if the search for product id).
+				SelectorUtil.initializeSelectorsAndDoActions(PLPSelectors.GHSearchButton.get());
+			} else {
+				WebElement recommendedProduct = SelectorUtil.getelement(SelectorSS);
 
-			getCurrentFunctionName(false);
+				itemTitle = recommendedProduct.getText();
+				logs.debug("Picked item: " + itemTitle);
+				recommendedProduct.click();
+
+				getCurrentFunctionName(false);
+			}
 			return itemTitle;
 		} catch (NoSuchElementException e) {
 			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {

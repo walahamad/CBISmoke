@@ -31,12 +31,11 @@ public class PLPSelectors {
 	public static final cselector GRFilterContainerContents = new cselector("css,.unbxd-facet-option-checkbox input","css,.u-text-letter-spacing-0 > div");
 	public static final cselector GRallCatigories = new cselector("","css,.pw-field__label-wrap.pw--end > label > div > div > div");
 
-	
-	
-	//Random PLP 
+	//Random PLP
 	public static final cselector desktopMenuItem = new cselector("css,a.gwt-MenuItem");
 	public static final cselector PLPIdentifier = new cselector("css,.product-details-main-container","css,.c-product-item__price");
 	public static final cselector navigatetoPLP = new cselector("css,#mainContent > div.container.no-padding.grid-subcategories > div > div:nth-child(1) > div > a > img","css,#mainContent > div.container.no-padding.grid-subcategories > div > div:nth-child(1) > div > a > imgr","css,#app-main > div > div:nth-child(1) > div.u-flexbox.u-direction-row.u-flex-wrap > div:nth-child(1) > a > div.c-lazy-image.u-width-full > div > img");
 
-	
+	public static final cselector GHRecommendedOption =new cselector("css,.unbxd-as-popular-product-info","css,.c--align-middle a.pw-link.c-arrange.u-flexbox.c--align-middle.u-align-center", "css,.c-search-suggestions-products__product");
+	public static final cselector GHSearchButton = new cselector("css,#searchButton");
 }

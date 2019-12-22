@@ -12,8 +12,8 @@ import com.generic.setup.Common;
 import com.generic.setup.LoggingMsg;
 import com.generic.setup.SelTestCase;
 import com.generic.setup.SheetVariables;
-import com.generic.tests.FG.PDP.PDPValidation;
-import com.generic.tests.FG.PDP.WistListGuestValidation;
+import com.generic.tests.GH.PDP.PDPValidation;
+import com.generic.tests.GH.PDP.WistListGuestValidation;
 import com.generic.util.ReportUtil;
 import com.generic.util.SASLogger;
 import com.generic.util.dataProviderUtils;
@@ -54,7 +54,7 @@ public class PDPBase extends SelTestCase {
 	}
 
 	@Test(dataProvider = "PDP_SC")
-	public void PDPTest(String caseId, String runTest, String desc, String proprties)
+	public void PDPTest(String caseId, String runTest, String desc, String proprties, String pid)
 			throws Exception {
 		Testlogs.set(new SASLogger("PDP_SC " + getBrowserName()));
 		// Important to add this for logging/reporting
@@ -66,13 +66,13 @@ public class PDPBase extends SelTestCase {
 		try {
 
 			if (proprties.contains(this.singlePDP)) {
-				PDPValidation.validate(singlePDPSearchTerm);
+				PDPValidation.validate(pid);
 			}
 			if (proprties.contains(this.bundlePDP)) {
 				PDPValidation.validate(BundlePDPSearchTerm);
 			}
 			if (proprties.contains(this.personalizedPDP)) {
-				PDPValidation.validate(personalizedPDPSearchTerm);
+				PDPValidation.validate(pid);
 			}
 
 			if (proprties.contains(this.wishListGuestValidation)) {

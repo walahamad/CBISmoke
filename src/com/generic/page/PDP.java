@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
+
+import org.apache.commons.logging.Log;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoSuchFrameException;
@@ -340,7 +342,7 @@ public class PDP extends SelTestCase {
 			throw e;
 		}
 	}
-	
+
 	// done - SMK
 	public static boolean validateExpiredPDPMsgIsNotDisplayedSinglePDP() throws Exception {
 		getCurrentFunctionName(true);
@@ -397,6 +399,9 @@ public class PDP extends SelTestCase {
 		// disabled.
 		// because there is no attribute to verify if it is enabled.
 		String selectorEnabled = PDPSelectors.addToWLGRBtnEnabledSingle.get();
+		if (isGHRY()) {
+			selectorEnabled = PDPSelectors.GHAddToWLGRBtnEnabledSingle.get();
+		}
 		String selectorDisabled = PDPSelectors.addToCartBtnDisabledSingle.get();
 		if (!SelTestCase.isMobile() && getNumberOfItems() > 1) {
 			String ProductID = getProductID(0);
@@ -423,6 +428,9 @@ public class PDP extends SelTestCase {
 		String selectorEnabled = PDPSelectors.addToCartBtnEnabledSingle.get();
 		String selectorDisabled = PDPSelectors.addToCartBtnDisabledSingle.get();
 
+		if(isGHRY()) {
+			selectorEnabled = PDPSelectors.GHAddToCartBtnEnabledSingle.get();
+		}
     if (!SelTestCase.getBrowserName().contains(GlobalVariables.browsers.iPhone) && getNumberOfItems() > 1) {
 			String ProductID = getProductID(0);
 
@@ -459,6 +467,9 @@ public class PDP extends SelTestCase {
 		getCurrentFunctionName(true);
 		logs.debug("Validate if bottom price is updated after seleting options");
 		String selector = PDPSelectors.bottomPriceSingle.get();
+		if(isGHRY()) {
+			selector = PDPSelectors.GHRYBottomPriceSingle.get();
+		}
 		if (!SelTestCase.getBrowserName().contains(GlobalVariables.browsers.iPhone) && getNumberOfItems() > 1 ) {
 			String ProductID = getProductID(0);
 			selector= MessageFormat.format(PDPSelectors.bottomPriceBundle, ProductID);
@@ -879,6 +890,9 @@ public static boolean validateSelectRegistryOrWishListModalIsDisplayed() throws 
 			getCurrentFunctionName(true);
 			boolean isDisplayed = false;
 			String addPersonalizedButtonSelector = PDPSelectors.addPersonalizedButton.get();
+			if (isGH()) {
+				addPersonalizedButtonSelector = PDPSelectors.GHAddPersonalizedButton.get();
+			}
 			if (getNumberOfItems() > 1 && !SelTestCase.getBrowserName().contains(GlobalVariables.browsers.iPhone)) {
 				String ProductID = getProductID(0);
 				addPersonalizedButtonSelector = "css,#" + ProductID + ">"
@@ -897,6 +911,9 @@ public static boolean validateSelectRegistryOrWishListModalIsDisplayed() throws 
 		try {
 			getCurrentFunctionName(true);
 			String addPersonalizedButtonSelector = PDPSelectors.addPersonalizedButton.get(); 
+			if (isGH()) {
+				addPersonalizedButtonSelector = PDPSelectors.GHAddPersonalizedButton.get(); 
+			}
 			if (getNumberOfItems() > 1 && !SelTestCase.getBrowserName().contains(GlobalVariables.browsers.iPhone)) {
 				String ProductID = getProductID(0);
 		    addPersonalizedButtonSelector = "css,#" + ProductID + ">" + PDPSelectors.addPersonalizedButton.get().replace("css,", "");
@@ -919,9 +936,9 @@ public static boolean validateSelectRegistryOrWishListModalIsDisplayed() throws 
 		if (!SelTestCase.getBrowserName().contains(GlobalVariables.browsers.iPhone)) {
 			addPersonalizedButtonSelector = PDPSelectors.addPersonalizedButton.get();// for single PDP
 			if (getNumberOfItems() > 1) {// for bundle PDP
-	     	String ProductID = getProductID(0);
-	        addPersonalizedButtonSelector = "css,#" + ProductID + ">" + PDPSelectors.addPersonalizedButton.get().replace("css,", "");
-			
+		     	String ProductID = getProductID(0);
+	        	addPersonalizedButtonSelector = "css,#" + ProductID + ">" + PDPSelectors.addPersonalizedButton.get().replace("css,", "");
+
 			}
 		}
 		WebElement element = SelectorUtil.getelement(addPersonalizedButtonSelector);
@@ -941,6 +958,9 @@ public static boolean validateSelectRegistryOrWishListModalIsDisplayed() throws 
 		try {
 			getCurrentFunctionName(true);
 			String subStrArr = PDPSelectors.personalizationSaveAndCloseButton.get();
+			if (isGH()) {
+				subStrArr = PDPSelectors.GHPersonalizationSaveAndCloseButton.get();
+			}
 			SelectorUtil.initializeSelectorsAndDoActions(subStrArr);
 			getCurrentFunctionName(false);
 		} catch (NoSuchElementException e) {
@@ -995,18 +1015,17 @@ public static boolean validateSelectRegistryOrWishListModalIsDisplayed() throws 
 				List<WebElement> itemColors = SelectorUtil.getAllElements(PDPSelectors.personalizedItemColors1.get());
 				if (itemColors.size() > 0) {
 					WebElement firstItemColor = itemColors.get(0);
-					SelectorUtil.clickOnWebElement(firstItemColor);			
+					SelectorUtil.clickOnWebElement(firstItemColor);
 				}
 			}else if (isPersonalizedInputSwatchesDisplayed(PDPSelectors.personalizedItemMenu.get())) {// like item size 
 				WebElement menu = SelectorUtil.getelement(PDPSelectors.personalizedItemMenu.get());
 				List<WebElement> options =  menu.findElements(By.cssSelector(PDPSelectors.personalizedMenuOptions.get()));
-				options.get(1).click();// the first item is selected size 
+				options.get(1).click();// the first item is selected size
 			}
 		}
 		getCurrentFunctionName(false);
 	}
 
-	
 	public static void selectPersonalizationModalSwatches() throws Exception {
 		getCurrentFunctionName(true);
 		closeOpendItem();
@@ -1073,6 +1092,9 @@ public static boolean validateSelectRegistryOrWishListModalIsDisplayed() throws 
 		getCurrentFunctionName(true);
 		boolean isAdded = true;
 		String addedPersonlizedDetailsSelector  =  PDPSelectors.addedPersonlizedDetails.get();
+		if(isGH()) {
+			addedPersonlizedDetailsSelector  =  PDPSelectors.GHAddedPersonlizedDetails.get();
+		}
 		if (getNumberOfItems() > 1 && !SelTestCase.getBrowserName().contains(GlobalVariables.browsers.iPhone) ) {
 		String ProductID = getProductID(0);
 	    addedPersonlizedDetailsSelector = "css,#" + ProductID + ">" + PDPSelectors.addedPersonlizedDetails.get().replace("css,", "");
@@ -1176,6 +1198,36 @@ public static boolean validateSelectRegistryOrWishListModalIsDisplayed() throws 
 		}
 	}
 
+	/**
+	* Get the number of items from the header mini cart.
+	*
+	* @return integer.
+	* @throws Exception
+	*/
+	public static int getNumberOfCartItems() throws Exception {
+
+		try {
+			getCurrentFunctionName(true);
+			WebElement miniCart = SelectorUtil.getelement(PDPSelectors.miniCartItems.get());
+			String miniCartText = miniCart.getText();
+
+			if (!isMobile()) {
+				// Split the number of items from the text (Desktop & Tablet).
+				String[] listString = miniCartText.split("\\(");
+				miniCartText = listString[1];
+				miniCartText = miniCartText.split("item")[0].trim();
+			}
+
+			int miniCartItems = Integer.parseInt(miniCartText);
+			getCurrentFunctionName(false);
+			return miniCartItems;
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+			}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
+	}
+
 	// done - SMK
 	public static String GHgetOptionClass(int index) throws Exception {
 		try {
@@ -1184,6 +1236,33 @@ public static boolean validateSelectRegistryOrWishListModalIsDisplayed() throws 
 			String ID = SelectorUtil.getAttrString(Str, "class", index);
 			getCurrentFunctionName(false);
 			return ID;
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+			}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
+	}
+
+	/**
+	* Get the selected quantity.
+	*
+	* @return integer.
+	* @throws Exception
+ 	*/
+	public static int getQuantity() throws Exception {
+		try {
+			getCurrentFunctionName(true);
+			WebElement quantity = SelectorUtil.getelement(PDPSelectors.quantity.get());
+
+			String quantityText = quantity.getAttribute("value");
+			if (isMobile()) {
+				// The qunatity is a div not an input.
+				quantityText = quantity.getText();
+			}
+
+			int quantityValue = Integer.parseInt(quantityText);
+			getCurrentFunctionName(false);
+			return quantityValue;
 		} catch (NoSuchElementException e) {
 			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
 			}.getClass().getEnclosingMethod().getName()));

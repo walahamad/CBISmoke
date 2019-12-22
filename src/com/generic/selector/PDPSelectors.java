@@ -96,15 +96,33 @@ public class PDPSelectors {
 	public static final cselector personlizedStyleItem = new cselector ("css,div.gwt-accordion-tab-content.tabopen > div > div > div.gwt-personalization-modal-accordions-content-option>div.gwt-option-picker-image-picker>div.gwt-personalization-image-picker-option>img");
 	public static final cselector personlizedTitle = new cselector ("css,div.c-add-personalization-panel>span");
 
-	public static final cselector GHRYaddToCartBtn = new cselector("css,.gwt-product-detail-buttons-container>button.button.primary","c-add-to-cart");
+	public static final cselector GHRYaddToCartBtn = new cselector("css,.gwt-product-detail-buttons-container>button.button.primary","css,.c-add-to-cart");
 	public static final cselector GHfirstSwatchInOptions = new cselector("css,div> .gwt-product-option-panel-widget-panel > div  > div > div:nth-child(1)","css,div.c-product-options> div:nth-child({0})> div.u-margin-top > div > div:nth-child(1) > div > button > div > div > div > div > div");
-	public  final static cselector GHtopPriceSingle = new cselector("css,.gwt-product-detail-quantity-price-column>.gwt-product-detail-widget-price-holder", ".t-product-details-heading__price-and-tag>.t-product-details-heading__price.t-product-details__price>div");
+	public  final static cselector GHtopPriceSingle = new cselector("css,.gwt-product-detail-quantity-price-column>.gwt-product-detail-widget-price-holder", "css,.t-product-details-heading__price-and-tag>.t-product-details-heading__price.t-product-details__price");
 	public static final cselector GHRYColorOptions = new cselector("css,.gwt-product-detail-widget-options-column>div>div>.gwt-product-option-panel-swatchbox>.gwt-product-option-panel-widget-panel>.gwt-image-picker>.gwt-image-picker-option-holder>.gwt-image-picker-option","css,.gwt-image-picker-option>div");
 	public static final cselector GHRYSizeOptions = new cselector("css,.gwt-product-detail-widget-options-column>div>div>div>div>.gwt-product-option-panel-widget-panel>.gwt-selection-chip-picker>div>.gwt-selection-chip-picker-option","css,.pw-swatch__chip-inner>div>.c-product-option-items__item-normal");
 	public static final cselector offerControlClose = new cselector("css,body>form>div>.offer-control.close");
-	
+
 	public static final cselector FGGRSwatchesOptions = new cselector("css,.gwt-product-content-panel>.gwt-product-right-content-panel>#gwt-option-panel>div","css,.c-product-options>div>div>div" );
 	public static final cselector FGGRSwatchesOptionsList = new cselector("css,.gwt-product-content-panel>.gwt-product-right-content-panel>#gwt-option-panel>div>.gwt-product-option-panel-listbox-container>div>select", "css,.c-product-options__container>select");
 	public static final cselector FGGRSwatchesOptionsSwatchBox = new cselector("css,.gwt-product-content-panel>.gwt-product-right-content-panel>#gwt-option-panel>div>div>div.gwt-selection-chip-picker>img", "css,.c-product-option-items__item-normal");
-	
+
+	// GH PDP selectors
+	public final static cselector GHRYBottomPriceSingle = new cselector("css,.gwt-product-detail-widget-price-holder", "css,.t-product-details__quantity .t-product-details__price");
+	public static final cselector GHFirstSwatchInOptions = new cselector("css,div#gwt-option-panel > div:nth-child({0}) .gwt-product-option-panel-widget-panel > div  > div > div:nth-child(1)","css,div.c-product-options> div:nth-child({0})> div.u-margin-top > div > div:nth-child(1) > div > button > div > div > div > div > div");
+	public static final cselector GHAddPersonalizedButton = new cselector("css,.gwt-product-detail-widget-personalization-panel .gwt-personalize-link-style" , "css,.c-add-personalization-panel .pw-button");
+	public static final cselector GHAddedPersonlizedDetails = new cselector("css,.gwt-product-detail-widget-personalization-chosen-values .gwt-HTML","css,.c-edit-personalization-panel");
+	public static final cselector GHAddToWLGRBtnEnabledSingle = new cselector("css,.gwt-product-detail-buttons-panel .secondary","css,.t-product-details>div>.pw--secondary");
+	public static final cselector GHAddToCartBtnEnabledSingle = new cselector("css,.gwt-product-detail-buttons-panel .primary","css,.c-add-to-cart");
+	public static final cselector PDPPageClassName = new cselector("css,.view-ProductDetailView");
+	public static final cselector personalizationPrice = new cselector("css,.gwt-item-personalization-cost .gwt-personalization-choice-selected-name", "css,.c-personalization-chosen-values>div>div");
+	public static final cselector GHPersonalizationSaveAndCloseButton = new cselector ("css,div.gwt-submit-cancel-dialog-button-panel > button.button.primary" , "css,.c-personalization-accordion__preview-save .pw--primary");
+	public static final cselector GHPersonalizedInputValue = new cselector("css,#personalization-modal-options-scroll .gwt-accordion-tab:nth-child({0}) input","css,.pw-accordion--is-open .c-product-options input");
+	public static final cselector GHPersonalizedItemColors = new cselector("css,#personalization-modal-options-scroll .gwt-accordion-tab:nth-child({0}) .gwt-personalization-modal-accordions-content-option .gwt-personalization-swatch-picker-option img","css,.pw-accordion--is-open .c-product-options .color-item .pw-button");
+	public static final cselector personalizedItemStyle = new cselector("css,#personalization-modal-options-scroll .gwt-accordion-tab:nth-child({0}) .gwt-personalization-modal-accordions-content-option .gwt-personalization-image-picker-option img");
+	public static final cselector GHPersonalizedItems = new cselector("css,.m-personalization-accordion .pw-accordion__item");
+	public static final cselector continuePersonalizationSelection = new cselector("css,.pw-accordion--is-open .pw--primary");
+	public static final cselector miniCartItems = new cselector("css,#gwt_minicart_div .cartText", "css,.t-header__badge-center>span>span");
+	public static final cselector quantity = new cselector("css,.gwt-quantity-textbox", "css,.t-product-details-quantity-value");
+
 }
