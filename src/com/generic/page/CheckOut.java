@@ -1104,10 +1104,10 @@ public class CheckOut extends SelTestCase {
 					cvvStatus = checkCvvIframe();
 					noOfTries++;
 
-					if (noOfTries > 25)
+					if (noOfTries > 30)
 						break;
 
-					Thread.sleep(2000);
+					Thread.sleep(2500);
 				}
 
 			} catch (NoSuchElementException e) {
@@ -1784,6 +1784,9 @@ public class CheckOut extends SelTestCase {
 				PDP.addProductsToCart();
 				if (!getBrowserName().contains(GlobalVariables.browsers.iPhone))
 					PDP.clickAddToCartCloseBtn();
+				
+				URI url = new URI(getURL());
+				getDriver().get("https://"+url.getHost());
 			}
 			getCurrentFunctionName(false);
 		} catch (NoSuchElementException e) {
@@ -1952,15 +1955,32 @@ public class CheckOut extends SelTestCase {
 	public static boolean checkIfInStepTwo() throws Exception {
 		try {
 			getCurrentFunctionName(true);
+			boolean state=false;
 			Thread.sleep(1000);
-			boolean avillability =SelectorUtil.isDisplayed(CheckOutSelectors.stepTwoIdentifier.get());
+		
+			if (isFG()) {
+				state = SelectorUtil.isDisplayed(CheckOutSelectors.stepTwoIdentifier.get());
+			} else if (isGR()) {
+				state = SelectorUtil.isDisplayed(CheckOutSelectors.stepTwoIdentifierGR.get());
+			}
+			
 			getCurrentFunctionName(false);
 	
-			return avillability;		
+			return state;		
 			
 		} catch (NoSuchElementException e) {
 			try {
-			return SelectorUtil.isDisplayed(CheckOutSelectors.stepTwoIdentifier2.get());
+				
+				if (isFG()) {
+					return SelectorUtil.isDisplayed(CheckOutSelectors.stepTwoIdentifier2.get());
+
+				} else if (isGR()) {
+					return SelectorUtil.isDisplayed(CheckOutSelectors.stepTwoIdentifier2GR.get());
+
+				}
+				else {
+					return false;
+				}
 			}
 			catch (NoSuchElementException e2) {
 				return false;
@@ -1976,7 +1996,7 @@ public class CheckOut extends SelTestCase {
 		try {
 			getCurrentFunctionName(true);
 			//Click next to proceed to step 4
-			SelectorUtil.initializeSelectorsAndDoActions(CheckOutSelectors.thirdStepNextButton.get());
+			SelectorUtil.initializeSelectorsAndDoActions(CheckOutSelectors.thirdStepNextButton.get(),"ForceAction,click");
 			getCurrentFunctionName(false);
 		} catch (NoSuchElementException e) {
 			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
@@ -1991,7 +2011,7 @@ public class CheckOut extends SelTestCase {
 	public static void proceedToStepThree() throws Exception {
 		try {
 			getCurrentFunctionName(true);
-			SelectorUtil.initializeSelectorsAndDoActions(CheckOutSelectors.secondStepNextButton.get());
+			SelectorUtil.initializeSelectorsAndDoActions(CheckOutSelectors.secondStepNextButton.get(),"ForceAction,click");
 			getCurrentFunctionName(false);
 		} catch (NoSuchElementException e) {
 			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
@@ -2151,6 +2171,20 @@ public class CheckOut extends SelTestCase {
 				  WebElement closeElement = wait.until(visibilityOfElementLocated(By.cssSelector(CheckOutSelectors.closePoromotionalModal.get())));
 			      closeElement.click();			
 			}
+			getCurrentFunctionName(false);			
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+			}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
+
+	}
+	
+	// Done CBI
+	public static void clickCreditCardPayment() throws Exception {
+		try {	
+			getCurrentFunctionName(true);
+			SelectorUtil.initializeSelectorsAndDoActions(CheckOutSelectors.creditCartTab.get());		
 			getCurrentFunctionName(false);			
 		} catch (NoSuchElementException e) {
 			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {

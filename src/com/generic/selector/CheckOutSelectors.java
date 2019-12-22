@@ -35,7 +35,9 @@ public class CheckOutSelectors
 	public static final cselector secondStepNextButton = new cselector("css,.next-botton-panel .ship-method-and-gift-next-button","css,.c-checkout-accordion__next-cancel-panel .pw--primary");
 	public static final cselector productContainerInStepTwo =new cselector("css,.shipping-method-and-gift-main-container .address-related-items-panel","css,.c-cart-product__link");
 	public static final cselector stepTwoIdentifier =new cselector("css,.csb-panels-list-box","css,.t-checkout-shipping-and-gift__help-btn");
+	public static final cselector stepTwoIdentifierGR =new cselector("css,.ship-method-panel .csb-panels-list-box","css,.t-checkout-shipping-and-gift__help-btn");
 	public static final cselector stepTwoIdentifier2 =new cselector("css,.csb-panels-list-box","css,.t-checkout-step2__truck-delivery-panel");
+	public static final cselector stepTwoIdentifier2GR =new cselector("css,.ship-method-panel .csb-panels-list-box","css,.t-checkout-step2__truck-delivery-panel");
 
 
 	
@@ -44,6 +46,7 @@ public class CheckOutSelectors
 	public static final cselector emailBillingAddress =new cselector("css,#guest_email_field","css,#guest_email_field");
 	
 	//Step 4
+	public static final cselector creditCartTab = new cselector("css,.cc-tab-header", "css,.pw-tabs__link");	
 	public static final cselector shippingAndTaxCost = new cselector("css,.costs-holder .gwt-InlineLabel", "css,.pw-ledger__value");
 	public static final cselector subTotalValue = new cselector("css,.costs-holder .subtotal-value"); 
 	public static final cselector creditCardField = new cselector("css,#accountcc", "css,#accountcc"); 
