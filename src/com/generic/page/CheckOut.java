@@ -12,7 +12,10 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import static org.openqa.selenium.support.ui.ExpectedConditions.*;
+
+import com.generic.selector.CartSelectors;
 import com.generic.selector.CheckOutSelectors;
+import com.generic.selector.PayPalSelectors;
 import com.generic.setup.ExceptionMsg;
 import com.generic.setup.GlobalVariables;
 import com.generic.setup.LoggingMsg;
@@ -23,287 +26,9 @@ import com.generic.util.SelectorUtil;
 
 public class CheckOut extends SelTestCase {
 
-	public static class keys {
-		public static final String caseId = "caseId";
-	}
-
-	public static class guestCheckout {
-		public static void typeGuestMail(String email) throws Exception {
-			List<String> subStrArr = new ArrayList<String>();
-			List<String> valuesArr = new ArrayList<String>();
-			getCurrentFunctionName(true);
-			logs.debug(MessageFormat.format(LoggingMsg.TYPING_ELEMENT_VALUE, "guest mail", email));
-			subStrArr.add(CheckOutSelectors.guestMail);
-			valuesArr.add(email);
-			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
-			getCurrentFunctionName(false);
-
-		}
-
-		public static void typeGuestConfMail(String email) throws Exception {
-			getCurrentFunctionName(true);
-			List<String> subStrArr = new ArrayList<String>();
-			List<String> valuesArr = new ArrayList<String>();
-			logs.debug(MessageFormat.format(LoggingMsg.TYPING_ELEMENT_VALUE, "guest confirmation mail", email));
-			subStrArr.add(CheckOutSelectors.guestConfirmationMail);
-			valuesArr.add(email);
-			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
-			getCurrentFunctionName(false);
-
-		}
-
-		public static void clickCheckoutAsGuest() throws Exception {
-			try {
-				getCurrentFunctionName(true);
-				List<String> subStrArr = new ArrayList<String>();
-				List<String> valuesArr = new ArrayList<String>();
-				logs.debug(MessageFormat.format(LoggingMsg.CLICK_ELEMENT_SEL, "checkout as guest button"));
-				subStrArr.add(CheckOutSelectors.guestCheckoutButton.get());
-				valuesArr.add("");
-				SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
-				getCurrentFunctionName(false);
-			} catch (NoSuchElementException e) {
-				logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
-				}.getClass().getEnclosingMethod().getName()));
-				throw e;
-			}
-
-		}
-
-		public static void fillAndClickGuestCheckout(String email) throws Exception {
-			try {
-				getCurrentFunctionName(true);
-				// typeGuestMail(email);
-				// typeGuestConfMail(email);
-				clickCheckoutAsGuest();
-				getCurrentFunctionName(false);
-			} catch (NoSuchElementException e) {
-				logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
-				}.getClass().getEnclosingMethod().getName()));
-				throw e;
-			}
-		}
-
-		public static void fillPreRegFormAndClickRegBtn(String password, boolean newsLetterOptin) throws Exception {
-			getCurrentFunctionName(true);
-			typeGuestPassPreForm(password);
-			typeGuestPassConfPreForm(password);
-			checkNewsletterOptin(newsLetterOptin);
-			clickCreatAnaccount();
-			getCurrentFunctionName(false);
-
-		}
-
-		public static void clickCreatAnaccount() throws Exception {
-			getCurrentFunctionName(true);
-			List<String> subStrArr = new ArrayList<String>();
-			List<String> valuesArr = new ArrayList<String>();
-			logs.debug(MessageFormat.format(LoggingMsg.CLICK_ELEMENT_SEL, "guest creat an account"));
-			subStrArr.add(CheckOutSelectors.guestCreateAccButton);
-			valuesArr.add("");
-			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
-			getCurrentFunctionName(false);
-
-		}
-
-		public static void checkNewsletterOptin(boolean newsLetterOptin) throws Exception {
-			getCurrentFunctionName(true);
-			List<String> subStrArr = new ArrayList<String>();
-			List<String> valuesArr = new ArrayList<String>();
-			logs.debug(MessageFormat.format(LoggingMsg.CHECKBOX_SEL_VAL, "News Letter Optin", newsLetterOptin));
-			subStrArr.add(CheckOutSelectors.guestCreateAccOtpin);
-			valuesArr.add(String.valueOf(newsLetterOptin));
-			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
-			getCurrentFunctionName(false);
-
-		}
-
-		public static void typeGuestPassConfPreForm(String password) throws Exception {
-			getCurrentFunctionName(true);
-			List<String> subStrArr = new ArrayList<String>();
-			List<String> valuesArr = new ArrayList<String>();
-			logs.debug(MessageFormat.format(LoggingMsg.TYPING_ELEMENT_VALUE, "password confirmation ", password));
-			subStrArr.add(CheckOutSelectors.guestCreateAccCPwd);
-			valuesArr.add(password);
-			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
-			getCurrentFunctionName(false);
-
-		}
-
-		public static void typeGuestPassPreForm(String password) throws Exception {
-			getCurrentFunctionName(true);
-			List<String> subStrArr = new ArrayList<String>();
-			List<String> valuesArr = new ArrayList<String>();
-			logs.debug(MessageFormat.format(LoggingMsg.TYPING_ELEMENT_VALUE, "password ", password));
-			subStrArr.add(CheckOutSelectors.guestCreateAccPwd);
-			valuesArr.add(password);
-			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
-			getCurrentFunctionName(false);
-
-		}
-
-		// done-ocm
-		public static void returningCustomerLogin(String username, String password) throws Exception {
-			try {
-				getCurrentFunctionName(true);
-				typeRetuRningcustomerUserName(username);
-				typeRetuRningcustomerPassword(password);
-				clickRetuRningcustomerLogin();
-				getCurrentFunctionName(false);
-			} catch (NoSuchElementException e) {
-				logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
-				}.getClass().getEnclosingMethod().getName()));
-				throw e;
-			}
-		}
-
-		// done-ocm
-		private static void clickRetuRningcustomerLogin() throws Exception {
-			try {
-				getCurrentFunctionName(true);
-				List<String> subStrArr = new ArrayList<String>();
-				List<String> valuesArr = new ArrayList<String>();
-				logs.debug(MessageFormat.format(LoggingMsg.CLICKING_SEL, "Log In and Check Out"));
-				subStrArr.add(CheckOutSelectors.returningcustomerloginBtn);
-				valuesArr.add("");
-				SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
-				getCurrentFunctionName(false);
-			} catch (NoSuchElementException e) {
-				logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
-				}.getClass().getEnclosingMethod().getName()));
-				throw e;
-			}
-
-		}
-
-		// done-ocm
-		private static void typeRetuRningcustomerPassword(String password) throws Exception {
-			try {
-				getCurrentFunctionName(true);
-				List<String> subStrArr = new ArrayList<String>();
-				List<String> valuesArr = new ArrayList<String>();
-				logs.debug(MessageFormat.format(LoggingMsg.TYPING_ELEMENT_VALUE, "returning customer password ",
-						password));
-				subStrArr.add(CheckOutSelectors.returningcustomerPassword);
-				valuesArr.add(password);
-				SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
-				getCurrentFunctionName(false);
-			} catch (NoSuchElementException e) {
-				logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
-				}.getClass().getEnclosingMethod().getName()));
-				throw e;
-			}
-
-		}
-
-		// done-ocm
-		private static void typeRetuRningcustomerUserName(String username) throws Exception {
-			try {
-				getCurrentFunctionName(true);
-				List<String> subStrArr = new ArrayList<String>();
-				List<String> valuesArr = new ArrayList<String>();
-				logs.debug(MessageFormat.format(LoggingMsg.TYPING_ELEMENT_VALUE, "returning customer username ",
-						username));
-				subStrArr.add(CheckOutSelectors.returningcustomerUsername);
-				valuesArr.add(username);
-				SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
-				getCurrentFunctionName(false);
-			} catch (NoSuchElementException e) {
-				logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
-				}.getClass().getEnclosingMethod().getName()));
-				throw e;
-			}
-		}
-
-		// done-ocm
-		public static void clickOnHaveAnAccount() throws Exception {
-			try {
-				getCurrentFunctionName(true);
-				List<String> subStrArr = new ArrayList<String>();
-				List<String> valuesArr = new ArrayList<String>();
-				logs.debug("chose to Login");
-				subStrArr.add(CheckOutSelectors.choseToLogin);
-				valuesArr.add("");
-				SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
-				getCurrentFunctionName(false);
-			} catch (NoSuchElementException e) {
-				logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
-				}.getClass().getEnclosingMethod().getName()));
-				throw e;
-			}
-		}
-
-	}// guest-checkout
-
-	public static class paymentType {
-
-		public static void checkCardPayment() throws Exception {
-			getCurrentFunctionName(true);
-			List<String> subStrArr = new ArrayList<String>();
-			List<String> valuesArr = new ArrayList<String>();
-			logs.debug(LoggingMsg.SAVING_ADDRESS);
-			subStrArr.add(CheckOutSelectors.PaymentTypeSelection_CARD);
-			valuesArr.add("");
-			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
-			getCurrentFunctionName(false);
-
-		}
-
-		public static void checwkAccountPayment() throws Exception {
-			getCurrentFunctionName(true);
-			List<String> subStrArr = new ArrayList<String>();
-			List<String> valuesArr = new ArrayList<String>();
-			logs.debug(LoggingMsg.SAVING_ADDRESS);
-			subStrArr.add(CheckOutSelectors.PaymentTypeSelection_ACCOUNT);
-			valuesArr.add("");
-			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
-			getCurrentFunctionName(false);
-
-		}
-
-		public static void typePurchaseOrderNumber(String PurchaseOrderNumber) throws Exception {
-			getCurrentFunctionName(true);
-			List<String> subStrArr = new ArrayList<String>();
-			List<String> valuesArr = new ArrayList<String>();
-			logs.debug(MessageFormat.format(LoggingMsg.TYPING_ELEMENT_VALUE, "Purchase Order Number ",
-					PurchaseOrderNumber));
-			subStrArr.add(CheckOutSelectors.PurchaseOrderNumber);
-			valuesArr.add(PurchaseOrderNumber);
-			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
-			getCurrentFunctionName(false);
-
-		}
-
-		public static void selectCostCenter(String CostCenter) throws Exception {
-			getCurrentFunctionName(true);
-			List<String> subStrArr = new ArrayList<String>();
-			List<String> valuesArr = new ArrayList<String>();
-			subStrArr.add(CheckOutSelectors.PaymentTypeCostCenterSelect);
-			valuesArr.add(CostCenter);
-			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
-			getCurrentFunctionName(false);
-
-		}
-
-		public static void clickNext() throws Exception {
-			getCurrentFunctionName(true);
-			List<String> subStrArr = new ArrayList<String>();
-			List<String> valuesArr = new ArrayList<String>();
-			logs.debug(LoggingMsg.CLICKING_SHIPPING_NEXT_BTN);
-			subStrArr.add(CheckOutSelectors.PaymentType_continue_button);
-			valuesArr.add("");
-			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
-			getCurrentFunctionName(false);
-
-		}
-
-	}
-
 	public static class shippingAddress {
 
 		public static class keys {
-
-			public static final String isSavedShipping = "saved-shipping";
 
 			public static final String countery = "countery";
 			public static final String title = "title";
@@ -315,26 +40,6 @@ public class CheckOut extends SelTestCase {
 			public static final String phone = "phone";
 		}
 
-		// done-ocm
-		public static void selectCountery(String countery) throws Exception {
-			try {
-				getCurrentFunctionName(true);
-				List<String> subStrArr = new ArrayList<String>();
-				List<String> valuesArr = new ArrayList<String>();
-				logs.debug(MessageFormat.format(LoggingMsg.SELECTING_ELEMENT_VALUE, "Countery ", countery));
-				subStrArr.add(CheckOutSelectors.Bcountery);
-				valuesArr.add(countery);
-				SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
-				Thread.sleep(1500);
-				getCurrentFunctionName(false);
-			} catch (NoSuchElementException e) {
-				logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
-				}.getClass().getEnclosingMethod().getName()));
-				throw e;
-			}
-
-		}
-
 		// Done CBI
 		public static void typeFirstName(String firstName, boolean isSingle) throws Exception {
 			try {
@@ -343,25 +48,6 @@ public class CheckOut extends SelTestCase {
 					SelectorUtil.initializeSelectorsAndDoActions(CheckOutSelectors.firstNameSingle.get(), firstName);
 				else
 					SelectorUtil.initializeSelectorsAndDoActions(CheckOutSelectors.firstName.get(), firstName);
-				getCurrentFunctionName(false);
-			} catch (NoSuchElementException e) {
-				logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
-				}.getClass().getEnclosingMethod().getName()));
-				throw e;
-			}
-
-		}
-
-		// done-ocm
-		public static void typeAddress(String address) throws Exception {
-			try {
-				getCurrentFunctionName(true);
-				List<String> subStrArr = new ArrayList<String>();
-				List<String> valuesArr = new ArrayList<String>();
-				logs.debug(MessageFormat.format(LoggingMsg.TYPING_ELEMENT_VALUE, "address ", address));
-				subStrArr.add(CheckOutSelectors.address);
-				valuesArr.add(address);
-				SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
 				getCurrentFunctionName(false);
 			} catch (NoSuchElementException e) {
 				logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
@@ -459,209 +145,6 @@ public class CheckOut extends SelTestCase {
 
 		}
 
-		public static void checkSaveAddress(boolean check) throws Exception {
-			getCurrentFunctionName(true);
-			List<String> subStrArr = new ArrayList<String>();
-			List<String> valuesArr = new ArrayList<String>();
-			logs.debug(LoggingMsg.SAVING_ADDRESS);
-			subStrArr.add(CheckOutSelectors.CheckSaveAddress);
-			valuesArr.add(String.valueOf(check));
-			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
-			getCurrentFunctionName(false);
-
-		}
-
-		public static String getOrderTotal() throws Exception {
-			getCurrentFunctionName(true);
-			List<String> subStrArr = new ArrayList<String>();
-			List<String> valuesArr = new ArrayList<String>();
-			subStrArr.add(CheckOutSelectors.orderTotalShippingAddress);
-			valuesArr.add("");
-			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
-			logs.debug(SelectorUtil.textValue.get());
-			getCurrentFunctionName(false);
-			return SelectorUtil.textValue.get();
-		}
-
-		public static String getOrdersubTotal() throws Exception {
-			getCurrentFunctionName(true);
-			List<String> subStrArr = new ArrayList<String>();
-			List<String> valuesArr = new ArrayList<String>();
-			subStrArr.add(CheckOutSelectors.orderSubTotalShippingAddress);
-			valuesArr.add("");
-			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
-			logs.debug(SelectorUtil.textValue.get());
-			getCurrentFunctionName(false);
-			return SelectorUtil.textValue.get();
-		}
-
-		// done-ocm
-		public static void gotoPaytment() throws Exception {
-			try {
-				getCurrentFunctionName(true);
-				List<String> subStrArr = new ArrayList<String>();
-				List<String> valuesArr = new ArrayList<String>();
-				logs.debug(LoggingMsg.CLICKING_SHIPPING_NEXT_BTN);
-				subStrArr.add(CheckOutSelectors.submitShippingAddressBtn);
-				valuesArr.add("");
-				SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
-				getCurrentFunctionName(false);
-			} catch (NoSuchElementException e) {
-				logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
-				}.getClass().getEnclosingMethod().getName()));
-				throw e;
-			}
-
-		}
-
-
-
-		// in case of using the address book
-		public static void fillAndClickNext(boolean selectFromAddressBook) throws Exception {
-			getCurrentFunctionName(true);
-			selectFirstAddress();
-			getCurrentFunctionName(false);
-		}
-
-		// done- cbk
-		private static void selectFirstAddress() throws Exception {
-			try {
-				List<String> subStrArr = new ArrayList<String>();
-				List<String> valuesArr = new ArrayList<String>();
-				getCurrentFunctionName(true);
-				subStrArr.add(CheckOutSelectors.addresses);
-				valuesArr.add("FFF2");// pick first Address
-				SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
-				getCurrentFunctionName(false);
-			} catch (NoSuchElementException e) {
-				logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
-				}.getClass().getEnclosingMethod().getName()));
-				throw e;
-			}
-
-		}
-
-		public static String getAlertInfo() throws Exception {
-			getCurrentFunctionName(true);
-			List<String> subStrArr = new ArrayList<String>();
-			List<String> valuesArr = new ArrayList<String>();
-			logs.debug(MessageFormat.format(LoggingMsg.GET_ELEMENT_BY_LOCATOR, CheckOutSelectors.alertInfo));
-			subStrArr.add(CheckOutSelectors.alertInfo);
-			valuesArr.add("");
-			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
-			logs.debug(MessageFormat.format(LoggingMsg.ERROR_MSG, SelectorUtil.textValue.get()));
-			getCurrentFunctionName(false);
-			return SelectorUtil.textValue.get();
-		}
-
-		public static String getCountryError() throws Exception {
-			getCurrentFunctionName(true);
-			List<String> subStrArr = new ArrayList<String>();
-			List<String> valuesArr = new ArrayList<String>();
-			logs.debug(MessageFormat.format(LoggingMsg.GET_ELEMENT_BY_LOCATOR, CheckOutSelectors.countryError));
-			subStrArr.add(CheckOutSelectors.countryError);
-			valuesArr.add("index,1");
-			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
-			logs.debug(MessageFormat.format(LoggingMsg.ERROR_MSG, SelectorUtil.textValue.get()));
-			getCurrentFunctionName(false);
-			return SelectorUtil.textValue.get();
-		}
-
-		public static String getTitelError() throws Exception {
-			getCurrentFunctionName(true);
-			List<String> subStrArr = new ArrayList<String>();
-			List<String> valuesArr = new ArrayList<String>();
-			logs.debug(MessageFormat.format(LoggingMsg.GET_ELEMENT_BY_LOCATOR, CheckOutSelectors.titleError));
-			subStrArr.add(CheckOutSelectors.titleError);
-			valuesArr.add("index,1");
-			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
-			logs.debug(MessageFormat.format(LoggingMsg.ERROR_MSG, SelectorUtil.textValue.get()));
-			getCurrentFunctionName(false);
-			return SelectorUtil.textValue.get();
-		}
-
-		public static String getFirstNameError() throws Exception {
-			getCurrentFunctionName(true);
-			List<String> subStrArr = new ArrayList<String>();
-			List<String> valuesArr = new ArrayList<String>();
-			logs.debug(MessageFormat.format(LoggingMsg.GET_ELEMENT_BY_LOCATOR, CheckOutSelectors.fnameError));
-			subStrArr.add(CheckOutSelectors.fnameError);
-			valuesArr.add("");
-			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
-			logs.debug(MessageFormat.format(LoggingMsg.ERROR_MSG, SelectorUtil.textValue.get()));
-			getCurrentFunctionName(false);
-			return SelectorUtil.textValue.get();
-		}
-
-		public static String getLastNameError() throws Exception {
-			getCurrentFunctionName(true);
-			List<String> subStrArr = new ArrayList<String>();
-			List<String> valuesArr = new ArrayList<String>();
-			logs.debug(MessageFormat.format(LoggingMsg.GET_ELEMENT_BY_LOCATOR, CheckOutSelectors.lnameError));
-			subStrArr.add(CheckOutSelectors.lnameError);
-			valuesArr.add("");
-			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
-			logs.debug(MessageFormat.format(LoggingMsg.ERROR_MSG, SelectorUtil.textValue.get()));
-			getCurrentFunctionName(false);
-			return SelectorUtil.textValue.get();
-		}
-
-		public static String getAddress1Error() throws Exception {
-			getCurrentFunctionName(true);
-			List<String> subStrArr = new ArrayList<String>();
-			List<String> valuesArr = new ArrayList<String>();
-			logs.debug(MessageFormat.format(LoggingMsg.GET_ELEMENT_BY_LOCATOR, CheckOutSelectors.address1Error));
-			subStrArr.add(CheckOutSelectors.address1Error);
-			valuesArr.add("");
-			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
-			logs.debug(MessageFormat.format(LoggingMsg.ERROR_MSG, SelectorUtil.textValue.get()));
-			getCurrentFunctionName(false);
-			return SelectorUtil.textValue.get();
-		}
-
-		public static String getCityError() throws Exception {
-			getCurrentFunctionName(true);
-			List<String> subStrArr = new ArrayList<String>();
-			List<String> valuesArr = new ArrayList<String>();
-			logs.debug(MessageFormat.format(LoggingMsg.GET_ELEMENT_BY_LOCATOR, CheckOutSelectors.cityError));
-			subStrArr.add(CheckOutSelectors.cityError);
-			valuesArr.add("");
-			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
-			logs.debug(MessageFormat.format(LoggingMsg.ERROR_MSG, SelectorUtil.textValue.get()));
-			getCurrentFunctionName(false);
-			return SelectorUtil.textValue.get();
-		}
-
-		public static String getPostCodeEerror() throws Exception {
-			getCurrentFunctionName(true);
-			List<String> subStrArr = new ArrayList<String>();
-			List<String> valuesArr = new ArrayList<String>();
-			logs.debug(MessageFormat.format(LoggingMsg.GET_ELEMENT_BY_LOCATOR, CheckOutSelectors.postcodeEerror));
-			subStrArr.add(CheckOutSelectors.postcodeEerror);
-			valuesArr.add("");
-			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
-			logs.debug(MessageFormat.format(LoggingMsg.ERROR_MSG, SelectorUtil.textValue.get()));
-			getCurrentFunctionName(false);
-			return SelectorUtil.textValue.get();
-		}
-
-		// done -ocm
-		public static void typeEmailAddress(String mail) throws Exception {
-			try {
-				getCurrentFunctionName(true);
-				List<String> subStrArr = new ArrayList<String>();
-				List<String> valuesArr = new ArrayList<String>();
-				subStrArr.add(CheckOutSelectors.emailAddress);
-				valuesArr.add(mail);
-				SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
-				getCurrentFunctionName(false);
-			} catch (NoSuchElementException e) {
-				logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
-				}.getClass().getEnclosingMethod().getName()));
-				throw e;
-			}
-		}
-
 		//Done CBI
 		public static void selectState(String state) throws Exception {
 			try {
@@ -676,38 +159,26 @@ public class CheckOut extends SelTestCase {
 
 		}
 
-		public static void addAddress() throws Exception {
-			try {
-				getCurrentFunctionName(true);
-				List<String> subStrArr = new ArrayList<String>();
-				List<String> valuesArr = new ArrayList<String>();
-				subStrArr.add(CheckOutSelectors.addAddressChekbx);
-				valuesArr.add("");
-				SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
-				getCurrentFunctionName(false);
-			} catch (NoSuchElementException e) {
-				logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
-				}.getClass().getEnclosingMethod().getName()));
-				throw e;
-			}
-
-		}
-
 	}// shipping address
 
-	public static class shippingMethod {
 
-		public static void fillAndclickNext(String shippingMethod) throws Exception {
+
+	public static class paymentInnformation {
+
+		public static class keys {
+			public static final String name = "name";
+			public static final String number = "number";
+			public static final String expireYear = "expireYear";
+			public static final String expireMonth = "expireMonth";
+			public static final String CVCC = "CVCC";
+
+		}
+
+		// Done CBI
+		public static void switchBackToMainWindow(String mainWindow) {
 			try {
 				getCurrentFunctionName(true);
-				logs.debug(shippingMethod);
-				if (!shippingMethod.contains("AAGRND")) {
-					// clickaddShippingMethod();
-					selectShippingMethod(shippingMethod);
-					// clickNext();
-				} else {
-					logs.debug("ignoring reselecting the shipping method");
-				}
+				getDriver().switchTo().window(mainWindow);
 				getCurrentFunctionName(false);
 			} catch (NoSuchElementException e) {
 				logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
@@ -717,15 +188,68 @@ public class CheckOut extends SelTestCase {
 
 		}
 
-		private static void selectShippingMethod(String shippingMethod) throws Exception {
+		// Done CBI
+		public static String switchToPayPalWindow() throws InterruptedException {
 			try {
 				getCurrentFunctionName(true);
-				List<String> subStrArr = new ArrayList<String>();
-				List<String> valuesArr = new ArrayList<String>();
-				if (!shippingMethod.contains("AAGRND")) {
-					subStrArr.add(CheckOutSelectors.shippingMethod + shippingMethod);
-					valuesArr.add("");
-					SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
+				Thread.sleep(1000);
+				Set<String> winIds = getDriver().getWindowHandles();
+				Iterator<String> iter = winIds.iterator();
+				logs.debug("number of windows:" + winIds.size());
+				String main = iter.next();
+				logs.debug("main window " + main);
+				String paypal = iter.next();
+				logs.debug("paypal window " + paypal);
+				getDriver().switchTo().window(paypal);
+				getCurrentFunctionName(false);
+				return main;
+			} catch (NoSuchElementException e) {
+				logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+				}.getClass().getEnclosingMethod().getName()));
+				throw e;
+			}
+		}
+
+		// Done CBI
+		public static void typeCVV(String CVV) throws Exception {
+			try {
+				getCurrentFunctionName(true);
+				// Switch to cvv iframe
+				Thread.sleep(1000);
+
+				// wait for cvv iframe to load
+				waitforCvvFrame();
+
+				getDriver().switchTo().frame(GlobalVariables.CVV_Iframe_ID);
+				Thread.sleep(2000);
+				SelectorUtil.initializeSelectorsAndDoActions(CheckOutSelectors.cvv.get(), CVV);
+
+				// Switch to default frame
+				getDriver().switchTo().defaultContent();
+
+				getCurrentFunctionName(false);
+			} catch (NoSuchElementException e) {
+				logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+				}.getClass().getEnclosingMethod().getName()));
+				throw e;
+			}
+		}
+		
+		// Done CBI
+		public static void waitforCvvFrame() throws Exception {
+			try {
+				boolean cvvStatus = false;
+				int noOfTries = 0;
+
+				while (!cvvStatus) {
+					logs.debug(cvvStatus + "  Waiting for cvv iframe");
+
+					cvvStatus = checkCvvIframe();
+					noOfTries++;
+
+					if (noOfTries > 25)
+						break;
+
 					Thread.sleep(2000);
 				}
 				getCurrentFunctionName(false);
@@ -1608,166 +1132,80 @@ public class CheckOut extends SelTestCase {
 
 		}
 
-		// done-ocm
-		public static String getOrderId() throws Exception {
-			try {
-				getCurrentFunctionName(true);
-				List<String> subStrArr = new ArrayList<String>();
-				subStrArr.add(CheckOutSelectors.orderdetails);
-				WebElement details = SelectorUtil.getNthElement(subStrArr, 0);
-				String orderId = details.findElements(By.cssSelector("ul>li")).get(0).getText();
-				logs.debug(orderId);
-				getCurrentFunctionName(false);
-				return orderId.split(" ")[1].replace("#", "");
+
 			} catch (NoSuchElementException e) {
 				logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
 				}.getClass().getEnclosingMethod().getName()));
 				throw e;
 			}
 
-		}
-
-		// done-ocm
-		public static String getOrderTotal() throws Exception {
-			try {
-				getCurrentFunctionName(true);
-				List<String> subStrArr = new ArrayList<String>();
-				subStrArr.add(CheckOutSelectors.orderdetails);
-				WebElement details = SelectorUtil.getNthElement(subStrArr, 1);
-				String orderTotal = details.findElements(By.cssSelector("ul>li")).get(3).getText();
-				logs.debug(orderTotal);
-				getCurrentFunctionName(false);
-				return orderTotal;
-			} catch (NoSuchElementException e) {
-				logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
-				}.getClass().getEnclosingMethod().getName()));
-				throw e;
-			}
-
-		}
-
-		// done-ocm
-		public static String getItemsSubTotal() throws Exception {
-			try {
-				getCurrentFunctionName(true);
-				//String itemstotal = Cart.getItemSubTotal();
-				getCurrentFunctionName(false);
-				return "";
-			} catch (NoSuchElementException e) {
-				logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
-				}.getClass().getEnclosingMethod().getName()));
-				throw e;
-			}
-
-		}
-
-		public static String getShippingCost() throws Exception {
-			getCurrentFunctionName(true);
-			List<String> subStrArr = new ArrayList<String>();
-			List<String> valuesArr = new ArrayList<String>();
-			subStrArr.add(CheckOutSelectors.orderConfirmationShippingCost);
-			valuesArr.add("");
-			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
-			logs.debug(MessageFormat.format(LoggingMsg.SEL_TEXT, SelectorUtil.textValue.get()));
-			getCurrentFunctionName(false);
-			return SelectorUtil.textValue.get();
-
-		}
-
-		// done-ocm
-		public static String getBillingAddrerss() throws Exception {
-			try {
-				getCurrentFunctionName(true);
-				List<String> subStrArr = new ArrayList<String>();
-				subStrArr.add(CheckOutSelectors.orderdetails);
-				WebElement address = SelectorUtil.getNthElement(subStrArr, 1);
-				logs.debug(address.getText());
-				getCurrentFunctionName(false);
-				return address.getText();
-			} catch (NoSuchElementException e) {
-				logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
-				}.getClass().getEnclosingMethod().getName()));
-				throw e;
-			}
-
-		}
-
-		// done-ocm
-		public static String getShippingAddrerss() throws Exception {
-			try {
-				getCurrentFunctionName(true);
-				List<String> subStrArr = new ArrayList<String>();
-				subStrArr.add(CheckOutSelectors.orderdetails);
-				WebElement address = SelectorUtil.getNthElement(subStrArr, 2);
-				logs.debug(address.getText());
-				getCurrentFunctionName(false);
-				return address.getText();
-			} catch (NoSuchElementException e) {
-				logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
-				}.getClass().getEnclosingMethod().getName()));
-				throw e;
-			}
-		}
-
-		public static String getBillToCountryError() throws Exception {
-			getCurrentFunctionName(true);
-			List<String> subStrArr = new ArrayList<String>();
-			List<String> valuesArr = new ArrayList<String>();
-			logs.debug(MessageFormat.format(LoggingMsg.GET_ELEMENT_BY_LOCATOR, CheckOutSelectors.billToCountryError));
-			subStrArr.add(CheckOutSelectors.billToCountryError);
-			valuesArr.add("");
-			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
-			logs.debug(MessageFormat.format(LoggingMsg.ERROR_MSG, SelectorUtil.textValue.get()));
-			getCurrentFunctionName(false);
-			return SelectorUtil.textValue.get();
-		}
-
-	}// order confirmation page
-
-	// B2B order confirmation page
-	public static class B2BOrderConfirmation {
-
-		public static String getOrderTotal() throws Exception {
-			getCurrentFunctionName(true);
-			List<String> subStrArr = new ArrayList<String>();
-			List<String> valuesArr = new ArrayList<String>();
-			subStrArr.add(CheckOutSelectors.B2BorderConfirmationTotal);
-			valuesArr.add("");
-			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
-			logs.debug(MessageFormat.format(LoggingMsg.SEL_TEXT, SelectorUtil.textValue.get()));
-			getCurrentFunctionName(false);
-			return SelectorUtil.textValue.get();
-
-		}
-
-		public static String getBillingAddrerss() throws Exception {
-			getCurrentFunctionName(true);
-			List<String> subStrArr = new ArrayList<String>();
-			List<String> valuesArr = new ArrayList<String>();
-			subStrArr.add(CheckOutSelectors.B2BorderconfirmationBillingAddress);
-			valuesArr.add("");
-			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
-			logs.debug(MessageFormat.format(LoggingMsg.SEL_TEXT, SelectorUtil.textValue.get()));
-			getCurrentFunctionName(false);
-			return SelectorUtil.textValue.get();
-
-		}
-
-		public static String getShippingAddrerss() throws Exception {
-			getCurrentFunctionName(true);
-			List<String> subStrArr = new ArrayList<String>();
-			List<String> valuesArr = new ArrayList<String>();
-			subStrArr.add(CheckOutSelectors.B2BorderconfirmationshippingAddress);
-			valuesArr.add("");
-			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
-			logs.debug(MessageFormat.format(LoggingMsg.SEL_TEXT, SelectorUtil.textValue.get()));
-			getCurrentFunctionName(false);
-			return SelectorUtil.textValue.get();
 		}
 		
+		// Done CBI
+		private static boolean checkCvvIframe() throws Exception {
+			try {
+				
+				if (getDriver().findElements(By.id(GlobalVariables.CVV_Iframe_ID)).size() != 0)
+				//if ( SelectorUtil.getAllElements((GlobalVariables.CVV_Iframe_ID)).size()!= 0)
+					return true;
+				else
+					return false;
+				
+			} catch (NoSuchElementException e) {
+				logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+				}.getClass().getEnclosingMethod().getName()));
+				throw e;
+			}
+
+		}
 
 
-	}
+		// Done CBI
+		private static void typeExpireMonth(String month) throws Exception {
+			try {
+				getCurrentFunctionName(true);
+				SelectorUtil.initializeSelectorsAndDoActions(CheckOutSelectors.monthField.get(),month );
+				getCurrentFunctionName(false);
+			} catch (NoSuchElementException e) {
+				logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+				}.getClass().getEnclosingMethod().getName()));
+				throw e;
+			}
+		}
+		
+		// Done CBI
+		public static void typeExpireYear(String expireYear) throws Exception {
+			try {
+				getCurrentFunctionName(true);
+				getCurrentFunctionName(true);
+				SelectorUtil.initializeSelectorsAndDoActions(CheckOutSelectors.yearField.get(),expireYear);
+				getCurrentFunctionName(false);
+				getCurrentFunctionName(false);
+			} catch (NoSuchElementException e) {
+				logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+				}.getClass().getEnclosingMethod().getName()));
+				throw e;
+			}
+		}
+
+
+		// Done CBI
+		public static void typeCardNumber(String cardNumber) throws Exception {
+			try {
+				getCurrentFunctionName(true);
+				SelectorUtil.initializeSelectorsAndDoActions(CheckOutSelectors.creditCardField.get(), cardNumber);
+				getCurrentFunctionName(false);
+			} catch (NoSuchElementException e) {
+				logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+				}.getClass().getEnclosingMethod().getName()));
+				throw e;
+			}
+
+		}
+
+	}// payment info
+
+
 
 	// Done CBI
 	public static void searchForProductsandAddToCart(int productsNo) throws Exception {
@@ -2181,6 +1619,260 @@ public class CheckOut extends SelTestCase {
 	}
 	
 	// Done CBI
+	public static class PayPal {
+
+		public static void clickOnContinue() throws Exception {
+			try {
+				getCurrentFunctionName(true);
+				List<String> subStrArr = new ArrayList<String>();
+				List<String> valuesArr = new ArrayList<String>();
+				logs.debug("clicking on Agree and continue btn");
+				subStrArr.add(PayPalSelectors.confirmButtonTop);
+				valuesArr.add("");
+				SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
+				getCurrentFunctionName(false);
+			} catch (NoSuchElementException e) {
+				logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+				}.getClass().getEnclosingMethod().getName()));
+				throw e;
+			}
+
+		}
+		
+		public static void paymentPageClickContinue() throws Exception {
+			try {
+				getCurrentFunctionName(true);
+				if (!SelectorUtil.isNotDisplayed(CartSelectors.paymentPageCheckNextBtn.get()))
+					SelectorUtil.initializeSelectorsAndDoActions(CartSelectors.paymentPageCheckNextBtn.get());
+				getCurrentFunctionName(false);
+			} catch (NoSuchElementException e) {
+				logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+				}.getClass().getEnclosingMethod().getName()));
+				throw e;
+			}
+		}
+
+		public static String getConfirmationTotalValue() throws Exception {
+			try {
+				getCurrentFunctionName(true);
+				WebElement price = SelectorUtil.getelement(CheckOutSelectors.confirmationTotal.get());
+				getCurrentFunctionName(false);
+				return price.getText().replace("$", "").replace(",", "").trim();
+			} catch (NoSuchElementException e) {
+				logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+				}.getClass().getEnclosingMethod().getName()));
+				throw e;
+			}
+		}
+
+		public static String getConfirmationPageTaxValue() throws Exception {
+			try {
+				getCurrentFunctionName(true);
+				WebElement price = SelectorUtil.getelement(CheckOutSelectors.confirmationPageTax.get());
+				getCurrentFunctionName(false);
+				return price.getText().replace("$", "").replace(",", "").trim();
+			} catch (NoSuchElementException e) {
+				logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+				}.getClass().getEnclosingMethod().getName()));
+				throw e;
+			}
+		}
+
+		public static String getConfirmationPageShippingValue() throws Exception {
+			try {
+				getCurrentFunctionName(true);
+				WebElement price = SelectorUtil.getelement(CheckOutSelectors.confirmationShipping.get());
+				getCurrentFunctionName(false);
+				return price.getText().replace("$", "").replace(",", "").trim();
+			} catch (NoSuchElementException e) {
+				logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+				}.getClass().getEnclosingMethod().getName()));
+				throw e;
+			}
+		}
+
+		public static String getConfirmationPageSubtotalValue() throws Exception {
+			try {
+				getCurrentFunctionName(true);
+				WebElement price = SelectorUtil.getelement(CheckOutSelectors.confirmationPageSubtotal.get());
+				getCurrentFunctionName(false);
+				return price.getText().replace("$", "").replace(",", "").trim();
+			} catch (NoSuchElementException e) {
+				logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+				}.getClass().getEnclosingMethod().getName()));
+				throw e;
+			}
+		}
+
+		public static boolean isPayPalPayment() throws Exception {
+
+			try {
+				getCurrentFunctionName(true);
+				WebElement price = SelectorUtil.getelement(CheckOutSelectors.confirmationPageAccountType.get());
+				boolean result = false;
+				if (price.getText().trim().equals("PayPal Account"))
+					result = true;
+				getCurrentFunctionName(false);
+				return result;
+			} catch (NoSuchElementException e) {
+				logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+				}.getClass().getEnclosingMethod().getName()));
+				throw e;
+			}
+		}
+
+		public static boolean checkConfirmationPageImg() throws Exception {
+			try {
+				getCurrentFunctionName(true);
+				boolean isDisplayed = SelectorUtil.isDisplayed(CheckOutSelectors.confirmationPageProductImg.get())
+						&& SelectorUtil.isImgLoaded(CheckOutSelectors.confirmationPageProductImg.get());
+				getCurrentFunctionName(false);
+				return isDisplayed;
+			} catch (NoSuchElementException e) {
+				logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+				}.getClass().getEnclosingMethod().getName()));
+				throw e;
+			}
+		}
+
+		public static boolean checkOrderNumberAndEmailAndShippingAddress() throws Exception {
+			try {
+				getCurrentFunctionName(true);
+				boolean isDisplayed = SelectorUtil.isDisplayed(CheckOutSelectors.orderNumber.get())
+						&& SelectorUtil.isDisplayed(CheckOutSelectors.email.get())
+						&& SelectorUtil.isDisplayed(CheckOutSelectors.shippingAddress.get());
+				getCurrentFunctionName(false);
+				return isDisplayed;
+			} catch (NoSuchElementException e) {
+				logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+				}.getClass().getEnclosingMethod().getName()));
+				throw e;
+			}
+		}
+
+		public static int getCountOFProductForConfPage() throws Exception {
+			try {
+				getCurrentFunctionName(true);
+
+				List<String> subStrArr = new ArrayList<String>();
+				subStrArr.add(CheckOutSelectors.paypalConfermationPageAllProduct.get());
+				List<WebElement> elements = SelectorUtil.getAllElements(subStrArr);
+				getCurrentFunctionName(false);
+				return elements.size();
+			} catch (NoSuchElementException e) {
+				logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+				}.getClass().getEnclosingMethod().getName()));
+				throw e;
+			}
+		}
+
+		public static boolean isSubmitConfermationMessageDisplayed() throws Exception {
+			try {
+				getCurrentFunctionName(true);
+				boolean isDisplayed = SelectorUtil.isDisplayed(CheckOutSelectors.paypalSubmitConfermationMessage.get());
+				getCurrentFunctionName(false);
+				return isDisplayed;
+			} catch (NoSuchElementException e) {
+				logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+				}.getClass().getEnclosingMethod().getName()));
+				throw e;
+			}
+		}
+
+		public static void closePayPalSubmitPopup() throws Exception {
+			try {
+				getCurrentFunctionName(true);
+				if (!SelectorUtil.isNotDisplayed(CheckOutSelectors.paymentSubmitPopUpClose.get()))
+					SelectorUtil.initializeSelectorsAndDoActions(CheckOutSelectors.paymentSubmitPopUpClose.get());
+				getCurrentFunctionName(false);
+			} catch (NoSuchElementException e) {
+				logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+				}.getClass().getEnclosingMethod().getName()));
+				throw e;
+			}
+		}
+
+		public static void closePayPalSubmitRegestration() throws Exception {
+			try {
+				getCurrentFunctionName(true);
+				closePayPalSubmitPopup();
+				if (!SelectorUtil.isNotDisplayed(CheckOutSelectors.paymentPayPalSubmitRegistrationCloseBtn.get()))
+					SelectorUtil.initializeSelectorsAndDoActions(
+							CheckOutSelectors.paymentPayPalSubmitRegistrationCloseBtn.get());
+				closePayPalSubmitPopup();
+
+				getCurrentFunctionName(false);
+			} catch (NoSuchElementException e) {
+				logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+				}.getClass().getEnclosingMethod().getName()));
+				throw e;
+			}
+		}
+
+		public static void clickPayPalOrderSubmit() throws Exception {
+			try {
+				getCurrentFunctionName(true);
+				SelectorUtil.initializeSelectorsAndDoActions(CheckOutSelectors.paymentPagePayPalSubmitBtn.get());
+				getCurrentFunctionName(false);
+			} catch (NoSuchElementException e) {
+				logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+				}.getClass().getEnclosingMethod().getName()));
+				throw e;
+			}
+		}
+
+		public static boolean isOrderSummaryDisplayed() throws Exception {
+			try {
+				getCurrentFunctionName(true);
+				boolean isDisplayed = SelectorUtil.isDisplayed(CartSelectors.addedItemsTotalPrice.get());
+				getCurrentFunctionName(false);
+				return isDisplayed;
+			} catch (NoSuchElementException e) {
+				logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+				}.getClass().getEnclosingMethod().getName()));
+				throw e;
+			}
+		}
+
+		public static boolean isPaymentPageSelectedAndPayPalSelected() throws Exception {
+			try {
+				getCurrentFunctionName(true);
+				boolean isDisplayed = SelectorUtil.isDisplayed(CheckOutSelectors.paymentPagePayPalTitle.get());
+				getCurrentFunctionName(false);
+				return isDisplayed;
+			} catch (NoSuchElementException e) {
+				logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+				}.getClass().getEnclosingMethod().getName()));
+				throw e;
+			}
+		}
+
+		public static boolean isPayPalModelDisplayed() throws Exception {
+			try {
+				getCurrentFunctionName(true);
+				boolean isDisplayed = SelectorUtil.isDisplayed(PayPalSelectors.userName);
+				getCurrentFunctionName(false);
+				return isDisplayed;
+			} catch (NoSuchElementException e) {
+				logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+				}.getClass().getEnclosingMethod().getName()));
+				throw e;
+			}
+		}
+
+		public static boolean isPayPalShipToPageDisplayed() throws Exception {
+			try {
+				getCurrentFunctionName(true);
+				boolean isDisplayed = SelectorUtil.isDisplayed(PayPalSelectors.continueBtn);
+				getCurrentFunctionName(false);
+				return isDisplayed;
+			} catch (NoSuchElementException e) {
+				logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+				}.getClass().getEnclosingMethod().getName()));
+				throw e;
+			}
+		}
+	}
 	public static void clickCreditCardPayment() throws Exception {
 		try {	
 			getCurrentFunctionName(true);
@@ -2195,6 +1887,4 @@ public class CheckOut extends SelTestCase {
 	}
 	
 		
-	
-	
 }
