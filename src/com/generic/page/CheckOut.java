@@ -10,6 +10,7 @@ import java.util.NoSuchElementException;
 import java.util.Set;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import static org.openqa.selenium.support.ui.ExpectedConditions.*;
 
@@ -214,8 +215,10 @@ public class CheckOut extends SelTestCase {
 		public static void typeCVV(String CVV) throws Exception {
 			try {
 				getCurrentFunctionName(true);
+				// WebDriverWait wait = new WebDriverWait(getDriver(), 15);
+				
 				// Switch to cvv iframe
-				Thread.sleep(1000);
+				Thread.sleep(2800);
 
 				// wait for cvv iframe to load
 				waitforCvvFrame();
@@ -223,6 +226,9 @@ public class CheckOut extends SelTestCase {
 				getDriver().switchTo().frame(GlobalVariables.CVV_Iframe_ID);
 				Thread.sleep(2000);
 				SelectorUtil.initializeSelectorsAndDoActions(CheckOutSelectors.cvv.get(), CVV);
+				
+				//WebElement cvvField = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(CheckOutSelectors.cvv.get())));
+				//cvvField.sendKeys(CVV);
 
 				// Switch to default frame
 				getDriver().switchTo().defaultContent();
@@ -486,6 +492,7 @@ public class CheckOut extends SelTestCase {
 		try {
 			getCurrentFunctionName(true);
 			int productsNumber = SelectorUtil.getAllElements(CheckOutSelectors.productContainerInStepTwo.get()).size();	
+			logs.debug("Found" +productsNumber +"Products in step 2");
 			getCurrentFunctionName(false);
 			return productsNumber;
 		} catch (NoSuchElementException e) {
@@ -729,6 +736,7 @@ public class CheckOut extends SelTestCase {
 		try {	
 			getCurrentFunctionName(true);
 			int productsNumber = SelectorUtil.getAllElements(CheckOutSelectors.itemID.get()).size();	
+			logs.debug("Found" +productsNumber +"Products in confirmation page");
 			getCurrentFunctionName(false);			
 			return productsNumber;
 		} catch (NoSuchElementException e) {
@@ -744,9 +752,15 @@ public class CheckOut extends SelTestCase {
 		try {	
 			getCurrentFunctionName(true);
 			if (!getBrowserName().contains(GlobalVariables.browsers.iPad)) {
-				  WebDriverWait	wait = new WebDriverWait(getDriver(), 25);
+				try {
+				WebDriverWait	wait = new WebDriverWait(getDriver(), 25);
 				  WebElement closeElement = wait.until(visibilityOfElementLocated(By.cssSelector(CheckOutSelectors.closePoromotionalModal.get())));
-			      closeElement.click();			
+			      closeElement.click();
+				}
+				catch(Exception e) {
+					logs.debug("Promotional message didn't show up");
+
+				}
 			}
 			getCurrentFunctionName(false);			
 		} catch (NoSuchElementException e) {
