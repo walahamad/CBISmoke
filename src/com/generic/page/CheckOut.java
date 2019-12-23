@@ -501,6 +501,7 @@ public class CheckOut extends SelTestCase {
 			getCurrentFunctionName(true);
 			// Click next to proceed to step 2
 			SelectorUtil.initializeSelectorsAndDoActions(CheckOutSelectors.firstStepNextButton.get());
+			watiStepTobeready();
 			getCurrentFunctionName(false);
 		} catch (NoSuchElementException e) {
 			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
@@ -549,12 +550,29 @@ public class CheckOut extends SelTestCase {
 	}
 	
 	
+	public static void watiStepTobeready()throws Exception {
+		try {
+		getCurrentFunctionName(true);
+		
+		SelectorUtil.waitElementToDisappear(By.cssSelector(CheckOutSelectors.stepLoaderButton.get()));
+		
+		getCurrentFunctionName(false);
+	} catch (NoSuchElementException e) {
+		logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+		}.getClass().getEnclosingMethod().getName()));
+		throw e;
+	}
+	}
+	
+	
+	
 	// Done CBI
 	public static void proceedToStepFour() throws Exception {
 		try {
 			getCurrentFunctionName(true);
 			//Click next to proceed to step 4
 			SelectorUtil.initializeSelectorsAndDoActions(CheckOutSelectors.thirdStepNextButton.get(),"ForceAction,click");
+			watiStepTobeready();
 			getCurrentFunctionName(false);
 		} catch (NoSuchElementException e) {
 			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
@@ -570,6 +588,7 @@ public class CheckOut extends SelTestCase {
 		try {
 			getCurrentFunctionName(true);
 			SelectorUtil.initializeSelectorsAndDoActions(CheckOutSelectors.secondStepNextButton.get(),"ForceAction,click");
+			watiStepTobeready();
 			getCurrentFunctionName(false);
 		} catch (NoSuchElementException e) {
 			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
