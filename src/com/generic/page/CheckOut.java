@@ -486,6 +486,7 @@ public class CheckOut extends SelTestCase {
 		try {
 			getCurrentFunctionName(true);
 			int productsNumber = SelectorUtil.getAllElements(CheckOutSelectors.productContainerInStepTwo.get()).size();	
+			logs.debug("Found" +productsNumber +"Products in step 2");
 			getCurrentFunctionName(false);
 			return productsNumber;
 		} catch (NoSuchElementException e) {
@@ -729,6 +730,7 @@ public class CheckOut extends SelTestCase {
 		try {	
 			getCurrentFunctionName(true);
 			int productsNumber = SelectorUtil.getAllElements(CheckOutSelectors.itemID.get()).size();	
+			logs.debug("Found" +productsNumber +"Products in confirmation page");
 			getCurrentFunctionName(false);			
 			return productsNumber;
 		} catch (NoSuchElementException e) {
@@ -750,9 +752,8 @@ public class CheckOut extends SelTestCase {
 			}
 			getCurrentFunctionName(false);			
 		} catch (NoSuchElementException e) {
-			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
-			}.getClass().getEnclosingMethod().getName()));
-			throw e;
+			logs.debug("Promotional message didn't show up");
+
 		}
 
 	}

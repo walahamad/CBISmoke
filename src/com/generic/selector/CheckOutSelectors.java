@@ -34,10 +34,10 @@ public class CheckOutSelectors
 	
 	//Step 2
 	public static final cselector secondStepNextButton = new cselector("css,.next-botton-panel .ship-method-and-gift-next-button","css,.c-checkout-accordion__next-cancel-panel .pw--primary");
-	public static final cselector productContainerInStepTwo =new cselector("css,.shipping-method-and-gift-main-container .address-related-items-panel","css,.c-cart-product__link");
-	public static final cselector stepTwoIdentifier =new cselector("css,.csb-panels-list-box","css,.t-checkout-shipping-and-gift__help-btn");
+	public static final cselector productContainerInStepTwo =new cselector("css,.ship-method-panel","css,.c-cart-product__link");
+	public static final cselector stepTwoIdentifier =new cselector("css,.ship-method-panel","css,.t-checkout-shipping-and-gift__help-btn");
 	public static final cselector stepTwoIdentifierGR =new cselector("css,.ship-method-panel .csb-panels-list-box","css,.t-checkout-shipping-and-gift__help-btn");
-	public static final cselector stepTwoIdentifier2 =new cselector("css,.csb-panels-list-box","css,.t-checkout-step2__truck-delivery-panel");
+	public static final cselector stepTwoIdentifier2 =new cselector("css,.ship-method-panel","css,.t-checkout-step2__truck-delivery-panel");
 	public static final cselector stepTwoIdentifier2GR =new cselector("css,.ship-method-panel .csb-panels-list-box","css,.t-checkout-step2__truck-delivery-panel");
 
 
