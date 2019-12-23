@@ -214,19 +214,9 @@ public class CheckOut extends SelTestCase {
 		public static void typeCVV(String CVV) throws Exception {
 			try {
 				getCurrentFunctionName(true);
-				// Switch to cvv iframe
 				Thread.sleep(1000);
-
-				// wait for cvv iframe to load
-				waitforCvvFrame();
-
-				getDriver().switchTo().frame(GlobalVariables.CVV_Iframe_ID);
-				Thread.sleep(2000);
+			
 				SelectorUtil.initializeSelectorsAndDoActions(CheckOutSelectors.cvv.get(), CVV);
-
-				// Switch to default frame
-				getDriver().switchTo().defaultContent();
-
 				getCurrentFunctionName(false);
 			} catch (NoSuchElementException e) {
 				logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
@@ -235,50 +225,6 @@ public class CheckOut extends SelTestCase {
 			}
 		}
 		
-		// Done CBI
-		public static void waitforCvvFrame() throws Exception {
-			try {
-				boolean cvvStatus = false;
-				int noOfTries = 0;
-
-				while (!cvvStatus) {
-					logs.debug(cvvStatus + "  Waiting for cvv iframe");
-
-					cvvStatus = checkCvvIframe();
-					noOfTries++;
-
-					if (noOfTries > 25)
-						break;
-
-					Thread.sleep(2000);
-				}
-
-			} catch (NoSuchElementException e) {
-				logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
-				}.getClass().getEnclosingMethod().getName()));
-				throw e;
-			}
-
-		}
-		
-		// Done CBI
-		private static boolean checkCvvIframe() throws Exception {
-			try {
-				
-				if (getDriver().findElements(By.id(GlobalVariables.CVV_Iframe_ID)).size() != 0)
-				//if ( SelectorUtil.getAllElements((GlobalVariables.CVV_Iframe_ID)).size()!= 0)
-					return true;
-				else
-					return false;
-				
-			} catch (NoSuchElementException e) {
-				logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
-				}.getClass().getEnclosingMethod().getName()));
-				throw e;
-			}
-
-		}
-
 
 		// Done CBI
 		private static void typeExpireMonth(String month) throws Exception {
