@@ -141,15 +141,27 @@ public class PDP extends SelTestCase {
 
 	}
 
-	// done - SMK
+	/** Click on add to cart button.
+	*
+	* @throws Exception
+	*/
 	public static void clickAddToCartButton() throws Exception {
 		try {
 			getCurrentFunctionName(true);
 			String subStrArr = null;
 			if (SelTestCase.isFGGR())
 				subStrArr = PDPSelectors.addToCartBtn.get();
-			if (SelTestCase.isGHRY())
+			if (SelTestCase.isGHRY()) {
 				subStrArr = PDPSelectors.GHRYaddToCartBtn.get();
+
+				// Bundle product selector.
+				int numberOfItems = getNumberOfItems();
+				if (numberOfItems > 1) {
+					String ProductID = getProductID(0);
+					subStrArr = MessageFormat.format(PDPSelectors.GHAddToCartBtnEnabledBundle.get(), ProductID);
+				}
+			}
+
 			SelectorUtil.initializeSelectorsAndDoActions(subStrArr);
 			getCurrentFunctionName(false);
 		} catch (NoSuchElementException e) {
@@ -179,6 +191,31 @@ public class PDP extends SelTestCase {
 	public static int getNumberOfOptions() throws Exception {
 		getCurrentFunctionName(true);
 		String subStrArr = PDPSelectors.avaibleOptions.get();
+		int numberOfAvaibleOptions = 0;
+		if (!SelectorUtil.isNotDisplayed(subStrArr)) {
+			numberOfAvaibleOptions = SelectorUtil.getAllElements(subStrArr).size();
+		}
+		logs.debug("number Of Avaible Options" + numberOfAvaibleOptions);
+		getCurrentFunctionName(false);
+		return numberOfAvaibleOptions;
+	}
+
+	/** Get the number options for GH & RY.
+	*
+	* @throws Exception
+	*/
+	public static int GHRYNumberOfOptions() throws Exception {
+		getCurrentFunctionName(true);
+		String subStrArr = PDPSelectors.avaibleOptions.get();
+
+		// Bundle product selector.
+		int numberOfItems = getNumberOfItems();
+		if (numberOfItems > 1) {
+			String ProductID = getProductID(0);
+			subStrArr = MessageFormat.format(PDPSelectors.GHAvailableOptionsBundle.get(), ProductID);
+		}
+
+		// Check if options is displayed.
 		int numberOfAvaibleOptions = 0;
 		if (!SelectorUtil.isNotDisplayed(subStrArr)) {
 			numberOfAvaibleOptions = SelectorUtil.getAllElements(subStrArr).size();
@@ -390,7 +427,10 @@ public class PDP extends SelTestCase {
 		return isDisplayed;
 	}
 
-	// done - SMK
+	/** Check if the add to gift registry/wish list button is enabled.
+	*
+	* @throws Exception
+	*/
 	public static boolean validateAddToWLGRIsEnabled() throws Exception {
 		getCurrentFunctionName(true);
 		boolean isNotDisplayed;
@@ -405,10 +445,15 @@ public class PDP extends SelTestCase {
 		String selectorDisabled = PDPSelectors.addToCartBtnDisabledSingle.get();
 		if (!SelTestCase.isMobile() && getNumberOfItems() > 1) {
 			String ProductID = getProductID(0);
-			logs.debug(PDPSelectors.addToWLGRBtnEnabledBundle);
-			selectorEnabled = MessageFormat.format(PDPSelectors.addToWLGRBtnEnabledBundle, ProductID);
-			logs.debug(PDPSelectors.addToCartBtnDisabledBundle);
-			selectorDisabled = MessageFormat.format(PDPSelectors.addToCartBtnDisabledBundle, ProductID);
+			String addToWLGRBtnEnabledBundleSelector = PDPSelectors.addToWLGRBtnEnabledBundle;
+			String addToCartBtnDisabledBundle = PDPSelectors.addToCartBtnDisabledBundle;
+			if (isGH()) {
+				addToWLGRBtnEnabledBundleSelector = PDPSelectors.GHAddToWLGRBtnEnabledBundle.get();
+			}
+			logs.debug(addToWLGRBtnEnabledBundleSelector);
+			selectorEnabled = MessageFormat.format(addToWLGRBtnEnabledBundleSelector, ProductID);
+			logs.debug(addToCartBtnDisabledBundle);
+			selectorDisabled = MessageFormat.format(addToCartBtnDisabledBundle, ProductID);
 		}
 		SelectorUtil.isDisplayed(selectorEnabled);
 		logs.debug("Validate if Add To WL/GR Is not disabled");
@@ -417,7 +462,10 @@ public class PDP extends SelTestCase {
 		return isNotDisplayed;
 	}
 
-	// done - SMK
+	/** Check if the add to cart button is enabled.
+	*
+	* @throws Exception
+	*/
 	public static boolean validateAddToCartIsEnabled() throws Exception {
 		getCurrentFunctionName(true);
 		boolean isNotDisplayed;
@@ -433,11 +481,15 @@ public class PDP extends SelTestCase {
 		}
     if (!SelTestCase.getBrowserName().contains(GlobalVariables.browsers.iPhone) && getNumberOfItems() > 1) {
 			String ProductID = getProductID(0);
-
-			logs.debug(PDPSelectors.addToCartBtnEnabledBundle);
-			selectorEnabled= MessageFormat.format(PDPSelectors.addToCartBtnEnabledBundle, ProductID);	
-			logs.debug(PDPSelectors.addToCartBtnDisabledBundle);
-			selectorDisabled= MessageFormat.format(PDPSelectors.addToCartBtnDisabledBundle, ProductID);
+			String addToCartBtnEnabledBundle = PDPSelectors.addToCartBtnEnabledBundle;
+			String addToCartBtnDisabledBundle = PDPSelectors.addToCartBtnDisabledBundle;
+			if (isGH()) {
+				addToCartBtnEnabledBundle = PDPSelectors.GHAddToWLGRBtnEnabledBundle.get();
+			}
+			logs.debug(addToCartBtnEnabledBundle);
+			selectorEnabled= MessageFormat.format(addToCartBtnEnabledBundle, ProductID);	
+			logs.debug(addToCartBtnDisabledBundle);
+			selectorDisabled= MessageFormat.format(addToCartBtnDisabledBundle, ProductID);
 		}
 		SelectorUtil.isDisplayed(selectorEnabled);
 		logs.debug("Validate if Add To Cart Is not disabled");
@@ -470,9 +522,15 @@ public class PDP extends SelTestCase {
 		if(isGHRY()) {
 			selector = PDPSelectors.GHRYBottomPriceSingle.get();
 		}
-		if (!SelTestCase.getBrowserName().contains(GlobalVariables.browsers.iPhone) && getNumberOfItems() > 1 ) {
+
+		// Bundle product selector.
+		if (getNumberOfItems() > 1 ) {
 			String ProductID = getProductID(0);
-			selector= MessageFormat.format(PDPSelectors.bottomPriceBundle, ProductID);
+			if (isGH()) {
+				selector= MessageFormat.format(PDPSelectors.GHBottomPriceBundle.get(), ProductID);
+			} else if(!isMobile()) {
+				selector= MessageFormat.format(PDPSelectors.bottomPriceBundle, ProductID);
+			}
 		}
 		SelectorUtil.initializeSelectorsAndDoActions(selector);
 		String price = SelectorUtil.textValue.get();
@@ -517,6 +575,9 @@ public class PDP extends SelTestCase {
 		try {
 			getCurrentFunctionName(true);
 			String Str = PDPSelectors.itemsID.get();
+			if(isGH()) {
+				Str = PDPSelectors.GHItemsID.get();
+			}
 			String ID = SelectorUtil.getAttrString(Str, "id", index);
 			getCurrentFunctionName(false);
 			return ID;
@@ -532,9 +593,12 @@ public class PDP extends SelTestCase {
 		try {
 			getCurrentFunctionName(true);
 			String Str = PDPSelectors.numberOfBundleItems.get();
+			if (isGH()) {
+				Str = PDPSelectors.GHNumberOfBundleItems.get();
+			}
 			int numberOfItems = 0;
 			if (!SelectorUtil.isNotDisplayed(Str)) {
-			numberOfItems = SelectorUtil.getAllElements(Str).size();
+				numberOfItems = SelectorUtil.getAllElements(Str).size();
 			}
 			logs.debug("Number of Items: " + numberOfItems);
 			if(bundleProduct() && numberOfItems == 1) {
@@ -688,7 +752,7 @@ public class PDP extends SelTestCase {
 				}
 
 			} else if (SelTestCase.isGHRY())
-				GHRYselectSwatchesSingle();
+				GHRYselectSwatches();
 			getCurrentFunctionName(false);
 		} catch (NoSuchElementException e) {
 			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
@@ -701,9 +765,18 @@ public class PDP extends SelTestCase {
 	public static void clickBundleItems() throws Exception {
 		getCurrentFunctionName(true);
 		String selector = PDPSelectors.bundleItems.get();
+		if (isGH()) {
+			selector = PDPSelectors.GHBundleItems.get();
+		}
 		logs.debug("Clicking on any bundle item");
 		if (!SelectorUtil.isNotDisplayed(selector)) {
-			SelectorUtil.initializeSelectorsAndDoActions(selector);
+			if (!isMobile()) {
+				// TODO:: remove this code.
+				WebElement item = SelectorUtil.getAllElements(selector).get(4);
+				item.click();
+			} else {
+				SelectorUtil.initializeSelectorsAndDoActions(selector);
+			}
 		}
 	}
 
@@ -713,6 +786,9 @@ public class PDP extends SelTestCase {
 		boolean isDisplayed;
 		logs.debug("Validate if top price exist");
 		String selector = PDPSelectors.miniPDPPrice.get();
+		if (isGH()) {
+			selector = PDPSelectors.GHMiniPDPPrice.get();
+		}
 		isDisplayed = SelectorUtil.isDisplayed(selector);
 		getCurrentFunctionName(false);
 		return isDisplayed;
@@ -1135,25 +1211,21 @@ public static boolean validateSelectRegistryOrWishListModalIsDisplayed() throws 
 		getCurrentFunctionName(false);
 		return totalPrice;
 	}
-	
-	// done - SMK
-	public static void GHRYselectSwatches() throws Exception {
-		try {
-			getCurrentFunctionName(true);
-			GHRYselectSwatchesSingle();
-			getCurrentFunctionName(false);
-		} catch (NoSuchElementException e) {
-			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
-			}.getClass().getEnclosingMethod().getName()));
-			throw e;
-		}
-	}
 
 	// done - SMK
 	public static void GHRYselectColor() throws Exception {
 		try {
 			getCurrentFunctionName(true);
+
+			int numberOfItems = getNumberOfItems();
+
 			String subStrArr = (PDPSelectors.GHRYColorOptions.get());
+
+			// Bundle product selector.
+			if (numberOfItems > 1) {
+				String ProductID = getProductID(0);
+				subStrArr = MessageFormat.format(PDPSelectors.GHRYColorOptionsBundle.get(), ProductID);
+			}
 			List<WebElement> list = SelectorUtil.getAllElements(subStrArr);
 			logs.debug("Number of color options:" + list.size());
 			String classValue;
@@ -1161,9 +1233,15 @@ public static boolean validateSelectRegistryOrWishListModalIsDisplayed() throws 
 				classValue = SelectorUtil.getAttrString(subStrArr, "class", index);
 				logs.debug("classValue:" + classValue);
 				if (!classValue.contains("no-available") && !classValue.contains("disabled")) {
-					// list.get(index).click();
-					String nthSel = subStrArr.replace("css,", "") + ">img";
-					getDriver().findElements(By.cssSelector(nthSel)).get(index).click();
+					WebElement item;
+					if (!isMobile()) {
+						item = SelectorUtil.getAllElements(subStrArr + " .gwt-image-picker-option-image").get(index);
+					} else {
+						item = list.get(index);
+					}
+					String optionIndex = "index," + index;
+					String action = subStrArr + "ForceAction,click";
+					SelectorUtil.initializeSelectorsAndDoActions(subStrArr, action);
 					break;
 				}
 			}
@@ -1180,15 +1258,19 @@ public static boolean validateSelectRegistryOrWishListModalIsDisplayed() throws 
 		try {
 			getCurrentFunctionName(true);
 			String subStrArr = (PDPSelectors.GHRYSizeOptions.get());
+
+			// Bundle product selector.
+			int numberOfItems = getNumberOfItems();
+			if (numberOfItems > 1) {
+				String ProductID = getProductID(0);
+				subStrArr = MessageFormat.format(PDPSelectors.GHRYSizeOptionsBundle.get(), ProductID);
+			}
 			List<WebElement> list = SelectorUtil.getAllElements(subStrArr);
 			logs.debug("Number of size options:" + list.size());
 			for (int index = 0; index < list.size(); index++) {
 				String classValue = SelectorUtil.getAttrString(subStrArr, "class", index);
 				if (!classValue.contains("no-available") && !classValue.contains("disabled")) {
-					String optionIndex = "index," + index;
-					String nthSel = subStrArr + ">div";
-					String action = nthSel + "ForceAction,click";
-					SelectorUtil.initializeSelectorsAndDoActions(nthSel, action);
+					list.get(index).click();
 					break;
 				}
 			}
@@ -1254,7 +1336,15 @@ public static boolean validateSelectRegistryOrWishListModalIsDisplayed() throws 
 	public static int getQuantity() throws Exception {
 		try {
 			getCurrentFunctionName(true);
-			WebElement quantity = SelectorUtil.getelement(PDPSelectors.quantity.get());
+			String quantitySelector = PDPSelectors.quantity.get();
+			int numberOfItems = getNumberOfItems();
+
+			// Bundle product selector.
+			if (numberOfItems > 1) {
+				String ProductID = getProductID(0);
+				quantitySelector = MessageFormat.format(PDPSelectors.quantityBundle.get(), ProductID);
+			}
+			WebElement quantity = SelectorUtil.getelement(quantitySelector);
 
 			String quantityText = quantity.getAttribute("value");
 			if (isMobile()) {
@@ -1272,13 +1362,14 @@ public static boolean validateSelectRegistryOrWishListModalIsDisplayed() throws 
 		}
 	}
 
-	public static void GHRYselectSwatchesSingle() throws Exception {
+	public static void GHRYselectSwatches() throws Exception {
 		try {
 			getCurrentFunctionName(true);
 			if (SelTestCase.isGHRY()) {
 				closeSignUpModalIfDisplayed();
 			}
-			int numberOfPanels = getNumberOfOptions();
+			int numberOfPanels = GHRYNumberOfOptions();
+			logs.debug("numberOfPanels: " + numberOfPanels);
 			GHRYselectColor();
 			if (numberOfPanels > 1)
 				GHRYselectSize();

@@ -40,7 +40,6 @@ public class PDPSelectors {
 	public static final cselector addToCartBtnDisabledSingle = new cselector("css,.gwt-product-content-panel>.gwt-product-right-content-panel>.gwt-product-bottom-content-panel>.product-bottom-qty-atc-panel>div>button#gwt-add-to-cart-btn.button.primary.disabled","css,.u-bg-disabled-color-add-to-cart");
 	public static final cselector bottomPriceSingle = new cselector("css,.gwt-product-content-panel>.gwt-product-right-content-panel>.gwt-product-bottom-content-panel>.product-bottom-total-price-panel>div>.gwt-product-detail-widget-total-price-amount","css,.t-product-details-price>span");
 	public static final cselector bundleItems = new cselector("u-widget-product-icon u-position-absolute");
-	public static final cselector bundleItem = new cselector("css,#container");
 
 	public static final cselector miniPDPPrice = new cselector("css,.t-product-details-heading >div>.t-product-details-heading__price.t-product-details__price");
 	public static final cselector ListBoxOption = new cselector("css,.gwt-product-content-panel>.gwt-product-right-content-panel>.gwt-product-option-panel>.gwt-product-option-panel-listbox>.gwt-product-option-panel-listbox-container>div>select>option", "css,.c-product-options__content.u-border-brand-color.u-border-radius>option");
@@ -100,7 +99,7 @@ public class PDPSelectors {
 	public static final cselector GHfirstSwatchInOptions = new cselector("css,div> .gwt-product-option-panel-widget-panel > div  > div > div:nth-child(1)","css,div.c-product-options> div:nth-child({0})> div.u-margin-top > div > div:nth-child(1) > div > button > div > div > div > div > div");
 	public  final static cselector GHtopPriceSingle = new cselector("css,.gwt-product-detail-quantity-price-column>.gwt-product-detail-widget-price-holder", "css,.t-product-details-heading__price-and-tag>.t-product-details-heading__price.t-product-details__price");
 	public static final cselector GHRYColorOptions = new cselector("css,.gwt-product-detail-widget-options-column>div>div>.gwt-product-option-panel-swatchbox>.gwt-product-option-panel-widget-panel>.gwt-image-picker>.gwt-image-picker-option-holder>.gwt-image-picker-option","css,.gwt-image-picker-option>div");
-	public static final cselector GHRYSizeOptions = new cselector("css,.gwt-product-detail-widget-options-column>div>div>div>div>.gwt-product-option-panel-widget-panel>.gwt-selection-chip-picker>div>.gwt-selection-chip-picker-option","css,.pw-swatch__chip-inner>div>.c-product-option-items__item-normal");
+	public static final cselector GHRYSizeOptions = new cselector("css,.gwt-product-detail-widget-options-column>div>div>div>div>.gwt-product-option-panel-widget-panel>.gwt-selection-chip-picker>div>.gwt-selection-chip-picker-option>div","css,.pw-swatch__chip-inner>div>.c-product-option-items__item-normal");
 	public static final cselector offerControlClose = new cselector("css,body>form>div>.offer-control.close");
 
 	public static final cselector FGGRSwatchesOptions = new cselector("css,.gwt-product-content-panel>.gwt-product-right-content-panel>#gwt-option-panel>div","css,.c-product-options>div>div>div" );
@@ -114,7 +113,7 @@ public class PDPSelectors {
 	public static final cselector GHAddedPersonlizedDetails = new cselector("css,.gwt-product-detail-widget-personalization-chosen-values .gwt-HTML","css,.c-edit-personalization-panel");
 	public static final cselector GHAddToWLGRBtnEnabledSingle = new cselector("css,.gwt-product-detail-buttons-panel .secondary","css,.t-product-details>div>.pw--secondary");
 	public static final cselector GHAddToCartBtnEnabledSingle = new cselector("css,.gwt-product-detail-buttons-panel .primary","css,.c-add-to-cart");
-	public static final cselector PDPPageClassName = new cselector("css,.view-ProductDetailView");
+	public static final cselector PDPPageClassName = new cselector("css,.view-ProductDetailView","css,.t-product-details");
 	public static final cselector personalizationPrice = new cselector("css,.gwt-item-personalization-cost .gwt-personalization-choice-selected-name", "css,.c-personalization-chosen-values>div>div");
 	public static final cselector GHPersonalizationSaveAndCloseButton = new cselector ("css,div.gwt-submit-cancel-dialog-button-panel > button.button.primary" , "css,.c-personalization-accordion__preview-save .pw--primary");
 	public static final cselector GHPersonalizedInputValue = new cselector("css,#personalization-modal-options-scroll .gwt-accordion-tab:nth-child({0}) input","css,.pw-accordion--is-open .c-product-options input");
@@ -124,5 +123,18 @@ public class PDPSelectors {
 	public static final cselector continuePersonalizationSelection = new cselector("css,.pw-accordion--is-open .pw--primary");
 	public static final cselector miniCartItems = new cselector("css,#gwt_minicart_div .cartText", "css,.t-header__badge-center>span>span");
 	public static final cselector quantity = new cselector("css,.gwt-quantity-textbox", "css,.t-product-details-quantity-value");
+
+	// GH bundle PDP.
+	public static final cselector GHBundleItems = new cselector("css,.t-product-details__accordion-collection .pw-accordion__header");
+	public static final cselector GHMiniPDPPrice = new cselector("css,.t-product-details__accordion-collection .t-product-details__price");
+	public static final cselector GHBottomPriceBundle = new cselector("css,#{0} .gwt-product-detail-widget-price-holder", "css,#{0} .pw-accordion__content-wrapper .t-product-details__price");
+	public static final cselector GHRYSizeOptionsBundle = new cselector("css,#{0} .gwt-product-detail-widget-options-column>div>div>div>div>.gwt-product-option-panel-widget-panel>.gwt-selection-chip-picker>div>.gwt-selection-chip-picker-option>div", "css,#{0} .c-product-options__item");
+	public static final cselector GHRYColorOptionsBundle = new cselector("css,#{0} .gwt-product-detail-widget-options-column>div>div>.gwt-product-option-panel-swatchbox>.gwt-product-option-panel-widget-panel>.gwt-image-picker>.gwt-image-picker-option-holder>.gwt-image-picker-option","css,#{0} .gwt-image-picker-option>div");
+	public static final cselector GHAddToWLGRBtnEnabledBundle = new cselector("css,#{0} #gwt-add-to-gift-registry-btn","css,.t-product-details>div>.pw--secondary");
+	public static final cselector GHAddToCartBtnEnabledBundle = new cselector("css,#{0} #gwt-add-to-cart-btn","css,.c-add-to-cart");
+	public static final cselector quantityBundle = new cselector("css,#{0} .gwt-quantity-textbox", "css,#{0} .t-product-details-quantity-value");
+	public static final cselector GHAvailableOptionsBundle = new cselector("css,#{0} .gwt-product-option-panel-widget-panel>div", "css,#{0} .t-product-options__product-option-label");
+	public static final cselector GHNumberOfBundleItems = new cselector("css,.gwt-product-detail-products-container>.gwt-product-detail-widget","css,.t-product-details__accordion-collection .pw-accordion__item");
+	public static final cselector GHItemsID = new cselector("css,.gwt-product-detail-products-container>.gwt-product-detail-widget", "css,.t-product-details__accordion-collection .pw-accordion__item.pw-accordion--is-open");	
 
 }

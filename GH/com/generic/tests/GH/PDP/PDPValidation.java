@@ -28,6 +28,7 @@ public class PDPValidation extends SelTestCase {
 
 		// Verify user is navigated to PDP page.
 		validateIsPDPPage();
+		SelectorUtil.waitGWTLoadedEventPWA();
 
 		int numberOfItems = PDP.getNumberOfItems();
 		String priceErrorMessage;
@@ -37,8 +38,7 @@ public class PDPValidation extends SelTestCase {
 		//for bundle PDP mobile and desktop,validate the prices are displayed in bundle landing page for all items.
 		if (numberOfItems == 1) {
 			priceErrorMessage = "Top price is not dispayed";
-		} else if (!SelTestCase.getBrowserName().contains(GlobalVariables.browsers.iPhone) && numberOfItems > 1) {
-			sassert().assertTrue(PDP.validateBundlePriceIsDisplayed(), "Bundle Price is not dispayed");
+		} else if (!isMobile() && numberOfItems > 1) {
 			priceErrorMessage = "Top price for the bundle items are not dispayed";
 		} else {
 			priceErrorMessage = "Price for the bundle items are not dispayed";
@@ -46,15 +46,15 @@ public class PDPValidation extends SelTestCase {
 
 		// The desktop and tablet didn't contains a top price.
 		if (isMobile()) {
-			sassert().assertTrue(PDP.validatePriceIsDisplayed(), priceErrorMessage);			
+			sassert().assertTrue(PDP.validatePriceIsDisplayed(), priceErrorMessage);
 		}
 
 		// For bundle PDP mobile, validate the price is displayed in mini PDP page
-		// if (SelTestCase.getBrowserName().contains(GlobalVariables.browsers.iPhone) && numberOfItems > 1) {
-		// 	PDP.clickBundleItems();
-		// 	sassert().assertTrue(PDP.validateMobileBundlePriceIsDisplayed(),
-		// 			"Top price for the bundle item (mini PDP) is not dispayed");
-		// }
+		 if (isMobile() && numberOfItems > 1) {
+		 	PDP.clickBundleItems();
+		 	sassert().assertTrue(PDP.validateMobileBundlePriceIsDisplayed(),
+		 			"Top price for the bundle item (mini PDP) is not dispayed");
+		 }
 		// Select all required swatches.
 		PDP.selectSwatches();
 
@@ -101,7 +101,7 @@ public class PDPValidation extends SelTestCase {
 
 		int numberOfCartItems = PDP.getNumberOfCartItems();
 		// Verify the product added to the cart.
-		sassert().assertTrue(numberOfCartItems == (quantity + initialNumberOfCartItems) , "No items in cart");
+		sassert().assertTrue(numberOfCartItems == (quantity + initialNumberOfCartItems) , "There is an error in add item to cart or in mini cart items number.");
 
 		getCurrentFunctionName(false);
 	}

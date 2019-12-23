@@ -69,7 +69,7 @@ public class PDPBase extends SelTestCase {
 				PDPValidation.validate(pid);
 			}
 			if (proprties.contains(this.bundlePDP)) {
-				PDPValidation.validate(BundlePDPSearchTerm);
+				PDPValidation.validate(pid);
 			}
 			if (proprties.contains(this.personalizedPDP)) {
 				PDPValidation.validate(pid);
