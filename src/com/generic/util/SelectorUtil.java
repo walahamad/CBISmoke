@@ -386,8 +386,8 @@ public class SelectorUtil extends SelTestCase {
 			}
 			if (!selector.equals("")) {
 				if (!SelectorUtil.isAnErrorSelector) {
-					if (value.contains(commands.actions.ForceAction)) {
-						action = value.split(commands.actions.ForceAction+",")[1].split(",")[0];
+					if (value.contains("ForceAction")) {
+						action = value.split("ForceAction,")[1].split(",")[0];
 					}
 
 					if (action.equals("hover")) {
@@ -1183,13 +1183,4 @@ public class SelectorUtil extends SelTestCase {
 		}
 		getCurrentFunctionName(false);
 	}
-
-	public static class commands
-	{
-		public static class actions{
-			protected final static String ForceAction = "ForceAction";
-			public final static String hover  = ForceAction+",hover"; 			
-		}
-	}
-
 }
