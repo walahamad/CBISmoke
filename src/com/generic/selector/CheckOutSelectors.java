@@ -8,6 +8,7 @@ public class CheckOutSelectors
 	//Navigation
 	public static final cselector beginSecureCheckoutButton = new cselector("css,.secure-checkout-button","css,.c-checkout-buttons__checkout .pw--primary");
 	public static final cselector guestCheckoutButton = new cselector("css,.guest-checkout-button-panel > button:nth-child(1)","css,#single-page-checkout-container > div > div.t-checkout-step0.customer-information-panel > div.guest-checkout-form > button");
+	public static final cselector stepLoaderButton = new cselector("button.pw-button.pw--primary.u-width-full>div>div.c-custom-loader");
 	
 	//Step 1 Multiple Addresses
 	public static final cselector multipleAddressesTab = new cselector( "css,.shipping-address .gwt-TabBarItem .gwt-HTML","css,.t-checkout-step1__tabs .pw-tabs__tab a");
@@ -33,9 +34,11 @@ public class CheckOutSelectors
 	
 	//Step 2
 	public static final cselector secondStepNextButton = new cselector("css,.next-botton-panel .ship-method-and-gift-next-button","css,.c-checkout-accordion__next-cancel-panel .pw--primary");
-	public static final cselector productContainerInStepTwo =new cselector("css,.shipping-method-and-gift-main-container .address-related-items-panel","css,.c-cart-product__link");
-	public static final cselector stepTwoIdentifier =new cselector("css,.csb-panels-list-box","css,.t-checkout-shipping-and-gift__help-btn");
-	public static final cselector stepTwoIdentifier2 =new cselector("css,.csb-panels-list-box","css,.t-checkout-step2__truck-delivery-panel");
+	public static final cselector productContainerInStepTwo =new cselector("css,.ship-method-panel","css,.c-cart-product__link");
+	public static final cselector stepTwoIdentifier =new cselector("css,.ship-method-panel","css,.t-checkout-shipping-and-gift__help-btn");
+	public static final cselector stepTwoIdentifierGR =new cselector("css,.ship-method-panel .csb-panels-list-box","css,.t-checkout-shipping-and-gift__help-btn");
+	public static final cselector stepTwoIdentifier2 =new cselector("css,.ship-method-panel","css,.t-checkout-step2__truck-delivery-panel");
+	public static final cselector stepTwoIdentifier2GR =new cselector("css,.ship-method-panel .csb-panels-list-box","css,.t-checkout-step2__truck-delivery-panel");
 
 
 	
@@ -44,12 +47,14 @@ public class CheckOutSelectors
 	public static final cselector emailBillingAddress =new cselector("css,#guest_email_field","css,#guest_email_field");
 	
 	//Step 4
+	public static final cselector creditCartTab = new cselector("css,.cc-tab-header", "css,.pw-tabs__link");	
 	public static final cselector shippingAndTaxCost = new cselector("css,.costs-holder .gwt-InlineLabel", "css,.pw-ledger__value");
 	public static final cselector subTotalValue = new cselector("css,.costs-holder .subtotal-value"); 
 	public static final cselector creditCardField = new cselector("css,#accountcc", "css,#accountcc"); 
 	public static final cselector monthField = new cselector("css,#exp-month", "css,.c-custom-select");  
 	public static final cselector yearField = new cselector("css,#exp-year", "css,.t-checkout-payment__card-year .c-custom-select"); 
 	public static final cselector cvv = new cselector("css,#cvv", "css,#cvv","css,html body.cvv-provider-body div.animated-label-textbox-panel input#cvv"); 
+	//public static final cselector cvv = new cselector("css,#security-id", "css,#cvv","css,html body.cvv-provider-body div.animated-label-textbox-panel input#cvv"); 
 	public static final cselector placeSecureOrderButton = new cselector("css,.place-order-panel .primary-button","css,.t-checkout-footer .pw--primary");
 	
 	//Confirmation Page

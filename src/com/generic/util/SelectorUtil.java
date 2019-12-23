@@ -1169,4 +1169,18 @@ public class SelectorUtil extends SelTestCase {
 		}
 		getCurrentFunctionName(false);
 	}
+	
+	public static void waitElementToDisappear(By selector) throws Exception {
+		int tries = 0;
+		getCurrentFunctionName(true);
+		while (isElementExist(selector)) {
+			Thread.sleep(1000);
+			logs.debug("Waiting load element: " + selector);
+			if(tries == 30) {
+				throw new NoSuchElementException("Error in Loading GWT.");
+			}
+			tries ++;
+		}
+		getCurrentFunctionName(false);
+	}
 }

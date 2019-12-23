@@ -10,6 +10,7 @@ import java.util.NoSuchElementException;
 import java.util.Set;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import static org.openqa.selenium.support.ui.ExpectedConditions.*;
 
@@ -214,8 +215,10 @@ public class CheckOut extends SelTestCase {
 		public static void typeCVV(String CVV) throws Exception {
 			try {
 				getCurrentFunctionName(true);
+				// WebDriverWait wait = new WebDriverWait(getDriver(), 15);
+				
 				// Switch to cvv iframe
-				Thread.sleep(1000);
+				Thread.sleep(2800);
 
 				// wait for cvv iframe to load
 				waitforCvvFrame();
@@ -223,6 +226,9 @@ public class CheckOut extends SelTestCase {
 				getDriver().switchTo().frame(GlobalVariables.CVV_Iframe_ID);
 				Thread.sleep(2000);
 				SelectorUtil.initializeSelectorsAndDoActions(CheckOutSelectors.cvv.get(), CVV);
+				
+				//WebElement cvvField = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(CheckOutSelectors.cvv.get())));
+				//cvvField.sendKeys(CVV);
 
 				// Switch to default frame
 				getDriver().switchTo().defaultContent();
@@ -342,6 +348,9 @@ public class CheckOut extends SelTestCase {
 				PDP.addProductsToCart();
 				if (!getBrowserName().contains(GlobalVariables.browsers.iPhone))
 					PDP.clickAddToCartCloseBtn();
+				
+				URI url = new URI(getURL());
+				getDriver().get("https://"+url.getHost());
 			}
 			getCurrentFunctionName(false);
 		} catch (NoSuchElementException e) {
@@ -483,6 +492,7 @@ public class CheckOut extends SelTestCase {
 		try {
 			getCurrentFunctionName(true);
 			int productsNumber = SelectorUtil.getAllElements(CheckOutSelectors.productContainerInStepTwo.get()).size();	
+			logs.debug("Found" +productsNumber +"Products in step 2");
 			getCurrentFunctionName(false);
 			return productsNumber;
 		} catch (NoSuchElementException e) {
@@ -498,6 +508,7 @@ public class CheckOut extends SelTestCase {
 			getCurrentFunctionName(true);
 			// Click next to proceed to step 2
 			SelectorUtil.initializeSelectorsAndDoActions(CheckOutSelectors.firstStepNextButton.get());
+			watiStepTobeready();
 			getCurrentFunctionName(false);
 		} catch (NoSuchElementException e) {
 			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
@@ -510,15 +521,32 @@ public class CheckOut extends SelTestCase {
 	public static boolean checkIfInStepTwo() throws Exception {
 		try {
 			getCurrentFunctionName(true);
+			boolean state=false;
 			Thread.sleep(1000);
-			boolean avillability =SelectorUtil.isDisplayed(CheckOutSelectors.stepTwoIdentifier.get());
+		
+			if (isFG()) {
+				state = SelectorUtil.isDisplayed(CheckOutSelectors.stepTwoIdentifier.get());
+			} else if (isGR()) {
+				state = SelectorUtil.isDisplayed(CheckOutSelectors.stepTwoIdentifierGR.get());
+			}
+			
 			getCurrentFunctionName(false);
 	
-			return avillability;		
+			return state;		
 			
 		} catch (NoSuchElementException e) {
 			try {
-			return SelectorUtil.isDisplayed(CheckOutSelectors.stepTwoIdentifier2.get());
+				
+				if (isFG()) {
+					return SelectorUtil.isDisplayed(CheckOutSelectors.stepTwoIdentifier2.get());
+
+				} else if (isGR()) {
+					return SelectorUtil.isDisplayed(CheckOutSelectors.stepTwoIdentifier2GR.get());
+
+				}
+				else {
+					return false;
+				}
 			}
 			catch (NoSuchElementException e2) {
 				return false;
@@ -529,12 +557,29 @@ public class CheckOut extends SelTestCase {
 	}
 	
 	
+	public static void watiStepTobeready()throws Exception {
+		try {
+		getCurrentFunctionName(true);
+		
+		SelectorUtil.waitElementToDisappear(By.cssSelector(CheckOutSelectors.stepLoaderButton.get()));
+		
+		getCurrentFunctionName(false);
+	} catch (NoSuchElementException e) {
+		logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+		}.getClass().getEnclosingMethod().getName()));
+		throw e;
+	}
+	}
+	
+	
+	
 	// Done CBI
 	public static void proceedToStepFour() throws Exception {
 		try {
 			getCurrentFunctionName(true);
 			//Click next to proceed to step 4
-			SelectorUtil.initializeSelectorsAndDoActions(CheckOutSelectors.thirdStepNextButton.get());
+			SelectorUtil.initializeSelectorsAndDoActions(CheckOutSelectors.thirdStepNextButton.get(),"ForceAction,click");
+			watiStepTobeready();
 			getCurrentFunctionName(false);
 		} catch (NoSuchElementException e) {
 			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
@@ -549,7 +594,8 @@ public class CheckOut extends SelTestCase {
 	public static void proceedToStepThree() throws Exception {
 		try {
 			getCurrentFunctionName(true);
-			SelectorUtil.initializeSelectorsAndDoActions(CheckOutSelectors.secondStepNextButton.get());
+			SelectorUtil.initializeSelectorsAndDoActions(CheckOutSelectors.secondStepNextButton.get(),"ForceAction,click");
+			watiStepTobeready();
 			getCurrentFunctionName(false);
 		} catch (NoSuchElementException e) {
 			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
@@ -690,6 +736,7 @@ public class CheckOut extends SelTestCase {
 		try {	
 			getCurrentFunctionName(true);
 			int productsNumber = SelectorUtil.getAllElements(CheckOutSelectors.itemID.get()).size();	
+			logs.debug("Found" +productsNumber +"Products in confirmation page");
 			getCurrentFunctionName(false);			
 			return productsNumber;
 		} catch (NoSuchElementException e) {
@@ -705,9 +752,15 @@ public class CheckOut extends SelTestCase {
 		try {	
 			getCurrentFunctionName(true);
 			if (!getBrowserName().contains(GlobalVariables.browsers.iPad)) {
-				  WebDriverWait	wait = new WebDriverWait(getDriver(), 25);
+				try {
+				WebDriverWait	wait = new WebDriverWait(getDriver(), 25);
 				  WebElement closeElement = wait.until(visibilityOfElementLocated(By.cssSelector(CheckOutSelectors.closePoromotionalModal.get())));
-			      closeElement.click();			
+			      closeElement.click();
+				}
+				catch(Exception e) {
+					logs.debug("Promotional message didn't show up");
+
+				}
 			}
 			getCurrentFunctionName(false);			
 		} catch (NoSuchElementException e) {
@@ -973,5 +1026,18 @@ public class CheckOut extends SelTestCase {
 			}
 		}
 	}
+	public static void clickCreditCardPayment() throws Exception {
+		try {	
+			getCurrentFunctionName(true);
+			SelectorUtil.initializeSelectorsAndDoActions(CheckOutSelectors.creditCartTab.get());		
+			getCurrentFunctionName(false);			
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+			}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
+
+	}
+	
 		
 }

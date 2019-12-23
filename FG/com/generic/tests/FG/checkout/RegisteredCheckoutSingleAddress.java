@@ -34,7 +34,7 @@ public class RegisteredCheckoutSingleAddress extends SelTestCase {
 
 			//Perform login
 			SignIn.fillLoginFormAndClickSubmit(userMail, userPassword);
-			
+
 			// Add products to cart
 			CheckOut.searchForProductsandAddToCart(productsCount);
 
@@ -49,17 +49,26 @@ public class RegisteredCheckoutSingleAddress extends SelTestCase {
 				// Proceed to step 2
 				CheckOut.proceedToStepTwo();
 			}
+			Thread.sleep(1000);
 
 			// Check number of products in step 2
-			sassert().assertTrue(CheckOut.checkProductsinStepTwo() == productsCount, "Some products are missing in step 2 ");
+			sassert().assertTrue(CheckOut.checkProductsinStepTwo() >= productsCount, "Some products are missing in step 2 ");
 			
 			productsCountStepTWO =CheckOut.checkProductsinStepTwo();
+			
+			Thread.sleep(1500);
 			
 			// Proceed to step 3
 			CheckOut.proceedToStepThree();
 
+			Thread.sleep(1000);
+
 			// Proceed to step 4
 			CheckOut.proceedToStepFour();
+
+			Thread.sleep(1000);
+			
+			CheckOut.clickCreditCardPayment();
 
 			// Saving tax and shipping costs to compare them in the confirmation page
 			orderShipping = CheckOut.getShippingCosts();

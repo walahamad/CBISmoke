@@ -545,13 +545,15 @@ public class PDP extends SelTestCase {
 		try {
 			Thread.sleep(4500);
 			Boolean bundle = false;
-			String Str = PDPSelectors.bundleItem.get();
-			  JavascriptExecutor jse = (JavascriptExecutor) getDriver();    
-			  String value = (String) jse.executeScript("return gwtDynamic.coremetrics.isSingleProduct;");
-				logs.debug("isSingleProduct: " + value);
-			  if (value.equals("N"))
-				  bundle = true;
-			  
+
+			JavascriptExecutor jse = (JavascriptExecutor) getDriver();
+			
+			String value = (String) jse.executeScript("return gwtDynamic.coremetrics.isSingleProduct;");
+			
+			logs.debug("isSingleProduct: " + jse.toString());
+			
+			if (value.equals("N"))
+				bundle = true;
 			return bundle;
 		} catch (NoSuchElementException e) {
 			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
