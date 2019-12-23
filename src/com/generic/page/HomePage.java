@@ -130,11 +130,13 @@ public class HomePage extends SelTestCase {
 		getCurrentFunctionName(true);
 		logs.debug("Get the account menu items.");
 		List<WebElement> menuItems = new ArrayList<WebElement>();
+		//TODO:: (use getAllElements in selectorUtils instead of this function.
 		menuItems = getElementsList(HomePageSelectors.accountMenuItems.get());
 		getCurrentFunctionName(false);
 		return menuItems;
 	}
 
+	//TODO:: No need for this function (use getAllElements in selectorUtils instead of this function.)
 	public static List<WebElement> getElementsList(String selector) throws Exception {
 		getCurrentFunctionName(true);
 		List<WebElement> elementsList = SelectorUtil.getAllElements(selector);
@@ -169,6 +171,8 @@ public class HomePage extends SelTestCase {
 		logs.debug("Validate if global footer  exist");
 		isDisplayed = SelectorUtil.isDisplayed(HomePageSelectors.globalFooter.get());
 		List<WebElement> footerItems = new ArrayList<WebElement>();
+
+		//TODO:: (use getAllElements in selectorUtils instead of this function.
 		footerItems = getElementsList(HomePageSelectors.accordionHeader.get());
 		for (WebElement element : footerItems) {
 			isDisplayed = element.isDisplayed();
@@ -180,7 +184,6 @@ public class HomePage extends SelTestCase {
 	public static void clickOnMiniCart() throws Exception {
 		getCurrentFunctionName(true);
 		String subStrArr = HomePageSelectors.miniCartBtn.get();
-		String valuesArr = "ForceAction,hover";
 		if (!SelTestCase.getBrowserName().contains(GlobalVariables.browsers.chrome)) {
 			logs.debug("Clicking on Mini Cart");
 			SelectorUtil.initializeSelectorsAndDoActions(subStrArr);
@@ -505,6 +508,8 @@ public class HomePage extends SelTestCase {
 
 		logs.debug("Get the menu items first level.");
 		List<WebElement> menuFirstLevelElements = new ArrayList<WebElement>();
+
+		//TODO:: (use getAllElements in selectorUtils instead of this function.
 		// Get the menu items list.
 		menuFirstLevelElements = getElementsList(HomePageSelectors.menuItems.get());
 		getCurrentFunctionName(false);
@@ -578,6 +583,8 @@ public class HomePage extends SelTestCase {
 				currentPageMatchNavigated = false;
 				validateSubMenuNavigation = false;
 			} else {
+
+				//TODO:: (use getAllElements in selectorUtils instead of this function.
 				// Select the list of leaf items in the menu.
 				List<WebElement> leafMenuItems = getElementsList(HomePageSelectors.leafMenuItems.get());
 
