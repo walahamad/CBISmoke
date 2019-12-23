@@ -2,9 +2,11 @@ package com.generic.page;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Random;
 
+import org.openqa.selenium.By;
 import java.util.NoSuchElementException;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
@@ -14,8 +16,6 @@ import com.generic.setup.SelTestCase;
 import com.generic.util.SelectorUtil;
 import com.generic.setup.ExceptionMsg;
 import com.generic.setup.LoggingMsg;
-import com.generic.util.SelectorUtil.commands.actions;
-
 
 /**
  * The Class HomePage.
@@ -95,7 +95,7 @@ public class HomePage extends SelTestCase {
 			getCurrentFunctionName(true);
 			logs.debug("Clicking on Account menu");
 			if (withHover) {
-				SelectorUtil.initializeSelectorsAndDoActions(HomePageSelectors.accountMenu.get(), actions.hover);
+				SelectorUtil.initializeSelectorsAndDoActions(HomePageSelectors.accountMenu.get(), "ForceAction,hover");
 			} else {
 				SelectorUtil.initializeSelectorsAndDoActions(HomePageSelectors.accountMenu.get());
 			}
