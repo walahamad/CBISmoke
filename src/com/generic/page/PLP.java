@@ -104,7 +104,7 @@ public class PLP extends SelTestCase {
 			
 			List<String> productsNames = getfirst3ProductsNames();
 			
-			Thread.sleep(20000);
+			Thread.sleep(2000);
 			
 			sortByPriceLowToHighPLP();
 			
