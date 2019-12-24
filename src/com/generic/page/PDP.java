@@ -92,10 +92,18 @@ public class PDP extends SelTestCase {
 			// This is to handle production Monetate issue on iPad for search field.
 			if (SelTestCase.isFGGR() && SelTestCase.isiPad())
 				HomePage.updateMmonetate();
-			if (SelTestCase.isFGGR())
+			if (SelTestCase.isFGGR() || (isRY() && isMobile()))
 				PLP.clickSearchicon();
-			PLP.typeSearch(SearchTerm);
-			String itemName = PLP.pickRecommendedOption();
+			String itemName;
+			//This is to handle iPad behavior for search modal.
+			//TODO: to use this process on all brands
+			if (isGHRY() && isiPad()) {
+				PLP.clickSearch(SearchTerm);
+				itemName = PLP.pickPLPFirstProduct();
+			} else {
+				PLP.typeSearch(SearchTerm);
+				itemName = PLP.pickRecommendedOption();
+			}
 			getCurrentFunctionName(false);
 			return itemName;
 		} catch (NoSuchElementException e) {
@@ -1157,7 +1165,10 @@ public static boolean validateSelectRegistryOrWishListModalIsDisplayed() throws 
 				if (!classValue.contains("no-available") && !classValue.contains("disabled")) {
 					// list.get(index).click();
 					String nthSel = subStrArr.replace("css,", "") + ">img";
-					getDriver().findElements(By.cssSelector(nthSel)).get(index).click();
+					WebElement item = getDriver().findElements(By.cssSelector(nthSel)).get(index);
+					JavascriptExecutor jse = (JavascriptExecutor) getDriver();
+					jse.executeScript("arguments[0].scrollIntoView(false)", item);
+					item.click();
 					break;
 				}
 			}
@@ -1179,10 +1190,13 @@ public static boolean validateSelectRegistryOrWishListModalIsDisplayed() throws 
 			for (int index = 0; index < list.size(); index++) {
 				String classValue = SelectorUtil.getAttrString(subStrArr, "class", index);
 				if (!classValue.contains("no-available") && !classValue.contains("disabled")) {
-					String optionIndex = "index," + index;
 					String nthSel = subStrArr + ">div";
-					String action = nthSel + "ForceAction,click";
-					SelectorUtil.initializeSelectorsAndDoActions(nthSel, action);
+					WebElement item = getDriver().findElements(By.cssSelector(nthSel)).get(index);
+					JavascriptExecutor jse = (JavascriptExecutor) getDriver();
+					jse.executeScript("arguments[0].scrollIntoView(false)", item);
+					if (isMobile())
+						Thread.sleep(1000);
+					((JavascriptExecutor) getDriver()).executeScript("arguments[0].click()", item);
 					break;
 				}
 			}
@@ -1235,11 +1249,10 @@ public static boolean validateSelectRegistryOrWishListModalIsDisplayed() throws 
 			String subStrArr = PDPSelectors.offerControlClose.get();
 			logs.debug("Closing the offer modal");
 			if (SelTestCase.isGH())
-				getDriver().switchTo().frame("fcopt-offer-35642-content");
+				getDriver().switchTo().frame(PDPSelectors.GHOfferControlClose.get());
 			if (SelTestCase.isRY())
-				getDriver().switchTo().frame("fcopt_form_94684");
-			if (SelectorUtil.isDisplayed(subStrArr))
-				SelectorUtil.initializeSelectorsAndDoActions(subStrArr);
+				getDriver().switchTo().frame(PDPSelectors.RYOfferControlClose.get());
+			SelectorUtil.initializeSelectorsAndDoActions(subStrArr);
 			// getDriver().switchTo().parentFrame();
 			getCurrentFunctionName(false);
 		} catch (NoSuchFrameException e) {

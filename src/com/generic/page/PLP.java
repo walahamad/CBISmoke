@@ -449,7 +449,7 @@ public class PLP extends SelTestCase {
 	}
 
 	// CBI
-	private static void clickSearch(String searchTerm) throws Exception {
+	public static void clickSearch(String searchTerm) throws Exception {
 		try {
 			getCurrentFunctionName(true);
 			SelectorUtil.initializeSelectorsAndDoActions(PLPSelectors.searchBox.get(), searchTerm + ",pressEnter");
@@ -505,7 +505,10 @@ public class PLP extends SelTestCase {
 	public static void clickSearchicon() throws Exception {
 		try {
 			getCurrentFunctionName(true);
-			SelectorUtil.initializeSelectorsAndDoActions(PLPSelectors.SearchIcon.get());
+			if (!isRY())
+				SelectorUtil.initializeSelectorsAndDoActions(PLPSelectors.SearchIcon.get());
+			else
+				SelectorUtil.initializeSelectorsAndDoActions(PLPSelectors.RYSearchIcon.get());
 			getCurrentFunctionName(false);
 		} catch (NoSuchElementException e) {
 			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
@@ -515,25 +518,28 @@ public class PLP extends SelTestCase {
 
 	}
 	
-  	// CBI
-		public static String pickPLPFirstProduct() throws Exception {
-			try {
-				getCurrentFunctionName(true);
-				String SelectorSS = null;
-				SelectorSS = PLPSelectors.product.get();
-				WebElement PLPFirstProduct = SelectorUtil.getelement(SelectorSS);
-				String itemTitle = PLPFirstProduct.getText();
-				logs.debug("Picked item: " + itemTitle);
-				PLPFirstProduct.click();
-				getCurrentFunctionName(false);
-				return itemTitle;
-			} catch (NoSuchElementException e) {
-				logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
-				}.getClass().getEnclosingMethod().getName()));
-				throw e;
-			}
-
+	// CBI
+	public static String pickPLPFirstProduct() throws Exception {
+		try {
+			getCurrentFunctionName(true);
+			String SelectorSS;
+			if (isGH())
+				SelectorSS = PLPSelectors.GHproductsImages.get();
+			else if (isGR())
+				SelectorSS = PLPSelectors.productsImagesGR.get();
+			else
+				SelectorSS = PLPSelectors.productsImages.get();
+			String itemTitle = SelectorUtil.getAttrString(SelectorSS, "alt");
+			SelectorUtil.initializeSelectorsAndDoActions(SelectorSS);
+			getCurrentFunctionName(false);
+			return itemTitle;
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+			}.getClass().getEnclosingMethod().getName()));
+			throw e;
 		}
+
+	}
   
   // CBI
 	public static void navigateToRandomPLPMobileIpad() throws Exception {
