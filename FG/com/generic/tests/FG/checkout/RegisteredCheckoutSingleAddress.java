@@ -13,6 +13,7 @@ import com.generic.setup.GlobalVariables;
 import com.generic.setup.LoggingMsg;
 import com.generic.setup.SelTestCase;
 import com.generic.tests.FG.Cart.CartValidation;
+import com.generic.util.RandomUtilities;
 
 public class RegisteredCheckoutSingleAddress extends SelTestCase {
 	
@@ -33,7 +34,8 @@ public class RegisteredCheckoutSingleAddress extends SelTestCase {
 			int productsCountStepTWO=0;
 
 			//Perform login
-			SignIn.fillLoginFormAndClickSubmit(userMail, userPassword);
+			//SignIn.fillLoginFormAndClickSubmit(userMail, userPassword);
+			Registration.registerFreshUser(RandomUtilities.getRandomEmail(), "TestITG226");
 
 			// Add products to cart
 			CheckOut.searchForProductsandAddToCart(productsCount);
