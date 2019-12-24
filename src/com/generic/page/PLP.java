@@ -430,7 +430,10 @@ public class PLP extends SelTestCase {
 	public static void clickSearchicon() throws Exception {
 		try {
 			getCurrentFunctionName(true);
-			SelectorUtil.initializeSelectorsAndDoActions(PLPSelectors.SearchIcon.get());
+			if (!isRY())
+				SelectorUtil.initializeSelectorsAndDoActions(PLPSelectors.SearchIcon.get());
+			else
+				SelectorUtil.initializeSelectorsAndDoActions(PLPSelectors.RYSearchIcon.get());
 			getCurrentFunctionName(false);
 		} catch (NoSuchElementException e) {
 			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {

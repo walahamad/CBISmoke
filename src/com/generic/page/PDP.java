@@ -92,7 +92,7 @@ public class PDP extends SelTestCase {
 			// This is to handle production Monetate issue on iPad for search field.
 			if (SelTestCase.isFGGR() && SelTestCase.isiPad())
 				HomePage.updateMmonetate();
-			if (SelTestCase.isFGGR())
+			if (SelTestCase.isFGGR() || (isRY() && isMobile()))
 				PLP.clickSearchicon();
 			String itemName;
 			//This is to handle iPad behavior for search modal.
