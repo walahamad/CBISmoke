@@ -21,6 +21,50 @@ public class Cart extends SelTestCase {
 
 	}
 	
+	// Done CBI
+	public static String getTaxValue() throws Exception {
+		try {
+			getCurrentFunctionName(true);
+			WebElement price = SelectorUtil.getelement(CartSelectors.tax.get());
+			if (price.getText().trim().isEmpty()) {
+				price = SelectorUtil.getelement(CartSelectors.taxGR);
+			}
+			getCurrentFunctionName(false);
+			return price.getText().replace("$", "").replace(",", "").trim();
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+			}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
+	}
+
+	// Done CBI
+	public static String getShippingValue() throws Exception {
+		try {
+			getCurrentFunctionName(true);
+			WebElement price = SelectorUtil.getelement(CartSelectors.shipping.get());
+			getCurrentFunctionName(false);
+			return price.getText().replace("$", "").replace(",", "").trim();
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+			}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
+	}
+
+	// Done CBI
+	public static void paypalBtnClick() throws Exception {
+		try {
+			getCurrentFunctionName(true);
+			String subStrArr = CartSelectors.paypalCheckoutBtn.get();
+			SelectorUtil.initializeSelectorsAndDoActions(subStrArr);
+			getCurrentFunctionName(false);
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+			}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
+	}
 	
 	//Done CBI
 	public static void moveItemsToCartFromWishlist() throws Exception {
@@ -156,16 +200,21 @@ public class Cart extends SelTestCase {
 		return inDisplayed;
 	}
 
-	//Done CBI
+	// Done CBI
 	public static boolean checkAddedItemTotalPriceDisplay() throws Exception {
-		getCurrentFunctionName(true);
-		List<String> subStrArr = new ArrayList<String>();
-		subStrArr.add(CartSelectors.addedItemsTotalPrice.get());
-		List<WebElement> savedItems = SelectorUtil.getAllElements(subStrArr);
-		boolean inDisplayed = isListDisplayed(savedItems);
-		getCurrentFunctionName(false);
-		return inDisplayed;
+
+		try {
+			getCurrentFunctionName(true);
+			boolean isDisplayed = SelectorUtil.isDisplayed(CartSelectors.addedItemsTotalPrice.get());
+			getCurrentFunctionName(false);
+			return isDisplayed;
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+			}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
 	}
+	
 
 	//Done CBI
 	public static String getFirstSavedItemsOptions() throws Exception {
@@ -210,12 +259,10 @@ public class Cart extends SelTestCase {
 					SelectorUtil.initializeSelectorsAndDoActions(CartSelectors.optionsImage.get(), "index,1");
 
 				} catch (Exception e2) {
-					Thread.holdsLock(2500);
+					Thread.sleep(2500);
 
 					// Check if the product has buttons and select one
-					List<WebElement> swatches = getDriver()
-							.findElements(By.cssSelector(CartSelectors.optionsButton.get()));
-					swatches.get(2).click();
+					SelectorUtil.initializeSelectorsAndDoActions(CartSelectors.optionsButton.get());
 				}
 
 			}
