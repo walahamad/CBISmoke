@@ -11,6 +11,7 @@ import com.generic.setup.ExceptionMsg;
 import com.generic.setup.GlobalVariables;
 import com.generic.setup.LoggingMsg;
 import com.generic.setup.SelTestCase;
+import com.generic.util.RandomUtilities;
 
 public class RegisteredCheckoutMultipleAddress extends SelTestCase  {
 	
@@ -29,7 +30,8 @@ public class RegisteredCheckoutMultipleAddress extends SelTestCase  {
 			int productsCountStepTWO=0;
 
 			//Perform login
-			SignIn.fillLoginFormAndClickSubmit(userMail, userPassword);		
+			//SignIn.fillLoginFormAndClickSubmit(userMail, userPassword);
+			Registration.registerFreshUser(RandomUtilities.getRandomEmail(), "TestITG226");
 
 			// Add products to cart
 			CheckOut.searchForProductsandAddToCart(productsCount);
