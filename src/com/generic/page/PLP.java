@@ -56,12 +56,13 @@ public class PLP extends SelTestCase {
 			List<String> productsNames = getfirst3ProductsNames();
 			sortByPriceLowToHigh();
 			List<String> sortedProductsNames = getfirst3ProductsNames();
-			result = result && compareOperationResults(productsNames, sortedProductsNames);
-
-			List<String> productsNamesBeforeFilter = getfirst3ProductsNames();
+			result = result && compareOperationResults(productsNames, sortedProductsNames);			
+			
+			int productsCountBeforeFilter =getProductsCountinPLP();		
 			SelectFilter();
-			List<String> productsNamesAfterFilter = getfirst3ProductsNames();
-			result = result && compareOperationResults(productsNamesBeforeFilter, productsNamesAfterFilter);
+			result = result && compareFilterResults(productsCountBeforeFilter,getProductsCountinPLP() );
+			
+			logs.debug("Filters check result "+ result);
 
 			getCurrentFunctionName(false);
 			return result;
@@ -72,22 +73,57 @@ public class PLP extends SelTestCase {
 		}
 	}
 
+	public static boolean compareFilterResults(int before, int after) throws Exception {
+		try {
+			getCurrentFunctionName(true);
+			getCurrentFunctionName(false);
+
+			if(before!=after)
+				return true;
+			else
+				return false;	
+
+		}
+		catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+			}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
+	
+	}
+	
+	
 	
 	public static boolean VerifyPLP() throws Exception {
 		try {
 			getCurrentFunctionName(true);
 			boolean result = true; 
 			result = result && verifyProductImagesDisplayed();
+			
+			logs.debug("Image cehck result "+ result);
+			
 			List<String> productsNames = getfirst3ProductsNames();
+			
+			Thread.sleep(2000);
+			
 			sortByPriceLowToHighPLP();
+			
+		    Thread.sleep(2000);
 			List<String> sortedProductsNames = getfirst3ProductsNames();
 			result = result && compareOperationResults(productsNames, sortedProductsNames);
 
-			List<String> productsNamesBeforeFilter = getfirst3ProductsNames();
+			logs.debug("Sorting result "+ result);
+			
+			int productsCountBeforeFilter = getProductsCountinPLP();
+			
 			if (checkFiltersAvillability()) {
 				SelectFilter();
-				List<String> productsNamesAfterFilter = getfirst3ProductsNames();
-				result = result && compareOperationResults(productsNamesBeforeFilter, productsNamesAfterFilter);
+			    Thread.sleep(2000);
+
+				result = result &&compareFilterResults(productsCountBeforeFilter,getProductsCountinPLP());
+				
+				logs.debug("Filters check result "+ productsCountBeforeFilter + getProductsCountinPLP() + result);
+
 			}
 			getCurrentFunctionName(false);
 			return result;
@@ -138,13 +174,32 @@ public class PLP extends SelTestCase {
 			
 			if(isMobile())
 			{
-				if(isFG())
-					SelectorUtil.initializeSelectorsAndDoActions(PLPSelectors.allCatigories.get(), "ForceAction,click");
+				if(isFG()) {
+					try {
+						SelectorUtil.initializeSelectorsAndDoActions(PLPSelectors.allCatigories.get(),
+								"ForceAction,click");
+					} catch (Exception e) {
+	
+						try {
+							
+							SelectorUtil.initializeSelectorsAndDoActions(PLPSelectors.allCatigories2.get(),"ForceAction,click");
+
+						}
+						catch(Exception e2) {
+							WebElement maxPriceField = SelectorUtil.getelement(PLPSelectors.filterPrice.get());
+							Double value = Double.parseDouble(maxPriceField.getText())-5;
+							maxPriceField.sendKeys(value+"");
+							
+						}
+						
+					}
+				}
 				if(isGR())
 					SelectorUtil.initializeSelectorsAndDoActions(PLPSelectors.GRallCatigories.get(), "ForceAction,click");
 					
 					
 			}
+			
 			Thread.sleep(3000);
 			getCurrentFunctionName(false);
 		} catch (NoSuchElementException e) {
@@ -334,6 +389,26 @@ public class PLP extends SelTestCase {
 			throw e;
 		}
 	}
+	
+	
+	
+	// CBI
+	public static int getProductsCountinPLP() throws Exception {
+		try {
+			getCurrentFunctionName(true);
+			List<WebElement> namesWebElements = SelectorUtil.getAllElements(PLPSelectors.productsNames.get());
+			getCurrentFunctionName(false);
+
+			return namesWebElements.size();
+			
+
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+			}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
+	}
+	
 
 	// CBI
 	public static boolean verifyProductImagesDisplayed() throws InterruptedException {
@@ -374,7 +449,7 @@ public class PLP extends SelTestCase {
 	}
 
 	// CBI
-	private static void clickSearch(String searchTerm) throws Exception {
+	public static void clickSearch(String searchTerm) throws Exception {
 		try {
 			getCurrentFunctionName(true);
 			SelectorUtil.initializeSelectorsAndDoActions(PLPSelectors.searchBox.get(), searchTerm + ",pressEnter");
@@ -443,25 +518,28 @@ public class PLP extends SelTestCase {
 
 	}
 	
-  	// CBI
-		public static String pickPLPFirstProduct() throws Exception {
-			try {
-				getCurrentFunctionName(true);
-				String SelectorSS = null;
-				SelectorSS = PLPSelectors.product.get();
-				WebElement PLPFirstProduct = SelectorUtil.getelement(SelectorSS);
-				String itemTitle = PLPFirstProduct.getText();
-				logs.debug("Picked item: " + itemTitle);
-				PLPFirstProduct.click();
-				getCurrentFunctionName(false);
-				return itemTitle;
-			} catch (NoSuchElementException e) {
-				logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
-				}.getClass().getEnclosingMethod().getName()));
-				throw e;
-			}
-
+	// CBI
+	public static String pickPLPFirstProduct() throws Exception {
+		try {
+			getCurrentFunctionName(true);
+			String SelectorSS;
+			if (isGH())
+				SelectorSS = PLPSelectors.GHproductsImages.get();
+			else if (isGR())
+				SelectorSS = PLPSelectors.productsImagesGR.get();
+			else
+				SelectorSS = PLPSelectors.productsImages.get();
+			String itemTitle = SelectorUtil.getAttrString(SelectorSS, "alt");
+			SelectorUtil.initializeSelectorsAndDoActions(SelectorSS);
+			getCurrentFunctionName(false);
+			return itemTitle;
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+			}.getClass().getEnclosingMethod().getName()));
+			throw e;
 		}
+
+	}
   
   // CBI
 	public static void navigateToRandomPLPMobileIpad() throws Exception {
@@ -489,7 +567,12 @@ public class PLP extends SelTestCase {
 			// Check if the target is CLP
 			if (isCLP()) {
 				// Navigate to a PLP
-				SelectorUtil.initializeSelectorsAndDoActions(PLPSelectors.navigatetoPLP.get());
+				try {
+					SelectorUtil.initializeSelectorsAndDoActions(PLPSelectors.navigatetoPLP.get());
+				} catch (Exception e) {
+					SelectorUtil.initializeSelectorsAndDoActions(PLPSelectors.navigatetoPLP2.get());
+
+				}
 			}
 
 			getCurrentFunctionName(false);
@@ -510,7 +593,7 @@ public class PLP extends SelTestCase {
 			List<WebElement> menuFirstLevelElements = HomePage.getFirstLevelMenuItems();
 			Random randomGenerator = new Random();
 			WebElement randomElement = menuFirstLevelElements
-					.get(randomGenerator.nextInt(menuFirstLevelElements.size()));
+					.get(randomGenerator.nextInt(menuFirstLevelElements.size()-1));
 			SelectorUtil.clickOnWebElement(randomElement);
 
 			if (isCLP()) {

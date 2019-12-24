@@ -93,8 +93,16 @@ public class PDP extends SelTestCase {
 				HomePage.updateMmonetate();
 			if (SelTestCase.isFGGR() || (isRY() && isMobile()))
 				PLP.clickSearchicon();
-			PLP.typeSearch(SearchTerm);
-			String itemName = PLP.pickRecommendedOption();
+			String itemName;
+			//This is to handle iPad behavior for search modal.
+			//TODO: to use this process on all brands
+			if (isGHRY() && isiPad()) {
+				PLP.clickSearch(SearchTerm);
+				itemName = PLP.pickPLPFirstProduct();
+			} else {
+				PLP.typeSearch(SearchTerm);
+				itemName = PLP.pickRecommendedOption();
+			}
 			getCurrentFunctionName(false);
 			return itemName;
 		} catch (NoSuchElementException e) {
@@ -538,19 +546,36 @@ public class PDP extends SelTestCase {
 
 	// done - SMK
 	public static boolean bundleProduct() throws Exception {
+		return bundleProduct(0);
+	}
+	
+	
+	// done - SMK
+	public static boolean bundleProduct(int tries) throws Exception {
 		getCurrentFunctionName(true);
 		try {
 			Thread.sleep(4500);
+			String PDPChecker = "return gwtDynamic.coremetrics.isSingleProduct;"; 
 			Boolean bundle = false;
 
-			JavascriptExecutor jse = (JavascriptExecutor) getDriver();
-
-			String value = (String) jse.executeScript("return gwtDynamic.coremetrics.isSingleProduct;");
-
-			logs.debug("isSingleProduct: " + jse.toString());
-
-			if (value.equals("N"))
+			JavascriptExecutor jse = (JavascriptExecutor) getDriver();		
+			
+			String value = (String) jse.executeScript(PDPChecker);
+			
+			logs.debug("isSingleProduct: " + value);
+			
+			if (value.equals("N")) {
 				bundle = true;
+				}
+			else if (value.equals("Y"))
+			{
+				bundle = false;
+			}else
+			{
+				if (tries < 10)
+				bundleProduct(tries++); 
+			}
+			
 			return bundle;
 		} catch (NoSuchElementException e) {
 			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
@@ -1162,9 +1187,10 @@ public class PDP extends SelTestCase {
 				if (!classValue.contains("no-available") && !classValue.contains("disabled")) {
 					// list.get(index).click();
 					String nthSel = subStrArr.replace("css,", "") + ">img";
-					WebElement colorBtn = getDriver().findElements(By.cssSelector(nthSel)).get(index);
-					JavascriptExecutor executor = (JavascriptExecutor) getDriver();
-					executor.executeScript("arguments[0].click();", colorBtn);
+					WebElement item = getDriver().findElements(By.cssSelector(nthSel)).get(index);
+					JavascriptExecutor jse = (JavascriptExecutor) getDriver();
+					jse.executeScript("arguments[0].scrollIntoView(false)", item);
+					item.click();
 					break;
 				}
 			}
@@ -1186,13 +1212,13 @@ public class PDP extends SelTestCase {
 			for (int index = 0; index < list.size(); index++) {
 				String classValue = SelectorUtil.getAttrString(subStrArr, "class", index);
 				if (!classValue.contains("no-available") && !classValue.contains("disabled")) {
-					String optionIndex = "index," + index;
 					String nthSel = subStrArr + ">div";
-					String action = nthSel + "ForceAction,click";
-					// electorUtil.initializeSelectorsAndDoActions(nthSel, action);
-					WebElement sizeBtn = getDriver().findElements(By.cssSelector(nthSel)).get(index);
-					JavascriptExecutor executor = (JavascriptExecutor) getDriver();
-					executor.executeScript("arguments[0].click();", sizeBtn);
+					WebElement item = getDriver().findElements(By.cssSelector(nthSel)).get(index);
+					JavascriptExecutor jse = (JavascriptExecutor) getDriver();
+					jse.executeScript("arguments[0].scrollIntoView(false)", item);
+					if (isMobile())
+						Thread.sleep(1000);
+					((JavascriptExecutor) getDriver()).executeScript("arguments[0].click()", item);
 					break;
 				}
 			}
@@ -1244,22 +1270,12 @@ public class PDP extends SelTestCase {
 			getCurrentFunctionName(true);
 			String subStrArr = PDPSelectors.offerControlClose.get();
 			logs.debug("Closing the offer modal");
-			if (SelTestCase.isGH()) {
-				if (!isMobile()) {
-					getDriver().switchTo().frame("fcopt-offer-35642-content");
-				} else {
-					Thread.sleep(5000);
-					getDriver().switchTo().frame("fcopt-offer-35745-content");
-				}
-			}
+
+			if (SelTestCase.isGH())
+				getDriver().switchTo().frame(PDPSelectors.GHOfferControlClose.get());
 			if (SelTestCase.isRY())
-				if (isMobile()) {
-					Thread.sleep(5000);
-					getDriver().switchTo().frame("fcopt-offer-94688-content");
-				} else
-					getDriver().switchTo().frame("fcopt-offer-94684-content");
-			if (SelectorUtil.isDisplayed(subStrArr))
-				SelectorUtil.initializeSelectorsAndDoActions(subStrArr);
+				getDriver().switchTo().frame(PDPSelectors.RYOfferControlClose.get());
+			SelectorUtil.initializeSelectorsAndDoActions(subStrArr);
 			// getDriver().switchTo().parentFrame();
 			getCurrentFunctionName(false);
 		} catch (NoSuchFrameException e) {
