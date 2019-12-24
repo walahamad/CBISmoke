@@ -1,4 +1,4 @@
-package com.generic.tests.FG.checkout;
+package com.generic.tests.RY.checkout;
 
 import java.util.LinkedHashMap;
 
@@ -93,6 +93,7 @@ public class PayPalValidation extends SelTestCase {
 					sassert().assertTrue(false, "shipping value is not same");
 				if (subtotalValue + tax + shippingValue != total)
 					sassert().assertTrue(false, "Total value is not equales the sum of subtotal + tax + shipping");
+
 			}
 		}
 

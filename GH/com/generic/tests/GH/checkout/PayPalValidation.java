@@ -1,4 +1,4 @@
-package com.generic.tests.FG.checkout;
+package com.generic.tests.GH.checkout;
 
 import java.util.LinkedHashMap;
 
@@ -74,7 +74,6 @@ public class PayPalValidation extends SelTestCase {
 				CheckOut.PayPal.closePayPalSubmitRegestration();
 				sassert().assertTrue(CheckOut.PayPal.isSubmitConfermationMessageDisplayed(),
 						"Order confirmation page is not displayed");
-
 				sassert().assertTrue(CheckOut.PayPal.checkOrderNumberAndEmailAndShippingAddress(),
 						"Order number or email or shipping address is not displayed");
 				sassert().assertTrue(CheckOut.PayPal.checkConfirmationPageImg(), "Product image is not displayed");
@@ -93,6 +92,7 @@ public class PayPalValidation extends SelTestCase {
 					sassert().assertTrue(false, "shipping value is not same");
 				if (subtotalValue + tax + shippingValue != total)
 					sassert().assertTrue(false, "Total value is not equales the sum of subtotal + tax + shipping");
+
 			}
 		}
 
