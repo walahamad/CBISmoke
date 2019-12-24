@@ -592,7 +592,13 @@ public class PLP extends SelTestCase {
 
 			if (isCLP()) {
 				// Navigate to a PLP
+				try {
 				SelectorUtil.initializeSelectorsAndDoActions(PLPSelectors.navigatetoPLP.get());
+				}
+				catch(Exception e) {
+					SelectorUtil.initializeSelectorsAndDoActions(PLPSelectors.navigatetoPLP2.get());
+
+				}
 			}
 
 			Thread.sleep(15000);

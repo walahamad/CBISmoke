@@ -1,12 +1,12 @@
-package com.generic.tests.FG.e2e;
+package com.generic.tests.GR.e2e;
 
 import java.text.MessageFormat;
 import java.util.LinkedHashMap;
 import java.util.NoSuchElementException;
 import com.generic.setup.ExceptionMsg;
 import com.generic.setup.SelTestCase;
-import com.generic.tests.FG.checkout.GuestCheckoutSingleAddress;
-import com.generic.tests.FG.checkout.RegisteredCheckoutSingleAddress;
+import com.generic.tests.GR.checkout.GuestCheckoutSingleAddress;
+import com.generic.tests.GR.checkout.RegisteredCheckoutSingleAddress;
 
 public class Checkout_e2e extends SelTestCase {
 
