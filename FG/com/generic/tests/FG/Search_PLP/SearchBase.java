@@ -28,6 +28,9 @@ public class SearchBase extends SelTestCase {
 
 	private static ThreadLocal<SASLogger> Testlogs = new ThreadLocal<SASLogger>();
 	private static LinkedHashMap<String, Object> users;
+	
+	private String RecommendedProductsCase = "Recommended products";
+	private String fullSearchCase = "full search";
 
 	@BeforeTest
 	public static void initialSetUp(XmlTest test) throws Exception {
@@ -46,10 +49,10 @@ public class SearchBase extends SelTestCase {
 		Testlogs.get().debug(Arrays.deepToString(data).replace("\n", "--"));
 		return data;
 	}
+
 	
-	@SuppressWarnings("unchecked")
 	@Test(dataProvider = "PLP")
-	public void verifyPLP(String caseId, String runTest, String desc) throws Exception {
+	public void verifyPLP(String caseId, String runTest,String proprties, String desc) throws Exception {
 		
 		Testlogs.set(new SASLogger("PLP " + getBrowserName()));
 		// Important to add this for logging/reporting
@@ -59,8 +62,11 @@ public class SearchBase extends SelTestCase {
 		try {
 			
 			//validate the suggested items
+			if (proprties.contains(RecommendedProductsCase)) 
 			sassert().assertTrue(PLP.searchAndVerifyResults("glass" , true), "Serach validation failed");
+			
 			//Validate the direct search
+			if (proprties.contains(fullSearchCase)) 
 			sassert().assertTrue(PLP.searchAndVerifyResults("mat" , false), "Serach validation failed");
 			
 			sassert().assertAll();

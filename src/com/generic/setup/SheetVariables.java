@@ -18,12 +18,14 @@ public class SheetVariables {
 	//SheetNames
     public static final String loginSheet = "LoginRegression";
     public static final String checkoutSheet = "CheckOutRegression";
+    public static final String PayPalcheckoutSheet = "PayPalCheckOutRegression";
     public static final String OrderHistory = "OrderHistoryRegression";
     public static final String plpSheet = "PLPRegression";
     public static final String personalDetailsSheet = "PersonalDetailsRegression";
     public static final String orderHistorySheet = "OrderHistoryRegression";
     public static final String cartSheet = "CartRegression";
     public static final String PDPSheet = "PDPRegression";
+    public static final String GRSheet = "GiftRegistryRegression";
     public static final String testCasesSheet = "Test Cases";
     public static final String AddressBookSheet = "AddressBookRegression";
     public static final String PaymentDetailsSheet = "PaymentDetailsRegression";
@@ -55,6 +57,7 @@ public class SheetVariables {
     public static final String orderHistoryTestCaseId = "OrderHistory";
 	public static final String cartCaseId = "Cart";
 	public static final String PDPCaseId = "PDP";
+	public static final String GRCaseId = "GR";
 	public static final String addressbookTestCaseId="AddressBook";
 	public static final String PaymentDetailsTestCaseId = "PaymentDetails";
 	public static final String MailSignupTestCaseId = "MailSignup";
