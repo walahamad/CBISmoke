@@ -23,6 +23,9 @@ public class HomePage extends SelTestCase {
 	public static int homePageMenuLevelTestItems = Integer
 			.parseInt(getCONFIG().getProperty("homePageMenuLevelTestItems"));
 
+	public final static String searchPlacholder = "Search - Keyword or Item #";
+	public final static String pwaLinkClassNameIdentifier = "pw-link";
+
 	public static boolean validateLogodisplayed() throws Exception {
 		getCurrentFunctionName(true);
 		boolean isDisplayed;
@@ -121,7 +124,7 @@ public class HomePage extends SelTestCase {
 		Random random = new Random();
 		int randomIndex = random.nextInt(accountMenuElements.size());
 		WebElement element = accountMenuElements.get(randomIndex);
-		((JavascriptExecutor) SelTestCase.getDriver()).executeScript("arguments[0].click()", element);
+		SelectorUtil.clickOnWebElement(element);
 		getCurrentFunctionName(false);
 	}
 
@@ -308,7 +311,7 @@ public class HomePage extends SelTestCase {
 	}
 
 	public static boolean validateSearchFieldPlaceHolderText() throws Exception {
-		if ("Search - Keyword or Item #".equals(readSearchFieldPlaceHolderText()))
+		if (searchPlacholder.equals(readSearchFieldPlaceHolderText()))
 			return true;
 		else
 			return false;
@@ -549,8 +552,6 @@ public class HomePage extends SelTestCase {
 
 		// Get the first menu modal list.
 		List<WebElement> menuFirstLevelElements = getFirstLevelMenuItems();
-
-		String pwaLinkClassNameIdentifier = "pw-link";
 
 		int numberOfMenuItems = menuFirstLevelElements.size();
 		if (homePageMenuLevelTestItems <= numberOfMenuItems) {
