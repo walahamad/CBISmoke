@@ -9,7 +9,6 @@ import java.util.NoSuchElementException;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import com.generic.selector.HomePageSelectors;
-import com.generic.setup.GlobalVariables;
 import com.generic.setup.SelTestCase;
 import com.generic.util.SelectorUtil;
 import com.generic.setup.ExceptionMsg;
@@ -184,7 +183,7 @@ public class HomePage extends SelTestCase {
 	public static void clickOnMiniCart() throws Exception {
 		getCurrentFunctionName(true);
 		String subStrArr = HomePageSelectors.miniCartBtn.get();
-		if (!SelTestCase.getBrowserName().contains(GlobalVariables.browsers.chrome)) {
+		if (!isDesktop()) {
 			logs.debug("Clicking on Mini Cart");
 			SelectorUtil.initializeSelectorsAndDoActions(subStrArr);
 		} else {
