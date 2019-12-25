@@ -21,6 +21,7 @@ import java.util.Properties;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Result;
 import javax.xml.transform.Source;
 import javax.xml.transform.Transformer;
@@ -32,6 +33,7 @@ import javax.xml.transform.stream.StreamResult;
 
 import org.apache.commons.io.FileUtils;
 import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 import org.xml.sax.SAXException;
 
 import com.generic.setup.EnvironmentFiles;
@@ -209,6 +211,20 @@ public class TestUtilities extends SelTestCase {
 				// Read the FinalRegression.xml file
 				DocumentBuilderFactory destDbFactory = DocumentBuilderFactory.newInstance();
 				DocumentBuilder destBuilder = destDbFactory.newDocumentBuilder();
+				
+				destBuilder.setEntityResolver(new org.xml.sax.EntityResolver() {
+
+					@Override
+					public org.xml.sax.InputSource resolveEntity(String arg0, String arg1)
+							throws SAXException, IOException {
+						if (arg1.contains("http://testng.org/testng-1.0.dtd")) {
+							return new InputSource(new StringReader(""));
+						} else {
+							return null;
+						}
+					}
+				});
+				
 				org.w3c.dom.Document destDoc = destBuilder.parse(destFile);
 
 				// locate the <test> tag from the source regression xml
@@ -217,6 +233,16 @@ public class TestUtilities extends SelTestCase {
 
 				// fetch the <suite> tag in the FinalRegression.xml file to copy <test> tag to
 				org.w3c.dom.Node destRootNode = destDoc.getElementsByTagName("suite").item(0);
+				String brand = RandomUtilities.getRandomNumber(); 
+				for (int i = 0 ; i < 3 ; i++)
+				{
+					Element parameter = (Element) srcTestNode.getElementsByTagName("parameter").item(i); 
+					if (parameter.getAttribute("name").equalsIgnoreCase("Brand"))
+					{
+						brand = parameter.getAttribute("value");
+					}
+					
+				}
 
 				// loop over included browsers in the regression to append them to <test> tags.
 				for (String browser : targetBrowsers) {
@@ -229,11 +255,11 @@ public class TestUtilities extends SelTestCase {
 
 					String newNodeAttributeValue = "";
 					for (String attributePart : attributeSplit) {
-						newNodeAttributeValue = newNodeAttributeValue + attributePart + " ";
+						newNodeAttributeValue = newNodeAttributeValue + attributePart+ " " ;
 					}
 
 					// appending the new value of "name" attribute to include the browser name
-					destTestNode.setAttribute("name", newNodeAttributeValue);
+					destTestNode.setAttribute("name", newNodeAttributeValue + " " + brand + " " + env);
 
 					// retrieving the "parameter" attribute value and replace it with the targeted
 					// browser
@@ -251,8 +277,13 @@ public class TestUtilities extends SelTestCase {
 					destRootNode.appendChild(destTestNode);
 				}
 
+				org.w3c.dom.DOMImplementation domImpl = destDoc.getImplementation();
+				org.w3c.dom.DocumentType doctype = domImpl.createDocumentType("doctype","SYSTEM","http://testng.org/testng-1.0.dtd");
+				
+				
 				// Save the changes to FinalRegression.xml file
 				Transformer transformer = TransformerFactory.newInstance().newTransformer();
+				transformer.setOutputProperty(OutputKeys.DOCTYPE_SYSTEM, doctype.getSystemId());
 				Result output = new StreamResult(destFile);
 				Source input = new DOMSource(destRootNode);
 				transformer.transform(input, output);
