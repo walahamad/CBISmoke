@@ -534,6 +534,39 @@ public class Common extends SelTestCase {
 		return runners.toArray(new String[runners.size()]); 
 	}//read runners
 	
+	
+	public static String[] readBrands() throws Exception {
+		ArrayList<String> brands = new ArrayList<String>();
+		
+		dataProviderUtils TDP = dataProviderUtils.getInstance();
+		Object[][] data = TDP.getData(SheetVariables.BrandsSheet);
+		
+		// data map
+		int name = 0;
+		
+		logs.debug((String) data[0][name]+"");
+		for (int row = 0; row < data.length; row++) {
+			brands.add((String) data[row][name]);
+		}
+		return brands.toArray(new String[brands.size()]); 
+	}//read Brands
+	
+	public static String[] readEnvs() throws Exception {
+		ArrayList<String> Envs = new ArrayList<String>();
+		
+		dataProviderUtils TDP = dataProviderUtils.getInstance();
+		Object[][] data = TDP.getData(SheetVariables.EnvSheet);
+		
+		// data map
+		int name = 0;
+		
+		logs.debug((String) data[0][name]+"");
+		for (int row = 0; row < data.length; row++) {
+			Envs.add((String) data[row][name]);
+		}
+		return Envs.toArray(new String[Envs.size()]); 
+	}//read envs
+	
 	public static String[] readBrowsers() throws Exception {
 
 		ArrayList<String> browsers = new ArrayList<String>();
