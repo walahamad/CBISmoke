@@ -6,7 +6,7 @@
 	    <parameter name="Env" value="prod"></parameter>
 		<parameter name="Brand" value="FG"></parameter>
 		<classes>
-			<class name="com.generic.tests.runners.BuildFullRegression" />
+			<class name="com.generic.runners.BuildFullRegression" />
 		</classes>
 	</test><!-- Test -->
 </suite> <!-- Suite -->

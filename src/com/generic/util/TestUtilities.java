@@ -148,10 +148,10 @@ public class TestUtilities extends SelTestCase {
 		getCurrentFunctionName(true);
 		// Template file to copy the suite tag from
 		File srcTemplateFile = new File(
-				System.getProperty("user.dir") + "/src/com/generic/test_runners/TemplateRegression.xml");
+				System.getProperty("user.dir") + "/src/com/generic/runners/TemplateRegression.xml");
 
 		// The name of final output file
-		File destFile = new File(System.getProperty("user.dir") + "/src/com/generic/test_runners/FinalRegression.xml");
+		File destFile = new File(System.getProperty("user.dir") + "/src/com/generic/runners/FinalRegression.xml");
 		destFile.createNewFile();
 
 		// Read the source template
