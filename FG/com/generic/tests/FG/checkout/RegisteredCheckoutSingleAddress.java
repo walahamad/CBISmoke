@@ -13,6 +13,7 @@ import com.generic.setup.GlobalVariables;
 import com.generic.setup.LoggingMsg;
 import com.generic.setup.SelTestCase;
 import com.generic.tests.FG.Cart.CartValidation;
+import com.generic.util.RandomUtilities;
 
 public class RegisteredCheckoutSingleAddress extends SelTestCase {
 	
@@ -33,8 +34,9 @@ public class RegisteredCheckoutSingleAddress extends SelTestCase {
 			int productsCountStepTWO=0;
 
 			//Perform login
-			SignIn.fillLoginFormAndClickSubmit(userMail, userPassword);
-			
+			//SignIn.fillLoginFormAndClickSubmit(userMail, userPassword);
+			Registration.registerFreshUser(RandomUtilities.getRandomEmail(), "TestITG226");
+
 			// Add products to cart
 			CheckOut.searchForProductsandAddToCart(productsCount);
 
@@ -49,17 +51,26 @@ public class RegisteredCheckoutSingleAddress extends SelTestCase {
 				// Proceed to step 2
 				CheckOut.proceedToStepTwo();
 			}
+			Thread.sleep(1000);
 
 			// Check number of products in step 2
-			sassert().assertTrue(CheckOut.checkProductsinStepTwo() == productsCount, "Some products are missing in step 2 ");
+			sassert().assertTrue(CheckOut.checkProductsinStepTwo() >= productsCount, "Some products are missing in step 2 ");
 			
 			productsCountStepTWO =CheckOut.checkProductsinStepTwo();
+			
+			Thread.sleep(1500);
 			
 			// Proceed to step 3
 			CheckOut.proceedToStepThree();
 
+			Thread.sleep(1000);
+
 			// Proceed to step 4
 			CheckOut.proceedToStepFour();
+
+			Thread.sleep(1000);
+			
+			CheckOut.clickCreditCardPayment();
 
 			// Saving tax and shipping costs to compare them in the confirmation page
 			orderShipping = CheckOut.getShippingCosts();

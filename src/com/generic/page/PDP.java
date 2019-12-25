@@ -1,33 +1,22 @@
 package com.generic.page;
 
 import java.text.MessageFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.Random;
-import java.util.Set;
-import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
 import org.openqa.selenium.By;
-import org.openqa.selenium.ElementClickInterceptedException;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoSuchFrameException;
-import org.openqa.selenium.NoSuchWindowException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.Wait;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.generic.selector.HomePageSelectors;
 import com.generic.selector.PDPSelectors;
-import com.generic.setup.Common;
 import com.generic.setup.ExceptionMsg;
 import com.generic.setup.GlobalVariables;
 import com.generic.setup.LoggingMsg;
@@ -103,10 +92,18 @@ public class PDP extends SelTestCase {
 			// This is to handle production Monetate issue on iPad for search field.
 			if (SelTestCase.isFGGR() && SelTestCase.isiPad())
 				HomePage.updateMmonetate();
-			if (SelTestCase.isFGGR())
+			if (SelTestCase.isFGGR() || (isRY() && isMobile()))
 				PLP.clickSearchicon();
-			PLP.typeSearch(SearchTerm);
-			String itemName = PLP.pickRecommendedOption();
+			String itemName;
+			//This is to handle iPad behavior for search modal.
+			//TODO: to use this process on all brands
+			if (isGHRY() && isiPad()) {
+				PLP.clickSearch(SearchTerm);
+				itemName = PLP.pickPLPFirstProduct();
+			} else {
+				PLP.typeSearch(SearchTerm);
+				itemName = PLP.pickRecommendedOption();
+			}
 			getCurrentFunctionName(false);
 			return itemName;
 		} catch (NoSuchElementException e) {
@@ -224,22 +221,26 @@ public class PDP extends SelTestCase {
 	// done - SMK
 	public static void selectNthOptionFirstSwatch(int index) throws Exception {
 		try {
-		getCurrentFunctionName(true);
-		String subStrArr = MessageFormat.format(PDPSelectors.firstSwatchInOptions.get(), index);
-		logs.debug(MessageFormat.format(LoggingMsg.CLICKING_SEL, subStrArr));
-		String nthSel = subStrArr;
-		// Clicking on the div on desktop and iPad does not select the options,
-		// you need to click on the img if there is an img tag.
-		if (!SelTestCase.isMobile())
-			nthSel = subStrArr + ">img";
-		SelectorUtil.initializeSelectorsAndDoActions(nthSel);
+			getCurrentFunctionName(true);
+			String subStrArr = MessageFormat.format(PDPSelectors.firstSwatchInOptions.get(), index);
+			logs.debug(MessageFormat.format(LoggingMsg.CLICKING_SEL, subStrArr));
+			String nthSel = subStrArr;
+			// Clicking on the div on desktop and iPad does not select the options,
+			// you need to click on the img if there is an img tag.
+			if (!SelTestCase.isMobile()) {
+				String nthSel2 = subStrArr + ">img";
+				if (!SelectorUtil.isNotDisplayed(nthSel2))
+					nthSel = subStrArr + ">img";
+			}
 
-		getCurrentFunctionName(false);
-	} catch (NoSuchElementException e) {
-		logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
-		}.getClass().getEnclosingMethod().getName()));
-		throw e;
-	}
+			SelectorUtil.initializeSelectorsAndDoActions(nthSel);
+
+			getCurrentFunctionName(false);
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+			}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
 	}
 
 	// done - SMK
@@ -548,15 +549,35 @@ public class PDP extends SelTestCase {
 	
 	// done - SMK
 	public static boolean bundleProduct() throws Exception {
+		return bundleProduct(0);
+	}
+	
+	
+	// done - SMK
+	public static boolean bundleProduct(int tries) throws Exception {
 		getCurrentFunctionName(true);
 		try {
+			Thread.sleep(4500);
+			String PDPChecker = "return gwtDynamic.coremetrics.isSingleProduct;"; 
 			Boolean bundle = false;
-			String Str = PDPSelectors.bundleItem.get();
-			  JavascriptExecutor jse = (JavascriptExecutor) getDriver();    
-			  jse.executeScript("gwtDynamic.coremetrics.isSingleProduct;");
-				logs.debug("isSingleProduct: " + jse.toString());
-			  if (jse.toString().equals("N"))
-				  bundle = true;
+			JavascriptExecutor jse = (JavascriptExecutor) getDriver();		
+			
+			String value = (String) jse.executeScript(PDPChecker);
+			
+			logs.debug("isSingleProduct: " + value);
+			
+			if (value.equals("N")) {
+				bundle = true;
+				}
+			else if (value.equals("Y"))
+			{
+				bundle = false;
+			}else
+			{
+				if (tries < 10)
+				bundleProduct(tries++); 
+			}
+			
 			return bundle;
 		} catch (NoSuchElementException e) {
 			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
@@ -1144,7 +1165,10 @@ public static boolean validateSelectRegistryOrWishListModalIsDisplayed() throws 
 				if (!classValue.contains("no-available") && !classValue.contains("disabled")) {
 					// list.get(index).click();
 					String nthSel = subStrArr.replace("css,", "") + ">img";
-					getDriver().findElements(By.cssSelector(nthSel)).get(index).click();
+					WebElement item = getDriver().findElements(By.cssSelector(nthSel)).get(index);
+					JavascriptExecutor jse = (JavascriptExecutor) getDriver();
+					jse.executeScript("arguments[0].scrollIntoView(false)", item);
+					item.click();
 					break;
 				}
 			}
@@ -1166,10 +1190,13 @@ public static boolean validateSelectRegistryOrWishListModalIsDisplayed() throws 
 			for (int index = 0; index < list.size(); index++) {
 				String classValue = SelectorUtil.getAttrString(subStrArr, "class", index);
 				if (!classValue.contains("no-available") && !classValue.contains("disabled")) {
-					String optionIndex = "index," + index;
 					String nthSel = subStrArr + ">div";
-					String action = nthSel + "ForceAction,click";
-					SelectorUtil.initializeSelectorsAndDoActions(nthSel, action);
+					WebElement item = getDriver().findElements(By.cssSelector(nthSel)).get(index);
+					JavascriptExecutor jse = (JavascriptExecutor) getDriver();
+					jse.executeScript("arguments[0].scrollIntoView(false)", item);
+					if (isMobile())
+						Thread.sleep(1000);
+					((JavascriptExecutor) getDriver()).executeScript("arguments[0].click()", item);
 					break;
 				}
 			}
@@ -1222,11 +1249,10 @@ public static boolean validateSelectRegistryOrWishListModalIsDisplayed() throws 
 			String subStrArr = PDPSelectors.offerControlClose.get();
 			logs.debug("Closing the offer modal");
 			if (SelTestCase.isGH())
-				getDriver().switchTo().frame("fcopt-offer-35642-content");
+				getDriver().switchTo().frame(PDPSelectors.GHOfferControlClose.get());
 			if (SelTestCase.isRY())
-				getDriver().switchTo().frame("fcopt_form_94684");
-			if (SelectorUtil.isDisplayed(subStrArr))
-				SelectorUtil.initializeSelectorsAndDoActions(subStrArr);
+				getDriver().switchTo().frame(PDPSelectors.RYOfferControlClose.get());
+			SelectorUtil.initializeSelectorsAndDoActions(subStrArr);
 			// getDriver().switchTo().parentFrame();
 			getCurrentFunctionName(false);
 		} catch (NoSuchFrameException e) {

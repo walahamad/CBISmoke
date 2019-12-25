@@ -1,5 +1,6 @@
 package com.generic.tests.FG.Cart;
 
+import java.net.URI;
 import java.text.MessageFormat;
 import java.util.List;
 import com.generic.page.Cart;
@@ -26,7 +27,11 @@ public class CartValidation extends SelTestCase {
 
 	public static void cartValidation() throws Exception {
 		//Search for products and add them to cart
-		addProductToCart();		
+		addProductToCart();	
+		
+		URI url = new URI(getURL());
+		getDriver().get("https://"+url.getHost());
+		
 		addProductToCart();
 		
 		//Navigate to cart by URL
