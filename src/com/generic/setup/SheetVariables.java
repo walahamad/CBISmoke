@@ -44,6 +44,8 @@ public class SheetVariables {
 	public static final String HPRegressionsheet = "HomePageRegression";
 	public static final String VisualTestingCLPRegressionsheet = "VisualTestingCLPRegression";
 	public static final String RunnersRegressionSheet = "SetupRunners";
+	public static final String BrandsSheet = "Brands";
+	public static final String EnvSheet = "Envs";
 	public static final String BrowsersListingSheet = "SetupBrowsers";
 	public static final String FavoriteSheet = "FavoriteRegression";
 	public static final String MiniCartSheet = "MiniCartRegression";
