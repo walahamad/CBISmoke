@@ -2,6 +2,8 @@ package com.generic.tests.runners;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
@@ -20,6 +22,8 @@ import com.generic.util.TestUtilities;
 public class BuildFullRegression extends SelTestCase {
 	private static String[] runners = null;
 	private static String[] browsers = null;
+	private static String[] envs = null;
+	private static String[] brands = null;
 	private static ArrayList<String> regressionsPathes = new ArrayList<String>();
 	private static int testCaseID;
 	// used sheet in test
@@ -33,36 +37,92 @@ public class BuildFullRegression extends SelTestCase {
 		try {
 			Testlogs.set(new SASLogger(test.getName() + test.getIndex()));
 			testObject = test;
-			
+
 			try {
-			runners = System.getenv("Runners").split(",");
-			}
-			catch(Exception e)
-			{
+				runners = System.getenv("Runners").split(",");
+			} catch (Exception e) {
 				logs.debug("The evn var is not set for runners ... pulling data from sheet");
-				runners=Common.readRunners();
+				runners = Common.readRunners();
 			}
-			
-			if (runners[0].equals("all") )
-				runners = "addressBookRegression,BuildFullRegression,cartRegression_IE11,cartRegression,checkoutRegression,FavoriteRegression_IE11,FavoriteRegression,FinalRegression,FullRegression,HPRegression,LoginRegression_IE,LoginRegression,MiniCartRegression,OrderHistoryRegression_IE,OrderHistoryRegression,PaymentDetailsRegression,PDPRegression_IE11,PDPRegression,PLPRegression_IE,PLPRegression,RegistrationRegression_IE,RegistrationRegression,restPasswordRegression_IE,restPasswordRegression".split(",");
-			
+
+			if (runners[0].equals("all"))
+				runners = "HomePageRegression,CLPRegression,CheckOutRegression,PDPRegression,PayPalCheckOutRegression,CartRegression,PLPRegression,RegistrationRegression,LoginRegression,GiftRegistryRegression"
+						.split(",");
+
 			Testlogs.get().debug("Started in Regression");
-			
-			try
-			{
+
+			///////////////////////////////////////////////////////////////////////////////////////////////////////
+
+			try {
+				brands = System.getenv("Brands").split(",");
+			} catch (Exception e) {
+				logs.debug("The evn var is not set for runners ... pulling data from sheet");
+				brands = Common.readBrands();
+			}
+
+			///////////////////////////////////////////////////////////////////////////////////////////////////////
+			try {
+				envs = System.getenv("Envs").split(",");
+			} catch (Exception e) {
+				logs.debug("The evn var is not set for runners ... pulling data from sheet");
+				envs = Common.readEnvs();
+			}
+			///////////////////////////////////////////////////////////////////////////////////////////////////////
+
+			try {
 				browsers = System.getenv("Browsers").split(",");
-			}catch(Exception e)
-			{
+			} catch (Exception e) {
 				logs.debug("The evn var is not set for browsers ... pulling data from sheet");
-				browsers =Common.readBrowsers();
+				browsers = Common.readBrowsers();
 			}
-			
-			for (String regressionName : runners) {
-				logs.debug("Adding runner path to paths: " + regressionName);
-				regressionsPathes.add(TestUtilities.searchSpecificFile(
-						new File(System.getProperty("user.dir") + "\\src\\com\\generic\\test_runners"),
-						regressionName));
-			}
+			String regSearch = "Regression";
+			for (String brandName : brands)
+				for (String regressionName : runners) {
+
+					if (brandName == null || regressionName == null)
+						break;
+
+					regSearch = "Regression";
+
+					String regPath = regressionName;
+					if (regressionName.equals("PayPal")) {
+						regPath = "checkout";
+						regSearch = "PayPalCheckoutRegression";
+					}
+
+					if (regressionName.equals("Search") || regressionName.equals("PLP")) {
+						regPath = "Search_PLP";
+						regSearch = regressionName + "Regression";
+					}
+
+					if (regressionName.equals("GiftRegistryRegression")) {
+						regPath = "PDP";
+						regSearch = "GRRegression";
+					}
+
+					if (regressionName.equals("PDP")) {
+						regSearch = regressionName + "Regression";
+					}
+
+					if (regressionName.equals("checkout")) {
+						regSearch = regressionName + "Regression";
+					}
+
+					if (Files.exists(Paths.get(System.getProperty("user.dir") + "\\" + brandName
+							+ "\\com\\generic\\tests\\" + brandName + "\\" + regPath))) {
+
+
+
+						logs.debug("Adding runner path to paths: " + regressionName);
+						regressionsPathes
+								.add(TestUtilities
+										.searchSpecificFile(
+												new File(System.getProperty("user.dir") + "\\" + brandName
+														+ "\\com\\generic\\tests\\" + brandName + "\\" + regPath),
+												regSearch));
+					}
+
+				}
 		} catch (Throwable t) {
 			t.printStackTrace();
 		}
@@ -71,7 +131,7 @@ public class BuildFullRegression extends SelTestCase {
 	@Test
 	public void generateFinalRegressionXML() {
 		try {
-			TestUtilities.writeFinalXMLRegression(regressionsPathes, browsers);
+			TestUtilities.writeFinalXMLRegression(regressionsPathes, browsers, envs);
 			Common.testPass();
 		} catch (SAXException | IOException | ParserConfigurationException | TransformerFactoryConfigurationError
 				| TransformerException e) {
