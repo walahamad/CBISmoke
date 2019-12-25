@@ -677,6 +677,7 @@ public class Registration extends SelTestCase {
 
 	}
 
+	//Done - CBI 
 	@SuppressWarnings("unchecked")
 	public static String registerFreshUser(String email, String password) throws Exception {
 
