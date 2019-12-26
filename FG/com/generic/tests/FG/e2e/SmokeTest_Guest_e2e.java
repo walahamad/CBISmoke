@@ -45,6 +45,7 @@ public class SmokeTest_Guest_e2e extends SelTestCase {
 	}
 
 	@SuppressWarnings("unchecked") // avoid warning from linked hashmap
+	@Test()
 	public void checkOutBaseTest(String caseId, String runTest, String desc, String proprties, String productsNumber,
 			String shippingMethod, String payment, String shippingAddress, String billingAddress,
 			String email) throws Exception {
