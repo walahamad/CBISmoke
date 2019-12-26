@@ -555,7 +555,7 @@ public class PLP extends SelTestCase {
 			// Click on random menu element
 			SelectorUtil.clickOnWebElement(randomMenuElement);
 
-			List<WebElement> leafMenuItems = HomePage.getElementsList(HomePageSelectors.leafMenuItems.get());
+			List<WebElement> leafMenuItems = SelectorUtil.getAllElements(HomePageSelectors.leafMenuItems.get());
 
 			// Select a random item from the leaf items list.
 			Random rand = new Random();

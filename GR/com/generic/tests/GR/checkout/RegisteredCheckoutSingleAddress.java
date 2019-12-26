@@ -6,7 +6,7 @@ import java.util.NoSuchElementException;
 
 import com.generic.page.CheckOut;
 import com.generic.page.Registration;
-import com.generic.page.SignIn;
+import com.generic.page.Login;
 import com.generic.setup.ExceptionMsg;
 import com.generic.setup.GlobalVariables;
 import com.generic.setup.LoggingMsg;
