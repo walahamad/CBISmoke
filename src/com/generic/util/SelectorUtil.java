@@ -39,7 +39,7 @@ import ru.yandex.qatools.ashot.Screenshot;
 import ru.yandex.qatools.ashot.shooting.ShootingStrategies;
 
 import com.beust.jcommander.internal.Lists;
-import com.generic.selector.SignInSelectors;
+import com.generic.selector.LoginSelectors;
 import com.generic.setup.ExceptionMsg;
 import com.generic.setup.GlobalVariables;
 import com.generic.setup.LoggingMsg;
@@ -360,7 +360,7 @@ public class SelectorUtil extends SelTestCase {
 				} else {
 					// used to get the element at specific index when there are multiple elements of
 					// the same selector
-					if (value.contains("index")) {
+					if (value.contains(commands.actions.selectIndex)) {
 						int elementIndex = Integer.parseInt(value.split("index,")[1].split(",")[0]);
 						
 						field = wait.until(new Function<WebDriver, WebElement>() {
@@ -1094,9 +1094,9 @@ public class SelectorUtil extends SelTestCase {
 		getCurrentFunctionName(true);
 		boolean isPWAMobile = getBrowserName().contains(GlobalVariables.browsers.iPhone);
 		if (isPWAMobile) {
-			boolean isAccountMobileOpened = SelectorUtil.isElementExist(By.cssSelector(SignInSelectors.myAccountModal));
+			boolean isAccountMobileOpened = SelectorUtil.isElementExist(By.cssSelector(LoginSelectors.myAccountModal));
 			if (!isAccountMobileOpened) {
-				SelectorUtil.initializeSelectorsAndDoActions(SignInSelectors.accountMenuIcon.get());
+				SelectorUtil.initializeSelectorsAndDoActions(LoginSelectors.accountMenuIcon.get());
 			}
 		}
 		getCurrentFunctionName(false);
@@ -1117,7 +1117,7 @@ public class SelectorUtil extends SelTestCase {
 		openMobileAccountMenu();
 
 		// Get an account items list.
-		List <WebElement> menuItems = SelectorUtil.getElementsList(SignInSelectors.accountMenuList);
+		List <WebElement> menuItems = SelectorUtil.getElementsList(LoginSelectors.accountMenuList);
 		WebElement linkElement = menuItems.get(0);
 		int index = 0;
 		// Get the Sign in/create account page or welcome message item.
@@ -1188,7 +1188,9 @@ public class SelectorUtil extends SelTestCase {
 	{
 		public static class actions{
 			protected final static String ForceAction = "ForceAction";
-			public final static String hover  = ForceAction+",hover"; 			
+			protected final static String selectIndex = "index";
+			public final static String hover  = ForceAction+",hover";
+			public final static String index  = selectIndex+",{0}";
 		}
 	}
 
