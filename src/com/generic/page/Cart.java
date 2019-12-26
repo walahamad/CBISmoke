@@ -127,7 +127,7 @@ public class Cart extends SelTestCase {
 	}
 
 	//Done CBI
-	//TODO:: Duplicated from HomePage file.
+	//TODO:: Remove this function and use the isListLoaded from HomePage class (Duplicated from HomePage file).
 	public static boolean isListDisplayed(List<WebElement> elements) {
 		boolean loaded = true;
 		for (int i = 0; i < elements.size(); i++) {
@@ -138,7 +138,7 @@ public class Cart extends SelTestCase {
 	}
 
 	//Done CBI
-	//TODO:: Duplicated from HomePage file.
+	//TODO:: Remove this function and use the isListLoaded from HomePage class (Duplicated from HomePage file).
 	public static boolean isListLoaded(List<WebElement> elements) {
 		boolean result = true;
 		for (int i = 0; i < elements.size(); i++) {
