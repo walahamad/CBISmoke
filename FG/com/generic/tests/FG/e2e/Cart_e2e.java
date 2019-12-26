@@ -15,9 +15,7 @@ public class Cart_e2e extends SelTestCase {
 	public static void Validate() throws Exception {
 
 		try {
-			getCurrentFunctionName(true);
-			CartValidation.addProductToCart();
-			
+			getCurrentFunctionName(true);			
 			//Navigate to cart by URL
 			CheckOut.navigatetoCart();
 

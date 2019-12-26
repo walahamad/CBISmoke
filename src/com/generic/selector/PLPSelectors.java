@@ -20,7 +20,10 @@ public class PLPSelectors {
     public static final cselector GHproductsImages = new cselector("css,.gwt-product-info-panel-image-container>a>.unbxd-grid-product-image");
 
     public static final cselector PriceLowToHigh = new cselector("Price: Low to High","css,#unbxd_normal_sort_price-asc > div");
-    public static final cselector PriceLowToHighPLP = new cselector("Price: High to Low","css,#unbxd_prime_sort_price-asc");
+    public static final cselector PriceHighToLow = new cselector("Price: High to Low","css,#unbxd_normal_sort_price-desc > div");
+   
+    public static final cselector PriceLowToHighPLP = new cselector("Price: Low to High","css,#unbxd_prime_sort_price-asc > div");
+    public static final cselector PriceHighToLowPLP = new cselector("Price: High to Low","css,#unbxd_prime_sort_price-desc > div");
 
     public static final cselector FilterContainer = new cselector("css,div.text-facets-container-panel div.unbxd-all-options-container span.gwt-InlineLabel.selected-option-span","css,div.c-product-list__container-filter-option.u-flex-1.u-margin-end > div > button > div");
 	public static final cselector FilterContainerContents =  new cselector("css,div.unbxd-facet-option.text-facet span.unbxd-facet-option-checkbox input","css,.u-color-neutral-70.u-text-uppercase.u-text-align-center.u-letter-spacing-3");
@@ -35,6 +38,8 @@ public class PLPSelectors {
 	public static final cselector GRMobileSorting = new cselector("css,#app-main > div > div:nth-child(2) > div > div > div.u-flexbox.u-direction-column-reverse > div > div.c-product-list__container-sort-option.u-flex-1 > div > div > div > select");
 	public static final cselector GRDeskTopSorting = new cselector("css,.unbxd-all-sort-options .selected-option-span");
 	public static final cselector GRDeskTopSortingLowtoHIgh = new cselector("css,#unbxd-sort-options-container > div > div > a:nth-child(2)");
+	public static final cselector GRDeskTopSortingHighToLow = new cselector("css,#unbxd-sort-options-container > div > div > a:nth-child(3)");
+
 
 	public static final cselector GRFilterContainer = new cselector("css,#text-facets-container-panel > div:nth-child(1) > span","css,div.pw-accordion__close-icon");
 	public static final cselector GRFilterContainerContents = new cselector("css,.unbxd-facet-option-checkbox input","css,.u-text-letter-spacing-0 > div");
@@ -45,8 +50,27 @@ public class PLPSelectors {
 	//Random PLP 
 	public static final cselector desktopMenuItem = new cselector("css,a.gwt-MenuItem");
 	public static final cselector PLPIdentifier = new cselector("css,.product-details-main-container","css,.c-product-item__price");
-	public static final cselector navigatetoPLP = new cselector("css,#mainContent > div.container.no-padding.grid-subcategories > div > div:nth-child(1) > div > a > img","css,#mainContent > div.container.no-padding.grid-subcategories > div > div:nth-child(1) > div > a > imgr","css,#app-main > div > div:nth-child(1) > div.u-flexbox.u-direction-row.u-flex-wrap > div:nth-child(1) > a > div.c-lazy-image.u-width-full > div > img");
-	public static final cselector navigatetoPLP2 = new cselector("css,#mainContent > div.genericESpot > div.container.no-padding.grid-subcategories > div > div:nth-child(1) > div > a > img","css,#mainContent > div.genericESpot > div.container.no-padding.grid-subcategories > div > div:nth-child(1) > div > a > img","css,#app-main > div > div:nth-child(1) > div.u-flexbox.u-direction-row.u-flex-wrap > div:nth-child(1) > a > div.c-lazy-image.u-width-full > div > img");
+	
+	public static final cselector navigatetoPLP = new cselector(
+			"css,#mainContent > div.container.no-padding.grid-subcategories > div > div:nth-child(1) > div > a > img",
+			"css,#mainContent > div.container.no-padding.grid-subcategories > div > div:nth-child(1) > div > a > img",
+			"css,#app-main > div > div:nth-child(1) > div.u-flexbox.u-direction-row.u-flex-wrap > div:nth-child(1) > a > div.c-lazy-image.u-width-full > div > img");
+	
+	public static final cselector navigatetoPLP2 = new cselector(
+			"css,#mainContent > div.genericESpot > div.container.no-padding.grid-subcategories > div > div:nth-child(1) > div > a > img",
+			"css,#mainContent > div.genericESpot > div.container.no-padding.grid-subcategories > div > div:nth-child(1) > div > a > img",
+			"css,#app-main > div > div:nth-child(1) > div.u-flexbox.u-direction-row.u-flex-wrap > div:nth-child(1) > a > div.c-lazy-image.u-width-full > div > img");
+	
+	
+	public static final cselector navigatetoPLPGR = new cselector(
+			"css,#mainContent > div.container.no-padding.grid-subcategories > div > div:nth-child(1) > div > a > img",
+			"css,#mainContent > div.container.no-padding.grid-subcategories > div > div:nth-child(1) > div > a > img",
+			"css,#app-main > div > div:nth-child(3) > div:nth-child(1) > a > div.c-lazy-image.u-width-full > div > img");
+	
+	public static final cselector navigatetoPLP2GR = new cselector(
+			"css,#mainContent > div.genericESpot > div.container.no-padding.grid-subcategories > div > div:nth-child(1) > div > a > img",
+			"css,#mainContent > div.genericESpot > div.container.no-padding.grid-subcategories > div > div:nth-child(1) > div > a > img",
+			"css,#app-main > div > div:nth-child(1) > div.u-flexbox.u-direction-row.u-flex-wrap > div:nth-child(1) > a > div.c-lazy-image.u-width-full > div > img");
 	
 	
 	

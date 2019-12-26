@@ -1,4 +1,4 @@
-package com.generic.tests.FG.e2e;
+package com.generic.tests.GR.e2e;
 
 import java.text.MessageFormat;
 import java.util.Arrays;
@@ -12,6 +12,7 @@ import com.generic.setup.Common;
 import com.generic.setup.LoggingMsg;
 import com.generic.setup.SelTestCase;
 import com.generic.setup.SheetVariables;
+import com.generic.tests.GR.e2e.Registeration_e2e;
 import com.generic.tests.GR.e2e.Cart_e2e;
 import com.generic.tests.GR.e2e.Checkout_e2e;
 import com.generic.tests.GR.e2e.HomePage_e2e;
@@ -21,12 +22,13 @@ import com.generic.util.dataProviderUtils;
 import com.generic.util.ReportUtil;
 import com.generic.util.SASLogger;
 
-public class SmokeTest_e2e extends SelTestCase {
+public class SmokeTest_Registered_e2e extends SelTestCase {
 
 	// used sheet in test
 	public static final String testDataSheet = SheetVariables.checkoutSheet;
 	private static XmlTest testObject;
 	private static ThreadLocal<SASLogger> Testlogs = new ThreadLocal<SASLogger>();
+	public static boolean external = false; // change this value will pass through logging
 
 	@BeforeTest
 	public static void initialSetUp(XmlTest test) throws Exception {
@@ -51,6 +53,15 @@ public class SmokeTest_e2e extends SelTestCase {
 			String shippingMethod, String payment, String shippingAddress, String billingAddress, String email)
 			throws Exception {
 
+		if (!external) { // this logic to avoid passing this block in case you call it from other class
+			// Important to add this for logging/reporting
+			Testlogs.set(new SASLogger("checkout_" + getBrowserName()));
+			setTestCaseReportName("Checkout Case");
+			logCaseDetailds(MessageFormat.format(LoggingMsg.CHECKOUTDESC, testDataSheet + "." + caseId,
+					this.getClass().getCanonicalName(), desc, proprties.replace("\n", "<br>- "), payment,
+					shippingMethod));
+		} // if not external
+
 		LinkedHashMap<String, String> addressDetails = (LinkedHashMap<String, String>) addresses.get(shippingAddress);
 		LinkedHashMap<String, String> paymentDetails = (LinkedHashMap<String, String>) paymentCards.get(payment);
 		LinkedHashMap<String, String> userdetails = (LinkedHashMap<String, String>) users.get(email);
@@ -58,12 +69,15 @@ public class SmokeTest_e2e extends SelTestCase {
 		int productsCount = Integer.parseInt(productsNumber);
 
 		try {
-
-			HomePage_e2e.Validate();
+			
+			Common.refreshBrowser();
+			
+			Registeration_e2e.Validate();
+		    HomePage_e2e.Validate();
 			Search_PLP_e2e.Validate();
 			PDP_e2e.Validate();
-			Cart_e2e.Validate();
-			Checkout_e2e.Validate(productsCount, addressDetails, paymentDetails, userdetails);
+		    Cart_e2e.Validate();
+			Checkout_e2e.ValidateRegistered(productsCount, addressDetails, paymentDetails, userdetails);
 
 			sassert().assertAll();
 			Common.testPass();

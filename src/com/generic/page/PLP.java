@@ -51,12 +51,19 @@ public class PLP extends SelTestCase {
 	private static boolean verifySeachResultPage() throws Exception {
 		try {
 			getCurrentFunctionName(true);
+			Thread.sleep(3000);
 			boolean result = true; 
 			result = result && verifyProductImagesDisplayed();
-			List<String> productsNames = getfirst3ProductsNames();
+			
 			sortByPriceLowToHigh();
-			List<String> sortedProductsNames = getfirst3ProductsNames();
-			result = result && compareOperationResults(productsNames, sortedProductsNames);			
+			List<String> L2HproductsNames = getfirst3ProductsNames();
+
+			Thread.sleep(2500);
+			
+			sortByPriceHighToLow();		
+			List<String> H2LsortedProductsNames = getfirst3ProductsNames();
+			
+			result = result && compareOperationResults(L2HproductsNames, H2LsortedProductsNames);			
 			
 			int productsCountBeforeFilter =getProductsCountinPLP();		
 			SelectFilter();
@@ -98,19 +105,21 @@ public class PLP extends SelTestCase {
 		try {
 			getCurrentFunctionName(true);
 			boolean result = true; 
+			Thread.sleep(3000);
+			
 			result = result && verifyProductImagesDisplayed();
 			
 			logs.debug("Image cehck result "+ result);
 			
-			List<String> productsNames = getfirst3ProductsNames();
-			
-			Thread.sleep(2000);
-			
 			sortByPriceLowToHighPLP();
+			List<String> L2HproductsNames = getfirst3ProductsNames();
+
+			Thread.sleep(2500);
 			
-		    Thread.sleep(2000);
-			List<String> sortedProductsNames = getfirst3ProductsNames();
-			result = result && compareOperationResults(productsNames, sortedProductsNames);
+			sortByPriceHighToLowPLP();		
+			List<String> H2LsortedProductsNames = getfirst3ProductsNames();
+			
+			result = result && compareOperationResults(L2HproductsNames, H2LsortedProductsNames);		
 
 			logs.debug("Sorting result "+ result);
 			
@@ -186,9 +195,9 @@ public class PLP extends SelTestCase {
 
 						}
 						catch(Exception e2) {
-							WebElement maxPriceField = SelectorUtil.getelement(PLPSelectors.filterPrice.get());
-							Double value = Double.parseDouble(maxPriceField.getText())-5;
-							maxPriceField.sendKeys(value+"");
+							List <WebElement> maxPriceField = SelectorUtil.getElementsList(PLPSelectors.filterPrice.get());
+							maxPriceField.get(0).clear();
+							maxPriceField.get(0).sendKeys("250");
 							
 						}
 						
@@ -321,6 +330,45 @@ public class PLP extends SelTestCase {
 		}
 	}
 	
+	
+
+	// CBI
+	private static void sortByPriceHighToLow() throws Exception {
+
+		try {
+			getCurrentFunctionName(true);
+			
+			if(isFG()) {
+				if (isMobile())
+				{
+					clickOnSortMenu();
+				}
+				SelectorUtil.initializeSelectorsAndDoActions(PLPSelectors.PriceHighToLow.get());
+			}
+			if(isGR())
+			{
+				if(isMobile())
+				{
+					SelectorUtil.initializeSelectorsAndDoActions(PLPSelectors.GRMobileSorting.get(),"FFF3");
+				}
+				else {
+					SelectorUtil.initializeSelectorsAndDoActions(PLPSelectors.GRDeskTopSorting.get());
+					SelectorUtil.initializeSelectorsAndDoActions(PLPSelectors.GRDeskTopSortingHighToLow.get());
+
+				}
+				
+			}
+			getCurrentFunctionName(false);
+
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+			}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
+	}
+	
+	
+	
 	// CBI
 	private static void sortByPriceLowToHighPLP() throws Exception {
 
@@ -357,6 +405,41 @@ public class PLP extends SelTestCase {
 	}
 	
 
+	// CBI
+	private static void sortByPriceHighToLowPLP() throws Exception {
+
+		try {
+			getCurrentFunctionName(true);
+			
+			if(isFG()) {
+				if (isMobile())
+				{
+					clickOnSortMenu();
+				}
+				SelectorUtil.initializeSelectorsAndDoActions(PLPSelectors.PriceHighToLowPLP.get());
+			}
+			if(isGR())
+			{
+				if(isMobile())
+				{
+					SelectorUtil.initializeSelectorsAndDoActions(PLPSelectors.GRMobileSorting.get(),"FFF3");
+				}
+				else {
+					SelectorUtil.initializeSelectorsAndDoActions(PLPSelectors.GRDeskTopSorting.get());
+					SelectorUtil.initializeSelectorsAndDoActions(PLPSelectors.GRDeskTopSortingHighToLow.get());
+
+				}
+				
+			}
+			getCurrentFunctionName(false);
+
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+			}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
+	}
+	
 	//CBI
 	private static void clickOnSortMenu() throws Exception {
 		try {
@@ -567,11 +650,20 @@ public class PLP extends SelTestCase {
 			// Check if the target is CLP
 			if (isCLP()) {
 				// Navigate to a PLP
+				Thread.sleep(2000);
+				
 				try {
-					SelectorUtil.initializeSelectorsAndDoActions(PLPSelectors.navigatetoPLP.get());
+					if (isFG())
+						SelectorUtil.initializeSelectorsAndDoActions(PLPSelectors.navigatetoPLP.get());
+					else if (isGR())
+						SelectorUtil.initializeSelectorsAndDoActions(PLPSelectors.navigatetoPLPGR.get());
+						
 				} catch (Exception e) {
-					SelectorUtil.initializeSelectorsAndDoActions(PLPSelectors.navigatetoPLP2.get());
-
+					
+					if (isFG())
+						SelectorUtil.initializeSelectorsAndDoActions(PLPSelectors.navigatetoPLP2.get());
+					else if (isGR())
+						SelectorUtil.initializeSelectorsAndDoActions(PLPSelectors.navigatetoPLP2GR.get());
 				}
 			}
 
@@ -624,6 +716,7 @@ public class PLP extends SelTestCase {
 	public static boolean isCLP() throws Exception {
 		getCurrentFunctionName(true);
 		try{
+			Thread.sleep(2500);
 			return !SelectorUtil.isDisplayed(PLPSelectors.PLPIdentifier.get());
 		}
 		catch(Exception e) {
