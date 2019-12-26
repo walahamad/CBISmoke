@@ -21,22 +21,7 @@ public class RegistrationBase extends SelTestCase {
 
 	// possible scenarios
 	public static final String freshUser = "fresh";
-	public static final String existingUser = "existing";
 	public static final String emptyData = "empty";
-	public static final String invalidUserID = "UserID";
-	public static final String passwordMismatch = "Mismatch";
-	public static final String invalidPassword = "UserPassword";
-
-	// messagesValidations
-	public static final String successMessage = "success";
-	public static final String invalidEmail = "invalidEmail";
-	public static final String titleError = "titleError";
-	public static final String firstNameError = "firstNameError";
-	public static final String lastNameError = "lastNameError";
-	public static final String passwordError = "passwordError";
-	public static final String confPasswordError = "confirmPasswordError";
-	public static final String passwordRulesError = "passwordRuleError";
-	public static final String passwordMisatchError = "passwordMismatchError";
 
 	// used sheet in test
 	public static final String testDataSheet = SheetVariables.registrationRegressionSheet;
@@ -61,7 +46,6 @@ public class RegistrationBase extends SelTestCase {
 		return data;
 	}
 
-	@SuppressWarnings("unchecked") // avoid warning from linked hashmap
 	@Test(dataProvider = "Registration")
 	public void registrationRegressionTest(String caseId, String runTest, String desc, String proprties,
 			String password, String fieldsValidation) throws Exception {
@@ -69,8 +53,7 @@ public class RegistrationBase extends SelTestCase {
 		Testlogs.set(new SASLogger("registration " + getBrowserName()));
 		// Important to add this for logging/reporting
 		setTestCaseReportName("Registration Case");
-		// Testlogs.get().debug("Case Browser: " +
-		// testObject.getParameter("browserName") );
+
 		logCaseDetailds(MessageFormat.format(LoggingMsg.REGISTRATIONDESC, testDataSheet + "." + caseId,
 				this.getClass().getCanonicalName(), desc, proprties.replace("\n", "<br>- ")));
 
@@ -129,7 +112,7 @@ public class RegistrationBase extends SelTestCase {
 			if (proprties.contains(emptyData)) {
 
 				Registration.goToRegistrationForm();
-				
+
 				Registration.clickRegisterButton();
 
 				String validationMsg = "";

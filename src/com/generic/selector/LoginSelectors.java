@@ -2,7 +2,7 @@ package com.generic.selector;
 
 import com.generic.setup.cselector;
 
-public class SignInSelectors
+public class LoginSelectors
 {
 	//done
 	public static final String userName = "j_username";
