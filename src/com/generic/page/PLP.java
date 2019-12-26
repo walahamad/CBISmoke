@@ -523,7 +523,7 @@ public class PLP extends SelTestCase {
 		try {
 			getCurrentFunctionName(true);
 			String SelectorSS;
-			if (isGH())
+			if (isGHRY())
 				SelectorSS = PLPSelectors.GHproductsImages.get();
 			else if (isGR())
 				SelectorSS = PLPSelectors.productsImagesGR.get();
