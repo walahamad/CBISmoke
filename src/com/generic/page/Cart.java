@@ -128,17 +128,6 @@ public class Cart extends SelTestCase {
 
 	//Done CBI
 	//TODO:: Remove this function and use the isListLoaded from HomePage class (Duplicated from HomePage file).
-	public static boolean isListDisplayed(List<WebElement> elements) {
-		boolean loaded = true;
-		for (int i = 0; i < elements.size(); i++) {
-			if (!elements.get(i).isDisplayed())
-				loaded = false;
-		}
-		return loaded;
-	}
-
-	//Done CBI
-	//TODO:: Remove this function and use the isListLoaded from HomePage class (Duplicated from HomePage file).
 	public static boolean isListLoaded(List<WebElement> elements) {
 		boolean result = true;
 		for (int i = 0; i < elements.size(); i++) {
@@ -187,7 +176,7 @@ public class Cart extends SelTestCase {
 		List<String> subStrArr = new ArrayList<String>();
 		subStrArr.add(CartSelectors.addedItemsImage.get());
 		List<WebElement> savedElements = SelectorUtil.getAllElements(subStrArr);
-		boolean displayed = isListDisplayed(savedElements);
+		boolean displayed = HomePage.isListDisplayed(savedElements);
 		boolean loaded = isListLoaded(savedElements);
 		getCurrentFunctionName(false);
 		return displayed & loaded;
@@ -199,7 +188,7 @@ public class Cart extends SelTestCase {
 		List<String> subStrArr = new ArrayList<String>();
 		subStrArr.add(CartSelectors.addedItemsPrice.get());
 		List<WebElement> savedItems = SelectorUtil.getAllElements(subStrArr);
-		boolean inDisplayed = isListDisplayed(savedItems);
+		boolean inDisplayed = HomePage.isListDisplayed(savedItems);
 		getCurrentFunctionName(false);
 		return inDisplayed;
 	}
