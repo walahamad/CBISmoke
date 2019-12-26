@@ -8,28 +8,27 @@
         <parameter name="Brand" value="GH"></parameter>
 		
 		<classes>
-			<class name="com.generic.tests.GH.checkout.Base_checkout" />
+			<class name="com.generic.tests.GH.checkout.Base_PayPalCheckout" />
 		</classes>
 		</test> 
 			
-<!-- 	<test name="Registration Tests_iPad">
+<!-- 	<test name="checkout Tests_iPad">
 		<parameter name="browserName" value="mobile_iPad"></parameter>
-		<parameter name="Env" value="www"></parameter>
+		<parameter name="Env" value="stagewcs"></parameter>
         <parameter name="Brand" value="GH"></parameter>
 		<classes>
-			<class name="com.generic.tests.GH.checkout.Base_checkout" />
+			<class name="com.generic.tests.GH.checkout.Base_PayPalCheckout" />
 		</classes>
-	</test>  -->
-      
+	</test>  --> 
 	
-<!-- 	<test name="Registration iPhone">
+	<test name="checkout iPhone">
 		<parameter name="browserName" value="mobile_iPhone X"></parameter>
-		<parameter name="Env" value="www"></parameter>
+		<parameter name="Env" value="stagewcs"></parameter>
         <parameter name="Brand" value="GH"></parameter>
 		<classes>
-			<class name="com.generic.tests.GH.checkout.Base_checkout" />
+			<class name="com.generic.tests.GH.checkout.Base_PayPalCheckout" />
 		</classes>
-		</test>  -->
+		</test>  
 		
 	
 

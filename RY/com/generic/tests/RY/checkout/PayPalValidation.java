@@ -1,4 +1,4 @@
-package com.generic.tests.FG.checkout;
+package com.generic.tests.RY.checkout;
 
 import java.util.LinkedHashMap;
 
@@ -7,7 +7,7 @@ import com.generic.page.CheckOut;
 import com.generic.page.HomePage;
 import com.generic.page.PayPal;
 import com.generic.page.Registration;
-import com.generic.page.Login;
+import com.generic.page.SignIn;
 import com.generic.setup.GlobalVariables;
 import com.generic.setup.LoggingMsg;
 import com.generic.setup.SelTestCase;
@@ -21,8 +21,8 @@ public class PayPalValidation extends SelTestCase {
 		if (userType.contains("registered")) {
 			String userMail = getSubMailAccount(userDetalis.get(Registration.keys.email));
 			String userPassword = userDetalis.get(Registration.keys.password);
-			Login.fillLoginFormAndClickSubmit(userMail, userPassword);
-			sassert().assertTrue(Login.checkUserAccount(), LoggingMsg.USER_IS_NOT_LOGGED_IN_SUCCESSFULLY);
+			SignIn.fillLoginFormAndClickSubmit(userMail, userPassword);
+			sassert().assertTrue(SignIn.checkUserAccount(), LoggingMsg.USER_IS_NOT_LOGGED_IN_SUCCESSFULLY);
 			if(SelTestCase.isMobile())
 			HomePage.clickOnCloseButton();
 		}
@@ -93,6 +93,7 @@ public class PayPalValidation extends SelTestCase {
 					sassert().assertTrue(false, "shipping value is not same");
 				if (subtotalValue + tax + shippingValue != total)
 					sassert().assertTrue(false, "Total value is not equales the sum of subtotal + tax + shipping");
+
 			}
 		}
 
