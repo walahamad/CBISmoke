@@ -360,7 +360,7 @@ public class SelectorUtil extends SelTestCase {
 				} else {
 					// used to get the element at specific index when there are multiple elements of
 					// the same selector
-					if (value.contains("index")) {
+					if (value.contains(commands.actions.selectIndex)) {
 						int elementIndex = Integer.parseInt(value.split("index,")[1].split(",")[0]);
 						
 						field = wait.until(new Function<WebDriver, WebElement>() {
@@ -1188,7 +1188,9 @@ public class SelectorUtil extends SelTestCase {
 	{
 		public static class actions{
 			protected final static String ForceAction = "ForceAction";
-			public final static String hover  = ForceAction+",hover"; 			
+			protected final static String selectIndex = "index";
+			public final static String hover  = ForceAction+",hover";
+			public final static String index  = selectIndex+",{0}";
 		}
 	}
 
