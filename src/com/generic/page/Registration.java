@@ -20,6 +20,23 @@ public class Registration extends SelTestCase {
 		public static final String password = "password";
 		public static final String email = "mail";
 	}
+	
+	public static class shippingAddress {
+		
+		public static class keys {
+	
+			public static final String isSavedShipping = "saved-shipping";
+	
+			public static final String countery = "countery";
+			public static final String title = "title";
+			public static final String lastName = "lastName";
+			public static final String firstName = "firstName";
+			public static final String adddressLine = "adddressLine";
+			public static final String city = "city";
+			public static final String zipcode = "postal";
+			public static final String phone = "phone";
+		}
+	}
 
 	// Done CBI Smoke
 	public static void typeFirstName(String firstName) throws Exception {
@@ -172,14 +189,14 @@ public class Registration extends SelTestCase {
 
 			typeAddressLine1(RandomUtilities.getRandomName());
 
-			if (!"".equals(addressDetails.get(AddressBook.shippingAddress.keys.city)))
-				typeCity(addressDetails.get(AddressBook.shippingAddress.keys.city));
+			if (!"".equals(addressDetails.get(shippingAddress.keys.city)))
+				typeCity(addressDetails.get(shippingAddress.keys.city));
 
-			if (!"".equals(addressDetails.get(AddressBook.shippingAddress.keys.city)))
-				typeState(addressDetails.get(AddressBook.shippingAddress.keys.city));
+			if (!"".equals(addressDetails.get(shippingAddress.keys.city)))
+				typeState(addressDetails.get(shippingAddress.keys.city));
 
-			if (!"".equals(addressDetails.get(AddressBook.shippingAddress.keys.zipcode)))
-				typeZipcode(addressDetails.get(AddressBook.shippingAddress.keys.zipcode));
+			if (!"".equals(addressDetails.get(shippingAddress.keys.zipcode)))
+				typeZipcode(addressDetails.get(shippingAddress.keys.zipcode));
 
 			typePhone(RandomUtilities.getRandomPhone());
 
@@ -675,7 +692,7 @@ public class Registration extends SelTestCase {
 	public static String registerFreshUser(String email, String password) throws Exception {
 
 		//click on register new user button
-		Registration.goToRegistrationForm();
+		goToRegistrationForm();
 
 		//prepare random address details
 		LinkedHashMap<String, String> addressDetails = (LinkedHashMap<String, String>) addresses.get("A3");
@@ -687,13 +704,13 @@ public class Registration extends SelTestCase {
 
 
 		//register new user and validate the results
-		Registration.fillRegistrationFirstStep(email,email,password,password);
+		fillRegistrationFirstStep(email,email,password,password);
 
 		Thread.sleep(1500);
-		Registration.fillRegistrationSecondStep(firstName,lastName,companyName,addressDetails);
+		fillRegistrationSecondStep(firstName,lastName,companyName,addressDetails);
 
 		//Success message needs to be updated on excel to (Welcome to your account at )
-		String registrationSuccessMsg = Registration.getRegistrationSuccessMessage();
+		String registrationSuccessMsg = getRegistrationSuccessMessage();
 		return registrationSuccessMsg;
 	}
 }

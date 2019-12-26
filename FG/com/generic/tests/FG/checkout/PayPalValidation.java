@@ -7,7 +7,7 @@ import com.generic.page.CheckOut;
 import com.generic.page.HomePage;
 import com.generic.page.PayPal;
 import com.generic.page.Registration;
-import com.generic.page.SignIn;
+import com.generic.page.Login;
 import com.generic.setup.GlobalVariables;
 import com.generic.setup.LoggingMsg;
 import com.generic.setup.SelTestCase;
@@ -21,8 +21,8 @@ public class PayPalValidation extends SelTestCase {
 		if (userType.contains("registered")) {
 			String userMail = getSubMailAccount(userDetalis.get(Registration.keys.email));
 			String userPassword = userDetalis.get(Registration.keys.password);
-			SignIn.fillLoginFormAndClickSubmit(userMail, userPassword);
-			sassert().assertTrue(SignIn.checkUserAccount(), LoggingMsg.USER_IS_NOT_LOGGED_IN_SUCCESSFULLY);
+			Login.fillLoginFormAndClickSubmit(userMail, userPassword);
+			sassert().assertTrue(Login.checkUserAccount(), LoggingMsg.USER_IS_NOT_LOGGED_IN_SUCCESSFULLY);
 			if(SelTestCase.isMobile())
 			HomePage.clickOnCloseButton();
 		}

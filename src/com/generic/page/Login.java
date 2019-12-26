@@ -9,7 +9,7 @@ import java.util.NoSuchElementException;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
-import com.generic.selector.SignInSelectors;
+import com.generic.selector.LoginSelectors;
 import com.generic.setup.ExceptionMsg;
 import com.generic.setup.LoggingMsg;
 import com.generic.setup.SelTestCase;
@@ -17,7 +17,7 @@ import com.generic.util.RandomUtilities;
 import com.generic.util.SelectorUtil;
 import com.generic.setup.GlobalVariables;
 
-public class SignIn extends SelTestCase {
+public class Login extends SelTestCase {
 
 	public static String logoffhref = "/Logoff";
 	public static String myAccountPageLink = "AccountOverView";
@@ -74,8 +74,8 @@ public class SignIn extends SelTestCase {
 		try {
 			getCurrentFunctionName(true);
 			// Select the sign in button and Navigate to the Sign in/Create account page..
-			SelectorUtil.initializeSelectorsAndDoActions(SignInSelectors.signInButton.get());
-			SelectorUtil.waitingLoadingButton(SignInSelectors.loadingButton);
+			SelectorUtil.initializeSelectorsAndDoActions(LoginSelectors.signInButton.get());
+			SelectorUtil.waitingLoadingButton(LoginSelectors.loadingButton);
 			getCurrentFunctionName(false);
 		} catch (NoSuchElementException e) {
 			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
@@ -95,7 +95,7 @@ public class SignIn extends SelTestCase {
 		try {
 			getCurrentFunctionName(true);
 			// Select the password input and Enter the password.
-			SelectorUtil.initializeSelectorsAndDoActions(SignInSelectors.signInEmailPasswordInput.get(), password);
+			SelectorUtil.initializeSelectorsAndDoActions(LoginSelectors.signInEmailPasswordInput.get(), password);
 			getCurrentFunctionName(false);
 		} catch (NoSuchElementException e) {
 			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
@@ -114,7 +114,7 @@ public class SignIn extends SelTestCase {
 		try {
 			getCurrentFunctionName(true);
 			// Select the email input and Enter the email.
-			SelectorUtil.initializeSelectorsAndDoActions(SignInSelectors.signInEmailInput.get(), email);
+			SelectorUtil.initializeSelectorsAndDoActions(LoginSelectors.signInEmailInput.get(), email);
 			getCurrentFunctionName(false);
 		} catch (NoSuchElementException e) {
 			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
@@ -131,7 +131,7 @@ public class SignIn extends SelTestCase {
 	public static String getMailErrorMsg() throws Exception {
 		getCurrentFunctionName(true);
 		try {
-			String errorMessage = SelectorUtil.getelement(SignInSelectors.emailError.get()).getText();
+			String errorMessage = SelectorUtil.getelement(LoginSelectors.emailError.get()).getText();
 			logs.debug(MessageFormat.format(LoggingMsg.ERROR_MSG, errorMessage));
 			getCurrentFunctionName(false);
 			return errorMessage;
@@ -151,7 +151,7 @@ public class SignIn extends SelTestCase {
 		getCurrentFunctionName(true);
 		try {
 			Thread.sleep(1000);
-			String errorMessage = SelectorUtil.getelement(SignInSelectors.errorMessage.get()).getText();
+			String errorMessage = SelectorUtil.getelement(LoginSelectors.errorMessage.get()).getText();
 			logs.debug(MessageFormat.format(LoggingMsg.ERROR_MSG, errorMessage));
 			getCurrentFunctionName(false);
 			return errorMessage;
@@ -167,7 +167,7 @@ public class SignIn extends SelTestCase {
 		try {
 			List<String> subStrArr = new ArrayList<String>();
 			List<String> valuesArr = new ArrayList<String>();
-			subStrArr.add(SignInSelectors.emailError.get());
+			subStrArr.add(LoginSelectors.emailError.get());
 			valuesArr.add("");
 			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
 			logs.debug(MessageFormat.format(LoggingMsg.ERROR_MSG, SelectorUtil.textValue.get()));
@@ -190,7 +190,7 @@ public class SignIn extends SelTestCase {
 	public static String getPasswrdErrorMsg() throws Exception {
 		getCurrentFunctionName(true);
 		try {
-			String errorMessage = SelectorUtil.getelement(SignInSelectors.passwordError.get()).getText();
+			String errorMessage = SelectorUtil.getelement(LoginSelectors.passwordError.get()).getText();
 			logs.debug(MessageFormat.format(LoggingMsg.ERROR_MSG, errorMessage));
 			getCurrentFunctionName(false);
 			return errorMessage;
@@ -224,7 +224,7 @@ public class SignIn extends SelTestCase {
 					isUserLogedIn = true;
 				}
 			} else {
-				WebElement welcomeMessage = SelectorUtil.getelement(SignInSelectors.welcomeMessage.get());
+				WebElement welcomeMessage = SelectorUtil.getelement(LoginSelectors.welcomeMessage.get());
 				logs.debug("welcomeMessage: " + welcomeMessage.getAttribute("innerText").trim());
 				if (welcomeMessage.getAttribute("innerText").trim().toLowerCase().contains("welcome")) {
 					isUserLogedIn = true;
@@ -259,7 +259,7 @@ public class SignIn extends SelTestCase {
 			if (isPWAMobile) {
 				myAccountLink = SelectorUtil.getMenuLinkMobilePWA(myAccountPageLink);
 			} else {
-				myAccountLink = SelectorUtil.getelement(SignInSelectors.myAccountLink);
+				myAccountLink = SelectorUtil.getelement(LoginSelectors.myAccountLink);
 			}
 
 			// Check if link is for my account page.
@@ -334,7 +334,7 @@ public class SignIn extends SelTestCase {
 				logs.debug("Validate Sign in desktop or tablet");
 
 				// Get the sign in link or welcome.
-				signInLink = SelectorUtil.getelement(SignInSelectors.signInNavigation.get());
+				signInLink = SelectorUtil.getelement(LoginSelectors.signInNavigation.get());
 			}
 
 			// Navigate to the Sign in/Create account page.
@@ -352,7 +352,7 @@ public class SignIn extends SelTestCase {
 			getCurrentFunctionName(true);
 			List<String> subStrArr = new ArrayList<String>();
 			List<String> valuesArr = new ArrayList<String>();
-			subStrArr.add(SignInSelectors.forgotPasswordLnk);
+			subStrArr.add(LoginSelectors.forgotPasswordLnk);
 			valuesArr.add("");
 			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
 			getCurrentFunctionName(false);
@@ -369,7 +369,7 @@ public class SignIn extends SelTestCase {
 			getCurrentFunctionName(true);
 			List<String> subStrArr = new ArrayList<String>();
 			List<String> valuesArr = new ArrayList<String>();
-			subStrArr.add(SignInSelectors.forgottenPwdInput);
+			subStrArr.add(LoginSelectors.forgottenPwdInput);
 			valuesArr.add(email);
 			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
 			getCurrentFunctionName(false);
@@ -386,7 +386,7 @@ public class SignIn extends SelTestCase {
 			getCurrentFunctionName(true);
 			List<String> subStrArr = new ArrayList<String>();
 			List<String> valuesArr = new ArrayList<String>();
-			subStrArr.add(SignInSelectors.forgotPasswordSubmitBtn);
+			subStrArr.add(LoginSelectors.forgotPasswordSubmitBtn);
 			valuesArr.add("");
 			SelectorUtil.getNthElement(subStrArr, 1).click();
 			getCurrentFunctionName(false);
@@ -403,7 +403,7 @@ public class SignIn extends SelTestCase {
 			getCurrentFunctionName(true);
 			List<String> subStrArr = new ArrayList<String>();
 			List<String> valuesArr = new ArrayList<String>();
-			subStrArr.add(SignInSelectors.alertPositiveForgottenPassword);
+			subStrArr.add(LoginSelectors.alertPositiveForgottenPassword);
 			valuesArr.add("");
 			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
 			logs.debug(MessageFormat.format(LoggingMsg.SEL_TEXT, SelectorUtil.textValue.get()));
@@ -422,7 +422,7 @@ public class SignIn extends SelTestCase {
 			getCurrentFunctionName(true);
 			List<String> subStrArr = new ArrayList<String>();
 			List<String> valuesArr = new ArrayList<String>();
-			subStrArr.add(SignInSelectors.forgottenPwdEmailError);
+			subStrArr.add(LoginSelectors.forgottenPwdEmailError);
 			valuesArr.add("");
 			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
 			logs.debug(MessageFormat.format(LoggingMsg.SEL_TEXT, SelectorUtil.textValue.get()));
@@ -463,7 +463,7 @@ public class SignIn extends SelTestCase {
 					SelectorUtil.clickOnWebElement(logoffLink);
 					Thread.sleep(1500);
 				} else {
-					SelectorUtil.initializeSelectorsAndDoActions(SignInSelectors.logoffLink);
+					SelectorUtil.initializeSelectorsAndDoActions(LoginSelectors.logoffLink);
 				}
 			}
 
