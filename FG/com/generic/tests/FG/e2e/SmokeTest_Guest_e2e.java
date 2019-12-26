@@ -44,19 +44,7 @@ public class SmokeTest_Guest_e2e extends SelTestCase {
 		testObject = test;
 	}
 
-	@DataProvider(name = "Orders", parallel = true)
-	public static Object[][] loadTestData() throws Exception {
-		// concurrency maintenance on sheet reading
-		getBrowserWait(testObject.getParameter("browserName"));
-
-		dataProviderUtils TDP = dataProviderUtils.getInstance();
-		Object[][] data = TDP.getData(testDataSheet);
-		Testlogs.get().debug(Arrays.deepToString(data).replace("\n", "--"));
-		return data;
-	}
-
 	@SuppressWarnings("unchecked") // avoid warning from linked hashmap
-	@Test(dataProvider = "Orders")
 	public void checkOutBaseTest(String caseId, String runTest, String desc, String proprties, String productsNumber,
 			String shippingMethod, String payment, String shippingAddress, String billingAddress,
 			String email) throws Exception {
