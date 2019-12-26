@@ -12,11 +12,11 @@ import com.generic.setup.Common;
 import com.generic.setup.LoggingMsg;
 import com.generic.setup.SelTestCase;
 import com.generic.setup.SheetVariables;
-import com.generic.tests.GR.e2e.Cart_e2e;
-import com.generic.tests.GR.e2e.Checkout_e2e;
-import com.generic.tests.GR.e2e.HomePage_e2e;
-import com.generic.tests.GR.e2e.PDP_e2e;
-import com.generic.tests.GR.e2e.Search_PLP_e2e;
+import com.generic.tests.FG.e2e.Cart_e2e;
+import com.generic.tests.FG.e2e.Checkout_e2e;
+import com.generic.tests.FG.e2e.HomePage_e2e;
+import com.generic.tests.FG.e2e.PDP_e2e;
+import com.generic.tests.FG.e2e.Search_PLP_e2e;
 import com.generic.util.dataProviderUtils;
 import com.generic.util.ReportUtil;
 import com.generic.util.SASLogger;
@@ -24,7 +24,7 @@ import com.generic.util.SASLogger;
 public class SmokeTest_Registered_e2e extends SelTestCase {
 
 	// used sheet in test
-	public static final String testDataSheet = SheetVariables.checkoutSheet;
+	public static final String testDataSheet = SheetVariables.smokeTesting;
 	private static XmlTest testObject;
 	private static ThreadLocal<SASLogger> Testlogs = new ThreadLocal<SASLogger>();
 	public static boolean external = false; // change this value will pass through logging

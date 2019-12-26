@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Random;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
 import com.generic.selector.HomePageSelectors;

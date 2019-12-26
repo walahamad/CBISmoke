@@ -159,7 +159,7 @@ public class Cart extends SelTestCase {
 	}
 
 	// Done CBI
-	public static List<WebElement> getAllSavedItemsInCart() throws Exception {
+	public static List<WebElement> getAllAddedItemsInCart() throws Exception {
 		getCurrentFunctionName(true);
 		List<String> subStrArr = new ArrayList<String>();
 		subStrArr.add(CartSelectors.addedItemsInCart.get());
@@ -171,22 +171,20 @@ public class Cart extends SelTestCase {
 	// Done CBI
 	public static boolean isItemAdded() throws Exception {
 		getCurrentFunctionName(true);
-		boolean isSaved;
-		List<WebElement> savedElements = getAllSavedItemsInCart();
+		boolean isAdded;
+		List<WebElement> savedElements = getAllAddedItemsInCart();
 		if (savedElements.size() > 1)
-			isSaved = true;
+			isAdded = true;
 		else
-			isSaved = false;
+			isAdded = false;
 		getCurrentFunctionName(false);
-		return isSaved;
+		return isAdded;
 	}
 
 	// Done CBI
 	public static boolean addedItemImageValidation() throws Exception {
 		getCurrentFunctionName(true);
-		List<String> subStrArr = new ArrayList<String>();
-		subStrArr.add(CartSelectors.addedItemsImage.get());
-		List<WebElement> savedElements = SelectorUtil.getAllElements(subStrArr);
+		List<WebElement> savedElements = SelectorUtil.getAllElements(CartSelectors.addedItemsImage.get());
 		boolean displayed = isListDisplayed(savedElements);
 		boolean loaded = isListLoaded(savedElements);
 		getCurrentFunctionName(false);
@@ -196,9 +194,7 @@ public class Cart extends SelTestCase {
 	// Done CBI
 	public static boolean checkAddedItemPriceDisplay() throws Exception {
 		getCurrentFunctionName(true);
-		List<String> subStrArr = new ArrayList<String>();
-		subStrArr.add(CartSelectors.addedItemsPrice.get());
-		List<WebElement> savedItems = SelectorUtil.getAllElements(subStrArr);
+		List<WebElement> savedItems = SelectorUtil.getAllElements(CartSelectors.addedItemsPrice.get());
 		boolean inDisplayed = isListDisplayed(savedItems);
 		getCurrentFunctionName(false);
 		return inDisplayed;
