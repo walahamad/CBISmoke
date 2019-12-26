@@ -41,12 +41,10 @@ public class HomePageSelectors
 	public static final cselector GHespots = new cselector("css,div.genericESpot section>div>div>div>a>img","css,div.responsive-content > div > div > #mobify-homepage > div > a");
 	public static final cselector RYespots = new cselector("css,div.genericESpot section>div>div>div>a>img","css,div.container-fluid > div > div.col-sm-12 > a > img");
 	public static final String HomePageSearchbutton = "toggle-mobile-menu";
-	//public static final cselector miniCartCheckoutBtn = new cselector("css,.mini-cart-product-panel-btn-img.checkout-version2","pw-link mini-cart__link pw-button pw--primary u-width-full u-text-weight-medium");		
 
 	//public static final cselector miniCartMobd = new cselector("css,#cartAnchor","css,.pw-header-bar__actions.t-header-bar__cart > button");
- 
+
 	public static final cselector mainHomeCarousels = new cselector("body gray-disabled-arrows","css,#gwt_recommendations_home_1 > div > div > div > div.body","css,#home_rr_PWA > div > div > div");
-	//public static final String logo = "css,#logo1 a.logo-anchor";
 
 	public static final String header = "header-container";
 	public static final String body_topNavLinks = "css,#main-navigation-large>.container>.nav-links";
@@ -66,7 +64,8 @@ public class HomePageSelectors
 	public static final cselector menuItems = new cselector("css,#css-top-navigation #flyout>.menuItem>a", "css,.navigation-modal_class .pw-link");
 	public static final cselector GHmenuItems = new cselector("css,#navbar-collapse-grid > ul > li > a", "css,.m-accordion-navigation__content  div.pw-accordion__item > button");
 	public static final cselector GHselectedMenuHeader = new cselector("", "css,div.m-accordion-navigation__content  div.pw-accordion__item > button[aria-selected=\"true\"]");
-    public static final cselector selectedMenuHeader = new cselector("", "css,#gwt-top-navigation .active>.gwt-nav-item-has-submenu.opened>.gwt-HTML", "css,.m-navigation__fades-in .pw-header-bar .c-sheet__title");
+   public static final cselector selectedMenuHeader = new cselector("", "css,#gwt-top-navigation .active>.gwt-nav-item-has-submenu.opened>.gwt-HTML", "css,.m-navigation__fades-in .pw-header-bar .c-sheet__title");
+
 	public static final cselector leafMenuItems = new cselector("", "css,.active-menu-item>:not(.gwt-nav-item-has-submenu)", "css,.navigation-modal_class .pw-list-tile:not(.pw--has-child) .pw-link");
 	public static final String sideBoxHeader = "css,#sideBoxHeader";
 
@@ -78,7 +77,7 @@ public class HomePageSelectors
 	public static final cselector welcomeMessage = new cselector("css,#welcome");
 	public static final cselector accountMenuIcon = new cselector("css,#gwt_dropdownmenu_my_account", "css,.t-header__my-account");
 	public static final String accountMenuList = "css,.my-account-controls-modal_class .pw-link";
-	
+
     public static final cselector product =  new cselector("css,div.unbxd-products-dispaly-container > div > div > div > a","css,footer > div.c-custom-accordion"); 
     public static final cselector productContainer =  new cselector("css,div.unbxd-products-display-panel","css,footer > div.c-custom-accordion"); 
 }

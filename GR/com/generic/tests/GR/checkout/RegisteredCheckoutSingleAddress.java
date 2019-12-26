@@ -6,11 +6,12 @@ import java.util.NoSuchElementException;
 
 import com.generic.page.CheckOut;
 import com.generic.page.Registration;
-import com.generic.page.SignIn;
+import com.generic.page.Login;
 import com.generic.setup.ExceptionMsg;
 import com.generic.setup.GlobalVariables;
 import com.generic.setup.LoggingMsg;
 import com.generic.setup.SelTestCase;
+import com.generic.util.RandomUtilities;
 
 public class RegisteredCheckoutSingleAddress extends SelTestCase {
 
@@ -28,13 +29,15 @@ public class RegisteredCheckoutSingleAddress extends SelTestCase {
 			String userPassword = userDetalis.get(Registration.keys.password);
 
 			int productsCountStepTWO=0;
-
+			
+			Thread.sleep(1500);
 
 			//Perform login
-			SignIn.fillLoginFormAndClickSubmit(userMail, userPassword);	
+			//SignIn.fillLoginFormAndClickSubmit(userMail, userPassword);
+			Registration.registerFreshUser(RandomUtilities.getRandomEmail(), "TestITG226");
 
 			// Add products to cart
-			//CheckOut.searchForProductsandAddToCart(productsCount);
+			CheckOut.searchForProductsandAddToCart(productsCount);
 
 			// Navigating to Cart by URL
 			CheckOut.navigatetoCart();
@@ -47,17 +50,25 @@ public class RegisteredCheckoutSingleAddress extends SelTestCase {
 				CheckOut.proceedToStepTwo();
 			}
 			
+			Thread.sleep(1000);
+
 			// Check number of products in step 2
-			sassert().assertTrue(CheckOut.checkProductsinStepTwo() == productsCount, "Some products are missing in step 2 ");
+			sassert().assertTrue(CheckOut.checkProductsinStepTwo() >= productsCount, "Some products are missing in step 2 ");
 			productsCountStepTWO =CheckOut.checkProductsinStepTwo();
 
 			Thread.sleep(2500);
 			
 			// Proceed to step 3
 			CheckOut.proceedToStepThree();
+			
+			Thread.sleep(1000);
 
 			// Proceed to step 4
 			CheckOut.proceedToStepFour();
+			
+			Thread.sleep(1000);
+			
+			CheckOut.clickCreditCardPayment();
 
 			// Saving tax and shipping costs to compare them in the confirmation page
 			orderShipping = CheckOut.getShippingCosts();
@@ -72,7 +83,7 @@ public class RegisteredCheckoutSingleAddress extends SelTestCase {
 			// Click place order button
 			CheckOut.placeOrder();
 
-			Thread.sleep(2000);
+			Thread.sleep(3500);
 
 			// Check number of products in confirmation page
 			sassert().assertTrue(CheckOut.checkProductsinConfirmationPage() == productsCountStepTWO,"Some products are missing in confirmation page ");

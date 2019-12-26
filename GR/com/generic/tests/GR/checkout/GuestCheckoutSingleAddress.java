@@ -52,6 +52,8 @@ public class GuestCheckoutSingleAddress extends SelTestCase {
 
 			// Proceed to step 4
 			CheckOut.proceedToStepFour();
+			
+			Thread.sleep(2000);
 
 			// Saving tax and shipping costs to compare them in the confirmation page
 			orderShipping = CheckOut.getShippingCosts();

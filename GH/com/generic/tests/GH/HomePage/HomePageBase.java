@@ -28,14 +28,8 @@ public class HomePageBase extends SelTestCase {
 	public static final String miniCart = "Mini cart validation";
 	public static final String search = "Search validation";
 	public static final String espots = "espots validation";
-	public static final String verify = "verify";
-	public static final String header = "header";
-	public static final String footer = "footer";
-	public static final String body = "body";
 	public static final String YMALCarousels = "YMAL Carousels Verification";
-
 	public static final String menu = "menu";
-	public static final String signIn = "SignIn validation";
 	public static final String AccountMenu = "Account menu validation";
 	public static final String GlobalFooter = "Global footer validation";
 
@@ -73,22 +67,23 @@ public class HomePageBase extends SelTestCase {
 
 		try {
 
-			if (proprties.contains(this.AccountMenu)) {
+			if (proprties.contains(Logo)) {
 				LogoValidation.validate();
 
-			} else if (proprties.contains(this.miniCart)) {
+			} else if (proprties.contains(miniCart)) {
 				MiniCartValidation.validate();
 
-			} else if (proprties.contains(this.espots)) {
+			} else if (proprties.contains(espots)) {
 				HomePageValidation.validateCaroselAndEspot();
 
-			} else if (proprties.contains(this.search)) {
+			} else if (proprties.contains(search)) {
 				HomePageValidation.validateSearch();
-			} else if (proprties.equals(this.menu)) {
+			} else if (proprties.equals(menu)) {
 				// Check the Navigation menu.
 				sassert().assertTrue(MenuValidation.validate(), "Menu validation has some problems");
 			} else if (proprties.contains(this.GlobalFooter)) {
 				sassert().assertTrue(GlobalFooterValidation.validate(), "Global footer validation has some problems");
+
 			} else {
 				Testlogs.get().debug("please check proprties provided in excel sheet");
 			}

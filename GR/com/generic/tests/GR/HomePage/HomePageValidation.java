@@ -1,7 +1,5 @@
 package com.generic.tests.GR.HomePage;
 
-import org.testng.asserts.SoftAssert;
-
 import com.generic.page.HomePage;
 import com.generic.setup.SelTestCase;
 
