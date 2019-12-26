@@ -1,4 +1,4 @@
-package com.generic.tests.FG.e2e;
+package com.generic.tests.GR.e2e;
 
 import java.text.MessageFormat;
 import java.util.LinkedHashMap;
@@ -10,18 +10,18 @@ import com.generic.setup.ExceptionMsg;
 import com.generic.setup.GlobalVariables;
 import com.generic.setup.LoggingMsg;
 import com.generic.setup.SelTestCase;
-import com.generic.tests.FG.checkout.GuestCheckoutSingleAddress;
-import com.generic.tests.FG.checkout.RegisteredCheckoutSingleAddress;
+import com.generic.tests.GR.checkout.GuestCheckoutSingleAddress;
+import com.generic.tests.GR.checkout.RegisteredCheckoutSingleAddress;
 import com.generic.util.RandomUtilities;
 
 public class Checkout_e2e extends SelTestCase {
+
 
 	public static void ValidateGuest(int productsCount, LinkedHashMap<String, String> addressDetails,
 			LinkedHashMap<String, String> paymentDetails, LinkedHashMap<String, String> userdetails) throws Exception {
 
 		try {
 			getCurrentFunctionName(true);
-
 			String orderSubTotal;
 			String orderTax;
 			String orderShipping;
@@ -59,7 +59,7 @@ public class Checkout_e2e extends SelTestCase {
 
 			// Saving tax and shipping costs to compare them in the confirmation page
 			orderShipping = CheckOut.getShippingCosts();
-			orderTax = CheckOut.getTaxCosts(GlobalVariables.FG_TAX_CART);
+			orderTax = CheckOut.getTaxCosts(GlobalVariables.GR_TAX_CART);
 			orderSubTotal = CheckOut.getSubTotal();
 
 			logs.debug(MessageFormat.format(LoggingMsg.SEL_TEXT, "Shippping cost is: " + orderShipping
@@ -87,7 +87,7 @@ public class Checkout_e2e extends SelTestCase {
 			sassert().assertTrue(CheckOut.getShippingCosts().equals(orderShipping), "Shipping cost value issue ");
 
 			// Check if tax cost match
-			sassert().assertTrue(CheckOut.getTaxCosts(GlobalVariables.FG_TAX_CONFIRMATION).equals(orderTax),
+			sassert().assertTrue(CheckOut.getTaxCosts(GlobalVariables.GR_TAX_CONFIRMATION).equals(orderTax),
 					"Tax value issue ");
 
 			// Check if subtotal value match
@@ -104,8 +104,6 @@ public class Checkout_e2e extends SelTestCase {
 	}
 	
 	
-	
-	
 	public static void ValidateRegistered(int productsCount, LinkedHashMap<String, String> addressDetails,
 			LinkedHashMap<String, String> paymentDetails, LinkedHashMap<String, String> userdetails) throws Exception {
 
@@ -117,9 +115,8 @@ public class Checkout_e2e extends SelTestCase {
 			String orderTax;
 			String orderShipping;
 			
-
 			int productsCountStepTWO=0;
-			
+
 			
 			// Clicking begin secure checkout
 			CheckOut.clickBeginSecureCheckoutButton();
@@ -152,7 +149,7 @@ public class Checkout_e2e extends SelTestCase {
 
 			// Saving tax and shipping costs to compare them in the confirmation page
 			orderShipping = CheckOut.getShippingCosts();
-			orderTax = CheckOut.getTaxCosts(GlobalVariables.FG_TAX_CART);
+			orderTax = CheckOut.getTaxCosts(GlobalVariables.GR_TAX_CART);
 			orderSubTotal = CheckOut.getSubTotal();
 
 			logs.debug(MessageFormat.format(LoggingMsg.SEL_TEXT, "Shippping cost is: " + orderShipping + " ---- Tax cost is:" + orderTax + " ---- Subtotal is:" + orderSubTotal));
@@ -174,12 +171,12 @@ public class Checkout_e2e extends SelTestCase {
 			sassert().assertTrue(CheckOut.getShippingCosts().equals(orderShipping), "Shipping cost value issue ");
 
 			// Check if tax cost match
-			sassert().assertTrue(CheckOut.getTaxCosts(GlobalVariables.FG_TAX_CONFIRMATION).equals(orderTax), "Tax value issue ");
+			sassert().assertTrue(CheckOut.getTaxCosts(GlobalVariables.GR_TAX_CONFIRMATION).equals(orderTax), "Tax value issue ");
 
 			// Check if subtotal value match
 			sassert().assertTrue(CheckOut.getSubTotal().equals(orderSubTotal), "Subtotal value issue ");
 
-
+			
 			getCurrentFunctionName(false);
 
 		} catch (NoSuchElementException e) {
@@ -192,10 +189,5 @@ public class Checkout_e2e extends SelTestCase {
 	
 	
 	
-	
-	
-	
-	
-
 
 }
