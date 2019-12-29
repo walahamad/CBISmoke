@@ -34,6 +34,7 @@ public class reportBuilder extends SelTestCase {
 	    }
 
 	public static ArrayList<HashMap<String, String>> readLogs( String dst) throws IOException {
+		SelTestCase.getCurrentFunctionName(true);
 		boolean dumyTestFound = false;
 		File folder = new File(EnvironmentFiles.getLogReportPath());
 		//File folder = new File("F:\\WS\\SAS_FW_testNg_justDriver_static\\logs\\reportLogs");
@@ -59,6 +60,7 @@ public class reportBuilder extends SelTestCase {
 				destination.transferFrom(source, 0, source.size());
 			}
 		}
+		SelTestCase.getCurrentFunctionName(false);
 		return details;
 
 	}
