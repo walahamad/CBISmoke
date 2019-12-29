@@ -86,7 +86,7 @@ public class SmokeTest_Guest_e2e extends SelTestCase {
 			Cart_e2e.Validate();
 			Checkout_e2e.ValidateGuest(productsCount, addressDetails, paymentDetails, userdetails);
 
-			//sassert().assertAll();
+			sassert().assertAll();
 			Common.testPass();
 
 		} catch (Throwable t) {
