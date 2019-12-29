@@ -161,9 +161,7 @@ public class Cart extends SelTestCase {
 	// Done CBI
 	public static List<WebElement> getAllAddedItemsInCart() throws Exception {
 		getCurrentFunctionName(true);
-		List<String> subStrArr = new ArrayList<String>();
-		subStrArr.add(CartSelectors.addedItemsInCart.get());
-		List<WebElement> savedElements = SelectorUtil.getAllElements(subStrArr);
+		List<WebElement> savedElements = SelectorUtil.getAllElements(CartSelectors.addedItemsInCart.get());
 		getCurrentFunctionName(false);
 		return savedElements;
 	}
@@ -173,7 +171,7 @@ public class Cart extends SelTestCase {
 		getCurrentFunctionName(true);
 		boolean isAdded;
 		List<WebElement> savedElements = getAllAddedItemsInCart();
-		if (savedElements.size() > 1)
+		if (savedElements.size() >= 1)
 			isAdded = true;
 		else
 			isAdded = false;

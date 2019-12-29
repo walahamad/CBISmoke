@@ -51,22 +51,29 @@ public class PLP extends SelTestCase {
 		try {
 			getCurrentFunctionName(true);
 			Thread.sleep(3000);
+			
+			getDriver().navigate().refresh();
+			
 			boolean result = true; 
 			result = result && verifyProductImagesDisplayed();
 			
 			sortByPriceLowToHigh();
 			List<String> L2HproductsNames = getfirst3ProductsNames();
 
-			Thread.sleep(2500);
+			Thread.sleep(3000);
 			
 			sortByPriceHighToLow();		
 			List<String> H2LsortedProductsNames = getfirst3ProductsNames();
 			
-			result = result && compareOperationResults(L2HproductsNames, H2LsortedProductsNames);			
+			result = result && compareOperationResults(L2HproductsNames, H2LsortedProductsNames);
 			
-			int productsCountBeforeFilter =getProductsCountinPLP();		
+			Thread.sleep(3000);
+			
+			String firstProductName = getfirst3ProductsNames().get(0);
 			SelectFilter();
-			result = result && compareFilterResults(productsCountBeforeFilter,getProductsCountinPLP() );
+			Thread.sleep(3000);
+			String secondProductName = getfirst3ProductsNames().get(0);
+			result = result && (firstProductName!=secondProductName);
 			
 			logs.debug("Filters check result "+ result);
 
@@ -82,13 +89,16 @@ public class PLP extends SelTestCase {
 	public static boolean compareFilterResults(int before, int after) throws Exception {
 		try {
 			getCurrentFunctionName(true);
-			getCurrentFunctionName(false);
 
+			boolean result = false;
+			
 			if(before!=after)
-				return true;
+				result =  true;
 			else
-				return false;	
+				result = false;	
 
+			getCurrentFunctionName(false);
+			return result;
 		}
 		catch (NoSuchElementException e) {
 			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
@@ -305,7 +315,7 @@ public class PLP extends SelTestCase {
 				{
 					clickOnSortMenu();
 				}
-				SelectorUtil.initializeSelectorsAndDoActions(PLPSelectors.PriceLowToHigh.get());
+				SelectorUtil.initializeSelectorsAndDoActions(PLPSelectors.PriceLowToHigh.get(),"forceAction,click");
 			}
 			if(isGR())
 			{
