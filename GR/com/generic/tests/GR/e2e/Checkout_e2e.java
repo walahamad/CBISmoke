@@ -1,4 +1,4 @@
-package com.generic.tests.FG.e2e;
+package com.generic.tests.GR.e2e;
 
 import java.text.MessageFormat;
 import java.util.LinkedHashMap;
@@ -17,7 +17,6 @@ public class Checkout_e2e extends SelTestCase {
 
 		try {
 			getCurrentFunctionName(true);
-
 			String orderSubTotal;
 			String orderTax;
 			String orderShipping;
@@ -38,6 +37,10 @@ public class Checkout_e2e extends SelTestCase {
 			// Proceed to step 2
 			CheckOut.proceedToStepTwo();
 
+			// Check number of products in step 2
+			sassert().assertTrue(CheckOut.checkProductsinStepTwo() >= productsCount,
+					"Some products are missing in step 2 ");
+
 			// Proceed to step 3
 			CheckOut.proceedToStepThree();
 
@@ -51,7 +54,7 @@ public class Checkout_e2e extends SelTestCase {
 
 			// Saving tax and shipping costs to compare them in the confirmation page
 			orderShipping = CheckOut.getShippingCosts();
-			orderTax = CheckOut.getTaxCosts(GlobalVariables.FG_TAX_CART);
+			orderTax = CheckOut.getTaxCosts(GlobalVariables.GR_TAX_CART);
 			orderSubTotal = CheckOut.getSubTotal();
 
 			logs.debug(MessageFormat.format(LoggingMsg.SEL_TEXT, "Shippping cost is: " + orderShipping
@@ -79,7 +82,7 @@ public class Checkout_e2e extends SelTestCase {
 			sassert().assertTrue(CheckOut.getShippingCosts().equals(orderShipping), "Shipping cost value issue ");
 
 			// Check if tax cost match
-			sassert().assertTrue(CheckOut.getTaxCosts(GlobalVariables.FG_TAX_CONFIRMATION).equals(orderTax),
+			sassert().assertTrue(CheckOut.getTaxCosts(GlobalVariables.GR_TAX_CONFIRMATION).equals(orderTax),
 					"Tax value issue ");
 
 			// Check if subtotal value match
@@ -138,7 +141,7 @@ public class Checkout_e2e extends SelTestCase {
 
 			// Saving tax and shipping costs to compare them in the confirmation page
 			orderShipping = CheckOut.getShippingCosts();
-			orderTax = CheckOut.getTaxCosts(GlobalVariables.FG_TAX_CART);
+			orderTax = CheckOut.getTaxCosts(GlobalVariables.GR_TAX_CART);
 			orderSubTotal = CheckOut.getSubTotal();
 
 			logs.debug(MessageFormat.format(LoggingMsg.SEL_TEXT, "Shippping cost is: " + orderShipping
@@ -162,7 +165,7 @@ public class Checkout_e2e extends SelTestCase {
 			sassert().assertTrue(CheckOut.getShippingCosts().equals(orderShipping), "Shipping cost value issue ");
 
 			// Check if tax cost match
-			sassert().assertTrue(CheckOut.getTaxCosts(GlobalVariables.FG_TAX_CONFIRMATION).equals(orderTax),
+			sassert().assertTrue(CheckOut.getTaxCosts(GlobalVariables.GR_TAX_CONFIRMATION).equals(orderTax),
 					"Tax value issue ");
 
 			// Check if subtotal value match

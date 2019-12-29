@@ -232,5 +232,6 @@ public class ReportResultsWriter {
 		} finally {
 			out.close();
 		}
+		SelTestCase.getCurrentFunctionName(false);
 	}
 }
