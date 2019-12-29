@@ -13,7 +13,7 @@ public class Search_PLP_e2e extends SelTestCase {
 		try {
 			getCurrentFunctionName(true);
 
-			sassert().assertTrue(PLP.searchAndVerifyResults("sofa", false), "Serach validation failed");
+			sassert().assertTrue(PLP.searchAndVerifyResults("mats", false), "Serach validation failed");
 
 			getCurrentFunctionName(false);
 		} catch (NoSuchElementException e) {

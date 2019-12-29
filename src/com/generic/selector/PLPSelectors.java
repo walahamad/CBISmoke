@@ -35,7 +35,7 @@ public class PLPSelectors {
 	
 	
 	
-	public static final cselector GRMobileSorting = new cselector("css,#app-main > div > div:nth-child(2) > div > div > div.u-flexbox.u-direction-column-reverse > div > div.c-product-list__container-sort-option.u-flex-1 > div > div > div > select");
+	public static final cselector GRMobileSorting = new cselector("css,.c-product-list__container-sort-option.u-flex-1 > div > div > div > select");
 	public static final cselector GRDeskTopSorting = new cselector("css,.unbxd-all-sort-options .selected-option-span");
 	public static final cselector GRDeskTopSortingLowtoHIgh = new cselector("css,#unbxd-sort-options-container > div > div > a:nth-child(2)");
 	public static final cselector GRDeskTopSortingHighToLow = new cselector("css,#unbxd-sort-options-container > div > div > a:nth-child(3)");

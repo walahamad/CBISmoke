@@ -35,7 +35,7 @@ public class PLP extends SelTestCase {
 				result = verifyPickedProduct(productName);
 			} else {
 				clickSearch(SearchTerm);
-				result = verifySeachResultPage();
+				result = verifySearchResultPage();
 			}
 			getCurrentFunctionName(false);
 			return result;
@@ -47,7 +47,7 @@ public class PLP extends SelTestCase {
 
 	}
 
-	private static boolean verifySeachResultPage() throws Exception {
+	private static boolean verifySearchResultPage() throws Exception {
 		try {
 			getCurrentFunctionName(true);
 			Thread.sleep(3000);
