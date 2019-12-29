@@ -24,7 +24,7 @@ import com.generic.util.SASLogger;
 public class SmokeTest_Guest_e2e extends SelTestCase {
 
 	// used sheet in test
-	public static final String testDataSheet = SheetVariables.checkoutSheet;
+	public static final String testDataSheet = SheetVariables.smokeTesting;
 	private static XmlTest testObject;
 	private static ThreadLocal<SASLogger> Testlogs = new ThreadLocal<SASLogger>();
 	public static boolean external = false; // change this value will pass through logging
@@ -68,12 +68,12 @@ public class SmokeTest_Guest_e2e extends SelTestCase {
 		int productsCount = Integer.parseInt(productsNumber);
 
 		try {
-			
+
 			Common.refreshBrowser();
-		    HomePage_e2e.Validate();
+			HomePage_e2e.Validate();
 			Search_PLP_e2e.Validate();
 			PDP_e2e.Validate();
-		    Cart_e2e.Validate();
+			Cart_e2e.Validate();
 			Checkout_e2e.ValidateGuest(productsCount, addressDetails, paymentDetails, userdetails);
 
 			sassert().assertAll();

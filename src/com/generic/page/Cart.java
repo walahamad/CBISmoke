@@ -27,9 +27,9 @@ public class Cart extends SelTestCase {
 	public static String getTaxValue() throws Exception {
 		try {
 			getCurrentFunctionName(true);
-			WebElement price = SelectorUtil.getelement(CartSelectors.tax.get());
+			WebElement price = SelectorUtil.getElement(CartSelectors.tax.get());
 			if (price.getText().trim().isEmpty()) {
-				price = SelectorUtil.getelement(CartSelectors.taxGR);
+				price = SelectorUtil.getElement(CartSelectors.taxGR);
 			}
 			getCurrentFunctionName(false);
 			return price.getText().replace("$", "").replace(",", "").trim();
@@ -44,7 +44,7 @@ public class Cart extends SelTestCase {
 	public static String getShippingValue() throws Exception {
 		try {
 			getCurrentFunctionName(true);
-			WebElement price = SelectorUtil.getelement(CartSelectors.shipping.get());
+			WebElement price = SelectorUtil.getElement(CartSelectors.shipping.get());
 			getCurrentFunctionName(false);
 			return price.getText().replace("$", "").replace(",", "").trim();
 		} catch (NoSuchElementException e) {
@@ -121,7 +121,7 @@ public class Cart extends SelTestCase {
 	// Done CBI
 	public static String getTotalPrice() throws Exception {
 		getCurrentFunctionName(true);
-		WebElement price = SelectorUtil.getelement(CartSelectors.addedItemsTotalPrice.get());
+		WebElement price = SelectorUtil.getElement(CartSelectors.addedItemsTotalPrice.get());
 		getCurrentFunctionName(false);
 		return price.getText().trim();
 	}

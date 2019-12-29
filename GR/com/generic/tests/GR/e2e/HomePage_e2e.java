@@ -9,15 +9,14 @@ import com.generic.tests.GR.HomePage.LogoValidation;
 
 public class HomePage_e2e extends SelTestCase {
 
-
 	public static void Validate() throws Exception {
 
 		try {
 			getCurrentFunctionName(true);
-			
+
 			LogoValidation.validate();
-			sassert().assertTrue(GlobalFooterValidation.validate(), "Global footer validation has some problems");	
-			
+			GlobalFooterValidation.validate();
+
 			getCurrentFunctionName(false);
 		} catch (NoSuchElementException e) {
 			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
@@ -26,5 +25,5 @@ public class HomePage_e2e extends SelTestCase {
 		}
 
 	}
-	
+
 }

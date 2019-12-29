@@ -6,7 +6,6 @@ import java.util.NoSuchElementException;
 import com.generic.setup.ExceptionMsg;
 import com.generic.setup.SelTestCase;
 import com.generic.tests.GR.PDP.PDPValidation;
-import com.generic.tests.GR.PDP.WistListGuestValidation;
 
 public class PDP_e2e extends SelTestCase{
 	
@@ -20,16 +19,6 @@ public class PDP_e2e extends SelTestCase{
 			getCurrentFunctionName(true);
 			
 			PDPValidation.validate(singlePDPSearchTerm);
-			
-			URI url = new URI(getURL());
-			getDriver().get("https://"+url.getHost());		
-			
-			/*
-			WistListGuestValidation.validate();
-			
-			url = new URI(getURL());
-			getDriver().get("https://"+url.getHost());
-			*/	
 			
 			getCurrentFunctionName(false);
 		} catch (NoSuchElementException e) {

@@ -131,7 +131,7 @@ public class Login extends SelTestCase {
 	public static String getMailErrorMsg() throws Exception {
 		getCurrentFunctionName(true);
 		try {
-			String errorMessage = SelectorUtil.getelement(LoginSelectors.emailError.get()).getText();
+			String errorMessage = SelectorUtil.getElement(LoginSelectors.emailError.get()).getText();
 			logs.debug(MessageFormat.format(LoggingMsg.ERROR_MSG, errorMessage));
 			getCurrentFunctionName(false);
 			return errorMessage;
@@ -151,7 +151,7 @@ public class Login extends SelTestCase {
 		getCurrentFunctionName(true);
 		try {
 			Thread.sleep(1000);
-			String errorMessage = SelectorUtil.getelement(LoginSelectors.errorMessage.get()).getText();
+			String errorMessage = SelectorUtil.getElement(LoginSelectors.errorMessage.get()).getText();
 			logs.debug(MessageFormat.format(LoggingMsg.ERROR_MSG, errorMessage));
 			getCurrentFunctionName(false);
 			return errorMessage;
@@ -190,7 +190,7 @@ public class Login extends SelTestCase {
 	public static String getPasswrdErrorMsg() throws Exception {
 		getCurrentFunctionName(true);
 		try {
-			String errorMessage = SelectorUtil.getelement(LoginSelectors.passwordError.get()).getText();
+			String errorMessage = SelectorUtil.getElement(LoginSelectors.passwordError.get()).getText();
 			logs.debug(MessageFormat.format(LoggingMsg.ERROR_MSG, errorMessage));
 			getCurrentFunctionName(false);
 			return errorMessage;
@@ -224,7 +224,7 @@ public class Login extends SelTestCase {
 					isUserLogedIn = true;
 				}
 			} else {
-				WebElement welcomeMessage = SelectorUtil.getelement(LoginSelectors.welcomeMessage.get());
+				WebElement welcomeMessage = SelectorUtil.getElement(LoginSelectors.welcomeMessage.get());
 				logs.debug("welcomeMessage: " + welcomeMessage.getAttribute("innerText").trim());
 				if (welcomeMessage.getAttribute("innerText").trim().toLowerCase().contains("welcome")) {
 					isUserLogedIn = true;
@@ -259,7 +259,7 @@ public class Login extends SelTestCase {
 			if (isPWAMobile) {
 				myAccountLink = SelectorUtil.getMenuLinkMobilePWA(myAccountPageLink);
 			} else {
-				myAccountLink = SelectorUtil.getelement(LoginSelectors.myAccountLink);
+				myAccountLink = SelectorUtil.getElement(LoginSelectors.myAccountLink);
 			}
 
 			// Check if link is for my account page.
@@ -334,7 +334,7 @@ public class Login extends SelTestCase {
 				logs.debug("Validate Sign in desktop or tablet");
 
 				// Get the sign in link or welcome.
-				signInLink = SelectorUtil.getelement(LoginSelectors.signInNavigation.get());
+				signInLink = SelectorUtil.getElement(LoginSelectors.signInNavigation.get());
 			}
 
 			// Navigate to the Sign in/Create account page.

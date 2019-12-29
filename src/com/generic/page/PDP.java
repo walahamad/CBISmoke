@@ -743,7 +743,7 @@ public static boolean validateSelectRegistryOrWishListModalIsDisplayed() throws 
     public static void clickOnCreateNewWL() throws Exception{
         getCurrentFunctionName(true);
         logs.debug("Click on create new wish list");
-        WebElement element = SelectorUtil.getelement(PDPSelectors.giftRegistryListBox.get());
+        WebElement element = SelectorUtil.getElement(PDPSelectors.giftRegistryListBox.get());
         WebElement option =  element.findElement(By.cssSelector(PDPSelectors.createNewWL.get()));
         option.click();
         clickOnCreateNewWLConfirmationBtn();
@@ -775,7 +775,7 @@ public static boolean validateSelectRegistryOrWishListModalIsDisplayed() throws 
     public static boolean validateCreatedWLisSelectedByDefault(String createdWL) throws Exception {
         getCurrentFunctionName(true);
         boolean isSelected = true;
-        Select element = new Select(SelectorUtil.getelement(PDPSelectors.giftRegistryListBox.get()));
+        Select element = new Select(SelectorUtil.getElement(PDPSelectors.giftRegistryListBox.get()));
         WebElement option = element.getFirstSelectedOption();
         String defaultWL = option.getText();
         String selectedWL =  defaultWL;
@@ -810,7 +810,7 @@ public static boolean validateSelectRegistryOrWishListModalIsDisplayed() throws 
 				isDisplayed = SelectorUtil.isDisplayed(PDPSelectors.confirmationModal.get());
 				logs.debug("Validate confirmation modal exist menu" + isDisplayed + "   " + selectedProductName);
 
-				WebElement addToCardProductElement = SelectorUtil.getelement(PDPSelectors.addToCardProductName.get());
+				WebElement addToCardProductElement = SelectorUtil.getElement(PDPSelectors.addToCardProductName.get());
 
 				if (addToCardProductElement.getText().equals(selectedProductName))
 					logs.debug("Product is the right added one");
@@ -967,7 +967,7 @@ public static boolean validateSelectRegistryOrWishListModalIsDisplayed() throws 
 			
 			}
 		}
-		WebElement element = SelectorUtil.getelement(addPersonalizedButtonSelector);
+		WebElement element = SelectorUtil.getElement(addPersonalizedButtonSelector);
 		String personalizationText = element.getText().toLowerCase();
 		logs.debug("personalizationText:  " + personalizationText);
 
@@ -1032,7 +1032,7 @@ public static boolean validateSelectRegistryOrWishListModalIsDisplayed() throws 
 			WebElement element = elementsList.get(i);
 			SelectorUtil.clickOnWebElement(element);
 			if (isPersonalizedInputSwatchesDisplayed(PDPSelectors.personalizedInputValue.get())) {// input container like MONOGRAM or any value
-				WebElement input = SelectorUtil.getelement(PDPSelectors.personalizedInputValue.get());
+				WebElement input = SelectorUtil.getElement(PDPSelectors.personalizedInputValue.get());
 				input.sendKeys(RandomUtilities.getRandomStringWithLength(3));
 			}else if (isPersonalizedInputSwatchesDisplayed(PDPSelectors.personalizedItemColors1.get())) { // like item color 
 				List<WebElement> itemColors = SelectorUtil.getAllElements(PDPSelectors.personalizedItemColors1.get());
@@ -1041,7 +1041,7 @@ public static boolean validateSelectRegistryOrWishListModalIsDisplayed() throws 
 					SelectorUtil.clickOnWebElement(firstItemColor);			
 				}
 			}else if (isPersonalizedInputSwatchesDisplayed(PDPSelectors.personalizedItemMenu.get())) {// like item size 
-				WebElement menu = SelectorUtil.getelement(PDPSelectors.personalizedItemMenu.get());
+				WebElement menu = SelectorUtil.getElement(PDPSelectors.personalizedItemMenu.get());
 				List<WebElement> options =  menu.findElements(By.cssSelector(PDPSelectors.personalizedMenuOptions.get()));
 				options.get(1).click();// the first item is selected size 
 			}
@@ -1059,7 +1059,7 @@ public static boolean validateSelectRegistryOrWishListModalIsDisplayed() throws 
 			WebElement element = elementsList.get(i);
 			SelectorUtil.clickOnWebElement(element);
 			if (isPersonalizedInputSwatchesDisplayed(PDPSelectors.personalizedInputValue.get())) {// input container like MONOGRAM or any value
-				WebElement input = SelectorUtil.getelement(PDPSelectors.personalizedInputValue.get());
+				WebElement input = SelectorUtil.getElement(PDPSelectors.personalizedInputValue.get());
 				input.sendKeys(RandomUtilities.getRandomStringWithLength(3));
 			}else if (isPersonalizedInputSwatchesDisplayed(PDPSelectors.personalizedItemColors1.get())) { // like item color 
 				List<WebElement> itemColors = SelectorUtil.getAllElements(PDPSelectors.personalizedItemColors1.get());
@@ -1081,7 +1081,7 @@ public static boolean validateSelectRegistryOrWishListModalIsDisplayed() throws 
 					SelectorUtil.clickOnWebElement(firstItemColor);	
 				}
 			}else if (isPersonalizedInputSwatchesDisplayed(PDPSelectors.personalizedItemMenu.get())) {// like item size 
-				WebElement menu = SelectorUtil.getelement(PDPSelectors.personalizedItemMenu.get());
+				WebElement menu = SelectorUtil.getElement(PDPSelectors.personalizedItemMenu.get());
 				List<WebElement> options =  menu.findElements(By.cssSelector(PDPSelectors.personalizedMenuOptions.get()));
 				options.get(1).click();// the first item is selected size 
 			}
@@ -1093,7 +1093,7 @@ public static boolean validateSelectRegistryOrWishListModalIsDisplayed() throws 
 	public static void closeOpendItem( )throws Exception {
 		try {
 			getCurrentFunctionName(true);
-			WebElement e = SelectorUtil.getelement(PDPSelectors.personalizedOpenItem.get());
+			WebElement e = SelectorUtil.getElement(PDPSelectors.personalizedOpenItem.get());
 			SelectorUtil.clickOnWebElement(e);
 			getCurrentFunctionName(false);
 		} catch (NoSuchElementException e) {

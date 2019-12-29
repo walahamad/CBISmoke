@@ -503,7 +503,7 @@ public class PLP extends SelTestCase {
 	
 
 	// CBI
-	public static boolean verifyProductImagesDisplayed() throws InterruptedException {
+	public static boolean verifyProductImagesDisplayed() throws Exception {
 		try {
 			getCurrentFunctionName(true);
 			boolean result;
@@ -563,7 +563,7 @@ public class PLP extends SelTestCase {
 			getCurrentFunctionName(true);
 
 			String SelectorSS = PLPSelectors.recommendedOption.get();
-			WebElement recommendedProduct = SelectorUtil.getelement(SelectorSS);
+			WebElement recommendedProduct = SelectorUtil.getElement(SelectorSS);
 
 			String itemTitle = recommendedProduct.getText();
 			logs.debug("Picked item: " + itemTitle);
