@@ -578,7 +578,7 @@ public class PDP extends SelTestCase {
 			if (SelTestCase.isFG() || SelTestCase.isGR()) {
 				Boolean bundle = PDP.bundleProduct();
 				String ProductID = null;
-				if (bundle)
+				if (!isMobile() && bundle)
 					ProductID = PDP.getProductID(0);
 				selectSwatches(bundle,ProductID);
 
