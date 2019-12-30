@@ -13,6 +13,10 @@ public class PDPValidation extends SelTestCase {
 		if (SelTestCase.getBrowserName().contains(GlobalVariables.browsers.iPhone))
 			Common.refreshBrowser();
 		PDP.NavigateToPDP(searchTerm);
+		Boolean bundle = PDP.getNumberOfItems() > 1;
+		String ProductID = null;
+		if (bundle)
+			ProductID = PDP.getProductID(0);
 		int numberOfItems = PDP.getNumberOfItems();
 		String priceErrorMessage; 
 		// price error message
@@ -42,7 +46,7 @@ public class PDPValidation extends SelTestCase {
 		// click add personalized button
 		if (PDP.PersonalizedItem()) {
 			String initialPrice = PDP.getBottomPrice();
-			boolean isFreePersonalization = PDP.isFreePersonalization();
+			boolean isFreePersonalization = PDP.isFreePersonalization(bundle,ProductID);
 			PDP.clickAddPersonalizationButton();
 			sassert().assertTrue(PDP.validatePersonalizedModal(), "Personalization Modal is not dispayed");
 			if (SelTestCase.getBrowserName().contains(GlobalVariables.browsers.iPhone)) {
@@ -52,7 +56,7 @@ public class PDPValidation extends SelTestCase {
 				PDP.selectPersonalizationModalSwatches();
 				PDP.clickPersonalizationSaveAndCloseButton();
 			}
-			sassert().assertTrue(PDP.validateAddedPersonalizedDetails(),
+			sassert().assertTrue(PDP.validateAddedPersonalizedDetails(bundle,ProductID),
 					"Added personalization details is not dispayed");
 			if (!isFreePersonalization) {
 				String finalPrice = PDP.getTotalPriceAfterAddedPersonalized(); // take final price after added
