@@ -16,16 +16,13 @@ import com.generic.setup.Common;
 import com.generic.setup.LoggingMsg;
 import com.generic.setup.SelTestCase;
 import com.generic.setup.SheetVariables;
-import com.generic.tests.GR.Registration.RegistrationBase;
 import com.generic.util.RandomUtilities;
 import com.generic.util.ReportUtil;
 import com.generic.util.SASLogger;
-import com.generic.util.SelectorUtil;
 import com.generic.util.dataProviderUtils;
 
 public class LoginBase extends SelTestCase {
 
-	private static int testCaseID;
 	// used sheet in test
 	public static final String testDataSheet = SheetVariables.loginSheet;
 	private static XmlTest testObject;
@@ -135,29 +132,6 @@ public class LoginBase extends SelTestCase {
 				sassert().assertTrue(Login.checkMyAccountPage(), LoggingMsg.NOT_MY_ACCOUNT_PAGE);
 			}
 
-			if (proprties.equals("Forgot password -Valid Email")) {
-				Login.clickForgotPasswordBtn();
-				Login.typeForgottenPwdEmail(userMail);
-				Login.clickForgotPasswordSubmitBtn();
-				Thread.sleep(1500);
-				String alertMessage = Login.getAlertPositiveForgottenPasswordd();
-				String failureMessage = MessageFormat.format(LoggingMsg.ACTUAL_EXPECTED_ERROR, alertMessage,
-						fieldsValidation);
-				sassert().assertTrue(alertMessage.contains(fieldsValidation), failureMessage);
-			}
-			if (proprties.equals("Forgot password -Invalid Email")) {
-				if(!getBrowserName().contains("mobile"))
-				{
-					Login.clickForgotPasswordBtn();
-					Login.typeForgottenPwdEmail(userMail.replace("@", ""));
-					Login.clickForgotPasswordSubmitBtn();
-					Thread.sleep(1500);
-					String alertMessage = Login.getForgottenPwdEmailError();
-					String failureMessage = MessageFormat.format(LoggingMsg.ACTUAL_EXPECTED_ERROR, alertMessage,
-							fieldsValidation);
-					sassert().assertTrue(alertMessage.contains(fieldsValidation), failureMessage);
-				}
-			}
 			sassert().assertAll();
 			Common.testPass();
 		} catch (Throwable t) {

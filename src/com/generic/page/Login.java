@@ -6,14 +6,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
 import com.generic.selector.LoginSelectors;
 import com.generic.setup.ExceptionMsg;
 import com.generic.setup.LoggingMsg;
 import com.generic.setup.SelTestCase;
-import com.generic.util.RandomUtilities;
 import com.generic.util.SelectorUtil;
 import com.generic.setup.GlobalVariables;
 
@@ -53,7 +51,6 @@ public class Login extends SelTestCase {
 					"Navigating to registration page..." + getCONFIG().getProperty("RegistrationPage")));
 			getDriver().get(new URI(getDriver().getCurrentUrl()).resolve(getCONFIG().getProperty("RegistrationPage"))
 					.toString());
-			// clickOnMainMenue();
 			typeEmail(email);
 			typePassword(Password);
 			clickLogin();
@@ -66,7 +63,7 @@ public class Login extends SelTestCase {
 	}
 
 	/**
-	* Click lSign in button.
+	* Click Sign in button.
 	*
 	* @throws Exception
 	*/
@@ -160,26 +157,6 @@ public class Login extends SelTestCase {
 			}.getClass().getEnclosingMethod().getName()));
 			throw e;
 		}
-	}
-
-	public static String getEmailErrorMsg() throws Exception {
-		getCurrentFunctionName(true);
-		try {
-			List<String> subStrArr = new ArrayList<String>();
-			List<String> valuesArr = new ArrayList<String>();
-			subStrArr.add(LoginSelectors.emailError.get());
-			valuesArr.add("");
-			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
-			logs.debug(MessageFormat.format(LoggingMsg.ERROR_MSG, SelectorUtil.textValue.get()));
-		} catch (Exception e) {
-			// to make sure the application is throwing the correct exception
-			if (ExceptionMsg.noValidSelector.contains(e.getMessage()))
-				throw new Exception(ExceptionMsg.noErrorMsg);
-			else
-				throw new Exception(e);
-		}
-		getCurrentFunctionName(false);
-		return SelectorUtil.textValue.get();
 	}
 
 	/**
@@ -310,133 +287,6 @@ public class Login extends SelTestCase {
 		}
 	}
 
-
-	/**
-	* Click on main menu.
-	*
-	* @throws Exception
-	*/
-	private static void clickOnMainMenue() throws Exception {
-		try {
-			WebElement signInLink;
-
-			// Check if the device is mobile(PWA site) or (desktop, tablet).
-			boolean isPWAMobile = getBrowserName().contains(GlobalVariables.browsers.iPhone);
-
-			if (isPWAMobile) {
-				// Validate the sign in for Mobile (PWA site).
-				logs.debug("Validate Sign in for Mobile (PWA site)");
-
-				// Get the sign in link or welcome message from the account menu.
-				signInLink = SelectorUtil.getMenuLinkMobilePWA("UserLogonView");
-			} else {
-				// Validate the desktop and tablet sign in form.
-				logs.debug("Validate Sign in desktop or tablet");
-
-				// Get the sign in link or welcome.
-				signInLink = SelectorUtil.getElement(LoginSelectors.signInNavigation.get());
-			}
-
-			// Navigate to the Sign in/Create account page.
-			SelectorUtil.clickOnWebElement(signInLink);
-		} catch (NoSuchElementException e) {
-			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
-			}.getClass().getEnclosingMethod().getName()));
-			throw e;
-		}
-	}
-
-	// done-ocm
-	public static void clickForgotPasswordBtn() throws Exception {
-		try {
-			getCurrentFunctionName(true);
-			List<String> subStrArr = new ArrayList<String>();
-			List<String> valuesArr = new ArrayList<String>();
-			subStrArr.add(LoginSelectors.forgotPasswordLnk);
-			valuesArr.add("");
-			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
-			getCurrentFunctionName(false);
-		} catch (NoSuchElementException e) {
-			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
-			}.getClass().getEnclosingMethod().getName()));
-			throw e;
-		}
-	}
-
-	// done-ocm
-	public static void typeForgottenPwdEmail(String email) throws Exception {
-		try {
-			getCurrentFunctionName(true);
-			List<String> subStrArr = new ArrayList<String>();
-			List<String> valuesArr = new ArrayList<String>();
-			subStrArr.add(LoginSelectors.forgottenPwdInput);
-			valuesArr.add(email);
-			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
-			getCurrentFunctionName(false);
-		} catch (NoSuchElementException e) {
-			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
-			}.getClass().getEnclosingMethod().getName()));
-			throw e;
-		}
-	}
-
-	// done-ocm
-	public static void clickForgotPasswordSubmitBtn() throws Exception {
-		try {
-			getCurrentFunctionName(true);
-			List<String> subStrArr = new ArrayList<String>();
-			List<String> valuesArr = new ArrayList<String>();
-			subStrArr.add(LoginSelectors.forgotPasswordSubmitBtn);
-			valuesArr.add("");
-			SelectorUtil.getNthElement(subStrArr, 1).click();
-			getCurrentFunctionName(false);
-		} catch (NoSuchElementException e) {
-			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
-			}.getClass().getEnclosingMethod().getName()));
-			throw e;
-		}
-	}
-
-	// done-ocm
-	public static String getAlertPositiveForgottenPasswordd() throws Exception {
-		try {
-			getCurrentFunctionName(true);
-			List<String> subStrArr = new ArrayList<String>();
-			List<String> valuesArr = new ArrayList<String>();
-			subStrArr.add(LoginSelectors.alertPositiveForgottenPassword);
-			valuesArr.add("");
-			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
-			logs.debug(MessageFormat.format(LoggingMsg.SEL_TEXT, SelectorUtil.textValue.get()));
-			getCurrentFunctionName(false);
-			return SelectorUtil.textValue.get();
-		} catch (NoSuchElementException e) {
-			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
-			}.getClass().getEnclosingMethod().getName()));
-			throw e;
-		}
-	}
-
-	// done-ocm
-	public static String getForgottenPwdEmailError() throws Exception {
-		try {
-			getCurrentFunctionName(true);
-			List<String> subStrArr = new ArrayList<String>();
-			List<String> valuesArr = new ArrayList<String>();
-			subStrArr.add(LoginSelectors.forgottenPwdEmailError);
-			valuesArr.add("");
-			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
-			logs.debug(MessageFormat.format(LoggingMsg.SEL_TEXT, SelectorUtil.textValue.get()));
-			getCurrentFunctionName(false);
-			return SelectorUtil.textValue.get();
-		} catch (NoSuchElementException e) {
-			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
-			}.getClass().getEnclosingMethod().getName()));
-			throw e;
-		}
-
-	}
-	
-	//CBI 
 	public static void registerNewUser(String userMail, String userPassword) throws Exception {
 		try {
 			getCurrentFunctionName(true);
