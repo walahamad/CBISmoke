@@ -27,9 +27,9 @@ public class Cart extends SelTestCase {
 	public static String getTaxValue() throws Exception {
 		try {
 			getCurrentFunctionName(true);
-			WebElement price = SelectorUtil.getelement(CartSelectors.tax.get());
+			WebElement price = SelectorUtil.getElement(CartSelectors.tax.get());
 			if (price.getText().trim().isEmpty()) {
-				price = SelectorUtil.getelement(CartSelectors.taxGR);
+				price = SelectorUtil.getElement(CartSelectors.taxGR);
 			}
 			getCurrentFunctionName(false);
 			return price.getText().replace("$", "").replace(",", "").trim();
@@ -44,7 +44,7 @@ public class Cart extends SelTestCase {
 	public static String getShippingValue() throws Exception {
 		try {
 			getCurrentFunctionName(true);
-			WebElement price = SelectorUtil.getelement(CartSelectors.shipping.get());
+			WebElement price = SelectorUtil.getElement(CartSelectors.shipping.get());
 			getCurrentFunctionName(false);
 			return price.getText().replace("$", "").replace(",", "").trim();
 		} catch (NoSuchElementException e) {
@@ -126,7 +126,7 @@ public class Cart extends SelTestCase {
 
 	// Done CBI
 	public static String getTotalPrice() throws Exception {
-		try {
+try {
 			getCurrentFunctionName(true);
 			WebElement price = SelectorUtil.getelement(CartSelectors.addedItemsTotalPrice.get());
 			getCurrentFunctionName(false);
@@ -153,13 +153,11 @@ public class Cart extends SelTestCase {
 	}
 
 	// Done CBI
-	public static List<WebElement> getAllSavedItemsInCart() throws Exception {
+	public static List<WebElement> getAllAddedItemsInCart() throws Exception {
 		try {
 			getCurrentFunctionName(true);
-			List<String> subStrArr = new ArrayList<String>();
-			subStrArr.add(CartSelectors.addedItemsInCart.get());
-			List<WebElement> savedElements = SelectorUtil.getAllElements(subStrArr);
-			getCurrentFunctionName(false);
+		List<WebElement> savedElements = SelectorUtil.getAllElements(CartSelectors.addedItemsInCart.get());
+		getCurrentFunctionName(false);
 			return savedElements;
 		} catch (NoSuchElementException e) {
 			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
@@ -170,16 +168,16 @@ public class Cart extends SelTestCase {
 
 	// Done CBI
 	public static boolean isItemAdded() throws Exception {
-		try {
+try {
 			getCurrentFunctionName(true);
-			boolean isSaved;
-			List<WebElement> savedElements = getAllSavedItemsInCart();
-			if (savedElements.size() > 1)
-				isSaved = true;
-			else
-				isSaved = false;
-			getCurrentFunctionName(false);
-			return isSaved;
+		boolean isAdded;
+		List<WebElement> savedElements = getAllAddedItemsInCart();
+		if (savedElements.size() >= 1)
+			isAdded = true;
+		else
+			isAdded = false;
+		getCurrentFunctionName(false);
+		return isAdded;
 		} catch (NoSuchElementException e) {
 			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
 			}.getClass().getEnclosingMethod().getName()));
@@ -189,15 +187,13 @@ public class Cart extends SelTestCase {
 
 	// Done CBI
 	public static boolean addedItemImageValidation() throws Exception {
-		try {
+	try {
 			getCurrentFunctionName(true);
-			List<String> subStrArr = new ArrayList<String>();
-			subStrArr.add(CartSelectors.addedItemsImage.get());
-			List<WebElement> savedElements = SelectorUtil.getAllElements(subStrArr);
-			boolean displayed = HomePage.isListDisplayed(savedElements);
-			boolean loaded = isListLoaded(savedElements);
-			getCurrentFunctionName(false);
-			return displayed & loaded;
+		List<WebElement> savedElements = SelectorUtil.getAllElements(CartSelectors.addedItemsImage.get());
+		boolean displayed = isListDisplayed(savedElements);
+		boolean loaded = isListLoaded(savedElements);
+		getCurrentFunctionName(false);
+		return displayed & loaded;
 		} catch (NoSuchElementException e) {
 			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
 			}.getClass().getEnclosingMethod().getName()));
@@ -207,14 +203,12 @@ public class Cart extends SelTestCase {
 
 	// Done CBI
 	public static boolean checkAddedItemPriceDisplay() throws Exception {
-		try {
+try {
 			getCurrentFunctionName(true);
-			List<String> subStrArr = new ArrayList<String>();
-			subStrArr.add(CartSelectors.addedItemsPrice.get());
-			List<WebElement> savedItems = SelectorUtil.getAllElements(subStrArr);
-			boolean inDisplayed = HomePage.isListDisplayed(savedItems);
-			getCurrentFunctionName(false);
-			return inDisplayed;
+		List<WebElement> savedItems = SelectorUtil.getAllElements(CartSelectors.addedItemsPrice.get());
+		boolean inDisplayed = isListDisplayed(savedItems);
+		getCurrentFunctionName(false);
+		return inDisplayed;
 		} catch (NoSuchElementException e) {
 			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
 			}.getClass().getEnclosingMethod().getName()));

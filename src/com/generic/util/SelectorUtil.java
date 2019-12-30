@@ -871,7 +871,7 @@ public class SelectorUtil extends SelTestCase {
 		return initializeSelectorsAndDoActions(subStrArr, valuesArr, doAction);
 	}
 	
-	public static WebElement getelement(String selector) throws Exception {
+	public static WebElement getElement(String selector) throws Exception {
 		List<String> subStrArr = new ArrayList<String>();
 		subStrArr.add(selector);
 		List<String> valuesArr = new ArrayList<String>();
@@ -926,8 +926,8 @@ public class SelectorUtil extends SelTestCase {
 
 	}
 
-	public static boolean isImgLoaded(String selector) {
-		WebElement img = getDriver().findElement(By.cssSelector(selector));
+	public static boolean isImgLoaded(String selector) throws Exception {
+		WebElement img = getElement(selector);
 		return ImageLoaded(img);
 	}
 	

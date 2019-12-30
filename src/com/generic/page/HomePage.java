@@ -562,7 +562,7 @@ public class HomePage extends SelTestCase {
 			SelectorUtil.clickOnWebElement(element);
 
 			// Get the sub menu header text.
-			WebElement selectedMenuHeader = SelectorUtil.getelement(HomePageSelectors.selectedMenuHeader.get());
+			WebElement selectedMenuHeader = SelectorUtil.getElement(HomePageSelectors.selectedMenuHeader.get());
 			String selectedMenuHeaderText = selectedMenuHeader.getText().toLowerCase();
 
 			// Get the current page URL.

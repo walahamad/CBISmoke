@@ -669,7 +669,7 @@ public class CheckOut extends SelTestCase {
 				}
 				else {
 					getCurrentFunctionName(false);
-					return SelectorUtil.getelement(CheckOutSelectors.subTotalValue.get()).getText();
+					return SelectorUtil.getElement(CheckOutSelectors.subTotalValue.get()).getText();
 				}
 				
 			} catch (NoSuchElementException e) {
@@ -808,7 +808,7 @@ public class CheckOut extends SelTestCase {
 		public static String getConfirmationTotalValue() throws Exception {
 			try {
 				getCurrentFunctionName(true);
-				WebElement price = SelectorUtil.getelement(CheckOutSelectors.confirmationTotal.get());
+				WebElement price = SelectorUtil.getElement(CheckOutSelectors.confirmationTotal.get());
 				getCurrentFunctionName(false);
 				return price.getText().replace("$", "").replace(",", "").trim();
 			} catch (NoSuchElementException e) {
@@ -821,7 +821,7 @@ public class CheckOut extends SelTestCase {
 		public static String getConfirmationPageTaxValue() throws Exception {
 			try {
 				getCurrentFunctionName(true);
-				WebElement price = SelectorUtil.getelement(CheckOutSelectors.confirmationPageTax.get());
+				WebElement price = SelectorUtil.getElement(CheckOutSelectors.confirmationPageTax.get());
 				getCurrentFunctionName(false);
 				return price.getText().replace("$", "").replace(",", "").trim();
 			} catch (NoSuchElementException e) {
@@ -834,7 +834,7 @@ public class CheckOut extends SelTestCase {
 		public static String getConfirmationPageShippingValue() throws Exception {
 			try {
 				getCurrentFunctionName(true);
-				WebElement price = SelectorUtil.getelement(CheckOutSelectors.confirmationShipping.get());
+				WebElement price = SelectorUtil.getElement(CheckOutSelectors.confirmationShipping.get());
 				getCurrentFunctionName(false);
 				return price.getText().replace("$", "").replace(",", "").trim();
 			} catch (NoSuchElementException e) {
@@ -847,7 +847,7 @@ public class CheckOut extends SelTestCase {
 		public static String getConfirmationPageSubtotalValue() throws Exception {
 			try {
 				getCurrentFunctionName(true);
-				WebElement price = SelectorUtil.getelement(CheckOutSelectors.confirmationPageSubtotal.get());
+				WebElement price = SelectorUtil.getElement(CheckOutSelectors.confirmationPageSubtotal.get());
 				getCurrentFunctionName(false);
 				return price.getText().replace("$", "").replace(",", "").trim();
 			} catch (NoSuchElementException e) {
@@ -861,7 +861,7 @@ public class CheckOut extends SelTestCase {
 
 			try {
 				getCurrentFunctionName(true);
-				WebElement price = SelectorUtil.getelement(CheckOutSelectors.confirmationPageAccountType.get());
+				WebElement price = SelectorUtil.getElement(CheckOutSelectors.confirmationPageAccountType.get());
 				boolean result = false;
 				if (price.getText().trim().equals("PayPal Account"))
 					result = true;

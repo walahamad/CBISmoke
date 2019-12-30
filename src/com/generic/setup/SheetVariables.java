@@ -50,6 +50,7 @@ public class SheetVariables {
 	public static final String FavoriteSheet = "FavoriteRegression";
 	public static final String MiniCartSheet = "MiniCartRegression";
 	public static final String CLPSheet = "CLPRegression";
+	public static final String smokeTesting = "SmkRegression";
 
     //Test Case id
     public static final String registrationTestCaseId = "Registration";
@@ -69,6 +70,7 @@ public class SheetVariables {
 	public static final String FavoriteSheetTestCaseId = "Favorite Case";
 	public static final String cartTestCaseId="Cart Test";
     public static final String clpTestCaseId = "CLP";
+
 
 
 

@@ -110,7 +110,7 @@ public class GiftRegistry extends SelTestCase {
 			logs.debug("Create new registry.");
 
 			// Gift registry step one.
-			WebElement stepOneContainer = SelectorUtil.getelement(GiftRegistrySelectors.stepOneContainer.get());
+			WebElement stepOneContainer = SelectorUtil.getElement(GiftRegistrySelectors.stepOneContainer.get());
 			sassert().assertTrue(stepOneContainer != null,
 					"Create Gift registry - not able to navigate to Step 1");
 			fillRegistryInformation();
@@ -118,7 +118,7 @@ public class GiftRegistry extends SelTestCase {
 			SelectorUtil.waitGWTLoadedEventPWA();
 
 			// Gift registry step two.
-			WebElement stepTwoContainer = SelectorUtil.getelement(GiftRegistrySelectors.stepTwoContainer.get());
+			WebElement stepTwoContainer = SelectorUtil.getElement(GiftRegistrySelectors.stepTwoContainer.get());
 			sassert().assertTrue(stepTwoContainer != null,
 					"Create Gift registry - not able to navigate to Step 2");
 
@@ -216,7 +216,7 @@ public class GiftRegistry extends SelTestCase {
 			getCurrentFunctionName(true);
 			SelectorUtil.waitGWTLoadedEventPWA();
 			Thread.sleep(1000);
-			WebElement confirmationModal = SelectorUtil.getelement(GiftRegistrySelectors.confirmationModalGR.get());
+			WebElement confirmationModal = SelectorUtil.getElement(GiftRegistrySelectors.confirmationModalGR.get());
 			sassert().assertTrue(confirmationModal != null,
 					"Error Confirmation gift registry created modal not displayed");
 			SelectorUtil.initializeSelectorsAndDoActions(GiftRegistrySelectors.manageRegistryButton.get());
@@ -238,7 +238,7 @@ public class GiftRegistry extends SelTestCase {
 			getCurrentFunctionName(true);
 
 			// Validate that the page is manage gift registry.
-			WebElement giftRegisrtContainer = SelectorUtil.getelement(GiftRegistrySelectors.manageGRContainer.get());
+			WebElement giftRegisrtContainer = SelectorUtil.getElement(GiftRegistrySelectors.manageGRContainer.get());
 			sassert().assertTrue(giftRegisrtContainer != null,
 					"Error this page is not manage gift registry");
 
@@ -251,12 +251,12 @@ public class GiftRegistry extends SelTestCase {
 					"Error in selected registry, expected " + registryName + " : " + selectedRegistry);
 
 			// Validate the empty registry.
-			String emptyMsg = SelectorUtil.getelement(GiftRegistrySelectors.emptyRegistryMsg.get()).getText().trim().toLowerCase();
+			String emptyMsg = SelectorUtil.getElement(GiftRegistrySelectors.emptyRegistryMsg.get()).getText().trim().toLowerCase();
 			sassert().assertTrue(emptyMsg.equals(emptyMessage.toLowerCase().trim()),
 					"Error empty messages is not as expected " + emptyMessage.toLowerCase().trim() + " : " + emptyMsg);
 
 			// Validate gift card container.
-			WebElement giftCardContainer = SelectorUtil.getelement(GiftRegistrySelectors.giftCardContainer.get());
+			WebElement giftCardContainer = SelectorUtil.getElement(GiftRegistrySelectors.giftCardContainer.get());
 			sassert().assertTrue(giftCardContainer != null,
 					"Error gift card section not displayed at manage gift card page.");
 			getCurrentFunctionName(false);
@@ -293,7 +293,7 @@ public class GiftRegistry extends SelTestCase {
 			if (isGR() && isMobile() && !SelectorUtil.isElementExist(By.cssSelector(GiftRegistrySelectors.miniCartText.get()))) {
 				numberOfItemAddedToCart = 0;
 			} else {
-				numberOfItemAddedToCart = Integer.parseInt(SelectorUtil.getelement(GiftRegistrySelectors.miniCartText.get()).getText());
+				numberOfItemAddedToCart = Integer.parseInt(SelectorUtil.getElement(GiftRegistrySelectors.miniCartText.get()).getText());
 			}
 
 			logs.debug("Number of items before add to cart: " + numberOfItemAddedToCart);
@@ -439,12 +439,12 @@ public class GiftRegistry extends SelTestCase {
 		try {
 			getCurrentFunctionName(true);
 			logs.debug("Validate add product to gift registry modal at PDP.");
-			WebElement addToGRModal = SelectorUtil.getelement(GiftRegistrySelectors.addToGiftRegistyModal.get());
+			WebElement addToGRModal = SelectorUtil.getElement(GiftRegistrySelectors.addToGiftRegistyModal.get());
 			sassert().assertTrue(addToGRModal != null,
 					"Error: Product added to gift registry modal displayed.");
 
 			logs.debug("Validate product container in added to gift registry modal at PDP.");
-			WebElement productAddedToGRContainer = SelectorUtil.getelement(GiftRegistrySelectors.productAddedToGRContainer.get());
+			WebElement productAddedToGRContainer = SelectorUtil.getElement(GiftRegistrySelectors.productAddedToGRContainer.get());
 			sassert().assertTrue(productAddedToGRContainer != null,
 					"Error: Product container contain in added to gift registry modal.");
 			getCurrentFunctionName(false);
@@ -464,7 +464,7 @@ public class GiftRegistry extends SelTestCase {
 		try {
 			getCurrentFunctionName(true);
 			logs.debug("Validate added item in gift registry.");
-			WebElement productAddedToGRContainer = SelectorUtil.getelement(GiftRegistrySelectors.productListGR.get());
+			WebElement productAddedToGRContainer = SelectorUtil.getElement(GiftRegistrySelectors.productListGR.get());
 			sassert().assertTrue(productAddedToGRContainer != null,
 					"Error: Items in gift registry.");
 			getCurrentFunctionName(false);
@@ -488,11 +488,11 @@ public class GiftRegistry extends SelTestCase {
 			if (isFG() && isMobile()) {
 				Thread.sleep(500);
 				// No add to cart modal displayed at mobile.
-				int numberOfItemAddedToCart = Integer.parseInt(SelectorUtil.getelement(GiftRegistrySelectors.miniCartText.get()).getText());
+				int numberOfItemAddedToCart = Integer.parseInt(SelectorUtil.getElement(GiftRegistrySelectors.miniCartText.get()).getText());
 				int tries = 0;
 				while (numberOfItemAddedToCart == oldNumberOfItemAddedToCart && tries < 20) {
 					Thread.sleep(1000);
-					numberOfItemAddedToCart = Integer.parseInt(SelectorUtil.getelement(GiftRegistrySelectors.miniCartText.get()).getText());
+					numberOfItemAddedToCart = Integer.parseInt(SelectorUtil.getElement(GiftRegistrySelectors.miniCartText.get()).getText());
 					tries ++;
 				}
 				logs.debug("Number of items after add to cart in mini cart: " + numberOfItemAddedToCart);
@@ -506,7 +506,7 @@ public class GiftRegistry extends SelTestCase {
 				} else {
 					SelectorUtil.waitElementLoading(By.cssSelector(addToCartModalSelector));
 				}
-				WebElement addToGRModal = SelectorUtil.getelement(addToCartModalSelector);
+				WebElement addToGRModal = SelectorUtil.getElement(addToCartModalSelector);
 				sassert().assertTrue(addToGRModal != null,
 						"Error: Product added to cart from gift registry modal displayed.");
 			}
@@ -527,7 +527,7 @@ public class GiftRegistry extends SelTestCase {
 		try {
 			getCurrentFunctionName(true);
 			logs.debug("Validate select registry/wishlist modal.");
-			WebElement selectGRModal = SelectorUtil.getelement(GiftRegistrySelectors.selectGRModal.get());
+			WebElement selectGRModal = SelectorUtil.getElement(GiftRegistrySelectors.selectGRModal.get());
 			sassert().assertTrue(selectGRModal != null,
 					"Error: Select gift registry modal displayed.");
 			getCurrentFunctionName(false);
@@ -569,7 +569,7 @@ public class GiftRegistry extends SelTestCase {
 					"Error: Product added corectlly to shopping cart from Gift registry");
 
 			logs.debug("Validate product added to cart from gift registry label.");
-			WebElement selectGRModal = SelectorUtil.getelement(GiftRegistrySelectors.addedFromGR.get());
+			WebElement selectGRModal = SelectorUtil.getElement(GiftRegistrySelectors.addedFromGR.get());
 			sassert().assertTrue(selectGRModal != null,
 					"Error: Item added from Gift registry label.");
 			getCurrentFunctionName(false);
