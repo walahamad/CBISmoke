@@ -54,7 +54,7 @@ public class PDPBase extends SelTestCase {
 	}
 
 	@Test(dataProvider = "PDP_SC")
-	public void PDPTest(String caseId, String runTest, String desc, String proprties)
+	public void PDPTest(String caseId, String runTest, String desc, String proprties,String PID)
 			throws Exception {
 		Testlogs.set(new SASLogger("PDP_SC " + getBrowserName()));
 		// Important to add this for logging/reporting
@@ -66,14 +66,14 @@ public class PDPBase extends SelTestCase {
 		try { 
 
 			if (proprties.contains(this.singlePDP)) {
-				PDPValidation.validate(singlePDPSearchTerm);
+				PDPValidation.validate(singlePDPSearchTerm,false);
 			}
 			if (proprties.contains(this.bundlePDP)) {
-				PDPValidation.validate(BundlePDPSearchTerm);
+				PDPValidation.validate(BundlePDPSearchTerm,false);
 			}
 
 			if (proprties.contains(this.personalizedPDP)) {
-				PDPValidation.validate(personalizedPDPSearchTerm);
+				PDPValidation.validate(personalizedPDPSearchTerm,true);
 			}
 
 			if (proprties.contains(this.wishListGuestValidation)) {
