@@ -1,7 +1,6 @@
 package com.generic.page;
 
 import java.text.MessageFormat;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import org.openqa.selenium.By;
@@ -128,7 +127,7 @@ public class Cart extends SelTestCase {
 	public static String getTotalPrice() throws Exception {
 try {
 			getCurrentFunctionName(true);
-			WebElement price = SelectorUtil.getelement(CartSelectors.addedItemsTotalPrice.get());
+			WebElement price = SelectorUtil.getElement(CartSelectors.addedItemsTotalPrice.get());
 			getCurrentFunctionName(false);
 			return price.getText().trim();
 		} catch (NoSuchElementException e) {
@@ -190,7 +189,7 @@ try {
 	try {
 			getCurrentFunctionName(true);
 		List<WebElement> savedElements = SelectorUtil.getAllElements(CartSelectors.addedItemsImage.get());
-		boolean displayed = isListDisplayed(savedElements);
+		boolean displayed = HomePage.isListDisplayed(savedElements);
 		boolean loaded = isListLoaded(savedElements);
 		getCurrentFunctionName(false);
 		return displayed & loaded;
@@ -206,7 +205,7 @@ try {
 try {
 			getCurrentFunctionName(true);
 		List<WebElement> savedItems = SelectorUtil.getAllElements(CartSelectors.addedItemsPrice.get());
-		boolean inDisplayed = isListDisplayed(savedItems);
+		boolean inDisplayed = HomePage.isListDisplayed(savedItems);
 		getCurrentFunctionName(false);
 		return inDisplayed;
 		} catch (NoSuchElementException e) {
