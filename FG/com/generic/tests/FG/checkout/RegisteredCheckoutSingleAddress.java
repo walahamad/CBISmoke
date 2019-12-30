@@ -3,16 +3,12 @@ package com.generic.tests.FG.checkout;
 import java.text.MessageFormat;
 import java.util.LinkedHashMap;
 import java.util.NoSuchElementException;
-
-import com.generic.page.Cart;
 import com.generic.page.CheckOut;
 import com.generic.page.Registration;
-import com.generic.page.Login;
 import com.generic.setup.ExceptionMsg;
 import com.generic.setup.GlobalVariables;
 import com.generic.setup.LoggingMsg;
 import com.generic.setup.SelTestCase;
-import com.generic.tests.FG.Cart.CartValidation;
 import com.generic.util.RandomUtilities;
 
 public class RegisteredCheckoutSingleAddress extends SelTestCase {
@@ -28,14 +24,16 @@ public class RegisteredCheckoutSingleAddress extends SelTestCase {
 			String orderTax;
 			String orderShipping;
 			
-			String userMail = getSubMailAccount(userDetalis.get(Registration.keys.email));
-			String userPassword = userDetalis.get(Registration.keys.password);
-
+			String fName="FirstVisa";
+			String lName="LastVisa";
+			String userMail = RandomUtilities.getRandomEmail();
+			String userPassword = "TestITG226";
+			
 			int productsCountStepTWO=0;
 
 			//Perform login
 			//SignIn.fillLoginFormAndClickSubmit(userMail, userPassword);
-			Registration.registerFreshUser(RandomUtilities.getRandomEmail(), "TestITG226");
+			Registration.registerFreshUser(userMail, userPassword, fName, lName);
 
 			// Add products to cart
 			CheckOut.searchForProductsandAddToCart(productsCount);

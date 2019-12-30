@@ -24,14 +24,16 @@ public class RegisteredCheckoutMultipleAddress extends SelTestCase {
 			String orderTax;
 			String orderShipping;
 			
-			String userMail = getSubMailAccount(userDetalis.get(Registration.keys.email));
-			String userPassword = userDetalis.get(Registration.keys.password);
-			
+			String fName="FirstVisa";
+			String lName="LastVisa";
+			String userMail = RandomUtilities.getRandomEmail();
+			String userPassword = "TestITG226";
+
 			int productsCountStepTWO=0;
-		
+
 			//Perform login
 			//SignIn.fillLoginFormAndClickSubmit(userMail, userPassword);
-			Registration.registerFreshUser(RandomUtilities.getRandomEmail(), "TestITG226");
+			Registration.registerFreshUser(userMail, userPassword, fName, lName);
 
 			// Add products to cart
 			CheckOut.searchForProductsandAddToCart(productsCount);
