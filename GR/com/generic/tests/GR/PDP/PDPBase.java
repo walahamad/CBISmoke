@@ -66,14 +66,14 @@ public class PDPBase extends SelTestCase {
 		try { 
 
 			if (proprties.contains(this.singlePDP)) {
-				PDPValidation.validate(singlePDPSearchTerm);
+				PDPValidation.validate(singlePDPSearchTerm,false);
 			}
 			if (proprties.contains(this.bundlePDP)) {
-				PDPValidation.validate(BundlePDPSearchTerm);
+				PDPValidation.validate(BundlePDPSearchTerm,false);
 			}
 
 			if (proprties.contains(this.personalizedPDP)) {
-				PDPValidation.validate(personalizedPDPSearchTerm);
+				PDPValidation.validate(personalizedPDPSearchTerm,true);
 			}
 
 			if (proprties.contains(this.wishListGuestValidation)) {

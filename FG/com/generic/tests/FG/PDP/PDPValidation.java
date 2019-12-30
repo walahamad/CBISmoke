@@ -7,7 +7,7 @@ import com.generic.setup.SelTestCase;
 
 public class PDPValidation extends SelTestCase {
 
-	public static void validate(String searchTerm) throws Exception {
+	public static void validate(String searchTerm, Boolean Personalized) throws Exception {
 		getCurrentFunctionName(true);
 		// To be removed after R1 build, this is to handle blank page in mobile for new session.
 		if (isMobile())
@@ -16,7 +16,7 @@ public class PDPValidation extends SelTestCase {
 		// int numberOfItems = PDP.getNumberOfItems();
 		Boolean bundle = PDP.getNumberOfItems() > 1;
 		String ProductID = null;
-		if (bundle)
+		if (!isMobile() && bundle)
 			ProductID = PDP.getProductID(0);
 		String priceErrorMessage;
 		// price error message
@@ -47,7 +47,7 @@ public class PDPValidation extends SelTestCase {
 		sassert().assertTrue(!bottomPrice.equals("$0.00"), "Bottom price is not updated correctly, Current price: " + bottomPrice );
 		Thread.sleep(2500);
 		// click add personalized button
-		if (PDP.PersonalizedItem(bundle,ProductID)) {
+		if (Personalized && PDP.PersonalizedItem(bundle,ProductID)) {
 			String initialPrice = bottomPrice;
 			boolean isFreePersonalization = PDP.isFreePersonalization(bundle,ProductID);
 			PDP.clickAddPersonalizationButton(bundle,ProductID);

@@ -14,7 +14,7 @@ public class PDP_e2e extends SelTestCase {
 
 		try {
 			getCurrentFunctionName(true);
-			PDPValidation.validate(singlePDPSearchTerm);
+			PDPValidation.validate(singlePDPSearchTerm,false);
 
 			getCurrentFunctionName(false);
 		} catch (NoSuchElementException e) {

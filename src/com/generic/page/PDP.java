@@ -460,10 +460,10 @@ public class PDP extends SelTestCase {
 		try {
 			getCurrentFunctionName(true);
 			String Str = PDPSelectors.numberOfBundleItems.get();
-			int numberOfItems = 0;
-			if (!SelectorUtil.isNotDisplayed(Str)) {
+			int numberOfItems = 1;
+		//	if (!SelectorUtil.isNotDisplayed(Str)) {
 			numberOfItems = SelectorUtil.getAllElements(Str).size();
-			}
+	//		}
 			logs.debug("Number of Items: " + numberOfItems);
 			if(numberOfItems == 1 && bundleProduct()) {
 				logs.debug("This is a bundle product with one item");	
@@ -488,7 +488,8 @@ public class PDP extends SelTestCase {
 	public static boolean bundleProduct(int tries) throws Exception {
 		getCurrentFunctionName(true);
 		try {
-			Thread.sleep(4500);
+			if(isMobile())
+			Thread.sleep(5500);
 			String PDPChecker = "return gwtDynamic.coremetrics.isSingleProduct;"; 
 			Boolean bundle = false;
 			JavascriptExecutor jse = (JavascriptExecutor) getDriver();		
@@ -1182,12 +1183,11 @@ public class PDP extends SelTestCase {
 		}
 	}
 	
-	public static String getTotalPriceAfterAddedPersonalized() throws Exception {// in GR : total bottom price doesn't change after added personalized .based on the discussion with Emad , I compare the total price in personalized details with bottom price to make sure the price is changed
+	public static String getTotalPriceAfterAddedPersonalized(Boolean Bundle, String ProductID) throws Exception {// in GR : total bottom price doesn't change after added personalized .based on the discussion with Emad , I compare the total price in personalized details with bottom price to make sure the price is changed
 		try {
 			getCurrentFunctionName(true);
 			String addedPersonlizedDetailsSelector = PDPSelectors.addedPersonlizedDetails.get();
-			if (getNumberOfItems() > 1 && !SelTestCase.getBrowserName().contains(GlobalVariables.browsers.iPhone)) {
-				String ProductID = getProductID(0);
+			if (!isMobile() && Bundle) {
 				addedPersonlizedDetailsSelector = "css,#" + ProductID + ">"
 						+ PDPSelectors.addedPersonlizedDetails.get().replace("css,", "");
 			}
@@ -1196,7 +1196,6 @@ public class PDP extends SelTestCase {
 			WebElement totalPriceElement = addedPersonlizedDetailsItems.get(addedPersonlizedDetailsItems.size() - 1);
 			String totalPrice = totalPriceElement.getText();
 			logs.debug("totalPriceElement:  " + totalPrice);
-
 			getCurrentFunctionName(false);
 			return totalPrice;
 		} catch (NoSuchElementException e) {
