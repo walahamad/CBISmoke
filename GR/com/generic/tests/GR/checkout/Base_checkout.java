@@ -67,8 +67,9 @@ public class Base_checkout extends SelTestCase {
 		// Important to add this for logging/reporting
 		Testlogs.set(new SASLogger("checkout_" + getBrowserName()));
 		setTestCaseReportName("Checkout Case");
-		logCaseDetailds(MessageFormat.format(LoggingMsg.CHECKOUTDESC, testDataSheet + "." + caseId,
-				this.getClass().getCanonicalName(), desc, proprties.replace("\n", "<br>- "), payment, shippingMethod));
+		String CaseDescription = MessageFormat.format(LoggingMsg.TEST_CASE_DESC, testDataSheet + "." + caseId,
+				this.getClass().getCanonicalName(), desc.replace("\n", "<br>--"));
+
 
 		LinkedHashMap<String, String> addressDetails = (LinkedHashMap<String, String>) addresses.get(shippingAddress);
 		LinkedHashMap<String, String> paymentDetails = (LinkedHashMap<String, String>) paymentCards.get(payment);
@@ -99,9 +100,12 @@ public class Base_checkout extends SelTestCase {
 			}
 
 			sassert().assertAll();
+			logCaseDetailds(CaseDescription);
 			Common.testPass();
 
 		} catch (Throwable t) {
+			logCaseDetailds(CaseDescription + "<br><b><font color='red'>Failure Reason: </font></b>"
+					+ t.getMessage().replace("\n", "").trim());
 			setTestCaseDescription(getTestCaseDescription());
 			Testlogs.get().debug(MessageFormat.format(LoggingMsg.DEBUGGING_TEXT, t.getMessage()));
 			t.printStackTrace();

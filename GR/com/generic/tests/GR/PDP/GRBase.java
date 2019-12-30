@@ -59,8 +59,8 @@ public class GRBase extends SelTestCase {
 		// Important to add this for logging/reporting
 		setTestCaseReportName(SheetVariables.GRCaseId);
 		Testlogs.get().debug("Case Browser: " + testObject.getParameter("browserName"));
-		logCaseDetailds(MessageFormat.format(LoggingMsg.TEST_CASE_DESC, testDataSheet + "." + caseId,
-				this.getClass().getCanonicalName(), desc));
+		String CaseDescription = MessageFormat.format(LoggingMsg.TEST_CASE_DESC, testDataSheet + "." + caseId,
+				this.getClass().getCanonicalName(), desc.replace("\n", "<br>--"));
 
 		try {
 			// Prepare registration data.
@@ -84,8 +84,11 @@ public class GRBase extends SelTestCase {
 			}
 
 			sassert().assertAll();
+			logCaseDetailds(CaseDescription);
 			Common.testPass();
 		} catch (Throwable t) {
+			logCaseDetailds(CaseDescription + "<br><b><font color='red'>Failure Reason: </font></b>"
+					+ t.getMessage().replace("\n", "").trim());
 			setTestCaseDescription(getTestCaseDescription());
 			Testlogs.get().debug(MessageFormat.format(LoggingMsg.DEBUGGING_TEXT, t.getMessage()));
 			t.printStackTrace();
