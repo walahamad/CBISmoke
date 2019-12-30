@@ -22,7 +22,7 @@ public class Cart extends SelTestCase {
 		public static final String invalidCoupon = "invalid";
 
 	}
-	
+
 	// Done CBI
 	public static String getTaxValue() throws Exception {
 		try {
@@ -67,8 +67,8 @@ public class Cart extends SelTestCase {
 			throw e;
 		}
 	}
-	
-	//Done CBI
+
+	// Done CBI
 	public static void moveItemsToCartFromWishlist() throws Exception {
 		try {
 			getCurrentFunctionName(true);
@@ -84,10 +84,16 @@ public class Cart extends SelTestCase {
 
 	// Done CBI
 	public static boolean verifySavedList() throws Exception {
-		getCurrentFunctionName(true);
-		boolean inPDPPage = SelectorUtil.isDisplayed(CartSelectors.savedListFirstItem.get());
-		getCurrentFunctionName(false);
-		return inPDPPage;
+		try {
+			getCurrentFunctionName(true);
+			boolean inPDPPage = SelectorUtil.isDisplayed(CartSelectors.savedListFirstItem.get());
+			getCurrentFunctionName(false);
+			return inPDPPage;
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+			}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
 	}
 
 	// Done CBI
@@ -120,55 +126,50 @@ public class Cart extends SelTestCase {
 
 	// Done CBI
 	public static String getTotalPrice() throws Exception {
-		getCurrentFunctionName(true);
-		WebElement price = SelectorUtil.getElement(CartSelectors.addedItemsTotalPrice.get());
-		getCurrentFunctionName(false);
-		return price.getText().trim();
-	}
-
-	//Done CBI
-	//TODO:: Remove this function and use the isListLoaded from HomePage class (Duplicated from HomePage file).
-	public static boolean isListDisplayed(List<WebElement> elements) {
-		boolean loaded = true;
-		for (int i = 0; i < elements.size(); i++) {
-			if (!elements.get(i).isDisplayed())
-				loaded = false;
+try {
+			getCurrentFunctionName(true);
+			WebElement price = SelectorUtil.getelement(CartSelectors.addedItemsTotalPrice.get());
+			getCurrentFunctionName(false);
+			return price.getText().trim();
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+			}.getClass().getEnclosingMethod().getName()));
+			throw e;
 		}
-		return loaded;
 	}
 
-	//Done CBI
-	//TODO:: Remove this function and use the isListLoaded from HomePage class (Duplicated from HomePage file).
+	// Done CBI
 	public static boolean isListLoaded(List<WebElement> elements) {
-		boolean result = true;
-		for (int i = 0; i < elements.size(); i++) {
-
-			Object resultForOneCarusal = (Boolean) ((JavascriptExecutor) getDriver()).executeScript(
-					"return arguments[0].complete && " + "typeof arguments[0].naturalWidth != \"undefined\" && "
-							+ "arguments[0].naturalWidth > 0",
-					elements.get(i));
-
-			boolean loaded = false;
-			if (resultForOneCarusal instanceof Boolean) {
-				loaded = (Boolean) result;
-				if (loaded == false)
-					result = false;
-			}
+		try {
+			getCurrentFunctionName(true);
+			boolean result = HomePage.isListLoaded(elements);
+			getCurrentFunctionName(false);
+			return result;
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+			}.getClass().getEnclosingMethod().getName()));
+			throw e;
 		}
-		return result;
 	}
 
 	// Done CBI
 	public static List<WebElement> getAllAddedItemsInCart() throws Exception {
-		getCurrentFunctionName(true);
+		try {
+			getCurrentFunctionName(true);
 		List<WebElement> savedElements = SelectorUtil.getAllElements(CartSelectors.addedItemsInCart.get());
 		getCurrentFunctionName(false);
-		return savedElements;
+			return savedElements;
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+			}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
 	}
 
 	// Done CBI
 	public static boolean isItemAdded() throws Exception {
-		getCurrentFunctionName(true);
+try {
+			getCurrentFunctionName(true);
 		boolean isAdded;
 		List<WebElement> savedElements = getAllAddedItemsInCart();
 		if (savedElements.size() >= 1)
@@ -177,25 +178,42 @@ public class Cart extends SelTestCase {
 			isAdded = false;
 		getCurrentFunctionName(false);
 		return isAdded;
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+			}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
 	}
 
 	// Done CBI
 	public static boolean addedItemImageValidation() throws Exception {
-		getCurrentFunctionName(true);
+	try {
+			getCurrentFunctionName(true);
 		List<WebElement> savedElements = SelectorUtil.getAllElements(CartSelectors.addedItemsImage.get());
 		boolean displayed = isListDisplayed(savedElements);
 		boolean loaded = isListLoaded(savedElements);
 		getCurrentFunctionName(false);
 		return displayed & loaded;
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+			}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
 	}
 
 	// Done CBI
 	public static boolean checkAddedItemPriceDisplay() throws Exception {
-		getCurrentFunctionName(true);
+try {
+			getCurrentFunctionName(true);
 		List<WebElement> savedItems = SelectorUtil.getAllElements(CartSelectors.addedItemsPrice.get());
 		boolean inDisplayed = isListDisplayed(savedItems);
 		getCurrentFunctionName(false);
 		return inDisplayed;
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+			}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
 	}
 
 	// Done CBI
@@ -212,23 +230,33 @@ public class Cart extends SelTestCase {
 			throw e;
 		}
 	}
-	
 
 	// Done CBI
 	public static String getFirstSavedItemsOptions() throws Exception {
-
-		getCurrentFunctionName(true);
-		SelectorUtil.initializeSelectorsAndDoActions(CartSelectors.firstAddedItemsOption.get());
-		getCurrentFunctionName(false);
-		return SelectorUtil.textValue.get();
+		try {
+			getCurrentFunctionName(true);
+			SelectorUtil.initializeSelectorsAndDoActions(CartSelectors.firstAddedItemsOption.get());
+			getCurrentFunctionName(false);
+			return SelectorUtil.textValue.get();
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+			}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
 	}
 
 	// Done CBI
 	public static String getlastAddedItemsOptions() throws Exception {
-		getCurrentFunctionName(true);
-		SelectorUtil.initializeSelectorsAndDoActions(CartSelectors.lastAddedItemsOption.get());
-		getCurrentFunctionName(false);
-		return SelectorUtil.textValue.get();
+		try {
+			getCurrentFunctionName(true);
+			SelectorUtil.initializeSelectorsAndDoActions(CartSelectors.lastAddedItemsOption.get());
+			getCurrentFunctionName(false);
+			return SelectorUtil.textValue.get();
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+			}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
 	}
 
 	// Done CBI
@@ -265,7 +293,6 @@ public class Cart extends SelTestCase {
 					// SelectorUtil.initializeSelectorsAndDoActions(CartSelectors.optionsImage.get(),
 					// "index,1");
 					List<WebElement> imgs = getDriver().findElements(By.cssSelector(CartSelectors.optionsImage.get()));
-					int x;
 					if (imgs.size() < 3)
 						throw new Exception();
 					WebElement ele = imgs.get(imgs.size() - 1);

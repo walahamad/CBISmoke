@@ -607,9 +607,9 @@ public class SelectorUtil extends SelTestCase {
 										break;
 									}
 								}
-							} else if (value.contains("FFFS")) {
+							} else if (value.contains(commands.actions.select)) {
 								// Select an option using the displayed text.
-								String selectText = value.split("FFFS")[1];
+								String selectText = value.split(commands.actions.select)[1];
 								logs.debug(
 										"Direct selection by text: " + selectText);
 								select.selectByVisibleText(selectText);
@@ -1191,6 +1191,8 @@ public class SelectorUtil extends SelTestCase {
 			protected final static String selectIndex = "index";
 			public final static String hover  = ForceAction+",hover";
 			public final static String index  = selectIndex+",{0}";
+			public final static String select  = "FFFS";
+			public final static String selectOption = select+"{0}";
 		}
 	}
 
