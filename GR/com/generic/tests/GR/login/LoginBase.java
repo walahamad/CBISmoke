@@ -76,7 +76,7 @@ public class LoginBase extends SelTestCase {
 
 			if ((proprties.equals("Success login") || proprties.equals("myAccountLink")) && email.equals("")) {
 				Testlogs.get().debug("Run the registration test case before sign in.");
-				//Prepare registration data.
+				// Prepare registration data.
 				userMail = RandomUtilities.getRandomEmail();
 				userPassword = "P@ssword11";
 				Login.registerNewUser(userMail, userPassword, true);
@@ -98,8 +98,10 @@ public class LoginBase extends SelTestCase {
 				String failureMessage = MessageFormat.format(LoggingMsg.ACTUAL_EXPECTED_ERROR,
 						emailMessage + "<br>" + passwordMessage, fieldsValidation);
 
-				sassert().assertTrue(fieldsValidation.contains(emailMessage),"Mail Validation error: "+failureMessage);
-				sassert().assertTrue(fieldsValidation.contains(passwordMessage),"Password Validation error"+ failureMessage);
+				sassert().assertTrue(fieldsValidation.contains(emailMessage),
+						"Mail Validation error: " + failureMessage);
+				sassert().assertTrue(fieldsValidation.contains(passwordMessage),
+						"Password Validation error" + failureMessage);
 				sassert().assertTrue(!Login.checkUserAccount(), LoggingMsg.USER_IS_LOGGED_IN);
 			}
 

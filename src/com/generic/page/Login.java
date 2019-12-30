@@ -2,8 +2,6 @@ package com.generic.page;
 
 import java.net.URI;
 import java.text.MessageFormat;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.NoSuchElementException;
 
 import org.openqa.selenium.WebElement;
@@ -38,12 +36,12 @@ public class Login extends SelTestCase {
 	}
 
 	/**
-	* Fill the login form and click submit button.
-	*
-	* @param email
-	* @param Password
-	* @throws Exception
-	*/
+	 * Fill the login form and click submit button.
+	 *
+	 * @param email
+	 * @param Password
+	 * @throws Exception
+	 */
 	public static void fillLoginFormAndClickSubmit(String email, String Password) throws Exception {
 		try {
 			getCurrentFunctionName(true);
@@ -63,10 +61,10 @@ public class Login extends SelTestCase {
 	}
 
 	/**
-	* Click Sign in button.
-	*
-	* @throws Exception
-	*/
+	 * Click Sign in button.
+	 *
+	 * @throws Exception
+	 */
 	public static void clickLogin() throws Exception {
 		try {
 			getCurrentFunctionName(true);
@@ -83,11 +81,11 @@ public class Login extends SelTestCase {
 	}
 
 	/**
-	* Type user password.
-	*
-	* @param Password
-	* @throws Exception
-	*/
+	 * Type user password.
+	 *
+	 * @param Password
+	 * @throws Exception
+	 */
 	public static void typePassword(String password) throws Exception {
 		try {
 			getCurrentFunctionName(true);
@@ -102,11 +100,11 @@ public class Login extends SelTestCase {
 	}
 
 	/**
-	* Enter user password.
-	*
-	* @param email
-	* @throws Exception
-	*/
+	 * Enter user password.
+	 *
+	 * @param email
+	 * @throws Exception
+	 */
 	public static void typeEmail(String email) throws Exception {
 		try {
 			getCurrentFunctionName(true);
@@ -121,10 +119,10 @@ public class Login extends SelTestCase {
 	}
 
 	/**
-	* Get Email error message.
-	*
-	* @throws Exception
-	*/
+	 * Get Email error message.
+	 *
+	 * @throws Exception
+	 */
 	public static String getMailErrorMsg() throws Exception {
 		getCurrentFunctionName(true);
 		try {
@@ -140,10 +138,10 @@ public class Login extends SelTestCase {
 	}
 
 	/**
-	* Get login error message.
-	*
-	* @throws Exception
-	*/
+	 * Get login error message.
+	 *
+	 * @throws Exception
+	 */
 	public static String getErrologinMessage() throws Exception {
 		getCurrentFunctionName(true);
 		try {
@@ -160,10 +158,10 @@ public class Login extends SelTestCase {
 	}
 
 	/**
-	* Get password error message.
-	*
-	* @throws Exception
-	*/
+	 * Get password error message.
+	 *
+	 * @throws Exception
+	 */
 	public static String getPasswrdErrorMsg() throws Exception {
 		getCurrentFunctionName(true);
 		try {
@@ -179,10 +177,10 @@ public class Login extends SelTestCase {
 	}
 
 	/**
-	* Check user account is logged in.
-	*
-	* @throws Exception
-	*/
+	 * Check user account is logged in.
+	 *
+	 * @throws Exception
+	 */
 	public static boolean checkUserAccount() throws Exception {
 		try {
 			getCurrentFunctionName(true);
@@ -219,10 +217,11 @@ public class Login extends SelTestCase {
 	}
 
 	/**
-	* Check user account link.
-	* @param boolean
-	* @throws Exception
-	*/
+	 * Check user account link.
+	 * 
+	 * @param boolean
+	 * @throws Exception
+	 */
 	public static boolean checkExistenceOfAccountLink() throws Exception {
 		try {
 			getCurrentFunctionName(true);
@@ -260,11 +259,11 @@ public class Login extends SelTestCase {
 	}
 
 	/**
-	* Check current page if it is my account.
-	*
-	* @return boolean
-	* @throws Exception
-	*/
+	 * Check current page if it is my account.
+	 *
+	 * @return boolean
+	 * @throws Exception
+	 */
 	public static boolean checkMyAccountPage() throws Exception {
 		try {
 			getCurrentFunctionName(true);

@@ -44,17 +44,16 @@ public class CartBase extends SelTestCase {
 		return data;
 	}
 
-	@SuppressWarnings("unchecked")
 	@Test(dataProvider = "Carts")
 	public void CartBaseTest(String caseId, String runTest, String desc, String proprties) throws Exception {
-		
+
 		Testlogs.set(new SASLogger("HP_SC " + getBrowserName()));
 		// Important to add this for logging/reporting
 		setTestCaseReportName(SheetVariables.cartTestCaseId);
 		Testlogs.get().debug("Case Browser: " + testObject.getParameter("browserName"));
 		logCaseDetailds(MessageFormat.format(LoggingMsg.TEST_CASE_DESC, testDataSheet + "." + caseId,
 				this.getClass().getCanonicalName(), desc));
-		
+
 		try {
 			CartValidation.cartValidation();
 			sassert().assertAll();

@@ -2,7 +2,6 @@ package com.generic.tests.GR.Search_PLP;
 
 import java.text.MessageFormat;
 import java.util.Arrays;
-import java.util.LinkedHashMap;
 import org.testng.Assert;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.DataProvider;
@@ -27,13 +26,11 @@ public class PLP_Base extends SelTestCase {
 	private static XmlTest testObject;
 
 	private static ThreadLocal<SASLogger> Testlogs = new ThreadLocal<SASLogger>();
-	private static LinkedHashMap<String, Object> users;
 
 	@BeforeTest
 	public static void initialSetUp(XmlTest test) throws Exception {
 		Testlogs.set(new SASLogger(test.getName() + test.getIndex()));
 		testObject = test;
-		users = Common.readUsers();
 	}
 	
 	@DataProvider(name = "PLP", parallel = true)
@@ -47,7 +44,6 @@ public class PLP_Base extends SelTestCase {
 		return data;
 	}
 	
-	@SuppressWarnings("unchecked")
 	@Test(dataProvider = "PLP")
 	public void verifyPLP(String caseId, String runTest, String Proprties, String desc ) throws Exception {
 		

@@ -7,8 +7,6 @@ import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringReader;
-import java.nio.file.Files;
-import java.nio.file.LinkOption;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.MessageFormat;
@@ -33,14 +31,12 @@ import javax.xml.transform.stream.StreamResult;
 
 import org.apache.commons.io.FileUtils;
 import org.w3c.dom.Element;
-import org.w3c.dom.Node;
 import org.xml.sax.SAXException;
 
 import com.generic.setup.EnvironmentFiles;
 import com.generic.setup.LoggingMsg;
 import com.generic.setup.SelTestCase;
 
-import jdk.internal.org.xml.sax.EntityResolver;
 import org.xml.sax.InputSource;
 
 public class TestUtilities extends SelTestCase {
@@ -160,18 +156,17 @@ public class TestUtilities extends SelTestCase {
 		DocumentBuilderFactory srcTemplateFactory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder srcTemplateBuilder = srcTemplateFactory.newDocumentBuilder();
 		srcTemplateBuilder.setEntityResolver(new org.xml.sax.EntityResolver() {
-			
+
 			@Override
 			public org.xml.sax.InputSource resolveEntity(String arg0, String arg1) throws SAXException, IOException {
 				if (arg1.contains("http://testng.org/testng-1.0.dtd")) {
-	                return new InputSource(new StringReader(""));
-	            } else {
-	                return null;
-	            }
-	        }
+					return new InputSource(new StringReader(""));
+				} else {
+					return null;
+				}
+			}
 		});
 
-		
 		org.w3c.dom.Document srcTemplateDoc = srcTemplateBuilder.parse(srcTemplateFile);
 
 		srcTemplateDoc.getDoctype();
@@ -196,22 +191,23 @@ public class TestUtilities extends SelTestCase {
 				DocumentBuilderFactory srcDbFactory = DocumentBuilderFactory.newInstance();
 				DocumentBuilder srcBuilder = srcDbFactory.newDocumentBuilder();
 				srcBuilder.setEntityResolver(new org.xml.sax.EntityResolver() {
-					
+
 					@Override
-					public org.xml.sax.InputSource resolveEntity(String arg0, String arg1) throws SAXException, IOException {
+					public org.xml.sax.InputSource resolveEntity(String arg0, String arg1)
+							throws SAXException, IOException {
 						if (arg1.contains("http://testng.org/testng-1.0.dtd")) {
-			                return new InputSource(new StringReader(""));
-			            } else {
-			                return null;
-			            }
-			        }
+							return new InputSource(new StringReader(""));
+						} else {
+							return null;
+						}
+					}
 				});
 				org.w3c.dom.Document srcDoc = srcBuilder.parse(srcXmlFile);
 
 				// Read the FinalRegression.xml file
 				DocumentBuilderFactory destDbFactory = DocumentBuilderFactory.newInstance();
 				DocumentBuilder destBuilder = destDbFactory.newDocumentBuilder();
-				
+
 				destBuilder.setEntityResolver(new org.xml.sax.EntityResolver() {
 
 					@Override
@@ -224,7 +220,7 @@ public class TestUtilities extends SelTestCase {
 						}
 					}
 				});
-				
+
 				org.w3c.dom.Document destDoc = destBuilder.parse(destFile);
 
 				// locate the <test> tag from the source regression xml
@@ -233,15 +229,13 @@ public class TestUtilities extends SelTestCase {
 
 				// fetch the <suite> tag in the FinalRegression.xml file to copy <test> tag to
 				org.w3c.dom.Node destRootNode = destDoc.getElementsByTagName("suite").item(0);
-				String brand = RandomUtilities.getRandomNumber(); 
-				for (int i = 0 ; i < 3 ; i++)
-				{
-					Element parameter = (Element) srcTestNode.getElementsByTagName("parameter").item(i); 
-					if (parameter.getAttribute("name").equalsIgnoreCase("Brand"))
-					{
+				String brand = RandomUtilities.getRandomNumber();
+				for (int i = 0; i < 3; i++) {
+					Element parameter = (Element) srcTestNode.getElementsByTagName("parameter").item(i);
+					if (parameter.getAttribute("name").equalsIgnoreCase("Brand")) {
 						brand = parameter.getAttribute("value");
 					}
-					
+
 				}
 
 				// loop over included browsers in the regression to append them to <test> tags.
@@ -255,7 +249,7 @@ public class TestUtilities extends SelTestCase {
 
 					String newNodeAttributeValue = "";
 					for (String attributePart : attributeSplit) {
-						newNodeAttributeValue = newNodeAttributeValue + attributePart+ " " ;
+						newNodeAttributeValue = newNodeAttributeValue + attributePart + " ";
 					}
 
 					// appending the new value of "name" attribute to include the browser name
@@ -278,9 +272,9 @@ public class TestUtilities extends SelTestCase {
 				}
 
 				org.w3c.dom.DOMImplementation domImpl = destDoc.getImplementation();
-				org.w3c.dom.DocumentType doctype = domImpl.createDocumentType("doctype","SYSTEM","http://testng.org/testng-1.0.dtd");
-				
-				
+				org.w3c.dom.DocumentType doctype = domImpl.createDocumentType("doctype", "SYSTEM",
+						"http://testng.org/testng-1.0.dtd");
+
 				// Save the changes to FinalRegression.xml file
 				Transformer transformer = TransformerFactory.newInstance().newTransformer();
 				transformer.setOutputProperty(OutputKeys.DOCTYPE_SYSTEM, doctype.getSystemId());
@@ -324,7 +318,7 @@ public class TestUtilities extends SelTestCase {
 
 	public static String searchSpecificFile(File dir, String fileName) {
 		getCurrentFunctionName(true);
-		
+
 		File[] files = dir.listFiles(new FilenameFilter() {
 
 			@Override

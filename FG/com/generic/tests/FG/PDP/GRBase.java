@@ -52,22 +52,23 @@ public class GRBase extends SelTestCase {
 	}
 
 	@Test(dataProvider = "GR_SC")
-	public void GRTest(String caseId, String runTest, String desc, String proprties, String registryType, String eventDateMonth, String eventDateDay, String eventDateYear, String emptyMessage)
-			throws Exception {
+	public void GRTest(String caseId, String runTest, String desc, String proprties, String registryType,
+			String eventDateMonth, String eventDateDay, String eventDateYear, String emptyMessage) throws Exception {
 		Testlogs.set(new SASLogger("GR_SC " + getBrowserName()));
 		// Important to add this for logging/reporting
 		setTestCaseReportName(SheetVariables.GRCaseId);
 		Testlogs.get().debug("Case Browser: " + testObject.getParameter("browserName"));
-		logCaseDetailds(MessageFormat.format(LoggingMsg.TEST_CASE_DESC, testDataSheet + "." + caseId,
-				this.getClass().getCanonicalName(), desc));
+		String CaseDescription = MessageFormat.format(LoggingMsg.TEST_CASE_DESC, testDataSheet + "." + caseId,
+				this.getClass().getCanonicalName(), desc);
 
 		try {
-			//Prepare registration data.
+			// Prepare registration data.
 			String userMail = RandomUtilities.getRandomEmail();
 			String userPassword = "P@ssword11";
 			GiftRegistry.accessValidAccount(userMail, userPassword);
 
-			GiftRegistry.setRegistryInformtion(registryType, eventDateMonth, eventDateDay, eventDateYear, emptyMessage, singlePDPSearchTerm);
+			GiftRegistry.setRegistryInformtion(registryType, eventDateMonth, eventDateDay, eventDateYear, emptyMessage,
+					singlePDPSearchTerm);
 
 			if (proprties.contains(createRegistry)) {
 				GiftRegistry.validate(userMail);
@@ -82,8 +83,11 @@ public class GRBase extends SelTestCase {
 			}
 
 			sassert().assertAll();
+			logCaseDetailds(CaseDescription);
 			Common.testPass();
 		} catch (Throwable t) {
+			logCaseDetailds(CaseDescription + "<br><b><font color='red'>Failure Reason: </font></b>"
+					+ t.getMessage().replace("\n", "").trim());
 			setTestCaseDescription(getTestCaseDescription());
 			Testlogs.get().debug(MessageFormat.format(LoggingMsg.DEBUGGING_TEXT, t.getMessage()));
 			t.printStackTrace();

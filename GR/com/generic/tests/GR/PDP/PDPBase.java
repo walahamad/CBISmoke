@@ -20,7 +20,6 @@ import com.generic.util.dataProviderUtils;
 
 public class PDPBase extends SelTestCase {
 
-
 	// possible scenarios
 	public static final String singlePDP = "Validate PDP Single active elements";
 	public static final String bundlePDP = "Validate PDP Bundle active elements";
@@ -54,8 +53,7 @@ public class PDPBase extends SelTestCase {
 	}
 
 	@Test(dataProvider = "PDP_SC")
-	public void PDPTest(String caseId, String runTest, String desc, String proprties,String PID)
-			throws Exception {
+	public void PDPTest(String caseId, String runTest, String desc, String proprties, String PID) throws Exception {
 		Testlogs.set(new SASLogger("PDP_SC " + getBrowserName()));
 		// Important to add this for logging/reporting
 		setTestCaseReportName(SheetVariables.PDPCaseId);
@@ -63,20 +61,20 @@ public class PDPBase extends SelTestCase {
 		logCaseDetailds(MessageFormat.format(LoggingMsg.TEST_CASE_DESC, testDataSheet + "." + caseId,
 				this.getClass().getCanonicalName(), desc));
 
-		try { 
+		try {
 
-			if (proprties.contains(this.singlePDP)) {
-				PDPValidation.validate(singlePDPSearchTerm,false);
+			if (proprties.contains(singlePDP)) {
+				PDPValidation.validate(singlePDPSearchTerm, false);
 			}
-			if (proprties.contains(this.bundlePDP)) {
-				PDPValidation.validate(BundlePDPSearchTerm,false);
-			}
-
-			if (proprties.contains(this.personalizedPDP)) {
-				PDPValidation.validate(personalizedPDPSearchTerm,true);
+			if (proprties.contains(bundlePDP)) {
+				PDPValidation.validate(BundlePDPSearchTerm, false);
 			}
 
-			if (proprties.contains(this.wishListGuestValidation)) {
+			if (proprties.contains(personalizedPDP)) {
+				PDPValidation.validate(personalizedPDPSearchTerm, true);
+			}
+
+			if (proprties.contains(wishListGuestValidation)) {
 				WistListGuestValidation.validate();
 			}
 
