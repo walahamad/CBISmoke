@@ -1,25 +1,16 @@
 package com.generic.page;
 
-import java.security.SecureRandom;
 import java.text.MessageFormat;
-import java.util.Iterator;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.NoSuchElementException;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
-import org.testng.Assert;
-
 import com.generic.selector.GiftRegistrySelectors;
-import com.generic.setup.Common;
 import com.generic.setup.ExceptionMsg;
-import com.generic.setup.GlobalVariables;
-import com.generic.setup.LoggingMsg;
 import com.generic.setup.SelTestCase;
 import com.generic.util.RandomUtilities;
-import com.generic.util.ReportUtil;
 import com.generic.util.SelectorUtil;
+import com.generic.util.SelectorUtil.commands;
 
 public class GiftRegistry extends SelTestCase {
 
@@ -35,18 +26,6 @@ public class GiftRegistry extends SelTestCase {
 	// Constants.
 	public static String singlePDPSearchTerm = "Rugs";
 	public static final String createGiftRegistryString = "Create New Registry";
-
-	// User information.
-
-	// Contact input text values
-	public String firstNameInput;
-	public String lastNameInput;
-	public String emailAddressInput;
-	public String streetAddressInput;
-	public String cityAddressInput;
-	public String regionAddressInput;
-	public String zipCodeInput;
-	public String phoneInput;
 
 	/**
 	* Set initial values for Gift registry.
@@ -228,15 +207,6 @@ public class GiftRegistry extends SelTestCase {
 	}
 
 	/**
-	* Get selected text from web element.
-	* @param selector
-	*
-	* @throws Exception
-	*/
-	public static String getElementText(String selector) throws Exception {
-		return SelectorUtil.getElement(selector).getAttribute("value");
-	}
-	/**
 	* Validate create gift registry confirmation modal.
 	*
 	* @throws Exception
@@ -374,7 +344,7 @@ public class GiftRegistry extends SelTestCase {
 
 				if (!selectedGiftRegistry.contains(registryName)) {
 					// Selected created registry.
-					SelectorUtil.initializeSelectorsAndDoActions(GRListBoxSelector, "FFFS" + "\"" + registryName +"\"");
+					SelectorUtil.initializeSelectorsAndDoActions(GRListBoxSelector, MessageFormat.format(commands.actions.selectOption, "\"" + registryName +"\""));
 				}
 
 				String selectGRSelector = "";
