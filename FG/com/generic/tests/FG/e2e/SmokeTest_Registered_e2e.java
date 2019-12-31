@@ -57,7 +57,8 @@ public class SmokeTest_Registered_e2e extends SelTestCase {
 		String CaseDescription = MessageFormat.format(LoggingMsg.CHECKOUTDESC, testDataSheet + "." + caseId,
 				this.getClass().getCanonicalName(), desc, proprties.replace("\n", "<br>- "), payment,
 				shippingMethod);
-
+		initReportTime();
+		
 		LinkedHashMap<String, String> addressDetails = (LinkedHashMap<String, String>) addresses.get(shippingAddress);
 		LinkedHashMap<String, String> paymentDetails = (LinkedHashMap<String, String>) paymentCards.get(payment);
 		LinkedHashMap<String, String> userdetails = (LinkedHashMap<String, String>) users.get(email);

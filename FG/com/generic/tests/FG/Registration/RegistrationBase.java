@@ -55,7 +55,8 @@ public class RegistrationBase extends SelTestCase {
 		setTestCaseReportName("Registration Case");
 		String CaseDescription = MessageFormat.format(LoggingMsg.REGISTRATIONDESC, testDataSheet + "." + caseId,
 				this.getClass().getCanonicalName(), desc, proprties.replace("\n", "<br>- "));
-
+		initReportTime();
+		
 		String thankUMsg = (fieldsValidation.split("ThankyouValidation:").length > 2)
 				? fieldsValidation.split("ThankyouValidation:")[0].split("\n")[0]
 				: "";

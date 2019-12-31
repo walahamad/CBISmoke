@@ -260,10 +260,13 @@ public class SelTestCase {
 	}
 
 	public static void logCaseDetailds(String msg) {
-		logs.debug("Case started: " + Thread.currentThread().getStackTrace()[2]);
 		logs.debug("Case Description: " + msg);
 	}
 
+	public static void initReportTime() {
+		logs.debug("Case started: " + Thread.currentThread().getStackTrace()[2]);
+	}
+	
 	public static void getBrowserWait(String BrowserName) {
 		try {
 			int waitBrowser = RandomUtils.nextInt(0, 2000);
