@@ -13,7 +13,7 @@
 		</classes>
 	</test> 
 		
-	<test name="Registration Test_mobile_IPad">
+	<test name="Registration Test_mobile_iPad">
 		<parameter name="browserName" value="mobile_iPad"></parameter>
 		<parameter name="Env" value="prod"></parameter>
         <parameter name="Brand" value="GR"></parameter>
