@@ -17,7 +17,6 @@ import java.io.*;
 import java.text.MessageFormat;
 import java.util.Calendar;
 
-
 public class Xls_Reader {
 	public String path;
 	public FileInputStream fis = null;
@@ -90,7 +89,7 @@ public class Xls_Reader {
 			if (cell == null)
 				return "";
 			if (cell.getCellTypeEnum() == CellType.STRING)
-				return  ((cell.getStringCellValue().equals("null")) ? "":cell.getStringCellValue());
+				return ((cell.getStringCellValue().equals("null")) ? "" : cell.getStringCellValue());
 			else if (cell.getCellTypeEnum() == CellType.NUMERIC || cell.getCellTypeEnum() == CellType.FORMULA) {
 				String cellText = String.valueOf(cell.getNumericCellValue());
 				if (HSSFDateUtil.isCellDateFormatted(cell)) {
@@ -117,24 +116,22 @@ public class Xls_Reader {
 	}
 
 	// returns the data from a cell
-	public String getCellData(String sheetName,int colNum,int rowNum){
+	public String getCellData(String sheetName, int colNum, int rowNum) {
 		try {
-			if (rowNum <= 0)
-			{
+			if (rowNum <= 0) {
 				logs.debug("row number is not correct: " + row.toString());
 				return "";
 			}
-			//logs.debug("getting data from sheet: " + sheetName);
+			// logs.debug("getting data from sheet: " + sheetName);
 			int index = workbook.getSheetIndex(sheetName);
 
-			if (index == -1)
-			{
-				logs.debug("Shee is not exist: "+ sheetName);
+			if (index == -1) {
+				logs.debug("Shee is not exist: " + sheetName);
 				return "";
 			}
 
 			sheet = workbook.getSheetAt(index);
-			
+
 			row = sheet.getRow(rowNum - 1);
 			if (row == null)
 				return "";
@@ -163,15 +160,18 @@ public class Xls_Reader {
 				}
 
 				return cellText;
-			}else if (cell.getCellTypeEnum() ==  CellType.BOOLEAN) {
-				logs.debug("Cell is boolean: " + cell.getCellTypeEnum() + " " +String.valueOf(cell.getBooleanCellValue()) );
+			} else if (cell.getCellTypeEnum() == CellType.BOOLEAN) {
+				logs.debug("Cell is boolean: " + cell.getCellTypeEnum() + " "
+						+ String.valueOf(cell.getBooleanCellValue()));
 				cell.setCellType(CellType.STRING);
-				logs.debug("Cell is not fit to any type : " + cell.getCellTypeEnum() + "sheet:ROW/COL: " + sheetName+":"+colNum +"/"+rowNum );
+				logs.debug("Cell is not fit to any type : " + cell.getCellTypeEnum() + "sheet:ROW/COL: " + sheetName
+						+ ":" + colNum + "/" + rowNum);
 				return String.valueOf(cell.getBooleanCellValue());
-			}else if (cell.getCellTypeEnum() == CellType.BLANK)
+			} else if (cell.getCellTypeEnum() == CellType.BLANK)
 				return "";
 			else {
-				logs.debug("Cell is not fit to any type : " + cell.getCellTypeEnum() + " sheet:ROW/COL: " + sheetName+":"+colNum +"/"+rowNum );
+				logs.debug("Cell is not fit to any type : " + cell.getCellTypeEnum() + " sheet:ROW/COL: " + sheetName
+						+ ":" + colNum + "/" + rowNum);
 				cell.setCellType(CellType.STRING);
 				logs.debug("Cell new Value is  :  " + cell.getStringCellValue());
 				return String.valueOf(cell.getStringCellValue());
@@ -182,7 +182,7 @@ public class Xls_Reader {
 			e.printStackTrace();
 			return "row " + rowNum + " or column " + colNum + " does not exist  in xls";
 		}
-    }// getCellData()
+	}// getCellData()
 
 	// returns true if data is set successfully else false
 	public boolean setCellData(String sheetName, String colName, int rowNum, String data) {
@@ -347,6 +347,7 @@ public class Xls_Reader {
 	}
 
 	// returns true if column is created successfully
+	@SuppressWarnings("deprecation")
 	public boolean addColumn(String sheetName, String colName) {
 		// System.out.println("**************addColumn*********************");
 
@@ -392,6 +393,7 @@ public class Xls_Reader {
 	}
 
 	// removes a column and all the contents
+	@SuppressWarnings("deprecation")
 	public boolean removeColumn(String sheetName, int colNum) {
 		try {
 			if (!isSheetExist(sheetName))
@@ -401,7 +403,7 @@ public class Xls_Reader {
 			sheet = workbook.getSheet(sheetName);
 			XSSFCellStyle style = workbook.createCellStyle();
 			style.setFillForegroundColor(HSSFColor.GREY_40_PERCENT.index);
-			XSSFCreationHelper createHelper = workbook.getCreationHelper();
+			//XSSFCreationHelper createHelper = workbook.getCreationHelper();
 			style.setFillPattern(FillPatternType.SOLID_FOREGROUND);
 
 			for (int i = 0; i < getRowCount(sheetName); i++) {

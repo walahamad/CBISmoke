@@ -1,12 +1,8 @@
 package com.generic.tests.GH.HomePage;
 
 import com.generic.page.HomePage;
-import com.generic.selector.HomePageSelectors;
 import com.generic.setup.GlobalVariables.browsers;
 import com.generic.setup.SelTestCase;
-
-import org.openqa.selenium.WebElement;
-import java.util.List;
 
 public class AccountMenuValidation extends SelTestCase {
 	public static boolean validate() throws Exception {

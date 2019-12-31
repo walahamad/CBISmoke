@@ -9,16 +9,15 @@ import com.generic.util.RandomUtilities;
 
 public class Registeration_e2e extends SelTestCase {
 
-
 	public static void Validate() throws Exception {
 
 		try {
 			getCurrentFunctionName(true);
-			String email = RandomUtilities.getRandomName()+"@testing.com"; 
-			String password = "P@ssword1"; 
-		
-			Registration.registerFreshUser(email, password, "Firstvisa", "Lastvisa" );				
-			
+			String email = RandomUtilities.getRandomName() + "@testing.com";
+			String password = "P@ssword1";
+
+			Registration.registerFreshUser(email, password, "Firstvisa", "Lastvisa");
+
 			getCurrentFunctionName(false);
 		} catch (NoSuchElementException e) {
 			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
@@ -27,7 +26,5 @@ public class Registeration_e2e extends SelTestCase {
 		}
 
 	}
-	
-	
-	
+
 }

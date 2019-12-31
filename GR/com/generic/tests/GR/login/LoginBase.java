@@ -54,8 +54,9 @@ public class LoginBase extends SelTestCase {
 		// Important to add this for logging/reporting
 		setTestCaseReportName("Login Case");
 		Testlogs.get().debug("Case Browser: " + testObject.getParameter("browserName"));
-		logCaseDetailds(MessageFormat.format(LoggingMsg.TEST_CASE_DESC, testDataSheet + "." + caseId,
-				this.getClass().getCanonicalName(), desc, proprties.replace("\n", "<br>- ")));
+		String CaseDescription = MessageFormat.format(LoggingMsg.TEST_CASE_DESC, testDataSheet + "." + caseId,
+				this.getClass().getCanonicalName(), desc.replace("\n", "<br>--"));
+		initReportTime();
 
 		String userMail = "";
 		String userPassword = "";
@@ -76,7 +77,7 @@ public class LoginBase extends SelTestCase {
 
 			if ((proprties.equals("Success login") || proprties.equals("myAccountLink")) && email.equals("")) {
 				Testlogs.get().debug("Run the registration test case before sign in.");
-				//Prepare registration data.
+				// Prepare registration data.
 				userMail = RandomUtilities.getRandomEmail();
 				userPassword = "P@ssword11";
 				Login.registerNewUser(userMail, userPassword, true);
@@ -98,8 +99,10 @@ public class LoginBase extends SelTestCase {
 				String failureMessage = MessageFormat.format(LoggingMsg.ACTUAL_EXPECTED_ERROR,
 						emailMessage + "<br>" + passwordMessage, fieldsValidation);
 
-				sassert().assertTrue(fieldsValidation.contains(emailMessage),"Mail Validation error: "+failureMessage);
-				sassert().assertTrue(fieldsValidation.contains(passwordMessage),"Password Validation error"+ failureMessage);
+				sassert().assertTrue(fieldsValidation.contains(emailMessage),
+						"Mail Validation error: " + failureMessage);
+				sassert().assertTrue(fieldsValidation.contains(passwordMessage),
+						"Password Validation error" + failureMessage);
 				sassert().assertTrue(!Login.checkUserAccount(), LoggingMsg.USER_IS_LOGGED_IN);
 			}
 
@@ -133,8 +136,11 @@ public class LoginBase extends SelTestCase {
 			}
 
 			sassert().assertAll();
+			logCaseDetailds(CaseDescription);
 			Common.testPass();
 		} catch (Throwable t) {
+			logCaseDetailds(CaseDescription + "<br><b><font color='red'>Failure Reason: </font></b>"
+					+ t.getMessage().replace("\n", "").trim());
 			setTestCaseDescription(getTestCaseDescription());
 			Testlogs.get().debug(MessageFormat.format(LoggingMsg.DEBUGGING_TEXT, t.getMessage()));
 			t.printStackTrace();

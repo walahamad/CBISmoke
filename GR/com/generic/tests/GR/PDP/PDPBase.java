@@ -20,7 +20,6 @@ import com.generic.util.dataProviderUtils;
 
 public class PDPBase extends SelTestCase {
 
-
 	// possible scenarios
 	public static final String singlePDP = "Validate PDP Single active elements";
 	public static final String bundlePDP = "Validate PDP Bundle active elements";
@@ -54,35 +53,38 @@ public class PDPBase extends SelTestCase {
 	}
 
 	@Test(dataProvider = "PDP_SC")
-	public void PDPTest(String caseId, String runTest, String desc, String proprties)
-			throws Exception {
+	public void PDPTest(String caseId, String runTest, String desc, String proprties, String PID) throws Exception {
 		Testlogs.set(new SASLogger("PDP_SC " + getBrowserName()));
 		// Important to add this for logging/reporting
 		setTestCaseReportName(SheetVariables.PDPCaseId);
 		Testlogs.get().debug("Case Browser: " + testObject.getParameter("browserName"));
-		logCaseDetailds(MessageFormat.format(LoggingMsg.TEST_CASE_DESC, testDataSheet + "." + caseId,
-				this.getClass().getCanonicalName(), desc));
+		String CaseDescription = MessageFormat.format(LoggingMsg.TEST_CASE_DESC, testDataSheet + "." + caseId,
+				this.getClass().getCanonicalName(), desc.replace("\n", "<br>--"));
+		initReportTime();
 
-		try { 
+		try {
 
-			if (proprties.contains(this.singlePDP)) {
-				PDPValidation.validate(singlePDPSearchTerm);
+			if (proprties.contains(singlePDP)) {
+				PDPValidation.validate(singlePDPSearchTerm, false);
 			}
-			if (proprties.contains(this.bundlePDP)) {
-				PDPValidation.validate(BundlePDPSearchTerm);
-			}
-
-			if (proprties.contains(this.personalizedPDP)) {
-				PDPValidation.validate(personalizedPDPSearchTerm);
+			if (proprties.contains(bundlePDP)) {
+				PDPValidation.validate(BundlePDPSearchTerm, false);
 			}
 
-			if (proprties.contains(this.wishListGuestValidation)) {
+			if (proprties.contains(personalizedPDP)) {
+				PDPValidation.validate(personalizedPDPSearchTerm, true);
+			}
+
+			if (proprties.contains(wishListGuestValidation)) {
 				WistListGuestValidation.validate();
 			}
 
 			sassert().assertAll();
+			logCaseDetailds(CaseDescription);
 			Common.testPass();
 		} catch (Throwable t) {
+			logCaseDetailds(CaseDescription + "<br><b><font color='red'>Failure Reason: </font></b>"
+					+ t.getMessage().replace("\n", "").trim());
 			setTestCaseDescription(getTestCaseDescription());
 			Testlogs.get().debug(MessageFormat.format(LoggingMsg.DEBUGGING_TEXT, t.getMessage()));
 			t.printStackTrace();
