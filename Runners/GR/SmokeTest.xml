@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="e2e Smoke test" parallel="tests" thread-count="3" data-provider-thread-count="1">
+
+		<test name="e2e chrome Guest User">
+		<parameter name="browserName" value="chrome"></parameter>
+		<parameter name="Env" value="www"></parameter>
+		<parameter name="Brand" value="GR"></parameter>
+
+		<classes>
+			<class name="com.generic.tests.GR.e2e.SmokeTest_Guest_e2e" />
+		</classes>
+	</test>
+
+	<test name="e2e iPad Guest User">
+		<parameter name="browserName" value="mobile_iPad"></parameter>
+		<parameter name="Env" value="www"></parameter>
+		<parameter name="Brand" value="GR"></parameter>
+		<classes>
+			<class name="com.generic.tests.GR.e2e.SmokeTest_Guest_e2e" />
+		</classes>
+	</test>
+
+
+	<test name="e2e iPhone Guest User">
+		<parameter name="browserName" value="mobile_iPhone X"></parameter>
+		<parameter name="Env" value="www"></parameter>
+		<parameter name="Brand" value="GR"></parameter>
+		<classes>
+			<class name="com.generic.tests.GR.e2e.SmokeTest_Guest_e2e" />
+		</classes>
+	</test> 
+	
+		<test name="e2e chrome Registered User">
+		<parameter name="browserName" value="chrome"></parameter>
+		<parameter name="Env" value="www"></parameter>
+		<parameter name="Brand" value="GR"></parameter>
+
+		<classes>
+			<class name="com.generic.tests.GR.e2e.SmokeTest_Registered_e2e" />
+		</classes>
+	</test>
+
+	<test name="e2e iPad Registered User">
+		<parameter name="browserName" value="mobile_iPad"></parameter>
+		<parameter name="Env" value="www"></parameter>
+		<parameter name="Brand" value="GR"></parameter>
+		<classes>
+			<class name="com.generic.tests.GR.e2e.SmokeTest_Registered_e2e" />
+		</classes>
+	</test>
+
+
+	<test name="e2e iPhone Registered User">
+		<parameter name="browserName" value="mobile_iPhone X"></parameter>
+		<parameter name="Env" value="www"></parameter>
+		<parameter name="Brand" value="GR"></parameter>
+		<classes>
+			<class name="com.generic.tests.GR.e2e.SmokeTest_Registered_e2e" />
+		</classes>
+	</test>
+
+
+
+</suite> <!-- Suite -->
