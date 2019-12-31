@@ -59,7 +59,8 @@ public class Base_PayPalCheckout extends SelTestCase {
 		setTestCaseReportName("Checkout Case");
 		String CaseDescription = MessageFormat.format(LoggingMsg.CHECKOUTDESC, testDataSheet + "." + caseId,
 				this.getClass().getCanonicalName(), desc, proprties.replace("\n", "<br>- "), payment, email);
-
+		initReportTime();
+		
 		LinkedHashMap<String, String> paymentDetails = (LinkedHashMap<String, String>) paymentCards.get(payment);
 		LinkedHashMap<String, String> userdetails = (LinkedHashMap<String, String>) users.get(email);
 		int productsCount = Integer.parseInt(productsNumber);

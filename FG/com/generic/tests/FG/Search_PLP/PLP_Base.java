@@ -52,7 +52,8 @@ public class PLP_Base extends SelTestCase {
 		setTestCaseReportName("PLP Case");
 		String CaseDescription = MessageFormat.format(LoggingMsg.TEST_CASE_DESC, testDataSheet + "." + caseId,
 				this.getClass().getCanonicalName(), desc);
-
+		initReportTime();
+		
 		try {
 
 			if (Proprties.contains(plpTest)) {

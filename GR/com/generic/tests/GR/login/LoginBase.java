@@ -56,6 +56,7 @@ public class LoginBase extends SelTestCase {
 		Testlogs.get().debug("Case Browser: " + testObject.getParameter("browserName"));
 		String CaseDescription = MessageFormat.format(LoggingMsg.TEST_CASE_DESC, testDataSheet + "." + caseId,
 				this.getClass().getCanonicalName(), desc.replace("\n", "<br>--"));
+		initReportTime();
 
 		String userMail = "";
 		String userPassword = "";
