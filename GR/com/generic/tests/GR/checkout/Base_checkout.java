@@ -24,12 +24,14 @@ public class Base_checkout extends SelTestCase {
 
 	// user types
 	public static final String guestUser = "guest";
-	public static final String freshUserMultipleAddresses = "fresh-multiple"; //Needs to be updated in the excel sheet to fresh-multiple-2 where 2 is the number of  products
-	public static final String freshUserSingleAddress = "fresh-single"; 
-	public static final String registeredUserMultipleAddresses = "registered-multiple"; 
-	public static final String registeredUserSingleAddress = "registered-single"; 
+	public static final String freshUserMultipleAddresses = "fresh-multiple"; // Needs to be updated in the excel sheet
+																				// to fresh-multiple-2 where 2 is the
+																				// number of products
+	public static final String freshUserSingleAddress = "fresh-single";
+	public static final String registeredUserMultipleAddresses = "registered-multiple";
+	public static final String registeredUserSingleAddress = "registered-single";
 	public static final String loggedDuringChcOt = "logging During Checkout";
-	
+
 	public static boolean external = false; // change this value will pass through logging
 
 	// used sheet in test
@@ -59,48 +61,52 @@ public class Base_checkout extends SelTestCase {
 	@SuppressWarnings("unchecked") // avoid warning from linked hashmap
 	@Test(dataProvider = "Orders")
 	public void checkOutBaseTest(String caseId, String runTest, String desc, String proprties, String productsNumber,
-			String shippingMethod, String payment, String shippingAddress, String billingAddress,
-			String email) throws Exception {
+			String shippingMethod, String payment, String shippingAddress, String billingAddress, String email)
+			throws Exception {
 
 		// Important to add this for logging/reporting
 		Testlogs.set(new SASLogger("checkout_" + getBrowserName()));
 		setTestCaseReportName("Checkout Case");
-		logCaseDetailds(MessageFormat.format(LoggingMsg.CHECKOUTDESC, testDataSheet + "." + caseId,
-				this.getClass().getCanonicalName(), desc, proprties.replace("\n", "<br>- "), payment,
-				shippingMethod));
+		String CaseDescription = MessageFormat.format(LoggingMsg.TEST_CASE_DESC, testDataSheet + "." + caseId,
+				this.getClass().getCanonicalName(), desc.replace("\n", "<br>--"));
+		initReportTime();
+
 
 		LinkedHashMap<String, String> addressDetails = (LinkedHashMap<String, String>) addresses.get(shippingAddress);
 		LinkedHashMap<String, String> paymentDetails = (LinkedHashMap<String, String>) paymentCards.get(payment);
 		LinkedHashMap<String, String> userdetails = (LinkedHashMap<String, String>) users.get(email);
-		
-		int productsCount =Integer.parseInt(productsNumber);
+
+		int productsCount = Integer.parseInt(productsNumber);
 
 		try {
 
-			//Guest user with multiple addresses
+			// Guest user with multiple addresses
 			if (proprties.contains(freshUserMultipleAddresses)) {
 				GuestCheckoutMultipleAddress.startTest(productsCount, addressDetails, paymentDetails);
 			}
 
-			//Guest user with single address
+			// Guest user with single address
 			if (proprties.contains(freshUserSingleAddress)) {
 				GuestCheckoutSingleAddress.startTest(productsCount, addressDetails, paymentDetails);
 			}
 
-			//Registered user with multiple addresses
+			// Registered user with multiple addresses
 			if (proprties.contains(registeredUserMultipleAddresses)) {
 				RegisteredCheckoutMultipleAddress.startTest(productsCount, addressDetails, paymentDetails, userdetails);
 			}
 
-			//Guest user with multiple addresses
+			// Guest user with multiple addresses
 			if (proprties.contains(registeredUserSingleAddress)) {
 				RegisteredCheckoutSingleAddress.startTest(productsCount, addressDetails, paymentDetails, userdetails);
 			}
-			
+
 			sassert().assertAll();
+			logCaseDetailds(CaseDescription);
 			Common.testPass();
-			
+
 		} catch (Throwable t) {
+			logCaseDetailds(CaseDescription + "<br><b><font color='red'>Failure Reason: </font></b>"
+					+ t.getMessage().replace("\n", "").trim());
 			setTestCaseDescription(getTestCaseDescription());
 			Testlogs.get().debug(MessageFormat.format(LoggingMsg.DEBUGGING_TEXT, t.getMessage()));
 			t.printStackTrace();

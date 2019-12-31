@@ -9,7 +9,6 @@ import org.testng.annotations.Test;
 import org.testng.xml.XmlTest;
 
 import com.generic.setup.Common;
-import com.generic.setup.GlobalVariables;
 import com.generic.setup.LoggingMsg;
 import com.generic.setup.SelTestCase;
 import com.generic.setup.SheetVariables;
@@ -59,9 +58,10 @@ public class HomePageBase extends SelTestCase {
 		// Important to add this for logging/reporting
 		setTestCaseReportName(SheetVariables.HPTestCaseId);
 		Testlogs.get().debug("Case Browser: " + testObject.getParameter("browserName"));
-		logCaseDetailds(MessageFormat.format(LoggingMsg.TEST_CASE_DESC, testDataSheet + "." + caseId,
-				this.getClass().getCanonicalName(), desc.replace("\n", "<br>")));
-
+		String CaseDescription = MessageFormat.format(LoggingMsg.TEST_CASE_DESC, testDataSheet + "." + caseId,
+				this.getClass().getCanonicalName(), desc.replace("\n", "<br>"));
+		initReportTime();
+		
 		try {
 
 			if (proprties.contains(Logo)) {
@@ -89,8 +89,11 @@ public class HomePageBase extends SelTestCase {
 			}
 
 			sassert().assertAll();
+			logCaseDetailds(CaseDescription);
 			Common.testPass();
 		} catch (Throwable t) {
+			logCaseDetailds(CaseDescription + "<br><b><font color='red'>Failure Reason: </font></b>"
+					+ t.getMessage().replace("\n", "").trim());
 			setTestCaseDescription(getTestCaseDescription());
 			Testlogs.get().debug(MessageFormat.format(LoggingMsg.DEBUGGING_TEXT, t.getMessage()));
 			t.printStackTrace();

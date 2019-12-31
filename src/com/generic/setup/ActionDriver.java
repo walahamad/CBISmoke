@@ -156,7 +156,7 @@ public class ActionDriver extends SelTestCase {
 			e.printStackTrace();
 		}
 	}
-      
+
 	/**
 	 * It will type the test data into an input box
 	 *
@@ -192,45 +192,40 @@ public class ActionDriver extends SelTestCase {
 	public static void click(By locator) throws Exception {
 		try {
 			logs.debug(MessageFormat.format(LoggingMsg.CLICK_ELEMENT_SEL, locator.toString()));
-			if (getBrowserName().contains("mobile"))
-			{
+			if (getBrowserName().contains("mobile")) {
 				logs.debug("Clicking on " + locator.toString());
-				((JavascriptExecutor) getDriver()).executeScript("arguments[0].scrollIntoView(true)", getElement(locator));
+				((JavascriptExecutor) getDriver()).executeScript("arguments[0].scrollIntoView(true)",
+						getElement(locator));
 				Thread.sleep(50000);
 				getElement(locator).click();
-			}
-			else {
+			} else {
 				getElement(locator).click();
 			}
-			
+
 		} catch (Throwable t) {
 			// t.printStackTrace();
 			throw new Exception(locator + " is missing " + t);
 		}
 	}
-	
-	
-	
+
 	public static void click(WebElement field) throws Exception {
 		try {
 			logs.debug(MessageFormat.format(LoggingMsg.CLICK_ELEMENT_SEL, field.toString()));
-			if (getBrowserName().contains("mobile"))
-				{
+			if (getBrowserName().contains("mobile")) {
 				((JavascriptExecutor) getDriver()).executeScript("arguments[0].scrollIntoView(true)", field);
 				Thread.sleep(3000);
 				((JavascriptExecutor) getDriver()).executeScript("arguments[0].click()", field);
-				//field.click();
-				}//mobile
+				// field.click();
+			} // mobile
 			else {
 				field.click();
 			}
-			
+
 		} catch (Throwable t) {
 			// t.printStackTrace();
 			throw new Exception(field + " is missing " + t);
 		}
 	}
-	
 
 	/**
 	 * It clicks on web element

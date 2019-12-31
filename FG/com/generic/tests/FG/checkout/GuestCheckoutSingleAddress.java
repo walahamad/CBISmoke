@@ -11,7 +11,6 @@ import com.generic.setup.SelTestCase;
 
 public class GuestCheckoutSingleAddress extends SelTestCase {
 
-
 	public static void startTest(int productsCount, LinkedHashMap<String, String> addressDetails,
 			LinkedHashMap<String, String> paymentDetails) throws Exception {
 		getCurrentFunctionName(true);
@@ -42,7 +41,8 @@ public class GuestCheckoutSingleAddress extends SelTestCase {
 			CheckOut.proceedToStepTwo();
 
 			// Check number of products in step 2
-			sassert().assertTrue(CheckOut.checkProductsinStepTwo() == productsCount, "Some products are missing in step 2 ");
+			sassert().assertTrue(CheckOut.checkProductsinStepTwo() == productsCount,
+					"Some products are missing in step 2 ");
 
 			// Proceed to step 3
 			CheckOut.proceedToStepThree();
@@ -52,7 +52,7 @@ public class GuestCheckoutSingleAddress extends SelTestCase {
 
 			// Proceed to step 4
 			CheckOut.proceedToStepFour();
-			
+
 			Thread.sleep(2000);
 
 			// Saving tax and shipping costs to compare them in the confirmation page
@@ -60,7 +60,8 @@ public class GuestCheckoutSingleAddress extends SelTestCase {
 			orderTax = CheckOut.getTaxCosts(GlobalVariables.FG_TAX_CART);
 			orderSubTotal = CheckOut.getSubTotal();
 
-			logs.debug(MessageFormat.format(LoggingMsg.SEL_TEXT, "Shippping cost is: " + orderShipping + " ---- Tax cost is:" + orderTax + " ---- Subtotal is:" + orderSubTotal));
+			logs.debug(MessageFormat.format(LoggingMsg.SEL_TEXT, "Shippping cost is: " + orderShipping
+					+ " ---- Tax cost is:" + orderTax + " ---- Subtotal is:" + orderSubTotal));
 
 			// Fill payment details in the last step
 			CheckOut.fillPayment(paymentDetails);
@@ -77,13 +78,15 @@ public class GuestCheckoutSingleAddress extends SelTestCase {
 			CheckOut.closeRegisterButton();
 
 			// Check number of products in confirmation page
-			sassert().assertTrue(CheckOut.checkProductsinConfirmationPage() == productsCount,"Some products are missing in confirmation page ");
+			sassert().assertTrue(CheckOut.checkProductsinConfirmationPage() == productsCount,
+					"Some products are missing in confirmation page ");
 
 			// Check if shipping costs match
 			sassert().assertTrue(CheckOut.getShippingCosts().equals(orderShipping), "Shipping cost value issue ");
 
 			// Check if tax cost match
-			sassert().assertTrue(CheckOut.getTaxCosts(GlobalVariables.FG_TAX_CONFIRMATION).equals(orderTax), "Tax value issue ");
+			sassert().assertTrue(CheckOut.getTaxCosts(GlobalVariables.FG_TAX_CONFIRMATION).equals(orderTax),
+					"Tax value issue ");
 
 			// Check if subtotal value match
 			sassert().assertTrue(CheckOut.getSubTotal().equals(orderSubTotal), "Subtotal value issue ");
@@ -97,5 +100,5 @@ public class GuestCheckoutSingleAddress extends SelTestCase {
 		}
 
 	}
-	
+
 }

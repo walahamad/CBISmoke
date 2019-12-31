@@ -14,8 +14,6 @@ import com.generic.util.SelectorUtil;
 import com.generic.setup.ExceptionMsg;
 import com.generic.setup.LoggingMsg;
 import com.generic.util.SelectorUtil.commands.actions;
-import com.generic.util.SelectorUtil;
-
 
 /**
  * The Class HomePage.
@@ -42,7 +40,7 @@ public class HomePage extends SelTestCase {
 		getCurrentFunctionName(false);
 	}
 
-	//This is to disable Monetate if needed.
+	// This is to disable Monetate if needed.
 	public static void updateMmonetate() throws Exception {
 		getCurrentFunctionName(true);
 		getDriver().get(getURL() + "/?monetate=" + getCONFIG().getProperty("monetateStatus"));
@@ -519,7 +517,7 @@ public class HomePage extends SelTestCase {
 
 		logs.debug("Open navigation menu");
 		// Click on navigation menu icon and Navigate to an item in the menu.
-		SelectorUtil.initializeSelectorsAndDoActions(HomePageSelectors.navIcon.get()); 
+		SelectorUtil.initializeSelectorsAndDoActions(HomePageSelectors.navIcon.get());
 		getCurrentFunctionName(false);
 	}
 
@@ -590,7 +588,7 @@ public class HomePage extends SelTestCase {
 
 				// Navigate to the selected random page.
 				SelectorUtil.clickOnWebElement(randomElement);
-				
+
 				Thread.sleep(1000);
 				SelectorUtil.waitGWTLoadedEventPWA();
 				String currentPageUrl = SelectorUtil.getCurrentPageUrl();

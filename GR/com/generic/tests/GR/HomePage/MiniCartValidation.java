@@ -8,7 +8,7 @@ import com.generic.setup.SelTestCase;
 public class MiniCartValidation extends SelTestCase {
 
 	public static final String PDPSearchTerm = "lights";
-	
+
 	public static void validate() throws Exception {
 
 		getCurrentFunctionName(true);

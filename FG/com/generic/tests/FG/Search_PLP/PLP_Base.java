@@ -2,7 +2,6 @@ package com.generic.tests.FG.Search_PLP;
 
 import java.text.MessageFormat;
 import java.util.Arrays;
-import java.util.LinkedHashMap;
 import org.testng.Assert;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.DataProvider;
@@ -21,21 +20,19 @@ public class PLP_Base extends SelTestCase {
 
 	// used sheet in test
 	public static final String testDataSheet = SheetVariables.plpSheet;
-	
+
 	public static final String plpTest = "Full PLP";
 
 	private static XmlTest testObject;
 
 	private static ThreadLocal<SASLogger> Testlogs = new ThreadLocal<SASLogger>();
-	private static LinkedHashMap<String, Object> users;
 
 	@BeforeTest
 	public static void initialSetUp(XmlTest test) throws Exception {
 		Testlogs.set(new SASLogger(test.getName() + test.getIndex()));
 		testObject = test;
-		users = Common.readUsers();
 	}
-	
+
 	@DataProvider(name = "PLP", parallel = true)
 	// concurrency maintenance on sheet reading
 	public static Object[][] loadTestData() throws Exception {
@@ -46,19 +43,19 @@ public class PLP_Base extends SelTestCase {
 		Testlogs.get().debug(Arrays.deepToString(data).replace("\n", "--"));
 		return data;
 	}
-	
-	@SuppressWarnings("unchecked")
+
 	@Test(dataProvider = "PLP")
-	public void verifyPLP(String caseId, String runTest, String Proprties, String desc ) throws Exception {
-		
+	public void verifyPLP(String caseId, String runTest, String Proprties, String desc) throws Exception {
+
 		Testlogs.set(new SASLogger("PLP " + getBrowserName()));
 		// Important to add this for logging/reporting
 		setTestCaseReportName("PLP Case");
-		logCaseDetailds(MessageFormat.format(LoggingMsg.TEST_CASE_DESC, testDataSheet + "." + caseId,
-				this.getClass().getCanonicalName(), desc));	
-
+		String CaseDescription = MessageFormat.format(LoggingMsg.TEST_CASE_DESC, testDataSheet + "." + caseId,
+				this.getClass().getCanonicalName(), desc);
+		initReportTime();
+		
 		try {
-			
+
 			if (Proprties.contains(plpTest)) {
 				if (isMobile() || isiPad())
 					PLP.navigateToRandomPLPMobileIpad();
@@ -68,10 +65,13 @@ public class PLP_Base extends SelTestCase {
 
 				sassert().assertTrue(PLP.VerifyPLP(), "Serach validation failed");
 			}
-					
+
 			sassert().assertAll();
+			logCaseDetailds(CaseDescription);
 			Common.testPass();
 		} catch (Throwable t) {
+			logCaseDetailds(CaseDescription + "<br><b><font color='red'>Failure Reason: </font></b>"
+					+ t.getMessage().replace("\n", "").trim());
 			setTestCaseDescription(getTestCaseDescription());
 			Testlogs.get().debug(MessageFormat.format(LoggingMsg.DEBUGGING_TEXT, t.getMessage()));
 			t.printStackTrace();

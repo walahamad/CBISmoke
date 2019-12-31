@@ -33,7 +33,7 @@ public class CLPBase extends SelTestCase {
 	@BeforeTest
 	public static void initialSetUp(XmlTest test) throws Exception {
 		Testlogs.set(new SASLogger(test.getName() + test.getIndex()));
-		testObject = test; 
+		testObject = test;
 	}
 
 	@DataProvider(name = "CLP_SC", parallel = true)
@@ -52,18 +52,23 @@ public class CLPBase extends SelTestCase {
 		// Important to add this for logging/reporting
 		setTestCaseReportName(SheetVariables.HPTestCaseId);
 		Testlogs.get().debug("Case Browser: " + testObject.getParameter("browserName"));
-		logCaseDetailds(MessageFormat.format(LoggingMsg.TEST_CASE_DESC, testDataSheet + "." + caseId,
-				this.getClass().getCanonicalName(), desc.replace("\n", "<br>--")));
+		String CaseDescription = MessageFormat.format(LoggingMsg.TEST_CASE_DESC, testDataSheet + "." + caseId,
+				this.getClass().getCanonicalName(), desc.replace("\n", "<br>--"));
+		initReportTime();
 
 		try {
-			   if (proprties.contains(CLP)) {
-					sassert().assertTrue(CLPValidation.validate(), "CLP validation has some problems");
-				} else {
-					Testlogs.get().debug("please check proprties provided in excel sheet");
-				}
+			if (proprties.contains(CLP)) {
+				sassert().assertTrue(CLPValidation.validate(), "CLP validation has some problems");
+			} else {
+				Testlogs.get().debug("please check proprties provided in excel sheet");
+			}
 			sassert().assertAll();
+			logCaseDetailds(CaseDescription);
 			Common.testPass();
 		} catch (Throwable t) {
+			logCaseDetailds(CaseDescription + "<br><b><font color='red'>Failure Reason: </font></b>"
+					+ t.getMessage().replace("\n", "").trim());
+			
 			setTestCaseDescription(getTestCaseDescription());
 			Testlogs.get().debug(MessageFormat.format(LoggingMsg.DEBUGGING_TEXT, t.getMessage()));
 			t.printStackTrace();
@@ -74,4 +79,3 @@ public class CLPBase extends SelTestCase {
 		} // catch
 	}// test
 }
-

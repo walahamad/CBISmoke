@@ -12,7 +12,6 @@ import org.testng.xml.XmlTest;
 
 import com.generic.page.Registration;
 import com.generic.page.Login;
-import com.generic.selector.LoginSelectors;
 import com.generic.setup.Common;
 import com.generic.setup.LoggingMsg;
 import com.generic.setup.SelTestCase;
