@@ -21,6 +21,9 @@ import javax.imageio.ImageIO;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.testng.Assert;
+import org.testng.SkipException;
+
 import com.generic.setup.GlobalVariables.browsers;
 import com.generic.util.ReportUtil;
 import com.generic.util.dataProviderUtils;
@@ -151,13 +154,48 @@ public class Common extends SelTestCase {
 		setTestStatus("Pass");
 
 	}
-
-	public static void testIgnored() {
-		logs.debug("Test Status: Ignored");
-		setTestStatus("Ignore");
+	
+	/**
+	 * Set test case status that will appear in the Automation Report
+	 *
+	 */
+	public static void testPass(String CaseDescription) {
+		logCaseDetailds(CaseDescription);
+		logs.debug("Test Status: PASS");
+		setTestStatus("Pass");
 
 	}
 
+	public static void testSkipped(String CaseDescription) {
+		logCaseDetailds(CaseDescription);
+		logs.debug("Test Status: Skipped");
+		setTestStatus("Skip");
+		throw new SkipException("Test Skipped");
+
+	}
+
+	
+	/**
+	 * Set test case status that will appear in the Automation Report
+	 *
+	 *
+	 */
+	public static void testFail(Throwable t, String CaseDescription , String screenshotName ) {
+		logCaseDetailds(CaseDescription + "<br><b><font color='red'>Failure Reason: </font></b>"
+				+ t.getMessage().replace("\n", "").trim());
+			setTestCaseDescription(getTestCaseDescription());
+			logs.debug(MessageFormat.format(LoggingMsg.DEBUGGING_TEXT, t.getMessage()));
+			t.printStackTrace();
+			
+			logs.debug("Test Status: Failed");
+			setTestStatus("Fail: " + t.getMessage());
+			logs.debug(MessageFormat.format(LoggingMsg.CURRENT_URL, SelTestCase.getDriver().getCurrentUrl()));
+			
+			ReportUtil.takeScreenShot(getDriver(), screenshotName);
+			Assert.assertTrue(false, t.getMessage());
+	}
+
+	
 	/**
 	 * Set test case status that will appear in the Automation Report
 	 *

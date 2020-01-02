@@ -47,8 +47,8 @@ public class ReportResultsWriter {
 		} else if (status.toLowerCase().startsWith("fail")) {
 			out.write("<td class='status-fail'><div class='circle'></div><span>" + status.substring(0, 4)
 					+ "</span></td>\n");
-		} else if (status.toLowerCase().startsWith("ignore")) {
-			out.write("<td class='status-ignore'><div class='circle'></div><span>" + status.substring(0, 6)
+		} else if (status.toLowerCase().startsWith("skip")) {
+			out.write("<td class='status-skip'><div class='circle'></div><span>" + "Skip"
 					+ "</span></td>\n");
 		} else {
 			out.write("<td>" + status + "</td>\n");
