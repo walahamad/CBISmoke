@@ -3,8 +3,6 @@ package com.generic.tests.GR.HomePage;
 import java.text.MessageFormat;
 import java.util.Arrays;
 
-import org.apache.commons.collections4.iterators.SkippingIterator;
-import org.testng.Assert;
 import org.testng.SkipException;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.DataProvider;
@@ -16,7 +14,6 @@ import com.generic.setup.LoggingMsg;
 import com.generic.setup.SelTestCase;
 import com.generic.setup.SheetVariables;
 import com.generic.tests.GR.HomePage.LogoValidation;
-import com.generic.util.ReportUtil;
 import com.generic.util.SASLogger;
 import com.generic.util.dataProviderUtils;
 

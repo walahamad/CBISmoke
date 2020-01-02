@@ -3,7 +3,6 @@ package com.generic.tests.GR.Cart;
 import java.text.MessageFormat;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
-import org.testng.Assert;
 import org.testng.SkipException;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
@@ -14,7 +13,6 @@ import com.generic.setup.LoggingMsg;
 import com.generic.setup.SelTestCase;
 import com.generic.setup.SheetVariables;
 import com.generic.tests.GR.Cart.CartValidation;
-import com.generic.util.ReportUtil;
 import com.generic.util.SASLogger;
 import com.generic.util.dataProviderUtils;
 
