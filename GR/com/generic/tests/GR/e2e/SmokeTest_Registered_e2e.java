@@ -66,8 +66,6 @@ public class SmokeTest_Registered_e2e extends SelTestCase {
 
 		try {
 
-			Common.refreshBrowser();
-
 			Registeration_e2e.Validate();
 			HomePage_e2e.Validate();
 			Search_PLP_e2e.Validate();

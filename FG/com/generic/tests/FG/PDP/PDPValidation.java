@@ -8,10 +8,6 @@ public class PDPValidation extends SelTestCase {
 
 	public static void validate(String searchTerm, Boolean Personalized) throws Exception {
 		getCurrentFunctionName(true);
-		// To be removed after R1 build, this is to handle blank page in mobile for new
-		// session.
-		if (isMobile())
-			Common.refreshBrowser();
 		PDP.NavigateToPDP(searchTerm);
 		// int numberOfItems = PDP.getNumberOfItems();
 		Boolean bundle = PDP.getNumberOfItems() > 1;
