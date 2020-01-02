@@ -391,6 +391,8 @@ public class SelTestCase {
 		try {
 			Common.launchApplication(test.getParameter("browserName"), test.getParameter("Env"),
 					test.getParameter("Brand"));
+			if (isMobile())
+				getDriver().navigate().refresh();
 
 		} catch (Throwable t) {
 			logs.debug(MessageFormat.format(LoggingMsg.DEBUGGING_TEXT, t));

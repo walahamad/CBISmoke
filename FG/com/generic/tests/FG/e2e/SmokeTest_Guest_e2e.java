@@ -75,8 +75,6 @@ public class SmokeTest_Guest_e2e extends SelTestCase {
 		int productsCount = Integer.parseInt(productsNumber);
 
 		try {
-			// added this as protection from white page
-			Common.refreshBrowser();
 
 			HomePage_e2e.Validate();
 			Search_PLP_e2e.Validate();

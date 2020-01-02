@@ -65,7 +65,6 @@ public class SmokeTest_Guest_e2e extends SelTestCase {
 
 		try {
 
-			Common.refreshBrowser();
 			HomePage_e2e.Validate();
 			Search_PLP_e2e.Validate();
 			PDP_e2e.Validate();
