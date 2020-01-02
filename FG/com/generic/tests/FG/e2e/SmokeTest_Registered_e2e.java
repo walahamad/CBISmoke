@@ -2,7 +2,7 @@ package com.generic.tests.FG.e2e;
 
 import java.text.MessageFormat;
 import java.util.Arrays;
-import org.testng.Assert;
+import org.testng.SkipException;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -18,7 +18,6 @@ import com.generic.tests.FG.e2e.HomePage_e2e;
 import com.generic.tests.FG.e2e.PDP_e2e;
 import com.generic.tests.FG.e2e.Search_PLP_e2e;
 import com.generic.util.dataProviderUtils;
-import com.generic.util.ReportUtil;
 import com.generic.util.SASLogger;
 
 public class SmokeTest_Registered_e2e extends SelTestCase {
@@ -55,10 +54,9 @@ public class SmokeTest_Registered_e2e extends SelTestCase {
 		Testlogs.set(new SASLogger("checkout_" + getBrowserName()));
 		setTestCaseReportName("Checkout Case");
 		String CaseDescription = MessageFormat.format(LoggingMsg.CHECKOUTDESC, testDataSheet + "." + caseId,
-				this.getClass().getCanonicalName(), desc, proprties.replace("\n", "<br>- "), payment,
-				shippingMethod);
+				this.getClass().getCanonicalName(), desc, proprties.replace("\n", "<br>- "), payment, shippingMethod);
 		initReportTime();
-		
+
 		LinkedHashMap<String, String> addressDetails = (LinkedHashMap<String, String>) addresses.get(shippingAddress);
 		LinkedHashMap<String, String> paymentDetails = (LinkedHashMap<String, String>) paymentCards.get(payment);
 		LinkedHashMap<String, String> userdetails = (LinkedHashMap<String, String>) users.get(email);
@@ -76,19 +74,15 @@ public class SmokeTest_Registered_e2e extends SelTestCase {
 			Checkout_e2e.ValidateRegistered(productsCount, addressDetails, paymentDetails, userdetails);
 
 			sassert().assertAll();
-			logCaseDetailds(CaseDescription);
-			Common.testPass();
 
+			Common.testPass(CaseDescription);
 		} catch (Throwable t) {
-			logCaseDetailds(CaseDescription + "<br><b><font color='red'>Failure Reason: </font></b>"
-					+ t.getMessage().replace("\n", "").trim());
-			setTestCaseDescription(getTestCaseDescription());
-			Testlogs.get().debug(MessageFormat.format(LoggingMsg.DEBUGGING_TEXT, t.getMessage()));
-			t.printStackTrace();
-			String temp = getTestCaseReportName();
-			Common.testFail(t, temp);
-			ReportUtil.takeScreenShot(getDriver(), testDataSheet + "_" + caseId);
-			Assert.assertTrue(false, t.getMessage());
+			if ((getTestStatus() != null) && getTestStatus().equalsIgnoreCase("skip")) {
+				throw new SkipException("Skipping this exception");
+			} else {
+				Common.testFail(t, CaseDescription, testDataSheet + "_" + caseId);
+			}
+
 		} // catch
 	}// test
-}// class
+}

@@ -9,20 +9,5 @@
 			<class name="com.generic.tests.GR.HomePage.HomePageBase" />
 		</classes>
 	</test><!-- Test -->
-	<test name="HP iPad">
-		<parameter name="browserName" value="mobile_iPad"></parameter>
-		<parameter name="Env" value="prod"></parameter>
-		<parameter name="Brand" value="GR"></parameter>
-		<classes>
-			<class name="com.generic.tests.GR.HomePage.HomePageBase" />
-		</classes>
-	</test><!-- Test -->
-	<test name="HP iPhone">
-		<parameter name="browserName" value="mobile_iPhone X"></parameter>
-		<parameter name="Env" value="prod"></parameter>
-		<parameter name="Brand" value="GR"></parameter>
-		<classes>
-			<class name="com.generic.tests.GR.HomePage.HomePageBase" />
-		</classes>
-	</test><!-- Test -->
+
 </suite> <!-- Suite -->

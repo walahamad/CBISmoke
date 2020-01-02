@@ -2,7 +2,7 @@ package com.generic.tests.GR.checkout;
 
 import java.text.MessageFormat;
 import java.util.Arrays;
-import org.testng.Assert;
+import org.testng.SkipException;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -13,7 +13,6 @@ import com.generic.setup.LoggingMsg;
 import com.generic.setup.SelTestCase;
 import com.generic.setup.SheetVariables;
 import com.generic.util.dataProviderUtils;
-import com.generic.util.ReportUtil;
 import com.generic.util.SASLogger;
 
 public class Base_PayPalCheckout extends SelTestCase {
@@ -53,13 +52,11 @@ public class Base_PayPalCheckout extends SelTestCase {
 	public void checkOutBaseTest(String caseId, String runTest, String desc, String proprties, String productsNumber,
 			String payment, String email) throws Exception {
 
-
 		Testlogs.set(new SASLogger("checkout_" + getBrowserName()));
 		setTestCaseReportName("Checkout Case");
 		String CaseDescription = MessageFormat.format(LoggingMsg.TEST_CASE_DESC, testDataSheet + "." + caseId,
 				this.getClass().getCanonicalName(), desc.replace("\n", "<br>--"));
 		initReportTime();
-
 
 		LinkedHashMap<String, String> userdetails = (LinkedHashMap<String, String>) users.get(email);
 		LinkedHashMap<String, String> paymentDetails = (LinkedHashMap<String, String>) paymentCards.get(payment);
@@ -79,19 +76,15 @@ public class Base_PayPalCheckout extends SelTestCase {
 			}
 
 			sassert().assertAll();
-			logCaseDetailds(CaseDescription);
-			Common.testPass();
 
+			Common.testPass(CaseDescription);
 		} catch (Throwable t) {
-			logCaseDetailds(CaseDescription + "<br><b><font color='red'>Failure Reason: </font></b>"
-					+ t.getMessage().replace("\n", "").trim());
-			setTestCaseDescription(getTestCaseDescription());
-			Testlogs.get().debug(MessageFormat.format(LoggingMsg.DEBUGGING_TEXT, t.getMessage()));
-			t.printStackTrace();
-			String temp = getTestCaseReportName();
-			Common.testFail(t, temp);
-			ReportUtil.takeScreenShot(getDriver(), testDataSheet + "_" + caseId);
-			Assert.assertTrue(false, t.getMessage());
+			if ((getTestStatus() != null) && getTestStatus().equalsIgnoreCase("skip")) {
+				throw new SkipException("Skipping this exception");
+			} else {
+				Common.testFail(t, CaseDescription, testDataSheet + "_" + caseId);
+			}
+
 		} // catch
 	}// test
-}// class
+}
