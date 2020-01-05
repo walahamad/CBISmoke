@@ -2,7 +2,7 @@ package com.generic.tests.GR.checkout;
 
 import java.text.MessageFormat;
 import java.util.Arrays;
-import org.testng.Assert;
+import org.testng.SkipException;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -17,19 +17,20 @@ import com.generic.tests.GR.checkout.GuestCheckoutSingleAddress;
 import com.generic.tests.GR.checkout.RegisteredCheckoutMultipleAddress;
 import com.generic.tests.GR.checkout.RegisteredCheckoutSingleAddress;
 import com.generic.util.dataProviderUtils;
-import com.generic.util.ReportUtil;
 import com.generic.util.SASLogger;
 
 public class Base_checkout extends SelTestCase {
 
 	// user types
 	public static final String guestUser = "guest";
-	public static final String freshUserMultipleAddresses = "fresh-multiple"; //Needs to be updated in the excel sheet to fresh-multiple-2 where 2 is the number of  products
-	public static final String freshUserSingleAddress = "fresh-single"; 
-	public static final String registeredUserMultipleAddresses = "registered-multiple"; 
-	public static final String registeredUserSingleAddress = "registered-single"; 
+	public static final String freshUserMultipleAddresses = "fresh-multiple"; // Needs to be updated in the excel sheet
+																				// to fresh-multiple-2 where 2 is the
+																				// number of products
+	public static final String freshUserSingleAddress = "fresh-single";
+	public static final String registeredUserMultipleAddresses = "registered-multiple";
+	public static final String registeredUserSingleAddress = "registered-single";
 	public static final String loggedDuringChcOt = "logging During Checkout";
-	
+
 	public static boolean external = false; // change this value will pass through logging
 
 	// used sheet in test
@@ -59,57 +60,54 @@ public class Base_checkout extends SelTestCase {
 	@SuppressWarnings("unchecked") // avoid warning from linked hashmap
 	@Test(dataProvider = "Orders")
 	public void checkOutBaseTest(String caseId, String runTest, String desc, String proprties, String productsNumber,
-			String shippingMethod, String payment, String shippingAddress, String billingAddress,
-			String email) throws Exception {
+			String shippingMethod, String payment, String shippingAddress, String billingAddress, String email)
+			throws Exception {
 
-		if (!external) { // this logic to avoid passing this block in case you call it from other class
-			// Important to add this for logging/reporting
-			Testlogs.set(new SASLogger("checkout_" + getBrowserName()));
-			setTestCaseReportName("Checkout Case");
-			logCaseDetailds(MessageFormat.format(LoggingMsg.CHECKOUTDESC, testDataSheet + "." + caseId,
-					this.getClass().getCanonicalName(), desc, proprties.replace("\n", "<br>- "), payment,
-					shippingMethod));
-		} // if not external
+		// Important to add this for logging/reporting
+		Testlogs.set(new SASLogger("checkout_" + getBrowserName()));
+		setTestCaseReportName("Checkout Case");
+		String CaseDescription = MessageFormat.format(LoggingMsg.TEST_CASE_DESC, testDataSheet + "." + caseId,
+				this.getClass().getCanonicalName(), desc.replace("\n", "<br>--"));
+		initReportTime();
 
 		LinkedHashMap<String, String> addressDetails = (LinkedHashMap<String, String>) addresses.get(shippingAddress);
 		LinkedHashMap<String, String> paymentDetails = (LinkedHashMap<String, String>) paymentCards.get(payment);
 		LinkedHashMap<String, String> userdetails = (LinkedHashMap<String, String>) users.get(email);
-		
-		int productsCount =Integer.parseInt(productsNumber);
+
+		int productsCount = Integer.parseInt(productsNumber);
 
 		try {
 
-			//Guest user with multiple addresses
+			// Guest user with multiple addresses
 			if (proprties.contains(freshUserMultipleAddresses)) {
 				GuestCheckoutMultipleAddress.startTest(productsCount, addressDetails, paymentDetails);
 			}
 
-			//Guest user with single address
+			// Guest user with single address
 			if (proprties.contains(freshUserSingleAddress)) {
 				GuestCheckoutSingleAddress.startTest(productsCount, addressDetails, paymentDetails);
 			}
 
-			//Registered user with multiple addresses
+			// Registered user with multiple addresses
 			if (proprties.contains(registeredUserMultipleAddresses)) {
 				RegisteredCheckoutMultipleAddress.startTest(productsCount, addressDetails, paymentDetails, userdetails);
 			}
 
-			//Guest user with multiple addresses
+			// Guest user with multiple addresses
 			if (proprties.contains(registeredUserSingleAddress)) {
 				RegisteredCheckoutSingleAddress.startTest(productsCount, addressDetails, paymentDetails, userdetails);
 			}
-			
+
 			sassert().assertAll();
-			Common.testPass();
-			
+
+			Common.testPass(CaseDescription);
 		} catch (Throwable t) {
-			setTestCaseDescription(getTestCaseDescription());
-			Testlogs.get().debug(MessageFormat.format(LoggingMsg.DEBUGGING_TEXT, t.getMessage()));
-			t.printStackTrace();
-			String temp = getTestCaseReportName();
-			Common.testFail(t, temp);
-			ReportUtil.takeScreenShot(getDriver(), testDataSheet + "_" + caseId);
-			Assert.assertTrue(false, t.getMessage());
+			if ((getTestStatus() != null) && getTestStatus().equalsIgnoreCase("skip")) {
+				throw new SkipException("Skipping this exception");
+			} else {
+				Common.testFail(t, CaseDescription, testDataSheet + "_" + caseId);
+			}
+
 		} // catch
 	}// test
-}// class
+}

@@ -10,9 +10,8 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.xml.XmlTest;
 
-import com.generic.page.PLP;
 import com.generic.page.Registration;
-import com.generic.page.SignIn;
+import com.generic.page.Login;
 import com.generic.setup.Common;
 import com.generic.setup.LoggingMsg;
 import com.generic.setup.PagesURLs;
@@ -67,7 +66,7 @@ public class PLP_Base extends SelTestCase {
 			
 			if (Proprties.contains("Loggedin"))
 			{
-				SignIn.logIn(emailSubmail, (String) userDetails.get(Registration.keys.password));
+				Login.logIn(emailSubmail, (String) userDetails.get(Registration.keys.password));
 
 			}
 			String url = PagesURLs.getHomePage()+ PagesURLs.getPLP();

@@ -153,12 +153,12 @@
                 font-size: 22px;
                 font-weight: bold;
         }
-        .status-pass , .status-fail {
+        .status-pass , .status-fail , .status-skip {
             padding: 0;
             padding-left: 3px;
             padding-top: 5px;
         }
-        .status-pass .circle , .status-fail .circle {
+        .status-pass .circle , .status-fail .circle, .status-skip .circle{
             display: inline-block;
             -webkit-border-radius:8px;
             -moz-border-radius:8px;
@@ -167,7 +167,7 @@
             width:10px;
             height:10px;
         }
-        .status-pass span, .status-fail span {
+        .status-pass span, .status-fail span , .status-skip span{
             text-transform: uppercase;
             padding-left: 5px;
         }
@@ -179,7 +179,7 @@
             background-color: #ff3b30;
             border-color: #ff3b30;
         }
-		.status-ignore .circle {
+		.status-skip .circle {
             background-color: #E4EF3A;
             border-color: #E4EF3A;
         }

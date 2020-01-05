@@ -2,8 +2,6 @@ package com.generic.tests.GHSearch_PLP;
 
 import java.text.MessageFormat;
 import java.util.Arrays;
-import java.util.LinkedHashMap;
-
 import org.testng.Assert;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.DataProvider;
@@ -27,7 +25,6 @@ public class SearchBase extends SelTestCase {
 	private static XmlTest testObject;
 
 	private static ThreadLocal<SASLogger> Testlogs = new ThreadLocal<SASLogger>();
-	private static LinkedHashMap<String, Object> users;
 	
 	private String RecommendedProductsCase = "Recommended products";
 	private String fullSearchCase = "full search";
@@ -36,7 +33,6 @@ public class SearchBase extends SelTestCase {
 	public static void initialSetUp(XmlTest test) throws Exception {
 		Testlogs.set(new SASLogger(test.getName() + test.getIndex()));
 		testObject = test;
-		users = Common.readUsers();
 	}
 	
 	@DataProvider(name = "PLP", parallel = true)

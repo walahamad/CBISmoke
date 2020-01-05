@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="CLPRegression" parallel="tests" thread-count="3" data-provider-thread-count="1">
+<suite name="CLP Regression" parallel="tests" thread-count="3" data-provider-thread-count="1">
  	<test name="CLP Chrome">
 		<parameter name="browserName" value="Chrome"></parameter>
 		<parameter name="Env" value="prod"></parameter>

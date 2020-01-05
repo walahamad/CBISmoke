@@ -9,7 +9,7 @@ public class YMALCarouselsVerification extends SelTestCase {
 		getCurrentFunctionName(true);
 		sassert().assertTrue(HomePage.validateYMALCarouselsDisplayed(), "YMAL Carousels is not displayed");
 		getCurrentFunctionName(false);
-		
+
 	}
 
 }

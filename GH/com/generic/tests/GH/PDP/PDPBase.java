@@ -25,9 +25,9 @@ public class PDPBase extends SelTestCase {
 	public static final String singlePDP = "Validate PDP Single active elements";
 	public static final String bundlePDP = "Validate PDP Bundle active elements";
 	public static final String personalizedPDP = "Validate PDP Personalized active elements";
-	public static final String singlePDPSearchTerm = "Rugs";
+	public static final String singlePDPSearchTerm = "shirt";
 	public static final String BundlePDPSearchTerm = "Collection";
-	public static final String personalizedPDPSearchTerm = "Resort Cotton";
+	public static final String personalizedPDPSearchTerm = "2750";
 	public static final String wishListGuestValidation = "Wish List Guest Validation";
 
 	// used sheet in test
@@ -65,17 +65,17 @@ public class PDPBase extends SelTestCase {
 
 		try {
 
-			if (proprties.contains(this.singlePDP)) {
-				PDPValidation.validate(pid);
+			if (proprties.contains(singlePDP)) {
+				PDPValidation.validate(singlePDPSearchTerm);
 			}
-			if (proprties.contains(this.bundlePDP)) {
+			if (proprties.contains(bundlePDP)) {
 				PDPValidation.validate(BundlePDPSearchTerm);
 			}
-			if (proprties.contains(this.personalizedPDP)) {
-				PDPValidation.validate(pid);
+			if (proprties.contains(personalizedPDP)) {
+				PDPValidation.validate(personalizedPDPSearchTerm);
 			}
 
-			if (proprties.contains(this.wishListGuestValidation)) {
+			if (proprties.contains(wishListGuestValidation)) {
 				WistListGuestValidation.validate();
 			}
 

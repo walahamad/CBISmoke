@@ -1,8 +1,6 @@
 package com.generic.setup;
 
-public class cselector extends SelTestCase{
-	
-	
+public class cselector extends SelTestCase {
 
 	public String DesktopSelector = "";
 	public String TabletSelector = "";
