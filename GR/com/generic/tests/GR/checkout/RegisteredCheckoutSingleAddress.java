@@ -6,11 +6,11 @@ import java.util.NoSuchElementException;
 
 import com.generic.page.CheckOut;
 import com.generic.page.Registration;
-import com.generic.page.SignIn;
 import com.generic.setup.ExceptionMsg;
 import com.generic.setup.GlobalVariables;
 import com.generic.setup.LoggingMsg;
 import com.generic.setup.SelTestCase;
+import com.generic.util.RandomUtilities;
 
 public class RegisteredCheckoutSingleAddress extends SelTestCase {
 
@@ -23,16 +23,17 @@ public class RegisteredCheckoutSingleAddress extends SelTestCase {
 			String orderSubTotal;
 			String orderTax;
 			String orderShipping;
-			
-			String userMail = getSubMailAccount(userDetalis.get(Registration.keys.email));
-			String userPassword = userDetalis.get(Registration.keys.password);
 
-			int productsCountStepTWO=0;
-			
-			Thread.sleep(1500);
+			String fName = "FirstVisa";
+			String lName = "LastVisa";
+			String userMail = RandomUtilities.getRandomEmail();
+			String userPassword = "TestITG226";
 
-			//Perform login
-			SignIn.fillLoginFormAndClickSubmit(userMail, userPassword);	
+			int productsCountStepTWO = 0;
+
+			// Perform login
+			// SignIn.fillLoginFormAndClickSubmit(userMail, userPassword);
+			Registration.registerFreshUser(userMail, userPassword, fName, lName);
 
 			// Add products to cart
 			CheckOut.searchForProductsandAddToCart(productsCount);
@@ -47,25 +48,26 @@ public class RegisteredCheckoutSingleAddress extends SelTestCase {
 				// Proceed to step 2
 				CheckOut.proceedToStepTwo();
 			}
-			
+
 			Thread.sleep(1000);
 
 			// Check number of products in step 2
-			sassert().assertTrue(CheckOut.checkProductsinStepTwo() >= productsCount, "Some products are missing in step 2 ");
-			productsCountStepTWO =CheckOut.checkProductsinStepTwo();
+			sassert().assertTrue(CheckOut.checkProductsinStepTwo() >= productsCount,
+					"Some products are missing in step 2 ");
+			productsCountStepTWO = CheckOut.checkProductsinStepTwo();
 
 			Thread.sleep(2500);
-			
+
 			// Proceed to step 3
 			CheckOut.proceedToStepThree();
-			
+
 			Thread.sleep(1000);
 
 			// Proceed to step 4
 			CheckOut.proceedToStepFour();
-			
+
 			Thread.sleep(1000);
-			
+
 			CheckOut.clickCreditCardPayment();
 
 			// Saving tax and shipping costs to compare them in the confirmation page
@@ -73,7 +75,8 @@ public class RegisteredCheckoutSingleAddress extends SelTestCase {
 			orderTax = CheckOut.getTaxCosts(GlobalVariables.GR_TAX_CART);
 			orderSubTotal = CheckOut.getSubTotal();
 
-			logs.debug(MessageFormat.format(LoggingMsg.SEL_TEXT, "Shippping cost is: " + orderShipping + " ---- Tax cost is:" + orderTax + " ---- Subtotal is:" + orderSubTotal));
+			logs.debug(MessageFormat.format(LoggingMsg.SEL_TEXT, "Shippping cost is: " + orderShipping
+					+ " ---- Tax cost is:" + orderTax + " ---- Subtotal is:" + orderSubTotal));
 
 			// Fill payment details in the last step
 			CheckOut.fillPayment(paymentDetails);
@@ -84,19 +87,20 @@ public class RegisteredCheckoutSingleAddress extends SelTestCase {
 			Thread.sleep(3500);
 
 			// Check number of products in confirmation page
-			sassert().assertTrue(CheckOut.checkProductsinConfirmationPage() == productsCountStepTWO,"Some products are missing in confirmation page ");
+			sassert().assertTrue(CheckOut.checkProductsinConfirmationPage() == productsCountStepTWO,
+					"Some products are missing in confirmation page ");
 
 			// Check if shipping costs match
 			sassert().assertTrue(CheckOut.getShippingCosts().equals(orderShipping), "Shipping cost value issue ");
 
 			// Check if tax cost match
-			sassert().assertTrue(CheckOut.getTaxCosts(GlobalVariables.GR_TAX_CONFIRMATION).equals(orderTax), "Tax value issue ");
+			sassert().assertTrue(CheckOut.getTaxCosts(GlobalVariables.GR_TAX_CONFIRMATION).equals(orderTax),
+					"Tax value issue ");
 
 			// Check if subtotal value match
 			sassert().assertTrue(CheckOut.getSubTotal().equals(orderSubTotal), "Subtotal value issue ");
 
-
-		getCurrentFunctionName(false);
+			getCurrentFunctionName(false);
 
 		} catch (NoSuchElementException e) {
 			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
@@ -105,6 +109,5 @@ public class RegisteredCheckoutSingleAddress extends SelTestCase {
 		}
 
 	}
-	
 
 }

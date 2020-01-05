@@ -2,20 +2,18 @@ package com.generic.page;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Random;
 
-import org.openqa.selenium.By;
 import java.util.NoSuchElementException;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import com.generic.selector.HomePageSelectors;
-import com.generic.setup.GlobalVariables;
 import com.generic.setup.SelTestCase;
 import com.generic.util.SelectorUtil;
 import com.generic.setup.ExceptionMsg;
 import com.generic.setup.LoggingMsg;
+import com.generic.util.SelectorUtil.commands.actions;
 
 /**
  * The Class HomePage.
@@ -23,6 +21,9 @@ import com.generic.setup.LoggingMsg;
 public class HomePage extends SelTestCase {
 	public static int homePageMenuLevelTestItems = Integer
 			.parseInt(getCONFIG().getProperty("homePageMenuLevelTestItems"));
+
+	public final static String searchPlacholder = "Search - Keyword or Item #";
+	public final static String pwaLinkClassNameIdentifier = "pw-link";
 
 	public static boolean validateLogodisplayed() throws Exception {
 		getCurrentFunctionName(true);
@@ -39,7 +40,7 @@ public class HomePage extends SelTestCase {
 		getCurrentFunctionName(false);
 	}
 
-	//This is to disable Monetate if needed.
+	// This is to disable Monetate if needed.
 	public static void updateMmonetate() throws Exception {
 		getCurrentFunctionName(true);
 		getDriver().get(getURL() + "/?monetate=" + getCONFIG().getProperty("monetateStatus"));
@@ -95,7 +96,7 @@ public class HomePage extends SelTestCase {
 			getCurrentFunctionName(true);
 			logs.debug("Clicking on Account menu");
 			if (withHover) {
-				SelectorUtil.initializeSelectorsAndDoActions(HomePageSelectors.accountMenu.get(), "ForceAction,hover");
+				SelectorUtil.initializeSelectorsAndDoActions(HomePageSelectors.accountMenu.get(), actions.hover);
 			} else {
 				SelectorUtil.initializeSelectorsAndDoActions(HomePageSelectors.accountMenu.get());
 			}
@@ -122,7 +123,7 @@ public class HomePage extends SelTestCase {
 		Random random = new Random();
 		int randomIndex = random.nextInt(accountMenuElements.size());
 		WebElement element = accountMenuElements.get(randomIndex);
-		((JavascriptExecutor) SelTestCase.getDriver()).executeScript("arguments[0].click()", element);
+		SelectorUtil.clickOnWebElement(element);
 		getCurrentFunctionName(false);
 	}
 
@@ -130,16 +131,9 @@ public class HomePage extends SelTestCase {
 		getCurrentFunctionName(true);
 		logs.debug("Get the account menu items.");
 		List<WebElement> menuItems = new ArrayList<WebElement>();
-		menuItems = getElementsList(HomePageSelectors.accountMenuItems.get());
+		menuItems = SelectorUtil.getAllElements(HomePageSelectors.accountMenuItems.get());
 		getCurrentFunctionName(false);
 		return menuItems;
-	}
-
-	public static List<WebElement> getElementsList(String selector) throws Exception {
-		getCurrentFunctionName(true);
-		List<WebElement> elementsList = SelectorUtil.getAllElements(selector);
-		getCurrentFunctionName(false);
-		return elementsList;
 	}
 
 	public static boolean validateAccountMenuItemsDisplayed() throws Exception {
@@ -169,7 +163,8 @@ public class HomePage extends SelTestCase {
 		logs.debug("Validate if global footer  exist");
 		isDisplayed = SelectorUtil.isDisplayed(HomePageSelectors.globalFooter.get());
 		List<WebElement> footerItems = new ArrayList<WebElement>();
-		footerItems = getElementsList(HomePageSelectors.accordionHeader.get());
+
+		footerItems = SelectorUtil.getAllElements(HomePageSelectors.accordionHeader.get());
 		for (WebElement element : footerItems) {
 			isDisplayed = element.isDisplayed();
 		}
@@ -180,8 +175,7 @@ public class HomePage extends SelTestCase {
 	public static void clickOnMiniCart() throws Exception {
 		getCurrentFunctionName(true);
 		String subStrArr = HomePageSelectors.miniCartBtn.get();
-		String valuesArr = "ForceAction,hover";
-		if (!SelTestCase.getBrowserName().contains(GlobalVariables.browsers.chrome)) {
+		if (!isDesktop()) {
 			logs.debug("Clicking on Mini Cart");
 			SelectorUtil.initializeSelectorsAndDoActions(subStrArr);
 		} else {
@@ -306,7 +300,7 @@ public class HomePage extends SelTestCase {
 	}
 
 	public static boolean validateSearchFieldPlaceHolderText() throws Exception {
-		if ("Search - Keyword or Item #".equals(readSearchFieldPlaceHolderText()))
+		if (searchPlacholder.equals(readSearchFieldPlaceHolderText()))
 			return true;
 		else
 			return false;
@@ -505,8 +499,9 @@ public class HomePage extends SelTestCase {
 
 		logs.debug("Get the menu items first level.");
 		List<WebElement> menuFirstLevelElements = new ArrayList<WebElement>();
+
 		// Get the menu items list.
-		menuFirstLevelElements = getElementsList(HomePageSelectors.menuItems.get());
+		menuFirstLevelElements = SelectorUtil.getAllElements(HomePageSelectors.menuItems.get());
 		getCurrentFunctionName(false);
 
 		return menuFirstLevelElements;
@@ -522,7 +517,7 @@ public class HomePage extends SelTestCase {
 
 		logs.debug("Open navigation menu");
 		// Click on navigation menu icon and Navigate to an item in the menu.
-		SelectorUtil.initializeSelectorsAndDoActions(HomePageSelectors.navIcon.get()); 
+		SelectorUtil.initializeSelectorsAndDoActions(HomePageSelectors.navIcon.get());
 		getCurrentFunctionName(false);
 	}
 
@@ -546,8 +541,6 @@ public class HomePage extends SelTestCase {
 		// Get the first menu modal list.
 		List<WebElement> menuFirstLevelElements = getFirstLevelMenuItems();
 
-		String pwaLinkClassNameIdentifier = "pw-link";
-
 		int numberOfMenuItems = menuFirstLevelElements.size();
 		if (homePageMenuLevelTestItems <= numberOfMenuItems) {
 			numberOfMenuItems = homePageMenuLevelTestItems;
@@ -567,19 +560,20 @@ public class HomePage extends SelTestCase {
 			SelectorUtil.clickOnWebElement(element);
 
 			// Get the sub menu header text.
-			WebElement selectedMenuHeader = SelectorUtil.getelement(HomePageSelectors.selectedMenuHeader.get());
+			WebElement selectedMenuHeader = SelectorUtil.getElement(HomePageSelectors.selectedMenuHeader.get());
 			String selectedMenuHeaderText = selectedMenuHeader.getText().toLowerCase();
 
 			// Get the current page URL.
 			String pageUrl = SelectorUtil.getCurrentPageUrl();
-
 			// Check if the sub menu header title is the same of the selected item text.
 			if (!selectedMenuHeaderText.equals(selectedText)) {
 				currentPageMatchNavigated = false;
 				validateSubMenuNavigation = false;
 			} else {
+				SelectorUtil.waitGWTLoadedEventPWA();
+
 				// Select the list of leaf items in the menu.
-				List<WebElement> leafMenuItems = getElementsList(HomePageSelectors.leafMenuItems.get());
+				List<WebElement> leafMenuItems = SelectorUtil.getAllElements(HomePageSelectors.leafMenuItems.get());
 
 				// Select a random item from the leaf items list.
 				Random rand = new Random();
@@ -596,6 +590,7 @@ public class HomePage extends SelTestCase {
 				SelectorUtil.clickOnWebElement(randomElement);
 
 				Thread.sleep(1000);
+				SelectorUtil.waitGWTLoadedEventPWA();
 				String currentPageUrl = SelectorUtil.getCurrentPageUrl();
 				// Get the current page URL.
 				logs.debug("Navigated random page path: " + currentPageUrl + "    " + href);

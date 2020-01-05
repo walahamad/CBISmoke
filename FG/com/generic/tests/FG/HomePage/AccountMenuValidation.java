@@ -1,42 +1,36 @@
 package com.generic.tests.FG.HomePage;
 
 import com.generic.page.HomePage;
-import com.generic.selector.HomePageSelectors;
-import com.generic.setup.GlobalVariables.browsers;
 import com.generic.setup.SelTestCase;
-
-import org.openqa.selenium.WebElement;
-import java.util.List;
 
 public class AccountMenuValidation extends SelTestCase {
 	public static boolean validate() throws Exception {
 		getCurrentFunctionName(true);
-		boolean accountMenuValidation = true; 
-		if (getBrowserName().toLowerCase().equals(browsers.iPhone.toLowerCase())) {
+		boolean accountMenuValidation = true;
+		if (isMobile()) {
 			accountMenuValidation = validateMobile();
-		}else {
+		} else {
 			accountMenuValidation = validateDesktopAndTablet();
-		}		
+		}
 		getCurrentFunctionName(false);
-	    return accountMenuValidation;
+		return accountMenuValidation;
 	}
-	
-	public static boolean validateDesktopAndTablet() throws Exception{
+
+	public static boolean validateDesktopAndTablet() throws Exception {
 		getCurrentFunctionName(true);
-		boolean accountMenuValidation = true; 
-		accountMenuValidation =  HomePage.validateAccountMenuDisplayed();
+		boolean accountMenuValidation = true;
+		accountMenuValidation = HomePage.validateAccountMenuDisplayed();
 		HomePage.clickOnAccountMenu(true);
 		HomePage.validateAccountMenuItemsDisplayed();
 		HomePage.clickOnRandomAccountMenuItem();
 		getCurrentFunctionName(false);
 		return accountMenuValidation;
 	}
-	
-	
-	public static boolean validateMobile() throws Exception{
+
+	public static boolean validateMobile() throws Exception {
 		getCurrentFunctionName(true);
-		boolean accountMenuValidation = true; 
-		accountMenuValidation =  HomePage.validateAccountMenuDisplayed();
+		boolean accountMenuValidation = true;
+		accountMenuValidation = HomePage.validateAccountMenuDisplayed();
 		HomePage.clickOnAccountMenu(false);
 		HomePage.validateAccountMenuItemsDisplayed();
 		HomePage.clickOnCloseButton();
@@ -44,5 +38,4 @@ public class AccountMenuValidation extends SelTestCase {
 		return accountMenuValidation;
 	}
 
-	
 }

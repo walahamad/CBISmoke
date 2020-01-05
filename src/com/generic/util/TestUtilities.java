@@ -6,6 +6,7 @@ import java.io.FileInputStream;
 import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.StringReader;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.MessageFormat;
@@ -18,6 +19,7 @@ import java.util.Properties;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Result;
 import javax.xml.transform.Source;
 import javax.xml.transform.Transformer;
@@ -34,6 +36,8 @@ import org.xml.sax.SAXException;
 import com.generic.setup.EnvironmentFiles;
 import com.generic.setup.LoggingMsg;
 import com.generic.setup.SelTestCase;
+
+import org.xml.sax.InputSource;
 
 public class TestUtilities extends SelTestCase {
 
@@ -120,7 +124,7 @@ public class TestUtilities extends SelTestCase {
 		setCONFIG(new Properties());
 		FileInputStream fn = new FileInputStream(EnvironmentFiles.getConfigFilePath());
 		getCONFIG().load(fn);
-		
+
 		// getCONFIG().setProperty("testSiteName",
 		// "https://"+getCONFIG().getProperty("testEnvironment")+"/"+getCONFIG().getProperty("testSiteName"));
 		// getCONFIG().setProperty("logout",
@@ -136,23 +140,36 @@ public class TestUtilities extends SelTestCase {
 		getCurrentFunctionName(false);
 	}
 
-	public static void writeFinalXMLRegression(ArrayList<String> regressionsPathes, String[] targetBrowsers)
-			throws SAXException, IOException, ParserConfigurationException, TransformerFactoryConfigurationError,
-			TransformerException {
+	public static void writeFinalXMLRegression(ArrayList<String> regressionsPathes, String[] targetBrowsers,
+			String[] targetEnv) throws SAXException, IOException, ParserConfigurationException,
+			TransformerFactoryConfigurationError, TransformerException {
 		getCurrentFunctionName(true);
 		// Template file to copy the suite tag from
 		File srcTemplateFile = new File(
-				System.getProperty("user.dir") + "/src/com/generic/test_runners/TemplateRegression.xml");
+				System.getProperty("user.dir") + "/src/com/generic/runners/TemplateRegression.xml");
 
 		// The name of final output file
-		File destFile = new File(System.getProperty("user.dir") + "/src/com/generic/test_runners/FinalRegression.xml");
+		File destFile = new File(System.getProperty("user.dir") + "/src/com/generic/runners/FinalRegression.xml");
 		destFile.createNewFile();
 
 		// Read the source template
 		DocumentBuilderFactory srcTemplateFactory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder srcTemplateBuilder = srcTemplateFactory.newDocumentBuilder();
+		srcTemplateBuilder.setEntityResolver(new org.xml.sax.EntityResolver() {
+
+			@Override
+			public org.xml.sax.InputSource resolveEntity(String arg0, String arg1) throws SAXException, IOException {
+				if (arg1.contains("http://testng.org/testng-1.0.dtd")) {
+					return new InputSource(new StringReader(""));
+				} else {
+					return null;
+				}
+			}
+		});
+
 		org.w3c.dom.Document srcTemplateDoc = srcTemplateBuilder.parse(srcTemplateFile);
 
+		srcTemplateDoc.getDoctype();
 		// locate the root element (suite) tag
 		srcTemplateDoc.getDocumentElement().normalize();
 		org.w3c.dom.Node srcDocRootNode = srcTemplateDoc.getElementsByTagName("suite").item(0);
@@ -164,59 +181,107 @@ public class TestUtilities extends SelTestCase {
 		finalTransformer.transform(finalInput, finalOutput);
 
 		// loop over the XML regression files that will be included in the run
-		for (String path : regressionsPathes) {
-			File srcXmlFile = new File(path);
+		for (String env : targetEnv) {
 
-			// Read current XML Runner
-			DocumentBuilderFactory srcDbFactory = DocumentBuilderFactory.newInstance();
-			DocumentBuilder srcBuilder = srcDbFactory.newDocumentBuilder();
-			org.w3c.dom.Document srcDoc = srcBuilder.parse(srcXmlFile);
+			if (env == null || env.equals(""))
+				continue;
+			for (String path : regressionsPathes) {
+				File srcXmlFile = new File(path);
+				// Read current XML Runner
+				DocumentBuilderFactory srcDbFactory = DocumentBuilderFactory.newInstance();
+				DocumentBuilder srcBuilder = srcDbFactory.newDocumentBuilder();
+				srcBuilder.setEntityResolver(new org.xml.sax.EntityResolver() {
 
-			// Read the FinalRegression.xml file
-			DocumentBuilderFactory destDbFactory = DocumentBuilderFactory.newInstance();
-			DocumentBuilder destBuilder = destDbFactory.newDocumentBuilder();
-			org.w3c.dom.Document destDoc = destBuilder.parse(destFile);
+					@Override
+					public org.xml.sax.InputSource resolveEntity(String arg0, String arg1)
+							throws SAXException, IOException {
+						if (arg1.contains("http://testng.org/testng-1.0.dtd")) {
+							return new InputSource(new StringReader(""));
+						} else {
+							return null;
+						}
+					}
+				});
+				org.w3c.dom.Document srcDoc = srcBuilder.parse(srcXmlFile);
 
-			// locate the <test> tag from the source regression xml
-			srcDoc.getDocumentElement().normalize();
-			org.w3c.dom.Element srcTestNode = (org.w3c.dom.Element) srcDoc.getElementsByTagName("test").item(0);
+				// Read the FinalRegression.xml file
+				DocumentBuilderFactory destDbFactory = DocumentBuilderFactory.newInstance();
+				DocumentBuilder destBuilder = destDbFactory.newDocumentBuilder();
 
-			// fetch the <suite> tag in the FinalRegression.xml file to copy <test> tag to
-			org.w3c.dom.Node destRootNode = destDoc.getElementsByTagName("suite").item(0);
+				destBuilder.setEntityResolver(new org.xml.sax.EntityResolver() {
 
-			// loop over included browsers in the regression to append them to <test> tags.
-			for (String browser : targetBrowsers) {
-				org.w3c.dom.Element destTestNode = (Element) destDoc.adoptNode(srcTestNode.cloneNode(true));
+					@Override
+					public org.xml.sax.InputSource resolveEntity(String arg0, String arg1)
+							throws SAXException, IOException {
+						if (arg1.contains("http://testng.org/testng-1.0.dtd")) {
+							return new InputSource(new StringReader(""));
+						} else {
+							return null;
+						}
+					}
+				});
 
-				// retrieving the name attribute on <test> tag and adding the target browser to
-				String oldNodeAttributeValue = srcTestNode.getAttribute("name");
-				String[] attributeSplit = oldNodeAttributeValue.split(" ");
-				attributeSplit[attributeSplit.length - 1] = browser;
+				org.w3c.dom.Document destDoc = destBuilder.parse(destFile);
 
-				String newNodeAttributeValue = "";
-				for (String attributePart : attributeSplit) {
-					newNodeAttributeValue = newNodeAttributeValue + attributePart + " ";
+				// locate the <test> tag from the source regression xml
+				srcDoc.getDocumentElement().normalize();
+				org.w3c.dom.Element srcTestNode = (org.w3c.dom.Element) srcDoc.getElementsByTagName("test").item(0);
+
+				// fetch the <suite> tag in the FinalRegression.xml file to copy <test> tag to
+				org.w3c.dom.Node destRootNode = destDoc.getElementsByTagName("suite").item(0);
+				String brand = RandomUtilities.getRandomNumber();
+				for (int i = 0; i < 3; i++) {
+					Element parameter = (Element) srcTestNode.getElementsByTagName("parameter").item(i);
+					if (parameter.getAttribute("name").equalsIgnoreCase("Brand")) {
+						brand = parameter.getAttribute("value");
+					}
+
 				}
 
-				// appending the new value of "name" attribute to include the browser name
-				destTestNode.setAttribute("name", newNodeAttributeValue);
+				// loop over included browsers in the regression to append them to <test> tags.
+				for (String browser : targetBrowsers) {
+					org.w3c.dom.Element destTestNode = (Element) destDoc.adoptNode(srcTestNode.cloneNode(true));
 
-				// retrieving the "parameter" attribute value and replace it with the targeted
-				// browser
-				org.w3c.dom.Element destTestNodeParameter = (Element) destTestNode.getElementsByTagName("parameter")
-						.item(0);
-				destTestNodeParameter.setAttribute("value", browser);
+					// retrieving the name attribute on <test> tag and adding the target browser to
+					String oldNodeAttributeValue = srcTestNode.getAttribute("name");
+					String[] attributeSplit = oldNodeAttributeValue.split(" ");
+					attributeSplit[attributeSplit.length - 1] = browser;
 
-				// Adding the final <test> tag to the <suite> tag in Finalregression.xml file
-				destRootNode.appendChild(destTestNode);
+					String newNodeAttributeValue = "";
+					for (String attributePart : attributeSplit) {
+						newNodeAttributeValue = newNodeAttributeValue + attributePart + " ";
+					}
+
+					// appending the new value of "name" attribute to include the browser name
+					destTestNode.setAttribute("name", newNodeAttributeValue + " " + brand + " " + env);
+
+					// retrieving the "parameter" attribute value and replace it with the targeted
+					// browser
+					org.w3c.dom.Element destTestNodeParameter = (Element) destTestNode.getElementsByTagName("parameter")
+							.item(0);
+					destTestNodeParameter.setAttribute("value", browser);
+
+					// Adding the final <test> tag to the <suite> tag in Finalregression.xml file
+
+					org.w3c.dom.Element destTestNodeParameter1 = (Element) destTestNode
+							.getElementsByTagName("parameter").item(1);
+					destTestNodeParameter1.setAttribute("value", env);
+					// Adding the final <test> tag to the <suite> tag in Finalregression.xml file
+
+					destRootNode.appendChild(destTestNode);
+				}
+
+				org.w3c.dom.DOMImplementation domImpl = destDoc.getImplementation();
+				org.w3c.dom.DocumentType doctype = domImpl.createDocumentType("doctype", "SYSTEM",
+						"http://testng.org/testng-1.0.dtd");
+
+				// Save the changes to FinalRegression.xml file
+				Transformer transformer = TransformerFactory.newInstance().newTransformer();
+				transformer.setOutputProperty(OutputKeys.DOCTYPE_SYSTEM, doctype.getSystemId());
+				Result output = new StreamResult(destFile);
+				Source input = new DOMSource(destRootNode);
+				transformer.transform(input, output);
 			}
-
-			// Save the changes to FinalRegression.xml file
-			Transformer transformer = TransformerFactory.newInstance().newTransformer();
-			Result output = new StreamResult(destFile);
-			Source input = new DOMSource(destRootNode);
-			transformer.transform(input, output);
-
 		}
 		getCurrentFunctionName(false);
 	}
@@ -241,7 +306,7 @@ public class TestUtilities extends SelTestCase {
 		// loop over subDirs to get fileName
 		for (File folder : subDirs) {
 			String filePath = searchSpecificFile(folder, fileName);
-			if (filePath.length()==0) {
+			if (filePath.length() == 0) {
 				getCurrentFunctionName(false);
 				return filePath;
 			}
@@ -253,6 +318,7 @@ public class TestUtilities extends SelTestCase {
 
 	public static String searchSpecificFile(File dir, String fileName) {
 		getCurrentFunctionName(true);
+
 		File[] files = dir.listFiles(new FilenameFilter() {
 
 			@Override

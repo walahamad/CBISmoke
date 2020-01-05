@@ -5,37 +5,34 @@ import java.util.LinkedHashMap;
 import com.generic.page.Cart;
 import com.generic.page.CheckOut;
 import com.generic.page.HomePage;
-import com.generic.page.PDP;
 import com.generic.page.PayPal;
 import com.generic.page.Registration;
-import com.generic.page.SignIn;
-import com.generic.selector.HomePageSelectors;
-import com.generic.setup.GlobalVariables;
+import com.generic.page.Login;
 import com.generic.setup.LoggingMsg;
 import com.generic.setup.SelTestCase;
-import com.generic.util.SelectorUtil;
 
 public class PayPalValidation extends SelTestCase {
 
-	public static void validate(String userType, int productsCount, LinkedHashMap<String, String> userDetalis,LinkedHashMap<String, String> paymentDetails) throws Exception {
+	public static void validate(String userType, int productsCount, LinkedHashMap<String, String> userDetalis,
+			LinkedHashMap<String, String> paymentDetails) throws Exception {
 
 		// Perform login
 		if (userType.contains("registered")) {
 			String userMail = getSubMailAccount(userDetalis.get(Registration.keys.email));
 			String userPassword = userDetalis.get(Registration.keys.password);
-			SignIn.fillLoginFormAndClickSubmit(userMail, userPassword);
-			sassert().assertTrue(SignIn.checkUserAccount(), LoggingMsg.USER_IS_NOT_LOGGED_IN_SUCCESSFULLY);
-			if(SelTestCase.isMobile())
-			HomePage.clickOnCloseButton();
+			Login.fillLoginFormAndClickSubmit(userMail, userPassword);
+			sassert().assertTrue(Login.checkUserAccount(), LoggingMsg.USER_IS_NOT_LOGGED_IN_SUCCESSFULLY);
+			if (SelTestCase.isMobile())
+				HomePage.clickOnCloseButton();
 
-			}
+		}
 
 		// Add products to cart
 		CheckOut.searchForProductsandAddToCart(productsCount);
 
 		// Navigating to Cart by URL
 		CheckOut.navigatetoCart();
-		
+
 		Thread.sleep(1000);
 
 		sassert().assertTrue(Cart.checkAddedItemTotalPriceDisplay(), "Cart page is not displayed");
@@ -78,7 +75,7 @@ public class PayPalValidation extends SelTestCase {
 				CheckOut.PayPal.closePayPalSubmitRegestration();
 				sassert().assertTrue(CheckOut.PayPal.isSubmitConfermationMessageDisplayed(),
 						"Order confirmation page is not displayed");
-				
+
 				sassert().assertTrue(CheckOut.PayPal.checkOrderNumberAndEmailAndShippingAddress(),
 						"Order number or email or shipping address is not displayed");
 				sassert().assertTrue(CheckOut.PayPal.checkConfirmationPageImg(), "Product image is not displayed");

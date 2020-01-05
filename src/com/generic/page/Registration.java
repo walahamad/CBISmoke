@@ -1,31 +1,39 @@
 package com.generic.page;
 
 import java.text.MessageFormat;
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.NoSuchElementException;
-import org.openqa.selenium.By;
 import com.generic.selector.RegistrationSelectors;
 import com.generic.setup.ExceptionMsg;
-import com.generic.setup.GlobalVariables;
 import com.generic.setup.LoggingMsg;
 import com.generic.setup.SelTestCase;
 import com.generic.util.RandomUtilities;
 import com.generic.util.SelectorUtil;
+import com.generic.util.SelectorUtil.commands.actions;
+
 import java.net.URI;
 
 public class Registration extends SelTestCase {
 	public static class keys {
-		public static final String caseId = "caseId";
-		public static final String title = "title";
-		public static final String name = "name";
-		public static final String userName = "userName";
-		public static final String firstName = "firstName";
-		public static final String lastName = "lastName";
 		public static final String password = "password";
 		public static final String email = "mail";
+	}
 
+	public static class shippingAddress {
+
+		public static class keys {
+
+			public static final String isSavedShipping = "saved-shipping";
+
+			public static final String countery = "countery";
+			public static final String title = "title";
+			public static final String lastName = "lastName";
+			public static final String firstName = "firstName";
+			public static final String adddressLine = "adddressLine";
+			public static final String city = "city";
+			public static final String zipcode = "postal";
+			public static final String phone = "phone";
+		}
 	}
 
 	// Done CBI Smoke
@@ -142,7 +150,7 @@ public class Registration extends SelTestCase {
 
 			if (!"".equals(confEmail))
 				typeconfEmailAddress(confEmail);
-			
+
 			if (!"".equals(password))
 				typePassword(password);
 
@@ -179,14 +187,14 @@ public class Registration extends SelTestCase {
 
 			typeAddressLine1(RandomUtilities.getRandomName());
 
-			if (!"".equals(addressDetails.get(AddressBook.shippingAddress.keys.city)))
-				typeCity(addressDetails.get(AddressBook.shippingAddress.keys.city));
+			if (!"".equals(addressDetails.get(shippingAddress.keys.city)))
+				typeCity(addressDetails.get(shippingAddress.keys.city));
 
-			if (!"".equals(addressDetails.get(AddressBook.shippingAddress.keys.city)))
-				typeState(addressDetails.get(AddressBook.shippingAddress.keys.city));
+			if (!"".equals(addressDetails.get(shippingAddress.keys.city)))
+				typeState(addressDetails.get(shippingAddress.keys.city));
 
-			if (!"".equals(addressDetails.get(AddressBook.shippingAddress.keys.zipcode)))
-				typeZipcode(addressDetails.get(AddressBook.shippingAddress.keys.zipcode));
+			if (!"".equals(addressDetails.get(shippingAddress.keys.zipcode)))
+				typeZipcode(addressDetails.get(shippingAddress.keys.zipcode));
 
 			typePhone(RandomUtilities.getRandomPhone());
 
@@ -218,14 +226,13 @@ public class Registration extends SelTestCase {
 
 	}
 
-
 	// Done CBI Smoke
 	private static void typePhone(String phone) throws Exception {
 		try {
 			getCurrentFunctionName(true);
 			if (isGH() || isRY()) {
 				SelectorUtil.initializeSelectorsAndDoActions(RegistrationSelectors.phoneGH.get(), phone);
-			} else if(isGR() || isFG()) {
+			} else if (isGR() || isFG()) {
 				SelectorUtil.initializeSelectorsAndDoActions(RegistrationSelectors.phone.get(), phone);
 			}
 			getCurrentFunctionName(false);
@@ -245,7 +252,7 @@ public class Registration extends SelTestCase {
 				if (!isMobile())
 					SelectorUtil.initializeSelectorsAndDoActions(RegistrationSelectors.confirmEmailAddress.get(),
 							email);
-			} else if(isGR() || isFG() || isRY()) {
+			} else if (isGR() || isFG() || isRY()) {
 				SelectorUtil.initializeSelectorsAndDoActions(RegistrationSelectors.confirmEmailAddress.get(), email);
 
 			}
@@ -352,9 +359,10 @@ public class Registration extends SelTestCase {
 		try {
 			getCurrentFunctionName(true);
 
-			if (getBrowserName().contains(GlobalVariables.browsers.iPhone)) {
+			if (isMobile()) {
 				logs.debug(MessageFormat.format(LoggingMsg.GETTING_TEXT, "Email Address Error"));
-				SelectorUtil.initializeSelectorsAndDoActions(RegistrationSelectors.emailAddressErrorMobile.get(), "index,0");
+				SelectorUtil.initializeSelectorsAndDoActions(RegistrationSelectors.emailAddressErrorMobile.get(),
+						MessageFormat.format(actions.index, "0"));
 			} else {
 				logs.debug(MessageFormat.format(LoggingMsg.GETTING_TEXT, "Email Address Error"));
 				SelectorUtil.initializeSelectorsAndDoActions(RegistrationSelectors.emailAddressError.get());
@@ -374,10 +382,10 @@ public class Registration extends SelTestCase {
 		try {
 			getCurrentFunctionName(true);
 
-			if (getBrowserName().contains(GlobalVariables.browsers.iPhone)) {
+			if (isMobile()) {
 				logs.debug(MessageFormat.format(LoggingMsg.GETTING_TEXT, "Email Address Error"));
 				SelectorUtil.initializeSelectorsAndDoActions(RegistrationSelectors.confEmailAddressErrorMobile.get(),
-						"index,1");
+						MessageFormat.format(actions.index, "1"));
 			} else {
 				logs.debug(MessageFormat.format(LoggingMsg.GETTING_TEXT, "Email Address Error"));
 				SelectorUtil.initializeSelectorsAndDoActions(RegistrationSelectors.confEmailAddressError.get(), "");
@@ -397,9 +405,10 @@ public class Registration extends SelTestCase {
 		try {
 			getCurrentFunctionName(true);
 
-			if (getBrowserName().contains(GlobalVariables.browsers.iPhone)) {
+			if (isMobile()) {
 				logs.debug(MessageFormat.format(LoggingMsg.GETTING_TEXT, "Email Address Error"));
-				SelectorUtil.initializeSelectorsAndDoActions(RegistrationSelectors.passwordRulesErrorMobile.get(), "index,2");
+				SelectorUtil.initializeSelectorsAndDoActions(RegistrationSelectors.passwordRulesErrorMobile.get(),
+						MessageFormat.format(actions.index, "2"));
 
 			} else {
 				logs.debug(MessageFormat.format(LoggingMsg.GETTING_TEXT, "Email Address Error"));
@@ -420,10 +429,10 @@ public class Registration extends SelTestCase {
 		try {
 			getCurrentFunctionName(true);
 
-			if (getBrowserName().contains(GlobalVariables.browsers.iPhone)) {
+			if (isMobile()) {
 				logs.debug(MessageFormat.format(LoggingMsg.GETTING_TEXT, "Confirm Password Error"));
 				SelectorUtil.initializeSelectorsAndDoActions(RegistrationSelectors.confirmPasswordErrorMobile.get(),
-						"index,3");
+						MessageFormat.format(actions.index, "3"));
 			} else {
 				logs.debug(MessageFormat.format(LoggingMsg.GETTING_TEXT, "Confirm Password Error"));
 				SelectorUtil.initializeSelectorsAndDoActions(RegistrationSelectors.confirmPasswordError.get());
@@ -443,9 +452,10 @@ public class Registration extends SelTestCase {
 		try {
 			getCurrentFunctionName(true);
 
-			if (getBrowserName().contains(GlobalVariables.browsers.iPhone)) {
+			if (isMobile()) {
 				logs.debug(MessageFormat.format(LoggingMsg.GETTING_TEXT, "First name Error"));
-				SelectorUtil.initializeSelectorsAndDoActions(RegistrationSelectors.firstNameErrorMobile.get(), "index,0");
+				SelectorUtil.initializeSelectorsAndDoActions(RegistrationSelectors.firstNameErrorMobile.get(),
+						MessageFormat.format(actions.index, "0"));
 			} else {
 				logs.debug(MessageFormat.format(LoggingMsg.GETTING_TEXT, "First name Error"));
 				SelectorUtil.initializeSelectorsAndDoActions(RegistrationSelectors.firstNameError.get());
@@ -465,9 +475,10 @@ public class Registration extends SelTestCase {
 		try {
 			getCurrentFunctionName(true);
 
-			if (getBrowserName().contains(GlobalVariables.browsers.iPhone)) {
+			if (isMobile()) {
 				logs.debug(MessageFormat.format(LoggingMsg.GETTING_TEXT, "Last name Error"));
-				SelectorUtil.initializeSelectorsAndDoActions(RegistrationSelectors.lastNameErrorMobile.get(), "index,1");
+				SelectorUtil.initializeSelectorsAndDoActions(RegistrationSelectors.lastNameErrorMobile.get(),
+						MessageFormat.format(actions.index, "1"));
 			} else {
 				logs.debug(MessageFormat.format(LoggingMsg.GETTING_TEXT, "Last name Error"));
 				SelectorUtil.initializeSelectorsAndDoActions(RegistrationSelectors.lastNameError.get());
@@ -487,9 +498,10 @@ public class Registration extends SelTestCase {
 		try {
 			getCurrentFunctionName(true);
 
-			if (getBrowserName().contains(GlobalVariables.browsers.iPhone)) {
+			if (isMobile()) {
 				logs.debug(MessageFormat.format(LoggingMsg.GETTING_TEXT, "Street address Error"));
-				SelectorUtil.initializeSelectorsAndDoActions(RegistrationSelectors.streetAddreesErrorMobile.get(), "index,2");
+				SelectorUtil.initializeSelectorsAndDoActions(RegistrationSelectors.streetAddreesErrorMobile.get(),
+						MessageFormat.format(actions.index, "2"));
 			} else {
 				logs.debug(MessageFormat.format(LoggingMsg.GETTING_TEXT, "Street address Error"));
 				SelectorUtil.initializeSelectorsAndDoActions(RegistrationSelectors.streetAddreesError.get());
@@ -509,9 +521,10 @@ public class Registration extends SelTestCase {
 		try {
 			getCurrentFunctionName(true);
 
-			if (getBrowserName().contains(GlobalVariables.browsers.iPhone)) {
+			if (isMobile()) {
 				logs.debug(MessageFormat.format(LoggingMsg.GETTING_TEXT, "City Error"));
-				SelectorUtil.initializeSelectorsAndDoActions(RegistrationSelectors.cityErrorMobile.get(), "index,3");
+				SelectorUtil.initializeSelectorsAndDoActions(RegistrationSelectors.cityErrorMobile.get(),
+						MessageFormat.format(actions.index, "3"));
 			} else {
 				logs.debug(MessageFormat.format(LoggingMsg.GETTING_TEXT, "City Error"));
 				SelectorUtil.initializeSelectorsAndDoActions(RegistrationSelectors.cityError.get());
@@ -531,7 +544,7 @@ public class Registration extends SelTestCase {
 		try {
 			getCurrentFunctionName(true);
 
-			if (getBrowserName().contains(GlobalVariables.browsers.iPhone)) {
+			if (isMobile()) {
 				logs.debug(MessageFormat.format(LoggingMsg.GETTING_TEXT, "State Error"));
 				SelectorUtil.initializeSelectorsAndDoActions(RegistrationSelectors.stateErrorMobile.get());
 			} else {
@@ -553,9 +566,10 @@ public class Registration extends SelTestCase {
 		try {
 			getCurrentFunctionName(true);
 
-			if (getBrowserName().contains(GlobalVariables.browsers.iPhone)) {
+			if (isMobile()) {
 				logs.debug(MessageFormat.format(LoggingMsg.GETTING_TEXT, "State Error"));
-				SelectorUtil.initializeSelectorsAndDoActions(RegistrationSelectors.ZIPCodeErrorMobile.get(), "index,4");
+				SelectorUtil.initializeSelectorsAndDoActions(RegistrationSelectors.ZIPCodeErrorMobile.get(),
+						MessageFormat.format(actions.index, "4"));
 			} else {
 				logs.debug(MessageFormat.format(LoggingMsg.GETTING_TEXT, "State Error"));
 				SelectorUtil.initializeSelectorsAndDoActions(RegistrationSelectors.ZIPCodeError.get());
@@ -575,9 +589,10 @@ public class Registration extends SelTestCase {
 		try {
 			getCurrentFunctionName(true);
 
-			if (getBrowserName().contains(GlobalVariables.browsers.iPhone)) {
+			if (isMobile()) {
 				logs.debug(MessageFormat.format(LoggingMsg.GETTING_TEXT, "State Error"));
-				SelectorUtil.initializeSelectorsAndDoActions(RegistrationSelectors.phoneErrorMobile.get(), "index,5");
+				SelectorUtil.initializeSelectorsAndDoActions(RegistrationSelectors.phoneErrorMobile.get(),
+						MessageFormat.format(actions.index, "5"));
 			} else {
 				logs.debug(MessageFormat.format(LoggingMsg.GETTING_TEXT, "State Error"));
 				SelectorUtil.initializeSelectorsAndDoActions(RegistrationSelectors.phoneError.get());
@@ -597,19 +612,19 @@ public class Registration extends SelTestCase {
 		try {
 			getCurrentFunctionName(true);
 			logs.debug(MessageFormat.format(LoggingMsg.GETTING_TEXT, "welcome Message check"));
-			
+
 			if (isGH()) {
 				SelectorUtil.initializeSelectorsAndDoActions(RegistrationSelectors.welcomeMessageGH.get(), "");
 			}
-			
+
 			else if (isRY()) {
 				SelectorUtil.initializeSelectorsAndDoActions(RegistrationSelectors.welcomeMessageRY.get(), "");
-			} 
-			
-			else if(isGR() || isFG()){
+			}
+
+			else if (isGR() || isFG()) {
 				SelectorUtil.initializeSelectorsAndDoActions(RegistrationSelectors.welcomeMessage.get(), "");
 			}
-			
+
 			getCurrentFunctionName(false);
 
 			return SelectorUtil.textValue.get();
@@ -630,30 +645,33 @@ public class Registration extends SelTestCase {
 			getDriver().get(new URI(getDriver().getCurrentUrl()).resolve(getCONFIG().getProperty("RegistrationPage"))
 					.toString());
 
-			//GH 
+			// GH
 			if (isGH()) {
 
 				if (!isMobile()) {
-					logs.debug(MessageFormat.format(LoggingMsg.GETTING_TEXT, "Clicking Register Button for desktop..."));
+					logs.debug(
+							MessageFormat.format(LoggingMsg.GETTING_TEXT, "Clicking Register Button for desktop..."));
 					SelectorUtil.initializeSelectorsAndDoActions(RegistrationSelectors.registrationButton.get());
-				
+
 				} else {
 					logs.debug(MessageFormat.format(LoggingMsg.GETTING_TEXT, "Clicking Register Tab for mobile... GH"));
-					getDriver().findElements(By.cssSelector(RegistrationSelectors.mobileRegistrationTabGH.get())).get(1).click();
+					SelectorUtil.getAllElements(RegistrationSelectors.mobileRegistrationTabGH.get()).get(1).click();
 
-					logs.debug(MessageFormat.format(LoggingMsg.GETTING_TEXT,"Clicking Register Button for mobile...  GH"));
-					SelectorUtil.initializeSelectorsAndDoActions(RegistrationSelectors.mobileRegistrationButtonGH.get());
+					logs.debug(MessageFormat.format(LoggingMsg.GETTING_TEXT,
+							"Clicking Register Button for mobile...  GH"));
+					SelectorUtil
+							.initializeSelectorsAndDoActions(RegistrationSelectors.mobileRegistrationButtonGH.get());
 				}
 
-			//RY	
+				// RY
 			} else if (isRY()) {
 				logs.debug(MessageFormat.format(LoggingMsg.GETTING_TEXT, "Clicking Register Button RY..."));
-				SelectorUtil.initializeSelectorsAndDoActions(RegistrationSelectors.registrationButtonRY.get());			
-				
+				SelectorUtil.initializeSelectorsAndDoActions(RegistrationSelectors.registrationButtonRY.get());
+
 			}
-			
-			//FG, GR
-			else if(isGR() || isFG()) {
+
+			// FG, GR
+			else if (isGR() || isFG()) {
 				if (!isMobile()) {
 					logs.debug(
 							MessageFormat.format(LoggingMsg.GETTING_TEXT, "Clicking Register Button for desktop..."));
@@ -677,29 +695,56 @@ public class Registration extends SelTestCase {
 
 	}
 
+	// Done - CBI
 	@SuppressWarnings("unchecked")
 	public static String registerFreshUser(String email, String password) throws Exception {
 
-		//click on register new user button
-		Registration.goToRegistrationForm();
+		// click on register new user button
+		goToRegistrationForm();
 
-		//prepare random address details
+		// prepare random address details
 		LinkedHashMap<String, String> addressDetails = (LinkedHashMap<String, String>) addresses.get("A3");
 
-		//Prepare registration data
+		// Prepare registration data
 		String firstName = RandomUtilities.getRandomName();
 		String lastName = RandomUtilities.getRandomName();
 		String companyName = RandomUtilities.getRandomName();
 
-
-		//register new user and validate the results
-		Registration.fillRegistrationFirstStep(email,email,password,password);
+		// register new user and validate the results
+		fillRegistrationFirstStep(email, email, password, password);
 
 		Thread.sleep(1500);
-		Registration.fillRegistrationSecondStep(firstName,lastName,companyName,addressDetails);
+		fillRegistrationSecondStep(firstName, lastName, companyName, addressDetails);
 
-		//Success message needs to be updated on excel to (Welcome to your account at )
+		// Success message needs to be updated on excel to (Welcome to your account at )
+		String registrationSuccessMsg = getRegistrationSuccessMessage();
+		return registrationSuccessMsg;
+	}
+
+	// Done - CBI
+	@SuppressWarnings("unchecked")
+	public static String registerFreshUser(String email, String password, String fname, String lname) throws Exception {
+
+		// click on register new user button
+		Registration.goToRegistrationForm();
+
+		// prepare random address details
+		LinkedHashMap<String, String> addressDetails = (LinkedHashMap<String, String>) addresses.get("A3");
+
+		// Prepare registration data
+		String firstName = fname;
+		String lastName = lname;
+		String companyName = RandomUtilities.getRandomName();
+
+		// register new user and validate the results
+		Registration.fillRegistrationFirstStep(email, email, password, password);
+
+		Thread.sleep(1500);
+		Registration.fillRegistrationSecondStep(firstName, lastName, companyName, addressDetails);
+
+		// Success message needs to be updated on excel to (Welcome to your account at )
 		String registrationSuccessMsg = Registration.getRegistrationSuccessMessage();
 		return registrationSuccessMsg;
 	}
+
 }

@@ -1,11 +1,7 @@
 package com.generic.tests.GH.Cart;
 
-import java.text.MessageFormat;
-import java.util.List;
 import com.generic.page.Cart;
 import com.generic.page.CheckOut;
-import com.generic.setup.GlobalVariables;
-import com.generic.setup.LoggingMsg;
 import com.generic.setup.SelTestCase;
 import com.generic.page.PDP;
 

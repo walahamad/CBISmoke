@@ -1,36 +1,35 @@
 package com.generic.setup;
 
 public class SheetVariables {
-   
-	//addresses
-	public static final String addresses = "addresses";
-	
-	//products
-	public static final String products = "products";
-	
-	//cards
-	public static final String cards = "cards";
-	
 
-	//users
+	// addresses
+	public static final String addresses = "addresses";
+
+	// products
+	public static final String products = "products";
+
+	// cards
+	public static final String cards = "cards";
+
+	// users
 	public static final String users = "users";
-	
-	//SheetNames
-    public static final String loginSheet = "LoginRegression";
-    public static final String checkoutSheet = "CheckOutRegression";
-    public static final String PayPalcheckoutSheet = "PayPalCheckOutRegression";
-    public static final String OrderHistory = "OrderHistoryRegression";
-    public static final String plpSheet = "PLPRegression";
-    public static final String personalDetailsSheet = "PersonalDetailsRegression";
-    public static final String orderHistorySheet = "OrderHistoryRegression";
-    public static final String cartSheet = "CartRegression";
-    public static final String PDPSheet = "PDPRegression";
-    public static final String GRSheet = "GiftRegistryRegression";
-    public static final String testCasesSheet = "Test Cases";
-    public static final String AddressBookSheet = "AddressBookRegression";
-    public static final String PaymentDetailsSheet = "PaymentDetailsRegression";
-    public static final String myAccountSheet = "MyAccountRegression";
-    public static final String storeLocatorSheet = "StoreLocatorRegression";
+
+	// SheetNames
+	public static final String loginSheet = "LoginRegression";
+	public static final String checkoutSheet = "CheckOutRegression";
+	public static final String PayPalcheckoutSheet = "PayPalCheckOutRegression";
+	public static final String OrderHistory = "OrderHistoryRegression";
+	public static final String plpSheet = "PLPRegression";
+	public static final String personalDetailsSheet = "PersonalDetailsRegression";
+	public static final String orderHistorySheet = "OrderHistoryRegression";
+	public static final String cartSheet = "CartRegression";
+	public static final String PDPSheet = "PDPRegression";
+	public static final String GRSheet = "GiftRegistryRegression";
+	public static final String testCasesSheet = "Test Cases";
+	public static final String AddressBookSheet = "AddressBookRegression";
+	public static final String PaymentDetailsSheet = "PaymentDetailsRegression";
+	public static final String myAccountSheet = "MyAccountRegression";
+	public static final String storeLocatorSheet = "StoreLocatorRegression";
 	public static final String orderDetailsSheet = "OrderDetailsRegression";
 	public static final String EmailAddressRegressionSheet = "EmailAddressRegression";
 	public static final String PasswordRegressionSheet = "PasswordRegression";
@@ -44,30 +43,31 @@ public class SheetVariables {
 	public static final String HPRegressionsheet = "HomePageRegression";
 	public static final String VisualTestingCLPRegressionsheet = "VisualTestingCLPRegression";
 	public static final String RunnersRegressionSheet = "SetupRunners";
+	public static final String BrandsSheet = "Brands";
+	public static final String EnvSheet = "Envs";
 	public static final String BrowsersListingSheet = "SetupBrowsers";
 	public static final String FavoriteSheet = "FavoriteRegression";
 	public static final String MiniCartSheet = "MiniCartRegression";
 	public static final String CLPSheet = "CLPRegression";
+	public static final String smokeTesting = "SmkRegression";
 
-    //Test Case id
-    public static final String registrationTestCaseId = "Registration";
-    public static final String checkoutTestCaseId = "CheckOut";
-    public static final String plpTestCaseId = "PLP";
-    public static final String personalDetailsTestCaseId = "PersonalDetails";
-    public static final String orderHistoryTestCaseId = "OrderHistory";
+	// Test Case id
+	public static final String registrationTestCaseId = "Registration";
+	public static final String checkoutTestCaseId = "CheckOut";
+	public static final String plpTestCaseId = "PLP";
+	public static final String personalDetailsTestCaseId = "PersonalDetails";
+	public static final String orderHistoryTestCaseId = "OrderHistory";
 	public static final String cartCaseId = "Cart";
 	public static final String PDPCaseId = "PDP";
 	public static final String GRCaseId = "GR";
-	public static final String addressbookTestCaseId="AddressBook";
+	public static final String addressbookTestCaseId = "AddressBook";
 	public static final String PaymentDetailsTestCaseId = "PaymentDetails";
 	public static final String MailSignupTestCaseId = "MailSignup";
 	public static final String QuickViewTestCaseId = "QuickView";
 	public static final String HPTestCaseId = "VisualTestingHP case";
 	public static final String VisualTestingCLPTestCaseId = "VisualTestingCLP case";
 	public static final String FavoriteSheetTestCaseId = "Favorite Case";
-	public static final String cartTestCaseId="Cart Test";
-    public static final String clpTestCaseId = "CLP";
-
-
+	public static final String cartTestCaseId = "Cart Test";
+	public static final String clpTestCaseId = "CLP";
 
 }

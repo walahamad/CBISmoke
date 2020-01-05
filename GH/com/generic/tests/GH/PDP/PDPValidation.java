@@ -31,6 +31,10 @@ public class PDPValidation extends SelTestCase {
 		SelectorUtil.waitGWTLoadedEventPWA();
 
 		int numberOfItems = PDP.getNumberOfItems();
+		Boolean bundle = PDP.getNumberOfItems() > 1;
+		String ProductID = null;
+		if (!isMobile() && bundle)
+			ProductID = PDP.getProductID(0);
 		String priceErrorMessage;
 		// price error message
 		//for single PDP, validate the price is displayed below the title of the page for both desktop and mobile
@@ -58,7 +62,8 @@ public class PDPValidation extends SelTestCase {
 		// Select all required swatches.
 		PDP.selectSwatches();
 
-		sassert().assertTrue(!PDP.getBottomPrice().equals("$0.00"), "Bottom price is not updated correctly, Current price: " + PDP.getBottomPrice());
+		String bottomPrice = PDP.getBottomPrice(bundle, ProductID);
+		sassert().assertTrue(!bottomPrice.equals("$0.00"), "Bottom price is not updated correctly, Current price: " + bottomPrice);
 
 		// Check if the personalization button exist.
 		if (PDP.PersonalizedItem()) {
@@ -76,7 +81,7 @@ public class PDPValidation extends SelTestCase {
 				selectPersonalizationModalSwatches();
 				PDP.clickPersonalizationSaveAndCloseButton();
 			}
-			sassert().assertTrue(PDP.validateAddedPersonalizedDetails(),
+			sassert().assertTrue(PDP.validateAddedPersonalizedDetails(bundle, ProductID),
 					"Added personalization details is not dispayed");
 
 			// Verify prices are displayed.
@@ -116,7 +121,7 @@ public class PDPValidation extends SelTestCase {
 			String styleSelector = MessageFormat.format(PDPSelectors.personalizedItemStyle.get(), index);
 			if (PDP.isPersonalizedInputSwatchesDisplayed(inputSelector)) {// input container like MONOGRAM or any value
 				logs.debug("Input personalized item.");
-				WebElement input = SelectorUtil.getelement(inputSelector);
+				WebElement input = SelectorUtil.getElement(inputSelector);
 				String perosnalizedString = RandomUtilities.getRandomName();
 				perosnalizedString = perosnalizedString.substring(0, Math.min(perosnalizedString.length(), 3));
 				input.sendKeys(perosnalizedString);
@@ -140,7 +145,7 @@ public class PDPValidation extends SelTestCase {
 	*/
 	public static void validateIsPDPPage() throws Exception {
 		getCurrentFunctionName(true);
-		WebElement PDPContainer = SelectorUtil.getelement(PDPSelectors.PDPPageClassName.get());
+		WebElement PDPContainer = SelectorUtil.getElement(PDPSelectors.PDPPageClassName.get());
 		sassert().assertTrue(PDPContainer != null, "The current page is PDP");
 		getCurrentFunctionName(false);
 	}
@@ -162,7 +167,7 @@ public class PDPValidation extends SelTestCase {
 				}
 			}
 		} else {
-			perosnalizationPrice = SelectorUtil.getelement(PDPSelectors.personalizationPrice.get()).getText();
+			perosnalizationPrice = SelectorUtil.getElement(PDPSelectors.personalizationPrice.get()).getText();
 		}
 
 		logs.debug("Final Price Value: " + finalPrice);
@@ -208,14 +213,14 @@ public class PDPValidation extends SelTestCase {
 				perosnalizedString = perosnalizedString.substring(0, Math.min(perosnalizedString.length(), 3));
 				SelectorUtil.initializeSelectorsAndDoActions(personalizedInputValueSelector, perosnalizedString);
 			} else if (PDP.isPersonalizedInputSwatchesDisplayed(personalizedItemColorsSelector)) { // like item color
-				// Select a randon color or style option.
+				// Select a random color or style option.
 				logs.debug("Color personalized item.");
 				List<WebElement> itemColors = SelectorUtil.getAllElements(personalizedItemColorsSelector);
 				selectRandomItem(itemColors);
 			} else if (PDP.isPersonalizedInputSwatchesDisplayed(PDPSelectors.personalizedItemMenu.get())) {// like item size 
 				// Need an example (Not test on GH).
 				logs.debug("Style personalized item.");
-				WebElement menu = SelectorUtil.getelement(PDPSelectors.personalizedItemMenu.get());
+				WebElement menu = SelectorUtil.getElement(PDPSelectors.personalizedItemMenu.get());
 				List<WebElement> options =  menu.findElements(By.cssSelector(PDPSelectors.personalizedMenuOptions.get()));
 				selectRandomItem(options);
 			}

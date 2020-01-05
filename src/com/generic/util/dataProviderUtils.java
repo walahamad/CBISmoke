@@ -3,7 +3,6 @@ package com.generic.util;
 import java.text.MessageFormat;
 import com.generic.setup.EnvironmentFiles;
 import com.generic.setup.LoggingMsg;
-import com.generic.setup.SelTestCase;
 
 public class dataProviderUtils {
 
@@ -26,15 +25,15 @@ public class dataProviderUtils {
 		return getData(testName, 2);
 	}
 
-	public Object[][] getData(String testName, int startingRow) throws Exception{
+	public Object[][] getData(String testName, int startingRow) throws Exception {
 		/*
 		 * if the sheet is regression then the sheet name should contains the
-		 * "regression/setup" word and in col 2 should have the property runTest (empty not->
-		 * run , full-> run) so this function can ignore the test cases before it's been
-		 * send to parameterized class
+		 * "regression/setup" word and in col 2 should have the property runTest (empty
+		 * not-> run , full-> run) so this function can ignore the test cases before
+		 * it's been send to parameterized class
 		 */
 		// starting row 1 to rows sheets
-		logs.debug("Pulling data from sheet: "+ testName );
+		logs.debug("Pulling data from sheet: " + testName);
 		Xls_Reader dataTable = new Xls_Reader(EnvironmentFiles.getDataSheetPath());
 		int rows = dataTable.getRowCount(testName) - 1;
 		// if empty sheet return empty data
@@ -47,23 +46,24 @@ public class dataProviderUtils {
 		rows = dataTable.getRowCount(testName);
 		int cols = dataTable.getColumnCount(testName);
 
-		logs.debug(MessageFormat.format(LoggingMsg.TEST_NAME, testName) + " this sheet contains rows:"+rows+" and cols:"+cols);
+		logs.debug(MessageFormat.format(LoggingMsg.TEST_NAME, testName) + " this sheet contains rows:" + rows
+				+ " and cols:" + cols);
 		Object data[][] = new Object[rows - (startingRow - 1)][cols];// rows -1 since we dont have to include header
 
 		int ignoredCases = 0;
 
 		for (int rowNum = startingRow; rowNum <= rows; rowNum++) {
-			if (testName.contains("Regression") || testName.contains("Setup") ) {
+			if (testName.contains("Regression") || testName.contains("Setup")) {
 				if (dataTable.getCellData(testName, 1, 1).contains("runTest")
 						&& !dataTable.getCellData(testName, 1, rowNum).equals("")) {
 					for (int colNum = 0; colNum < cols; colNum++) {
 						Thread.sleep(100);
-						String CellValue = dataTable.getCellData(testName, colNum,rowNum);
-						
-						if (!(CellValue==""))
+						String CellValue = dataTable.getCellData(testName, colNum, rowNum);
+
+						if (!(CellValue == ""))
 							data[rowNum - startingRow][colNum] = CellValue;
 						else
-							data[rowNum - startingRow][colNum]  = "";  
+							data[rowNum - startingRow][colNum] = "";
 					}
 				} else {
 					for (int colNum = 0; colNum < cols; colNum++) {
@@ -73,8 +73,7 @@ public class dataProviderUtils {
 				}
 			} else {
 				for (int colNum = 0; colNum < cols; colNum++) {
-					data[rowNum - startingRow][colNum] = dataTable.getCellData(testName, colNum,
-							rowNum);
+					data[rowNum - startingRow][colNum] = dataTable.getCellData(testName, colNum, rowNum);
 				}
 			}
 		}
@@ -92,9 +91,9 @@ public class dataProviderUtils {
 			}
 		}
 
-		if (dataFinal.length==0)
+		if (dataFinal.length == 0)
 			throw new Exception("No Tests cases enabled in Data sheet");
-		
+
 		return dataFinal;
 	}
 
