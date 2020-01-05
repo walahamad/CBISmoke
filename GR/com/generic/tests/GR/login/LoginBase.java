@@ -4,7 +4,7 @@ import java.text.MessageFormat;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
 
-import org.testng.Assert;
+import org.testng.SkipException;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -16,16 +16,12 @@ import com.generic.setup.Common;
 import com.generic.setup.LoggingMsg;
 import com.generic.setup.SelTestCase;
 import com.generic.setup.SheetVariables;
-import com.generic.tests.GR.Registration.RegistrationBase;
 import com.generic.util.RandomUtilities;
-import com.generic.util.ReportUtil;
 import com.generic.util.SASLogger;
-import com.generic.util.SelectorUtil;
 import com.generic.util.dataProviderUtils;
 
 public class LoginBase extends SelTestCase {
 
-	private static int testCaseID;
 	// used sheet in test
 	public static final String testDataSheet = SheetVariables.loginSheet;
 	private static XmlTest testObject;
@@ -57,8 +53,9 @@ public class LoginBase extends SelTestCase {
 		// Important to add this for logging/reporting
 		setTestCaseReportName("Login Case");
 		Testlogs.get().debug("Case Browser: " + testObject.getParameter("browserName"));
-		logCaseDetailds(MessageFormat.format(LoggingMsg.TEST_CASE_DESC, testDataSheet + "." + caseId,
-				this.getClass().getCanonicalName(), desc, proprties.replace("\n", "<br>- ")));
+		String CaseDescription = MessageFormat.format(LoggingMsg.TEST_CASE_DESC, testDataSheet + "." + caseId,
+				this.getClass().getCanonicalName(), desc.replace("\n", "<br>--"));
+		initReportTime();
 
 		String userMail = "";
 		String userPassword = "";
@@ -79,7 +76,7 @@ public class LoginBase extends SelTestCase {
 
 			if ((proprties.equals("Success login") || proprties.equals("myAccountLink")) && email.equals("")) {
 				Testlogs.get().debug("Run the registration test case before sign in.");
-				//Prepare registration data.
+				// Prepare registration data.
 				userMail = RandomUtilities.getRandomEmail();
 				userPassword = "P@ssword11";
 				Login.registerNewUser(userMail, userPassword, true);
@@ -101,8 +98,10 @@ public class LoginBase extends SelTestCase {
 				String failureMessage = MessageFormat.format(LoggingMsg.ACTUAL_EXPECTED_ERROR,
 						emailMessage + "<br>" + passwordMessage, fieldsValidation);
 
-				sassert().assertTrue(fieldsValidation.contains(emailMessage),"Mail Validation error: "+failureMessage);
-				sassert().assertTrue(fieldsValidation.contains(passwordMessage),"Password Validation error"+ failureMessage);
+				sassert().assertTrue(fieldsValidation.contains(emailMessage),
+						"Mail Validation error: " + failureMessage);
+				sassert().assertTrue(fieldsValidation.contains(passwordMessage),
+						"Password Validation error" + failureMessage);
 				sassert().assertTrue(!Login.checkUserAccount(), LoggingMsg.USER_IS_LOGGED_IN);
 			}
 
@@ -135,39 +134,16 @@ public class LoginBase extends SelTestCase {
 				sassert().assertTrue(Login.checkMyAccountPage(), LoggingMsg.NOT_MY_ACCOUNT_PAGE);
 			}
 
-			if (proprties.equals("Forgot password -Valid Email")) {
-				Login.clickForgotPasswordBtn();
-				Login.typeForgottenPwdEmail(userMail);
-				Login.clickForgotPasswordSubmitBtn();
-				Thread.sleep(1500);
-				String alertMessage = Login.getAlertPositiveForgottenPasswordd();
-				String failureMessage = MessageFormat.format(LoggingMsg.ACTUAL_EXPECTED_ERROR, alertMessage,
-						fieldsValidation);
-				sassert().assertTrue(alertMessage.contains(fieldsValidation), failureMessage);
-			}
-			if (proprties.equals("Forgot password -Invalid Email")) {
-				if(!getBrowserName().contains("mobile"))
-				{
-					Login.clickForgotPasswordBtn();
-					Login.typeForgottenPwdEmail(userMail.replace("@", ""));
-					Login.clickForgotPasswordSubmitBtn();
-					Thread.sleep(1500);
-					String alertMessage = Login.getForgottenPwdEmailError();
-					String failureMessage = MessageFormat.format(LoggingMsg.ACTUAL_EXPECTED_ERROR, alertMessage,
-							fieldsValidation);
-					sassert().assertTrue(alertMessage.contains(fieldsValidation), failureMessage);
-				}
-			}
 			sassert().assertAll();
-			Common.testPass();
+
+			Common.testPass(CaseDescription);
 		} catch (Throwable t) {
-			setTestCaseDescription(getTestCaseDescription());
-			Testlogs.get().debug(MessageFormat.format(LoggingMsg.DEBUGGING_TEXT, t.getMessage()));
-			t.printStackTrace();
-			String temp = getTestCaseReportName();
-			Common.testFail(t, temp);
-			ReportUtil.takeScreenShot(getDriver(), testDataSheet + "_" + caseId);
-			Assert.assertTrue(false, t.getMessage());
+			if ((getTestStatus() != null) && getTestStatus().equalsIgnoreCase("skip")) {
+				throw new SkipException("Skipping this exception");
+			} else {
+				Common.testFail(t, CaseDescription, testDataSheet + "_" + caseId);
+			}
+
 		} // catch
 	}// test
 }

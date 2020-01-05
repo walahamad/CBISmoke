@@ -65,7 +65,7 @@ public class PDPSelectors {
 	public static final String expiredPDPBundle = "css,#{0}>" + expiredPDP.DesktopSelector.replace("css,", "");
 	public static final String ListBoxOptionBundle = "css,#{0}>" + ListBoxOption.DesktopSelector.replace("css,", "");
 	
-	public static final cselector SelectRegistryOrWishListModal = new cselector("css,#gwt-add-to-gift-registry-modal","css,div.c-pdp-modal.m-wishlist-registery");
+	public static final cselector SelectRegistryOrWishListModal = new cselector("css,#gwt-add-to-gift-registry-modal","css,.pw-sheet__inner");
     public static final cselector giftRegistryListBox = new cselector("css,select.gift-registry-list-bx","css,div.pw-sheet__content > div > div > select");
     public static final cselector createNewWL = new cselector("css,select.gift-registry-list-bx > option[value='Create New Wish List']","css, div.pw-sheet__content > div > div > select > option[value='Create New Wish List']");
     public static final cselector RYcreateNewWL = new cselector("css,li> button.wishlist-item","css,div.t-product-details__wishlist-dropdown > button");
@@ -85,7 +85,8 @@ public class PDPSelectors {
     public static final cselector RYmyWLAddToCartBtn = new cselector("css,div.wish-list-add-to-cart > div > a","css,.t-registry-list-product-list__product-add-to-cart > button");
     public static final cselector addToCartConfirmationModal = new cselector("css,div.gwt-DialogBox.ok-cancel-dlog.gwt_addtocart_div");
     public static final cselector addToCartConfirmationModalCheckoutBtn = new cselector("css,div.gwt-DialogBox.ok-cancel-dlog.gwt_addtocart_div button.button.primary");
-    public static final cselector shoppingCartProductsName = new cselector("css,div.order-item-name > div");
+    public static final cselector shoppingCartProductsName = new cselector("css,div.order-item-name > div","css,div.c-cart-product-item> div > a > h2");
+                                                                              
 	
 	public static final cselector addPersonalizedButton = new cselector("css,.gwt-product-content-panel>div.gwt-product-right-content-panel>div.gwt-product-detail-widget-personalization-panel> div.gwt-personalize-link-style" , "pw-button c-add-personalization-button" );
 	public static final cselector personalizedItems = new cselector("button third gwt-tab-header-sign-button","css,div.pw-accordion--is-prerender > button");

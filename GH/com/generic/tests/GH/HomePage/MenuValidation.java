@@ -5,7 +5,6 @@ import java.util.List;
 import org.openqa.selenium.WebElement;
 
 import com.generic.page.HomePage;
-import com.generic.selector.HomePageSelectors;
 import com.generic.setup.SelTestCase;
 import com.generic.setup.GlobalVariables;
 

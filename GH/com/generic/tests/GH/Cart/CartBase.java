@@ -43,7 +43,6 @@ public class CartBase extends SelTestCase {
 		return data;
 	}
 
-	@SuppressWarnings("unchecked")
 	@Test(dataProvider = "Carts")
 	public void CartBaseTest(String caseId, String runTest, String desc, String proprties) throws Exception {
 		

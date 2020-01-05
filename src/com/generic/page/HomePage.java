@@ -14,8 +14,6 @@ import com.generic.util.SelectorUtil;
 import com.generic.setup.ExceptionMsg;
 import com.generic.setup.LoggingMsg;
 import com.generic.util.SelectorUtil.commands.actions;
-import com.generic.util.SelectorUtil;
-
 
 /**
  * The Class HomePage.
@@ -47,7 +45,7 @@ public class HomePage extends SelTestCase {
 		getCurrentFunctionName(false);
 	}
 
-	//This is to disable Monetate if needed.
+	// This is to disable Monetate if needed.
 	public static void updateMmonetate() throws Exception {
 		getCurrentFunctionName(true);
 		getDriver().get(getURL() + "/?monetate=" + getCONFIG().getProperty("monetateStatus"));
@@ -179,10 +177,10 @@ public class HomePage extends SelTestCase {
 		List<WebElement> footerItems = new ArrayList<WebElement>();
 		if(isGH() || isRY()) {
 			isDisplayed = SelectorUtil.isDisplayed(HomePageSelectors.GHglobalFooter.get());
-			footerItems = getElementsList(HomePageSelectors.GHaccordionHeader.get());
+			footerItems = SelectorUtil.getAllElements(HomePageSelectors.GHaccordionHeader.get());
 		}else {
 			isDisplayed = SelectorUtil.isDisplayed(HomePageSelectors.globalFooter.get());
-			footerItems = getElementsList(HomePageSelectors.accordionHeader.get());
+			footerItems = SelectorUtil.getAllElements(HomePageSelectors.accordionHeader.get());
 		}
 		for (WebElement element : footerItems) {
 			isDisplayed = element.isDisplayed();
@@ -554,11 +552,11 @@ public class HomePage extends SelTestCase {
 
 		// Get the menu items list.
 		if(isGH()) {
-			menuFirstLevelElements = getElementsList(HomePageSelectors.GHmenuItems.get());
+			menuFirstLevelElements = SelectorUtil.getAllElements(HomePageSelectors.GHmenuItems.get());
 		}else if(isRY()){
-			menuFirstLevelElements = getElementsList(HomePageSelectors.RYmenuItems.get());
+			menuFirstLevelElements = SelectorUtil.getAllElements(HomePageSelectors.RYmenuItems.get());
 		}else {
-			menuFirstLevelElements = getElementsList(HomePageSelectors.menuItems.get());
+			menuFirstLevelElements = SelectorUtil.getAllElements(HomePageSelectors.menuItems.get());
 		}
 		getCurrentFunctionName(false);
 
@@ -624,9 +622,9 @@ public class HomePage extends SelTestCase {
 			// Get the sub menu header text.
 			WebElement selectedMenuHeader;
 			if(isGH() || isRY()) {
-				 selectedMenuHeader = SelectorUtil.getelement(HomePageSelectors.GHselectedMenuHeader.get());
+				 selectedMenuHeader = SelectorUtil.getElement(HomePageSelectors.GHselectedMenuHeader.get());
 			}else {
-				 selectedMenuHeader = SelectorUtil.getelement(HomePageSelectors.selectedMenuHeader.get());
+				 selectedMenuHeader = SelectorUtil.getElement(HomePageSelectors.selectedMenuHeader.get());
 			}
 			String selectedMenuHeaderText = selectedMenuHeader.getText().toLowerCase();
 
@@ -655,7 +653,7 @@ public class HomePage extends SelTestCase {
 
 				// Navigate to the selected random page.
 				SelectorUtil.clickOnWebElement(randomElement);
-				
+
 				Thread.sleep(1000);
 				SelectorUtil.waitGWTLoadedEventPWA();
 				String currentPageUrl = SelectorUtil.getCurrentPageUrl();

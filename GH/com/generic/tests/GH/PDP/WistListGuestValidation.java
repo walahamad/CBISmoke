@@ -1,8 +1,6 @@
 package com.generic.tests.GH.PDP;
 
-import com.generic.page.HomePage;
 import com.generic.page.PDP;
-import com.generic.page.PLP;
 import com.generic.setup.SelTestCase;
 import com.generic.setup.GlobalVariables.browsers;
 
