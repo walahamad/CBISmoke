@@ -536,23 +536,13 @@ public class PLP extends SelTestCase {
 			getCurrentFunctionName(true);
 
 			String SelectorSS = PLPSelectors.recommendedOption.get();
-			if (isGH()) {
-				SelectorSS = PLPSelectors.GHRecommendedOption.get();
-			}
+			WebElement recommendedProduct = SelectorUtil.getElement(SelectorSS);
 
-			if (isGH() && isiPad()) {
-				// The GH option didn't contains suggestion product so submit search.
-				// (The unbxd redirect the site to PDP if the search for product id).
-				SelectorUtil.initializeSelectorsAndDoActions(PLPSelectors.GHSearchButton.get());
-			} else {
-				WebElement recommendedProduct = SelectorUtil.getElement(SelectorSS);
+			itemTitle = recommendedProduct.getText();
+			logs.debug("Picked item: " + itemTitle);
+			recommendedProduct.click();
 
-				itemTitle = recommendedProduct.getText();
-				logs.debug("Picked item: " + itemTitle);
-				recommendedProduct.click();
-
-				getCurrentFunctionName(false);
-			}
+			getCurrentFunctionName(false);
 			return itemTitle;
 		} catch (NoSuchElementException e) {
 			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
