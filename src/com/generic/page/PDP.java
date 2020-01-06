@@ -19,6 +19,7 @@ import org.openqa.selenium.support.ui.Wait;
 
 import com.generic.selector.HomePageSelectors;
 import com.generic.selector.PDPSelectors;
+import com.generic.selector.PLPSelectors;
 import com.generic.setup.ExceptionMsg;
 import com.generic.setup.GlobalVariables;
 import com.generic.setup.LoggingMsg;
@@ -42,13 +43,14 @@ public class PDP extends SelTestCase {
 				HomePage.updateMmonetate();
 			if (SelTestCase.isFGGR() || (isRY() && isMobile()))
 				PLP.clickSearchicon();
-			String itemName;
+			String itemName = "";
 			// This is to handle iPad behavior for search modal.
 			// TODO: to use this process on all brands
 			if (isGHRY() && isiPad()) {
 				PLP.clickSearch(SearchTerm);
-				itemName = PLP.pickPLPFirstProduct();
-			} else {
+				if (SelectorUtil.isElementExist(By.cssSelector(PLPSelectors.PLPPageSelector.get()))) {
+					itemName = PLP.pickPLPFirstProduct();
+				}			} else {
 				PLP.typeSearch(SearchTerm);
 				itemName = PLP.pickRecommendedOption();
 			}
@@ -657,7 +659,7 @@ public class PDP extends SelTestCase {
 				}
 
 			} else if (SelTestCase.isGHRY())
-				GHRYselectSwatches();
+				GHRYselectSwatches(bundle);
 			getCurrentFunctionName(false);
 		} catch (NoSuchElementException e) {
 			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
@@ -670,15 +672,15 @@ public class PDP extends SelTestCase {
 	public static void selectSwatches() throws Exception {
 		try {
 			getCurrentFunctionName(true);
+			Boolean bundle = PDP.bundleProduct();
 			if (SelTestCase.isFG() || SelTestCase.isGR()) {
-				Boolean bundle = PDP.bundleProduct();
 				String ProductID = null;
 				if (!isMobile() && bundle)
 					ProductID = PDP.getProductID(0);
 				selectSwatches(bundle, ProductID);
 
 			} else if (SelTestCase.isGHRY())
-				GHRYselectSwatches();
+				GHRYselectSwatches(bundle);
 			getCurrentFunctionName(false);
 		} catch (NoSuchElementException e) {
 			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
@@ -1375,16 +1377,14 @@ public class PDP extends SelTestCase {
 	}
 
 	// done - SMK
-	public static void GHRYselectColor() throws Exception {
+	public static void GHRYselectColor(Boolean bundle) throws Exception {
 		try {
 			getCurrentFunctionName(true);
-
-			int numberOfItems = getNumberOfItems();
 
 			String subStrArr = (PDPSelectors.GHRYColorOptions.get());
 
 			// Bundle product selector.
-			if (numberOfItems > 1) {
+			if (bundle) {
 				String ProductID = getProductID(0);
 				subStrArr = MessageFormat.format(PDPSelectors.GHRYColorOptionsBundle.get(), ProductID);
 			}
@@ -1393,7 +1393,6 @@ public class PDP extends SelTestCase {
 			String classValue;
 			for (int index = 0; index < list.size(); index++) {
 				classValue = SelectorUtil.getAttrString(subStrArr, "class", index);
-				logs.debug("classValue:" + classValue);
 				if (!classValue.contains("no-available") && !classValue.contains("disabled")) {
 					WebElement item;
 					if (!isMobile()) {
@@ -1403,9 +1402,7 @@ public class PDP extends SelTestCase {
 					}
 					JavascriptExecutor jse = (JavascriptExecutor) getDriver();
 					jse.executeScript("arguments[0].scrollIntoView(false)", item);
-					String optionIndex = "index," + index;
-					String action = subStrArr + "ForceAction,click";
-					SelectorUtil.initializeSelectorsAndDoActions(subStrArr, action);
+					item.click();
 					break;
 				}
 			}
@@ -1418,14 +1415,13 @@ public class PDP extends SelTestCase {
 	}
 
 	// done - SMK
-	public static void GHRYselectSize() throws Exception {
+	public static void GHRYselectSize(Boolean bundle) throws Exception {
 		try {
 			getCurrentFunctionName(true);
 			String subStrArr = (PDPSelectors.GHRYSizeOptions.get());
 
 			// Bundle product selector.
-			int numberOfItems = getNumberOfItems();
-			if (numberOfItems > 1) {
+			if (bundle) {
 				String ProductID = getProductID(0);
 				subStrArr = MessageFormat.format(PDPSelectors.GHRYSizeOptionsBundle.get(), ProductID);
 			}
@@ -1532,17 +1528,17 @@ public class PDP extends SelTestCase {
 		}
 	}
 
-	public static void GHRYselectSwatches() throws Exception {
+	public static void GHRYselectSwatches(Boolean bundle) throws Exception {
 		try {
 			getCurrentFunctionName(true);
 			if (SelTestCase.isGHRY()) {
 				closeSignUpModalIfDisplayed();
 			}
+			GHRYselectColor(bundle);
 			int numberOfPanels = GHRYNumberOfOptions();
 			logs.debug("numberOfPanels: " + numberOfPanels);
-			GHRYselectColor();
 			if (numberOfPanels > 1)
-				GHRYselectSize();
+				GHRYselectSize(bundle);
 			getCurrentFunctionName(false);
 
 		} catch (NoSuchElementException e) {

@@ -72,5 +72,5 @@ public class PLPSelectors {
 	
 	public static final cselector GHRecommendedOption =new cselector("css,.unbxd-as-popular-product-info","css,.c--align-middle a.pw-link.c-arrange.u-flexbox.c--align-middle.u-align-center", "css,.c-search-suggestions-products__product");
 	public static final cselector GHSearchButton = new cselector("css,#searchButton");
-	
+	public static final cselector PLPPageSelector = new cselector("css,.view-UnbxdBodyView");
 }

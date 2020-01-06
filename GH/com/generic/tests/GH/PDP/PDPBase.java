@@ -59,6 +59,9 @@ public class PDPBase extends SelTestCase {
 		Testlogs.set(new SASLogger("PDP_SC " + getBrowserName()));
 		// Important to add this for logging/reporting
 		setTestCaseReportName(SheetVariables.PDPCaseId);
+		String CaseDescription = MessageFormat.format(LoggingMsg.TEST_CASE_DESC, testDataSheet + "." + caseId,
+				this.getClass().getCanonicalName(), desc);
+		initReportTime();
 		Testlogs.get().debug("Case Browser: " + testObject.getParameter("browserName"));
 		logCaseDetailds(MessageFormat.format(LoggingMsg.TEST_CASE_DESC, testDataSheet + "." + caseId,
 				this.getClass().getCanonicalName(), desc));
@@ -80,7 +83,7 @@ public class PDPBase extends SelTestCase {
 			}
 
 			sassert().assertAll();
-			Common.testPass();
+			Common.testPass(CaseDescription);
 		} catch (Throwable t) {
 			setTestCaseDescription(getTestCaseDescription());
 			Testlogs.get().debug(MessageFormat.format(LoggingMsg.DEBUGGING_TEXT, t.getMessage()));

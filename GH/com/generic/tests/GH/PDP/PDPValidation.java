@@ -30,19 +30,25 @@ public class PDPValidation extends SelTestCase {
 		validateIsPDPPage();
 		SelectorUtil.waitGWTLoadedEventPWA();
 
-		int numberOfItems = PDP.getNumberOfItems();
 		Boolean bundle = PDP.getNumberOfItems() > 1;
 		String ProductID = null;
-		if (!isMobile() && bundle)
+
+		// For bundle PDP mobile, validate the price is displayed in mini PDP page
+		 if (isMobile() && bundle) {
+		 	PDP.clickBundleItems();
+		 	sassert().assertTrue(PDP.validateMobileBundlePriceIsDisplayed(),
+		 			"Top price for the bundle item (mini PDP) is not dispayed");
+		 }
+		if (bundle)
 			ProductID = PDP.getProductID(0);
 		String priceErrorMessage;
 		// price error message
 		//for single PDP, validate the price is displayed below the title of the page for both desktop and mobile
 		//for bundle PDP Desktop, validate the top price is displayed for the collection. (this is not displayed in mobile).
 		//for bundle PDP mobile and desktop,validate the prices are displayed in bundle landing page for all items.
-		if (numberOfItems == 1) {
+		if (!bundle) {
 			priceErrorMessage = "Top price is not dispayed";
-		} else if (!isMobile() && numberOfItems > 1) {
+		} else if (!isMobile() && bundle) {
 			priceErrorMessage = "Top price for the bundle items are not dispayed";
 		} else {
 			priceErrorMessage = "Price for the bundle items are not dispayed";
@@ -52,13 +58,6 @@ public class PDPValidation extends SelTestCase {
 		if (isMobile()) {
 			sassert().assertTrue(PDP.validatePriceIsDisplayed(), priceErrorMessage);
 		}
-
-		// For bundle PDP mobile, validate the price is displayed in mini PDP page
-		 if (isMobile() && numberOfItems > 1) {
-		 	PDP.clickBundleItems();
-		 	sassert().assertTrue(PDP.validateMobileBundlePriceIsDisplayed(),
-		 			"Top price for the bundle item (mini PDP) is not dispayed");
-		 }
 		// Select all required swatches.
 		PDP.selectSwatches();
 
