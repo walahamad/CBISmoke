@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="e2e Smoke test" parallel="tests" thread-count="3"
+	data-provider-thread-count="1">
+	<parameter name="Brand" value="FG"></parameter>
+	<parameter name="Env" value="prod"></parameter>
+
+	<test name="e2e chrome Guest User">
+		<parameter name="browserName" value="chrome"></parameter>
+		<classes>
+			<class name="com.generic.tests.FG.e2e.SmokeTest_Guest_e2e" />
+		</classes>
+	</test>
+
+	<test name="e2e iPad Guest User">
+		<parameter name="browserName" value="mobile_iPad"></parameter>
+		<classes>
+			<class name="com.generic.tests.FG.e2e.SmokeTest_Guest_e2e" />
+		</classes>
+	</test>
+
+
+	<test name="e2e iPhone Guest User">
+		<parameter name="browserName" value="mobile_iPhone X"></parameter>
+		<classes>
+			<class name="com.generic.tests.FG.e2e.SmokeTest_Guest_e2e" />
+		</classes>
+	</test>
+</suite> <!-- Suite -->
