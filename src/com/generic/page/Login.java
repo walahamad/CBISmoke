@@ -4,6 +4,7 @@ import java.net.URI;
 import java.text.MessageFormat;
 import java.util.NoSuchElementException;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
 import com.generic.selector.LoginSelectors;
@@ -194,11 +195,11 @@ public class Login extends SelTestCase {
 				Thread.sleep(1000);
 				SelectorUtil.waitGWTLoadedEventPWA();
 				if (isRY()) {
-					SelectorUtil.initializeSelectorsAndDoActions(SignInSelectors.GHRYMobileMenuBuuton.get());
+					SelectorUtil.initializeSelectorsAndDoActions(LoginSelectors.GHRYMobileMenuBuuton.get());
 				}
 				if (isGH()) {
-					SelectorUtil.initializeSelectorsAndDoActions(SignInSelectors.GHRYMobileMenuBuuton.get());
-					if (SelectorUtil.isElementExist(By.cssSelector(SignInSelectors.GHMobileMenuSignout.get()))) {
+					SelectorUtil.initializeSelectorsAndDoActions(LoginSelectors.GHRYMobileMenuBuuton.get());
+					if (SelectorUtil.isElementExist(By.cssSelector(LoginSelectors.GHMobileMenuSignout.get()))) {
 						isUserLogedIn = true;
 					}
 				} else {
@@ -209,7 +210,7 @@ public class Login extends SelTestCase {
 					}
 				}
 			} else if(isRY()) {
-				WebElement welcomeMessage = SelectorUtil.getelement(SignInSelectors.RYWelcomeMessage.get());
+				WebElement welcomeMessage = SelectorUtil.getElement(LoginSelectors.RYWelcomeMessage.get());
 				logs.debug("welcomeMessage: " + welcomeMessage.getAttribute("innerText").trim());
 				if (welcomeMessage.getAttribute("innerText").trim().toLowerCase().contains("hi")) {
 					isUserLogedIn = true;
@@ -250,12 +251,12 @@ public class Login extends SelTestCase {
 			// Get my account link.
 			if (isPWAMobile) {
 				if (isRY()) {
-					SelectorUtil.initializeSelectorsAndDoActions(SignInSelectors.GHRYMobileMenuBuuton.get());
+					SelectorUtil.initializeSelectorsAndDoActions(LoginSelectors.GHRYMobileMenuBuuton.get());
 				}
 
 				if(isGH()) {
-					SelectorUtil.initializeSelectorsAndDoActions(SignInSelectors.GHRYMobileMenuBuuton.get());
-					myAccountLink = SelectorUtil.getelement(SignInSelectors.GHMobileSignoutLink.get());
+					SelectorUtil.initializeSelectorsAndDoActions(LoginSelectors.GHRYMobileMenuBuuton.get());
+					myAccountLink = SelectorUtil.getElement(LoginSelectors.GHMobileSignoutLink.get());
 				} else {
 					myAccountLink = SelectorUtil.getMenuLinkMobilePWA(myAccountPageLink);
 				}
@@ -269,7 +270,7 @@ public class Login extends SelTestCase {
 				isUserLogedIn = true;
 			}
 			if(isGH() && isMobile()) {
-				myAccountLink = SelectorUtil.getelement(SignInSelectors.GHMobileSignoutLink.get());
+				myAccountLink = SelectorUtil.getElement(LoginSelectors.GHMobileSignoutLink.get());
 			} else {
 				if (!isRY()) {
 					// Go to my account page.
