@@ -95,7 +95,7 @@ public class PDPValidation extends SelTestCase {
 		// Verify "Add to Cart" is enabled.
 		sassert().assertTrue(PDP.validateAddToCartIsEnabled(), "Add to Cart button is not enabled");
 
-		int quantity = PDP.getQuantity();
+		int quantity = PDP.getQuantity(bundle);
 
 		// Click "Add To Cart".
 		PDP.clickAddToCartButton();

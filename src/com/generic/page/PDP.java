@@ -160,13 +160,12 @@ public class PDP extends SelTestCase {
 	*
 	* @throws Exception
 	*/
-	public static int GHRYNumberOfOptions() throws Exception {
+	public static int GHRYNumberOfOptions(Boolean bundle) throws Exception {
 		getCurrentFunctionName(true);
 		String subStrArr = PDPSelectors.avaibleOptions.get();
 
 		// Bundle product selector.
-		int numberOfItems = getNumberOfItems();
-		if (numberOfItems > 1) {
+		if (bundle) {
 			String ProductID = getProductID(0);
 			subStrArr = MessageFormat.format(PDPSelectors.GHAvailableOptionsBundle.get(), ProductID);
 		}
@@ -468,20 +467,20 @@ public class PDP extends SelTestCase {
 	}
 
 	// done - SMK
-		public static String getBottomPrice() throws Exception {
-			getCurrentFunctionName(true);
-			logs.debug("Validate if bottom price is updated after seleting options");
-			String selector = PDPSelectors.bottomPriceSingle.get();
-			if (!SelTestCase.getBrowserName().contains(GlobalVariables.browsers.iPhone) && getNumberOfItems() > 1) {
-				String ProductID = getProductID(0);
-				selector = MessageFormat.format(PDPSelectors.bottomPriceBundle, ProductID);
-			}
-			SelectorUtil.initializeSelectorsAndDoActions(selector);
-			String price = SelectorUtil.textValue.get();
-			getCurrentFunctionName(false);
-			return price;
+	public static String getBottomPrice() throws Exception {
+		getCurrentFunctionName(true);
+		logs.debug("Validate if bottom price is updated after seleting options");
+		String selector = PDPSelectors.bottomPriceSingle.get();
+		if (!SelTestCase.getBrowserName().contains(GlobalVariables.browsers.iPhone) && getNumberOfItems() > 1) {
+			String ProductID = getProductID(0);
+			selector = MessageFormat.format(PDPSelectors.bottomPriceBundle, ProductID);
 		}
-	
+		SelectorUtil.initializeSelectorsAndDoActions(selector);
+		String price = SelectorUtil.textValue.get();
+		getCurrentFunctionName(false);
+		return price;
+	}
+
 	// done - SMK
 		public static String getBottomPrice(Boolean bundle, String ProductID) throws Exception {
 			getCurrentFunctionName(true);
@@ -1499,14 +1498,13 @@ public class PDP extends SelTestCase {
 	* @return integer.
 	* @throws Exception
  	*/
-	public static int getQuantity() throws Exception {
+	public static int getQuantity(boolean bundle) throws Exception {
 		try {
 			getCurrentFunctionName(true);
 			String quantitySelector = PDPSelectors.quantity.get();
-			int numberOfItems = getNumberOfItems();
 
 			// Bundle product selector.
-			if (numberOfItems > 1) {
+			if (bundle) {
 				String ProductID = getProductID(0);
 				quantitySelector = MessageFormat.format(PDPSelectors.quantityBundle.get(), ProductID);
 			}
@@ -1535,7 +1533,7 @@ public class PDP extends SelTestCase {
 				closeSignUpModalIfDisplayed();
 			}
 			GHRYselectColor(bundle);
-			int numberOfPanels = GHRYNumberOfOptions();
+			int numberOfPanels = GHRYNumberOfOptions(bundle);
 			logs.debug("numberOfPanels: " + numberOfPanels);
 			if (numberOfPanels > 1)
 				GHRYselectSize(bundle);
