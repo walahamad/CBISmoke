@@ -10,7 +10,6 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.xml.XmlTest;
 
-import com.generic.page.PLP;
 import com.generic.page.Registration;
 import com.generic.page.Login;
 import com.generic.setup.Common;

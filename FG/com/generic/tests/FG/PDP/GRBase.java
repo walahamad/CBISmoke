@@ -3,7 +3,7 @@ package com.generic.tests.FG.PDP;
 import java.text.MessageFormat;
 import java.util.Arrays;
 
-import org.testng.Assert;
+import org.testng.SkipException;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -16,7 +16,6 @@ import com.generic.setup.SelTestCase;
 import com.generic.setup.SheetVariables;
 import com.generic.tests.FG.login.LoginBase;
 import com.generic.util.RandomUtilities;
-import com.generic.util.ReportUtil;
 import com.generic.util.SASLogger;
 import com.generic.util.dataProviderUtils;
 
@@ -52,22 +51,24 @@ public class GRBase extends SelTestCase {
 	}
 
 	@Test(dataProvider = "GR_SC")
-	public void GRTest(String caseId, String runTest, String desc, String proprties, String registryType, String eventDateMonth, String eventDateDay, String eventDateYear, String emptyMessage)
-			throws Exception {
+	public void GRTest(String caseId, String runTest, String desc, String proprties, String registryType,
+			String eventDateMonth, String eventDateDay, String eventDateYear, String emptyMessage) throws Exception {
 		Testlogs.set(new SASLogger("GR_SC " + getBrowserName()));
 		// Important to add this for logging/reporting
 		setTestCaseReportName(SheetVariables.GRCaseId);
 		Testlogs.get().debug("Case Browser: " + testObject.getParameter("browserName"));
-		logCaseDetailds(MessageFormat.format(LoggingMsg.TEST_CASE_DESC, testDataSheet + "." + caseId,
-				this.getClass().getCanonicalName(), desc));
+		String CaseDescription = MessageFormat.format(LoggingMsg.TEST_CASE_DESC, testDataSheet + "." + caseId,
+				this.getClass().getCanonicalName(), desc);
+		initReportTime();
 
 		try {
-			//Prepare registration data.
+			// Prepare registration data.
 			String userMail = RandomUtilities.getRandomEmail();
 			String userPassword = "P@ssword11";
 			GiftRegistry.accessValidAccount(userMail, userPassword);
 
-			GiftRegistry.setRegistryInformtion(registryType, eventDateMonth, eventDateDay, eventDateYear, emptyMessage, singlePDPSearchTerm);
+			GiftRegistry.setRegistryInformtion(registryType, eventDateMonth, eventDateDay, eventDateYear, emptyMessage,
+					singlePDPSearchTerm);
 
 			if (proprties.contains(createRegistry)) {
 				GiftRegistry.validate(userMail);
@@ -82,15 +83,15 @@ public class GRBase extends SelTestCase {
 			}
 
 			sassert().assertAll();
-			Common.testPass();
+
+			Common.testPass(CaseDescription);
 		} catch (Throwable t) {
-			setTestCaseDescription(getTestCaseDescription());
-			Testlogs.get().debug(MessageFormat.format(LoggingMsg.DEBUGGING_TEXT, t.getMessage()));
-			t.printStackTrace();
-			String temp = getTestCaseReportName();
-			Common.testFail(t, temp);
-			ReportUtil.takeScreenShot(getDriver(), testDataSheet + "_" + caseId);
-			Assert.assertTrue(false, t.getMessage());
+			if ((getTestStatus() != null) && getTestStatus().equalsIgnoreCase("skip")) {
+				throw new SkipException("Skipping this exception");
+			} else {
+				Common.testFail(t, CaseDescription, testDataSheet + "_" + caseId);
+			}
+
 		} // catch
 	}// test
 }

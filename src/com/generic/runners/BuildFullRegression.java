@@ -25,19 +25,14 @@ public class BuildFullRegression extends SelTestCase {
 	private static String[] envs = null;
 	private static String[] brands = null;
 	private static ArrayList<String> regressionsPathes = new ArrayList<String>();
-	private static int testCaseID;
 	// used sheet in test
 	public static final String testDataSheet = SheetVariables.RunnersRegressionSheet;
-	private static XmlTest testObject;
-
 	private static ThreadLocal<SASLogger> Testlogs = new ThreadLocal<SASLogger>();
 
 	@BeforeTest
 	public static void initialSetUp(XmlTest test) throws Exception {
 		try {
 			Testlogs.set(new SASLogger(test.getName() + test.getIndex()));
-			testObject = test;
-
 			try {
 				runners = System.getenv("Runners").split(",");
 			} catch (Exception e) {
@@ -110,8 +105,6 @@ public class BuildFullRegression extends SelTestCase {
 
 					if (Files.exists(Paths.get(System.getProperty("user.dir") + "\\" + brandName
 							+ "\\com\\generic\\tests\\" + brandName + "\\" + regPath))) {
-
-
 
 						logs.debug("Adding runner path to paths: " + regressionName);
 						regressionsPathes

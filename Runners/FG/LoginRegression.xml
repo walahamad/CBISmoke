@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Login Regression" parallel="tests" thread-count="3" data-provider-thread-count="1">
+	<test name="Login Regression Chrome">
+		<parameter name="browserName" value="Chrome"></parameter>
+		<parameter name="Env" value="prod"></parameter>
+		<parameter name="Brand" value="FG"></parameter>
+		<classes>
+			<class name="com.generic.tests.FG.login.LoginBase" />
+		</classes>
+	</test><!-- Test -->
+	<test name="Login Regression iPad">
+		<parameter name="browserName" value="mobile_iPad"></parameter>
+		<parameter name="Env" value="prod"></parameter>
+		<parameter name="Brand" value="FG"></parameter>
+		<classes>
+			<class name="com.generic.tests.FG.login.LoginBase" />
+		</classes>
+	</test><!-- Test -->
+	<test name="Login Regression iPhone">
+		<parameter name="browserName" value="mobile_iPhone X"></parameter>
+		<parameter name="Env" value="prod"></parameter>
+		<parameter name="Brand" value="FG"></parameter>
+		<classes>
+			<class name="com.generic.tests.FG.login.LoginBase" />
+		</classes>
+	</test><!-- Test -->
+</suite> <!-- Suite -->

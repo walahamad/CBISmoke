@@ -57,7 +57,7 @@ public class CLPBase extends SelTestCase {
 				this.getClass().getCanonicalName(), desc.replace("\n", "<br>--")));
 
 		try {
-			   if (proprties.contains(this.CLP)) {
+			   if (proprties.contains(CLP)) {
 					sassert().assertTrue(CLPValidation.validate(), "CLP validation has some problems");
 				} else {
 					Testlogs.get().debug("please check proprties provided in excel sheet");

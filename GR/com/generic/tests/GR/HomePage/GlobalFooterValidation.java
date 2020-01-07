@@ -8,6 +8,8 @@ public class GlobalFooterValidation extends SelTestCase {
 		getCurrentFunctionName(true);
 		boolean isCountrySelectorDisplayed = HomePage.validateCountrySelectorDisplayed();
 		boolean isFooterItemsDisplayed = HomePage.validateGlobalFooterItemsDisplayed();
+		sassert().assertTrue(isCountrySelectorDisplayed && isFooterItemsDisplayed,
+				"Global footer validation has some problems");
 		getCurrentFunctionName(false);
 		return isCountrySelectorDisplayed && isFooterItemsDisplayed;
 	}
