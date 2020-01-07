@@ -4,7 +4,6 @@ import java.text.MessageFormat;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
 
-import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.DataProvider;
@@ -12,10 +11,8 @@ import org.testng.annotations.Test;
 import org.testng.xml.XmlTest;
 
 import com.generic.page.Registration;
-import com.generic.page.SignIn;
-import com.generic.selector.SignInSelectors;
+import com.generic.page.Login;
 import com.generic.setup.Common;
-import com.generic.setup.GlobalVariables;
 import com.generic.setup.LoggingMsg;
 import com.generic.setup.SelTestCase;
 import com.generic.setup.SheetVariables;
@@ -26,7 +23,6 @@ import com.generic.util.dataProviderUtils;
 
 public class LoginBase extends SelTestCase {
 
-	private static int testCaseID;
 	// used sheet in test
 	public static final String testDataSheet = SheetVariables.loginSheet;
 	private static XmlTest testObject;
@@ -81,79 +77,56 @@ public class LoginBase extends SelTestCase {
 				//Prepare registration data.
 				userMail = RandomUtilities.getRandomEmail();
 				userPassword = "P@ssword11";
-				SignIn.registerNewUser(userMail, userPassword);
+				Login.registerNewUser(userMail, userPassword);
 			}
 
 			if (proprties.equals("Success login")) {
 				Testlogs.get().debug("Validate Success login");
-				SignIn.fillLoginFormAndClickSubmit(userMail, (String) userPassword);
-				sassert().assertTrue(SignIn.checkUserAccount(), LoggingMsg.USER_IS_NOT_LOGGED_IN_SUCCESSFULLY);
+				Login.fillLoginFormAndClickSubmit(userMail, (String) userPassword);
+				sassert().assertTrue(Login.checkUserAccount(), LoggingMsg.USER_IS_NOT_LOGGED_IN_SUCCESSFULLY);
 			}
 			if (proprties.equals("emptyData")) {
-				SignIn.fillLoginFormAndClickSubmit("", "");
-				String emailMessage = SignIn.getMailErrorMsg();
-				String passwordMessage = SignIn.getPasswrdErrorMsg();
+				Login.fillLoginFormAndClickSubmit("", "");
+				String emailMessage = Login.getMailErrorMsg();
+				String passwordMessage = Login.getPasswrdErrorMsg();
 
 				String failureMessage = MessageFormat.format(LoggingMsg.ACTUAL_EXPECTED_ERROR,
 						emailMessage + "<br>" + passwordMessage, fieldsValidation);
 
 				sassert().assertTrue(fieldsValidation.contains(emailMessage),"Mail Validation error: "+failureMessage);
 				sassert().assertTrue(fieldsValidation.contains(passwordMessage),"Password Validation error"+ failureMessage);
-				sassert().assertTrue(!SignIn.checkUserAccount(), LoggingMsg.USER_IS_LOGGED_IN);
+				sassert().assertTrue(!Login.checkUserAccount(), LoggingMsg.USER_IS_LOGGED_IN);
 			}
 
 			if (proprties.equals("invalidUserEmail")) {
 				Testlogs.get().debug("Validate invalid User Email login");
-				SignIn.fillLoginFormAndClickSubmit(userMail.replace("@", ""), userPassword);
-				String alertMessage = SignIn.getMailErrorMsg().toLowerCase();
+				Login.fillLoginFormAndClickSubmit(userMail.replace("@", ""), userPassword);
+				String alertMessage = Login.getMailErrorMsg().toLowerCase();
 				sassert().assertTrue(alertMessage.contains(fieldsValidation.toLowerCase()),
 						"Error message is not as expected" + fieldsValidation + " : " + alertMessage);
-				sassert().assertTrue(!SignIn.checkUserAccount(), LoggingMsg.USER_IS_LOGGED_IN);
+				sassert().assertTrue(!Login.checkUserAccount(), LoggingMsg.USER_IS_LOGGED_IN);
 			}
 
 			if (proprties.equals("wrongUserPassword")) {
 
 				Testlogs.get().debug("Validate wrong User Password Message");
-				SignIn.fillLoginFormAndClickSubmit(userMail, userPassword + "123");
-				String loginformMessage = SignIn.getErrologinMessage();
+				Login.fillLoginFormAndClickSubmit(userMail, userPassword + "123");
+				String loginformMessage = Login.getErrologinMessage();
 				String failureMessage = MessageFormat.format(LoggingMsg.ACTUAL_EXPECTED_ERROR, loginformMessage,
 						fieldsValidation);
 				sassert().assertTrue(loginformMessage.contains(fieldsValidation), failureMessage);
-				sassert().assertTrue(!SignIn.checkUserAccount(), LoggingMsg.USER_IS_LOGGED_IN);
+				sassert().assertTrue(!Login.checkUserAccount(), LoggingMsg.USER_IS_LOGGED_IN);
 			}
 
 			if (proprties.equals("myAccountLink")) {
 
 				Testlogs.get().debug("Validate existence of my account link");
-				SignIn.fillLoginFormAndClickSubmit(userMail, userPassword);
-				sassert().assertTrue(SignIn.checkUserAccount(), LoggingMsg.USER_IS_NOT_LOGGED_IN_SUCCESSFULLY);
-				sassert().assertTrue(SignIn.checkExistenceOfAccountLink(), LoggingMsg.MY_ACCOUNT_LINK_NOT_EXIST);
-				sassert().assertTrue(SignIn.checkMyAccountPage(), LoggingMsg.NOT_MY_ACCOUNT_PAGE);
+				Login.fillLoginFormAndClickSubmit(userMail, userPassword);
+				sassert().assertTrue(Login.checkUserAccount(), LoggingMsg.USER_IS_NOT_LOGGED_IN_SUCCESSFULLY);
+				sassert().assertTrue(Login.checkExistenceOfAccountLink(), LoggingMsg.MY_ACCOUNT_LINK_NOT_EXIST);
+				sassert().assertTrue(Login.checkMyAccountPage(), LoggingMsg.NOT_MY_ACCOUNT_PAGE);
 			}
 
-			if (proprties.equals("Forgot password -Valid Email")) {
-				SignIn.clickForgotPasswordBtn();
-				SignIn.typeForgottenPwdEmail(userMail);
-				SignIn.clickForgotPasswordSubmitBtn();
-				Thread.sleep(1500);
-				String alertMessage = SignIn.getAlertPositiveForgottenPasswordd();
-				String failureMessage = MessageFormat.format(LoggingMsg.ACTUAL_EXPECTED_ERROR, alertMessage,
-						fieldsValidation);
-				sassert().assertTrue(alertMessage.contains(fieldsValidation), failureMessage);
-			}
-			if (proprties.equals("Forgot password -Invalid Email")) {
-				if(!getBrowserName().contains("mobile"))
-				{
-					SignIn.clickForgotPasswordBtn();
-					SignIn.typeForgottenPwdEmail(userMail.replace("@", ""));
-					SignIn.clickForgotPasswordSubmitBtn();
-					Thread.sleep(1500);
-					String alertMessage = SignIn.getForgottenPwdEmailError();
-					String failureMessage = MessageFormat.format(LoggingMsg.ACTUAL_EXPECTED_ERROR, alertMessage,
-							fieldsValidation);
-					sassert().assertTrue(alertMessage.contains(fieldsValidation), failureMessage);
-				}
-			}
 			sassert().assertAll();
 			Common.testPass();
 		} catch (Throwable t) {

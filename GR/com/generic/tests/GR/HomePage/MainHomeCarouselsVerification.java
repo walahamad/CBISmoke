@@ -9,7 +9,7 @@ public class MainHomeCarouselsVerification extends SelTestCase {
 		getCurrentFunctionName(true);
 		sassert().assertTrue(HomePage.validateMainHomeCarouselsDisplayed(), "Main home Carousels is not displayed");
 		getCurrentFunctionName(false);
-		
+
 	}
 
 }

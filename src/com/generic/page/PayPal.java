@@ -12,7 +12,7 @@ import com.generic.util.SelectorUtil;
 
 public class PayPal extends SelTestCase {
 
-	//CBI
+	// CBI
 	public static void signIn(String userName, String Password) throws Exception {
 		try {
 			getCurrentFunctionName(true);
@@ -31,8 +31,8 @@ public class PayPal extends SelTestCase {
 			throw e;
 		}
 	}
-	
-	//CBI
+
+	// CBI
 	private static void clickNext() throws Exception {
 		try {
 			getCurrentFunctionName(true);
@@ -46,12 +46,12 @@ public class PayPal extends SelTestCase {
 		} catch (NoSuchElementException e) {
 			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
 			}.getClass().getEnclosingMethod().getName()));
-			
+
 		}
 
 	}
-	
-	//CBI
+
+	// CBI
 	private static void clickLogin() throws Exception {
 		try {
 			getCurrentFunctionName(true);
@@ -69,8 +69,8 @@ public class PayPal extends SelTestCase {
 		}
 
 	}
-	
-	//CBI
+
+	// CBI
 	public static void clickOnContinue() throws Exception {
 		try {
 			getCurrentFunctionName(true);
@@ -89,7 +89,7 @@ public class PayPal extends SelTestCase {
 
 	}
 
-	//CBI
+	// CBI
 	private static void typePassword(String Password) throws Exception {
 		try {
 			getCurrentFunctionName(true);
@@ -108,7 +108,7 @@ public class PayPal extends SelTestCase {
 
 	}
 
-	//CBI
+	// CBI
 	private static void typeUserName(String userName) throws Exception {
 		try {
 			getCurrentFunctionName(true);

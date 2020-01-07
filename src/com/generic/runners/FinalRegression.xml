@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite data-provider-thread-count="1" name="Suite"
+	parallel="tests" thread-count="3">
+	<test name="HP Chrome  GR prod">
+		<parameter name="browserName" value="Chrome" />
+		<parameter name="Env" value="prod" />
+		<parameter name="Brand" value="GR" />
+		<classes>
+			<class name="com.generic.tests.GR.HomePage.HomePageBase" />
+		</classes>
+	</test>
+	<test name="HP mobile_iPad  GR prod">
+		<parameter name="browserName" value="mobile_iPad" />
+		<parameter name="Env" value="prod" />
+		<parameter name="Brand" value="GR" />
+		<classes>
+			<class name="com.generic.tests.GR.HomePage.HomePageBase" />
+		</classes>
+	</test>
+	<test name="HP mobile_iPhone x  GR prod">
+		<parameter name="browserName" value="mobile_iPhone x" />
+		<parameter name="Env" value="prod" />
+		<parameter name="Brand" value="GR" />
+		<classes>
+			<class name="com.generic.tests.GR.HomePage.HomePageBase" />
+		</classes>
+	</test>
+	<test name="CLP Chrome  GR prod">
+		<parameter name="browserName" value="Chrome" />
+		<parameter name="Env" value="prod" />
+		<parameter name="Brand" value="GR" />
+		<classes>
+			<class name="com.generic.tests.GR.CLP.CLPBase" />
+		</classes>
+	</test>
+	<test name="CLP mobile_iPad  GR prod">
+		<parameter name="browserName" value="mobile_iPad" />
+		<parameter name="Env" value="prod" />
+		<parameter name="Brand" value="GR" />
+		<classes>
+			<class name="com.generic.tests.GR.CLP.CLPBase" />
+		</classes>
+	</test>
+	<test name="CLP mobile_iPhone x  GR prod">
+		<parameter name="browserName" value="mobile_iPhone x" />
+		<parameter name="Env" value="prod" />
+		<parameter name="Brand" value="GR" />
+		<classes>
+			<class name="com.generic.tests.GR.CLP.CLPBase" />
+		</classes>
+	</test>
+	<test name="checkout Chrome  GR prod">
+		<parameter name="browserName" value="Chrome" />
+		<parameter name="Env" value="prod" />
+		<parameter name="Brand" value="GR" />
+
+		<classes>
+			<class name="com.generic.tests.GR.checkout.Base_checkout" />
+		</classes>
+	</test>
+	<test name="checkout mobile_iPad  GR prod">
+		<parameter name="browserName" value="mobile_iPad" />
+		<parameter name="Env" value="prod" />
+		<parameter name="Brand" value="GR" />
+
+		<classes>
+			<class name="com.generic.tests.GR.checkout.Base_checkout" />
+		</classes>
+	</test>
+	<test name="checkout mobile_iPhone x  GR prod">
+		<parameter name="browserName" value="mobile_iPhone x" />
+		<parameter name="Env" value="prod" />
+		<parameter name="Brand" value="GR" />
+
+		<classes>
+			<class name="com.generic.tests.GR.checkout.Base_checkout" />
+		</classes>
+	</test>
+	<test name="PDP Chrome  GR prod">
+		<parameter name="browserName" value="Chrome" />
+		<parameter name="Env" value="prod" />
+		<parameter name="Brand" value="GR" />
+		<classes>
+			<class name="com.generic.tests.GR.PDP.PDPBase" />
+		</classes>
+	</test>
+	<test name="PDP mobile_iPad  GR prod">
+		<parameter name="browserName" value="mobile_iPad" />
+		<parameter name="Env" value="prod" />
+		<parameter name="Brand" value="GR" />
+		<classes>
+			<class name="com.generic.tests.GR.PDP.PDPBase" />
+		</classes>
+	</test>
+	<test name="PDP mobile_iPhone x  GR prod">
+		<parameter name="browserName" value="mobile_iPhone x" />
+		<parameter name="Env" value="prod" />
+		<parameter name="Brand" value="GR" />
+		<classes>
+			<class name="com.generic.tests.GR.PDP.PDPBase" />
+		</classes>
+	</test>
+	<test name="checkout Chrome  GR prod paypal">
+		<parameter name="browserName" value="Chrome" />
+		<parameter name="Env" value="prod" />
+		<parameter name="Brand" value="GR" />
+
+		<classes>
+			<class name="com.generic.tests.GR.checkout.Base_PayPalCheckout" />
+		</classes>
+	</test>
+	<test name="checkout mobile_iPad  GR prod paypal">
+		<parameter name="browserName" value="mobile_iPad" />
+		<parameter name="Env" value="prod" />
+		<parameter name="Brand" value="GR" />
+
+		<classes>
+			<class name="com.generic.tests.GR.checkout.Base_PayPalCheckout" />
+		</classes>
+	</test>
+	<test name="checkout mobile_iPhone x  GR prod paypal">
+		<parameter name="browserName" value="mobile_iPhone x" />
+		<parameter name="Env" value="prod" />
+		<parameter name="Brand" value="GR" />
+
+		<classes>
+			<class name="com.generic.tests.GR.checkout.Base_PayPalCheckout" />
+		</classes>
+	</test>
+	<test name="cart Tests Chrome  GR prod">
+		<parameter name="browserName" value="Chrome" />
+		<parameter name="Env" value="prod" />
+		<parameter name="Brand" value="GR" />
+		<classes>
+			<class name="com.generic.tests.GR.Cart.CartBase" />
+
+		</classes>
+	</test>
+	<test name="cart Tests mobile_iPad  GR prod">
+		<parameter name="browserName" value="mobile_iPad" />
+		<parameter name="Env" value="prod" />
+		<parameter name="Brand" value="GR" />
+		<classes>
+			<class name="com.generic.tests.GR.Cart.CartBase" />
+
+		</classes>
+	</test>
+	<test name="cart Tests mobile_iPhone x  GR prod">
+		<parameter name="browserName" value="mobile_iPhone x" />
+		<parameter name="Env" value="prod" />
+		<parameter name="Brand" value="GR" />
+		<classes>
+			<class name="com.generic.tests.GR.Cart.CartBase" />
+
+		</classes>
+	</test>
+	<test name="Seach validation Chrome  GR prod">
+		<parameter name="browserName" value="Chrome" />
+
+		<parameter name="Env" value="prod" />
+		<parameter name="Brand" value="GR" />
+		<classes>
+			<class name="com.generic.tests.GR.Search_PLP.PLP_Base" />
+		</classes>
+	</test>
+	<test name="Seach validation mobile_iPad  GR prod">
+		<parameter name="browserName" value="mobile_iPad" />
+
+		<parameter name="Env" value="prod" />
+		<parameter name="Brand" value="GR" />
+		<classes>
+			<class name="com.generic.tests.GR.Search_PLP.PLP_Base" />
+		</classes>
+	</test>
+	<test name="Seach validation mobile_iPhone x  GR prod">
+		<parameter name="browserName" value="mobile_iPhone x" />
+
+		<parameter name="Env" value="prod" />
+		<parameter name="Brand" value="GR" />
+		<classes>
+			<class name="com.generic.tests.GR.Search_PLP.PLP_Base" />
+		</classes>
+	</test>
+	<test name="Registration Chrome  GR prod">
+		<parameter name="browserName" value="Chrome" />
+		<parameter name="Env" value="prod" />
+		<parameter name="Brand" value="GR" />
+
+		<classes>
+			<class
+				name="com.generic.tests.GR.Registration.RegistrationBase" />
+		</classes>
+	</test>
+	<test name="Registration mobile_iPad  GR prod">
+		<parameter name="browserName" value="mobile_iPad" />
+		<parameter name="Env" value="prod" />
+		<parameter name="Brand" value="GR" />
+
+		<classes>
+			<class
+				name="com.generic.tests.GR.Registration.RegistrationBase" />
+		</classes>
+	</test>
+	<test name="Registration mobile_iPhone x  GR prod">
+		<parameter name="browserName" value="mobile_iPhone x" />
+		<parameter name="Env" value="prod" />
+		<parameter name="Brand" value="GR" />
+
+		<classes>
+			<class
+				name="com.generic.tests.GR.Registration.RegistrationBase" />
+		</classes>
+	</test>
+	<test name="Login Regression Chrome  GR prod">
+		<parameter name="browserName" value="Chrome" />
+		<parameter name="Env" value="prod" />
+		<parameter name="Brand" value="GR" />
+		<classes>
+			<class name="com.generic.tests.GR.login.LoginBase" />
+		</classes>
+	</test>
+	<test name="Login Regression mobile_iPad  GR prod">
+		<parameter name="browserName" value="mobile_iPad" />
+		<parameter name="Env" value="prod" />
+		<parameter name="Brand" value="GR" />
+		<classes>
+			<class name="com.generic.tests.GR.login.LoginBase" />
+		</classes>
+	</test>
+	<test name="Login Regression mobile_iPhone x  GR prod">
+		<parameter name="browserName" value="mobile_iPhone x" />
+		<parameter name="Env" value="prod" />
+		<parameter name="Brand" value="GR" />
+		<classes>
+			<class name="com.generic.tests.GR.login.LoginBase" />
+		</classes>
+	</test>
+	<test name="GR Chrome  GR prod">
+		<parameter name="browserName" value="Chrome" />
+		<parameter name="Env" value="prod" />
+		<parameter name="Brand" value="GR" />
+		<classes>
+			<class name="com.generic.tests.GR.PDP.GRBase" />
+		</classes>
+	</test>
+	<test name="GR mobile_iPad  GR prod">
+		<parameter name="browserName" value="mobile_iPad" />
+		<parameter name="Env" value="prod" />
+		<parameter name="Brand" value="GR" />
+		<classes>
+			<class name="com.generic.tests.GR.PDP.GRBase" />
+		</classes>
+	</test>
+	<test name="GR mobile_iPhone x  GR prod">
+		<parameter name="browserName" value="mobile_iPhone x" />
+		<parameter name="Env" value="prod" />
+		<parameter name="Brand" value="GR" />
+		<classes>
+			<class name="com.generic.tests.GR.PDP.GRBase" />
+		</classes>
+	</test>
+</suite>

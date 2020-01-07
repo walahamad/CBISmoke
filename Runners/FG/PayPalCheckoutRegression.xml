@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="checkout Regression" parallel="tests" thread-count="3" data-provider-thread-count="1">
+
+	<test name="checkout chrome">
+		<parameter name="browserName" value="chrome"></parameter>
+		<parameter name="Env" value="prod"></parameter>
+        <parameter name="Brand" value="FG"></parameter>
+		
+		<classes>
+			<class name="com.generic.tests.FG.checkout.Base_PayPalCheckout" />
+		</classes>
+		</test> 
+			
+	<test name="checkout Tests_iPad">
+		<parameter name="browserName" value="mobile_iPad"></parameter>
+		<parameter name="Env" value="prod"></parameter>
+        <parameter name="Brand" value="FG"></parameter>
+		<classes>
+			<class name="com.generic.tests.FG.checkout.Base_PayPalCheckout" />
+		</classes>
+	</test> 
+      
+	
+	<test name="checkout iPhone">
+		<parameter name="browserName" value="mobile_iPhone X"></parameter>
+		<parameter name="Env" value="prod"></parameter>
+        <parameter name="Brand" value="FG"></parameter>
+		<classes>
+			<class name="com.generic.tests.FG.checkout.Base_PayPalCheckout" />
+		</classes>
+		</test> 
+		
+	
+
+</suite> <!-- Suite -->

@@ -1,22 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="CLPRegression" parallel="tests" thread-count="3" data-provider-thread-count="1">
- 	<test name="CLP Chrome">
-		<parameter name="browserName" value="Chrome"></parameter>
-		<parameter name="Env" value="prod"></parameter>
-		<parameter name="Brand" value="GR"></parameter>
-		<classes>
-			<class name="com.generic.tests.GR.CLP.CLPBase" />
-		</classes>
-	</test><!-- Test -->
- 	<test name="CLP iPad">
-		<parameter name="browserName" value="mobile_iPad"></parameter>
-		<parameter name="Env" value="prod"></parameter>
-		<parameter name="Brand" value="GR"></parameter>
-		<classes>
-			<class name="com.generic.tests.GR.CLP.CLPBase" />
-		</classes>
-	</test> <!-- Test -->
+<suite name="CLP Regression" parallel="tests" thread-count="3" data-provider-thread-count="1">
+ 	
    <test name="CLP iPhone">
 		<parameter name="browserName" value="mobile_iPhone X"></parameter>
 		<parameter name="Env" value="prod"></parameter>

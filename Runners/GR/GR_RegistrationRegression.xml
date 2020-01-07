@@ -13,7 +13,7 @@
 		</classes>
 	</test> 
 		
-	<test name="Registration Tests_Firefox">
+	<test name="Registration Test_mobile_iPad">
 		<parameter name="browserName" value="mobile_iPad"></parameter>
 		<parameter name="Env" value="prod"></parameter>
         <parameter name="Brand" value="GR"></parameter>
@@ -23,7 +23,7 @@
 	</test> 
       
 	
-	<test name="Registration iPhone">
+	<test name="Registration  Tests_mobile_iPhone">
 		<parameter name="browserName" value="mobile_iPhone X"></parameter>
 		<parameter name="Env" value="prod"></parameter>
         <parameter name="Brand" value="GR"></parameter>
