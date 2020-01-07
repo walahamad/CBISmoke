@@ -33,6 +33,7 @@ public class reportBuilder extends SelTestCase {
 
 	}
 
+	@SuppressWarnings("resource")
 	public static ArrayList<HashMap<String, String>> readLogs(String dst) throws IOException {
 		SelTestCase.getCurrentFunctionName(true);
 		boolean dumyTestFound = false;
@@ -140,12 +141,6 @@ public class reportBuilder extends SelTestCase {
 		if (m.find())
 			description = m.group(0);
 		return description;
-	}
-
-	private static String getEnvironmentName(String currentLine, String delimiter) {
-		String env = currentLine.split(delimiter)[1];
-		env = env.substring(0, env.length() - 4);
-		return env;
 	}
 
 	public static String getTestName(String content) {
