@@ -5,21 +5,22 @@ import com.generic.setup.cselector;
 public class CartSelectors{
 	
 	public static final cselector paypalCheckoutBtn=new cselector("css,#checkout-with-paypal-button","css,button > div > div > img");
-	public static final cselector shipping = new cselector("css,div:nth-child(3) > div:nth-child(1) > div:nth-child(2) > span","css, tr.t-cart__summary-shipping-charges > td.pw-ledger__value");
-	public static final cselector tax = new cselector("css,div:nth-child(4) > div:nth-child(1) > div:nth-child(2) > span","css, table > tbody > tr:nth-child(2) > td.pw-ledger__value");
+	public static final cselector shipping = new cselector("css,.shipping > span","css, tr.t-cart__summary-shipping-charges > td.pw-ledger__value");
+	public static final cselector tax = new cselector("css,.tax > span","css, table > tbody > tr:nth-child(2) > td.pw-ledger__value");
 	public static final cselector paymentPageCheckNextBtn=new cselector("css,div.gwt-accordion.checkout-steps.tabopen > div:nth-child(2) > div.gwt-accordion-tab-content.tabopen > div > div > div > div > div.next-botton-panel > button","css, div.c-checkout-accordion__next-cancel-panel > button");  
 	public static final String taxGR="css, table > tbody > tr:nth-child(3) > td.pw-ledger__value";
 	public static final cselector addToCartBtn=new cselector("css,#gwt-add-to-cart-btn","css,#gwt-add-to-cart-btn");
 	
 	//In cart
-	public static final cselector addedItemsInCart=new cselector("css,.order-item-display-wrapper","css, div> div > div > div.pw-list.items-container.u-bg-color-neutral-00.u-border-light-bottom > div > div.c-cart-product-item.u-flexbox.u-padding-md");
+	public static final cselector addedItemsInCart=new cselector("css,.order-item-display-wrapper","css, div> div > div > div.pw-list.items-container.u-bg-color-neutral-00.u-border-light-bottom > div > div.c-cart-product-item.u-flexbox.u-padding-md"); 	
 	public static final cselector addedItemsImage=new cselector("css,div.order-item-image-holder > img","css, div > div > div > div > div > div > div > div.c-cart-product-item.u-flexbox.u-padding-md > a > div > img"); 
-	public static final cselector addedItemsPrice=new cselector("css, div.left-main-panel > div.items-container > div > div > div.order-item-total-price-panel > div > div","css,#app-main > div.t-cart.t--loaded > div > div:nth-child(1) > div > div > div.pw-list.items-container.u-bg-color-neutral-00.u-border-light-bottom > div:nth-child(1) > div.c-cart-product-item.u-flexbox.u-padding-md > div > div.c-cart-product__quantity-and-price.order-item-quantity-panel > div.order-item-price-panel > div > div > div > span:nth-child(1)");
+	public static final cselector addedItemsPrice=new cselector("css, div.order-item-total-price-panel > div > div","css,#app-main > div.t-cart.t--loaded > div > div:nth-child(1) > div > div > div.pw-list.items-container.u-bg-color-neutral-00.u-border-light-bottom > div:nth-child(1) > div.c-cart-product-item.u-flexbox.u-padding-md > div > div.c-cart-product__quantity-and-price.order-item-quantity-panel > div.order-item-price-panel > div > div > div > span:nth-child(1)");
 	public static final cselector addedItemsTotalPrice=new cselector("css,h4.subtotal-value.right","css,#app-footer > footer > div > div > div > div > div > div > table > tbody > tr > td.pw-ledger__value");
+	/////////////////////////////
 	
 	//Items options
-	public static final cselector firstAddedItemsOption=new cselector("css, div.left-main-panel > div> div:nth-child(1) > div> div > div > div > div> div > div>div","css,div:nth-child(1) > div > div > div.pw-list.items-container.u-bg-color-neutral-00.u-border-light-bottom > div:nth-child(1) > div.c-cart-product-item.u-flexbox.u-padding-md > div > div.c-cart-product-item__product-attributes.u-margin-bottom-sm.u-position-relative > div > div");
-	public static final cselector lastAddedItemsOption=new cselector("css,#shopping-cart-v2-root > div > div.main-panel > div.left-main-panel > div.items-container > div:nth-child(2) > div > div.order-item-info-panel > div.order-item-details-panel > div.attribute-panel.less > div > div > div > div","css,#app-main > div.t-cart.t--loaded > div > div:nth-child(1) > div > div > div.pw-list.items-container.u-bg-color-neutral-00.u-border-light-bottom > div:nth-child(2) > div.c-cart-product-item.u-flexbox.u-padding-md > div > div.c-cart-product-item__product-attributes.u-margin-bottom-sm.u-position-relative");
+	public static final cselector firstAddedItemsOption=new cselector("css, div.left-main-panel > div> div:nth-child(1) > div> div > div > div > div> div.oios-summary-panel","css,div:nth-child(1) > div > div > div.pw-list.items-container.u-bg-color-neutral-00.u-border-light-bottom > div:nth-child(1) > div.c-cart-product-item.u-flexbox.u-padding-md > div > div.c-cart-product-item__product-attributes.u-margin-bottom-sm.u-position-relative > div > div");
+	public static final cselector lastAddedItemsOption=new cselector("css,div.left-main-panel > div> div:last-child> div> div > div > div > div> div.oios-summary-panel","css,#app-main > div.t-cart.t--loaded > div > div:nth-child(1) > div > div > div.pw-list.items-container.u-bg-color-neutral-00.u-border-light-bottom > div:nth-child(2) > div.c-cart-product-item.u-flexbox.u-padding-md > div > div.c-cart-product-item__product-attributes.u-margin-bottom-sm.u-position-relative");
 	
 	//Edit options
 	public static final cselector editFromCartLink=new cselector("css,.edit-link", "css,.c-cart-product__actions-edit");
@@ -29,6 +30,9 @@ public class CartSelectors{
 	public static final cselector optionsDropDown =new cselector( "css,.gwt-ListBox","css,.c-product-options__content");
 	public static final cselector finishAndPreviewButton =new cselector("css,.c-personalization-modal__finish.pw--primary");
 	public static final cselector finishAndPreviewButtonGR =new cselector("css,.pw-accordion__content .pw--primary");
+	
+	public static final cselector finishAndPreviewButtonGH =new cselector("css,.c-personalization-accordion__preview-save>div> button.pw-button.pw--primary");
+
 	public static final cselector saveEditsButton =new cselector("css,div.gwt-submit-cancel-dialog-button-panel > button.primary","css,.c-personalization-modal__save.pw--primary"); 
 	public static final cselector saveEditsButtonGR =new cselector("css,div.gwt-submit-cancel-dialog-button-panel > button.primary","css,.pw-accordion--is-open .pw-accordion__content-wrapper .pw--primary");
 		
