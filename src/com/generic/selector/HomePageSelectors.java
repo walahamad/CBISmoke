@@ -24,9 +24,9 @@ public class HomePageSelectors
 	public static final cselector miniCartText = new cselector("css,.empty-cart-sign-in-container > .gwt-HTML.inst-copy","css,.m-mini-cart__empty-content.u-text-align-center>h2");
 	public static final cselector miniCartClose = new cselector("css,.pw-button__inner>#nav-icon");
 	public static final cselector GHminiCartText = new cselector("css,.empty-cart-sign-in-container > .gwt-HTML.inst-copy","css,.m-mini-cart__empty-content.u-text-align-center div.m-mini-cart__empty-header");
-	public static final cselector GHminiCartClose = new cselector("css,button.qa-header__cart > div.pw-button__inner");
+	public static final cselector GHminiCartClose = new cselector("css,#headerBox > div.t-header__bar > div > div:nth-child(1) > div.pw-header-bar__actions.t-header-bar__cart.u-margin-end-6");
 	public static final cselector RYminiCartText = new cselector("css,.empty-cart-sign-in-container > .gwt-HTML.inst-copy","css, div.cart-empty-text");
-	public static final cselector miniCartProductContainer = new cselector("mini-cart-items-container","m-mini-cart__content-products");
+	public static final cselector miniCartProductContainer = new cselector("css,.mini-cart-items-container","css,.m-mini-cart__content-products");
 	public static final cselector RYminiCartProductContainer = new cselector("css,mini-cart-items-container","css,div.pw-list.items-container");
 	public static final cselector miniCartCheckoutBtn = new cselector("css,.mini-cart-product-panel-btn","pw-button pw--primary u-width-full");		
 	public static final cselector RYminiCartCheckoutBtn = new cselector("css,.mini-cart-product-panel-btn","css,div.c-checkout-buttons__checkout > button");		
@@ -61,7 +61,7 @@ public class HomePageSelectors
 	public static final cselector navigationIcon = new cselector("css,.nav-toggle", "css,div#pwa-shop-nav-button .pw-button");
 	public static final cselector GHnavigationIcon = new cselector("css,#pwa-shop-nav-button > button");
 	public static final cselector RYmenuItems = new cselector("css,#css-top-navigation #flyout>.menuItem>a", "css,.m-accordion-navigation__content  div.pw-accordion__item > button");
-	public static final cselector menuItems = new cselector("css,#css-top-navigation #flyout>.menuItem>a", "css,.navigation-modal_class .pw-link");
+	public static final cselector menuItems = new cselector("css,#css-top-navigation #flyout>.menuItem>a","css,div.column.active > div.gwt-MenuItem", "css,.navigation-modal_class .pw-link");
 	public static final cselector GHmenuItems = new cselector("css,#navbar-collapse-grid > ul > li > a", "css,.m-accordion-navigation__content  div.pw-accordion__item > button");
 	public static final cselector GHselectedMenuHeader = new cselector("", "css,div.m-accordion-navigation__content  div.pw-accordion__item > button[aria-selected=\"true\"]");
    public static final cselector selectedMenuHeader = new cselector("", "css,#gwt-top-navigation .active>.gwt-nav-item-has-submenu.opened>.gwt-HTML", "css,.m-navigation__fades-in .pw-header-bar .c-sheet__title");

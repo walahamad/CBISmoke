@@ -788,7 +788,7 @@ public class PDP extends SelTestCase {
 			}
 			
 			for (int i = 0; i < products.size(); i++) {
-				if (products.get(i).getText().contains(addedProductName)) {
+	            if(products.get(i).getText().toLowerCase().contains(addedProductName.toLowerCase())) {
 					addToCartBtns.get(i).click();
 					return true;
 				}

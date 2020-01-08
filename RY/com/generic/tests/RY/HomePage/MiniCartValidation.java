@@ -2,16 +2,18 @@ package com.generic.tests.RY.HomePage;
 
 import com.generic.page.HomePage;
 import com.generic.page.PDP;
+import com.generic.setup.Common;
 import com.generic.setup.GlobalVariables;
 import com.generic.setup.SelTestCase;
 
 public class MiniCartValidation extends SelTestCase {
 
-	public static final String PDPSearchTerm = "hat";
+	public static final String PDPSearchTerm = "scarf";
 	
 	public static void validate() throws Exception {
 		String expectedEmptyCartText="empty";
-		
+		if (isMobile()) 
+			Common.refreshBrowser();
 		getCurrentFunctionName(true);
 		HomePage.clickOnMiniCart();
 		String emptyCartText = HomePage.getMiniCartText();

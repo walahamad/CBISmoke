@@ -8,6 +8,7 @@ import java.util.Random;
 import java.util.NoSuchElementException;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import com.generic.selector.HomePageSelectors;
 import com.generic.setup.SelTestCase;
 import com.generic.util.SelectorUtil;
@@ -222,7 +223,9 @@ public class HomePage extends SelTestCase {
 		getCurrentFunctionName(true);
 		logs.debug("Clicking on Mini Cart clsoe icon");
 		if(isGH() || isRY()) {
-			SelectorUtil.initializeSelectorsAndDoActions(HomePageSelectors.GHminiCartClose.get());
+			WebElement element = SelectorUtil.getElement(HomePageSelectors.GHminiCartClose.get());
+			Actions actions = new Actions(SelTestCase.getDriver());
+			actions.moveToElement(element).click().perform();
 		}else {
 			SelectorUtil.initializeSelectorsAndDoActions(HomePageSelectors.miniCartClose.get());
 		}
@@ -276,7 +279,9 @@ public class HomePage extends SelTestCase {
 				SelectorUtil.initializeSelectorsAndDoActions(HomePageSelectors.searchIconOpenRY.get());
 			}else {
 				logs.debug(MessageFormat.format(LoggingMsg.CLICKING_SEL, HomePageSelectors.searchIconOpen));
-				SelectorUtil.initializeSelectorsAndDoActions(HomePageSelectors.searchIconOpen.get());
+				WebElement  element = SelectorUtil.getElement(HomePageSelectors.searchIconOpen.get());
+				Actions actions = new Actions(SelTestCase.getDriver());
+				actions.moveToElement(element).click().perform();
 			}
 			
 			getCurrentFunctionName(false);
@@ -516,7 +521,8 @@ public class HomePage extends SelTestCase {
 			
 			// Navigate to an item in the menu.
 			if(isGH()) {
-				element.click();
+				Actions actions = new Actions(SelTestCase.getDriver());
+				actions.moveToElement(element).click().perform();
 			}else {
 			SelectorUtil.clickOnWebElement(element);
 			}

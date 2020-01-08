@@ -36,6 +36,7 @@ public class CLP extends SelTestCase {
 			int index = random.nextInt(menueItems.size() -1);
 			 randomMenuElement = menueItems.get(index);	
 				SelectorUtil.clickOnWebElement(randomMenuElement);
+				index = index + 1;
 			   final cselector leafItem = new cselector("css,li:nth-child("+index+")  li > a");
 				leafMenuItems = SelectorUtil.getAllElements(leafItem.get());
 		}else {

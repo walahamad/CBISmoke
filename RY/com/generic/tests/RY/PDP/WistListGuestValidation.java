@@ -4,12 +4,15 @@ import com.generic.page.HomePage;
 import com.generic.page.PDP;
 import com.generic.page.PLP;
 import com.generic.setup.SelTestCase;
+import com.generic.setup.Common;
 import com.generic.setup.GlobalVariables.browsers;
 
 public class WistListGuestValidation extends SelTestCase {
 	public static void validate() throws Exception {
 		getCurrentFunctionName(true);
-		String selectedProductName = PDP.NavigateToPDP("hat");
+		if (isMobile())
+			Common.refreshBrowser();
+		   String selectedProductName = PDP.NavigateToPDP("Slippers");
 		PDP.selectSwatches();
 		PDP.clickAddToWLGR();
 		PDP.clickOnCreateNewWL();
@@ -22,7 +25,7 @@ public class WistListGuestValidation extends SelTestCase {
         logs.debug("selectedProductName"+selectedProductName);
 		//validate if selected product displayed in the WL and click on add to cart button
 		sassert().assertTrue(PDP.addedProductIsDisplayedInTheWL(selectedProductName), "Added product is not displayed in the Wish list");
-		if (!getBrowserName().toLowerCase().equals(browsers.iPhone.toLowerCase())) {
+		if (!isMobile()) {
 		sassert().assertTrue(PDP.validateAddToCartModalIsDisplayed(), "Add to cart confirmation modal not displayed.");
 		PDP.clickOnCheckout();
 		sassert().assertTrue(PDP.addedProductIsDisplayedInShoppingCart(selectedProductName), "Product not added to the cart.");
