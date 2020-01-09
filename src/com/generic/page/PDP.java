@@ -409,6 +409,7 @@ public class PDP extends SelTestCase {
 		// For Mobile, verify it from mini cart because there is no add to cart modal in
 		// mobile.
 		if (!isMobile()) {
+			Thread.sleep(4000);
 			isDisplayed = SelectorUtil.isDisplayed(PDPSelectors.addToCartModal.get());
 		} else if (isMobile() && isGHRY()) {
 			isDisplayed = SelectorUtil.isDisplayed(PDPSelectors.addToCartModal.get());
@@ -416,6 +417,7 @@ public class PDP extends SelTestCase {
 			HomePage.clickOnMiniCart();
 			isDisplayed = HomePage.validateMiniCartProductIsDsiplayed();
 		}
+		getCurrentFunctionName(false);
 		return isDisplayed;
 	}
 
