@@ -8,6 +8,7 @@ import com.generic.page.HomePage;
 import com.generic.page.PayPal;
 import com.generic.page.Registration;
 import com.generic.page.Login;
+import com.generic.setup.GlobalVariables;
 import com.generic.setup.LoggingMsg;
 import com.generic.setup.SelTestCase;
 
