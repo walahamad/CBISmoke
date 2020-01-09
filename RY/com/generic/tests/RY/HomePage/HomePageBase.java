@@ -1,4 +1,4 @@
-package com.generic.tests.GH.HomePage;
+package com.generic.tests.RY.HomePage;
 
 import java.text.MessageFormat;
 import java.util.Arrays;
@@ -13,11 +13,7 @@ import com.generic.setup.Common;
 import com.generic.setup.LoggingMsg;
 import com.generic.setup.SelTestCase;
 import com.generic.setup.SheetVariables;
-import com.generic.tests.GH.HomePage.GlobalFooterValidation;
-import com.generic.tests.GH.HomePage.HomePageValidation;
-import com.generic.tests.GH.HomePage.LogoValidation;
-import com.generic.tests.GH.HomePage.MenuValidation;
-import com.generic.tests.GH.HomePage.MiniCartValidation;
+import com.generic.tests.RY.HomePage.LogoValidation;
 import com.generic.util.ReportUtil;
 import com.generic.util.SASLogger;
 import com.generic.util.dataProviderUtils;
@@ -29,8 +25,14 @@ public class HomePageBase extends SelTestCase {
 	public static final String miniCart = "Mini cart validation";
 	public static final String search = "Search validation";
 	public static final String espots = "espots validation";
+	public static final String verify = "verify";
+	public static final String header = "header";
+	public static final String footer = "footer";
+	public static final String body = "body";
 	public static final String YMALCarousels = "YMAL Carousels Verification";
+
 	public static final String menu = "menu";
+	public static final String signIn = "SignIn validation";
 	public static final String AccountMenu = "Account menu validation";
 	public static final String GlobalFooter = "Global footer validation";
 
@@ -53,7 +55,7 @@ public class HomePageBase extends SelTestCase {
 		getBrowserWait(testObject.getParameter("browserName"));
 		dataProviderUtils TDP = dataProviderUtils.getInstance();
 		Object[][] data = TDP.getData(testDataSheet);
-		Testlogs.get().debug(Arrays.deepToString(data).replace("\n", "<br>--"));
+		Testlogs.get().debug(Arrays.deepToString(data).replace("\n", "--"));
 		return data;
 	}
 
@@ -66,25 +68,27 @@ public class HomePageBase extends SelTestCase {
 		String CaseDescription = MessageFormat.format(LoggingMsg.TEST_CASE_DESC, testDataSheet + "." + caseId,
 				this.getClass().getCanonicalName(), desc.replace("\n", "<br>"));
 		initReportTime();
+
 		try {
 
-			if (proprties.contains(Logo)) {
+			if (proprties.contains(this.Logo)) {
 				LogoValidation.validate();
-
-			} else if (proprties.contains(miniCart)) {
+    
+			} else if (proprties.contains(this.miniCart)) {
 				MiniCartValidation.validate();
 
-			} else if (proprties.contains(espots)) {
+			} else if (proprties.contains(this.espots)) {
 				HomePageValidation.validateCaroselAndEspot();
 
-			} else if (proprties.contains(search)) {
+			} else if (proprties.contains(this.search)) {
 				HomePageValidation.validateSearch();
-			} else if (proprties.equals(menu)) {
+			} else if (proprties.equals(this.menu)) {
 				// Check the Navigation menu.
 				sassert().assertTrue(MenuValidation.validate(), "Menu validation has some problems");
+			} else if (proprties.contains(this.AccountMenu)) {
+	            sassert().assertTrue(AccountMenuValidation.validate(), "My Account menu validation has some problems");
 			} else if (proprties.contains(this.GlobalFooter)) {
 				sassert().assertTrue(GlobalFooterValidation.validate(), "Global footer validation has some problems");
-
 			} else {
 				Testlogs.get().debug("please check proprties provided in excel sheet");
 			}

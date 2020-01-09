@@ -1,4 +1,4 @@
-package com.generic.tests.GH.PDP;
+package com.generic.tests.RY.PDP;
 
 import java.text.MessageFormat;
 import java.util.Arrays;
@@ -13,8 +13,6 @@ import com.generic.setup.Common;
 import com.generic.setup.LoggingMsg;
 import com.generic.setup.SelTestCase;
 import com.generic.setup.SheetVariables;
-import com.generic.tests.GH.PDP.PDPValidation;
-import com.generic.tests.GH.PDP.WistListGuestValidation;
 import com.generic.util.ReportUtil;
 import com.generic.util.SASLogger;
 import com.generic.util.dataProviderUtils;
@@ -26,7 +24,7 @@ public class PDPBase extends SelTestCase {
 	public static final String singlePDP = "Validate PDP Single active elements";
 	public static final String bundlePDP = "Validate PDP Bundle active elements";
 	public static final String personalizedPDP = "Validate PDP Personalized active elements";
-	public static final String singlePDPSearchTerm = "shirt";
+	public static final String singlePDPSearchTerm = "Rugs";
 	public static final String BundlePDPSearchTerm = "Collection";
 	public static final String personalizedPDPSearchTerm = "Resort Cotton";
 	public static final String wishListGuestValidation = "Wish List Guest Validation";
@@ -66,18 +64,7 @@ public class PDPBase extends SelTestCase {
 		initReportTime();
 
 		try {
-
-			if (proprties.contains(singlePDP)) {
-				PDPValidation.validate(singlePDPSearchTerm);
-			}
-			if (proprties.contains(bundlePDP)) {
-				PDPValidation.validate(BundlePDPSearchTerm);
-			}
-			if (proprties.contains(personalizedPDP)) {
-				PDPValidation.validate(personalizedPDPSearchTerm);
-			}
-
-			if (proprties.contains(wishListGuestValidation)) {
+			if (proprties.contains(this.wishListGuestValidation)) {
 				WistListGuestValidation.validate();
 			}
 
