@@ -54,7 +54,7 @@ public class CartSelectors{
 	public static final cselector selectWLConfiramtionBtn=new cselector("","css,div.c-cart-product__wishlist.u-position-relative > div > button.pw-button");
 	public static final cselector selectWL = new cselector("css,select.c-custom-select");
 	public static final cselector selectWLOptions = new cselector("css,select.c-custom-select > option");
-	public static fisnal cselector checkoutBtn = new cselector("css,div.gwt-DialogBox.ok-cancel-dlog.gwt_addtocart_div button.button.primary","css,div.u-flexbox.u-direction-column > button.pw-button.pw--primary");
+	public static final cselector checkoutBtn = new cselector("css,div.gwt-DialogBox.ok-cancel-dlog.gwt_addtocart_div button.button.primary","css,div.u-flexbox.u-direction-column > button.pw-button.pw--primary");
 	public static final cselector RYGoToShoppingBagBtn = new cselector("css,div.gwt-DialogBox.ok-cancel-dlog.gwt_addtocart_div button.button.primary","css,div > div > div.m-add-to-cart__buttons-container > button");
 	public static final cselector WLName = new cselector("css,input#wishlist_name_id");
 	public static final cselector nameYourNewWLconfirmationBtn = new cselector("css,#gwt-wishlist-create-modal  button.button.primary","css,div > div.u-width-full > button.pw--primary");
