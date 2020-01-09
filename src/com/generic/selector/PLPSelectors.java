@@ -4,9 +4,9 @@ import com.generic.setup.cselector;
 
 public class PLPSelectors {
 
+	public static final cselector RYSearchIcon = new cselector("css,.t-header__search-button>button");
 	//CBI
 	public static final cselector SearchIcon = new cselector("css,#uNavTop button.searchboxAsButton", "css,.t-header__fades-in>button");
-	public static final cselector RYSearchIcon = new cselector("css,.t-header__search-button>button");
 	
 	public static final cselector GHsearchClose = new cselector("css,button.pw-search__close");
 	public static final cselector searchBox = new cselector("css,#searchBox input#headerBox","css,form>div>div>input");

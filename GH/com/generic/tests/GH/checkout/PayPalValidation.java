@@ -1,13 +1,15 @@
-package com.generic.tests.GR.checkout;
+package com.generic.tests.GH.checkout;
 
 import java.util.LinkedHashMap;
 
 import com.generic.page.Cart;
 import com.generic.page.CheckOut;
 import com.generic.page.HomePage;
+import com.generic.page.Login;
 import com.generic.page.PayPal;
 import com.generic.page.Registration;
 import com.generic.page.Login;
+import com.generic.setup.GlobalVariables;
 import com.generic.setup.LoggingMsg;
 import com.generic.setup.SelTestCase;
 
@@ -22,9 +24,8 @@ public class PayPalValidation extends SelTestCase {
 			String userPassword = userDetalis.get(Registration.keys.password);
 			Login.fillLoginFormAndClickSubmit(userMail, userPassword);
 			sassert().assertTrue(Login.checkUserAccount(), LoggingMsg.USER_IS_NOT_LOGGED_IN_SUCCESSFULLY);
-			if (SelTestCase.isMobile())
-				HomePage.clickOnCloseButton();
-
+			if(SelTestCase.isMobile())
+			HomePage.clickOnCloseButton();
 		}
 
 		// Add products to cart
@@ -42,26 +43,25 @@ public class PayPalValidation extends SelTestCase {
 		Cart.paypalBtnClick();
 		String main = null;
 		if (SelTestCase.isDesktop())
-			main = CheckOut.paymentInnformation.switchToPayPalWindow();
+			main =  CheckOut.paymentInnformation.switchToPayPalWindow();
 		Thread.sleep(1000);
 		if (CheckOut.PayPal.isPayPalModelDisplayed()) {
 			String PayPalEmail = paymentDetails.get(CheckOut.paymentInnformation.keys.number);
-			String PayPalPassword = paymentDetails.get(CheckOut.paymentInnformation.keys.CVCC);
+			String PayPalPassword = paymentDetails.get(CheckOut.paymentInnformation.keys.CVCC); 
 			PayPal.signIn(PayPalEmail, PayPalPassword);
-			sassert().assertTrue(CheckOut.PayPal.isPayPalShipToPageDisplayed(),
-					"(PayPAl Ship to) page is not displayed");
+			sassert().assertTrue(CheckOut.PayPal.isPayPalShipToPageDisplayed(), "(PayPAl Ship to) page is not displayed");
 			PayPal.clickOnContinue();
 			if (userType.contains("registered")) {
 				Thread.sleep(2000);
 				CheckOut.PayPal.clickOnContinue();
 			}
-
+			
 			if (SelTestCase.isDesktop())
-				CheckOut.paymentInnformation.switchBackToMainWindow(main);
+				 CheckOut.paymentInnformation.switchBackToMainWindow(main);
 
 			Thread.sleep(2000);
 			CheckOut.PayPal.paymentPageClickContinue();
-
+			
 			if (CheckOut.PayPal.isPaymentPageSelectedAndPayPalSelected()) {
 				sassert().assertTrue(CheckOut.PayPal.isOrderSummaryDisplayed(), "Order summary is not displayed");
 				float newSubTotal = Float.parseFloat(Cart.getTotalPrice().replace("$", "").replace(",", "").trim());
@@ -74,7 +74,6 @@ public class PayPalValidation extends SelTestCase {
 				CheckOut.PayPal.closePayPalSubmitRegestration();
 				sassert().assertTrue(CheckOut.PayPal.isSubmitConfermationMessageDisplayed(),
 						"Order confirmation page is not displayed");
-
 				sassert().assertTrue(CheckOut.PayPal.checkOrderNumberAndEmailAndShippingAddress(),
 						"Order number or email or shipping address is not displayed");
 				sassert().assertTrue(CheckOut.PayPal.checkConfirmationPageImg(), "Product image is not displayed");
@@ -93,6 +92,7 @@ public class PayPalValidation extends SelTestCase {
 					sassert().assertTrue(false, "shipping value is not same");
 				if (subtotalValue + tax + shippingValue != total)
 					sassert().assertTrue(false, "Total value is not equales the sum of subtotal + tax + shipping");
+
 			}
 		}
 
