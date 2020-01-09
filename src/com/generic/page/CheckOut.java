@@ -800,7 +800,7 @@ public class CheckOut extends SelTestCase {
 				if (!isMobile()||isFGGR())
 					str = CheckOutSelectors.confirmationTotal.get();
 				else if (isGHRY() && isMobile())
-					str = CheckOutSelectors.GHConfirmationTotal;
+					str = CheckOutSelectors.GHConfirmationTotal.get();
 				WebElement price = SelectorUtil.getElement(str);
 				getCurrentFunctionName(false);
 				return price.getText().replace("$", "").replace(",", "").trim();

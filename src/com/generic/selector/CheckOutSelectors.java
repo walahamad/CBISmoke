@@ -4,7 +4,7 @@ import com.generic.setup.cselector;
 
 public class CheckOutSelectors
 {
-	public static final String GHConfirmationTotal="css,.estimated-total > div>span:nth-child(2)";
+	public static final cselector GHConfirmationTotal=new cselector("css,.estimated-total > div>span:nth-child(2)");
 	public static final cselector GHPaypalSubmitConfermationMessage=new cselector("css,p.t-checkout-confirmation__header-confirm-message:last-child");
 	//Done CBI
 	//Navigation
