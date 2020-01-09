@@ -4,25 +4,25 @@
  	<test name="CLP Chrome">
 		<parameter name="browserName" value="Chrome"></parameter>
 		<parameter name="Env" value="prod"></parameter>
-		<parameter name="Brand" value="FG"></parameter>
+		<parameter name="Brand" value="GH"></parameter>
 		<classes>
-			<class name="com.generic.tests.FG.CLP.CLPBase" />
+			<class name="com.generic.tests.GH.CLP.CLPBase" />
 		</classes>
 	</test><!-- Test -->
  	<test name="CLP iPad">
 		<parameter name="browserName" value="mobile_iPad"></parameter>
 		<parameter name="Env" value="prod"></parameter>
-		<parameter name="Brand" value="FG"></parameter>
+		<parameter name="Brand" value="GH"></parameter>
 		<classes>
-			<class name="com.generic.tests.FG.CLP.CLPBase" />
+			<class name="com.generic.tests.GH.CLP.CLPBase" />
 		</classes>
 	</test> <!-- Test -->
    <test name="CLP iPhone">
 		<parameter name="browserName" value="mobile_iPhone X"></parameter>
 		<parameter name="Env" value="prod"></parameter>
-		<parameter name="Brand" value="FG"></parameter>
+		<parameter name="Brand" value="GH"></parameter>
 		<classes>
-			<class name="com.generic.tests.FG.CLP.CLPBase" />
+			<class name="com.generic.tests.GH.CLP.CLPBase" />
 		</classes>
 	</test> <!-- Test -->
 </suite> <!-- Suite -->

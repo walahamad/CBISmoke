@@ -13,8 +13,6 @@ public class PDPValidation extends SelTestCase {
 		if (SelTestCase.getBrowserName().contains(GlobalVariables.browsers.iPhone))
 			Common.refreshBrowser();
 		PDP.NavigateToPDP(searchTerm);
-		int numberOfItems = PDP.getNumberOfItems();
-		String priceErrorMessage;
 		// price error message
 		//for single PDP, validate the price is displayed below the title of the page for both desktop and mobile
 		//for bundle PDP Desktop, validate the top price is displayed for the collection. (this is not displayed in mobile).

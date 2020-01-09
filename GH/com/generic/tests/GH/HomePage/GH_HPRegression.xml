@@ -4,25 +4,25 @@
 	<test name="HP Chrome">
 		<parameter name="browserName" value="Chrome"></parameter>
 		<parameter name="Env" value="prod"></parameter>
-		<parameter name="Brand" value="FG"></parameter>
+		<parameter name="Brand" value="GH"></parameter>
 		<classes>
-			<class name="com.generic.tests.FG.HomePage.HomePageBase" />
+			<class name="com.generic.tests.GH.HomePage.HomePageBase" />
 		</classes>
 	</test><!-- Test -->
-	<test name="HP iPad">
+<!-- 	<test name="HP iPad">
 		<parameter name="browserName" value="mobile_iPad"></parameter>
 		<parameter name="Env" value="prod"></parameter>
-		<parameter name="Brand" value="FG"></parameter>
+		<parameter name="Brand" value="GH"></parameter>
 		<classes>
-			<class name="com.generic.tests.FG.HomePage.HomePageBase" />
+			<class name="com.generic.tests.GH.HomePage.HomePageBase" />
 		</classes>
-	</test><!-- Test -->
+	</test>Test
 	<test name="HP iPhone">
 		<parameter name="browserName" value="mobile_iPhone X"></parameter>
 		<parameter name="Env" value="prod"></parameter>
-		<parameter name="Brand" value="FG"></parameter>
+		<parameter name="Brand" value="GH"></parameter>
 		<classes>
-			<class name="com.generic.tests.FG.HomePage.HomePageBase" />
+			<class name="com.generic.tests.GH.HomePage.HomePageBase" />
 		</classes>
-	</test><!-- Test -->
+	</test>Test -->
 </suite> <!-- Suite -->

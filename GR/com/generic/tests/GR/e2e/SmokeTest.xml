@@ -4,7 +4,7 @@
 
 		<test name="e2e chrome Guest User">
 		<parameter name="browserName" value="chrome"></parameter>
-		<parameter name="Env" value="www"></parameter>
+		<parameter name="Env" value="stagewcs"></parameter>
 		<parameter name="Brand" value="GR"></parameter>
 
 		<classes>
@@ -14,7 +14,7 @@
 
 	<test name="e2e iPad Guest User">
 		<parameter name="browserName" value="mobile_iPad"></parameter>
-		<parameter name="Env" value="www"></parameter>
+		<parameter name="Env" value="stagewcs"></parameter>
 		<parameter name="Brand" value="GR"></parameter>
 		<classes>
 			<class name="com.generic.tests.GR.e2e.SmokeTest_Guest_e2e" />
@@ -24,7 +24,7 @@
 
 	<test name="e2e iPhone Guest User">
 		<parameter name="browserName" value="mobile_iPhone X"></parameter>
-		<parameter name="Env" value="www"></parameter>
+		<parameter name="Env" value="stagewcs"></parameter>
 		<parameter name="Brand" value="GR"></parameter>
 		<classes>
 			<class name="com.generic.tests.GR.e2e.SmokeTest_Guest_e2e" />

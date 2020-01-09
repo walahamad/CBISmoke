@@ -4,12 +4,12 @@ import com.generic.page.HomePage;
 import com.generic.setup.SelTestCase;
 
 public class HomePageValidation extends SelTestCase {
-
+	public static final String searchHint = "Search - Keyword or Item #";
 	public static void validateSearch() throws Exception {
 		HomePage.searchIconClick();
 		sassert().assertTrue(HomePage.validateSearchIconFieldOpend(),
 				"Search icon field opened validation has some problems");
-		sassert().assertTrue(HomePage.validateSearchFieldPlaceHolderText(),
+		sassert().assertTrue(HomePage.validateSearchFieldPlaceHolderText(searchHint),
 				"Search field place holder validation has some problems");
 		HomePage.searchIconExitClick();
 		sassert().assertTrue(HomePage.validateSearchIconFieldClosed(),

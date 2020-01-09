@@ -1,6 +1,8 @@
 package com.generic.page;
 
+import java.net.URI;
 import java.text.MessageFormat;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import org.openqa.selenium.By;
@@ -12,6 +14,7 @@ import com.generic.selector.CartSelectors;
 import com.generic.setup.SelTestCase;
 import com.generic.setup.ExceptionMsg;
 import com.generic.setup.GlobalVariables;
+import com.generic.setup.LoggingMsg;
 import com.generic.util.SelectorUtil;
 
 public class Cart extends SelTestCase {
@@ -71,7 +74,13 @@ public class Cart extends SelTestCase {
 	public static void moveItemsToCartFromWishlist() throws Exception {
 		try {
 			getCurrentFunctionName(true);
-			String subStrArr = CartSelectors.savedListFirstItem.get() + CartSelectors.returnFromWishListBtn.get();
+			String subStrArr;
+			if(isGH()) 
+			 subStrArr = CartSelectors.GHsavedListFirstItem.get() + CartSelectors.GHreturnFromWishListBtn.get();
+			else if(isRY())
+			 subStrArr = CartSelectors.GHsavedListFirstItem.get() + CartSelectors.RYreturnFromWishListBtn.get();
+			else
+			subStrArr = CartSelectors.savedListFirstItem.get() + CartSelectors.returnFromWishListBtn.get();
 			SelectorUtil.initializeSelectorsAndDoActions(subStrArr);
 			getCurrentFunctionName(false);
 		} catch (NoSuchElementException e) {
@@ -99,7 +108,11 @@ public class Cart extends SelTestCase {
 	public static void clickRemoveBtnForSavedItem() throws Exception {
 		try {
 			getCurrentFunctionName(true);
-			String subStrArr = CartSelectors.firstAddedItemsRemove.get();
+			String subStrArr ;
+			if(isGHRY())
+				subStrArr = CartSelectors.GHRYfirstAddedItemsRemove.get();
+			else
+			    subStrArr = CartSelectors.firstAddedItemsRemove.get();
 			SelectorUtil.initializeSelectorsAndDoActions(subStrArr);
 			getCurrentFunctionName(false);
 		} catch (NoSuchElementException e) {
@@ -204,7 +217,11 @@ public class Cart extends SelTestCase {
 	public static boolean checkAddedItemPriceDisplay() throws Exception {
 		try {
 			getCurrentFunctionName(true);
-			List<WebElement> savedItems = SelectorUtil.getAllElements(CartSelectors.addedItemsPrice.get());
+			List<WebElement> savedItems = new ArrayList<WebElement>();
+			if(isGHRY())
+			savedItems = SelectorUtil.getAllElements(CartSelectors.GHRYaddedItemsPrice.get());
+			else
+		    savedItems = SelectorUtil.getAllElements(CartSelectors.addedItemsPrice.get());
 			boolean inDisplayed = HomePage.isListDisplayed(savedItems);
 			getCurrentFunctionName(false);
 			return inDisplayed;
@@ -312,6 +329,8 @@ public class Cart extends SelTestCase {
 
 				if (isGR())
 					SelectorUtil.initializeSelectorsAndDoActions(CartSelectors.finishAndPreviewButtonGR.get());
+				else if (isGHRY())
+					SelectorUtil.initializeSelectorsAndDoActions(CartSelectors.GHRYfinishAndPreviewButton.get());
 				else
 					SelectorUtil.initializeSelectorsAndDoActions(CartSelectors.finishAndPreviewButton.get());
 			}
@@ -319,6 +338,8 @@ public class Cart extends SelTestCase {
 			// Save the edits
 			if (isGR())
 				SelectorUtil.initializeSelectorsAndDoActions(CartSelectors.saveEditsButtonGR.get());
+			else if(isGHRY())
+				SelectorUtil.initializeSelectorsAndDoActions(CartSelectors.GHRYsaveEditsButton.get());
 			else
 				SelectorUtil.initializeSelectorsAndDoActions(CartSelectors.saveEditsButton.get());
 			getCurrentFunctionName(false);
@@ -330,5 +351,139 @@ public class Cart extends SelTestCase {
 		} // CATCH
 
 	}// EDIT METHOD
+
+	public static boolean verifySavedItemToWL() throws Exception {
+		try {
+		getCurrentFunctionName(true);
+		boolean inPDPPage = SelectorUtil.isDisplayed(CartSelectors.WLFirstItem.get());
+		getCurrentFunctionName(false);
+		return inPDPPage;
+		  }catch (NoSuchElementException e) {
+  			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+  			}.getClass().getEnclosingMethod().getName()));
+  			throw e;
+  		}
+	}
+	public static boolean validateSelectWishListModalIsDisplayed() throws Exception {
+		try {
+        getCurrentFunctionName(true);
+        boolean isDisplayed;
+        logs.debug("Validate select a registry or wish list modal exist");
+        isDisplayed = SelectorUtil.isDisplayed(CartSelectors.WLModal.get());
+        getCurrentFunctionName(false);
+        return isDisplayed;
+		  }catch (NoSuchElementException e) {
+  			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+  			}.getClass().getEnclosingMethod().getName()));
+  			throw e;
+  		}
+    }
+	
+    public static void clickOnSelectWLConfirmationBtn() throws Exception{
+    	try {
+        getCurrentFunctionName(true);
+        logs.debug("Click on create new wish list");
+        SelectorUtil.initializeSelectorsAndDoActions(CartSelectors.selectWLConfiramtionBtn.get());
+        getCurrentFunctionName(false);
+    	  }catch (NoSuchElementException e) {
+  			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+  			}.getClass().getEnclosingMethod().getName()));
+  			throw e;
+  		}
+    }
+    
+    public static void clickOnCheckout() throws Exception{
+    	try {
+        getCurrentFunctionName(true);
+        logs.debug("Click on create checkout/go to shopping bag");
+        if(isGH())
+        SelectorUtil.initializeSelectorsAndDoActions(CartSelectors.checkoutBtn.get());
+        else if(isRY())
+            SelectorUtil.initializeSelectorsAndDoActions(CartSelectors.RYGoToShoppingBagBtn.get());
+        getCurrentFunctionName(false);
+    	  }catch (NoSuchElementException e) {
+  			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+  			}.getClass().getEnclosingMethod().getName()));
+  			throw e;
+  		}
+    }
+    
+	public static void navigatetoWishList() throws Exception {
+		try {
+			getCurrentFunctionName(true);
+			logs.debug(MessageFormat.format(LoggingMsg.GETTING_TEXT,
+					"Navigating to wish list ..." + getCONFIG().getProperty("RegistrationPage")));
+			getDriver().get(new URI(getDriver().getCurrentUrl()).resolve(getCONFIG().getProperty("WishList")).toString());
+			getCurrentFunctionName(false);
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+			}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
+	}
+
+    public static void selectWLByName(String createdWL) throws Exception {
+    	try {
+        getCurrentFunctionName(true);
+        logs.debug("Click on created  wish list");
+		SelectorUtil.initializeSelectorsAndDoActions(CartSelectors.selectWL.get());
+            List <WebElement> options =  SelectorUtil.getAllElements(CartSelectors.selectWLOptions.get());
+            for(WebElement option: options) {
+            	if(option.getText().toLowerCase().contains(createdWL.toLowerCase())) {
+            	   option.click();
+            	   break;
+            }}
+         
+        getCurrentFunctionName(false);
+    	  }catch (NoSuchElementException e) {
+  			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+  			}.getClass().getEnclosingMethod().getName()));
+  			throw e;
+  		}
+	}
+	
+		
+	public static boolean validateAddedToWLModalIsDisplayed() throws Exception {
+		try {
+		getCurrentFunctionName(true);
+		boolean isDisplayed;
+		logs.debug("Validate add to cart confirmation is displayed");
+		isDisplayed = SelectorUtil.isDisplayed(CartSelectors.addedToWLModal.get());
+		getCurrentFunctionName(false);
+		return isDisplayed;
+		  }catch (NoSuchElementException e) {
+  			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+  			}.getClass().getEnclosingMethod().getName()));
+  			throw e;
+  		}
+	}
+	
+	
+    
+	public static void clickOnViewListBtn() throws Exception {
+		try {
+		getCurrentFunctionName(true);
+		logs.debug("Clicking on view list button");
+		SelectorUtil.initializeSelectorsAndDoActions(CartSelectors.viewListBtn.get());
+		getCurrentFunctionName(false);
+	  }catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+			}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
+	}
+	
+	   public static void createNewWL(String WLName) throws Exception {
+		   try {
+	        getCurrentFunctionName(true);       
+	            SelectorUtil.initializeSelectorsAndDoActions(CartSelectors.WLName.get(), WLName);
+	            SelectorUtil.initializeSelectorsAndDoActions(CartSelectors.nameYourNewWLconfirmationBtn.get());
+	            getCurrentFunctionName(false);  
+		   }catch (NoSuchElementException e) {
+	    			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+	    			}.getClass().getEnclosingMethod().getName()));
+	    			throw e;
+	    		}
+	    }
 
 }// MAIN CLASS

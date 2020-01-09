@@ -1005,7 +1005,7 @@ public class SelectorUtil extends SelTestCase {
 	public static WebElement getRandomWebElement(List<WebElement> items) throws Exception {
 		logs.debug("WebElement List Size = " + items.size());
 		Random random = new Random();
-		int index = random.nextInt(items.size());
+		int index = random.nextInt(items.size() - 1);
 		WebElement element = items.get(index);
 		return element;
 
