@@ -29,6 +29,4 @@
 			<class name="com.generic.tests.GH.checkout.Base_PayPalCheckout" />
 		</classes>
 		</test>  
-		
-	
 </suite> <!-- Suite -->

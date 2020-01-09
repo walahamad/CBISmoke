@@ -65,7 +65,7 @@ public class PayPalValidation extends SelTestCase {
 				sassert().assertTrue(CheckOut.PayPal.isOrderSummaryDisplayed(), "Order summary is not displayed");
 				float newSubTotal = Float.parseFloat(Cart.getTotalPrice().replace("$", "").replace(",", "").trim());
 				if (subtotalValue != newSubTotal)
-					sassert().assertTrue(CheckOut.PayPal.isPayPalShipToPageDisplayed(), "Subtotal value is incorrect");
+					sassert().assertTrue(false, "Subtotal value is incorrect");
 				float shippingValue = Float.parseFloat(Cart.getShippingValue());
 				float tax = Float.parseFloat(Cart.getTaxValue());
 				CheckOut.PayPal.clickPayPalOrderSubmit();
