@@ -13,14 +13,14 @@
 		</classes>
 	</test>
 
-<!-- 	<test name="checkout Tests_iPad">
+ 	<test name="checkout Tests_iPad">
 		<parameter name="browserName" value="mobile_iPad"></parameter>
 		<parameter name="Env" value="devwcs"></parameter>
 		<parameter name="Brand" value="RY"></parameter>
 		<classes>
 			<class name="com.generic.tests.RY.checkout.Base_PayPalCheckout" />
 		</classes>
-	</test> -->
+	</test>
 
 	<test name="checkout iPhone">
 		<parameter name="browserName" value="mobile_iPhone X"></parameter>
@@ -30,7 +30,5 @@
 			<class name="com.generic.tests.RY.checkout.Base_PayPalCheckout" />
 		</classes>
 	</test>
-
-
 
 </suite> <!-- Suite -->
