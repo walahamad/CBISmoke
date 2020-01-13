@@ -20,7 +20,7 @@ public class PDPValidation extends SelTestCase {
 	public static void validate(String searchTerm) throws Exception {
 		getCurrentFunctionName(true);
 		// To be removed after R1 build, this is to handle blank page in mobile for new session.
-		if (SelTestCase.getBrowserName().contains(GlobalVariables.browsers.iPhone))
+		if (isMobile())
 			Common.refreshBrowser();
 
 		// Navigate to PDP page.
@@ -35,7 +35,7 @@ public class PDPValidation extends SelTestCase {
 		//for bundle PDP mobile and desktop,validate the prices are displayed in bundle landing page for all items.
 		if (numberOfItems == 1) {
 			priceErrorMessage = "Top price is not dispayed";
-		} else if (!SelTestCase.getBrowserName().contains(GlobalVariables.browsers.iPhone) && numberOfItems > 1) {
+		} else if (!isMobile()) && numberOfItems > 1) {
 			sassert().assertTrue(PDP.validateBundlePriceIsDisplayed(), "Bundle Price is not dispayed");
 			priceErrorMessage = "Top price for the bundle items are not dispayed";
 		} else {
