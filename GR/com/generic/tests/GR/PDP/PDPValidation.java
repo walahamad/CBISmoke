@@ -1,7 +1,6 @@
 package com.generic.tests.GR.PDP;
 
 import com.generic.page.PDP;
-import com.generic.setup.Common;
 import com.generic.setup.SelTestCase;
 
 public class PDPValidation extends SelTestCase {

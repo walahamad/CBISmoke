@@ -4,12 +4,14 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Random;
 
 import org.openqa.selenium.WebElement;
 import com.generic.selector.CLPSelectors;
 import com.generic.selector.HomePageSelectors;
 import com.generic.setup.ExceptionMsg;
 import com.generic.setup.SelTestCase;
+import com.generic.setup.cselector;
 import com.generic.util.SelectorUtil;
 
 /**
@@ -18,31 +20,42 @@ import com.generic.util.SelectorUtil;
 public class CLP extends SelTestCase {
 
 	public static boolean validateMobileIpadCLP() throws Exception {
-		try {
-			getCurrentFunctionName(true);
-			boolean isValid = true;
-			HomePage.openNavigationMenu();
-			String pageUrl = SelectorUtil.getCurrentPageUrl();// to validate iPad
-			List<WebElement> menueItems = new ArrayList<WebElement>();
-			menueItems = menueWithoutWhatsNew();
-			WebElement randomMenuElement = SelectorUtil.getRandomWebElement(menueItems);
-			SelectorUtil.clickOnWebElement(randomMenuElement);
-			// Navigate to leafMenuItems items.
-			List<WebElement> leafMenuItems = new ArrayList<WebElement>();
-			leafMenuItems = SelectorUtil.getAllElements(HomePageSelectors.leafMenuItems.get());
-
-			WebElement viewAllElement = leafMenuItems.get(0);// get first index "view all"
-
-			boolean validateViewAllElement = true;
-			if (isMobile()) {
-				validateViewAllElement = SelectorUtil.isValidClickableItem(viewAllElement);
-			} else {// Check if the current page URL different than the previous page URL for iPad ;
-					// items didn't contains Href attribute
-				SelectorUtil.clickOnWebElement(viewAllElement);
-				String currentPageUrl = SelectorUtil.getCurrentPageUrl();
-				if (pageUrl.equalsIgnoreCase(currentPageUrl)) {
-					validateViewAllElement = false;
-				}
+        try {
+        getCurrentFunctionName(true);
+		boolean isValid = true;
+		//HomePage.openNavigationMenu();
+		if(!isGH() || (isGH() && isMobile())) HomePage.openNavigationMenu();
+		String pageUrl = SelectorUtil.getCurrentPageUrl();// to validate iPad
+		List<WebElement> menueItems = new ArrayList<WebElement>();
+		menueItems =  menueWithoutWhatsNew();
+		WebElement randomMenuElement;
+		List<WebElement> leafMenuItems = new ArrayList<WebElement>();
+		
+		if(isGH() && isiPad()) {
+			Random random = new Random();
+			int index = random.nextInt(menueItems.size() -1);
+			 randomMenuElement = menueItems.get(index);	
+				SelectorUtil.clickOnWebElement(randomMenuElement);
+				index = index + 1;
+			   final cselector leafItem = new cselector("css,li:nth-child("+index+")  li > a");
+				leafMenuItems = SelectorUtil.getAllElements(leafItem.get());
+		}else {
+			 randomMenuElement =  SelectorUtil.getRandomWebElement(menueItems);
+				SelectorUtil.clickOnWebElement(randomMenuElement);
+			   leafMenuItems = SelectorUtil.getAllElements(HomePageSelectors.leafMenuItems.get());
+		}
+		// Navigate to leafMenuItems  items.
+		WebElement viewAllElement =  leafMenuItems.get(0);//get first index "view all" 
+		boolean validateViewAllElement = true;
+		if (isMobile()) {
+			validateViewAllElement = SelectorUtil.isValidClickableItem(viewAllElement); 
+		} else {// Check if the current page URL different than the previous page URL for iPad ;
+			    // items didn't contains Href attribute	
+			SelectorUtil.clickOnWebElement(viewAllElement);
+			String currentPageUrl = SelectorUtil.getCurrentPageUrl();
+			if (pageUrl.equalsIgnoreCase(currentPageUrl)){
+				validateViewAllElement = false;
+			}
 			}
 			if (validateViewAllElement) {
 				isValid = validatePLP();
@@ -58,22 +71,23 @@ public class CLP extends SelTestCase {
 	}
 
 	public static boolean validateDesktopCLP() throws Exception {
-		try {
-			getCurrentFunctionName(true);
-			boolean isValid = true;
-			List<WebElement> menutems = new ArrayList<WebElement>();
-			menutems = menueWithoutWhatsNew();
-			WebElement menuElement = SelectorUtil.getRandomWebElement(menutems);
-			boolean isValidClickableElement = SelectorUtil.isValidClickableItem(menuElement);
-			if (isValidClickableElement) {
-				if (validatePLP()) {
-					isValid = true;
-				} else {
-					isValid = false;
-				}
-			} else {
+     try {
+		getCurrentFunctionName(true);
+		boolean isValid = true;
+		List<WebElement> menutems = new ArrayList<WebElement>();
+		menutems = menueWithoutWhatsNew();
+		WebElement menuElement =  SelectorUtil.getRandomWebElement(menutems);
+		boolean isValidClickableElement = SelectorUtil.isValidClickableItem(menuElement);
+		if(isGH()) {menuElement.click();}
+		if (isValidClickableElement) {
+			if (validatePLP()) { 
+				isValid = true;
+			}else {
 				isValid = false;
 			}
+		}else {
+			isValid = false;
+		}
 			getCurrentFunctionName(false);
 			return isValid;
 		} catch (NoSuchElementException e) {
@@ -87,7 +101,11 @@ public class CLP extends SelTestCase {
 		try {
 			getCurrentFunctionName(true);
 			List<WebElement> items = new ArrayList<WebElement>();
-			items = SelectorUtil.getAllElements(CLPSelectors.CLPItems.get());
+			if(isGH()) {
+				items = SelectorUtil.getAllElements(CLPSelectors.GHCLPItems.get());
+			}else {
+				items = SelectorUtil.getAllElements(CLPSelectors.CLPItems.get());
+			}
 			WebElement PLPElement = SelectorUtil.getRandomWebElement(items);
 			// Get the current page URL.
 			boolean isValidClickableElement = SelectorUtil.isValidClickableItem(PLPElement);
@@ -103,7 +121,11 @@ public class CLP extends SelTestCase {
 	public static List<WebElement> menueWithoutWhatsNew() throws Exception {
 		try {
 			List<WebElement> items = new ArrayList<WebElement>();
-			items = SelectorUtil.getAllElements(HomePageSelectors.menuItems.get());
+			if(isGH()) {
+				items = SelectorUtil.getAllElements(HomePageSelectors.GHmenuItems.get());
+			 }else {
+				items = SelectorUtil.getAllElements(HomePageSelectors.menuItems.get());
+			 }
 			items.remove(0);// remove what's New item : First item
 			items.remove(items.size() - 1);
 			return items;

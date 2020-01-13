@@ -7,9 +7,11 @@ import java.util.NoSuchElementException;
 import java.util.Random;
 
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 
 import com.generic.selector.HomePageSelectors;
 import com.generic.selector.PLPSelectors;
+import com.generic.setup.Common;
 import com.generic.setup.ExceptionMsg;
 import com.generic.setup.GlobalVariables;
 import com.generic.setup.SelTestCase;
@@ -540,8 +542,20 @@ public class PLP extends SelTestCase {
 
 			itemTitle = recommendedProduct.getText();
 			logs.debug("Picked item: " + itemTitle);
-			recommendedProduct.click();
-
+			if(isMobile() && isGHRY()) {
+				WebElement recommendedProductLink = SelectorUtil.getElement(PLPSelectors.recommendedOption.get()+">a");
+				String href = recommendedProductLink.getAttribute("href");
+				String currentPageUrl = SelectorUtil.getCurrentPageUrl();
+                if( href.equalsIgnoreCase(currentPageUrl)) {
+				logs.debug("Navigated random page path: " + currentPageUrl + "    " + href);
+				SelectorUtil.initializeSelectorsAndDoActions(PLPSelectors.GHsearchClose.get());
+				Common.refreshBrowser();
+				}else {
+					recommendedProduct.click();
+				}
+			}else {
+				recommendedProduct.click();
+			}
 			getCurrentFunctionName(false);
 			return itemTitle;
 		} catch (NoSuchElementException e) {

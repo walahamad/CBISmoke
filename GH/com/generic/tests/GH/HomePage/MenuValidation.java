@@ -6,6 +6,7 @@ import org.openqa.selenium.WebElement;
 
 import com.generic.page.HomePage;
 import com.generic.setup.SelTestCase;
+import com.generic.setup.Common;
 import com.generic.setup.GlobalVariables;
 
 public class MenuValidation extends SelTestCase {
@@ -15,12 +16,13 @@ public class MenuValidation extends SelTestCase {
 
 		boolean validation = false;
 		// Check if the device is mobile/tablet or desktop .
-		boolean isMobile = getBrowserName().contains(GlobalVariables.browsers.iPhone) || getBrowserName().contains(GlobalVariables.browsers.iPad) || getBrowserName().contains(GlobalVariables.browsers.Nexus);
+		boolean isMobile = getBrowserName().contains(GlobalVariables.browsers.iPhone) || getBrowserName().contains(GlobalVariables.browsers.Nexus);
 		if (!isMobile) {
 			// Validate the desktop menu.
 			validation = validateDesktop();
 		} else {
 			// Validate the mobile menu.
+			Common.refreshBrowser();
 			validation = validateMobile();
 		}
 		getCurrentFunctionName(false);

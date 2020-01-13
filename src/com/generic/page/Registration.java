@@ -696,29 +696,14 @@ public class Registration extends SelTestCase {
 	}
 
 	// Done - CBI
-	@SuppressWarnings("unchecked")
 	public static String registerFreshUser(String email, String password) throws Exception {
 
-		// click on register new user button
-		goToRegistrationForm();
-
-		// prepare random address details
-		LinkedHashMap<String, String> addressDetails = (LinkedHashMap<String, String>) addresses.get("A3");
-
+		
 		// Prepare registration data
 		String firstName = RandomUtilities.getRandomName();
 		String lastName = RandomUtilities.getRandomName();
-		String companyName = RandomUtilities.getRandomName();
 
-		// register new user and validate the results
-		fillRegistrationFirstStep(email, email, password, password);
-
-		Thread.sleep(1500);
-		fillRegistrationSecondStep(firstName, lastName, companyName, addressDetails);
-
-		// Success message needs to be updated on excel to (Welcome to your account at )
-		String registrationSuccessMsg = getRegistrationSuccessMessage();
-		return registrationSuccessMsg;
+		return registerFreshUser(email, password, firstName, lastName);
 	}
 
 	// Done - CBI

@@ -25,12 +25,10 @@ public class PDPValidation extends SelTestCase {
 
 		// Navigate to PDP page.
 		PDP.NavigateToPDP(searchTerm);
-
+    
 		// Verify user is navigated to PDP page.
 		validateIsPDPPage();
 
-		int numberOfItems = PDP.getNumberOfItems();
-		String priceErrorMessage;
 		// price error message
 		//for single PDP, validate the price is displayed below the title of the page for both desktop and mobile
 		//for bundle PDP Desktop, validate the top price is displayed for the collection. (this is not displayed in mobile).

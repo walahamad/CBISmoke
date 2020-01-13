@@ -3,31 +3,31 @@
 <suite name="cart regression" parallel="tests" thread-count="3"
 	data-provider-thread-count="1">
 
-	<test name="cart Tests _chrome FG">
+	<test name="cart Tests _chrome GH">
 		<parameter name="browserName" value="chrome"></parameter>
 		<parameter name="Env" value="prod"></parameter>
-		<parameter name="Brand" value="FG"></parameter>
+		<parameter name="Brand" value="GH"></parameter>
 		<classes>
-			<class name="com.generic.tests.FG.Cart.CartBase" />
+			<class name="com.generic.tests.GH.Cart.CartBase" />
 
 		</classes>
 	</test>
 
-	<test name="cart iPad FG">
+<test name="cart iPad GH">
 		<parameter name="browserName" value="mobile_iPad"></parameter>
 		<parameter name="Env" value="prod"></parameter>
-		<parameter name="Brand" value="FG"></parameter>
+		<parameter name="Brand" value="GH"></parameter>
 		<classes>
-			<class name="com.generic.tests.FG.Cart.CartBase" />
+			<class name="com.generic.tests.GH.Cart.CartBase" />
 		</classes>
 	</test>
 
-	<test name="cart iPhone FG">
+<test name="cart iPhone GH">
 		<parameter name="browserName" value="mobile_iPhone X"></parameter>
 		<parameter name="Env" value="prod"></parameter>
-		<parameter name="Brand" value="FG"></parameter>
+		<parameter name="Brand" value="GH"></parameter>
 		<classes>
-			<class name="com.generic.tests.FG.Cart.CartBase" />
+			<class name="com.generic.tests.GH.Cart.CartBase" />
 		</classes>
 	</test>
 

@@ -2,12 +2,15 @@ package com.generic.tests.GH.PDP;
 
 import com.generic.page.PDP;
 import com.generic.setup.SelTestCase;
+import com.generic.setup.Common;
 import com.generic.setup.GlobalVariables.browsers;
 
 public class WistListGuestValidation extends SelTestCase {
 	public static void validate() throws Exception {
 		getCurrentFunctionName(true);
-		String selectedProductName = PDP.NavigateToPDP("mirror");
+		if (isMobile())
+			Common.refreshBrowser();
+		String selectedProductName = PDP.NavigateToPDP("Espadrilles");
 		PDP.selectSwatches();
 		PDP.clickAddToWLGR();
 		sassert().assertTrue(PDP.validateSelectRegistryOrWishListModalIsDisplayed(), " Select A Registry Or Wish list modal is not dispayed");
@@ -15,7 +18,8 @@ public class WistListGuestValidation extends SelTestCase {
 		sassert().assertTrue(PDP.validateNameYourNewWLModalIsDisplayed(), "Name your new wish list modal is not dispayed");
         String WLName = PDP.getWishListName();
 		PDP.createNewWL(WLName);
-		sassert().assertTrue(PDP.validateSelectRegistryOrWishListModalIsDisplayed(), " Select A Registry Or Wish list modal is not dispayed");
+		sassert().assertTrue(PDP.validateSelectRegistryOrWishListModalIsDisplayed(), " Select A Registry or Wish list modal is not dispayed");
+		Thread.sleep(1000);
 		sassert().assertTrue(PDP.validateCreatedWLisSelectedByDefault(WLName), "created wish list is not selected by default");
 		PDP.clickOnCreateNewWLConfirmationBtn();
 		sassert().assertTrue(PDP.validateConfirmationModalWithCorrectProductIsDisplayed(selectedProductName), " Confirmation Modal is not dispayed");

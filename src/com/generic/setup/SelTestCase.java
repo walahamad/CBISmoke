@@ -45,7 +45,7 @@ public class SelTestCase {
 	public static SASLogger logs = new SASLogger("Default");
 
 	// protected SoftAssert softAssert = new SoftAssert();
-	private static ThreadLocal<SoftAssert> softAssert = new ThreadLocal<SoftAssert>();
+	private static ThreadLocal<CustomSoftAssert> softAssert = new ThreadLocal<CustomSoftAssert>();
 	public static ThreadLocal<XmlTest> testObj = new ThreadLocal<XmlTest>();
 
 	// private static ThreadLocal<String> testName= new ThreadLocal<String>();
@@ -348,7 +348,7 @@ public class SelTestCase {
 	}
 
 	public static void setAssert() {
-		softAssert.set(new SoftAssert());
+		softAssert.set(new CustomSoftAssert());
 	}
 
 	/**

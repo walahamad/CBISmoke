@@ -3,6 +3,7 @@ package com.generic.tests.GH.HomePage;
 import java.text.MessageFormat;
 import java.util.Arrays;
 import org.testng.Assert;
+import org.testng.SkipException;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -12,13 +13,11 @@ import com.generic.setup.Common;
 import com.generic.setup.LoggingMsg;
 import com.generic.setup.SelTestCase;
 import com.generic.setup.SheetVariables;
-import com.generic.tests.FG.HomePage.AccountMenuValidation;
-import com.generic.tests.FG.HomePage.GlobalFooterValidation;
-import com.generic.tests.FG.HomePage.HomePageValidation;
-import com.generic.tests.FG.HomePage.LogoValidation;
-import com.generic.tests.FG.HomePage.MenuValidation;
-import com.generic.tests.FG.HomePage.MiniCartValidation;
-import com.generic.tests.FG.HomePage.YMALCarouselsVerification;
+import com.generic.tests.GH.HomePage.GlobalFooterValidation;
+import com.generic.tests.GH.HomePage.HomePageValidation;
+import com.generic.tests.GH.HomePage.LogoValidation;
+import com.generic.tests.GH.HomePage.MenuValidation;
+import com.generic.tests.GH.HomePage.MiniCartValidation;
 import com.generic.util.ReportUtil;
 import com.generic.util.SASLogger;
 import com.generic.util.dataProviderUtils;
@@ -64,9 +63,9 @@ public class HomePageBase extends SelTestCase {
 		// Important to add this for logging/reporting
 		setTestCaseReportName(SheetVariables.HPTestCaseId);
 		Testlogs.get().debug("Case Browser: " + testObject.getParameter("browserName"));
-		logCaseDetailds(MessageFormat.format(LoggingMsg.TEST_CASE_DESC, testDataSheet + "." + caseId,
-				this.getClass().getCanonicalName(), desc.replace("\n", "<br>")));
-
+		String CaseDescription = MessageFormat.format(LoggingMsg.TEST_CASE_DESC, testDataSheet + "." + caseId,
+				this.getClass().getCanonicalName(), desc.replace("\n", "<br>"));
+		initReportTime();
 		try {
 
 			if (proprties.contains(Logo)) {
@@ -83,26 +82,22 @@ public class HomePageBase extends SelTestCase {
 			} else if (proprties.equals(menu)) {
 				// Check the Navigation menu.
 				sassert().assertTrue(MenuValidation.validate(), "Menu validation has some problems");
-			} else if (proprties.contains(AccountMenu)) {
-				sassert().assertTrue(AccountMenuValidation.validate(), "My Account menu validation has some problems");
-			} else if (proprties.contains(GlobalFooter)) {
+			} else if (proprties.contains(this.GlobalFooter)) {
 				sassert().assertTrue(GlobalFooterValidation.validate(), "Global footer validation has some problems");
-			} else if (proprties.contains(YMALCarousels)) {
-				YMALCarouselsVerification.validate();
+
 			} else {
 				Testlogs.get().debug("please check proprties provided in excel sheet");
 			}
 
 			sassert().assertAll();
 			Common.testPass();
-		} catch (Throwable t) {
-			setTestCaseDescription(getTestCaseDescription());
-			Testlogs.get().debug(MessageFormat.format(LoggingMsg.DEBUGGING_TEXT, t.getMessage()));
-			t.printStackTrace();
-			String temp = getTestCaseReportName();
-			Common.testFail(t, temp);
-			ReportUtil.takeScreenShot(getDriver(), testDataSheet + "_" + caseId);
-			Assert.assertTrue(false, t.getMessage());
+		}catch (Throwable t) {
+			if ((getTestStatus() != null) && getTestStatus().equalsIgnoreCase("skip")) {
+				throw new SkipException("Skipping this exception");
+			} else {
+				Common.testFail(t, CaseDescription, testDataSheet + "_" + caseId);
+			}
+
 		} // catch
 	}// test
 }

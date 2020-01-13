@@ -796,7 +796,12 @@ public class CheckOut extends SelTestCase {
 		public static String getConfirmationTotalValue() throws Exception {
 			try {
 				getCurrentFunctionName(true);
-				WebElement price = SelectorUtil.getElement(CheckOutSelectors.confirmationTotal.get());
+				String str=null;
+				if (!isMobile()||isFGGR())
+					str = CheckOutSelectors.confirmationTotal.get();
+				else if (isGHRY() && isMobile())
+					str = CheckOutSelectors.GHConfirmationTotal.get();
+				WebElement price = SelectorUtil.getElement(str);
 				getCurrentFunctionName(false);
 				return price.getText().replace("$", "").replace(",", "").trim();
 			} catch (NoSuchElementException e) {
@@ -910,7 +915,13 @@ public class CheckOut extends SelTestCase {
 		public static boolean isSubmitConfermationMessageDisplayed() throws Exception {
 			try {
 				getCurrentFunctionName(true);
-				boolean isDisplayed = SelectorUtil.isDisplayed(CheckOutSelectors.paypalSubmitConfermationMessage.get());
+				String str=null;
+				boolean isDisplayed = false;
+				if (isFGGR()|| !isMobile())
+					str = CheckOutSelectors.paypalSubmitConfermationMessage.get();
+				else if (isGHRY() && isMobile())
+					str = CheckOutSelectors.GHPaypalSubmitConfermationMessage.get();
+				isDisplayed = SelectorUtil.isDisplayed(str);
 				getCurrentFunctionName(false);
 				return isDisplayed;
 			} catch (NoSuchElementException e) {
