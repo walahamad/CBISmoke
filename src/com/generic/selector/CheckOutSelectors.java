@@ -63,7 +63,8 @@ public class CheckOutSelectors
 	public static final cselector closeRegisterButton = new cselector("css,.okCancelPanel .button.secondary");
 	public static final cselector itemID= new cselector("css,.gwt-oid-number", "css,.order-item-part-number");
 	public static final cselector closePoromotionalModal= new cselector("css,.extole-js-widget-wrapper.extole-widget-wrapper > a","css,.extole-js-widget-wrapper.extole-widget-wrapper > a");
-	
+	public static final cselector orderID = new cselector("css,.order-number-value","css,.order-number");
+
 	
 	// PayPal
 	public static final cselector paymentPagePayPalTitle=new cselector("css,.gwt-TabPanelBottom>div>div > div.gwt-Label","css, div > div.pw-accordion__title > a > h1 > span");

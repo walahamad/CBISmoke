@@ -1038,5 +1038,22 @@ public class CheckOut extends SelTestCase {
 		}
 
 	}
+	
+	
+	
+	public static void printOrderIDtoLogs() throws Exception {
+		try {
+			getCurrentFunctionName(true);
+			SelectorUtil.initializeSelectorsAndDoActions(CheckOutSelectors.orderID.get());
+			logs.debug(SelectorUtil.textValue.toString().replace("text is :", "Order ID is: "));
+			
+			getCurrentFunctionName(false);
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+			}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
+
+	}
 
 }
