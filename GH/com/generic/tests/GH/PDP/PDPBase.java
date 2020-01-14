@@ -3,6 +3,7 @@ package com.generic.tests.GH.PDP;
 import java.text.MessageFormat;
 import java.util.Arrays;
 import org.testng.Assert;
+import org.testng.SkipException;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -26,8 +27,10 @@ public class PDPBase extends SelTestCase {
 	public static final String bundlePDP = "Validate PDP Bundle active elements";
 	public static final String personalizedPDP = "Validate PDP Personalized active elements";
 	public static final String singlePDPSearchTerm = "shirt";
+
 	public static final String BundlePDPSearchTerm = "41589";
 	public static final String personalizedPDPSearchTerm = "Resort Cotton";
+
 	public static final String wishListGuestValidation = "Wish List Guest Validation";
 
 	// used sheet in test
@@ -63,8 +66,10 @@ public class PDPBase extends SelTestCase {
 				this.getClass().getCanonicalName(), desc);
 		initReportTime();
 		Testlogs.get().debug("Case Browser: " + testObject.getParameter("browserName"));
-		logCaseDetailds(MessageFormat.format(LoggingMsg.TEST_CASE_DESC, testDataSheet + "." + caseId,
-				this.getClass().getCanonicalName(), desc));
+
+		String CaseDescription = MessageFormat.format(LoggingMsg.TEST_CASE_DESC, testDataSheet + "." + caseId,
+				this.getClass().getCanonicalName(), desc.replace("\n", "<br>"));
+		initReportTime();
 
 		try {
 
@@ -85,13 +90,12 @@ public class PDPBase extends SelTestCase {
 			sassert().assertAll();
 			Common.testPass(CaseDescription);
 		} catch (Throwable t) {
-			setTestCaseDescription(getTestCaseDescription());
-			Testlogs.get().debug(MessageFormat.format(LoggingMsg.DEBUGGING_TEXT, t.getMessage()));
-			t.printStackTrace();
-			String temp = getTestCaseReportName();
-			Common.testFail(t, temp);
-			ReportUtil.takeScreenShot(getDriver(), testDataSheet + "_" + caseId);
-			Assert.assertTrue(false, t.getMessage());
+			if ((getTestStatus() != null) && getTestStatus().equalsIgnoreCase("skip")) {
+				throw new SkipException("Skipping this exception");
+			} else {
+				Common.testFail(t, CaseDescription, testDataSheet + "_" + caseId);
+			}
+
 		} // catch
 	}// test
 }

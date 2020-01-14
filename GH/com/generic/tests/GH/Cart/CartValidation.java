@@ -8,21 +8,21 @@ import com.generic.page.PDP;
 public class CartValidation extends SelTestCase {
 
 	public static void addProductToCart() throws Exception {
-		PDP.NavigateToPDP();
+		PDP.NavigateToPDP("elizabeth");
 
 		if (PDP.bundleProduct())
-			PDP.clickBundleItems();
+		PDP.clickBundleItems();
 
 		PDP.addProductsToCart();
-		
-		if (!isMobile())
-			PDP.clickAddToCartCloseBtn();
+		Thread.sleep(3000);
+     	PDP.clickAddToCartCloseBtn();
 		
 	}
 
 	public static void cartValidation() throws Exception {
 		//Search for products and add them to cart
 		addProductToCart();		
+		Thread.sleep(3000);
 		addProductToCart();
 		
 		//Navigate to cart by URL
@@ -59,20 +59,43 @@ public class CartValidation extends SelTestCase {
 		//Moving item
 		Cart.clickMoveToWishListBtnForSavedItem();
 
+	    Thread.sleep(3000);
+	    String WLName = PDP.getWishListName();
+	    if(isMobile()) {
+			Cart.createNewWL(WLName);
+			Thread.sleep(1000);
+			Cart.clickOnSelectWLConfirmationBtn();
+	    }else {
+			sassert().assertTrue(PDP.validateNameYourNewWLModalIsDisplayed(), "Name your new wish list modal is not dispayed");
+			Cart.createNewWL(WLName);
+			Cart.validateSelectWishListModalIsDisplayed();
+			sassert().assertTrue(PDP.validateCreatedWLisSelectedByDefault(WLName), "created wish list is not selected by default");
+			PDP.clickOnCreateNewWLConfirmationBtn();
+	    }
+	    
 		Thread.sleep(3000);
-
 		//Save total again 
 		String totalPriceAfterMove = Cart.getTotalPrice();
 		
 		//Compare total values
 		sassert().assertTrue(!totalPriceBeforeMove.equals(totalPriceAfterMove), "Move item to wish list validation has some problems");
-
+		
+		if(isMobile()){
+			Thread.sleep(5000);
+			Cart.navigatetoWishList();
+			Cart.selectWLByName(WLName);
+		}else {
+			Cart.validateAddedToWLModalIsDisplayed();
+			Cart.clickOnViewListBtn();
+		}
 		Thread.sleep(2000);
-		sassert().assertTrue(Cart.verifySavedList(), "Saved list validation has some problems");
+		sassert().assertTrue(Cart.verifySavedItemToWL(), "Saved list validation has some problems");
 		
 		Thread.sleep(2000);
 		Cart.moveItemsToCartFromWishlist();
 		
+		Cart.clickOnCheckout();
+		Thread.sleep(2000);
 		//Deletion and total before and after
 		String totalPriceBeforeDelete = Cart.getTotalPrice();
 		

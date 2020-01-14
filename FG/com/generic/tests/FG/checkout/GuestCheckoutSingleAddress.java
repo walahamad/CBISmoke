@@ -90,7 +90,9 @@ public class GuestCheckoutSingleAddress extends SelTestCase {
 
 			// Check if subtotal value match
 			sassert().assertTrue(CheckOut.getSubTotal().equals(orderSubTotal), "Subtotal value issue ");
-
+			
+			CheckOut.printOrderIDtoLogs();
+			
 			getCurrentFunctionName(false);
 
 		} catch (NoSuchElementException e) {

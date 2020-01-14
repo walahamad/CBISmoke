@@ -1,6 +1,7 @@
 package com.generic.page;
 
 import java.text.MessageFormat;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.concurrent.TimeUnit;
@@ -50,7 +51,9 @@ public class PDP extends SelTestCase {
 				PLP.clickSearch(SearchTerm);
 				if (SelectorUtil.isElementExist(By.cssSelector(PLPSelectors.PLPPageSelector.get()))) {
 					itemName = PLP.pickPLPFirstProduct();
-				}			} else {
+
+				}
+			} else {
 				PLP.typeSearch(SearchTerm);
 				itemName = PLP.pickRecommendedOption();
 			}
@@ -471,7 +474,10 @@ public class PDP extends SelTestCase {
 		getCurrentFunctionName(true);
 		logs.debug("Validate if bottom price is updated after seleting options");
 		String selector = PDPSelectors.bottomPriceSingle.get();
-		if (!SelTestCase.getBrowserName().contains(GlobalVariables.browsers.iPhone) && getNumberOfItems() > 1) {
+		if(isGHRY()) {
+			selector = PDPSelectors.GHRYBottomPriceSingle.get();
+		}
+		if (!SelTestCase.getBrowserName().contains(GlobalVariables.browsers.iPhone) && getNumberOfItems() > 1 ) {
 			String ProductID = getProductID(0);
 			selector = MessageFormat.format(PDPSelectors.bottomPriceBundle, ProductID);
 		}
@@ -510,6 +516,7 @@ public class PDP extends SelTestCase {
 		// For Mobile, verify it from mini cart because there is no add to cart modal in
 		// mobile.
 		if (!isMobile()) {
+			Thread.sleep(4000);
 			isDisplayed = SelectorUtil.isDisplayed(PDPSelectors.addToCartModal.get());
 		} else if (isMobile() && isGHRY()) {
 			isDisplayed = SelectorUtil.isDisplayed(PDPSelectors.addToCartModal.get());
@@ -517,6 +524,7 @@ public class PDP extends SelTestCase {
 			HomePage.clickOnMiniCart();
 			isDisplayed = HomePage.validateMiniCartProductIsDsiplayed();
 		}
+		getCurrentFunctionName(false);
 		return isDisplayed;
 	}
 
@@ -524,8 +532,13 @@ public class PDP extends SelTestCase {
 	public static void clickAddToWLGR() throws Exception {
 		try {
 			getCurrentFunctionName(true);
-			String subStrArr = PDPSelectors.addToWLGRBtnEnabled.get();
-			SelectorUtil.initializeSelectorsAndDoActions(subStrArr);
+			if(isGH()) {
+				SelectorUtil.initializeSelectorsAndDoActions(PDPSelectors.GHaddToWLGRBtnEnabled.get());
+			}else if(isRY()){
+				SelectorUtil.initializeSelectorsAndDoActions(PDPSelectors.RYaddToWLGRBtnEnabled.get());
+			}else {
+				SelectorUtil.initializeSelectorsAndDoActions(PDPSelectors.addToWLGRBtnEnabled.get());
+			}
 			getCurrentFunctionName(false);
 		} catch (NoSuchElementException e) {
 			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
@@ -744,10 +757,16 @@ public class PDP extends SelTestCase {
 		try {
 			getCurrentFunctionName(true);
 			logs.debug("Click on create new wish list");
-			WebElement element = SelectorUtil.getElement(PDPSelectors.giftRegistryListBox.get());
-			WebElement option = element.findElement(By.cssSelector(PDPSelectors.createNewWL.get()));
-			option.click();
-			clickOnCreateNewWLConfirmationBtn();
+			if(isRY()) {
+				List <WebElement> elements = SelectorUtil.getAllElements(PDPSelectors.RYcreateNewWL.get());
+				   SelectorUtil.clickOnWebElement( elements.get(elements.size() - 1));
+	 
+			 }else {
+				 WebElement element = SelectorUtil.getElement(PDPSelectors.giftRegistryListBox.get());
+				 WebElement option =  element.findElement(By.cssSelector(PDPSelectors.createNewWL.get()));
+				 option.click();
+				 clickOnCreateNewWLConfirmationBtn();	
+			 }
 			getCurrentFunctionName(false);
 		} catch (NoSuchElementException e) {
 			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
@@ -842,11 +861,17 @@ public class PDP extends SelTestCase {
 				logs.debug("Validate confirmation modal exist menu" + isDisplayed + "   " + selectedProductName);
 
 				WebElement addToCardProductElement = SelectorUtil.getElement(PDPSelectors.addToCardProductName.get());
+				String viewListBtnSelector;
+				if(isGH() || isRY()){
+					viewListBtnSelector = PDPSelectors.GHRYviewListBtn.get();
+				}else {
+					viewListBtnSelector = PDPSelectors.viewListBtn.get();
+				}
 
 				if (addToCardProductElement.getText().equals(selectedProductName))
 					logs.debug("Product is the right added one");
 
-				SelectorUtil.initializeSelectorsAndDoActions(PDPSelectors.viewListBtn.get());
+				SelectorUtil.initializeSelectorsAndDoActions(viewListBtnSelector);
 				getCurrentFunctionName(false);
 
 				return isDisplayed;
@@ -871,9 +896,17 @@ public class PDP extends SelTestCase {
 			boolean isDisplayed = true;
 			Thread.sleep(2000);
 			List<WebElement> products = SelectorUtil.getElementsList(PDPSelectors.addedProductName.get());
-			List<WebElement> addToCartBtns = SelectorUtil.getElementsList(PDPSelectors.myWLAddToCartBtn.get());
+			List<WebElement> addToCartBtns = new ArrayList<WebElement>();
+			if(isGH()) {
+			  addToCartBtns = SelectorUtil.getElementsList(PDPSelectors.GHmyWLAddToCartBtn.get());
+			}else if(isRY()){
+			  addToCartBtns = SelectorUtil.getElementsList(PDPSelectors.RYmyWLAddToCartBtn.get());
+			}else {
+			   addToCartBtns = SelectorUtil.getElementsList(PDPSelectors.myWLAddToCartBtn.get());
+			}
+			
 			for (int i = 0; i < products.size(); i++) {
-				if (products.get(i).getText().contains(addedProductName)) {
+	            if(products.get(i).getText().toLowerCase().contains(addedProductName.toLowerCase())) {
 					addToCartBtns.get(i).click();
 					return true;
 				}
@@ -1708,5 +1741,27 @@ public class PDP extends SelTestCase {
 			throw e;
 		}
 	}
+
+	public static boolean selectWLByName(String createdWL) throws Exception {
+		try{
+        getCurrentFunctionName(true);
+        boolean isSelected = false;
+        List<WebElement> elements = SelectorUtil.getAllElements(PDPSelectors.RYcreateNewWLName.get());
+        for(int index=0;index<elements.size();index++) {
+        	if(elements.get(index).getText().toLowerCase().equalsIgnoreCase(createdWL)) {
+        		isSelected = true;
+                List<WebElement> WLElements = SelectorUtil.getAllElements(PDPSelectors.RYcreateNewWL.get());
+                SelectorUtil.clickOnWebElement(WLElements.get(index));
+                 break;
+        	}
+        }
+        getCurrentFunctionName(false);
+		return isSelected;
+	} catch (NoSuchElementException e) {
+		logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+		}.getClass().getEnclosingMethod().getName()));
+		throw e;
+	}
+    }
 
 }

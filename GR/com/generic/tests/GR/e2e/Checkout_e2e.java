@@ -74,6 +74,9 @@ public class Checkout_e2e extends SelTestCase {
 
 			CheckOut.closeRegisterButton();
 
+			Thread.sleep(1500);
+			CheckOut.printOrderIDtoLogs();
+			
 			// Check number of products in confirmation page
 			sassert().assertTrue(CheckOut.checkProductsinConfirmationPage() == productsCount,
 					"Some products are missing in confirmation page ");
@@ -157,6 +160,9 @@ public class Checkout_e2e extends SelTestCase {
 
 			CheckOut.closePromotionalModal();
 
+			Thread.sleep(1500);
+			CheckOut.printOrderIDtoLogs();
+			
 			// Check number of products in confirmation page
 			sassert().assertTrue(CheckOut.checkProductsinConfirmationPage() == productsCountStepTWO,
 					"Some products are missing in confirmation page ");

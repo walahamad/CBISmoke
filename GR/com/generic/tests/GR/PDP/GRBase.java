@@ -14,7 +14,7 @@ import com.generic.setup.Common;
 import com.generic.setup.LoggingMsg;
 import com.generic.setup.SelTestCase;
 import com.generic.setup.SheetVariables;
-import com.generic.tests.FG.login.LoginBase;
+import com.generic.tests.GR.login.LoginBase;
 import com.generic.util.RandomUtilities;
 import com.generic.util.SASLogger;
 import com.generic.util.dataProviderUtils;

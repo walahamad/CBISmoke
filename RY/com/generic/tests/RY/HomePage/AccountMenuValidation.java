@@ -1,4 +1,4 @@
-package com.generic.tests.GH.HomePage;
+package com.generic.tests.RY.HomePage;
 
 import com.generic.page.HomePage;
 import com.generic.setup.GlobalVariables.browsers;
@@ -32,10 +32,11 @@ public class AccountMenuValidation extends SelTestCase {
 	public static boolean validateMobile() throws Exception{
 		getCurrentFunctionName(true);
 		boolean accountMenuValidation = true; 
+		HomePage.openNavigationMenu();
 		accountMenuValidation =  HomePage.validateAccountMenuDisplayed();
-		HomePage.clickOnAccountMenu(false);
 		HomePage.validateAccountMenuItemsDisplayed();
-		HomePage.clickOnCloseButton();
+		
+		HomePage.openNavigationMenu();
 		getCurrentFunctionName(false);
 		return accountMenuValidation;
 	}

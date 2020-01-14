@@ -72,6 +72,9 @@ public class GuestCheckoutSingleAddress extends SelTestCase {
 			Thread.sleep(2000);
 
 			CheckOut.closeRegisterButton();
+			
+			Thread.sleep(1500);
+			CheckOut.printOrderIDtoLogs();
 
 			// Check number of products in confirmation page
 			sassert().assertTrue(CheckOut.checkProductsinConfirmationPage() == productsCount,

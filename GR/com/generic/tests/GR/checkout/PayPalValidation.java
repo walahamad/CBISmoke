@@ -65,8 +65,7 @@ public class PayPalValidation extends SelTestCase {
 			if (CheckOut.PayPal.isPaymentPageSelectedAndPayPalSelected()) {
 				sassert().assertTrue(CheckOut.PayPal.isOrderSummaryDisplayed(), "Order summary is not displayed");
 				float newSubTotal = Float.parseFloat(Cart.getTotalPrice().replace("$", "").replace(",", "").trim());
-				if (subtotalValue != newSubTotal)
-					sassert().assertTrue(CheckOut.PayPal.isPayPalShipToPageDisplayed(), "Subtotal value is incorrect");
+				sassert().assertTrue(subtotalValue == newSubTotal, "Subtotal value is incorrect");
 				float shippingValue = Float.parseFloat(Cart.getShippingValue());
 				float tax = Float.parseFloat(Cart.getTaxValue());
 				CheckOut.PayPal.clickPayPalOrderSubmit();
@@ -80,7 +79,10 @@ public class PayPalValidation extends SelTestCase {
 						"Order number or email or shipping address is not displayed");
 				sassert().assertTrue(CheckOut.PayPal.checkConfirmationPageImg(), "Product image is not displayed");
 				sassert().assertTrue(CheckOut.PayPal.isPayPalPayment(), "Payment type is PayPal");
-
+				
+				Thread.sleep(1500);
+				CheckOut.printOrderIDtoLogs();
+				
 				float confirmationSubtotal = Float.parseFloat(CheckOut.PayPal.getConfirmationPageSubtotalValue());
 				float confirmationTax = Float.parseFloat(CheckOut.PayPal.getConfirmationPageTaxValue());
 				float confirmationShipping = Float.parseFloat(CheckOut.PayPal.getConfirmationPageShippingValue());

@@ -7,9 +7,11 @@ import java.util.NoSuchElementException;
 import java.util.Random;
 
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 
 import com.generic.selector.HomePageSelectors;
 import com.generic.selector.PLPSelectors;
+import com.generic.setup.Common;
 import com.generic.setup.ExceptionMsg;
 import com.generic.setup.GlobalVariables;
 import com.generic.setup.SelTestCase;
@@ -528,9 +530,9 @@ public class PLP extends SelTestCase {
 			throw e;
 		}
 	}
-
-	// CBI
-	public static String pickRecommendedOption() throws Exception {
+    
+    // CBI
+		public static String pickRecommendedOption() throws Exception {
 		String itemTitle = "";
 		try {
 			getCurrentFunctionName(true);
@@ -561,7 +563,7 @@ public class PLP extends SelTestCase {
 		}
 
 	}
-
+  
 	// CBI
 	public static void typeSearch(String searchTerm) throws Exception {
 		try {

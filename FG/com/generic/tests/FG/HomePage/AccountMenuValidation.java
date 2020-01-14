@@ -1,6 +1,7 @@
 package com.generic.tests.FG.HomePage;
 
 import com.generic.page.HomePage;
+import com.generic.setup.Common;
 import com.generic.setup.SelTestCase;
 
 public class AccountMenuValidation extends SelTestCase {
@@ -8,6 +9,7 @@ public class AccountMenuValidation extends SelTestCase {
 		getCurrentFunctionName(true);
 		boolean accountMenuValidation = true;
 		if (isMobile()) {
+			Common.refreshBrowser();
 			accountMenuValidation = validateMobile();
 		} else {
 			accountMenuValidation = validateDesktopAndTablet();

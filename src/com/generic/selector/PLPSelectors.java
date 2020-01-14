@@ -4,10 +4,11 @@ import com.generic.setup.cselector;
 
 public class PLPSelectors {
 
+	public static final cselector RYSearchIcon = new cselector("css,.t-header__search-button>button");
 	//CBI
 	public static final cselector SearchIcon = new cselector("css,#uNavTop button.searchboxAsButton", "css,.t-header__fades-in>button");
-	public static final cselector RYSearchIcon = new cselector("css,.t-header__search-button>button");
 	
+	public static final cselector GHsearchClose = new cselector("css,button.pw-search__close");
 	public static final cselector searchBox = new cselector("css,#searchBox input#headerBox","css,form>div>div>input");
 	public static final cselector recommendedOption =new cselector("css,li.unbxd-as-popular-product.unbxd-as-popular-product-grid .unbxd-as-popular-product-info","css,.c-arrange.u-flexbox.c--align-middle.u-align-center");
 	public static final cselector SearchButton =new cselector("css,li.unbxd-as-popular-product.unbxd-as-popular-product-grid a.unbxd-as-popular-product-info");
@@ -48,23 +49,22 @@ public class PLPSelectors {
 	//Random PLP
 	public static final cselector desktopMenuItem = new cselector("css,a.gwt-MenuItem");
 	public static final cselector PLPIdentifier = new cselector("css,.product-details-main-container","css,.c-product-item__price");
-	
+
 	public static final cselector navigatetoPLP = new cselector(
 			"css,#mainContent > div.container.no-padding.grid-subcategories > div > div:nth-child(1) > div > a > img",
 			"css,#mainContent > div.container.no-padding.grid-subcategories > div > div:nth-child(1) > div > a > img",
 			"css,#app-main > div > div:nth-child(1) > div.u-flexbox.u-direction-row.u-flex-wrap > div:nth-child(1) > a > div.c-lazy-image.u-width-full > div > img");
-	
+
 	public static final cselector navigatetoPLP2 = new cselector(
 			"css,#mainContent > div.genericESpot > div.container.no-padding.grid-subcategories > div > div:nth-child(1) > div > a > img",
 			"css,#mainContent > div.genericESpot > div.container.no-padding.grid-subcategories > div > div:nth-child(1) > div > a > img",
 			"css,#app-main > div > div:nth-child(1) > div.u-flexbox.u-direction-row.u-flex-wrap > div:nth-child(1) > a > div.c-lazy-image.u-width-full > div > img");
-	
-	
+
 	public static final cselector navigatetoPLPGR = new cselector(
 			"css,#mainContent > div.container.no-padding.grid-subcategories > div > div:nth-child(1) > div > a > img",
 			"css,#mainContent > div.container.no-padding.grid-subcategories > div > div:nth-child(1) > div > a > img",
 			"css,#app-main > div > div:nth-child(3) > div:nth-child(1) > a > div.c-lazy-image.u-width-full > div > img");
-	
+
 	public static final cselector navigatetoPLP2GR = new cselector(
 			"css,#mainContent > div.genericESpot > div.container.no-padding.grid-subcategories > div > div:nth-child(1) > div > a > img",
 			"css,#mainContent > div.genericESpot > div.container.no-padding.grid-subcategories > div > div:nth-child(1) > div > a > img",

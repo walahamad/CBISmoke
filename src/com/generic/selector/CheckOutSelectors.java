@@ -4,6 +4,8 @@ import com.generic.setup.cselector;
 
 public class CheckOutSelectors
 {
+	public static final cselector GHConfirmationTotal=new cselector("css,.estimated-total > div>span:nth-child(2)");
+	public static final cselector GHPaypalSubmitConfermationMessage=new cselector("css,p.t-checkout-confirmation__header-confirm-message:last-child");
 	//Done CBI
 	//Navigation
 	public static final cselector beginSecureCheckoutButton = new cselector("css,.secure-checkout-button","css,.c-checkout-buttons__checkout .pw--primary");
@@ -61,10 +63,11 @@ public class CheckOutSelectors
 	public static final cselector closeRegisterButton = new cselector("css,.okCancelPanel .button.secondary");
 	public static final cselector itemID= new cselector("css,.gwt-oid-number", "css,.order-item-part-number");
 	public static final cselector closePoromotionalModal= new cselector("css,.extole-js-widget-wrapper.extole-widget-wrapper > a","css,.extole-js-widget-wrapper.extole-widget-wrapper > a");
-	
+	public static final cselector orderID = new cselector("css,.order-number-value","css,.order-number");
+
 	
 	// PayPal
-	public static final cselector paymentPagePayPalTitle=new cselector("css,tbody:nth-child(1) > tr:nth-child(2) > td:nth-child(1) > div:nth-child(1) > div:nth-child(3) > div:nth-child(1) > div:nth-child(2)","css, div > div.pw-accordion__title > a > h1 > span");
+	public static final cselector paymentPagePayPalTitle=new cselector("css,.gwt-TabPanelBottom>div>div > div.gwt-Label","css, div > div.pw-accordion__title > a > h1 > span");
     public static final cselector paymentPagePayPalSubmitBtn=new cselector("css,.place-order-panel > button:nth-child(1)","css,div.c-checkout-buttons__checkout > button");
     public static final cselector paymentSubmitPopUpClose=new cselector("css,#extole-6763275864515365558 > div > div.extole-js-widget-wrapper.extole-widget-wrapper > a","css,#extole-6763275864515365558 > div > div.extole-js-widget-wrapper.extole-widget-wrapper > a");
     public static final cselector paymentPayPalSubmitRegistrationCloseBtn=new cselector("css,td > div > button.secondary");

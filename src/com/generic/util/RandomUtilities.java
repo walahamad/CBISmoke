@@ -76,7 +76,7 @@ public final class RandomUtilities {
 	 * number.
 	 *
 	 */
-	private static String[] number = { "12", "34", "25", "78", "90", "10", "31", "43", "52", "87", "09", "56", "16",
+	private static String[] number = { "12", "34", "25", "78", "90", "10", "31", "43", "52", "87", "99", "56", "16",
 			"26", "76", "31", "35", "37", "54", "56", "58", "69", "94", "23", "45", "47", "49", "13", "15", "17", "19",
 			"89", "86", "82", "51", "57", "59", "29", "24", "42", "48", "53", "43", "33", "34", "39", "22", "27", "87",
 			"94", "91", "63", "65", "60", "40", "94", "81", "11", "73", "71" };
@@ -150,7 +150,7 @@ public final class RandomUtilities {
 	 * @return String
 	 */
 	public static String getRandomName() {
-		return getRandomWord() + getRandomWord();
+		return getRandomWord() + getRandomWord() + getRandomNumber() + getRandomNumber();
 	}
 
 	public static String getRandomPassword(int passwordLength) {
