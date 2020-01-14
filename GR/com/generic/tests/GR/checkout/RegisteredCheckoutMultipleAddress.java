@@ -93,6 +93,7 @@ public class RegisteredCheckoutMultipleAddress extends SelTestCase {
 			CheckOut.placeOrder();
 
 			Thread.sleep(3500);
+			CheckOut.printOrderIDtoLogs();
 
 			// Check number of products in confirmation page
 			sassert().assertTrue(CheckOut.checkProductsinConfirmationPage() == productsCountStepTWO,
