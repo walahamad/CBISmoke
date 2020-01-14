@@ -29,13 +29,15 @@ public class PDPValidation extends SelTestCase {
 		// Verify user is navigated to PDP page.
 		validateIsPDPPage();
 
+		int numberOfItems = PDP.getNumberOfItems();
+		String priceErrorMessage;
 		// price error message
 		//for single PDP, validate the price is displayed below the title of the page for both desktop and mobile
 		//for bundle PDP Desktop, validate the top price is displayed for the collection. (this is not displayed in mobile).
 		//for bundle PDP mobile and desktop,validate the prices are displayed in bundle landing page for all items.
 		if (numberOfItems == 1) {
 			priceErrorMessage = "Top price is not dispayed";
-		} else if (!isMobile()) && numberOfItems > 1) {
+		} else if (!isMobile() && numberOfItems > 1) {
 			sassert().assertTrue(PDP.validateBundlePriceIsDisplayed(), "Bundle Price is not dispayed");
 			priceErrorMessage = "Top price for the bundle items are not dispayed";
 		} else {
