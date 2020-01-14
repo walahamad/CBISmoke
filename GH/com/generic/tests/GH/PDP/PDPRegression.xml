@@ -17,7 +17,8 @@
 			<class name="com.generic.tests.GH.PDP.PDPBase" />
 		</classes>
 	</test><!-- Test -->
-	<test name="PDP iPhone">
+
+	 <test name="PDP iPhone">
 		<parameter name="browserName" value="mobile_iPhone X"></parameter>
 		<parameter name="Env" value="prod"></parameter>
 		<parameter name="Brand" value="GH"></parameter>
@@ -25,5 +26,5 @@
 			<class name="com.generic.tests.GH.PDP.PDPBase" />
 		</classes>
 	</test><!-- Test -->
-	
+
 </suite> <!-- Suite -->

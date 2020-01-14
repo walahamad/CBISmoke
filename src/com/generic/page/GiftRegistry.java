@@ -471,6 +471,7 @@ public class GiftRegistry extends SelTestCase {
 		try {
 			getCurrentFunctionName(true);
 			logs.debug("Validate added item in gift registry.");
+			SelectorUtil.waitElementLoading(By.cssSelector(GiftRegistrySelectors.productListGR.get()));
 			WebElement productAddedToGRContainer = SelectorUtil.getElement(GiftRegistrySelectors.productListGR.get());
 			sassert().assertTrue(productAddedToGRContainer != null, "Error: Items in gift registry.");
 			getCurrentFunctionName(false);

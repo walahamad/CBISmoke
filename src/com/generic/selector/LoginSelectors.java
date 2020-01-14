@@ -26,6 +26,8 @@ public class LoginSelectors
 	public static final cselector signInEmailPasswordInput = new cselector("css,[name=logonPassword]", "css,[name=logonPassword].c-custom-input");
 	public static final cselector signInButton = new cselector("css,#logonButton", "css, .t-login__submit-button .pw-button");
 	public static final cselector welcomeMessage = new cselector("css,#welcome");
+	public static final cselector RYWelcomeMessage = new cselector("css,.gwt-MenuItem #accountMenu");
+
 	public static final cselector accountMenuIcon = new cselector("css,#gwt_dropdownmenu_my_account", "css,#pwa-my-account-button .pw-button");
 	public static final String accountMenuList = "css,.my-account-controls-modal_class .pw-link";
 	public static final String loadingButton = "css,.loading-button";
@@ -34,4 +36,11 @@ public class LoginSelectors
 	public static final String myAccountLink = "css,#myAccount a";
 	public static final String wrongPassword_mail = "css,div>div>form>div.error-form";
 	public static final String myAccountModal = "css,.m-my-account-controls-modal";
+
+	public static final cselector GHRYMobileMenuBuuton = new cselector("css,#pwa-shop-nav-button .pw-button");
+	public static final cselector GHMobileMenuSignout = new cselector("css,.signout");
+	public static final cselector GHMobileSignoutLink = new cselector("css,.myaccount + a");
+
+	public static final cselector RYAccountMenuList = new cselector("css,.m-accordion-navigation__content-my-account-details .pw-link");
+	public static final cselector RYMenuContainer = new cselector("css,.m-navigation-modal");
 }

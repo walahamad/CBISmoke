@@ -533,13 +533,14 @@ public class PLP extends SelTestCase {
 
 	// CBI
 	public static String pickRecommendedOption() throws Exception {
+		String itemTitle = "";
 		try {
 			getCurrentFunctionName(true);
 
 			String SelectorSS = PLPSelectors.recommendedOption.get();
 			WebElement recommendedProduct = SelectorUtil.getElement(SelectorSS);
 
-			String itemTitle = recommendedProduct.getText();
+			itemTitle = recommendedProduct.getText();
 			logs.debug("Picked item: " + itemTitle);
 			if(isMobile() && isGHRY()) {
 				WebElement recommendedProductLink = SelectorUtil.getElement(PLPSelectors.recommendedOption.get()+">a");
