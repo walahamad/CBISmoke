@@ -79,7 +79,10 @@ public class PayPalValidation extends SelTestCase {
 						"Order number or email or shipping address is not displayed");
 				sassert().assertTrue(CheckOut.PayPal.checkConfirmationPageImg(), "Product image is not displayed");
 				sassert().assertTrue(CheckOut.PayPal.isPayPalPayment(), "Payment type is PayPal");
-
+				
+				Thread.sleep(1500);
+				CheckOut.printOrderIDtoLogs();
+				
 				float confirmationSubtotal = Float.parseFloat(CheckOut.PayPal.getConfirmationPageSubtotalValue());
 				float confirmationTax = Float.parseFloat(CheckOut.PayPal.getConfirmationPageTaxValue());
 				float confirmationShipping = Float.parseFloat(CheckOut.PayPal.getConfirmationPageShippingValue());
